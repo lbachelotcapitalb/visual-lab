@@ -47,7 +47,16 @@ if (flag('list')) {
 } else if (flag('source')) {
   rows = query(`SELECT * FROM patterns WHERE source LIKE ${q(`%${flag('source')}%`)} ORDER BY id`);
 } else if (argv.length) {
-  const terms = argv.filter((a) => !a.startsWith('--')).join(' ');
+  // FTS5 assemble les termes en ET par défaut : une question posée en langage naturel
+  // (« barres arrondies histogramme ») ne trouve alors jamais rien, car un seul mot absent
+  // suffit à tout annuler. On passe en OU et on laisse `rank` remonter les patterns qui
+  // matchent le plus de termes. Le suffixe * rattrape les variantes (arrondi/arrondies).
+  const terms = argv
+    .filter((a) => !a.startsWith('--'))
+    .flatMap((a) => a.split(/\s+/))
+    .filter((t) => t.length > 2)
+    .map((t) => `"${t.replace(/"/g, '')}"*`)
+    .join(' OR ');
   rows = query(
     `SELECT p.* FROM patterns_fts f JOIN patterns p ON p.id = f.id
      WHERE patterns_fts MATCH ${q(terms)} ORDER BY rank`
