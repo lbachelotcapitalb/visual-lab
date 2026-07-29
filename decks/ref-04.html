@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <title>ref-04 — swiss investor blue</title>
 <style>
-/* sys-04 — reconstitution fidèle. Planche : 10 slides 16:9 (1600×900) écrites à leur taille
-   réelle, réduites de moitié par `transform: scale(.5)` dans une grille 2 colonnes. Les
-   valeurs typographiques du fichier sont donc celles de la spec, directement relisables. */
+/* sys-04 — reconstitution fidèle. FORMAT SLIDES : 10 slides 16:9 (1600×900) empilées, chacune
+   à sa taille réelle. Le fichier ne sait rien de la façon dont on le regarde — la
+   planche-contact réduite se dérive avec `node bin/board.mjs`, l'export slide par slide avec
+   `node bin/slides.mjs`. Les valeurs typographiques sont donc celles de la spec. */
 :root {
   --vl-bg: #D9D2C7;
   --vl-board: #D9D2C7;
@@ -28,11 +29,8 @@ body {
   background: var(--vl-board);
   font-family: var(--vl-font);
   -webkit-font-smoothing: antialiased;
-  display: grid; grid-template-columns: 800px 800px; gap: 32px;
-  justify-content: center;
+  display: flex; flex-direction: column; align-items: center; gap: 48px;
 }
-.cell { width: 800px; height: 450px; }
-.cell > .slide { transform: scale(.5); transform-origin: top left; }
 
 /* ————— la slide : marge unique, header et footer en micro-typo ————— */
 .slide {
@@ -114,7 +112,7 @@ body {
 <body>
 
 <!-- ————————————————— 01 · COUVERTURE (noir) ————————————————— -->
-<div class="cell"><section class="slide slide--black">
+<section class="slide slide--black">
   <div class="hdr micro">
     <span class="mark">+travel</span>
     <span>Investor pitch deck</span>
@@ -136,10 +134,10 @@ body {
     <span>Investor relations</span>
     <span>01 / 10</span>
   </div>
-</section></div>
+</section>
 
 <!-- ————————————————— 02 · PROBLEM (blanc) ————————————————— -->
-<div class="cell"><section class="slide slide--white">
+<section class="slide slide--white">
   <div class="hdr micro">
     <span class="mark">+travel</span>
     <span>Problem</span>
@@ -177,10 +175,10 @@ body {
     <span>Investor relations</span>
     <span>02 / 10</span>
   </div>
-</section></div>
+</section>
 
 <!-- ————————————————— 03 · PRODUCT (blanc) ————————————————— -->
-<div class="cell"><section class="slide slide--white">
+<section class="slide slide--white">
   <div class="hdr micro">
     <span class="mark">+travel</span>
     <span>Product</span>
@@ -214,10 +212,10 @@ body {
     <span>Investor relations</span>
     <span>03 / 10</span>
   </div>
-</section></div>
+</section>
 
 <!-- ————————————————— 04 · TABLE OF CONTENT (bleu) ————————————————— -->
-<div class="cell"><section class="slide slide--blue">
+<section class="slide slide--blue">
   <div class="hdr micro">
     <span class="mark">+travel</span>
     <span>Table of content</span>
@@ -252,10 +250,10 @@ body {
     <span>Investor relations</span>
     <span>04 / 10</span>
   </div>
-</section></div>
+</section>
 
 <!-- ————————————————— 05 · SOLUTION (bleu) ————————————————— -->
-<div class="cell"><section class="slide slide--blue">
+<section class="slide slide--blue">
   <div class="hdr micro">
     <span class="mark">+travel</span>
     <span>Solution</span>
@@ -295,10 +293,10 @@ body {
     <span>Investor relations</span>
     <span>05 / 10</span>
   </div>
-</section></div>
+</section>
 
 <!-- ————————————————— 06 · BUSINESS MODEL (blanc) ————————————————— -->
-<div class="cell"><section class="slide slide--white">
+<section class="slide slide--white">
   <div class="hdr micro">
     <span class="mark">+travel</span>
     <span>Business model</span>
@@ -348,10 +346,10 @@ body {
     <span>Investor relations</span>
     <span>06 / 10</span>
   </div>
-</section></div>
+</section>
 
 <!-- ————————————————— 07 · TEAM (blanc) ————————————————— -->
-<div class="cell"><section class="slide slide--white">
+<section class="slide slide--white">
   <div class="hdr micro">
     <span class="mark">+travel</span>
     <span>Team</span>
@@ -393,10 +391,10 @@ body {
     <span>Investor relations</span>
     <span>07 / 10</span>
   </div>
-</section></div>
+</section>
 
 <!-- ————————————————— 08 · TRACTION (bleu) ————————————————— -->
-<div class="cell"><section class="slide slide--blue">
+<section class="slide slide--blue">
   <div class="hdr micro">
     <span class="mark">+travel</span>
     <span>Traction</span>
@@ -430,10 +428,10 @@ body {
     <span>Investor relations</span>
     <span>08 / 10</span>
   </div>
-</section></div>
+</section>
 
 <!-- ————————————————— 09 · ASK / CLOSING (noir) ————————————————— -->
-<div class="cell"><section class="slide slide--black">
+<section class="slide slide--black">
   <div class="hdr micro">
     <span class="mark">+travel</span>
     <span>Ask / closing</span>
@@ -467,10 +465,10 @@ body {
     <span>Investor relations</span>
     <span>09 / 10</span>
   </div>
-</section></div>
+</section>
 
 <!-- ————————————————— 10 · UNIQUE VALUE (blanc) ————————————————— -->
-<div class="cell"><section class="slide slide--white">
+<section class="slide slide--white">
   <div class="hdr micro">
     <span class="mark">+travel</span>
     <span>Unique value</span>
@@ -496,7 +494,7 @@ body {
     <span>Investor relations</span>
     <span>10 / 10</span>
   </div>
-</section></div>
+</section>
 
 </body>
 </html>

@@ -12,6 +12,32 @@ Source de vérité du reverse-engineering : [SPEC-SOURCES.md](SPEC-SOURCES.md).
 Ne jamais les redemander : la spec les remplace, elle contient palettes, échelles typo,
 grilles, inventaire des éléments et pièges de fidélité.
 
+## Le livrable d'un lot est un DECK AU FORMAT SLIDES
+
+Un deck s'écrit **une `<section class="slide">` par slide, à sa taille réelle** (celle de la
+spec, ex. 1600 × 900). Le fichier ne sait rien de la façon dont on le regarde : il n'y a ni
+grille de vignettes ni `transform: scale()` dans `decks/ref-NN.html`. Les deux vues se
+**dérivent** :
+
+```bash
+node bin/slides.mjs decks/ref-NN.html
+```
+
+→ `proofs/ref-NN/slide-01.png` … une image par slide, pleine taille. **C'est la preuve qui
+compte** : à 50 %, une micro-typo de 8 px est illisible et les écarts se cachent.
+
+```bash
+node bin/board.mjs decks/ref-NN.html
+```
+
+→ `proofs/ref-NN.png`, la planche-contact. Elle sert à juger **le rythme d'ensemble** (ordre
+des fonds, alternance, équilibre du deck), jamais à valider une slide.
+
+**Ce qui est un deck, et ce qui n'en est pas un.** Le format slides vaut pour les 6 decks :
+`ref-03` (4 slides) · `ref-04` (10) · `ref-05` (8) · `ref-06` (8) · `ref-09` (12) ·
+`ref-10` (3). Les quatre autres références n'ont pas de slides : `ref-01` est une couverture
+seule, `ref-02` un visuel unique, `ref-07` et `ref-08` sont des pages web.
+
 ---
 
 ## Procédure d'un lot (identique à chaque fois)
@@ -19,10 +45,14 @@ grilles, inventaire des éléments et pièges de fidélité.
 1. Lire la section `ref-NN` de `SPEC-SOURCES.md`.
 2. Écrire `systems/sys-NN.json` : les tokens (palette, typo, rayons, marges) **et** la note
    de charte — ce qui fait tenir le système, pas seulement ses valeurs.
-3. Écrire `decks/ref-NN.html` : la reconstitution **fidèle et complète** de la référence
-   (toutes ses slides), avec son `:root` en dur dans le fichier.
-4. Rendre et **regarder** : `node bin/render.mjs decks/ref-NN.html <w> <h>`, puis ouvrir le
-   PNG. Corriger les écarts, re-rendre. Ne pas passer à l'étape 5 avant que ça ressemble.
+3. Écrire `decks/ref-NN.html` **au format slides** (cf. section ci-dessus) : la
+   reconstitution fidèle et **complète** — le deck doit compter exactement le nombre de
+   slides annoncé par la spec, aucune n'est facultative. Le `:root` du système est en dur
+   dans le fichier.
+4. Exporter et **regarder chaque slide** : `node bin/slides.mjs decks/ref-NN.html`, puis
+   ouvrir les PNG un par un. Corriger, ré-exporter (`--only N` pour une seule slide).
+   Finir par `node bin/board.mjs decks/ref-NN.html` pour juger le rythme d'ensemble.
+   Ne pas passer à l'étape 5 avant que ça ressemble.
 5. **Extraire** les patterns listés pour cette référence : un `.html` (fragment autonome,
    couleurs en `--vl-*` uniquement) + un `.json` (intention, quand l'employer, quand
    l'éviter, notes de réglage) par pattern.
@@ -36,10 +66,10 @@ grilles, inventaire des éléments et pièges de fidélité.
   en bandes larges (~2,7:1). Construire une slide trop haute crée des vides que la charte
   d'origine n'a pas, et on est alors tenté d'étirer le contenu pour les combler. Vérifier le
   ratio dans la spec avant d'écrire une ligne de CSS.
-- **Slides nombreuses = échelle CSS.** Pour une planche de 8 à 12 slides, écrire chaque
-  slide à sa taille réelle (ex. 1600×900) et la réduire avec
-  `transform: scale(.5); transform-origin: top left` dans une cellule de grille. Les valeurs
-  typographiques du fichier restent alors celles de la spec, directement relisables.
+- **La réduction est une VUE, pas le fichier.** Ne jamais écrire la grille de vignettes dans
+  le deck : les slides restent à leur taille réelle et `bin/board.mjs` fabrique la planche.
+  Un deck qui contient sa propre mise en vignettes ne s'exporte plus slide par slide, et on
+  finit par valider un rendu à 50 % où rien de fin ne se voit.
 - **Images.** Jamais d'URL distante : un `<div>` à ratio fixe rempli d'un dégradé gris
   (`--vl-ph-a` → `--vl-ph-b`) tient le rôle d'une photo N&B et ne périme pas.
 - **Alignement des bas de bloc.** Dans une rangée de cartes, coller les libellés en bas
@@ -56,9 +86,11 @@ grilles, inventaire des éléments et pièges de fidélité.
 
 ## Lots
 
-### ✅ Lot 0 — Socle (29/07/2026)
+### ✅ Lot 0 — Socle (29/07/2026, complété le 30/07)
 Dépôt, format de pattern, index SQLite régénérable, recherche plein texte, rendu PNG
 headless, squelette de création. Audit écrit des 10 références → `SPEC-SOURCES.md`.
+Ajout du 30/07 : `bin/slides.mjs` (export slide par slide, pleine taille) et
+`bin/board.mjs` (planche-contact dérivée) — les deux vues d'un deck écrit en format slides.
 
 ### ✅ Lot 1 — `ref-02` ghost-icon-claim (29/07/2026)
 `sys-02`, `decks/ref-02.html`, 3 patterns : `pat-card-ghost-icon-claim`,
@@ -66,23 +98,26 @@ headless, squelette de création. Audit écrit des 10 références → `SPEC-SOU
 **C'est le gabarit de forme** — le relire avant d'attaquer un lot.
 
 ### ✅ Lot 2 — `ref-03` bento-dark-pitch (29/07/2026)
-`sys-03`, `decks/ref-03.html` (4 slides), 7 patterns : `pat-layout-bento-nested`,
+`sys-03`, `decks/ref-03.html` — 4 slides 1120×410, déjà au format slides (vérifié le 30/07,
+export dans `proofs/ref-03/`). 7 patterns : `pat-layout-bento-nested`,
 `pat-badge-pill-outline`, `pat-tile-kpi`, `pat-chart-isotype`, `pat-chart-bars-stadium`,
 `pat-type-inline-highlight-pill`, `pat-icon-circle-arrow`.
 
 ### ✅ Lot 3 — `ref-04` swiss-investor-blue (30/07/2026)
-`decks/ref-04.html` (10 slides 1600×900, rythme des fonds respecté), 5 patterns :
+`decks/ref-04.html` — **10 slides 1600×900 au format slides**, rythme des fonds respecté,
+exportées une par une dans `proofs/ref-04/`. 5 patterns :
 `pat-layout-swiss-header-footer`, `pat-title-monster-caps`, `pat-list-numbered-giant`,
 `pat-toc-two-column`, `pat-deck-rhythm-fullbleed` (`kind: rule`, pas de HTML).
 `sys-04.json` était déjà écrit et n'a pas eu besoin d'être retouché.
 
 ### ⬜ Lot 4 — `ref-05` proposal-acid-yellow
-8 slides. Neutre + **un** accent fluo, header tri-parti, astérisque de marque.
+**8 slides** (format slides, une section par slide). Neutre + **un** accent fluo, header
+tri-parti, astérisque de marque.
 Patterns : `pat-header-tripartite`, `pat-mark-asterisk`, `pat-cards-numbered-steps`,
 `pat-title-hyphen-break`, `pat-accent-single-fluo` (`kind: rule`).
 
 ### ⬜ Lot 5 — `ref-06` orange-notched
-8 slides. La signature est le **coin chanfreiné** (`clip-path`).
+**8 slides.** La signature est le **coin chanfreiné** (`clip-path`).
 Patterns : `pat-shape-notched-card`, `pat-title-leading-rule`, `pat-list-index-rules`,
 `pat-stat-block-accent`.
 
@@ -99,7 +134,7 @@ Le tableau des différences ref-07 / ref-08 est dans la spec.
 Patterns nouveaux : `pat-hero-statement-first`, `pat-type-registered-superscript`.
 
 ### ⬜ Lot 8 — `ref-09` zine-annotated-blue
-12 slides. Le lot le plus technique : `pat-annotation-marker` est un générateur SVG de
+**12 slides** — la plus grosse planche du corpus, prévoir la session entière. Le lot le plus technique : `pat-annotation-marker` est un générateur SVG de
 tracés manuscrits (ovale d'encerclement, flèche courbe, soulignement ondulé, zigzag) dont
 **l'irrégularité des points de contrôle est la fonctionnalité** — un tracé régulier
 redevient une forme géométrique et l'effet tombe. C'est le plus fort différenciateur
@@ -107,7 +142,7 @@ anti-« AI slop » du corpus.
 Patterns : `pat-annotation-marker`, `pat-type-lowercase-editorial`, `pat-type-vertical-rail`.
 
 ### ⬜ Lot 9 — `ref-10` campaign-board-red
-3 slides. Typo condensée écrasée, collage d'images en overlay, tableau à filets.
+**3 slides.** Typo condensée écrasée, collage d'images en overlay, tableau à filets.
 Patterns : `pat-type-condensed-stack`, `pat-mark-paren-number`, `pat-table-hairline-rules`,
 `pat-layout-image-collage-overlay`, `pat-type-micro-caps-block`.
 
@@ -145,8 +180,14 @@ Ce qui transforme la collection en outil :
 3. **Un pattern = un fragment autonome**, qui se colle dans une page vide et se voit.
    Couleurs en variables `--vl-*`, jamais en dur — `bin/index.mjs` le vérifie et refuse
    d'écrire la base sinon.
-4. **Preuve obligatoire** (`/verify`) : un PNG regardé, pas seulement produit.
-5. **Pas de tableau Markdown dans la réponse à Léo** (il lit sur Telegram, cf. son
+4. **Preuve obligatoire** (`/verify`) : un PNG regardé, pas seulement produit — et pour un
+   deck, les PNG **de chaque slide**, pas la seule planche-contact.
+5. **Le compte de slides n'est pas négociable.** Le deck en compte exactement autant que la
+   spec en annonce. Une slide sautée parce qu'elle « ressemble » à une autre est la faute
+   qui se voit à l'usage. Si la spec elle-même paraît plus mince que la référence d'origine,
+   le seul recours est que Léo recolle l'image dans la session : elle n'est pas sur disque,
+   et personne ne peut la deviner.
+6. **Pas de tableau Markdown dans la réponse à Léo** (il lit sur Telegram, cf. son
    CLAUDE.md). Dans les fichiers du dépôt, les tableaux sont autorisés.
 
 ---
@@ -158,10 +199,23 @@ Reprends visual-lab (~/visual-lab). Lis ROADMAP.md, puis la section de SPEC-SOUR
 qui correspond au prochain lot non coché — les images d'origine n'existent pas sur
 disque, la spec les remplace.
 
-Fais ce lot et lui seul, en suivant la « Procédure d'un lot » de la ROADMAP. Prends
-decks/ref-03.html et patterns/pat-tile-kpi.* comme gabarits de forme.
+Fais ce lot et lui seul, en suivant la « Procédure d'un lot » de la ROADMAP.
 
-Ne me rends pas la main avant d'avoir REGARDÉ le PNG du deck et corrigé les écarts.
+Le livrable est un deck AU FORMAT SLIDES : une <section class="slide"> par slide, à sa
+taille réelle, autant de slides que la spec en annonce (aucune n'est facultative), et
+AUCUNE grille de vignettes dans le fichier. Gabarits de forme : decks/ref-04.html pour
+la structure d'un deck, patterns/pat-tile-kpi.* pour un pattern.
+
+Ne me rends pas la main avant d'avoir exporté `node bin/slides.mjs decks/ref-NN.html`
+et REGARDÉ chaque slide en pleine taille, écarts corrigés. Finis par
+`node bin/board.mjs decks/ref-NN.html` pour vérifier le rythme d'ensemble.
+
 Termine par : node bin/index.mjs, les PNG de chaque pattern, la case cochée ici, et
 un commit.
 ```
+
+## Ce qui reste, en un coup d'œil
+
+Decks à produire : `ref-05` (8 slides) · `ref-06` (8) · `ref-09` (12) · `ref-10` (3).
+Non-decks à produire : `ref-07` et `ref-08` (pages web) · `ref-01` (couverture seule).
+Puis les deux lots d'outillage : composition (11) et skill + carte (12).

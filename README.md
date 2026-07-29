@@ -25,10 +25,11 @@ ROADMAP.md        le découpage en lots + le prompt de continuation
 systems/sys-NN.json    les tokens d'une référence (palette, typo, rayons, notes de charte)
 patterns/pat-*.json    métadonnées d'un pattern (intention, quand l'employer, quand l'éviter)
 patterns/pat-*.html    le fragment autonome correspondant
-decks/ref-NN.html      la reconstitution fidèle d'une référence complète
-bin/                   les outils (index, recherche, rendu, création)
+decks/ref-NN.html      la reconstitution fidèle d'une référence complète, au format slides
+bin/                   les outils (index, recherche, rendu, export slides, planche, création)
 patterns.db            index SQLite — REGÉNÉRABLE, gitignoré
 proofs/                PNG de vérification — régénérables, gitignorés
+proofs/ref-NN/         un PNG par slide du deck (export bin/slides.mjs)
 ```
 
 **Le disque est la source de vérité, pas la base.** `patterns.db` est un index reconstruit à
@@ -63,6 +64,19 @@ node bin/render.mjs decks/ref-02.html 1500 660
 
 ```bash
 node bin/render.mjs --pattern pat-card-ghost-icon-claim
+```
+
+Un deck s'écrit **une slide par `<section class="slide">`, à sa taille réelle** ; les deux
+vues se dérivent. Slide par slide, en pleine taille — c'est la preuve qui compte :
+
+```bash
+node bin/slides.mjs decks/ref-04.html
+```
+
+Planche-contact réduite, pour juger le rythme d'ensemble (jamais une slide) :
+
+```bash
+node bin/board.mjs decks/ref-04.html
 ```
 
 Créer un pattern avec les champs obligatoires déjà en place :
