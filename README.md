@@ -86,4 +86,6 @@ bibliothèque à moitié indexée qui se tait coûte plus cher qu'une erreur bru
 
 ## État
 
-Lots 0 à 2 faits : socle, `ref-02` (3 patterns), `ref-03` (7 patterns dont la data-viz). Suite et prompt de reprise : [ROADMAP.md](ROADMAP.md).
+3 lots sur 12 faits : socle, `ref-02` (3 patterns), `ref-03` (7 patterns dont la data-viz).
+Reste 8 références à reproduire, une par lot. Suite et prompt de reprise :
+[ROADMAP.md](ROADMAP.md).
