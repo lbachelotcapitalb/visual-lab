@@ -44,6 +44,13 @@ grilles, inventaire des éléments et pièges de fidélité.
   (`--vl-ph-a` → `--vl-ph-b`) tient le rôle d'une photo N&B et ne périme pas.
 - **Alignement des bas de bloc.** Dans une rangée de cartes, coller les libellés en bas
   (`margin-top: auto`) : sans ça la rangée se désaligne au premier changement de contenu.
+- **Répartir n'est pas remplir.** Une slide trop vide ne se répare pas en étirant son
+  contenu (`space-between` sur une liste éloigne chaque filet de son entrée : l'écart se lit
+  comme un oubli). Deux gestes marchent : donner la hauteur restante à une IMAGE
+  (`flex: 1` sur le bloc photo), ou **centrer un bloc compact** et assumer le vide autour.
+- **Bloc de largeur bornée.** Un libellé à gauche et son chiffre à droite d'une slide de
+  1600 px ne forment plus une paire. Borner le bloc (`max-width` + `margin-left: auto`)
+  avant de s'en remettre à `justify-content: space-between`.
 
 ---
 
@@ -63,15 +70,11 @@ headless, squelette de création. Audit écrit des 10 références → `SPEC-SOU
 `pat-badge-pill-outline`, `pat-tile-kpi`, `pat-chart-isotype`, `pat-chart-bars-stadium`,
 `pat-type-inline-highlight-pill`, `pat-icon-circle-arrow`.
 
-### ⬜ Lot 3 — `ref-04` swiss-investor-blue
-La plus grosse planche : **10 slides**. `systems/sys-04.json` est **déjà écrit** — reprendre
-à l'étape 3 de la procédure.
-Slides à reproduire, dans l'ordre (le rythme des fonds fait partie du livrable) :
-couverture noire · PROBLEM blanc · PRODUCT blanc · TABLE OF CONTENT bleu · SOLUTION bleu ·
-BUSINESS MODEL blanc · TEAM blanc · TRACTION bleu · ASK/CLOSING noir · UNIQUE VALUE blanc.
-Patterns : `pat-layout-swiss-header-footer`, `pat-title-monster-caps`,
-`pat-list-numbered-giant`, `pat-toc-two-column`, `pat-deck-rhythm-fullbleed` (`kind: rule`,
-pas de HTML).
+### ✅ Lot 3 — `ref-04` swiss-investor-blue (30/07/2026)
+`decks/ref-04.html` (10 slides 1600×900, rythme des fonds respecté), 5 patterns :
+`pat-layout-swiss-header-footer`, `pat-title-monster-caps`, `pat-list-numbered-giant`,
+`pat-toc-two-column`, `pat-deck-rhythm-fullbleed` (`kind: rule`, pas de HTML).
+`sys-04.json` était déjà écrit et n'a pas eu besoin d'être retouché.
 
 ### ⬜ Lot 4 — `ref-05` proposal-acid-yellow
 8 slides. Neutre + **un** accent fluo, header tri-parti, astérisque de marque.

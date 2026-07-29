@@ -1,0 +1,50 @@
+<!-- pat-title-monster-caps — fragment autonome. Couleurs via --vl-* uniquement.
+     Deux fonds pour montrer que l'emphase change de couleur, jamais de mécanique. -->
+<div class="vl-monster-demo vl-monster-demo--light">
+  <p class="vl-monster__kicker">Confidential — for discussion only</p>
+  <h1 class="vl-monster">The<br>problem</h1>
+  <p class="vl-monster__lead">Independent operators still sell <span class="vl-monster__em">offline</span>,
+    and lose a third of their margin to intermediaries they never chose.</p>
+</div>
+
+<div class="vl-monster-demo vl-monster-demo--fill">
+  <p class="vl-monster__kicker">Section 08</p>
+  <h1 class="vl-monster">Traction<br>to date</h1>
+  <p class="vl-monster__lead">Eighteen months in market, <span class="vl-monster__em">zero churn</span>
+    on operators above €1M of annual inventory.</p>
+</div>
+
+<style>
+/* Un seul titre par slide, calé en haut à gauche, en capitales, sur deux lignes au plus.
+   La hiérarchie ne comporte que DEUX corps : ce titre et le micro-texte. L'absence de taille
+   intermédiaire est ce qui donne sa tension au bloc — ajouter un sous-titre de 32 px la tue. */
+.vl-monster-demo {
+  padding: 48px; margin-bottom: 24px;
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+.vl-monster-demo--light { background: var(--vl-white); color: var(--vl-black); }
+.vl-monster-demo--fill  { background: var(--vl-blue);  color: var(--vl-white); }
+
+.vl-monster {
+  margin: 0;
+  font-size: 76px; line-height: 0.92; font-weight: 900;
+  letter-spacing: -0.02em; text-transform: uppercase;
+}
+.vl-monster__kicker {
+  margin: 0 0 24px;
+  font-size: 8px; line-height: 1.4; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--vl-ink-muted);
+}
+.vl-monster-demo--fill .vl-monster__kicker { color: var(--vl-ink-muted-invert); }
+
+.vl-monster__lead {
+  margin: 32px 0 0; max-width: 46ch;
+  font-size: 26px; line-height: 1.2; font-weight: 500;
+}
+/* L'emphase colorée ne vit que dans la phrase secondaire, jamais dans le titre lui-même :
+   un mot bleu dans un titre déjà énorme fait deux titres. Sur fond plein, elle passe au
+   blanc — le bleu sur bleu n'existe pas dans ce système. */
+.vl-monster__em { color: var(--vl-blue); }
+.vl-monster-demo--fill .vl-monster__em { color: var(--vl-white); }
+</style>

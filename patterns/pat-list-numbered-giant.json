@@ -1,0 +1,31 @@
+{
+  "name": "Colonnes à numéro géant",
+  "kind": "component",
+  "family": "list",
+  "source": "ref-04-swiss-investor-blue",
+  "system": "sys-04",
+  "intent": "Aligner trois à quatre arguments de même rang en colonnes, chacun ouvert par un numéro ou un chiffre démesuré qui sert à la fois de repère de lecture et de seule tache de couleur du bloc.",
+  "when_to_use": "Bas de slide : les trois causes d'un problème, les trois étapes d'une solution, les quatre chiffres d'une traction. Trois ou quatre colonnes ; à cinq, le numéro cesse d'être un repère et devient une texture.",
+  "avoid_when": "Les entrées ne sont pas de même rang (une hiérarchie déguisée en liste), ou chacune demande plus de trois lignes de texte : ce n'est alors plus une liste, c'est une section.",
+  "tags": [
+    "liste",
+    "numerotation",
+    "colonnes",
+    "chiffre",
+    "kpi",
+    "argument",
+    "deck",
+    "slide",
+    "filet",
+    "suisse",
+    "etapes"
+  ],
+  "vars": [
+    { "name": "--vl-blue", "role": "couleur du numéro sur fond clair", "default": "#1B44D8" },
+    { "name": "--vl-hairline", "role": "filet vertical entre colonnes, fond clair", "default": "#00000018" },
+    { "name": "--vl-hairline-invert", "role": "filet vertical sur fond plein", "default": "#FFFFFF33" },
+    { "name": "--vl-ink-muted", "role": "corps de texte sous le numéro", "default": "#6E6E6E" }
+  ],
+  "slots": ["num", "body"],
+  "notes": "Trois réglages. 1) RAPPORT D'ÉCHELLE : le numéro doit faire au moins six fois le corps (88 px contre 13 px) ; en dessous, il redevient une puce numérotée ordinaire et le bloc perd son ancrage. 2) FILET PORTÉ À GAUCHE, retiré sur le premier enfant (`:first-child`) : il n'y a jamais de filet en bord de bloc, seulement entre les colonnes — poser une bordure extérieure transformerait la liste en tableau. 3) UNE SEULE COULEUR : le numéro est le seul élément coloré ; sur fond plein il passe au blanc, car ce système ne pose jamais son bleu sur autre chose que du blanc. La même mécanique accepte un rang (01, 02, 03) ou un chiffre réel (412, €38M) : dans le second cas, garder les libellés courts, la variation de largeur des chiffres se voit."
+}

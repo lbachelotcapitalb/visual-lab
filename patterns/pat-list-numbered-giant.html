@@ -1,0 +1,77 @@
+<!-- pat-list-numbered-giant — fragment autonome. Couleurs via --vl-* uniquement. -->
+<div class="vl-numgiant-demo">
+  <div class="vl-numgiant">
+    <div class="vl-numgiant__col">
+      <span class="vl-numgiant__num">01</span>
+      <p class="vl-numgiant__body">Fragmented inventory. 68% of small operators still keep
+        availability in a spreadsheet, and republish it by hand on four channels.</p>
+    </div>
+    <div class="vl-numgiant__col">
+      <span class="vl-numgiant__num">02</span>
+      <p class="vl-numgiant__body">Commission drift. Marketplace fees moved from 12% to 21% in
+        five years, without any matching gain in booking volume.</p>
+    </div>
+    <div class="vl-numgiant__col">
+      <span class="vl-numgiant__num">03</span>
+      <p class="vl-numgiant__body">No direct relationship. The operator never owns the traveller
+        record, so repeat business is captured by someone else.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Même mécanique, chiffres réels au lieu d'un rang : la colonne devient un KPI. -->
+<div class="vl-numgiant-demo vl-numgiant-demo--fill">
+  <div class="vl-numgiant">
+    <div class="vl-numgiant__col">
+      <span class="vl-numgiant__num">412</span>
+      <p class="vl-numgiant__body">Operators live on the platform, across 9 countries.</p>
+    </div>
+    <div class="vl-numgiant__col">
+      <span class="vl-numgiant__num">€38M</span>
+      <p class="vl-numgiant__body">Gross booking value processed in the last twelve months.</p>
+    </div>
+    <div class="vl-numgiant__col">
+      <span class="vl-numgiant__num">2.4×</span>
+      <p class="vl-numgiant__body">Net revenue retention, driven by inventory growth per operator.</p>
+    </div>
+    <div class="vl-numgiant__col">
+      <span class="vl-numgiant__num">61%</span>
+      <p class="vl-numgiant__body">Of bookings now direct — the share we do not charge a fee on.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Le numéro est le seul objet coloré de la slide, et il est énorme (88 px pour 13 px de
+   corps, soit un rapport de presque 7). Le filet vertical remplace toute carte : pas de
+   fond, pas de rayon, pas de bordure extérieure. */
+.vl-numgiant-demo {
+  padding: 48px; margin-bottom: 24px;
+  background: var(--vl-white); color: var(--vl-black);
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+.vl-numgiant-demo--fill { background: var(--vl-blue); color: var(--vl-white); }
+
+.vl-numgiant { display: flex; }
+/* Le filet porté par `border-left` et retiré sur le premier enfant : il n'y a donc jamais
+   de filet en bord de bloc, seulement ENTRE les colonnes. */
+.vl-numgiant__col {
+  flex: 1; padding: 0 32px;
+  border-left: 1px solid var(--vl-hairline);
+}
+.vl-numgiant__col:first-child { padding-left: 0; border-left: 0; }
+.vl-numgiant-demo--fill .vl-numgiant__col { border-color: var(--vl-hairline-invert); }
+
+.vl-numgiant__num {
+  display: block;
+  font-size: 88px; line-height: 1; font-weight: 900; letter-spacing: -0.03em;
+  color: var(--vl-blue);
+}
+.vl-numgiant-demo--fill .vl-numgiant__num { color: var(--vl-white); }
+
+.vl-numgiant__body {
+  margin: 14px 0 0;
+  font-size: 13px; line-height: 1.5; color: var(--vl-ink-muted);
+}
+.vl-numgiant-demo--fill .vl-numgiant__body { color: var(--vl-ink-muted-invert); }
+</style>

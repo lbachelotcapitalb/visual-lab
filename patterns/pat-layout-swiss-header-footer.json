@@ -1,0 +1,32 @@
+{
+  "name": "Cadre suisse header / footer",
+  "kind": "layout",
+  "family": "layout",
+  "source": "ref-04-swiss-investor-blue",
+  "system": "sys-04",
+  "intent": "Poser le cadre d'une slide de deck : une marge unique, deux barres de micro-typo à trois zones et un filet d'un pixel — de quoi rendre une suite de slides reconnaissable sans y ajouter le moindre ornement.",
+  "when_to_use": "Deck de plus de trois slides qui doit tenir comme un document : le header rappelle la section, le footer numérote. C'est aussi ce qui autorise les fonds pleins à alterner sans que le deck se disloque.",
+  "avoid_when": "Slide unique, visuel de réseau social, ou support projeté de loin : à 8 px les barres ne se lisent pas, elles ne sont là que pour tenir la page.",
+  "tags": [
+    "layout",
+    "cadre",
+    "header",
+    "footer",
+    "deck",
+    "slide",
+    "suisse",
+    "filet",
+    "micro-typo",
+    "grille",
+    "marge"
+  ],
+  "vars": [
+    { "name": "--vl-hairline", "role": "filet sous le header sur fond clair", "default": "#00000018" },
+    { "name": "--vl-hairline-invert", "role": "filet sur fond plein (bleu ou noir)", "default": "#FFFFFF33" },
+    { "name": "--vl-white", "role": "fond des slides claires", "default": "#FFFFFF" },
+    { "name": "--vl-blue", "role": "fond des slides pleines", "default": "#1B44D8" },
+    { "name": "--vl-ink-muted", "role": "corps de texte sur fond clair", "default": "#6E6E6E" }
+  ],
+  "slots": ["mark", "section", "meta", "body", "footer-left", "footer-center", "footer-right"],
+  "notes": "Trois réglages font tout le travail. 1) MARGE UNIQUE : la même valeur sur les quatre côtés (48 px pour une slide 1600×900), sinon les barres cessent d'être alignées sur le contenu et le cadre se voit. 2) ZONES ÉGALES : les trois cellules d'une barre sont en `flex: 1`, jamais dimensionnées au contenu — c'est ce qui garde la mention centrale au centre optique quand les textes latéraux changent de longueur. 3) FILET INVERSÉ : sur fond plein, le filet passe de noir 9 % à blanc 20 % ; un filet noir sur fond bleu disparaît et le header se met à flotter. La marque (le logo) est la seule exception à la micro-typo : elle garde son poids et sa casse, c'est ce qui l'empêche de se confondre avec la mention de section."
+}
