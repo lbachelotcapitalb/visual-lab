@@ -1,0 +1,14 @@
+{
+  "name": "Règle de l'icône fantôme",
+  "kind": "rule",
+  "family": "icon",
+  "source": "ref-02-ghost-icon-claim",
+  "system": "sys-02",
+  "intent": "Régler une icône décorative de grande taille pour qu'elle porte le volume d'un bloc sans jamais concurrencer le texte.",
+  "when_to_use": "Dès qu'une icône dépasse ~120 px dans une carte, une slide ou un hero. C'est la règle qui empêche le pictogramme géant de devenir le sujet.",
+  "avoid_when": "L'icône est cliquable, porte un statut, ou remplace un mot (avertissement, erreur, état) : elle doit alors être lisible, donc contrastée, donc hors de cette règle.",
+  "tags": ["icone", "regle", "contraste", "hierarchie", "decoratif", "accessibilite"],
+  "vars": [],
+  "slots": [],
+  "notes": "Quatre contraintes, dans cet ordre. 1) CONTRASTE : la couleur de l'icône reste à environ 4 % de luminosité du fond qui la porte (ici #E2E2E2 sur #EDEDED) — assez pour exister, trop peu pour se lire avant le titre. 2) TAILLE : au moins 3× la hauteur du titre ; en dessous elle redevient un pictogramme d'accompagnement et l'effet tombe. 3) FORME : silhouette pleine, jamais d'outline — un contour fin à ce contraste disparaît complètement et laisse un vide. 4) SÉMANTIQUE : aria-hidden=\"true\" obligatoire, l'icône ne dit rien qui ne soit déjà écrit. Corollaire d'audit : un contrôle d'accessibilité qui signale ce contraste a raison sur le chiffre et tort sur le cas — ne pas « corriger » l'icône, vérifier qu'elle est bien marquée décorative."
+}

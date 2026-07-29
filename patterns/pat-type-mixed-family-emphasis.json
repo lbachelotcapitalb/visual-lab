@@ -1,0 +1,19 @@
+{
+  "name": "Emphase par changement de famille",
+  "kind": "type",
+  "family": "type",
+  "source": "ref-02-ghost-icon-claim",
+  "system": "sys-02",
+  "intent": "Accentuer un fragment de titre en basculant sa FAMILLE typographique (grotesk bold → serif italique) à corps égal, au lieu de le colorer ou de le grossir.",
+  "when_to_use": "Un titre où un mot est un nom de produit, une nuance, un aparté (« (lite) », « nearly », « — vraiment »). Marche aussi en sens inverse : serif de titre avec un mot en grotesk.",
+  "avoid_when": "La charte n'a qu'une seule famille disponible, ou le fragment porte l'information principale — dans ce cas il doit être plus GROS, pas juste différent.",
+  "tags": ["typographie", "emphase", "titre", "serif", "italique", "contraste", "editorial"],
+  "vars": [
+    { "name": "--vl-font-display", "role": "famille du titre", "default": "grotesk système" },
+    { "name": "--vl-font-accent", "role": "famille du fragment accentué", "default": "Georgia, Times" },
+    { "name": "--vl-size-title", "role": "corps du titre", "default": "52px" },
+    { "name": "--vl-ink", "role": "couleur, identique pour les deux familles", "default": "#444444" }
+  ],
+  "slots": ["title"],
+  "notes": "Deux réglages non négociables : la couleur ne change PAS (sinon on empile deux signaux d'emphase et l'effet se brouille), et le serif est compensé à 1.04em car à corps égal un serif paraît plus petit qu'un grotesk. Un seul fragment accentué par titre."
+}

@@ -1,0 +1,7 @@
+# Index régénérable : la source de vérité est patterns/ et systems/.
+patterns.db
+# Preuves de rendu : régénérables par bin/render.mjs, et binaires (cf. la doctrine
+# claude-config : pas de poids binaire dans l'historique).
+proofs/
+.render-*.html
+.DS_Store
