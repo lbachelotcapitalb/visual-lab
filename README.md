@@ -102,5 +102,7 @@ bibliothèque à moitié indexée qui se tait coûte plus cher qu'une erreur bru
 
 4 lots sur 12 faits : socle, `ref-02` (3 patterns), `ref-03` (7 patterns dont la data-viz),
 `ref-04` (5 patterns, planche de 10 slides).
-Reste 7 références à reproduire, une par lot. Suite et prompt de reprise :
+`ref-08` (hero web « Studioform® ») a été reconstitué hors ordre le 30/07 — `sys-08` et
+`decks/ref-08.html` sont là, ses patterns restent à extraire (ils dépendent du lot 6).
+Reste 6 références à reproduire, une par lot. Suite et prompt de reprise :
 [ROADMAP.md](ROADMAP.md).

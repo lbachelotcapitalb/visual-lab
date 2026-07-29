@@ -126,12 +126,23 @@ Page web, carte flottante sur photo, wordmark géant bas-gauche, triptyque portr
 haut-droite. Patterns : `pat-hero-card-on-photo`, `pat-nav-three-zone`,
 `pat-hero-wordmark-bottom-left`, `pat-image-triptych`.
 
-### ⬜ Lot 7 — `ref-08` swiss-studio-hero
-**Dépend du lot 6.** C'est le MÊME squelette réglé autrement (phrase avant le nom, images
-paysage en bas, aucun accent, typo neutre). Le lot est réussi si `pat-hero-card-on-photo` et
-`pat-image-triptych` produisent les deux rendus **par variables**, sans être dupliqués.
-Le tableau des différences ref-07 / ref-08 est dans la spec.
-Patterns nouveaux : `pat-hero-statement-first`, `pat-type-registered-superscript`.
+### 🟡 Lot 7 — `ref-08` swiss-studio-hero — reconstitution faite, patterns à extraire
+**Fait le 30/07/2026, HORS ordre** (demande directe de Léo sur le visuel source) :
+`systems/sys-08.json` et `decks/ref-08.html` — la page complète, cadrée carré 1440×1440
+comme la maquette, preuve `proofs/ref-08.png`. Les trois photos sont remplacées par des
+compositions **SVG génératives** (marine / fenêtre de cabine / bouée), sans réseau.
+
+Trois valeurs de la spec ont été corrigées CONTRE elle, au vu du visuel source — la spec
+avait été écrite en supposant une carte plus petite :
+- wordmark **204px**, pas 112 : il affleure les deux marges (≈ largeur utile / 5.2).
+- statement **27px sur 3 lignes**, pas 15px sur 2.
+- carte **#F6F5F2**, pas #FFFFFF : elle est éclairée par la pièce.
+
+**Reste à faire** : les patterns. `pat-hero-statement-first`,
+`pat-type-registered-superscript`, et surtout la preuve du lot — que
+`pat-hero-card-on-photo` et `pat-image-triptych` (lot 6, pas encore écrits) produisent
+ref-07 ET ref-08 **par variables**, sans duplication. Le tableau des différences est dans
+la spec. Faire le lot 6 d'abord, puis revenir extraire ici.
 
 ### ⬜ Lot 8 — `ref-09` zine-annotated-blue
 **12 slides** — la plus grosse planche du corpus, prévoir la session entière. Le lot le plus technique : `pat-annotation-marker` est un générateur SVG de
