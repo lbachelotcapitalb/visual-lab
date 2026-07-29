@@ -1,0 +1,28 @@
+<!-- pat-badge-pill-outline — fragment autonome. Couleurs via --vl-* uniquement. -->
+<span class="vl-pill">2025</span>
+<span class="vl-pill">by year</span>
+
+<div style="margin-top:20px;padding:20px;border-radius:var(--vl-radius-sub);
+     background:var(--vl-surface-dark);color:var(--vl-ink-invert)">
+  <span class="vl-pill vl-pill--invert">by year</span>
+  <span class="vl-pill vl-pill--solid">within 5 years.</span>
+</div>
+
+<style>
+/* Une pilule outline ne pèse rien : c'est une étiquette de cadrage (période, unité, filtre),
+   jamais un bouton et jamais un statut. Le trait fait 1px et ne s'épaissit pas. */
+.vl-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 16px; border-radius: 999px;
+  border: 1px solid var(--vl-hairline);
+  font-size: 12px; line-height: 1; white-space: nowrap;
+  color: inherit;
+}
+/* Sur fond sombre le trait clair « brûle » : on descend d'un cran, on n'inverse pas. */
+.vl-pill--invert { border-color: var(--vl-hairline-invert); }
+/* Variante pleine : réservée au fragment qu'on veut lire EN PREMIER dans un bloc sombre. */
+.vl-pill--solid {
+  border: none; font-weight: 500;
+  background: var(--vl-surface-light); color: var(--vl-ink);
+}
+</style>

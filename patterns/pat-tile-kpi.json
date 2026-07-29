@@ -1,0 +1,44 @@
+{
+  "name": "Tuile KPI",
+  "kind": "component",
+  "family": "tile",
+  "source": "ref-03-bento-dark-pitch",
+  "system": "sys-03",
+  "intent": "Loger un chiffre, son libellé et une icône facultative dans une tuile de hauteur fixe, alignable en rangée sans que la longueur des textes désaligne quoi que ce soit.",
+  "when_to_use": "Rangée ou grille 2×2 de résultats chiffrés dans un deck ou un dashboard. Deux à six tuiles ; au-delà, plus personne ne lit.",
+  "avoid_when": "Les chiffres doivent être comparés entre eux (là il faut un graphique, pas des tuiles) ou une tuile mérite trois lignes d'explication — ce n'est plus un KPI.",
+  "tags": [
+    "kpi",
+    "tuile",
+    "chiffre",
+    "metrique",
+    "dashboard",
+    "deck",
+    "grille",
+    "bento",
+    "stat"
+  ],
+  "vars": [
+    {
+      "name": "--vl-accent",
+      "role": "fond des tuiles à mettre en avant",
+      "default": "#CFE3F5"
+    },
+    {
+      "name": "--vl-surface-tile",
+      "role": "fond des tuiles de second rang",
+      "default": "#3A3A3A"
+    },
+    {
+      "name": "--vl-radius-tile",
+      "role": "rayon de la tuile",
+      "default": "16px"
+    }
+  ],
+  "slots": [
+    "icon",
+    "figure",
+    "label"
+  ],
+  "notes": "Trois zones dans un ordre fixe : icône en haut, chiffre, libellé collé en bas par margin-top:auto. C'est ce collage qui aligne les bas de tuiles même quand l'une n'a pas de chiffre — sans lui, la rangée se décale au premier changement de contenu. Règle de couleur héritée de sys-03 : au plus la MOITIÉ des tuiles porte l'accent, sinon l'accent ne désigne plus rien."
+}

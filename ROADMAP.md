@@ -29,12 +29,14 @@ depuis la spec.
 Fait dans le lot 0 pour valider le pipeline. À relire comme **modèle de forme** avant
 d'attaquer le lot 2 : un `decks/ref-02.html` fidèle + 3 patterns atomiques + `systems/sys-02.json`.
 
-## Lot 2 — ref-03 `bento-dark-pitch`
+## Lot 2 — ref-03 `bento-dark-pitch` ✅ (fait le 29/07/2026)
 
 Le plus rentable : 7 patterns dont toute la data-viz.
-Livrables : `systems/sys-03.json`, `decks/ref-03.html` (les 4 slides), patterns
+Livrés : `systems/sys-03.json`, `decks/ref-03.html` (les 4 slides), patterns
 `pat-layout-bento-nested`, `pat-badge-pill-outline`, `pat-tile-kpi`, `pat-chart-isotype`,
 `pat-chart-bars-stadium`, `pat-type-inline-highlight-pill`, `pat-icon-circle-arrow`.
+
+Preuve : `proofs/ref-03.png` (planche des 4 slides) + un PNG par pattern.
 
 ## Lot 3 — ref-04 `swiss-investor-blue`
 

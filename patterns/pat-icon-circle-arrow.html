@@ -1,0 +1,21 @@
+<!-- pat-icon-circle-arrow — fragment autonome. Couleurs via --vl-* uniquement. -->
+<span class="vl-circ" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+<span class="vl-circ" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg></span>
+<span class="vl-circ" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 9v8h-8"/></svg></span>
+
+<style>
+/* Le cercle n'est pas un bouton : il donne un POINT au regard dans une zone vide,
+   et il indique une direction de lecture (→ suite, ↗ croissance, ↘ sortie). */
+.vl-circ {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--vl-hairline);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: inherit; vertical-align: middle;
+}
+.vl-circ--invert { border-color: var(--vl-hairline-invert); }
+.vl-circ svg {
+  width: 14px; height: 14px;
+  fill: none; stroke: currentColor; stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+</style>

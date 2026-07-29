@@ -1,0 +1,41 @@
+{
+  "name": "Badge pilule outline",
+  "kind": "component",
+  "family": "badge",
+  "source": "ref-03-bento-dark-pitch",
+  "system": "sys-03",
+  "intent": "Poser une étiquette de cadrage (période, unité, filtre) sous un titre, avec un poids visuel quasi nul.",
+  "when_to_use": "Juste après un titre de slide, pour dire « 2025 », « by year », « Q3 » — l'information qui qualifie le titre sans le rallonger.",
+  "avoid_when": "L'élément est cliquable (ça ressemble à un bouton et personne ne cliquera) ou porte un statut à surveiller (succès/erreur) : il faut alors du plein et de la couleur, pas un trait de 1px.",
+  "tags": [
+    "badge",
+    "pilule",
+    "etiquette",
+    "outline",
+    "periode",
+    "titre",
+    "cadrage",
+    "chip"
+  ],
+  "vars": [
+    {
+      "name": "--vl-hairline",
+      "role": "trait sur fond clair",
+      "default": "#D5D5D5"
+    },
+    {
+      "name": "--vl-hairline-invert",
+      "role": "trait sur fond sombre",
+      "default": "#4A4A4A"
+    },
+    {
+      "name": "--vl-surface-light",
+      "role": "fond de la variante pleine",
+      "default": "#FFFFFF"
+    }
+  ],
+  "slots": [
+    "label"
+  ],
+  "notes": "Le trait reste à 1px quelle que soit la taille du badge — l'épaissir le transforme en bouton. Sur fond sombre on descend le trait d'un cran (--vl-hairline-invert) au lieu de l'inverser en blanc, qui brûlerait. La variante --solid est réservée à UN fragment par bloc, celui qu'on veut lire en premier."
+}

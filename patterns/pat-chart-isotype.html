@@ -1,0 +1,39 @@
+<!-- pat-chart-isotype — fragment autonome. Couleurs via --vl-* uniquement. -->
+<div style="padding:28px;border-radius:var(--vl-radius-sub);
+     background:var(--vl-surface-dark);color:var(--vl-ink-invert);display:inline-flex;
+     align-items:flex-end;gap:34px">
+  <div>
+    <div class="vl-iso__figure">4k</div>
+    <div class="vl-iso__label">Clients to date</div>
+  </div>
+  <div class="vl-iso" role="img" aria-label="24 pictogrammes sur 40 remplis, soit 60 %">
+    <i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i>
+    <i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i>
+    <i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i class="is-on"></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+  </div>
+</div>
+
+<style>
+.vl-iso__figure { font-size: 56px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+.vl-iso__label { margin-top: 8px; font-size: 11px; color: var(--vl-ink-invert-muted); }
+
+/* Une proportion racontée en UNITÉS COMPTABLES : on voit 24 sur 40 avant de lire « 60 % ».
+   C'est ce qu'un camembert ne sait pas faire. Au-delà de ~60 pictogrammes on ne compte plus
+   rien : passer alors à une barre. */
+.vl-iso { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px 5px; width: 195px; }
+/* Le pictogramme est dessiné en CSS (tête + buste), sans image ni police d'icônes :
+   il hérite de currentColor et reste net à n'importe quelle taille. */
+.vl-iso i { position: relative; display: block; width: 13px; height: 18px; color: var(--vl-surface-light); }
+.vl-iso i::before {
+  content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 6.5px; height: 6.5px; border-radius: 50%; background: currentColor;
+}
+.vl-iso i::after {
+  content: ""; position: absolute; bottom: 0; left: 0; width: 13px; height: 9.5px;
+  border-radius: 6px 6px 3px 3px; background: currentColor;
+}
+/* La part remplie est portée par une CLASSE dans le HTML, pas par un nth-child :
+   changer la proportion ne doit pas obliger à éditer la feuille de style. */
+.vl-iso i.is-on { color: var(--vl-accent-2); }
+</style>

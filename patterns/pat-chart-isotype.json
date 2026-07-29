@@ -1,0 +1,38 @@
+{
+  "name": "Isotype à taux de remplissage",
+  "kind": "chart",
+  "family": "chart",
+  "source": "ref-03-bento-dark-pitch",
+  "system": "sys-03",
+  "intent": "Raconter une proportion en unités comptables (24 pictogrammes sur 40) au lieu d'un pourcentage abstrait.",
+  "when_to_use": "Une part qui porte sur des ÊTRES ou des OBJETS dénombrables — clients, sièges, sites, jours. Le lecteur voit la quantité avant de lire le chiffre.",
+  "avoid_when": "La grandeur est continue (chiffre d'affaires, température, durée) : il n'y a rien à compter. Et au-delà d'environ 60 pictogrammes plus personne ne compte — passer à une barre.",
+  "tags": [
+    "graphique",
+    "isotype",
+    "pictogramme",
+    "proportion",
+    "pourcentage",
+    "dataviz",
+    "comptage",
+    "part"
+  ],
+  "vars": [
+    {
+      "name": "--vl-accent-2",
+      "role": "couleur de la part remplie",
+      "default": "#8FBBE4"
+    },
+    {
+      "name": "--vl-surface-light",
+      "role": "couleur de la part vide",
+      "default": "#FFFFFF"
+    }
+  ],
+  "slots": [
+    "figure",
+    "label",
+    "grid"
+  ],
+  "notes": "La part remplie est portée par la classe is-on DANS LE HTML, pas par un :nth-child en CSS : changer la proportion ne doit pas obliger à éditer la feuille de style. Le pictogramme est dessiné en CSS (::before tête, ::after buste) — ni image, ni police d'icônes, donc net à toute taille et colorable par currentColor. Le total doit rester un nombre rond et lisible en grille (40 = 10×4, pas 37). Accessibilité : role=img et un aria-label qui donne la proportion en toutes lettres."
+}
