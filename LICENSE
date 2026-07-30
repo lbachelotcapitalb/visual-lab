@@ -19,20 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-Two exceptions, which this licence does NOT cover:
-
-1. THE FONTS. The typefaces in `fonts/` (Archivo, Inter, Anton) are distributed under the
-   SIL Open Font License 1.1, each with its own licence file next to it
-   (`fonts/LICENSE-*-OFL.txt`). Redistributing them means keeping the OFL, not this MIT.
-
-2. THE PHOTOGRAPHS. Nothing in `assets/photos/` is committed except the manifests: the
-   image files themselves are gitignored. Each `manifest.json` records the provider, the
-   author and the licence of every picture it fetched — re-download from there rather than
-   assuming this licence applies to someone else's photograph.
-
-The patterns themselves are reconstructions: what is captured is GEOMETRY — ratios, type
-scales, measured contrast thresholds — from third-party reference visuals that are named
-nowhere and shipped nowhere. Demo copy uses the fictional name `northbeam`.

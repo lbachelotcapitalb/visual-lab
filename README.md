@@ -1,10 +1,10 @@
 # visual-lab
 
-> Dépôt **public** sous [licence MIT](LICENSE) — deux exceptions y sont écrites : les polices
-> de `fonts/` restent sous OFL, et les photographies ne sont pas dans le dépôt (seuls les
-> manifestes le sont, crédits et licence par image). Les références reversées ne sont nommées
-> nulle part : ce qui est capitalisé ici est une GÉOMÉTRIE, et les textes de démonstration
-> utilisent le nom fictif `northbeam`.
+> Dépôt **public** sous [licence MIT](LICENSE). Trois réserves, détaillées dans
+> [NOTICE.md](NOTICE.md) : les polices de `fonts/` restent sous OFL, les photographies ne sont
+> pas dans le dépôt (seuls les manifestes le sont, crédits et licence par image), et les
+> références reversées ne sont nommées nulle part — ce qui est capitalisé ici est une
+> GÉOMÉTRIE, les textes de démonstration utilisant le nom fictif `northbeam`.
 
 Bibliothèque de **patterns visuels HTML/CSS** reconstruits par reverse-engineering à partir
 d'un corpus de 10 références (decks, planches de campagne, heros web). Objectif : quand il
