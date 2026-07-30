@@ -263,10 +263,20 @@ Ce qui transforme la collection en outil :
 - ✅ `DOCTRINE.md` : les lois de mise en page, sans média, avec le tableau « qui mesure quoi »
   et les TROUS assumés (mailing, flyer, social : rien ne les mesure). `deck-builder` et
   `bestfront` y renvoient au lieu de porter chacun leur copie.
-- ⬜ Enregistrement dans karto via `/karto-sync`.
-- ⬜ Arbitrage à poser à Léo : dépôt GitHub distant ou local seul. **Si publication** : le dépôt
-  public embarque `patterns/`, `bin/`, `kit/`, `DOCTRINE.md` — pas `decks/`, qui sont des
-  reconstitutions fidèles de références tierces.
+- ✅ Enregistrement dans karto (`skills-collect.mjs` + `karto-db.mjs build`, 31/07).
+- ✅ **Arbitrage tranché par Léo le 31/07 : dépôt GitHub PUBLIC, tout y vit, rien en local seul.**
+  Trois gestes payés avant la publication, à ne pas défaire :
+  1. **Licence MIT** à la racine, avec ses deux exceptions explicites — les polices restent sous
+     OFL (leurs licences vivent à côté d'elles), et les photos ne sont pas dans le dépôt (seuls
+     les manifestes le sont, avec auteur et licence par image).
+  2. **Anonymisation.** Aucune source n'est nommée (`ref-NN-<slug>` seulement) et les textes de
+     démonstration qui portaient encore un nom de marque réel sont passés au nom fictif
+     `northbeam` — un contenu de remplissage n'a aucune raison de citer une marque, et il est
+     recopié tel quel par le premier qui prend le fragment.
+  3. **`decks/` reste publié**, contrairement à ce que cette ligne disait avant l'arbitrage : ce
+     sont des reconstitutions à plat qui capitalisent une GÉOMÉTRIE, sans logo ni source citée,
+     et elles sont dans l'historique depuis le premier commit — les retirer imposerait de
+     réécrire tout l'historique pour un gain nul une fois l'anonymisation faite.
 
 ### ⬜ Lot 13 — Sortir du slide/web (ouvert le 31/07)
 Le constat mesuré : `node bin/emit.mjs --audit --target email` donne **0/17**. Tant qu'aucun

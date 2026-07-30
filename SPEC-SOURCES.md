@@ -7,6 +7,13 @@
 > notée `≈`. Les mesures sont exprimées pour une slide **1600 × 900** (ou une page 1440 de
 > large pour les deux références web), à convertir en `rem`/`%` dans le code.
 
+**Anonymisation (31/07/2026, avant publication du dépôt).** Les références sont des visuels
+tiers, désignés uniquement par `ref-NN-<slug>` : aucune source n'est nommée, et ce qui est
+capitalisé ici est la GÉOMÉTRIE (ratios, échelles, seuils de contraste), pas une création. Les
+textes de démonstration qui portaient encore un nom de marque réel ont été remplacés par le nom
+fictif `northbeam` — un contenu de remplissage n'a aucune raison de citer une marque, et il
+serait recopié tel quel par le premier qui prend le fragment.
+
 Convention d'identifiant : `ref-NN-slug` pour la référence (le même id nomme ses tokens dans
 `systems/`, son deck dans `decks/`), `<famille>[-NN]-<mots>` pour un pattern — cf. la section
 Nomenclature du README. **Les noms de patterns listés dans les références non traitées sont
@@ -174,8 +181,9 @@ Chiffres KPI 22 px poids 700.
 
 ## ref-04-swiss-investor-blue
 
-**Nature** — Planche de 10 slides 16:9 d'un « Investor Pitch Deck » (marque `+travel`),
-sur fond de planche `#D9D2C7`.
+**Nature** — Planche de 10 slides 16:9 d'un « Investor Pitch Deck » (marque tierce, remplacée
+partout par le nom fictif `northbeam` — cf. « Anonymisation » en tête de fichier), sur fond de
+planche `#D9D2C7`.
 
 **Intention** — Suisse maximaliste : titre-monstre en capitales, alternance de fonds pleins,
 photos noir et blanc, aucune fioriture.
