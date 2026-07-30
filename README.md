@@ -19,6 +19,11 @@ artefact, `frontend-design` **invente** une direction, `bestfront` est la **bouc
 vérification**. visual-lab fournit la **matière** : des compositions concrètes déjà validées à
 l'œil ET à la mesure.
 
+Le dépôt est lui-même un skill (`SKILL.md`, symlinké dans `~/.claude/skills/visual-lab`) : c'est
+lui qui porte les deux verbes — **consulter** la bibliothèque avant d'inventer, et y **verser**
+un visuel par reverse-engineering. Et il porte la doctrine commune ([DOCTRINE.md](DOCTRINE.md)) :
+les lois de mise en page valent pour tous les médias, seuls les seuils et le gate changent.
+
 ## Ce qui est la source de vérité d'un pattern
 
 Le choix qui structure tout le dépôt : **un pattern = un JSON de géométrie + un fragment HTML**,
@@ -42,6 +47,8 @@ un fragment réglé pour 1600 px de large donne un corps de 10,2 pt s'il est con
 ## Arborescence
 
 ```
+SKILL.md               le mode d'emploi opérateur (skill `visual-lab`, symlinké dans ~/.claude/skills)
+DOCTRINE.md            les lois de mise en page de la maison, TOUS MÉDIAS — et qui les mesure
 INDEX.md               LE POINT D'ENTRÉE : catalogue de routage + détail — GÉNÉRÉ, jamais édité
 index.json             le même pour la machine (ratios, benchmarks, tokens) — GÉNÉRÉ
 patterns/<id>.json     métadonnées d'un pattern (intention, quand l'employer, quand l'éviter)
@@ -53,7 +60,9 @@ ROADMAP.md        le découpage en lots + le prompt de continuation
 fonts/                 les 3 polices du corpus (OFL, dans le dépôt) + fonts.css
 fonts/FONTS.md         quelle police pour quelle référence, et comment la brancher
 assets/photos/<ref>/   récoltes d'images libres : manifest.json VERSIONNÉ, .jpg gitignorés
-bin/                   les outils (index, recherche, rendu, export slides, planche, création, CHECK)
+bin/                   les outils (index, recherche, rendu, export slides, planche, création, CHECK, ÉMETTEURS)
+bin/contact-sheet.mjs  la planche-contact des PATTERNS : choisir à l'œil parmi 10-20 vignettes
+bin/emit.mjs           sortir un pattern vers un autre média (inline, email) — refuse si ça ne tient pas
 kit/vl_pptx.py         le pont vers le .pptx : émetteurs + audit mathématique (lit index.json)
 patterns.db            index SQLite pour la recherche plein texte — REGÉNÉRABLE, gitignoré
 proofs/                PNG de vérification — régénérables, gitignorés
@@ -80,6 +89,52 @@ sont des index reconstruits à la demande par `bin/index.mjs` : ils se lisent, i
 jamais. `patterns.db` sert la recherche plein texte (gitignoré, binaire) ; `INDEX.md` et
 `index.json` sont VERSIONNÉS, parce qu'un agent qui arrive d'un autre skill doit pouvoir lire le
 catalogue sans sqlite et sans lancer quoi que ce soit.
+
+## Médias et émetteurs — un pattern, plusieurs sorties
+
+Un pattern déclare un champ `media` : où il est censé servir, dans un vocabulaire fermé
+(`slide`, `web`, `email`, `print`, `social`). C'est une **intention de routage**, pas une
+garantie de rendu — un producteur de mailing filtre dessus (`node bin/search.mjs --media email`)
+au lieu de dérouler tout le catalogue. Sans champ, un pattern vaut `slide web` : c'est ce que le
+corpus EST, et les patterns antérieurs n'ont pas à être ré-annotés pour rester exacts.
+
+La **faisabilité**, elle, se prouve. `bin/emit.mjs` sort le pattern vers une cible et refuse
+quand la cible ne sait pas rendre ce que le fragment demande :
+
+```bash
+node bin/emit.mjs card-03-stat-accent --target inline    # variables résolues, styles sur les éléments
+node bin/emit.mjs card-03-stat-accent --target email     # contraintes Outlook, sort en 1 si ça casse
+node bin/emit.mjs --audit --target email                 # l'état de toute la bibliothèque
+```
+
+**Au 30/07/2026 : 17/17 en `inline`, 0/17 en `email`.** Ce n'est pas une panne, c'est le constat
+— flex, `clip-path`, `calc()`, SVG inline : le corpus est de la matière slide/web. Pour un
+mailing, deux issues honnêtes : écrire un pattern nativement email (tables, largeurs fixes), ou
+rendre le pattern en image et poser l'image. **Quand `media` et l'audit divergent, c'est le JSON
+qui a tort.**
+
+Il n'y a **pas** d'émetteur `print` : un fragment HTML s'imprime tel quel (Chrome → PDF).
+Annoncer un émetteur qui ne ferait que recopier le fragment mentirait sur ce que le dépôt sait
+faire. Ce qui compte à l'impression est ailleurs — encre (aplats, ombres, dégradés) et polices
+embarquées depuis `fonts/`.
+
+## Choisir à l'œil : la planche-contact des patterns
+
+Le routage se fait sur `INDEX.md` — du texte, pas cher. La planche sert l'étape d'après :
+arbitrer entre les finalistes, ou passer une branche en revue pour en proposer trois.
+
+```bash
+node bin/contact-sheet.mjs                          # tout
+node bin/contact-sheet.mjs --family card --cols 3
+node bin/contact-sheet.mjs --media social --scale 0.4
+```
+
+Chaque vignette est rendue sur le `:root` de SA référence — une planche qui mélange les chartes
+montre aussi si deux systèmes jurent l'un à côté de l'autre. **Les tailles sont MESURÉES dans
+Chrome avant la mise en grille**, jamais devinées : sept patterns sur dix-sept ne déclarent pas
+de `geometry.frame`, et une planche qui rogne ce qu'elle est censée montrer est pire qu'une
+absence de planche. Une planche reste un dérivé : le pattern retenu se regarde en taille réelle
+(`bin/render.mjs --pattern <id>`) avant d'être posé.
 
 ## Le contrôle : mathématique d'abord, visuel ensuite — en boucle
 
@@ -222,6 +277,9 @@ bibliothèque à moitié indexée qui se tait coûte plus cher qu'une erreur bru
 
 1. `family` dans le vocabulaire fermé (cf. Nomenclature) ET égale au préfixe du nom de fichier.
 2. `name`, `ref`, `intent` et au moins un `tag` renseignés (sans tag, il est introuvable).
+2-bis. `media`, s'il est présent, dans le vocabulaire fermé — un média inventé ne remonterait
+   dans aucun filtre, et une panne silencieuse de routage se lit comme « la bibliothèque n'a
+   rien pour ce canal ».
 3. Un fichier `.html` existe : un pattern sans rendu n'est pas un pattern, c'est une note.
 4. **Aucune couleur hexadécimale en dur dans le HTML** : tout passe par une variable `--vl-*`.
    C'est ce qui rend un pattern rejouable sur une autre charte.
@@ -256,6 +314,15 @@ patterns sans deck.
 `ref-06-orange-notched` est le lot qui a apporté le reste de l'outillage : la mesure
 (`bin/check.mjs`), l'index versionné (`INDEX.md` / `index.json`) et le pont .pptx
 (`kit/vl_pptx.py`). Suite et prompt de reprise : [ROADMAP.md](ROADMAP.md).
+
+**31/07/2026 — le dépôt devient une bibliothèque partagée, pas seulement une réserve à slides** :
+`SKILL.md` (les deux verbes, consulter / verser), `DOCTRINE.md` (les lois, tous médias, et qui
+les mesure), le champ `media` avec son filtre, `bin/emit.mjs` (émetteurs + audit de faisabilité),
+`bin/contact-sheet.mjs` (la revue à l'œil) et le garde-fou anti-doublon de `bin/new.mjs`.
+`media` n'a été renseigné à la main sur aucun pattern existant : ils valent tous `slide web`, ce
+qui est exact. Le remplir est un acte délibéré, adossé à un rendu sur le canal visé — le
+déclarer « social » sans avoir jamais rendu la vignette en 1080×1350 serait un mensonge de
+catalogue.
 
 **Typographie** : les polices vivent dans le dépôt (`fonts/`, licences OFL) et se branchent
 par `@import url("../fonts/fonts.css")` **dans** le bloc `<style>` du deck — jamais par une

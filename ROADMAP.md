@@ -246,21 +246,38 @@ perspective ni l'ombre de la photo d'origine.
 Patterns : `layout-bento-primitives`, `shape-teardrop`, `shape-toggle`,
 `fill-gradient-stadium`.
 
-### ⬜ Lot 11 — Composition
+### 🟡 Lot 11 — Composition
 Ce qui transforme la collection en outil :
-- `bin/compose.mjs` — assembler une slide à partir d'ids de patterns + un `sys-*` + un
+- ⬜ `bin/compose.mjs` — assembler une slide à partir d'ids de patterns + un `sys-*` + un
   contenu JSON, sans copier-coller manuel.
-- Garde-fou : un pattern posé sur un système incompatible (accent manquant, token absent)
-  doit **échouer bruyamment**, pas rendre du gris.
-- `bin/contact-sheet.mjs` — planche-contact PNG de tous les patterns, pour choisir à l'œil.
+- ✅ Garde-fou « échouer bruyamment » : `bin/emit.mjs` refuse un pattern qui ne tient pas la
+  cible, et laisse VISIBLE toute variable non résolue (token absent du système choisi) au lieu
+  de rendre du gris. Reste à porter la même exigence dans `compose.mjs` quand il existera.
+- ✅ `bin/contact-sheet.mjs` — planche-contact PNG (tout, ou `--family` / `--ref` / `--media`),
+  chaque vignette sur le `:root` de sa référence, tailles MESURÉES dans Chrome avant la grille.
 
-### ⬜ Lot 12 — Skill + carte
-- Skill `visual-lab` dans `~/.claude/skills/` (symlink vers ce dépôt, convention maison —
-  cf. `claude-config/skills/SOURCES.md`), écrit avec `/skill-dev`. Il doit dire en quoi il
-  complète `deck-builder` (.pptx), `theme-factory` (appliquer un thème existant),
-  `frontend-design` (inventer une direction) et `bestfront` (la boucle de vérification).
-- Enregistrement dans karto via `/karto-sync`.
-- Arbitrage à poser à Léo : dépôt GitHub distant ou local seul.
+### 🟡 Lot 12 — Skill + carte (31/07/2026)
+- ✅ Skill `visual-lab` : `SKILL.md` à la racine du dépôt, symlink `~/.claude/skills/visual-lab`
+  (convention maison). Deux verbes — consulter / verser. Il situe `deck-builder`,
+  `theme-factory`, `frontend-design` et `bestfront`.
+- ✅ `DOCTRINE.md` : les lois de mise en page, sans média, avec le tableau « qui mesure quoi »
+  et les TROUS assumés (mailing, flyer, social : rien ne les mesure). `deck-builder` et
+  `bestfront` y renvoient au lieu de porter chacun leur copie.
+- ⬜ Enregistrement dans karto via `/karto-sync`.
+- ⬜ Arbitrage à poser à Léo : dépôt GitHub distant ou local seul. **Si publication** : le dépôt
+  public embarque `patterns/`, `bin/`, `kit/`, `DOCTRINE.md` — pas `decks/`, qui sont des
+  reconstitutions fidèles de références tierces.
+
+### ⬜ Lot 13 — Sortir du slide/web (ouvert le 31/07)
+Le constat mesuré : `node bin/emit.mjs --audit --target email` donne **0/17**. Tant qu'aucun
+pattern n'est écrit POUR ces canaux, « bibliothèque tous médias » reste une intention.
+- ⬜ Deux ou trois patterns nativement `email` (tables, largeurs fixes, zéro flex/calc/SVG) —
+  le premier vrai test du champ `media` et de l'émetteur.
+- ⬜ Un cadre `social` (1080×1350) : rendre une vignette existante à ce format et voir ce qui
+  casse (plancher typo au pouce, marges de sécurité).
+- ⬜ Reprendre l'émetteur **PSD live-text** déjà écrit dans `~/.claude/skills/gtm-content/psd/`
+  (`build-livetext-psd.mjs`) comme quatrième sortie du dépôt, au lieu de le laisser prisonnier
+  d'un skill de comm.
 
 ---
 
@@ -312,4 +329,5 @@ un commit.
 
 Decks à produire : `ref-05` (8 slides) · `ref-06` (8) · `ref-09` (12) · `ref-10` (3).
 Non-decks à produire : `ref-07` et `ref-08` (pages web) · `ref-01` (couverture seule).
-Puis les deux lots d'outillage : composition (11) et skill + carte (12).
+Outillage : composition (11) — reste `compose.mjs` · skill + carte (12) — reste karto et
+l'arbitrage publication · sortir du slide/web (13) — email, social, PSD.

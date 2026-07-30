@@ -144,15 +144,19 @@ body{padding:${PAD}px}
 .vl-grid{display:grid;gap:${GAP}px;grid-template-columns:repeat(${cols},${colW}px);align-items:start}
 .vl-frame{overflow:hidden;background:#fff;box-shadow:0 0 0 1px #00000012}
 .vl-frame > *{transform:scale(${scale});transform-origin:top left}
+/* Légende en deux DIV, jamais un span : les fragments cohabitent dans un seul document et
+   apportent chacun leur bloc <style> — un sélecteur de balise nu venu d'un pattern écraserait
+   un span de légende sans qu'on comprenne pourquoi (vu à la première planche : les deux
+   lignes collées). Une classe propre par ligne, et la planche ne dépend de personne. */
 .vl-cap{margin-top:8px;font-size:12px;line-height:1.4;color:#3A3A38;font-weight:600}
-.vl-cap span{display:block;font-weight:400;color:#84847F}
+.vl-cap__sub{display:block;font-weight:400;color:#84847F}
 </style>
 <div class="vl-grid">
 ${laid
   .map(
     (c) => `<div>
   <div class="vl-frame ${c.cls}" style="width:${c.cw}px;height:${c.ch}px">${c.p.html}</div>
-  <div class="vl-cap">${c.p.id}<span>${mediaOf(c.p).join(' · ')}</span></div>
+  <div class="vl-cap">${c.p.id}<div class="vl-cap__sub">${mediaOf(c.p).join(' · ')}</div></div>
 </div>`
   )
   .join('\n')}
