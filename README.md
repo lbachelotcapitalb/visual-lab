@@ -151,10 +151,15 @@ node bin/new.mjs pat-tile-kpi --source ref-03-bento-dark-pitch --system sys-03 -
 
 Ce qui fait tenir une planche d'images n'est pas la qualité de chaque photo, c'est leur
 **casting commun** — ref-10 tient parce que ses six photos portent toutes du rouge ou du brun.
-`bin/photos.mjs` interroge Pexels (usage libre, attribution non requise), classe les candidats
-par **ΔE76 CIELAB** contre une palette cible, et ne télécharge que les retenus. L'API renvoie
-`avg_color` pour chaque résultat : le tri se fait donc sur les métadonnées, avant tout
-téléchargement — 1 requête pour 80 candidats.
+`bin/photos.mjs` interroge une banque d'images libres, classe les candidats par **ΔE76 CIELAB**
+contre une palette cible, ne télécharge que les retenus, et écrit un manifeste de crédits.
+
+Deux fonds, deux économies :
+
+| fond | clé | couleur publiée ? | coût du tri | matière |
+|---|---|---|---|---|
+| `pexels` (défaut) | oui, gratuite (25 000 req/mois, attribution non requise) | `avg_color` dans la réponse | **1 requête pour 80 candidats** | photo éditoriale contemporaine |
+| `met` (Metropolitan) | **aucune** | non | 1 requête de détail + sonde vignette par candidat (`--scan` borne) | œuvres domaine public (CC0) : matière, texture, fond |
 
 ```bash
 node ~/Documents/Claude/Projects/cartographie-it/bw-get.mjs \
@@ -163,17 +168,30 @@ node ~/Documents/Claude/Projects/cartographie-it/bw-get.mjs \
     --query "cow hide close up" --query "red satin jacket"'
 ```
 
+```bash
+node bin/photos.mjs --provider met --slug musee --palette "#E33A22" --query "red lacquer"
+```
+
 La clé vit dans le coffre, **jamais** dans un fichier de réglages ni en argument. `--palette`
 prend un `sys-NN` ou une liste de hex ; `--any` assume l'absence de tri ; `--tol` règle le seuil
 (42 par défaut) ; `--orientation portrait|landscape|square`.
 
-**Une cible neutre ne prouve aucun casting.** Le crème `#EDEAE3` de sys-10 a fait passer une
-route bleu-gris à la première récolte — un gris est à ΔE modéré de tous les gris du monde. Les
-cibles peu chromatiques sont donc écartées d'office (sauf palette entièrement neutre), et le
-manifeste note lesquelles.
+Trois constats payés, à ne pas repayer :
 
-Chaque récolte écrit `manifest.json` (crédits, licence, `avg_color`, ΔE, dimensions) — **versionné**,
-il permet de re-télécharger à l'identique — et un `board.html` pour regarder la récolte :
+- **Une cible neutre ne prouve aucun casting.** Le crème `#EDEAE3` de sys-10 a fait passer une
+  route bleu-gris à la première récolte — un gris est à ΔE modéré de tous les gris du monde. Les
+  cibles peu chromatiques sont écartées d'office (sauf palette entièrement neutre) ; passe les
+  ACCENTS, pas la couleur du papier.
+- **Quand un fond ne publie pas de couleur**, `sips` (natif macOS) réduit l'image à 1×1 : c'est
+  la moyenne, calculée par le système. Un PNG d'un pixel se décode sans dépendance — tous les
+  filtres PNG y référencent des voisins hors cadre, donc l'octet brut EST la valeur.
+- **L'Art Institute of Chicago est écarté.** Sa meilleure API du lot (sans clé, couleur
+  dominante ET drapeau domaine public dans la recherche) est inutilisable : son serveur d'images
+  IIIF répond **403** à tout client non navigateur, en-têtes Chrome et Referer compris. Un fond
+  qui ne livre pas de fichier n'a pas sa place dans l'outil.
+
+Chaque récolte écrit `manifest.json` (crédits, licence, `avg_color`, ΔE, dimensions) —
+**versionné**, il permet de re-télécharger à l'identique — et un `board.html` pour regarder :
 
 ```bash
 node bin/render.mjs assets/photos/ref-10/board.html 1600 1180
