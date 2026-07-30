@@ -50,6 +50,7 @@ patterns/pat-*.html    le fragment autonome correspondant
 decks/ref-NN.html      la reconstitution fidèle d'une référence complète, au format slides
 fonts/                 les 3 polices du corpus (OFL, dans le dépôt) + fonts.css
 fonts/FONTS.md         quelle police pour quelle référence, et comment la brancher
+assets/photos/<slug>/   récoltes d'images libres : manifest.json VERSIONNÉ, .jpg gitignorés
 bin/                   les outils (index, recherche, rendu, export slides, planche, création, CHECK)
 kit/vl_pptx.py         le pont vers le .pptx : émetteurs + audit mathématique (lit index.json)
 INDEX.md               le catalogue lisible — GÉNÉRÉ par bin/index.mjs, jamais édité à la main
@@ -145,6 +146,41 @@ Créer un pattern avec les champs obligatoires déjà en place :
 ```bash
 node bin/new.mjs pat-tile-kpi --source ref-03-bento-dark-pitch --system sys-03 --kind component
 ```
+
+### Sourcer des photos : par PALETTE, jamais « les huit premières »
+
+Ce qui fait tenir une planche d'images n'est pas la qualité de chaque photo, c'est leur
+**casting commun** — ref-10 tient parce que ses six photos portent toutes du rouge ou du brun.
+`bin/photos.mjs` interroge Pexels (usage libre, attribution non requise), classe les candidats
+par **ΔE76 CIELAB** contre une palette cible, et ne télécharge que les retenus. L'API renvoie
+`avg_color` pour chaque résultat : le tri se fait donc sur les métadonnées, avant tout
+téléchargement — 1 requête pour 80 candidats.
+
+```bash
+node ~/Documents/Claude/Projects/cartographie-it/bw-get.mjs \
+  --item "Pexels — API" --field PEXELS_API_KEY --as PEXELS_API_KEY \
+  --exec 'node bin/photos.mjs --slug ref-10 --palette sys-10 --n 3 \
+    --query "cow hide close up" --query "red satin jacket"'
+```
+
+La clé vit dans le coffre, **jamais** dans un fichier de réglages ni en argument. `--palette`
+prend un `sys-NN` ou une liste de hex ; `--any` assume l'absence de tri ; `--tol` règle le seuil
+(42 par défaut) ; `--orientation portrait|landscape|square`.
+
+**Une cible neutre ne prouve aucun casting.** Le crème `#EDEAE3` de sys-10 a fait passer une
+route bleu-gris à la première récolte — un gris est à ΔE modéré de tous les gris du monde. Les
+cibles peu chromatiques sont donc écartées d'office (sauf palette entièrement neutre), et le
+manifeste note lesquelles.
+
+Chaque récolte écrit `manifest.json` (crédits, licence, `avg_color`, ΔE, dimensions) — **versionné**,
+il permet de re-télécharger à l'identique — et un `board.html` pour regarder la récolte :
+
+```bash
+node bin/render.mjs assets/photos/ref-10/board.html 1600 1180
+```
+
+Les `.jpg` sont gitignorés : la doctrine du dépôt interdit le poids binaire dans l'historique,
+comme pour `proofs/`.
 
 ## Contrat d'un pattern
 

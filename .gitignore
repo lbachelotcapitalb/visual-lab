@@ -10,3 +10,6 @@ proofs/
 .fonttest.html
 # Bytecode Python du kit .pptx
 kit/__pycache__/
+assets/photos/**/*.jpg
+assets/photos/**/*.png
+assets/photos/**/board.html
