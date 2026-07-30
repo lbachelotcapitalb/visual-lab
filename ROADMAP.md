@@ -128,9 +128,15 @@ haut-droite. Patterns : `pat-hero-card-on-photo`, `pat-nav-three-zone`,
 
 ### 🟡 Lot 7 — `ref-08` swiss-studio-hero — reconstitution faite, patterns à extraire
 **Fait le 30/07/2026, HORS ordre** (demande directe de Léo sur le visuel source) :
-`systems/sys-08.json` et `decks/ref-08.html` — la page complète, cadrée carré 1440×1440
-comme la maquette, preuve `proofs/ref-08.png`. Les trois photos sont remplacées par des
+`systems/sys-08.json` et `decks/ref-08.html` — **la slide seule, 1140×848, bord à bord** :
+pas de décor de maquette (photo d'intérieur, ombre portée) autour. Une première version le
+portait ; retirée le 30/07 — un décor oblige à recadrer chaque export à la main, et ce n'est
+pas la slide. Preuve `proofs/ref-08/slide-01.png`. Les trois photos sont remplacées par des
 compositions **SVG génératives** (marine / fenêtre de cabine / bouée), sans réseau.
+
+Un seul bloc `<style>`, dans le `<head>` : `bin/slides.mjs` ne reprend que le PREMIER bloc
+du fichier. Un second bloc en fin de page (les classes de remplissage SVG vivaient là)
+sortait un export aux images vides — 53 ko au lieu de 530.
 
 Trois valeurs de la spec ont été corrigées CONTRE elle, au vu du visuel source — la spec
 avait été écrite en supposant une carte plus petite :

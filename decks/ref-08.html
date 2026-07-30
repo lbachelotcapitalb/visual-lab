@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <title>ref-08 — swiss studio hero (Studioform®)</title>
 <style>
-/* sys-08 — reconstitution fidèle. ref-08 n'est PAS un deck : c'est UNE page web, cadrée
-   carré comme la maquette source (1440×1440), la carte flottant sur la photo d'intérieur.
-   Le conteneur porte quand même `.slide` pour que bin/slides.mjs et bin/board.mjs sachent
-   l'exporter comme le reste du dépôt.
+/* sys-08 — reconstitution fidèle. ref-08 n'est PAS un deck : c'est UNE page web.
+   LE FICHIER NE CONTIENT QUE LA SLIDE, à sa taille réelle (1140×848) : pas de photo
+   d'intérieur, pas d'ombre portée, pas de fond de planche. La mise en scène (la carte
+   flottant dans une pièce) est un DÉCOR de maquette, pas la slide — l'inclure obligeait à
+   recadrer chaque export à la main. Un export = exactement la carte, bord à bord.
 
    Les trois photos du visuel d'origine sont remplacées par des compositions SVG génératives
    (marine / fenêtre / bouée) : aucune URL distante, rien à télécharger, rien qui périme —
@@ -15,28 +16,15 @@
    Toutes les couleurs sont dans ce :root ; aucun hex plus bas. */
 :root {
   /* — carte et encre — */
-  --vl-bg: #C9BCA8;
-  --vl-board: #C9BCA8;
+  --vl-bg: #F6F5F2;
+  --vl-board: #F6F5F2;
   --vl-card: #F6F5F2;
   --vl-ink: #111111;
   --vl-ink-soft: #2A2A28;
-  --vl-shadow: rgba(60, 44, 28, 0.30);
-  --vl-shadow-near: rgba(60, 44, 28, 0.16);
   --vl-radius-card: 4px;
   --vl-radius-photo: 8px;
   --vl-margin: 40px;
   --vl-gap-photo: 16px;
-
-  /* — la pièce derrière la carte : mur, rideau, lumière de fenêtre — */
-  --vl-room-wall: #7E7565;
-  --vl-room-wall-dark: #5C5548;
-  --vl-room-warm: #E8DCC6;
-  --vl-room-warm-hi: #F5EEDD;
-  --vl-room-warm-lo: #C6B394;
-  --vl-room-frame: #EFE7D6;
-  --vl-room-frame-sh: #B8A587;
-  --vl-room-glass: #DCDCD2;
-  --vl-room-shade: rgba(60, 44, 28, 0.34);
 
   /* — photo A : marine, silhouette à capuche crème — */
   --vl-a-sky-hi: #C9D6DE;
@@ -86,83 +74,20 @@
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  background: var(--vl-board);
   font-family: "Helvetica Neue", Helvetica, Inter, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  display: flex; flex-direction: column; align-items: center;
 }
 
-/* ————— la page : cadrage carré de la maquette ————— */
+/* ————— LA SLIDE, et rien d'autre —————
+   La carte EST la slide : elle porte le fond, la marge et la mise en page. Le fichier
+   n'a ni décor autour ni ombre portée — une ombre suppose un fond derrière, donc du
+   recadrage à l'export. `width`/`height` sont lus par bin/slides.mjs. */
 .slide {
-  position: relative;
-  width: 1440px; height: 1440px;
-  overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-}
-
-/* ————— l'arrière-plan : intérieur chaud, fenêtre à droite, rideau —————
-   Décoratif et hors flux de lecture (aria-hidden) : c'est une matière, pas un contenu.
-   Le flou léger rejoue la profondeur de champ de la photo d'origine — sans lui, les
-   aplats se lisent comme un dégradé CSS et la carte ne flotte plus sur rien. */
-.room { position: absolute; inset: -40px; filter: blur(3px); }
-.room__wall {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(100deg,
-      var(--vl-room-wall-dark) 0%,
-      var(--vl-room-wall) 7%,
-      var(--vl-room-warm-lo) 13%,
-      var(--vl-room-warm) 26%,
-      var(--vl-room-warm-hi) 46%,
-      var(--vl-room-warm) 66%,
-      var(--vl-room-warm-lo) 88%,
-      var(--vl-room-wall) 100%);
-}
-/* plis du rideau : bandes verticales inégales, jamais un rythme régulier */
-.room__folds {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(90deg, transparent 0 16%, var(--vl-room-shade) 17%, transparent 19% 25%,
-      var(--vl-room-shade) 26%, transparent 28% 41%, var(--vl-room-shade) 42%,
-      transparent 45% 63%, var(--vl-room-shade) 64%, transparent 67% 79%,
-      var(--vl-room-shade) 80%, transparent 83% 100%);
-  opacity: 0.5;
-}
-/* la fenêtre : montant vertical + traverse basse, en bas à droite */
-.room__frame {
-  position: absolute; right: 4%; bottom: 0; width: 46%; height: 62%;
-  background: var(--vl-room-glass);
-  box-shadow: inset 0 0 0 22px var(--vl-room-frame), inset 0 0 60px var(--vl-room-shade);
-}
-.room__mullion {
-  position: absolute; right: 30%; bottom: 0; width: 20px; height: 62%;
-  background: var(--vl-room-frame);
-  box-shadow: -14px 0 24px var(--vl-room-shade);
-}
-.room__sill {
-  position: absolute; right: 0; bottom: 7%; width: 56%; height: 26px;
-  background: var(--vl-room-frame); box-shadow: 0 14px 26px var(--vl-room-shade);
-}
-.room__light {
-  position: absolute; inset: 0;
-  background: radial-gradient(120% 90% at 62% 34%,
-    var(--vl-room-warm-hi) 0%, transparent 58%);
-  opacity: 0.75;
-}
-.room__vignette {
-  position: absolute; inset: 0;
-  background: radial-gradient(130% 110% at 50% 42%, transparent 42%, var(--vl-room-shade) 100%);
-}
-
-/* ————— la carte flottante ————— */
-.card {
-  position: relative;
   width: 1140px; height: 848px;
   padding: var(--vl-margin);
   background: var(--vl-card);
   color: var(--vl-ink);
   border-radius: var(--vl-radius-card);
-  box-shadow: 0 6px 18px var(--vl-shadow-near), 0 46px 100px var(--vl-shadow);
   display: flex; flex-direction: column;
 }
 
@@ -213,23 +138,55 @@ body {
 .strip > :nth-child(1) { flex: 1 0 0; }
 .strip > :nth-child(2) { flex: 1.31 0 0; }
 .strip > :nth-child(3) { flex: 1.14 0 0; }
+
+/* Les arrêts de dégradé et les remplissages SVG passent par des classes : une variable CSS
+   dans un attribut de présentation n'est pas garantie partout, une propriété CSS l'est. */
+.s-a-sky-hi { stop-color: var(--vl-a-sky-hi); } .s-a-sky-lo { stop-color: var(--vl-a-sky-lo); }
+.s-a-sea-hi { stop-color: var(--vl-a-sea-hi); } .s-a-sea-lo { stop-color: var(--vl-a-sea-lo); }
+.s-a-cloth-hi { stop-color: var(--vl-a-cloth-hi); }
+.s-a-cloth { stop-color: var(--vl-a-cloth); } .s-a-cloth-sh { stop-color: var(--vl-a-cloth-sh); }
+.s-a-glow-out { stop-color: var(--vl-a-glow-out); }
+.a-swell rect { fill: var(--vl-a-sky-hi); opacity: 0.26; }
+.a-horizon-haze { fill: var(--vl-a-sky-hi); opacity: 0.45; }
+.a-fold { fill: var(--vl-a-cloth-deep); opacity: 0.5; }
+.a-skin { fill: var(--vl-a-skin); }
+
+.s-b-curtain-hi { stop-color: var(--vl-b-curtain-hi); }
+.s-b-curtain-mid { stop-color: var(--vl-b-curtain-mid); }
+.s-b-curtain-lo { stop-color: var(--vl-b-curtain-lo); }
+.s-b-out-hi { stop-color: var(--vl-b-out-hi); } .s-b-out-lo { stop-color: var(--vl-b-out-lo); }
+.s-b-wall { stop-color: var(--vl-b-wall); } .s-b-wall-hi { stop-color: var(--vl-b-wall-hi); }
+.s-b-coat { stop-color: var(--vl-b-coat); } .s-b-coat-hi { stop-color: var(--vl-b-coat-hi); }
+.b-curtain-edge { fill: var(--vl-b-curtain-lo); }
+.b-frame { fill: var(--vl-b-frame); }
+.b-frame-hi { fill: var(--vl-b-frame-hi); }
+.b-glass-edge { stroke: var(--vl-b-glass-edge); opacity: 0.5; }
+.b-daylight { fill: var(--vl-b-daylight); }
+.b-sea { fill: var(--vl-b-out-lo); }
+.b-hair { fill: var(--vl-b-hair); }
+.b-hair-hi { fill: var(--vl-b-shirt); }
+.b-hair-sh { fill: var(--vl-b-curtain-lo); }
+.s-b-shirt { stop-color: var(--vl-b-shirt); }
+.s-b-shirt-hi { stop-color: var(--vl-b-shirt-hi); }
+.b-shirt { fill: var(--vl-b-shirt); }
+.b-seat { fill: var(--vl-b-seat); }
+
+.s-c-water-hi { stop-color: var(--vl-c-water-hi); }
+.s-c-water-mid { stop-color: var(--vl-c-water-mid); }
+.s-c-water-lo { stop-color: var(--vl-c-water-lo); }
+.s-c-ring-hi { stop-color: var(--vl-c-ring-hi); }
+.s-c-ring { stop-color: var(--vl-c-ring); } .s-c-ring-sh { stop-color: var(--vl-c-ring-sh); }
+.c-bed { fill: var(--vl-c-bed); }
+.c-caustic path { stroke: var(--vl-c-caustic); }
+.c-accent { stroke: var(--vl-c-ring-accent); }
+.c-rope { stroke: var(--vl-c-ring-sh); }
+.c-ring-inner { stroke: var(--vl-c-ring-sh); }
+.c-shadow { fill: var(--vl-c-water-lo); }
 </style>
 </head>
 <body>
 
 <section class="slide">
-
-  <div class="room" aria-hidden="true">
-    <div class="room__wall"></div>
-    <div class="room__folds"></div>
-    <div class="room__frame"></div>
-    <div class="room__mullion"></div>
-    <div class="room__sill"></div>
-    <div class="room__light"></div>
-    <div class="room__vignette"></div>
-  </div>
-
-  <div class="card">
 
     <div class="top">
       <p class="statement">We partner with startups and visionaries to<br>
@@ -428,54 +385,8 @@ body {
       </svg>
 
     </div>
-  </div>
 </section>
 
-<style>
-/* Les arrêts de dégradé et les remplissages SVG passent par des classes : une variable CSS
-   dans un attribut de présentation n'est pas garantie partout, une propriété CSS l'est. */
-.s-a-sky-hi { stop-color: var(--vl-a-sky-hi); } .s-a-sky-lo { stop-color: var(--vl-a-sky-lo); }
-.s-a-sea-hi { stop-color: var(--vl-a-sea-hi); } .s-a-sea-lo { stop-color: var(--vl-a-sea-lo); }
-.s-a-cloth-hi { stop-color: var(--vl-a-cloth-hi); }
-.s-a-cloth { stop-color: var(--vl-a-cloth); } .s-a-cloth-sh { stop-color: var(--vl-a-cloth-sh); }
-.s-a-glow-out { stop-color: var(--vl-a-glow-out); }
-.a-swell rect { fill: var(--vl-a-sky-hi); opacity: 0.26; }
-.a-horizon-haze { fill: var(--vl-a-sky-hi); opacity: 0.45; }
-.a-fold { fill: var(--vl-a-cloth-deep); opacity: 0.5; }
-.a-skin { fill: var(--vl-a-skin); }
-
-.s-b-curtain-hi { stop-color: var(--vl-b-curtain-hi); }
-.s-b-curtain-mid { stop-color: var(--vl-b-curtain-mid); }
-.s-b-curtain-lo { stop-color: var(--vl-b-curtain-lo); }
-.s-b-out-hi { stop-color: var(--vl-b-out-hi); } .s-b-out-lo { stop-color: var(--vl-b-out-lo); }
-.s-b-wall { stop-color: var(--vl-b-wall); } .s-b-wall-hi { stop-color: var(--vl-b-wall-hi); }
-.s-b-coat { stop-color: var(--vl-b-coat); } .s-b-coat-hi { stop-color: var(--vl-b-coat-hi); }
-.b-curtain-edge { fill: var(--vl-b-curtain-lo); }
-.b-frame { fill: var(--vl-b-frame); }
-.b-frame-hi { fill: var(--vl-b-frame-hi); }
-.b-glass-edge { stroke: var(--vl-b-glass-edge); opacity: 0.5; }
-.b-daylight { fill: var(--vl-b-daylight); }
-.b-sea { fill: var(--vl-b-out-lo); }
-.b-hair { fill: var(--vl-b-hair); }
-.b-hair-hi { fill: var(--vl-b-shirt); }
-.b-hair-sh { fill: var(--vl-b-curtain-lo); }
-.s-b-shirt { stop-color: var(--vl-b-shirt); }
-.s-b-shirt-hi { stop-color: var(--vl-b-shirt-hi); }
-.b-shirt { fill: var(--vl-b-shirt); }
-.b-seat { fill: var(--vl-b-seat); }
-
-.s-c-water-hi { stop-color: var(--vl-c-water-hi); }
-.s-c-water-mid { stop-color: var(--vl-c-water-mid); }
-.s-c-water-lo { stop-color: var(--vl-c-water-lo); }
-.s-c-ring-hi { stop-color: var(--vl-c-ring-hi); }
-.s-c-ring { stop-color: var(--vl-c-ring); } .s-c-ring-sh { stop-color: var(--vl-c-ring-sh); }
-.c-bed { fill: var(--vl-c-bed); }
-.c-caustic path { stroke: var(--vl-c-caustic); }
-.c-accent { stroke: var(--vl-c-ring-accent); }
-.c-rope { stroke: var(--vl-c-ring-sh); }
-.c-ring-inner { stroke: var(--vl-c-ring-sh); }
-.c-shadow { fill: var(--vl-c-water-lo); }
-</style>
 
 </body>
 </html>
