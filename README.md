@@ -104,5 +104,7 @@ bibliothèque à moitié indexée qui se tait coûte plus cher qu'une erreur bru
 `ref-04` (5 patterns, planche de 10 slides).
 `ref-08` (hero web « Studioform® ») a été reconstitué hors ordre le 30/07 — `sys-08` et
 `decks/ref-08.html` sont là, ses patterns restent à extraire (ils dépendent du lot 6).
-Reste 6 références à reproduire, une par lot. Suite et prompt de reprise :
+`ref-06` (pitch deck orange chanfreiné) est reconstitué depuis le 30/07 — `sys-06` et
+`decks/ref-06.html`, 8 slides prouvées ; ses 4 patterns restent à extraire.
+Reste 5 références à reproduire, une par lot. Suite et prompt de reprise :
 [ROADMAP.md](ROADMAP.md).

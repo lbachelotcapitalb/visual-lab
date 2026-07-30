@@ -116,10 +116,30 @@ tri-parti, astérisque de marque.
 Patterns : `pat-header-tripartite`, `pat-mark-asterisk`, `pat-cards-numbered-steps`,
 `pat-title-hyphen-break`, `pat-accent-single-fluo` (`kind: rule`).
 
-### ⬜ Lot 5 — `ref-06` orange-notched
+### 🟡 Lot 5 — `ref-06` orange-notched — reconstitution faite, patterns à extraire
 **8 slides.** La signature est le **coin chanfreiné** (`clip-path`).
 Patterns : `pat-shape-notched-card`, `pat-title-leading-rule`, `pat-list-index-rules`,
 `pat-stat-block-accent`.
+
+**Fait le 30/07/2026 : la reconstitution.** `systems/sys-06.json` et `decks/ref-06.html` —
+**8 slides 1600×900**, preuves `proofs/ref-06/slide-01..08.png` + planche `proofs/ref-06.png`.
+
+Deux corrections CONTRE la spec, au vu du visuel source :
+- **Échelle ×1,6.** Les corps de la spec (titre 46 / chiffre 40 / corps 11) ont été relevés
+  sur une planche dont chaque slide fait ~1000 px de large. Reportés tels quels sur 1600×900,
+  ils laissent des bandes mortes que la charte d'origine n'a pas — on est alors tenté
+  d'étirer les cartes pour les combler. Le deck est donc en titre 74 / chiffre 64 / corps 17
+  / micro 12 : proportions de la spec respectées, valeurs absolues non.
+- **Le filet de titre a DEUX variantes.** `border-left` sur le bloc pour un titre aligné à
+  gauche ; mais sur `SALES|STRATEGY` (aligné à droite, 2 lignes) un `border-right` dessine
+  une barre le long des deux lignes et se lit comme un bord de cadre. Il faut un filet
+  **en ligne** (`.tlr-inline`), posé après le dernier caractère du premier mot.
+
+Troisième leçon, sur les cartes : ne PAS les laisser en `flex:1` dans leur rangée. Un
+libellé en haut et son texte en bas d'une carte de 450 px de haut créent un vide intérieur
+qui se lit comme un oubli. Hauteur bornée (300–340 px) et c'est la rangée qui cède la place.
+
+**Reste à faire** : les patterns (étapes 5 à 7 de la procédure), puis `node bin/index.mjs`.
 
 ### ⬜ Lot 6 — `ref-07` retro-brand-hero
 Page web, carte flottante sur photo, wordmark géant bas-gauche, triptyque portrait

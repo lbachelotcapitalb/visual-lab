@@ -1,0 +1,33 @@
+{
+  "name": "Corporate orange chanfreiné",
+  "source": "ref-06-orange-notched",
+  "notes": "Un seul geste porte toute la charte : LE COIN CHANFREINÉ à 45° (≈22px), et il n'est coupé qu'UNE fois par carte, jamais deux — c'est ce qui le fait lire comme une signature et non comme un effet. Il ne se pose que sur les aplats colorés (orange, gris-bleu) : une carte du fond de slide reste à angle vif. Deuxième geste : le filet vertical 4px orange COLLÉ au premier caractère du titre, sans espace — l'espace le transformerait en ornement décoratif alors qu'il doit se lire comme une lettre du mot. La hiérarchie tient sur trois corps seulement (titre 46px caps / chiffre 40px / corps 11px), donc tout l'air de la slide vient des marges et des vides, pas d'une taille intermédiaire. L'orange ne colore JAMAIS du texte sur fond clair : il est toujours un aplat (carte, filet, glyphe), sinon il devient criard. Le gris-bleu est la carte de second rang : même chanfrein, moitié moins de poids.",
+  "tokens": {
+    "--vl-bg": "#F0EFEC",
+    "--vl-board": "#DEDDD9",
+    "--vl-white": "#FFFFFF",
+    "--vl-black": "#141414",
+    "--vl-orange": "#F2551E",
+    "--vl-steel": "#C6D0CF",
+    "--vl-ink-muted": "#6F6F6C",
+    "--vl-ink-muted-invert": "#FFE3D8",
+    "--vl-hairline": "#00000015",
+    "--vl-ph-a": "#C9C9C9",
+    "--vl-ph-b": "#4C4C4C",
+    "--vl-ph-dark-a": "#6A6A6A",
+    "--vl-ph-dark-b": "#141414",
+    "--vl-notch": "22px",
+    "--vl-margin": "56px"
+  },
+  "type": {
+    "display": "\"Helvetica Neue\", Inter, Arial, sans-serif",
+    "body": "\"Helvetica Neue\", Inter, Arial, sans-serif",
+    "scale": {
+      "title": "46px / 1.05 / 800 / 0 / UPPERCASE",
+      "stat": "40px / 1 / 800 / -0.02em",
+      "index": "13px / 1.2 / 700 / 0.02em / UPPERCASE",
+      "body": "11px / 1.5 / 400",
+      "micro": "8px / 1.4 / 700 / 0.14em / UPPERCASE"
+    }
+  }
+}

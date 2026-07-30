@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ref-06 — orange notched pitch deck</title>
+<style>
+/* sys-06 — reconstitution fidèle de ref-06-orange-notched.
+   FORMAT SLIDES : 8 slides 16:9 (1600×900) empilées, chacune à sa taille réelle. Le fichier ne
+   sait rien de la façon dont on le regarde — export slide par slide `node bin/slides.mjs`,
+   planche-contact dérivée `node bin/board.mjs`.
+
+   ÉCHELLE : les corps de SPEC-SOURCES.md (titre 46 / chiffre 40 / corps 11) ont été relevés sur
+   une planche dont chaque slide fait ~1000 px de large. Reportés tels quels sur 1600×900 ils
+   laissent des bandes mortes que la charte d'origine n'a pas. Tout est donc au facteur 1,6 :
+   titre 74, chiffre 64, corps 17, micro 12 — les PROPORTIONS de la spec sont respectées, ses
+   valeurs absolues non. */
+:root {
+  --vl-bg: #F0EFEC;
+  --vl-board: #DEDDD9;
+  --vl-white: #FFFFFF;
+  --vl-black: #141414;
+  --vl-orange: #F2551E;
+  --vl-steel: #C6D0CF;
+  --vl-ink-muted: #6F6F6C;
+  --vl-ink-muted-invert: #FFE0D3;
+  --vl-hairline: #00000015;
+  --vl-ph-a: #C9C9C9;
+  --vl-ph-b: #4C4C4C;
+  --vl-ph-dark-a: #6A6A6A;
+  --vl-ph-dark-b: #141414;
+  --vl-notch: 34px;
+  --vl-margin: 60px;
+  --vl-font: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 48px;
+  background: var(--vl-board);
+  font-family: var(--vl-font);
+  -webkit-font-smoothing: antialiased;
+  display: flex; flex-direction: column; align-items: center; gap: 48px;
+}
+
+/* ————— la slide : un seul fond, une seule marge ————— */
+.slide {
+  width: 1600px; height: 900px; padding: var(--vl-margin);
+  background: var(--vl-bg); color: var(--vl-black);
+  display: flex; flex-direction: column; letter-spacing: 0;
+}
+
+/* ————— header tri-parti, filet bas ————— */
+.hdr {
+  display: flex; align-items: flex-start; gap: 56px;
+  padding-bottom: 16px; border-bottom: 1px solid var(--vl-hairline);
+}
+.hdr .mark { font-size: 17px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.hdr .spacer { flex: 1; }
+.micro {
+  font-size: 12px; line-height: 1.4; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+}
+.micro--muted { color: var(--vl-ink-muted); }
+
+/* ————— les trois seuls corps de la hiérarchie ————— */
+.title {
+  margin: 0; font-size: 74px; line-height: 1.05; font-weight: 800;
+  letter-spacing: -0.005em; text-transform: uppercase;
+}
+.title--lg { font-size: 76px; }
+.title--sm { font-size: 24px; letter-spacing: 0.02em; }
+.body { margin: 0; font-size: 17px; line-height: 1.55; font-weight: 400; color: var(--vl-ink-muted); }
+.body--invert { color: var(--vl-ink-muted-invert); }
+.stat { font-size: 64px; line-height: 1; font-weight: 800; letter-spacing: -0.02em; }
+
+/* ————— filet vertical 6px COLLÉ au titre (aucun espace : il se lit comme une lettre) ————— */
+.tlr { border-left: 6px solid var(--vl-orange); padding-left: 0; }
+/* variante EN LIGNE : le filet suit le dernier caractère d'un mot au lieu de border le bloc —
+   sur un titre de deux lignes alignées à droite, la version `border-right` dessinerait une
+   barre le long des DEUX lignes et se lirait comme un bord de cadre. */
+.tlr-inline {
+  display: inline-block; width: 6px; height: 0.76em; background: var(--vl-orange);
+  vertical-align: -0.02em;
+}
+
+/* ————— LA signature : un seul coin coupé à 45° ————— */
+.notch    { clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--vl-notch)), calc(100% - var(--vl-notch)) 100%, 0 100%); }
+.notch--tr{ clip-path: polygon(0 0, calc(100% - var(--vl-notch)) 0, 100% var(--vl-notch), 100% 100%, 0 100%); }
+.card-orange { background: var(--vl-orange); color: var(--vl-white); }
+.card-steel  { background: var(--vl-steel);  color: var(--vl-black); }
+.card-steel .body { color: #3E4746; }
+
+/* ————— index libellé / numéro, un filet sous chaque ligne ————— */
+.idx { display: flex; flex-direction: column; }
+.idx > div {
+  display: flex; align-items: flex-start; gap: 48px;
+  padding: 30px 0; border-bottom: 1px solid var(--vl-hairline);
+}
+.idx > :first-child { padding-top: 0; }
+.idx .lbl { margin: 0; font-size: 24px; font-weight: 800; letter-spacing: 0.01em; text-transform: uppercase; }
+.idx .no  { margin-left: auto; font-size: 24px; font-weight: 800; letter-spacing: 0.01em; }
+
+/* ————— photo N&B : rectangle net, radius 0 ————— */
+.ph { background: linear-gradient(150deg, var(--vl-ph-a), var(--vl-ph-b)); }
+.ph--dark { background: linear-gradient(120deg, var(--vl-ph-dark-a), var(--vl-ph-dark-b) 70%); }
+
+/* ————— glyphes : flèche blanche en coin de carte, chevron orange en puce ————— */
+.arw { font-size: 34px; line-height: 1; font-weight: 400; display: inline-block; }
+.arw--accent { color: var(--vl-orange); }
+.chev { color: var(--vl-orange); font-size: 30px; line-height: 1; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- ————————————————— 01 · COUVERTURE ————————————————— -->
+<section class="slide">
+  <div class="hdr">
+    <span class="mark">Company</span>
+    <span class="spacer"></span>
+    <span class="micro micro--muted">Pitch deck<br>Presentation</span>
+    <span class="micro micro--muted">20 March<br>20XX</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding-top:34px">
+    <!-- la photo prend la hauteur restante : c'est elle qui absorbe le vide, pas le texte -->
+    <div style="position:relative;flex:1">
+      <div class="ph ph--dark" style="height:100%"></div>
+      <!-- la carte statistique chevauche le bas de la photo : ce recouvrement ancre l'accent -->
+      <div class="card-orange notch" style="position:absolute;right:0;bottom:-104px;width:470px;padding:32px 34px 36px">
+        <div style="display:flex;align-items:flex-start">
+          <div>
+            <p class="micro" style="margin:0 0 16px;opacity:.85">Since first project</p>
+            <span class="stat">245+</span>
+          </div>
+          <span class="arw" style="margin-left:auto">&#8599;</span>
+        </div>
+        <p class="body body--invert" style="margin-top:24px;max-width:32ch">Projects delivered for
+          operators across the retail, logistics and industrial segments.</p>
+      </div>
+    </div>
+
+    <h1 class="title title--lg tlr" style="margin-top:48px;max-width:1240px">Empowering growth<br>through innovation</h1>
+    <p class="body" style="margin-top:22px;max-width:52ch">Five business lines, one operating model.
+      This deck sets out where the demand is, how we serve it today, and what the next three
+      years of growth are built on.</p>
+  </div>
+</section>
+
+<!-- ————————————————— 02 · SOMMAIRE ————————————————— -->
+<section class="slide">
+  <div class="hdr">
+    <span class="mark">Company</span>
+    <span class="spacer"></span>
+    <span class="micro micro--muted">Pitch deck<br>Presentation</span>
+    <span class="micro micro--muted">20 March<br>20XX</span>
+  </div>
+
+  <div style="flex:1;display:flex;gap:110px;align-items:stretch;padding-top:56px">
+    <div style="flex:0 0 44%;display:flex;flex-direction:column">
+      <h2 class="title tlr">Presentation<br>content index</h2>
+      <p class="body" style="margin-top:28px;max-width:44ch">Four sections, read in order.
+        The first two frame the market we operate in, the last two set out the model and
+        the terms of the round.</p>
+      <span class="arw arw--accent" style="margin-top:auto;font-size:46px">&#8601;</span>
+    </div>
+
+    <div class="idx" style="flex:1;justify-content:center">
+      <div>
+        <div>
+          <p class="lbl">Introduction</p>
+          <p class="body" style="margin-top:10px;max-width:44ch">Who we are, where we operate,
+            and the position we hold in our segment today.</p>
+        </div>
+        <span class="no">01</span>
+      </div>
+      <div>
+        <div>
+          <p class="lbl">Problem &amp; solution</p>
+          <p class="body" style="margin-top:10px;max-width:44ch">The cost operators carry today,
+            and the part of it our product removes.</p>
+        </div>
+        <span class="no">02</span>
+      </div>
+      <div>
+        <div>
+          <p class="lbl">Business model</p>
+          <p class="body" style="margin-top:10px;max-width:44ch">How revenue is earned, retained
+            and expanded across the two channels.</p>
+        </div>
+        <span class="no">03</span>
+      </div>
+      <div style="border-bottom:0;padding-bottom:0">
+        <div>
+          <p class="lbl">Investment opportunity</p>
+          <p class="body" style="margin-top:10px;max-width:44ch">Use of proceeds, the milestones
+            attached to them, and the terms on offer.</p>
+        </div>
+        <span class="no">04</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 03 · INTRODUCING OUR COMPANY ————————————————— -->
+<section class="slide">
+  <div class="hdr">
+    <span class="mark">Company</span>
+    <span class="spacer"></span>
+    <span class="micro micro--muted">Pitch deck<br>Presentation</span>
+    <span class="micro micro--muted">20 March<br>20XX</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding-top:34px">
+    <div style="display:flex;gap:60px;align-items:stretch;height:400px">
+      <div class="card-orange notch" style="flex:0 0 620px;align-self:flex-start;padding:32px 34px 36px">
+        <div style="display:flex;align-items:flex-start">
+          <div>
+            <p class="micro" style="margin:0 0 16px;opacity:.85">The company was founded in</p>
+            <span class="stat">2025</span>
+          </div>
+          <span class="arw" style="margin-left:auto">&#8599;</span>
+        </div>
+        <p class="body body--invert" style="margin-top:24px;max-width:36ch">Two founders, one
+          service contract, and a conviction that the back office of mid-market operators
+          had been left behind.</p>
+      </div>
+      <div class="ph" style="flex:1"></div>
+    </div>
+
+    <div style="display:flex;gap:60px;align-items:flex-end;flex:1;padding-top:56px">
+      <h2 class="title tlr" style="flex:0 0 620px">Introducing<br>our company</h2>
+      <div style="flex:1;display:flex;gap:60px">
+        <p class="body" style="flex:1">We build and operate the systems that mid-market
+          companies run their daily business on — ordering, stock, invoicing and the
+          reporting that sits on top of all three. One platform, deployed in weeks
+          rather than quarters.</p>
+        <p class="body" style="flex:1">Today we serve 240 operators in nine countries,
+          with a team of 68 split between product and delivery. Growth has been
+          funded by revenue since the second year of trading.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 04 · EXPANDING MARKET DEMAND ————————————————— -->
+<section class="slide">
+  <div class="hdr">
+    <span class="mark">Company</span>
+    <span class="spacer"></span>
+    <span class="micro micro--muted">Pitch deck<br>Presentation</span>
+    <span class="micro micro--muted">20 March<br>20XX</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding-top:44px">
+    <div style="display:flex;align-items:flex-start">
+      <h2 class="title">Expanding</h2>
+      <span class="chev" style="margin-left:auto">&raquo;&raquo;</span>
+    </div>
+
+    <div style="display:flex;gap:32px;align-items:stretch;height:340px;margin:44px 0 auto">
+      <div class="card-orange notch" style="flex:0 0 430px;padding:32px 34px 36px;display:flex;flex-direction:column">
+        <div style="display:flex;align-items:flex-start">
+          <div>
+            <p class="micro" style="margin:0 0 16px;opacity:.85">Potential</p>
+            <span class="stat">156%</span>
+          </div>
+          <span class="arw" style="margin-left:auto">&#8599;</span>
+        </div>
+        <p class="body body--invert" style="margin-top:auto;max-width:32ch">Compound growth of
+          the addressable segment over the last four reported years.</p>
+      </div>
+
+      <div style="flex:1;display:flex;flex-direction:column">
+        <p class="micro micro--muted" style="margin:0 0 16px;text-align:right">Target audience</p>
+        <div style="display:flex;gap:32px;flex:1">
+          <div class="card-steel notch--tr" style="flex:1;padding:32px 34px 36px;display:flex;flex-direction:column">
+            <p class="micro" style="margin:0">Business<br>professionals</p>
+            <p class="body" style="margin-top:auto">Operations and finance leads in companies of
+              50 to 500 people, buying to replace a stack of spreadsheets and one
+              ageing licence.</p>
+          </div>
+          <div class="card-steel notch--tr" style="flex:1;padding:32px 34px 36px;display:flex;flex-direction:column">
+            <p class="micro" style="margin:0">General<br>consumers</p>
+            <p class="body" style="margin-top:auto">The end customers of those operators, who
+              never see the platform but feel it in delivery times and in what a
+              promised date is worth.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-end">
+      <p class="micro micro--muted" style="margin:0">Market<br>opportunity</p>
+      <h2 class="title" style="margin-left:auto">Market demand</h2>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 05 · SALES STRATEGY ————————————————— -->
+<section class="slide">
+  <div class="hdr">
+    <span class="mark">Company</span>
+    <span class="spacer"></span>
+    <span class="micro micro--muted">Pitch deck<br>Presentation</span>
+    <span class="micro micro--muted">20 March<br>20XX</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding-top:48px">
+    <div style="display:flex;gap:110px;align-items:flex-start">
+      <div style="flex:0 0 42%">
+        <p class="micro" style="margin:0 0 20px">From awareness to conversion</p>
+        <p class="body" style="max-width:48ch">Three motions run in parallel, each with its own
+          cost of acquisition and its own owner. Nothing here is left to the assumption
+          that a good product sells itself.</p>
+      </div>
+      <h2 class="title" style="flex:1;text-align:right">Sales<span class="tlr-inline"></span><br>strategy</h2>
+    </div>
+
+    <div style="display:flex;gap:32px;align-items:stretch;height:300px;margin-top:auto">
+      <div class="card-steel notch--tr" style="flex:1;padding:34px 36px 38px;display:flex;flex-direction:column">
+        <p class="body">Priced against the saving it produces, not against the seat count.
+          The buyer signs on a number they can audit themselves after one quarter.</p>
+        <p class="micro" style="margin:auto 0 0">Value-based<br>selling</p>
+      </div>
+      <div class="card-steel notch--tr" style="flex:1;padding:34px 36px 38px;display:flex;flex-direction:column">
+        <p class="body">Documentation, benchmarks and two calculators that rank on the queries
+          our buyers actually type. Half of new pipeline arrives this way.</p>
+        <p class="micro" style="margin:auto 0 0">Inbound<br>sales</p>
+      </div>
+      <div class="card-orange notch--tr" style="flex:1;padding:34px 36px 38px;display:flex;flex-direction:column">
+        <p class="body body--invert">A named list of 400 operators, worked by two teams against
+          a single qualification standard. No volume outreach, no bought data.</p>
+        <p class="micro" style="margin:auto 0 0">Outbound<br>sales</p>
+      </div>
+    </div>
+
+    <span class="arw arw--accent" style="margin:26px 0 0 auto;font-size:44px">&#8599;</span>
+  </div>
+</section>
+
+<!-- ————————————————— 06 · PRODUCT OVERVIEW ————————————————— -->
+<section class="slide">
+  <div class="hdr">
+    <span class="mark">Company</span>
+    <span class="spacer"></span>
+    <span class="micro micro--muted">Pitch deck<br>Presentation</span>
+    <span class="micro micro--muted">20 March<br>20XX</span>
+  </div>
+
+  <div style="flex:1;display:flex;gap:80px;padding-top:44px">
+    <div style="flex:0 0 38%;display:flex;flex-direction:column">
+      <h2 class="title tlr">Product<br>overview</h2>
+      <p class="micro" style="margin-top:52px">Key features and functionality</p>
+      <p class="body" style="margin-top:auto;max-width:40ch">Two product lines on one core.
+        What changes between them is the workflow at the front, never the ledger
+        underneath — which is why a customer moves from one to the other without
+        a migration.</p>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column">
+      <div style="position:relative;flex:1">
+        <div class="ph ph--dark" style="height:100%"></div>
+        <div class="card-orange notch--tr" style="position:absolute;left:0;bottom:-30px;width:96px;height:96px;display:flex;align-items:center;justify-content:center">
+          <span class="chev" style="color:var(--vl-white);font-size:32px">&raquo;</span>
+        </div>
+      </div>
+
+      <div style="display:flex;padding-top:74px">
+        <div style="flex:1;padding-right:48px">
+          <p class="micro" style="margin:0 0 16px">01</p>
+          <p class="title title--sm" style="margin:0">Retail business</p>
+          <p class="body" style="margin-top:14px;max-width:34ch">Point of sale, stock and
+            replenishment for operators running between three and forty outlets.</p>
+        </div>
+        <div style="flex:1;padding-left:48px;border-left:1px solid var(--vl-hairline)">
+          <p class="micro" style="margin:0 0 16px">02</p>
+          <p class="title title--sm" style="margin:0">Direct selling</p>
+          <p class="body" style="margin-top:14px;max-width:34ch">Order capture, commissions and
+            payouts for field networks, settled on the same weekly cycle.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 07 · BEST TEAM INTRODUCTION ————————————————— -->
+<section class="slide">
+  <div class="hdr">
+    <span class="mark">Company</span>
+    <span class="spacer"></span>
+    <span class="micro micro--muted">Pitch deck<br>Presentation</span>
+    <span class="micro micro--muted">20 March<br>20XX</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding-top:44px">
+    <div style="display:flex;align-items:flex-start;padding-left:34%">
+      <h2 class="title">Best team<br>introduction</h2>
+      <span class="arw arw--accent" style="margin-left:auto;font-size:44px">&#8599;</span>
+    </div>
+
+    <!-- la première colonne monte plus haut que les deux autres : c'est le décalage qui donne
+         le rythme, les libellés restent alignés en bas -->
+    <div style="display:flex;gap:32px;align-items:stretch;flex:1;padding-top:40px">
+      <div style="flex:1;display:flex;flex-direction:column">
+        <div class="ph" style="flex:1"></div>
+        <p class="micro" style="margin:20px 0 8px">Jordan Parker</p>
+        <p class="body">Leader of the company</p>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;padding-top:64px">
+        <div class="ph" style="flex:1"></div>
+        <p class="micro" style="margin:20px 0 8px">Nely Dean</p>
+        <p class="body">Manager</p>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;padding-top:64px">
+        <div class="ph" style="flex:1"></div>
+        <p class="micro" style="margin:20px 0 8px">John Jonson</p>
+        <p class="body">Marketing officer</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 08 · CLÔTURE ————————————————— -->
+<section class="slide">
+  <div class="hdr">
+    <span class="mark">Company</span>
+    <span class="spacer"></span>
+    <span class="micro micro--muted">Pitch deck<br>Presentation</span>
+    <span class="micro micro--muted">20 March<br>20XX</span>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;padding-top:44px">
+    <div style="display:flex;align-items:flex-start">
+      <h2 class="title tlr" style="max-width:900px">Let's build the<br>future together</h2>
+      <span class="arw arw--accent" style="margin-left:auto;font-size:44px">&#8599;</span>
+    </div>
+    <p class="body" style="margin-top:26px;max-width:58ch">The round closes in June. What follows
+      is a working relationship, not a shareholding — the operators we serve expect the
+      same of us, and it is the only standard we know how to hold.</p>
+
+    <div style="position:relative;flex:1;margin-top:40px">
+      <div class="ph ph--dark" style="height:100%"></div>
+      <div class="card-orange notch" style="position:absolute;right:48px;bottom:52px;width:470px;padding:32px 34px 36px">
+        <p class="body body--invert" style="max-width:32ch">Talk to us before the term sheet is
+          drawn: the questions asked early are the ones that shape the next three years.</p>
+        <p class="micro" style="margin-top:28px">Excellence<br>through innovation</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
