@@ -2,8 +2,9 @@
 // Reconstruit patterns.db depuis les fichiers du dépôt. Idempotent : la base est
 // entièrement recréée à chaque passage. Sort en code 1 si un pattern est invalide —
 // une bibliothèque à moitié indexée qui se tait est pire qu'une erreur.
-import { unlinkSync, existsSync } from 'node:fs';
-import { DB, KINDS, loadPatterns, loadSystems, sql, q } from './lib.mjs';
+import { unlinkSync, existsSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { ROOT, DB, KINDS, loadPatterns, loadSystems, sql, q } from './lib.mjs';
 
 const SCHEMA = `
 CREATE TABLE systems (
@@ -35,6 +36,17 @@ for (const p of patterns) {
   if (!(p.tags?.length)) errors.push(`${p.id} : aucun tag — il sera introuvable`);
   if (p.kind !== 'rule' && !p.html) errors.push(`${p.id} : aucun ${p.id}.html (obligatoire sauf kind=rule)`);
   if (p.system && !systemIds.has(p.system)) errors.push(`${p.id} : système "${p.system}" inconnu`);
+  // Des benchmarks sans racine mesurable ne sont pas vérifiables : bin/check.mjs ne saurait
+  // pas contre quoi calculer les ratios. Mieux vaut refuser que laisser croire au contrôle.
+  if (p.benchmarks?.length && !p.geometry?.root) {
+    errors.push(`${p.id} : "benchmarks" sans "geometry.root" — bin/check.mjs ne peut rien mesurer`);
+  }
+  for (const b of p.benchmarks || []) {
+    if (!b.name || !b.measure) errors.push(`${p.id} : un benchmark sans "name" ou sans "measure"`);
+    if (b.expect === undefined && b.min === undefined && b.max === undefined) {
+      errors.push(`${p.id} : benchmark "${b.name}" sans seuil (expect / min / max)`);
+    }
+  }
   // Un pattern doit être thémable : pas de couleur hexadécimale en dur dans le HTML.
   // Les entités HTML numériques (`&#8599;` = ↗) ne sont PAS des couleurs : les retirer avant
   // le test, sinon un glyphe de flèche fait échouer l'indexation de tout le dépôt — vu le
@@ -78,4 +90,70 @@ for (const p of patterns) {
 rows.push('COMMIT;');
 sql(rows.join('\n'));
 
-console.log(`✓ ${patterns.length} pattern(s), ${systems.length} système(s) indexés → patterns.db`);
+// ————— Index LISIBLE, versionné, sans dépendance ————— //
+// patterns.db est parfait pour chercher, inutile pour un agent qui n'a pas sqlite sous la main
+// (ou qui lit le dépôt depuis un autre skill). On sort donc aussi, à CHAQUE indexation, deux
+// fichiers de texte committés : INDEX.md pour l'humain, index.json pour la machine. Ils sont
+// GÉNÉRÉS — ne jamais les éditer à la main, la prochaine indexation les écrase.
+const bySource = new Map();
+for (const p of patterns.sort((a, b) => a.id.localeCompare(b.id))) {
+  if (!bySource.has(p.source)) bySource.set(p.source, []);
+  bySource.get(p.source).push(p);
+}
+const withBench = patterns.filter((p) => p.benchmarks?.length);
+const md = [
+  '# INDEX — la bibliothèque en un fichier',
+  '',
+  '**Généré par `node bin/index.mjs`. Ne pas éditer à la main.**',
+  '',
+  `${patterns.length} patterns · ${systems.length} systèmes · ` +
+    `${withBench.length} patterns vérifiables (\`node bin/check.mjs <id>\`)`,
+  '',
+  'Colonnes : `id` · nature/famille · ce que ça fait · nb de benchmarks · système.',
+  'Le fragment est dans `patterns/<id>.html`, ses métadonnées complètes dans `index.json`.',
+  '',
+];
+for (const [source, list] of [...bySource].sort()) {
+  md.push(`## ${source}`, '');
+  for (const p of list) {
+    const nb = p.benchmarks?.length ? `${p.benchmarks.length} bench` : '—';
+    md.push(`- **${p.id}** · ${p.kind}/${p.family || '—'} · ${p.intent} · ${nb} · ${p.system || '—'}`);
+    md.push(`  - employer : ${p.when_to_use || '—'}`);
+    md.push(`  - éviter : ${p.avoid_when || '—'}`);
+    md.push(`  - tags : ${p.tags.join(', ')}`);
+  }
+  md.push('');
+}
+md.push('## Systèmes', '');
+for (const s of systems.sort((a, b) => a.id.localeCompare(b.id))) {
+  md.push(`- **${s.id}** — ${s.name} (${s.source})`);
+}
+md.push('');
+writeFileSync(join(ROOT, 'INDEX.md'), md.join('\n'));
+
+writeFileSync(
+  join(ROOT, 'index.json'),
+  JSON.stringify(
+    {
+      generated_by: 'node bin/index.mjs',
+      counts: { patterns: patterns.length, systems: systems.length, checkable: withBench.length },
+      patterns: patterns.map((p) => ({
+        id: p.id, name: p.name, kind: p.kind, family: p.family, source: p.source,
+        system: p.system, intent: p.intent, when_to_use: p.when_to_use,
+        avoid_when: p.avoid_when, tags: p.tags, vars: p.vars || [], slots: p.slots || [],
+        geometry: p.geometry || null, benchmarks: p.benchmarks || [], pptx: p.pptx || null,
+        html: p.htmlPath ? `patterns/${p.id}.html` : null,
+      })),
+      systems: systems.map((s) => ({
+        id: s.id, name: s.name, source: s.source, tokens: s.tokens || {}, type: s.type || {},
+      })),
+    },
+    null,
+    2
+  ) + '\n'
+);
+
+console.log(
+  `✓ ${patterns.length} pattern(s), ${systems.length} système(s) indexés → patterns.db · ` +
+    `INDEX.md · index.json  (${withBench.length} vérifiable(s) par bin/check.mjs)`
+);

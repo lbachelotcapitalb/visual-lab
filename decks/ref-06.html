@@ -14,6 +14,7 @@
    laissent des bandes mortes que la charte d'origine n'a pas. Tout est donc au facteur 1,6 :
    titre 74, chiffre 64, corps 17, micro 12 — les PROPORTIONS de la spec sont respectées, ses
    valeurs absolues non. */
+@import url("../fonts/fonts.css");
 :root {
   --vl-bg: #F0EFEC;
   --vl-board: #DEDDD9;
@@ -21,8 +22,9 @@
   --vl-black: #141414;
   --vl-orange: #F2551E;
   --vl-steel: #C6D0CF;
-  --vl-ink-muted: #6F6F6C;
-  --vl-ink-muted-invert: #FFE0D3;
+  --vl-ink-muted: #6A6A67;
+  --vl-ink-muted-invert: #FFF1E9;
+  --vl-ink-on-steel: #3E4746;
   --vl-hairline: #00000015;
   --vl-ph-a: #C9C9C9;
   --vl-ph-b: #4C4C4C;
@@ -87,7 +89,7 @@ body {
 .notch--tr{ clip-path: polygon(0 0, calc(100% - var(--vl-notch)) 0, 100% var(--vl-notch), 100% 100%, 0 100%); }
 .card-orange { background: var(--vl-orange); color: var(--vl-white); }
 .card-steel  { background: var(--vl-steel);  color: var(--vl-black); }
-.card-steel .body { color: #3E4746; }
+.card-steel .body { color: var(--vl-ink-on-steel); }
 
 /* ————— index libellé / numéro, un filet sous chaque ligne ————— */
 .idx { display: flex; flex-direction: column; }

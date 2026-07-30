@@ -8,3 +8,5 @@ proofs/
 .slides-*.html
 .board-*.html
 .fonttest.html
+# Bytecode Python du kit .pptx
+kit/__pycache__/

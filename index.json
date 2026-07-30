@@ -1,0 +1,1468 @@
+{
+  "generated_by": "node bin/index.mjs",
+  "counts": {
+    "patterns": 20,
+    "systems": 6,
+    "checkable": 5
+  },
+  "patterns": [
+    {
+      "id": "pat-badge-pill-outline",
+      "name": "Badge pilule outline",
+      "kind": "component",
+      "family": "badge",
+      "source": "ref-03-bento-dark-pitch",
+      "system": "sys-03",
+      "intent": "Poser une étiquette de cadrage (période, unité, filtre) sous un titre, avec un poids visuel quasi nul.",
+      "when_to_use": "Juste après un titre de slide, pour dire « 2025 », « by year », « Q3 » — l'information qui qualifie le titre sans le rallonger.",
+      "avoid_when": "L'élément est cliquable (ça ressemble à un bouton et personne ne cliquera) ou porte un statut à surveiller (succès/erreur) : il faut alors du plein et de la couleur, pas un trait de 1px.",
+      "tags": [
+        "badge",
+        "pilule",
+        "etiquette",
+        "outline",
+        "periode",
+        "titre",
+        "cadrage",
+        "chip"
+      ],
+      "vars": [
+        {
+          "name": "--vl-hairline",
+          "role": "trait sur fond clair",
+          "default": "#D5D5D5"
+        },
+        {
+          "name": "--vl-hairline-invert",
+          "role": "trait sur fond sombre",
+          "default": "#4A4A4A"
+        },
+        {
+          "name": "--vl-surface-light",
+          "role": "fond de la variante pleine",
+          "default": "#FFFFFF"
+        }
+      ],
+      "slots": [
+        "label"
+      ],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": "patterns/pat-badge-pill-outline.html"
+    },
+    {
+      "id": "pat-card-ghost-icon-claim",
+      "name": "Carte-argument à icône fantôme",
+      "kind": "component",
+      "family": "card",
+      "source": "ref-02-ghost-icon-claim",
+      "system": "sys-02",
+      "intent": "Asséner UN seul argument sur toute une largeur, avec une icône énorme mais presque invisible qui donne du volume sans voler l'attention au titre.",
+      "when_to_use": "Bloc de réassurance ou de promesse produit (confidentialité, garantie, engagement) sur une landing ou une slide. Un argument par carte, jamais deux.",
+      "avoid_when": "Il y a plus d'une idée à faire passer, ou l'icône doit être comprise (ici elle est décorative). Pour une rangée de 3 bénéfices, prendre un pattern de grille, pas celui-ci.",
+      "tags": [
+        "carte",
+        "argument",
+        "reassurance",
+        "icone",
+        "confidentialite",
+        "landing",
+        "hero",
+        "monochrome",
+        "claim"
+      ],
+      "vars": [
+        {
+          "name": "--vl-surface",
+          "role": "fond de la carte",
+          "default": "#EDEDED"
+        },
+        {
+          "name": "--vl-ghost",
+          "role": "couleur de l'icône, à ~4 % de luminosité du fond de carte",
+          "default": "#E2E2E2"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "couleur du titre",
+          "default": "#444444"
+        },
+        {
+          "name": "--vl-muted",
+          "role": "couleur du sous-titre",
+          "default": "#A9A9A9"
+        },
+        {
+          "name": "--vl-ghost-size",
+          "role": "largeur de la colonne icône",
+          "default": "250px"
+        },
+        {
+          "name": "--vl-gutter",
+          "role": "gouttière icône / texte",
+          "default": "90px"
+        }
+      ],
+      "slots": [
+        "icon",
+        "title",
+        "subtitle"
+      ],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": "patterns/pat-card-ghost-icon-claim.html"
+    },
+    {
+      "id": "pat-card-notched-brief",
+      "name": "Carte chanfreinée de second rang",
+      "kind": "component",
+      "family": "card",
+      "source": "ref-06-orange-notched",
+      "system": "sys-06",
+      "intent": "Porter une catégorie nommée et son explication sur un aplat neutre, en rangée, sans jamais rivaliser avec la vignette d'accent posée à côté.",
+      "when_to_use": "Deux à trois segments, audiences, motions commerciales ou options présentés côte à côte — typiquement à droite d'une vignette statistique qui, elle, porte le chiffre.",
+      "avoid_when": "Il n'y a qu'une seule carte (le second rang n'a plus de premier rang à côté, l'aplat neutre n'y sert à rien), ou l'explication dépasse quatre lignes — ce n'est plus un libellé commenté, c'est un paragraphe qui mérite sa colonne.",
+      "tags": [
+        "carte",
+        "segment",
+        "audience",
+        "categorie",
+        "chanfrein",
+        "notch",
+        "second-rang",
+        "rangee",
+        "deck",
+        "libelle"
+      ],
+      "vars": [
+        {
+          "name": "--vl-steel",
+          "role": "aplat neutre de second rang",
+          "default": "#C6D0CF"
+        },
+        {
+          "name": "--vl-black",
+          "role": "libellé",
+          "default": "#141414"
+        },
+        {
+          "name": "--vl-ink-on-steel",
+          "role": "corps sur l'aplat neutre",
+          "default": "#3E4746"
+        },
+        {
+          "name": "--vl-notch",
+          "role": "longueur du chanfrein",
+          "default": "32px"
+        }
+      ],
+      "slots": [
+        "label",
+        "body"
+      ],
+      "geometry": {
+        "root": ".vl-brief",
+        "frame": [
+          430,
+          340
+        ],
+        "ratios": {
+          "pad_x_over_width": 0.079,
+          "notch_over_width": 0.074,
+          "body_top_over_height": 0.63
+        },
+        "type_px": {
+          "label": 12,
+          "body": 17
+        },
+        "pad_ratio": {
+          "top": 0.074,
+          "x": 0.079,
+          "bottom": 0.084
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "chanfrein ≈ 7,5 % de la largeur",
+          "measure": "notch('.vl-brief') / W",
+          "expect": 0.075,
+          "tol": 0.015
+        },
+        {
+          "name": "chanfrein sur le coin HAUT-droit (l'orientation distingue le second rang)",
+          "measure": "notchCorner('.vl-brief') === 'tr' ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "marges intérieures identiques à la vignette d'accent (≈ 8 %)",
+          "measure": "num('.vl-brief','paddingLeft') / W",
+          "expect": 0.08,
+          "tol": 0.02
+        },
+        {
+          "name": "libellé en micro-capitales : ≤ 14 px",
+          "measure": "num('.vl-brief__label','fontSize')",
+          "max": 14
+        },
+        {
+          "name": "le corps ne rivalise pas avec la carte d'accent : ≤ 20 px",
+          "measure": "num('.vl-brief__body','fontSize')",
+          "max": 20
+        },
+        {
+          "name": "corps collé en bas (haut du bloc entre 45 % et 85 % de la hauteur)",
+          "measure": "box('.vl-brief__body').top / H",
+          "min": 0.45,
+          "max": 0.85
+        },
+        {
+          "name": "aucun débordement sous la marge basse",
+          "measure": "H - num('.vl-brief','paddingBottom') - box('.vl-brief__body').bottom",
+          "min": -1
+        },
+        {
+          "name": "les deux cartes de la rangée alignent leur corps sur la MÊME ligne",
+          "measure": "Math.abs(box('.vl-brief-row > :first-child .vl-brief__body').top - box('.vl-brief-row > :last-child .vl-brief__body').top)",
+          "expect": 0,
+          "tol": 1
+        },
+        {
+          "name": "contraste du corps ≥ 4,5 (petit corps sur aplat clair : seuil plein)",
+          "measure": "contrast('.vl-brief__body')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste du libellé ≥ 7 (il porte la catégorie, il doit claquer)",
+          "measure": "contrast('.vl-brief__label')",
+          "min": 7
+        }
+      ],
+      "pptx": {
+        "primitive": "notched_rect",
+        "emitter": "kit/vl_pptx.py:brief_card"
+      },
+      "html": "patterns/pat-card-notched-brief.html"
+    },
+    {
+      "id": "pat-chart-bars-stadium",
+      "name": "Barres à sommet arrondi",
+      "kind": "chart",
+      "family": "chart",
+      "source": "ref-03-bento-dark-pitch",
+      "system": "sys-03",
+      "intent": "Un histogramme réduit à l'essentiel : des barres à sommet en demi-cercle, aucune ligne d'axe, des légendes en pilules.",
+      "when_to_use": "Trois à six valeurs d'une même série sur un axe temporel, dans un deck. La progression doit se voir en une seconde, sans lecture de grille.",
+      "avoid_when": "Il faut comparer plusieurs séries, lire des valeurs précises, ou les écarts sont faibles — le sommet arrondi mange quelques pixels de hauteur et fausse la comparaison fine. Dans ce cas : barres droites et axe gradué.",
+      "tags": [
+        "graphique",
+        "barres",
+        "histogramme",
+        "dataviz",
+        "deck",
+        "revenus",
+        "progression",
+        "arrondi",
+        "axe"
+      ],
+      "vars": [
+        {
+          "name": "--vl-accent",
+          "role": "barres intermédiaires",
+          "default": "#CFE3F5"
+        },
+        {
+          "name": "--vl-accent-2",
+          "role": "barres intermédiaires",
+          "default": "#8FBBE4"
+        },
+        {
+          "name": "--vl-accent-3",
+          "role": "barre de fin de série",
+          "default": "#5E9BD6"
+        },
+        {
+          "name": "--vl-surface-tile",
+          "role": "fond des pilules d'axe",
+          "default": "#3A3A3A"
+        }
+      ],
+      "slots": [
+        "values",
+        "bars",
+        "axis"
+      ],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": "patterns/pat-chart-bars-stadium.html"
+    },
+    {
+      "id": "pat-chart-isotype",
+      "name": "Isotype à taux de remplissage",
+      "kind": "chart",
+      "family": "chart",
+      "source": "ref-03-bento-dark-pitch",
+      "system": "sys-03",
+      "intent": "Raconter une proportion en unités comptables (24 pictogrammes sur 40) au lieu d'un pourcentage abstrait.",
+      "when_to_use": "Une part qui porte sur des ÊTRES ou des OBJETS dénombrables — clients, sièges, sites, jours. Le lecteur voit la quantité avant de lire le chiffre.",
+      "avoid_when": "La grandeur est continue (chiffre d'affaires, température, durée) : il n'y a rien à compter. Et au-delà d'environ 60 pictogrammes plus personne ne compte — passer à une barre.",
+      "tags": [
+        "graphique",
+        "isotype",
+        "pictogramme",
+        "proportion",
+        "pourcentage",
+        "dataviz",
+        "comptage",
+        "part"
+      ],
+      "vars": [
+        {
+          "name": "--vl-accent-2",
+          "role": "couleur de la part remplie",
+          "default": "#8FBBE4"
+        },
+        {
+          "name": "--vl-surface-light",
+          "role": "couleur de la part vide",
+          "default": "#FFFFFF"
+        }
+      ],
+      "slots": [
+        "figure",
+        "label",
+        "grid"
+      ],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": "patterns/pat-chart-isotype.html"
+    },
+    {
+      "id": "pat-deck-rhythm-fullbleed",
+      "name": "Règle du rythme des fonds pleins",
+      "kind": "rule",
+      "family": "deck",
+      "source": "ref-04-swiss-investor-blue",
+      "system": "sys-04",
+      "intent": "Donner un tempo à un deck par la seule alternance des fonds pleins, sans ajouter un ornement, une carte ou une couleur d'accent.",
+      "when_to_use": "Deck de 8 slides ou plus construit sur deux à trois fonds pleins. C'est la règle qui remplace les séparateurs de section : le changement de fond EST le séparateur.",
+      "avoid_when": "Document imprimé (une slide bleue pleine coûte une cartouche et vire au violet sur du papier non couché), ou charte à plus de trois fonds : au-delà, l'alternance n'est plus un rythme, c'est du bruit.",
+      "tags": [
+        "rythme",
+        "regle",
+        "fond",
+        "alternance",
+        "deck",
+        "tempo",
+        "sequence",
+        "editorial",
+        "couleur",
+        "suisse"
+      ],
+      "vars": [],
+      "slots": [],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": null
+    },
+    {
+      "id": "pat-icon-circle-arrow",
+      "name": "Flèche dans un cercle outline",
+      "kind": "component",
+      "family": "icon",
+      "source": "ref-03-bento-dark-pitch",
+      "system": "sys-03",
+      "intent": "Donner un point d'accroche au regard dans une zone vide et indiquer une direction de lecture, sans ajouter de texte.",
+      "when_to_use": "Coin d'une carte, sous un titre, en tête d'un bloc : → pour la suite, ↗ pour la croissance, ↘ pour la sortie ou la conséquence.",
+      "avoid_when": "L'élément est réellement cliquable — il faut alors une cible de 44px et un état au survol, ce que ce fragment purement décoratif n'a pas.",
+      "tags": [
+        "icone",
+        "fleche",
+        "cercle",
+        "outline",
+        "direction",
+        "accroche",
+        "deck",
+        "ponctuation"
+      ],
+      "vars": [
+        {
+          "name": "--vl-hairline",
+          "role": "trait du cercle sur fond clair",
+          "default": "#D5D5D5"
+        },
+        {
+          "name": "--vl-hairline-invert",
+          "role": "trait du cercle sur fond sombre",
+          "default": "#4A4A4A"
+        }
+      ],
+      "slots": [
+        "arrow"
+      ],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": "patterns/pat-icon-circle-arrow.html"
+    },
+    {
+      "id": "pat-icon-ghost",
+      "name": "Règle de l'icône fantôme",
+      "kind": "rule",
+      "family": "icon",
+      "source": "ref-02-ghost-icon-claim",
+      "system": "sys-02",
+      "intent": "Régler une icône décorative de grande taille pour qu'elle porte le volume d'un bloc sans jamais concurrencer le texte.",
+      "when_to_use": "Dès qu'une icône dépasse ~120 px dans une carte, une slide ou un hero. C'est la règle qui empêche le pictogramme géant de devenir le sujet.",
+      "avoid_when": "L'icône est cliquable, porte un statut, ou remplace un mot (avertissement, erreur, état) : elle doit alors être lisible, donc contrastée, donc hors de cette règle.",
+      "tags": [
+        "icone",
+        "regle",
+        "contraste",
+        "hierarchie",
+        "decoratif",
+        "accessibilite"
+      ],
+      "vars": [],
+      "slots": [],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": null
+    },
+    {
+      "id": "pat-layout-bento-nested",
+      "name": "Bento à cartes imbriquées",
+      "kind": "layout",
+      "family": "layout",
+      "source": "ref-03-bento-dark-pitch",
+      "system": "sys-03",
+      "intent": "Structurer une slide dense en trois niveaux (carte → sous-carte → tuile) sans une seule bordure ni ombre, en ne faisant décroître que le rayon et le padding.",
+      "when_to_use": "Slide de chiffres ou de preuves où il faut caser 4 à 8 informations sans que ça ressemble à un tableau. C'est le squelette par défaut d'un deck investisseur moderne.",
+      "avoid_when": "Il n'y a qu'une seule idée sur la slide — l'imbrication crée alors une hiérarchie qui ne correspond à rien. Et sur un support imprimé en petit format, les tuiles descendent sous le seuil de lisibilité.",
+      "tags": [
+        "bento",
+        "layout",
+        "slide",
+        "cartes",
+        "imbrication",
+        "rayon",
+        "hierarchie",
+        "deck",
+        "investisseur",
+        "grille"
+      ],
+      "vars": [
+        {
+          "name": "--vl-radius-card",
+          "role": "rayon du niveau 1",
+          "default": "24px"
+        },
+        {
+          "name": "--vl-radius-sub",
+          "role": "rayon du niveau 2",
+          "default": "20px"
+        },
+        {
+          "name": "--vl-radius-tile",
+          "role": "rayon du niveau 3",
+          "default": "16px"
+        },
+        {
+          "name": "--vl-gap",
+          "role": "gouttière entre cartes de même niveau",
+          "default": "12px"
+        }
+      ],
+      "slots": [
+        "title",
+        "body",
+        "tiles"
+      ],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": "patterns/pat-layout-bento-nested.html"
+    },
+    {
+      "id": "pat-layout-swiss-header-footer",
+      "name": "Cadre suisse header / footer",
+      "kind": "layout",
+      "family": "layout",
+      "source": "ref-04-swiss-investor-blue",
+      "system": "sys-04",
+      "intent": "Poser le cadre d'une slide de deck : une marge unique, deux barres de micro-typo à trois zones et un filet d'un pixel — de quoi rendre une suite de slides reconnaissable sans y ajouter le moindre ornement.",
+      "when_to_use": "Deck de plus de trois slides qui doit tenir comme un document : le header rappelle la section, le footer numérote. C'est aussi ce qui autorise les fonds pleins à alterner sans que le deck se disloque.",
+      "avoid_when": "Slide unique, visuel de réseau social, ou support projeté de loin : à 8 px les barres ne se lisent pas, elles ne sont là que pour tenir la page.",
+      "tags": [
+        "layout",
+        "cadre",
+        "header",
+        "footer",
+        "deck",
+        "slide",
+        "suisse",
+        "filet",
+        "micro-typo",
+        "grille",
+        "marge"
+      ],
+      "vars": [
+        {
+          "name": "--vl-hairline",
+          "role": "filet sous le header sur fond clair",
+          "default": "#00000018"
+        },
+        {
+          "name": "--vl-hairline-invert",
+          "role": "filet sur fond plein (bleu ou noir)",
+          "default": "#FFFFFF33"
+        },
+        {
+          "name": "--vl-white",
+          "role": "fond des slides claires",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-blue",
+          "role": "fond des slides pleines",
+          "default": "#1B44D8"
+        },
+        {
+          "name": "--vl-ink-muted",
+          "role": "corps de texte sur fond clair",
+          "default": "#6E6E6E"
+        }
+      ],
+      "slots": [
+        "mark",
+        "section",
+        "meta",
+        "body",
+        "footer-left",
+        "footer-center",
+        "footer-right"
+      ],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": "patterns/pat-layout-swiss-header-footer.html"
+    },
+    {
+      "id": "pat-list-index-rules",
+      "name": "Sommaire à filets numérotés",
+      "kind": "component",
+      "family": "list",
+      "source": "ref-06-orange-notched",
+      "system": "sys-06",
+      "intent": "Lister les sections d'un document en donnant à chacune son libellé, une ligne d'explication et son numéro à droite, séparées par un filet fin qui appartient à l'entrée qu'il suit.",
+      "when_to_use": "Sommaire d'un deck ou d'une proposition, 3 à 6 entrées, en colonne de droite face au titre. Aussi valable pour une liste d'étapes ou de livrables numérotés.",
+      "avoid_when": "Plus de 6 entrées (les filets deviennent une trame et plus personne ne lit), ou les entrées n'ont pas d'explication — une liste de libellés nus n'a pas besoin de cette structure, un simple empilement suffit.",
+      "tags": [
+        "sommaire",
+        "index",
+        "toc",
+        "liste",
+        "filet",
+        "numero",
+        "hairline",
+        "deck",
+        "etapes"
+      ],
+      "vars": [
+        {
+          "name": "--vl-hairline",
+          "role": "filet sous chaque entrée (opacité comprise)",
+          "default": "#00000015"
+        },
+        {
+          "name": "--vl-black",
+          "role": "libellé et numéro",
+          "default": "#141414"
+        },
+        {
+          "name": "--vl-ink-muted",
+          "role": "explication",
+          "default": "#6F6F6C"
+        }
+      ],
+      "slots": [
+        "label",
+        "desc",
+        "number"
+      ],
+      "geometry": {
+        "root": ".vl-idx",
+        "frame": [
+          700,
+          420
+        ],
+        "ratios": {
+          "label_over_desc": 1.41
+        },
+        "type_px": {
+          "label": 24,
+          "desc": 17
+        },
+        "pad_ratio": {
+          "top": 0.043,
+          "x": 0,
+          "bottom": 0.043
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "numéro et libellé alignés sur la MÊME première ligne",
+          "measure": "Math.abs(box('.vl-idx__row:first-child .vl-idx__no').top - box('.vl-idx__row:first-child .vl-idx__label').top)",
+          "expect": 0,
+          "tol": 2
+        },
+        {
+          "name": "numéro et libellé au MÊME corps",
+          "measure": "num('.vl-idx__no','fontSize') / num('.vl-idx__label','fontSize')",
+          "expect": 1,
+          "tol": 0.01
+        },
+        {
+          "name": "saut libellé / explication entre 1,2 et 1,8 (proche = famille, loin = titre)",
+          "measure": "num('.vl-idx__label','fontSize') / num('.vl-idx__desc','fontSize')",
+          "min": 1.2,
+          "max": 1.8
+        },
+        {
+          "name": "filet fin : 1 px, pas un trait",
+          "measure": "num('.vl-idx__row','borderBottomWidth')",
+          "max": 1.5
+        },
+        {
+          "name": "toutes les entrées ont le même padding vertical",
+          "measure": "Math.abs(num('.vl-idx__row:nth-child(2)','paddingTop') - num('.vl-idx__row:nth-child(3)','paddingTop')) + Math.abs(num('.vl-idx__row:nth-child(2)','paddingBottom') - num('.vl-idx__row:nth-child(3)','paddingBottom'))",
+          "expect": 0,
+          "tol": 0.5
+        },
+        {
+          "name": "la 1re entrée n'a pas de padding haut (le bloc commence à sa ligne)",
+          "measure": "num('.vl-idx__row:first-child','paddingTop')",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "le filet reste collé à son entrée : gouttière ≤ 45 % du pas",
+          "measure": "(box('.vl-idx__row:nth-child(2)').top - box('.vl-idx__row:nth-child(1)').bottom) / (box('.vl-idx__row:nth-child(2)').top - box('.vl-idx__row:nth-child(1)').top)",
+          "max": 0.45
+        },
+        {
+          "name": "explication bornée à ~44 caractères",
+          "measure": "box('.vl-idx__desc').w / num('.vl-idx__desc','fontSize')",
+          "max": 25
+        },
+        {
+          "name": "contraste de l'explication ≥ 4,5",
+          "measure": "contrast('.vl-idx__desc')",
+          "min": 4.5
+        }
+      ],
+      "pptx": {
+        "primitive": "rows_hairline",
+        "emitter": "kit/vl_pptx.py:index_rows"
+      },
+      "html": "patterns/pat-list-index-rules.html"
+    },
+    {
+      "id": "pat-list-numbered-giant",
+      "name": "Colonnes à numéro géant",
+      "kind": "component",
+      "family": "list",
+      "source": "ref-04-swiss-investor-blue",
+      "system": "sys-04",
+      "intent": "Aligner trois à quatre arguments de même rang en colonnes, chacun ouvert par un numéro ou un chiffre démesuré qui sert à la fois de repère de lecture et de seule tache de couleur du bloc.",
+      "when_to_use": "Bas de slide : les trois causes d'un problème, les trois étapes d'une solution, les quatre chiffres d'une traction. Trois ou quatre colonnes ; à cinq, le numéro cesse d'être un repère et devient une texture.",
+      "avoid_when": "Les entrées ne sont pas de même rang (une hiérarchie déguisée en liste), ou chacune demande plus de trois lignes de texte : ce n'est alors plus une liste, c'est une section.",
+      "tags": [
+        "liste",
+        "numerotation",
+        "colonnes",
+        "chiffre",
+        "kpi",
+        "argument",
+        "deck",
+        "slide",
+        "filet",
+        "suisse",
+        "etapes"
+      ],
+      "vars": [
+        {
+          "name": "--vl-blue",
+          "role": "couleur du numéro sur fond clair",
+          "default": "#1B44D8"
+        },
+        {
+          "name": "--vl-hairline",
+          "role": "filet vertical entre colonnes, fond clair",
+          "default": "#00000018"
+        },
+        {
+          "name": "--vl-hairline-invert",
+          "role": "filet vertical sur fond plein",
+          "default": "#FFFFFF33"
+        },
+        {
+          "name": "--vl-ink-muted",
+          "role": "corps de texte sous le numéro",
+          "default": "#6E6E6E"
+        }
+      ],
+      "slots": [
+        "num",
+        "body"
+      ],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": "patterns/pat-list-numbered-giant.html"
+    },
+    {
+      "id": "pat-shape-notched-card",
+      "name": "Carte à coin chanfreiné",
+      "kind": "primitive",
+      "family": "shape",
+      "source": "ref-06-orange-notched",
+      "system": "sys-06",
+      "intent": "Donner à un aplat coloré une signature de forme reconnaissable — UN coin coupé à 45° — sans rien ajouter au contenu ni recourir à un rayon, une ombre ou un liseré.",
+      "when_to_use": "Sur les aplats d'accent d'un deck ou d'une landing qui doivent se reconnaître d'une slide à l'autre : carte statistique, carte de second rang, pastille de glyphe. Une seule orientation par famille de contenu.",
+      "avoid_when": "Sur une image (la coupe se lit comme un recadrage raté), sur une carte du même fond que la slide (la coupe devient invisible et le lecteur ne voit qu'un angle sale), ou sur plus d'un coin — deux coins coupés font un losange, pas une signature.",
+      "tags": [
+        "chanfrein",
+        "notch",
+        "coin",
+        "clip-path",
+        "carte",
+        "aplat",
+        "forme",
+        "signature",
+        "deck",
+        "corporate"
+      ],
+      "vars": [
+        {
+          "name": "--vl-notch",
+          "role": "longueur de la coupe à 45° (≈ 7,5 % de la largeur de la carte)",
+          "default": "32px"
+        },
+        {
+          "name": "--vl-orange",
+          "role": "aplat d'accent",
+          "default": "#F2551E"
+        },
+        {
+          "name": "--vl-steel",
+          "role": "aplat de second rang",
+          "default": "#C6D0CF"
+        }
+      ],
+      "slots": [],
+      "geometry": {
+        "root": ".vl-nc--br",
+        "frame": [
+          208,
+          200
+        ],
+        "ratios": {
+          "notch_over_width": 0.075
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "chanfrein ≈ 7,5 % de la largeur (br)",
+          "measure": "notch('.vl-nc--br') / W",
+          "expect": 0.075,
+          "tol": 0.025
+        },
+        {
+          "name": "les 4 orientations coupent de la MÊME longueur",
+          "measure": "Math.max(notch('.vl-nc--br'),notch('.vl-nc--tr'),notch('.vl-nc--bl'),notch('.vl-nc--tl')) - Math.min(notch('.vl-nc--br'),notch('.vl-nc--tr'),notch('.vl-nc--bl'),notch('.vl-nc--tl'))",
+          "expect": 0,
+          "tol": 0.5
+        },
+        {
+          "name": "un seul coin coupé : la coupe reste sous 12 % de la petite dimension",
+          "measure": "notch('.vl-nc--br') / Math.min(W, H)",
+          "max": 0.2
+        }
+      ],
+      "pptx": {
+        "primitive": "notched_rect",
+        "emitter": "kit/vl_pptx.py:notched_card"
+      },
+      "html": "patterns/pat-shape-notched-card.html"
+    },
+    {
+      "id": "pat-stat-block-accent",
+      "name": "Vignette statistique sur accent",
+      "kind": "component",
+      "family": "card",
+      "source": "ref-06-orange-notched",
+      "system": "sys-06",
+      "intent": "Faire porter UN chiffre par un aplat d'accent chanfreiné, avec son cadrage (micro-libellé au-dessus) et son commentaire (corps collé en bas), de façon à ce que le chiffre se lise avant le texte.",
+      "when_to_use": "Preuve chiffrée d'une slide : croissance, volume livré, part de marché. Une seule par slide, posée en tête de rangée ou en recouvrement du bas d'une photo pour ancrer l'accent.",
+      "avoid_when": "Le chiffre a besoin d'être comparé à d'autres (il faut un graphique), il n'y a pas de commentaire à mettre (la vignette se vide et le chanfrein devient un ornement seul), ou le texte descend sous 16 px — sur cet orange le contraste ne tient plus (3,4:1, valable seulement en grand corps).",
+      "tags": [
+        "stat",
+        "chiffre",
+        "kpi",
+        "vignette",
+        "carte",
+        "accent",
+        "chanfrein",
+        "notch",
+        "flèche",
+        "deck",
+        "preuve"
+      ],
+      "vars": [
+        {
+          "name": "--vl-orange",
+          "role": "aplat d'accent porteur",
+          "default": "#F2551E"
+        },
+        {
+          "name": "--vl-white",
+          "role": "chiffre et glyphe",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-ink-muted-invert",
+          "role": "corps sur l'aplat (jamais du blanc pur, mais pas plus sombre que 3:1 non plus)",
+          "default": "#FFF1E9"
+        },
+        {
+          "name": "--vl-notch",
+          "role": "longueur du chanfrein",
+          "default": "32px"
+        }
+      ],
+      "slots": [
+        "kicker",
+        "figure",
+        "arrow",
+        "body"
+      ],
+      "geometry": {
+        "root": ".vl-stat",
+        "frame": [
+          430,
+          340
+        ],
+        "ratios": {
+          "pad_x_over_width": 0.079,
+          "notch_over_width": 0.074,
+          "figure_over_kicker": 5.33,
+          "body_top_over_height": 0.66
+        },
+        "type_px": {
+          "kicker": 12,
+          "figure": 64,
+          "body": 17,
+          "arrow": 34
+        },
+        "pad_ratio": {
+          "top": 0.074,
+          "x": 0.079,
+          "bottom": 0.084
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "chanfrein ≈ 7,5 % de la largeur",
+          "measure": "notch('.vl-stat') / W",
+          "expect": 0.075,
+          "tol": 0.015
+        },
+        {
+          "name": "chanfrein sur le coin BAS-droit (l'orientation marque le premier rang)",
+          "measure": "notchCorner('.vl-stat') === 'br' ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "marge intérieure gauche ≈ 8 % de la largeur",
+          "measure": "num('.vl-stat','paddingLeft') / W",
+          "expect": 0.08,
+          "tol": 0.02
+        },
+        {
+          "name": "saut typographique chiffre / micro-libellé ≥ 4,5",
+          "measure": "num('.vl-stat__figure','fontSize') / num('.vl-stat__kicker','fontSize')",
+          "min": 4.5
+        },
+        {
+          "name": "le corps est bien en bas (haut du bloc entre 50 % et 85 % de la hauteur)",
+          "measure": "box('.vl-stat__body').top / H",
+          "min": 0.5,
+          "max": 0.85
+        },
+        {
+          "name": "aucun débordement du corps sous la marge basse",
+          "measure": "H - num('.vl-stat','paddingBottom') - box('.vl-stat__body').bottom",
+          "min": -1
+        },
+        {
+          "name": "le corps s'arrête AVANT le chanfrein (il ne rentre pas dans la coupe)",
+          "measure": "W - num('.vl-stat','paddingRight') - box('.vl-stat__body').right",
+          "min": -1
+        },
+        {
+          "name": "glyphe calé dans le coin haut-droit (≤ 12 % du bord)",
+          "measure": "(W - box('.vl-stat__arrow').right) / W",
+          "max": 0.12
+        },
+        {
+          "name": "contraste du chiffre ≥ 3 (grand corps, seuil WCAG large text)",
+          "measure": "contrast('.vl-stat__figure')",
+          "min": 3
+        },
+        {
+          "name": "corps ≥ 16 px — en dessous, 3,4:1 sur cet orange n'est plus lisible",
+          "measure": "num('.vl-stat__body','fontSize')",
+          "min": 16
+        },
+        {
+          "name": "mesure de garde : le corps ne dépasse pas 34 caractères de large",
+          "measure": "box('.vl-stat__body').w / num('.vl-stat__body','fontSize')",
+          "max": 19
+        },
+        {
+          "name": "contraste du corps ≥ 3 (l'aplat d'accent ne pardonne rien en dessous)",
+          "measure": "contrast('.vl-stat__body')",
+          "min": 3
+        }
+      ],
+      "pptx": {
+        "primitive": "notched_rect",
+        "emitter": "kit/vl_pptx.py:stat_block"
+      },
+      "html": "patterns/pat-stat-block-accent.html"
+    },
+    {
+      "id": "pat-tile-kpi",
+      "name": "Tuile KPI",
+      "kind": "component",
+      "family": "tile",
+      "source": "ref-03-bento-dark-pitch",
+      "system": "sys-03",
+      "intent": "Loger un chiffre, son libellé et une icône facultative dans une tuile de hauteur fixe, alignable en rangée sans que la longueur des textes désaligne quoi que ce soit.",
+      "when_to_use": "Rangée ou grille 2×2 de résultats chiffrés dans un deck ou un dashboard. Deux à six tuiles ; au-delà, plus personne ne lit.",
+      "avoid_when": "Les chiffres doivent être comparés entre eux (là il faut un graphique, pas des tuiles) ou une tuile mérite trois lignes d'explication — ce n'est plus un KPI.",
+      "tags": [
+        "kpi",
+        "tuile",
+        "chiffre",
+        "metrique",
+        "dashboard",
+        "deck",
+        "grille",
+        "bento",
+        "stat"
+      ],
+      "vars": [
+        {
+          "name": "--vl-accent",
+          "role": "fond des tuiles à mettre en avant",
+          "default": "#CFE3F5"
+        },
+        {
+          "name": "--vl-surface-tile",
+          "role": "fond des tuiles de second rang",
+          "default": "#3A3A3A"
+        },
+        {
+          "name": "--vl-radius-tile",
+          "role": "rayon de la tuile",
+          "default": "16px"
+        }
+      ],
+      "slots": [
+        "icon",
+        "figure",
+        "label"
+      ],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": "patterns/pat-tile-kpi.html"
+    },
+    {
+      "id": "pat-title-leading-rule",
+      "name": "Titre à filet d'accent collé",
+      "kind": "type",
+      "family": "title",
+      "source": "ref-06-orange-notched",
+      "system": "sys-06",
+      "intent": "Marquer le titre d'une slide d'un filet vertical d'accent sans ajouter ni couleur au texte ni élément décoratif : le filet est le seul accent du titre, et il est collé au mot.",
+      "when_to_use": "Titre de slide en capitales grasses sur 1 à 3 lignes, dans un deck qui répète ce marqueur d'une slide à l'autre — c'est sa répétition qui en fait une charte.",
+      "avoid_when": "Le titre est déjà coloré ou posé sur un aplat d'accent (deux accents se neutralisent), ou il est centré : un filet collé à un bloc centré désaxe la composition sans rien signifier.",
+      "tags": [
+        "titre",
+        "filet",
+        "barre",
+        "accent",
+        "typo",
+        "capitales",
+        "deck",
+        "marqueur",
+        "leading-rule"
+      ],
+      "vars": [
+        {
+          "name": "--vl-orange",
+          "role": "couleur du filet",
+          "default": "#F2551E"
+        },
+        {
+          "name": "--vl-black",
+          "role": "couleur du titre",
+          "default": "#141414"
+        }
+      ],
+      "slots": [
+        "title"
+      ],
+      "geometry": {
+        "root": ".vl-tlr",
+        "frame": [
+          760,
+          160
+        ],
+        "ratios": {
+          "rule_width_over_font_size": 0.081
+        },
+        "type_px": {
+          "title": 74
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "filet ≈ 8 % du corps du titre (6 px pour 74 px)",
+          "measure": "num('.vl-tlr','borderLeftWidth') / num('.vl-tlr','fontSize')",
+          "expect": 0.081,
+          "tol": 0.03
+        },
+        {
+          "name": "filet COLLÉ : aucun padding entre le filet et la première lettre",
+          "measure": "num('.vl-tlr','paddingLeft')",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "le filet court sur toute la hauteur du bloc (variante bloc)",
+          "measure": "box('.vl-tlr').h / (num('.vl-tlr','fontSize') * 1.05 * 2)",
+          "min": 0.95,
+          "max": 1.05
+        },
+        {
+          "name": "variante en ligne : filet à hauteur de capitale (70 à 85 % du corps)",
+          "measure": "box('.vl-tlr-inline').h / num('.vl-tlr-right','fontSize')",
+          "min": 0.7,
+          "max": 0.85
+        },
+        {
+          "name": "les deux variantes ont la MÊME épaisseur de filet",
+          "measure": "Math.abs(num('.vl-tlr','borderLeftWidth') - box('.vl-tlr-inline').w)",
+          "expect": 0,
+          "tol": 0.5
+        },
+        {
+          "name": "titre en capitales",
+          "measure": "cs('.vl-tlr','textTransform') === 'uppercase' ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "contraste du titre ≥ 7",
+          "measure": "contrast('.vl-tlr')",
+          "min": 7
+        }
+      ],
+      "pptx": {
+        "primitive": "rect_rule",
+        "emitter": "kit/vl_pptx.py:title_leading_rule"
+      },
+      "html": "patterns/pat-title-leading-rule.html"
+    },
+    {
+      "id": "pat-title-monster-caps",
+      "name": "Titre-monstre en capitales",
+      "kind": "type",
+      "family": "type",
+      "source": "ref-04-swiss-investor-blue",
+      "system": "sys-04",
+      "intent": "Faire porter toute la hiérarchie d'une slide par un seul bloc typographique : un titre en capitales grasses calé haut-gauche, une phrase secondaire, et rien entre les deux.",
+      "when_to_use": "Ouverture de section dans un deck, couverture, page de titre — dès qu'une slide n'a qu'une chose à dire et qu'on veut qu'elle se lise à trois mètres.",
+      "avoid_when": "La slide porte plusieurs idées de même rang, ou le titre dépasse trois mots par ligne : à 76 px en capitales, une ligne longue devient un mur et l'effet s'inverse.",
+      "tags": [
+        "titre",
+        "typographie",
+        "capitales",
+        "grotesk",
+        "deck",
+        "slide",
+        "suisse",
+        "emphase",
+        "hierarchie",
+        "couverture"
+      ],
+      "vars": [
+        {
+          "name": "--vl-blue",
+          "role": "couleur du mot mis en emphase sur fond clair",
+          "default": "#1B44D8"
+        },
+        {
+          "name": "--vl-white",
+          "role": "fond clair / emphase sur fond plein",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-ink-muted",
+          "role": "sur-titre en micro-typo",
+          "default": "#6E6E6E"
+        }
+      ],
+      "slots": [
+        "kicker",
+        "title",
+        "lead"
+      ],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": "patterns/pat-title-monster-caps.html"
+    },
+    {
+      "id": "pat-toc-two-column",
+      "name": "Sommaire numéroté 2 colonnes",
+      "kind": "component",
+      "family": "toc",
+      "source": "ref-04-swiss-investor-blue",
+      "system": "sys-04",
+      "intent": "Faire tenir un sommaire de dix à quatorze sections sur une seule slide, en deux colonnes numérotées, lisible d'un coup d'œil et refermable aussitôt.",
+      "when_to_use": "Deck long qu'on présente à quelqu'un qui doit savoir combien de temps ça va durer : investisseur, comité, client. Idéalement 10 à 14 entrées.",
+      "avoid_when": "Moins de huit entrées (une seule colonne suffit et la deuxième sonne creux), ou entrées de longueur très inégale : à 11 px en capitales, une entrée qui passe sur deux lignes casse l'alignement des filets.",
+      "tags": [
+        "sommaire",
+        "toc",
+        "agenda",
+        "numerotation",
+        "colonnes",
+        "deck",
+        "slide",
+        "navigation",
+        "filet",
+        "suisse"
+      ],
+      "vars": [
+        {
+          "name": "--vl-blue",
+          "role": "fond plein de la slide de sommaire",
+          "default": "#1B44D8"
+        },
+        {
+          "name": "--vl-hairline-invert",
+          "role": "filet sous chaque entrée",
+          "default": "#FFFFFF33"
+        },
+        {
+          "name": "--vl-ink-muted-invert",
+          "role": "numéro d'entrée, en retrait du libellé",
+          "default": "#D3D3D3"
+        }
+      ],
+      "slots": [
+        "head",
+        "note",
+        "entries"
+      ],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": "patterns/pat-toc-two-column.html"
+    },
+    {
+      "id": "pat-type-inline-highlight-pill",
+      "name": "Surlignage en pilule inversée",
+      "kind": "type",
+      "family": "type",
+      "source": "ref-03-bento-dark-pitch",
+      "system": "sys-03",
+      "intent": "Faire ressortir un membre de phrase en le posant dans une pilule pleine inversée, dans le flux du texte.",
+      "when_to_use": "La condition ou le délai qui change tout dans une promesse (« within 5 years », « sans engagement », « dès le premier mois »). Un fragment par bloc.",
+      "avoid_when": "Le fragment fait plus de quatre ou cinq mots : la pilule devient une barre et casse l'interligne. Utiliser alors une ligne à part.",
+      "tags": [
+        "typographie",
+        "surlignage",
+        "emphase",
+        "pilule",
+        "inline",
+        "promesse",
+        "condition",
+        "highlight"
+      ],
+      "vars": [
+        {
+          "name": "--vl-surface-light",
+          "role": "fond de la pilule",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "texte de la pilule",
+          "default": "#111111"
+        }
+      ],
+      "slots": [
+        "text",
+        "highlight"
+      ],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": "patterns/pat-type-inline-highlight-pill.html"
+    },
+    {
+      "id": "pat-type-mixed-family-emphasis",
+      "name": "Emphase par changement de famille",
+      "kind": "type",
+      "family": "type",
+      "source": "ref-02-ghost-icon-claim",
+      "system": "sys-02",
+      "intent": "Accentuer un fragment de titre en basculant sa FAMILLE typographique (grotesk bold → serif italique) à corps égal, au lieu de le colorer ou de le grossir.",
+      "when_to_use": "Un titre où un mot est un nom de produit, une nuance, un aparté (« (lite) », « nearly », « — vraiment »). Marche aussi en sens inverse : serif de titre avec un mot en grotesk.",
+      "avoid_when": "La charte n'a qu'une seule famille disponible, ou le fragment porte l'information principale — dans ce cas il doit être plus GROS, pas juste différent.",
+      "tags": [
+        "typographie",
+        "emphase",
+        "titre",
+        "serif",
+        "italique",
+        "contraste",
+        "editorial"
+      ],
+      "vars": [
+        {
+          "name": "--vl-font-display",
+          "role": "famille du titre",
+          "default": "grotesk système"
+        },
+        {
+          "name": "--vl-font-accent",
+          "role": "famille du fragment accentué",
+          "default": "Georgia, Times"
+        },
+        {
+          "name": "--vl-size-title",
+          "role": "corps du titre",
+          "default": "52px"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "couleur, identique pour les deux familles",
+          "default": "#444444"
+        }
+      ],
+      "slots": [
+        "title"
+      ],
+      "geometry": null,
+      "benchmarks": [],
+      "pptx": null,
+      "html": "patterns/pat-type-mixed-family-emphasis.html"
+    }
+  ],
+  "systems": [
+    {
+      "id": "sys-02",
+      "name": "Gris fantôme — argument unique",
+      "source": "ref-02-ghost-icon-claim",
+      "tokens": {
+        "--vl-bg": "#F7F7F7",
+        "--vl-surface": "#EDEDED",
+        "--vl-ghost": "#E2E2E2",
+        "--vl-ink": "#444444",
+        "--vl-muted": "#A9A9A9",
+        "--vl-radius-card": "48px",
+        "--vl-pad-card": "60px 76px",
+        "--vl-gutter": "90px"
+      },
+      "type": {
+        "display": "-apple-system, BlinkMacSystemFont, \"Helvetica Neue\", Inter, Arial, sans-serif",
+        "body": "-apple-system, BlinkMacSystemFont, \"Helvetica Neue\", Inter, Arial, sans-serif",
+        "accent": "Georgia, \"Times New Roman\", \"Iowan Old Style\", serif",
+        "scale": {
+          "title": "52px / 1.18 / 700 / -0.015em",
+          "subtitle": "25px / 1.35 / 400 / 0"
+        }
+      }
+    },
+    {
+      "id": "sys-03",
+      "name": "Bento sombre — pitch investisseur",
+      "source": "ref-03-bento-dark-pitch",
+      "tokens": {
+        "--vl-bg": "#2E2E2E",
+        "--vl-board": "#2E2E2E",
+        "--vl-surface-light": "#FFFFFF",
+        "--vl-surface-dark": "#111111",
+        "--vl-surface-tile": "#3A3A3A",
+        "--vl-accent": "#CFE3F5",
+        "--vl-accent-2": "#8FBBE4",
+        "--vl-accent-3": "#5E9BD6",
+        "--vl-ink": "#111111",
+        "--vl-ink-muted": "#6B6B6B",
+        "--vl-ink-invert": "#FFFFFF",
+        "--vl-ink-invert-muted": "#A0A0A0",
+        "--vl-hairline": "#D5D5D5",
+        "--vl-hairline-invert": "#4A4A4A",
+        "--vl-radius-card": "24px",
+        "--vl-radius-sub": "20px",
+        "--vl-radius-tile": "16px",
+        "--vl-gap": "12px"
+      },
+      "type": {
+        "display": "-apple-system, BlinkMacSystemFont, \"Helvetica Neue\", Inter, Arial, sans-serif",
+        "body": "-apple-system, BlinkMacSystemFont, \"Helvetica Neue\", Inter, Arial, sans-serif",
+        "scale": {
+          "title": "44px / 1.06 / 500 / -0.02em",
+          "figure-xl": "56px / 1 / 700 / -0.02em",
+          "figure": "22px / 1.1 / 700 / -0.01em",
+          "lead": "20px / 1.25 / 500",
+          "body": "14px / 1.5 / 400",
+          "micro": "11px / 1.35 / 400"
+        }
+      }
+    },
+    {
+      "id": "sys-04",
+      "name": "Suisse maximaliste — investor deck bleu",
+      "source": "ref-04-swiss-investor-blue",
+      "tokens": {
+        "--vl-bg": "#D9D2C7",
+        "--vl-board": "#D9D2C7",
+        "--vl-blue": "#1B44D8",
+        "--vl-black": "#0D0D0D",
+        "--vl-white": "#FFFFFF",
+        "--vl-ink-muted": "#6E6E6E",
+        "--vl-ink-muted-invert": "#D3D3D3",
+        "--vl-hairline": "#00000018",
+        "--vl-hairline-invert": "#FFFFFF33",
+        "--vl-ph-a": "#C9C9C9",
+        "--vl-ph-b": "#5A5A5A",
+        "--vl-margin": "48px"
+      },
+      "type": {
+        "display": "\"Helvetica Neue\", Inter, Arial, \"Archivo Black\", sans-serif",
+        "body": "\"Helvetica Neue\", Inter, Arial, sans-serif",
+        "scale": {
+          "monster": "76px / 0.92 / 900 / -0.02em / UPPERCASE",
+          "lead": "26px / 1.2 / 500",
+          "number-giant": "88px / 1 / 900 / -0.03em",
+          "body": "13px / 1.5 / 400",
+          "micro": "8px / 1.4 / 500 / 0.12em / UPPERCASE"
+        }
+      }
+    },
+    {
+      "id": "sys-06",
+      "name": "Corporate orange chanfreiné",
+      "source": "ref-06-orange-notched",
+      "tokens": {
+        "--vl-bg": "#F0EFEC",
+        "--vl-board": "#DEDDD9",
+        "--vl-white": "#FFFFFF",
+        "--vl-black": "#141414",
+        "--vl-orange": "#F2551E",
+        "--vl-steel": "#C6D0CF",
+        "--vl-ink-muted": "#6A6A67",
+        "--vl-ink-muted-invert": "#FFF1E9",
+        "--vl-ink-on-steel": "#3E4746",
+        "--vl-hairline": "#00000015",
+        "--vl-ph-a": "#C9C9C9",
+        "--vl-ph-b": "#4C4C4C",
+        "--vl-ph-dark-a": "#6A6A6A",
+        "--vl-ph-dark-b": "#141414",
+        "--vl-notch": "34px",
+        "--vl-margin": "60px"
+      },
+      "type": {
+        "display": "\"Helvetica Neue\", Inter, Arial, sans-serif",
+        "body": "\"Helvetica Neue\", Inter, Arial, sans-serif",
+        "scale": {
+          "title": "74px / 1.05 / 800 / -0.005em / UPPERCASE",
+          "title-lg": "76px / 1.05 / 800 (couverture)",
+          "title-sm": "24px / 1.05 / 800 / 0.02em (sous-titre de colonne, libellé d'index)",
+          "stat": "64px / 1 / 800 / -0.02em",
+          "body": "17px / 1.55 / 400",
+          "micro": "12px / 1.4 / 700 / 0.14em / UPPERCASE"
+        }
+      }
+    },
+    {
+      "id": "sys-08",
+      "name": "Suisse studio — hero web Studioform®",
+      "source": "ref-08-swiss-studio-hero",
+      "tokens": {
+        "--vl-bg": "#F6F5F2",
+        "--vl-board": "#F6F5F2",
+        "--vl-card": "#F6F5F2",
+        "--vl-ink": "#111111",
+        "--vl-ink-soft": "#2A2A28",
+        "--vl-radius-card": "4px",
+        "--vl-radius-photo": "8px",
+        "--vl-margin": "40px",
+        "--vl-gap-photo": "16px"
+      },
+      "type": {
+        "display": "\"Helvetica Neue\", Helvetica, Inter, Arial, sans-serif",
+        "body": "\"Helvetica Neue\", Helvetica, Inter, Arial, sans-serif",
+        "scale": {
+          "wordmark": "204px / 1 / 700 / -0.035em — se règle à la largeur, pas au nombre",
+          "registered": "0.30em du wordmark, en exposant",
+          "statement": "21px / 1.45 / 400 — 3 lignes, ≈ 43 caractères par ligne",
+          "nav": "15px / 1 / 400"
+        }
+      }
+    },
+    {
+      "id": "sys-10",
+      "name": "Planche de campagne — condensée rouge",
+      "source": "ref-10-campaign-board-red",
+      "tokens": {
+        "--vl-bg": "#EDEAE3",
+        "--vl-board": "#EDEAE3",
+        "--vl-slide": "#EDEAE3",
+        "--vl-red": "#E33A22",
+        "--vl-white": "#FFFFFF",
+        "--vl-inset": "137px",
+        "--vl-gutter": "8px",
+        "--vl-rule": "2.5px"
+      },
+      "type": {
+        "display": "Archivo, \"Archivo Black\", Anton, Impact, sans-serif",
+        "body": "Archivo, Inter, \"Helvetica Neue\", sans-serif",
+        "scale": {
+          "title": "104px / 0.84 / 900 / wdth 85 / -0.01em / UPPERCASE",
+          "section-number": "78px / 1 / 600 / wdth 100 — parenthèses comprises",
+          "micro-caps": "13px / 1.45 / 700 / 0.02em / UPPERCASE — colonnes de ~16 caractères",
+          "table-label": "13px / 1.45 / 700 / 0.02em / UPPERCASE"
+        }
+      }
+    }
+  ]
+}

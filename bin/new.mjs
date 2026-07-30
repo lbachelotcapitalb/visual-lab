@@ -41,6 +41,24 @@ writeFileSync(
       tags: [],
       vars: [{ name: '--vl-accent', role: 'couleur d’accent', default: 'var(--vl-accent)' }],
       slots: [],
+      // La géométrie et les benchmarks sont ce qui rend le pattern VÉRIFIABLE (bin/check.mjs)
+      // et utilisable en .pptx (kit/vl_pptx.py). `root` est le sélecteur mesuré : W et H en
+      // viennent, donc tous les benchmarks s'écrivent en RATIOS de cette boîte.
+      geometry: {
+        root: `.${id}`,
+        frame: [430, 340],
+        ratios: {},
+        type_px: {},
+        pad_ratio: { top: 0, x: 0, bottom: 0 },
+      },
+      benchmarks: [
+        {
+          name: 'À REMPLACER — une assertion mesurable, pas un avis',
+          measure: `num('.${id}','paddingLeft') / W`,
+          expect: 0.08,
+          tol: 0.02,
+        },
+      ],
       notes: '',
     },
     null,
@@ -57,3 +75,10 @@ if (kind !== 'rule') {
 }
 
 console.log(`✓ ${jsonPath}${kind !== 'rule' ? `\n✓ ${htmlPath}` : ''}`);
+console.log(
+  'Ensuite, dans cet ordre : node bin/index.mjs → node bin/check.mjs ' +
+    id +
+    ' (jusqu\'au vert) → node bin/render.mjs --pattern ' +
+    id +
+    ' (et REGARDER).'
+);

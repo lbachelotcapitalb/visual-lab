@@ -136,7 +136,7 @@ tri-parti, astérisque de marque.
 Patterns : `pat-header-tripartite`, `pat-mark-asterisk`, `pat-cards-numbered-steps`,
 `pat-title-hyphen-break`, `pat-accent-single-fluo` (`kind: rule`).
 
-### 🟡 Lot 5 — `ref-06` orange-notched — reconstitution faite, patterns à extraire
+### ✅ Lot 5 — `ref-06` orange-notched (30/07/2026)
 **8 slides.** La signature est le **coin chanfreiné** (`clip-path`).
 Patterns : `pat-shape-notched-card`, `pat-title-leading-rule`, `pat-list-index-rules`,
 `pat-stat-block-accent`.
@@ -159,7 +159,31 @@ Troisième leçon, sur les cartes : ne PAS les laisser en `flex:1` dans leur ran
 libellé en haut et son texte en bas d'une carte de 450 px de haut créent un vide intérieur
 qui se lit comme un oubli. Hauteur bornée (300–340 px) et c'est la rangée qui cède la place.
 
-**Reste à faire** : les patterns (étapes 5 à 7 de la procédure), puis `node bin/index.mjs`.
+**Patterns extraits le 30/07** — 5 au lieu des 4 prévus (Léo a pointé la carte de second rang
+comme une vignette à part entière) : `pat-shape-notched-card` (primitive),
+`pat-stat-block-accent`, `pat-card-notched-brief`, `pat-title-leading-rule`,
+`pat-list-index-rules`. **41 benchmarks, tous verts** (`node bin/check.mjs`), rendus PNG regardés
+un par un.
+
+Ce lot a fait naître l'outillage que les suivants doivent réutiliser :
+- `bin/check.mjs` — mesure la géométrie RÉELLE du fragment dans Chrome et confronte les
+  `benchmarks` du .json. Sort en code 1 tant qu'un seuil n'est pas tenu.
+- `INDEX.md` + `index.json` — générés par `bin/index.mjs` à chaque indexation, VERSIONNÉS, pour
+  qu'un autre skill lise le catalogue sans sqlite.
+- `kit/vl_pptx.py` — le pont vers le .pptx : mêmes ratios, mêmes seuils, un `audit()` qui lève.
+  `deck-builder` y pioche désormais (sa doc a été mise à jour dans le même mouvement).
+
+Trois pièges payés ici, à ne pas repayer :
+1. `getComputedStyle().clipPath` ne résout NI les `%` NI les `calc()`. Une regex qui ne ramasse
+   que les `px` fabrique des sommets fantaisistes — les mesures semblaient bonnes par
+   coïncidence et l'orientation du chanfrein sortait fausse. Il faut découper le polygone
+   (virgules, puis espaces, au premier niveau de parenthèses) et évaluer contre la boîte.
+2. Une tuile de DÉMONSTRATION doit avoir la proportion d'un vrai usage : 4 cartes côte à côte
+   sur 880 px donnaient 200 px de large, où le chanfrein de 34 px pèse 17 % au lieu de 7,5 %. La
+   démo mentait sur le pattern qu'elle illustre.
+3. `shape.shadow.inherit = False` ne suffit pas à retirer une ombre en .pptx : le `<p:style>`
+   émis par python-pptx référence l'ombre du thème. Toutes les cartes sont sorties avec une
+   ombre grise — invisible dans le proxy PIL, flagrante au rendu LibreOffice.
 
 ### ⬜ Lot 6 — `ref-07` retro-brand-hero
 Page web, carte flottante sur photo, wordmark géant bas-gauche, triptyque portrait
