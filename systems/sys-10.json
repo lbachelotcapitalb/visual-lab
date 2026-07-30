@@ -1,0 +1,25 @@
+{
+  "name": "Planche de campagne — condensée rouge",
+  "source": "ref-10-campaign-board-red",
+  "notes": "Deux couleurs et une seule famille condensée : tout le reste est porté par les PHOTOS, qui sont en couleur mais toutes castées rouge/brun — c'est ce casting, pas la charte, qui fait tenir la planche. Le rouge ne sert jamais de fond de slide : il est l'encre (titres, micro-caps, filets, numéros) et il occupe une incrustation carrée, rien entre les deux. La typo n'a que TROIS emplois, et ils sont séparés par un facteur 7 : le titre condensé Black en capitales (104px), la micro-cap dense (13px) et le numéro de section entre parenthèses (78px) — aucune taille intermédiaire, aucune casse mixte nulle part. Les images sont à FOND PERDU sur les bords de slide (aucune marge), et l'incrustation chevauche délibérément la limite entre deux images : c'est le seul geste de profondeur du système. Le fond de planche taupe #8A8078 de la source est un DÉCOR de contact sheet, pas une slide — il n'est pas reproduit ici, comme pour ref-08. Les valeurs typo ont été relevées à la PROPORTION occupée dans la source (le titre affleure 23 % de la largeur de slide, la colonne de micro-caps 9 %), pas recopiées de SPEC-SOURCES.md, dont les px sont bas d'un facteur ≈ 1.65.",
+  "tokens": {
+    "--vl-bg": "#EDEAE3",
+    "--vl-board": "#EDEAE3",
+    "--vl-slide": "#EDEAE3",
+    "--vl-red": "#E33A22",
+    "--vl-white": "#FFFFFF",
+    "--vl-inset": "137px",
+    "--vl-gutter": "8px",
+    "--vl-rule": "2.5px"
+  },
+  "type": {
+    "display": "Archivo, \"Archivo Black\", Anton, Impact, sans-serif",
+    "body": "Archivo, Inter, \"Helvetica Neue\", sans-serif",
+    "scale": {
+      "title": "104px / 0.84 / 900 / wdth 85 / -0.01em / UPPERCASE",
+      "section-number": "78px / 1 / 600 / wdth 100 — parenthèses comprises",
+      "micro-caps": "13px / 1.45 / 700 / 0.02em / UPPERCASE — colonnes de ~16 caractères",
+      "table-label": "13px / 1.45 / 700 / 0.02em / UPPERCASE"
+    }
+  }
+}

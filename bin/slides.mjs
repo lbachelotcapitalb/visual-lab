@@ -8,7 +8,7 @@
 // juger une slide (à 50 %, la micro-typo de 8 px devient illisible et les écarts se cachent).
 // La planche-contact, elle, se dérive ensuite avec bin/board.mjs.
 import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
-import { join, basename, resolve } from 'node:path';
+import { join, basename, dirname, resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { ROOT, DIRS } from './lib.mjs';
 
@@ -46,7 +46,9 @@ const name = basename(deck).replace(/\.html?$/, '');
 const outDir = join(DIRS.proofs, name);
 mkdirSync(outDir, { recursive: true });
 
-const tmp = join(ROOT, `.slides-${name}.html`);
+// Le fichier temporaire est écrit À CÔTÉ du deck : les chemins relatifs du deck
+// (@import d'une CSS de polices, asset local) doivent résoudre pareil à l'export.
+const tmp = join(dirname(deck), `.slides-${name}.html`);
 const wanted = only ? [only] : slides.map((_, i) => i + 1);
 
 for (const n of wanted) {

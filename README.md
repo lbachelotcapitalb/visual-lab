@@ -26,6 +26,8 @@ systems/sys-NN.json    les tokens d'une référence (palette, typo, rayons, note
 patterns/pat-*.json    métadonnées d'un pattern (intention, quand l'employer, quand l'éviter)
 patterns/pat-*.html    le fragment autonome correspondant
 decks/ref-NN.html      la reconstitution fidèle d'une référence complète, au format slides
+fonts/                 les 3 polices du corpus (OFL, dans le dépôt) + fonts.css
+fonts/FONTS.md         quelle police pour quelle référence, et comment la brancher
 bin/                   les outils (index, recherche, rendu, export slides, planche, création)
 patterns.db            index SQLite — REGÉNÉRABLE, gitignoré
 proofs/                PNG de vérification — régénérables, gitignorés
@@ -106,5 +108,12 @@ bibliothèque à moitié indexée qui se tait coûte plus cher qu'une erreur bru
 `decks/ref-08.html` sont là, ses patterns restent à extraire (ils dépendent du lot 6).
 `ref-06` (pitch deck orange chanfreiné) est reconstitué depuis le 30/07 — `sys-06` et
 `decks/ref-06.html`, 8 slides prouvées ; ses 4 patterns restent à extraire.
-Reste 5 références à reproduire, une par lot. Suite et prompt de reprise :
+`ref-10` (planche de campagne rouge) est reconstitué depuis le 30/07 — `sys-10` et
+`decks/ref-10.html`, 3 slides prouvées ; ses 5 patterns restent à extraire.
+Reste 4 références à reproduire, une par lot. Suite et prompt de reprise :
 [ROADMAP.md](ROADMAP.md).
+
+**Typographie** : les polices vivent dans le dépôt (`fonts/`, licences OFL) et se branchent
+par `@import url("../fonts/fonts.css")` **dans** le bloc `<style>` du deck — jamais par une
+balise de lien, que l'export slide par slide ne reprend pas. Registre et pièges de taille :
+[fonts/FONTS.md](fonts/FONTS.md).

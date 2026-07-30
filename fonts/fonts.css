@@ -1,0 +1,37 @@
+/* fonts/fonts.css — LE point d'entrée typographique du dépôt.
+   Les URL sont relatives à CE fichier : un deck (`../fonts/fonts.css`) et un rendu de
+   pattern à la racine (`fonts/fonts.css`) résolvent donc les mêmes chemins.
+   Rien de distant : les .ttf sont dans le dépôt, licences OFL à côté.
+   Quelle police pour quelle référence : voir fonts/FONTS.md. */
+
+/* Archivo — variable (largeur ET graisse). Le cheval de bataille des titres :
+   `font-stretch` descend jusqu'à 62 %, ce qui couvre les grotesks condensées Black
+   du corpus sans embarquer une seconde famille. */
+@font-face {
+  font-family: "Archivo";
+  src: url("Archivo-variable.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: block;
+}
+
+/* Inter — variable. Le substitut d'Helvetica Neue pour tout le corpus « grotesk neutre ».
+   `opsz` est laissé au réglage automatique : Inter ajuste seul son dessin à la taille. */
+@font-face {
+  font-family: "Inter";
+  src: url("Inter-variable.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+
+/* Anton — une seule graisse, plus condensée et plus serrée qu'Archivo à 62 %.
+   Alternative de titre quand Archivo Black condensé manque de tension. */
+@font-face {
+  font-family: "Anton";
+  src: url("Anton-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}

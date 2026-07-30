@@ -5,3 +5,6 @@ patterns.db
 proofs/
 .render-*.html
 .DS_Store
+.slides-*.html
+.board-*.html
+.fonttest.html

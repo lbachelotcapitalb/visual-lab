@@ -36,7 +36,13 @@ for (const p of patterns) {
   if (p.kind !== 'rule' && !p.html) errors.push(`${p.id} : aucun ${p.id}.html (obligatoire sauf kind=rule)`);
   if (p.system && !systemIds.has(p.system)) errors.push(`${p.id} : système "${p.system}" inconnu`);
   // Un pattern doit être thémable : pas de couleur hexadécimale en dur dans le HTML.
-  if (p.html && /#[0-9a-fA-F]{3,8}\b/.test(p.html.replace(/<!--[\s\S]*?-->/g, ''))) {
+  // Les entités HTML numériques (`&#8599;` = ↗) ne sont PAS des couleurs : les retirer avant
+  // le test, sinon un glyphe de flèche fait échouer l'indexation de tout le dépôt — vu le
+  // 30/07 sur pat-stat-block-accent. Un faux positif récurrent se corrige dans le détecteur.
+  const htmlSansEntites = (p.html || '')
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/&#x?[0-9a-fA-F]+;/g, '');
+  if (p.html && /#[0-9a-fA-F]{3,8}\b/.test(htmlSansEntites)) {
     errors.push(`${p.id} : couleur en dur dans le HTML — passer par une variable --vl-*`);
   }
 }

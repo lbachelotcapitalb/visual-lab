@@ -81,6 +81,26 @@ seule, `ref-02` un visuel unique, `ref-07` et `ref-08` sont des pages web.
 - **Bloc de largeur bornée.** Un libellé à gauche et son chiffre à droite d'une slide de
   1600 px ne forment plus une paire. Borner le bloc (`max-width` + `margin-left: auto`)
   avant de s'en remettre à `justify-content: space-between`.
+- **UN SEUL bloc `<style>`, et il porte tout.** `bin/slides.mjs` et `bin/board.mjs`
+  reconstruisent la page à partir du **premier** bloc `<style>` du deck, et de lui seul. Un
+  second bloc en fin de page ou une balise de lien dans l'en-tête sont perdus à l'export,
+  **sans erreur** : ref-08 est sorti avec ses trois images vides (53 ko au lieu de 530), et un
+  deck à police liée sortirait en police système. Les polices se branchent donc par
+  `@import url("../fonts/fonts.css")` **dans** ce bloc (cf. `fonts/FONTS.md`), et les fichiers
+  temporaires d'export sont écrits à côté du deck pour que ce chemin relatif tienne.
+- **Ne jamais écrire la balise ouvrante d'une slide dans un commentaire.** L'extraction est
+  une regex : elle prend la chaîne du commentaire pour le début de la slide 1 et exporte le
+  commentaire comme contenu (vu sur ref-10). Décrire, ne pas citer.
+- **La viewBox d'une image SVG se règle à la proportion de SA TUILE, pas du dessin.** Avec
+  `preserveAspectRatio="slice"`, un écart de ratio recadre au centre ET grossit d'autant : la
+  première veste de ref-10 perdait son ciel et ses boutons hors champ, et la robe de vache
+  montrait 4 taches géantes au lieu d'une dizaine. Quand il faut peupler un cadre plus large,
+  définir le motif une fois (`<g id>`) et le réinstancier décalé (`<use transform>`) plutôt
+  que d'étirer.
+- **Arrondir un polygone sans le redessiner** : `feGaussianBlur` franc, puis
+  `feComponentTransfer` avec une rampe alpha raide (`slope 7 / intercept -2.1`), puis un flou
+  de 0.7 pour l'antialiasing. Les angles fondent en lobes organiques, le bord reste net —
+  c'est ce qui a transformé des taches en camouflage anguleux en vraies taches de robe.
 
 ---
 
@@ -178,10 +198,24 @@ redevient une forme géométrique et l'effet tombe. C'est le plus fort différen
 anti-« AI slop » du corpus.
 Patterns : `pat-annotation-marker`, `pat-type-lowercase-editorial`, `pat-type-vertical-rail`.
 
-### ⬜ Lot 9 — `ref-10` campaign-board-red
+### 🟡 Lot 9 — `ref-10` campaign-board-red — reconstitution faite, patterns à extraire
 **3 slides.** Typo condensée écrasée, collage d'images en overlay, tableau à filets.
 Patterns : `pat-type-condensed-stack`, `pat-mark-paren-number`, `pat-table-hairline-rules`,
 `pat-layout-image-collage-overlay`, `pat-type-micro-caps-block`.
+
+**Fait le 30/07/2026, hors ordre** (demande directe de Léo sur le visuel source) :
+`systems/sys-10.json` et `decks/ref-10.html` — **3 slides 1600×900**, preuves
+`proofs/ref-10/slide-01..03.png` + planche `proofs/ref-10.png`. Le fond de planche taupe et
+la signature « @ALOHA DESIGN » ne sont PAS reproduits : décor de contact sheet, pas slides.
+Les six photos sont des compositions SVG génératives (robe de vache, veste rouge satinée,
+chemin de terre, main gantée à la fiole, pièce rouge, cactus à épines).
+
+**Le lot a apporté les polices au dépôt** : `fonts/` (Archivo variable, Inter variable,
+Anton, licences OFL) + `fonts/FONTS.md`, le registre « quelle police pour quelle référence ».
+C'est ref-10 qui l'imposait — sa grotesk condensée Black n'existe pas sur le système.
+
+Valeurs typo relevées à la proportion (titre 104px, micro-caps 13px, numéro 78px), pas
+recopiées de la spec : cf. le piège documenté dans `fonts/FONTS.md`.
 
 ### ⬜ Lot 10 — `ref-01` bento-pills-2030
 1 slide de couverture, purement géométrique. Reconstruire **à plat** : ne pas reproduire la

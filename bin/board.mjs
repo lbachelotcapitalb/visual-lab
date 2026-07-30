@@ -7,7 +7,7 @@
 // ce script qui met les slides en grille — pas le HTML du deck, qui ne doit rien savoir de
 // la façon dont on le regarde.
 import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
-import { join, basename, resolve } from 'node:path';
+import { join, basename, dirname, resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { ROOT, DIRS } from './lib.mjs';
 
@@ -49,7 +49,8 @@ const pageH = rows * ch + (rows - 1) * GAP + 2 * PAD;
 
 const name = basename(deck).replace(/\.html?$/, '');
 mkdirSync(DIRS.proofs, { recursive: true });
-const tmp = join(ROOT, `.board-${name}.html`);
+// Écrit à côté du deck : cf. la note dans bin/slides.mjs (chemins relatifs).
+const tmp = join(dirname(deck), `.board-${name}.html`);
 const out = join(DIRS.proofs, `${name}.png`);
 
 writeFileSync(
