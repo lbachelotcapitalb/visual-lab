@@ -7,7 +7,10 @@
 > notée `≈`. Les mesures sont exprimées pour une slide **1600 × 900** (ou une page 1440 de
 > large pour les deux références web), à convertir en `rem`/`%` dans le code.
 
-Convention d'identifiant : `ref-NN-slug` pour la référence, `pat-<famille>-<slug>` pour un
+Convention d'identifiant : `ref-NN-slug` pour la référence (le même id nomme ses tokens dans
+`systems/`, son deck dans `decks/`), `<famille>[-NN]-<mots>` pour un pattern — cf. la section
+Nomenclature du README. **Les noms de patterns listés dans les références non traitées sont
+indicatifs** : l'id définitif se fige à l'extraction, quand la famille est connue. Ancien
 pattern atomique extrait, `sys-NN` pour le système de tokens d'une référence.
 
 ---
@@ -21,7 +24,7 @@ la feuille de droite, à plat.
 **Intention** — Couverture « design system / rapport 2030 » : aucun texte hormis l'année.
 Le message est porté par la **géométrie seule**.
 
-**Palette (`sys-01`)**
+**Palette**
 - fond page `#F5F4F2` (blanc cassé chaud)
 - noir `#0B0B0B`
 - rouge vif `#E8342A`
@@ -49,13 +52,13 @@ horizontales) ou 2 rangées (pilule verticale).
 | 8 | `teardrop` (miroir) | coin droit en bas-gauche : `border-radius: 48px 48px 48px 0` | noir |
 
 **Patterns à extraire**
-- `pat-layout-bento-primitives` — la grille + le jeu de 6 primitives paramétrables.
-- `pat-shape-teardrop` — le squircle à coin unique droit (4 orientations).
-- `pat-shape-toggle` — pilule + pastille (sert aussi de puce/indicateur).
-- `pat-fill-gradient-stadium` — dégradé directionnel contraint à une forme stadium.
+- `layout-bento-primitives` — la grille + le jeu de 6 primitives paramétrables.
+- `shape-teardrop` — le squircle à coin unique droit (4 orientations).
+- `shape-toggle` — pilule + pastille (sert aussi de puce/indicateur).
+- `fill-gradient-stadium` — dégradé directionnel contraint à une forme stadium.
 
 **Piège de fidélité** — La photo est en perspective : ne PAS reproduire l'inclinaison ni
-l'ombre. Reconstruire à plat. La perspective sera un pattern séparé (`pat-fx-print-mockup`)
+l'ombre. Reconstruire à plat. La perspective sera un pattern séparé (`fx-print-mockup`)
 si Léo le demande un jour.
 
 ---
@@ -68,7 +71,7 @@ si Léo le demande un jour.
 **Intention** — Asséner **un seul argument**. Tout le design sert la hiérarchie :
 icône énorme mais presque invisible, titre lourd, preuve en gris clair.
 
-**Palette (`sys-02`)**
+**Palette**
 - fond page `#F7F7F7`
 - carte `#EDEDED`
 - icône `#E2E2E2` (à peine plus foncée que la carte — contraste volontairement sous le seuil)
@@ -91,9 +94,9 @@ reste. Les deux colonnes sont **centrées verticalement** l'une par rapport à l
 angle légèrement penché (le pouce à gauche). Silhouette simple, coins très arrondis.
 
 **Patterns à extraire**
-- `pat-card-ghost-icon-claim` — la carte complète (le pattern principal).
-- `pat-type-mixed-family-emphasis` — le fragment serif italique dans un titre grotesk.
-- `pat-icon-ghost` — règle de traitement : icône monochrome à `ΔL ≈ 4 %` du fond, taille
+- `card-ghost-icon-claim` — la carte complète (le pattern principal).
+- `type-mixed-family-emphasis` — le fragment serif italique dans un titre grotesk.
+- `icon-ghost` — règle de traitement : icône monochrome à `ΔL ≈ 4 %` du fond, taille
   ≥ 3× la hauteur du titre, jamais d'outline.
 
 ---
@@ -106,7 +109,7 @@ angle légèrement penché (le pouce à gauche). Silhouette simple, coins très 
 **Intention** — Deck investisseur « bento » : chaque slide est une composition de cartes
 imbriquées (carte → sous-cartes → tuiles), fond sombre, accents bleu pâle.
 
-**Palette (`sys-03`)**
+**Palette**
 - planche / fond `#2E2E2E`
 - carte claire `#FFFFFF`, carte sombre `#111111`, tuile grise `#3A3A3A`
 - bleu pâle (accent principal) `#CFE3F5`
@@ -159,13 +162,13 @@ Chiffres KPI 22 px poids 700.
   en badge pilule gris clair + icône graphique + micro-texte.
 
 **Patterns à extraire**
-- `pat-layout-bento-nested` — carte → sous-cartes → tuiles, échelle de rayons décroissante.
-- `pat-badge-pill-outline` — le badge « 2025 » / « by year ».
-- `pat-tile-kpi` — tuile chiffre + libellé + icône d'angle, hauteur figée.
-- `pat-chart-isotype` — matrice de pictogrammes à taux de remplissage.
-- `pat-chart-bars-stadium` — barres à sommet arrondi + axe en pilules.
-- `pat-type-inline-highlight-pill` — mot surligné par une pilule inversée dans le flux.
-- `pat-icon-circle-arrow` — flèche dans un cercle outline (↗ ↘ →).
+- `layout-bento-nested` — carte → sous-cartes → tuiles, échelle de rayons décroissante.
+- `badge-pill-outline` — le badge « 2025 » / « by year ».
+- `tile-kpi` — tuile chiffre + libellé + icône d'angle, hauteur figée.
+- `chart-isotype` — matrice de pictogrammes à taux de remplissage.
+- `chart-bars-stadium` — barres à sommet arrondi + axe en pilules.
+- `type-inline-highlight-pill` — mot surligné par une pilule inversée dans le flux.
+- `icon-circle-arrow` — flèche dans un cercle outline (↗ ↘ →).
 
 ---
 
@@ -177,7 +180,7 @@ sur fond de planche `#D9D2C7`.
 **Intention** — Suisse maximaliste : titre-monstre en capitales, alternance de fonds pleins,
 photos noir et blanc, aucune fioriture.
 
-**Palette (`sys-04`)**
+**Palette**
 - bleu `#1B44D8` (dominante), noir `#0D0D0D`, blanc `#FFFFFF`
 - gris de corps `#6E6E6E` sur fond clair, `#D3D3D3` sur fond sombre
 
@@ -207,11 +210,11 @@ contenu en 2 colonnes 50/50 ou 60/40.
 - Puces à chevron `↘` alignées en 3 colonnes en bas de slide.
 
 **Patterns à extraire**
-- `pat-layout-swiss-header-footer` — micro-header/footer 3 zones + filet.
-- `pat-title-monster-caps` — le titre-monstre calé haut-gauche.
-- `pat-list-numbered-giant` — colonnes 01/02/03 à numéro géant.
-- `pat-toc-two-column` — sommaire numéroté 2 colonnes.
-- `pat-deck-rhythm-fullbleed` — la règle d'alternance des fonds pleins (règle éditoriale,
+- `layout-swiss-header-footer` — micro-header/footer 3 zones + filet.
+- `title-monster-caps` — le titre-monstre calé haut-gauche.
+- `list-numbered-giant` — colonnes 01/02/03 à numéro géant.
+- `toc-two-column` — sommaire numéroté 2 colonnes.
+- `deck-rhythm-fullbleed` — la règle d'alternance des fonds pleins (règle éditoriale,
   pas de HTML : stockée comme pattern de type `rule`).
 
 ---
@@ -220,7 +223,7 @@ contenu en 2 colonnes 50/50 ou 60/40.
 
 **Nature** — Planche de 8 slides d'une « Business Proposal 2045 » sur fond `#EFEFED`.
 
-**Palette (`sys-05`)**
+**Palette**
 - fond `#EFEFED`, carte blanche `#FFFFFF`, carte noire `#111111`
 - jaune acide `#EAFF00` (aplat) — un seul accent, jamais deux
 - gris de corps `#7A7A7A`
@@ -245,11 +248,11 @@ contenu en 2 colonnes 50/50 ou 60/40.
 - Bandeau noir pleine largeur radius 16 contenant image de texture + texte blanc + badge jaune.
 
 **Patterns à extraire**
-- `pat-header-tripartite` — le header 3 zones (réutilisable hors de cette charte).
-- `pat-mark-asterisk` — le marqueur de marque et sa règle d'emploi (1 par slide).
-- `pat-cards-numbered-steps` — la rangée 01→04 avec une carte accentuée.
-- `pat-title-hyphen-break` — la césure volontaire dans un titre display.
-- `pat-accent-single-fluo` — règle : neutre + **un** accent fluo, ratio surface ≤ 12 %.
+- `header-tripartite` — le header 3 zones (réutilisable hors de cette charte).
+- `mark-asterisk` — le marqueur de marque et sa règle d'emploi (1 par slide).
+- `cards-numbered-steps` — la rangée 01→04 avec une carte accentuée.
+- `title-hyphen-break` — la césure volontaire dans un titre display.
+- `accent-single-fluo` — règle : neutre + **un** accent fluo, ratio surface ≤ 12 %.
 
 ---
 
@@ -257,7 +260,7 @@ contenu en 2 colonnes 50/50 ou 60/40.
 
 **Nature** — Planche de 8 slides d'un pitch deck corporate orange sur fond `#F0EFEC`.
 
-**Palette (`sys-06`)**
+**Palette**
 - fond `#F0EFEC`, blanc `#FFFFFF`, noir `#141414`
 - orange `#F2551E`
 - gris-bleu (carte secondaire) `#C6D0CF`
@@ -278,11 +281,11 @@ corps 11 px / 1.5, gris. Chiffres statistiques ≈ 40 px blanc sur orange.
 - Glyphe `»` orange comme puce.
 
 **Patterns à extraire**
-- `pat-shape-notched-card` — la carte à coin chanfreiné (4 orientations, taille du chanfrein
+- `shape-notched-card` — la carte à coin chanfreiné (4 orientations, taille du chanfrein
   paramétrable).
-- `pat-title-leading-rule` — le filet vertical collé au titre.
-- `pat-list-index-rules` — l'index libellé/numéro à filets.
-- `pat-stat-block-accent` — le bloc statistique sur aplat d'accent.
+- `title-leading-rule` — le filet vertical collé au titre.
+- `list-index-rules` — l'index libellé/numéro à filets.
+- `stat-block-accent` — le bloc statistique sur aplat d'accent.
 
 ---
 
@@ -291,7 +294,7 @@ corps 11 px / 1.5, gris. Chiffres statistiques ≈ 40 px blanc sur orange.
 **Nature** — Maquette de page d'accueil « RAD HABITS », carte flottant sur une photo de
 plage (ciel + sable). Page ≈ 1440 de large, carte ≈ 78 % de la largeur.
 
-**Palette (`sys-07`)**
+**Palette**
 - carte `#FBF7EC` (crème), rouge de marque `#B2201C`
 - texte de nav `#1E1B18`
 - l'arrière-plan est une **photo**, jamais un aplat
@@ -310,10 +313,10 @@ texte crème 12 px. Corps : wordmark en bas-gauche ; **triptyque d'images portra
 3:4, radius 8, gap 12) aligné **en haut à droite**, largeur totale ≈ 42 % de la carte.
 
 **Patterns à extraire**
-- `pat-hero-card-on-photo` — la carte flottante sur photo (avec l'ombre et les proportions).
-- `pat-nav-three-zone` — nav liens / logo centré / bouton.
-- `pat-hero-wordmark-bottom-left` — wordmark géant bas-gauche + triptyque haut-droite.
-- `pat-image-triptych` — 3 images de ratio identique, gap constant, radius léger.
+- `hero-card-on-photo` — la carte flottante sur photo (avec l'ombre et les proportions).
+- `nav-three-zone` — nav liens / logo centré / bouton.
+- `hero-wordmark-bottom-left` — wordmark géant bas-gauche + triptyque haut-droite.
+- `image-triptych` — 3 images de ratio identique, gap constant, radius léger.
 
 ---
 
@@ -323,7 +326,7 @@ texte crème 12 px. Corps : wordmark en bas-gauche ; **triptyque d'images portra
 photo d'intérieur (fenêtre, lumière chaude). **Jumelle structurelle de ref-07** : même
 squelette (carte flottante + wordmark + triptyque), tempérament opposé.
 
-**Palette (`sys-08`)** — carte `#FFFFFF`, texte `#111111`, pas d'accent coloré.
+**Palette** — carte `#FFFFFF`, texte `#111111`, pas d'accent coloré.
 
 **Typo**
 - Statement d'intro : 15 px / poids 400 / `line-height: 1.45`, 2 lignes, ≈ 64 caractères,
@@ -345,9 +348,9 @@ gap 14) en bas, pleine largeur de la carte, hauteur ≈ 38 % de la carte.
 | radius carte | 6 | 4 |
 
 **Patterns à extraire**
-- `pat-hero-statement-first` — la variante « phrase avant le nom ».
-- `pat-type-registered-superscript` — le `®` en exposant calibré.
-- réutilise `pat-hero-card-on-photo` et `pat-image-triptych` (paramétrés autrement).
+- `hero-statement-first` — la variante « phrase avant le nom ».
+- `type-registered-superscript` — le `®` en exposant calibré.
+- réutilise `hero-card-on-photo` et `image-triptych` (paramétrés autrement).
 
 ---
 
@@ -356,7 +359,7 @@ gap 14) en bas, pleine largeur de la carte, hauteur ≈ 38 % de la carte.
 **Nature** — Planche de 12 slides d'un « project proposal », slides blanches sur fond de
 planche `#D4D4D4`.
 
-**Palette (`sys-09`)** — blanc `#FFFFFF`, bleu `#2F3FE0`, texte noir `#111`, gris `#8A8A8A`.
+**Palette** — blanc `#FFFFFF`, bleu `#2F3FE0`, texte noir `#111`, gris `#8A8A8A`.
 
 **Typo** — Sans-serif **tout en minuscules**, y compris les titres (`project proposal`,
 `about us`, `our team`). Titres ≈ 40 px bleu. Corps ≈ 10 px, **justifié**
@@ -378,11 +381,11 @@ tombe). Rotation légère de l'ensemble (−2° à +3°).
 grands blancs. Le déséquilibre est intentionnel.
 
 **Patterns à extraire**
-- `pat-annotation-marker` — la bibliothèque de tracés (ellipse, flèche, soulignement,
+- `annotation-marker` — la bibliothèque de tracés (ellipse, flèche, soulignement,
   zigzag) + la règle d'irrégularité. **Priorité haute** : c'est le plus fort
   différenciateur anti-« AI slop » du corpus.
-- `pat-type-lowercase-editorial` — titres en minuscules + corps justifié étroit.
-- `pat-type-vertical-rail` — la micro-typo tournée sur le bord.
+- `type-lowercase-editorial` — titres en minuscules + corps justifié étroit.
+- `type-vertical-rail` — la micro-typo tournée sur le bord.
 
 ---
 
@@ -391,7 +394,7 @@ grands blancs. Le déséquilibre est intentionnel.
 **Nature** — Planche de 3 slides d'un deck de campagne (« social media / deliverables »),
 sur fond de planche taupe `#8A8078`. Slides crème.
 
-**Palette (`sys-10`)** — slide `#EDEAE3`, rouge `#E33A22`, blanc `#FFFFFF`.
+**Palette** — slide `#EDEAE3`, rouge `#E33A22`, blanc `#FFFFFF`.
 Les photos sont en **couleur** mais castées : elles contiennent toutes du rouge ou du brun,
 ce qui fait tenir l'ensemble.
 
@@ -413,11 +416,11 @@ rouge.
   image à droite, `(4)` en bas-gauche.
 
 **Patterns à extraire**
-- `pat-type-condensed-stack` — le titre condensé écrasé sur 2 lignes.
-- `pat-mark-paren-number` — le `(3)` de section.
-- `pat-table-hairline-rules` — le tableau label/valeur à filets fins.
-- `pat-layout-image-collage-overlay` — images en colonnes + incrustation en overlay.
-- `pat-type-micro-caps-block` — le bloc de texte en capitales 9 px, colonne étroite.
+- `type-condensed-stack` — le titre condensé écrasé sur 2 lignes.
+- `mark-paren-number` — le `(3)` de section.
+- `table-hairline-rules` — le tableau label/valeur à filets fins.
+- `layout-image-collage-overlay` — images en colonnes + incrustation en overlay.
+- `type-micro-caps-block` — le bloc de texte en capitales 9 px, colonne étroite.
 
 ---
 
@@ -437,3 +440,62 @@ rouge.
 **Trous du corpus** (à noter, pour ne pas croire la bibliothèque exhaustive) : aucune
 référence sombre à accent chaud, aucune typo serif de titre, aucun tableau dense de données,
 aucun graphique en ligne/aire, aucun état mobile.
+
+---
+
+# Ajouts hors corpus initial
+
+> Les références `ref-11` et au-delà n'appartiennent pas à l'audit des 10 ci-dessus : elles
+> sont arrivées après, une par une, au fil des besoins. Même règle qu'au-dessus — **l'image
+> d'origine n'est pas sur le disque**, cette section la remplace.
+
+## ref-12-neon-capsule-tags
+
+**Nature** — Fragment de visuel (capture partielle, bord droit coupé) : une **pile
+d'étiquettes-capsules** en contour néon sur fond vert forêt très sombre. Aucun autre élément
+visible — ni titre, ni image, ni aplat. Six capsules, alignées sur leur bord **droit**, qui
+déborde du cadre pour les deux premières.
+
+**Palette**
+- fond vert forêt sombre ≈ `#26331F`
+- néon vert ≈ `#4FE383` — **la seule couleur** : trait et texte, jamais un fond
+- contraste mesuré 8,9:1
+
+**Typo** — Grotesk neutre, **capitales**, graisse moyenne (≈ 500), `letter-spacing` ≈ 0.
+Corps ≈ 0,62 × l'unité de capsule, soit ~35 px pour une capsule de 70 px de haut. Le mot
+remplit la pilule : il n'y a pas de « petit texte dans une grande forme ».
+
+**Élément signature — la capsule soudée**
+Un cercle porte-glyphe et une pilule de texte forment **un seul contour continu**, raccordés
+par deux **congés concaves** (le « cou »). Ce n'est ni un chevauchement, ni deux formes
+posées côte à côte : les arcs sont tangents, le trait ne s'interrompt jamais. Géométrie
+relevée, en unités `u` (= hauteur de la pilule sans son trait) :
+
+| grandeur | valeur |
+|---|---|
+| rayon du cercle (axe du trait) | `0,60 u` |
+| rayon des calottes de la pilule | `0,50 u` |
+| rayon des congés concaves | `0,28 u` |
+| entraxe cercle ↔ calotte gauche | `1,20 u` |
+| épaisseur du trait | `0,055 u` |
+| hauteur de rangée (Ø extérieur du cercle) | `1,255 u` |
+| glyphe | `0,62 u`, centré à `(0,6275 u ; 0,6275 u)` |
+
+Les points de tangence en découlent : `x = 0,4563 u` sur le cercle, `x = 0,8597 u` sur la
+calotte, centres des congés à `(0,6692 u ; ±0,5715 u)`. **Ces six nombres sont solidaires** —
+changer le rayon du cercle sans recalculer les congés rouvre le contour.
+
+**Glyphes** — quatre pictogrammes de contour dans les cercles : éclair (×3), croix
+directionnelle à quatre flèches, rayons en couronne (12 traits), cadre à quatre équerres avec
+une croix. Ils marquent une catégorie ; ils n'expliquent rien et sont **redessinés**.
+
+**Composition** — pile alignée à droite, écart vertical serré (≈ `0,1 u`), largeur de chaque
+capsule pilotée par son mot. Le bord droit sort du cadre : la liste montrée est un extrait.
+
+**Patterns extraits**
+- `tag-capsule-gooey` — la capsule soudée (tête fixe + corps élastique + calotte).
+- `stack-keyword-flush-right` — la règle de composition de la pile.
+
+**Ce que cette référence apporte au corpus** — le premier **fond sombre** de la bibliothèque,
+et la première forme dont la signature est une **soudure** et non une coupe (`ref-06`) ou un
+rayon (`ref-03`).

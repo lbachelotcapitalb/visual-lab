@@ -1,0 +1,124 @@
+{
+  "name": "Carte statistique à barres empilées",
+  "family": "card",
+  "ref": "ref-11-finance-dashboard-mint",
+  "intent": "Porter UN KPI de premier rang (un total et sa tendance) sur un aplat noir, en-tête calé en haut et chiffre + mini-histogramme collés en bas, de façon à ce que le nombre se lise avant tout.",
+  "when_to_use": "Carte d'accroche d'un dashboard ou d'une slide produit : le chiffre du mois et sa décomposition sur deux à quatre périodes. L'aplat noir la pose en premier rang face aux cartes blanches autour.",
+  "avoid_when": "Il faut comparer des valeurs précises entre séries (le sommet arrondi et l'absence d'axe faussent la lecture fine — passer à un vrai graphique gradué), ou il n'y a pas de tendance à montrer : sans les barres, la carte n'est plus qu'un chiffre isolé.",
+  "tags": [
+    "carte",
+    "stat",
+    "kpi",
+    "histogramme",
+    "barres",
+    "empile",
+    "dashboard",
+    "noir",
+    "premier-rang",
+    "menthe",
+    "lilas"
+  ],
+  "vars": [
+    {
+      "name": "--vl-surface-dark",
+      "role": "aplat de la carte de premier rang",
+      "default": "#141414"
+    },
+    {
+      "name": "--vl-mint",
+      "role": "part principale de la barre (rang 1)",
+      "default": "#B4E3A0"
+    },
+    {
+      "name": "--vl-lilac",
+      "role": "part de second temps de la barre (rang 2)",
+      "default": "#B6ABE6"
+    },
+    {
+      "name": "--vl-radius-card",
+      "role": "rayon de la carte",
+      "default": "26px"
+    }
+  ],
+  "slots": [
+    "title",
+    "kicker",
+    "figure",
+    "bars"
+  ],
+  "geometry": {
+    "root": ".vl-sales",
+    "frame": [
+      556,
+      330
+    ],
+    "ratios": {
+      "pad_over_width": 0.054,
+      "figure_top_over_height": 0.72
+    },
+    "type_px": {
+      "title": 18,
+      "figure": 46,
+      "label": 11
+    },
+    "pad_ratio": {
+      "top": 0.091,
+      "x": 0.054,
+      "bottom": 0.091
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "marges intérieures ≈ 5,4 % de la largeur",
+      "measure": "num('.vl-sales','paddingLeft') / W",
+      "expect": 0.054,
+      "tol": 0.02
+    },
+    {
+      "name": "en-tête calé en haut (< 12 % de la hauteur)",
+      "measure": "box('.vl-sales__head').top / H",
+      "max": 0.12
+    },
+    {
+      "name": "chiffre héros collé en bas (haut du nombre au-delà de 60 % de la hauteur)",
+      "measure": "box('.vl-sales__num').top / H",
+      "min": 0.6
+    },
+    {
+      "name": "le chiffre héros appartient à l'échelle display : ≥ 40 px",
+      "measure": "num('.vl-sales__num','fontSize')",
+      "min": 40
+    },
+    {
+      "name": "hiérarchie : le chiffre est au moins 2× le titre",
+      "measure": "num('.vl-sales__num','fontSize') / num('.vl-sales__title','fontSize')",
+      "min": 2
+    },
+    {
+      "name": "la barre Novembre domine Septembre (la tendance se voit sans lire)",
+      "measure": "box('.vl-bars__grp:last-child .vl-bars__stack').h - box('.vl-bars__grp:first-child .vl-bars__stack').h",
+      "min": 20
+    },
+    {
+      "name": "dans chaque barre la MENTHE (rang 1) l'emporte sur le LILAS (rang 2)",
+      "measure": "box('.vl-bars__grp:last-child .vl-bars__mint').h - box('.vl-bars__grp:last-child .vl-bars__lilac').h",
+      "min": 1
+    },
+    {
+      "name": "bas des barres alignés sur le bas du chiffre (± 4 px)",
+      "measure": "Math.abs(box('.vl-bars').bottom - box('.vl-sales__num').bottom)",
+      "max": 4
+    },
+    {
+      "name": "contraste du titre blanc sur noir ≥ 7 (il porte le nom de la carte)",
+      "measure": "contrast('.vl-sales__title')",
+      "min": 7
+    },
+    {
+      "name": "aucun débordement du contenu hors de la carte",
+      "measure": "overflow('.vl-sales')",
+      "max": 0
+    }
+  ],
+  "notes": "Deux zones tenues aux deux bords par margin-top:auto : l'en-tête en haut, le couple chiffre+barres en bas. C'est ce collage qui fait lire le total avant le reste et qui aligne le pied des barres sur le pied du nombre (benchmark dédié). Règle de couleur de la référence : la menthe code la part principale, le lilas la part de second temps — jamais l'inverse, sinon l'accent ne désigne plus rien. Le sommet arrondi des barres est un parti pris de lecture rapide, pas de mesure : il interdit la comparaison fine, d'où l'avertissement avoid_when."
+}

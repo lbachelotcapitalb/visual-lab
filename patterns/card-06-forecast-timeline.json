@@ -1,0 +1,131 @@
+{
+  "name": "Carte prévision — timeline + sous-cartes",
+  "family": "card",
+  "ref": "ref-11-finance-dashboard-mint",
+  "intent": "Raconter une trajectoire dans une carte : une timeline verticale de jalons datés à gauche, et à droite deux sous-cartes teintées qui opposent la valeur constatée (menthe, présent) à la projection (lilas, futur).",
+  "when_to_use": "Carte « perspective » d'un dashboard : quelques jalons dans le temps plus deux chiffres clés, l'un acquis l'autre projeté. Le code couleur menthe/lilas fait lire présent vs futur sans légende.",
+  "avoid_when": "Il y a plus de cinq ou six jalons (les points se resserrent et la colonne devient illisible — passer à une frise horizontale), ou un seul chiffre à montrer : les deux sous-cartes n'ont alors plus d'opposition à porter.",
+  "tags": [
+    "carte",
+    "prevision",
+    "forecast",
+    "timeline",
+    "frise",
+    "jalons",
+    "sous-cartes",
+    "dashboard",
+    "menthe",
+    "lilas",
+    "projection"
+  ],
+  "vars": [
+    {
+      "name": "--vl-mint",
+      "role": "sous-carte du présent (valeur constatée)",
+      "default": "#B4E3A0"
+    },
+    {
+      "name": "--vl-lilac",
+      "role": "sous-carte du futur (projection)",
+      "default": "#B6ABE6"
+    },
+    {
+      "name": "--vl-hairline",
+      "role": "axe de la timeline",
+      "default": "#E3E5E1"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "point d'horizon (jalon plein) + encre",
+      "default": "#181A17"
+    },
+    {
+      "name": "--vl-radius-sub",
+      "role": "rayon des sous-cartes",
+      "default": "20px"
+    }
+  ],
+  "slots": [
+    "head",
+    "timeline",
+    "tile-present",
+    "tile-forecast"
+  ],
+  "geometry": {
+    "root": ".vl-forecast",
+    "frame": [
+      528,
+      560
+    ],
+    "ratios": {
+      "pad_over_width": 0.053,
+      "left_col_over_width": 0.43
+    },
+    "type_px": {
+      "title": 18,
+      "figure": 30,
+      "year": 14,
+      "desc": 11
+    },
+    "pad_ratio": {
+      "top": 0.05,
+      "x": 0.053,
+      "bottom": 0.05
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "marges intérieures ≈ 5,3 % de la largeur",
+      "measure": "num('.vl-forecast','paddingLeft') / W",
+      "expect": 0.053,
+      "tol": 0.02
+    },
+    {
+      "name": "colonne de gauche (timeline) ≈ 43 % de la largeur",
+      "measure": "box('.vl-forecast__left').w / W",
+      "expect": 0.43,
+      "tol": 0.06
+    },
+    {
+      "name": "la timeline porte bien 4 jalons",
+      "measure": "document.querySelectorAll('.vl-tl__it').length",
+      "expect": 4
+    },
+    {
+      "name": "sous-cartes EMPILÉES : la menthe (présent) est au-dessus de la lilas (futur)",
+      "measure": "box('.vl-fc--lilac').top - box('.vl-fc--mint').bottom",
+      "min": 8
+    },
+    {
+      "name": "les deux chiffres clés sont au plancher figure (≥ 28 px)",
+      "measure": "Math.min(num('.vl-fc--mint .vl-fc__big','fontSize'), num('.vl-fc--lilac .vl-fc__big','fontSize'))",
+      "min": 28
+    },
+    {
+      "name": "jauge de progression remplie mais non pleine (fill < track)",
+      "measure": "box('.vl-progress__fill').w / box('.vl-progress').w",
+      "max": 0.95
+    },
+    {
+      "name": "contraste du titre ≥ 7 (il nomme la carte)",
+      "measure": "contrast('.vl-forecast__ttl')",
+      "min": 7
+    },
+    {
+      "name": "contraste du chiffre présent sur la menthe ≥ 4,5",
+      "measure": "contrast('.vl-fc--mint .vl-fc__big')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste du chiffre projeté sur le lilas ≥ 4,5",
+      "measure": "contrast('.vl-fc--lilac .vl-fc__big')",
+      "min": 4.5
+    },
+    {
+      "name": "aucun débordement du contenu hors de la carte",
+      "measure": "overflow('.vl-forecast')",
+      "max": 0
+    }
+  ],
+  "notes": "Deux registres dans une même carte, tenus par la couleur : la timeline distribue ses jalons par justify-content:space-between (ils occupent toute la hauteur, dernier point plein = horizon), et les deux sous-cartes opposent menthe=présent / lilas=futur — un code repris de la référence, pas une alternance décorative. Les benchmarks vérifient l'empilement (menthe au-dessus de lilas) et les DEUX contrastes de chiffre sur aplat teinté, que le harnais HTML seul attrape. La courbe et la jauge sont des SVG autonomes sans valeur en dur : rejouables sur une autre charte."
+}

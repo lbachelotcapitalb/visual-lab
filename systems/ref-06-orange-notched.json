@@ -1,0 +1,34 @@
+{
+  "name": "Corporate orange chanfreiné",
+  "notes": "Un seul geste porte toute la charte : LE COIN CHANFREINÉ à 45° (≈22px), et il n'est coupé qu'UNE fois par carte, jamais deux — c'est ce qui le fait lire comme une signature et non comme un effet. Il ne se pose que sur les aplats colorés (orange, gris-bleu) : une carte du fond de slide reste à angle vif. Deuxième geste : le filet vertical 4px orange COLLÉ au premier caractère du titre, sans espace — l'espace le transformerait en ornement décoratif alors qu'il doit se lire comme une lettre du mot. La hiérarchie tient sur trois corps seulement (titre 46px caps / chiffre 40px / corps 11px), donc tout l'air de la slide vient des marges et des vides, pas d'une taille intermédiaire. L'orange ne colore JAMAIS du texte sur fond clair : il est toujours un aplat (carte, filet, glyphe), sinon il devient criard. Le gris-bleu est la carte de second rang : même chanfrein, moitié moins de poids. ÉCHELLE : les corps relevés dans SPEC-SOURCES.md (titre 46 / chiffre 40 / corps 11) l'ont été sur une planche à ~1000 px de large ; ce système est à l'échelle d'une slide 1600×900, donc ×1,6. Les patterns héritent de CES valeurs — c'est le système qui porte l'échelle, jamais le fragment. L'encre grise est à #6A6A67 et non #6F6F6C : sur le fond #F0EFEC, la valeur plus claire tombait à 4,28:1 — sous le seuil de 4,5 exigé pour un corps de 17 px. Un demi-ton plus sombre, invisible à l'œil, remet le corps au-dessus du seuil. Le corps sur l'orange est à #FFF1E9 et non #FFE0D3 : la teinte plus chaude tombait à 2,77:1, sous le seuil de 3:1 des grands corps. Sur cet aplat, TOUT texte lisible tourne autour de 3:1 — la hiérarchie entre le chiffre et son commentaire doit donc être portée par la TAILLE (×3,8), pas par un gris de plus, sinon on paie la hiérarchie en lisibilité.",
+  "tokens": {
+    "--vl-bg": "#F0EFEC",
+    "--vl-board": "#DEDDD9",
+    "--vl-white": "#FFFFFF",
+    "--vl-black": "#141414",
+    "--vl-orange": "#F2551E",
+    "--vl-steel": "#C6D0CF",
+    "--vl-ink-muted": "#6A6A67",
+    "--vl-ink-muted-invert": "#FFF1E9",
+    "--vl-ink-on-steel": "#3E4746",
+    "--vl-hairline": "#00000015",
+    "--vl-ph-a": "#C9C9C9",
+    "--vl-ph-b": "#4C4C4C",
+    "--vl-ph-dark-a": "#6A6A6A",
+    "--vl-ph-dark-b": "#141414",
+    "--vl-notch": "34px",
+    "--vl-margin": "60px"
+  },
+  "type": {
+    "display": "\"Helvetica Neue\", Inter, Arial, sans-serif",
+    "body": "\"Helvetica Neue\", Inter, Arial, sans-serif",
+    "scale": {
+      "title": "74px / 1.05 / 800 / -0.005em / UPPERCASE",
+      "title-lg": "76px / 1.05 / 800 (couverture)",
+      "title-sm": "24px / 1.05 / 800 / 0.02em (sous-titre de colonne, libellé d'index)",
+      "stat": "64px / 1 / 800 / -0.02em",
+      "body": "17px / 1.55 / 400",
+      "micro": "12px / 1.4 / 700 / 0.14em / UPPERCASE"
+    }
+  }
+}

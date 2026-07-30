@@ -1,0 +1,112 @@
+{
+  "name": "Carte transaction — identité + ligne de valeur",
+  "family": "card",
+  "ref": "ref-11-finance-dashboard-mint",
+  "intent": "Poser un intitulé de flux (badge + titre + acteurs) en haut d'une carte blanche et sa ligne de valeur unique sur aplat doux collée en bas, sans jamais faire de la carte un tableau.",
+  "when_to_use": "Bloc « dernière opération » ou « flux en cours » d'un dashboard : une identité, un groupe d'acteurs, une seule paire chiffrée. La pile d'avatars qui se recouvre signale un échange entre plusieurs parties.",
+  "avoid_when": "Il y a plus d'une ligne de valeur à montrer : au-delà d'une, ce n'est plus cette carte mais une LISTE, qui demande un séparateur et un rythme propres. Et sans acteurs à représenter, la pile d'avatars devient un ornement vide.",
+  "tags": [
+    "carte",
+    "transaction",
+    "avatars",
+    "pile",
+    "flux",
+    "dashboard",
+    "blanc",
+    "ligne-valeur",
+    "crypto"
+  ],
+  "vars": [
+    {
+      "name": "--vl-surface-soft",
+      "role": "aplat doux de la ligne de valeur",
+      "default": "#F1F2EF"
+    },
+    {
+      "name": "--vl-surface-dark",
+      "role": "fond du badge et de la pastille de devise",
+      "default": "#141414"
+    },
+    {
+      "name": "--vl-lilac",
+      "role": "pastille de menu (fin de la pile d'avatars)",
+      "default": "#B6ABE6"
+    },
+    {
+      "name": "--vl-radius-card",
+      "role": "rayon de la carte",
+      "default": "26px"
+    }
+  ],
+  "slots": [
+    "badge",
+    "title",
+    "avatars",
+    "value-row"
+  ],
+  "geometry": {
+    "root": ".vl-txn",
+    "frame": [
+      528,
+      208
+    ],
+    "ratios": {
+      "pad_over_width": 0.049,
+      "badge_over_width": 0.08
+    },
+    "type_px": {
+      "title": 18,
+      "pair": 15,
+      "sub": 11
+    },
+    "pad_ratio": {
+      "top": 0.125,
+      "x": 0.049,
+      "bottom": 0.125
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "marges intérieures ≈ 4,9 % de la largeur",
+      "measure": "num('.vl-txn','paddingLeft') / W",
+      "expect": 0.049,
+      "tol": 0.02
+    },
+    {
+      "name": "badge carré (largeur ≈ hauteur)",
+      "measure": "Math.abs(box('.vl-txn__badge').w - box('.vl-txn__badge').h)",
+      "max": 1
+    },
+    {
+      "name": "les avatars se RECOUVREENT (le 2e commence avant la fin du 1er)",
+      "measure": "box('.vl-txn__av--2').left - box('.vl-txn__av--1').right",
+      "max": -2
+    },
+    {
+      "name": "ligne de valeur collée en bas (son bas touche la marge basse, ± 3 px)",
+      "measure": "Math.abs((H - num('.vl-txn','paddingBottom')) - box('.vl-txn__row').bottom)",
+      "max": 3
+    },
+    {
+      "name": "le libellé de paire occupe la largeur restante (flex:1 → > 55 % de la carte)",
+      "measure": "box('.vl-txn__pair').w / W",
+      "min": 0.55
+    },
+    {
+      "name": "contraste du titre ≥ 7 (il nomme le flux)",
+      "measure": "contrast('.vl-txn__title')",
+      "min": 7
+    },
+    {
+      "name": "contraste de la valeur sur l'aplat doux ≥ 4,5 (petit corps, seuil plein)",
+      "measure": "contrast('.vl-txn__pair')",
+      "min": 4.5
+    },
+    {
+      "name": "aucun débordement du contenu hors de la carte",
+      "measure": "overflow('.vl-txn')",
+      "max": 0
+    }
+  ],
+  "notes": "Le margin-top:auto de la ligne de valeur est ce qui la scelle au bas de la carte quelle que soit la hauteur de l'en-tête : un benchmark vérifie que son bas touche bien la marge basse. Le recouvrement des avatars (marge négative) est mesuré, pas relu à l'œil — c'est lui qui distingue un GROUPE d'une simple file. Les avatars sont des dégradés de tokens (menthe / lilas) à la place des photos de la source : un pattern doit rester rejouable sur n'importe quelle charte, une photo en dur l'en empêcherait."
+}

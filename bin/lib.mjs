@@ -15,9 +15,22 @@ export const DIRS = {
   proofs: join(ROOT, 'proofs'),
 };
 
-/** Les seules valeurs acceptées pour `kind`. Un vocabulaire fermé : une faute de frappe
- *  doit casser l'indexation, pas créer silencieusement une 7e famille. */
-export const KINDS = ['primitive', 'component', 'layout', 'chart', 'type', 'rule'];
+/** Le vocabulaire fermé des familles. C'est AUSSI le préfixe du nom de fichier : un pattern
+ *  `card-03-stat-accent` est de famille `card`, et bin/index.mjs le vérifie. Une taxonomie
+ *  unique — l'ancien couple kind/famille disait deux fois la même chose et se contredisait. */
+export const FAMILIES = ['card', 'chart', 'layout', 'list', 'shape', 'tag', 'title'];
+
+/** Le vocabulaire fermé des MÉDIAS de destination. Un pattern déclare où il est censé servir ;
+ *  c'est ce qui permet à un producteur (deck, mailing, flyer, post) de ne piocher que dans ce
+ *  qui tient dans SON cadre. La déclaration est une INTENTION — la faisabilité, elle, se
+ *  prouve par `bin/emit.mjs --target <média>`, qui refuse ce que la cible ne sait pas rendre.
+ *  Deux champs séparés parce que deux questions différentes : « à quoi ça sert » et « est-ce
+ *  que ça passe ». Un `media` déclaré sans émetteur qui tienne est un mensonge de catalogue. */
+export const MEDIA = ['slide', 'web', 'email', 'print', 'social'];
+
+/** Ce que le corpus EST par défaut : reversé de decks, collable dans une page. Les patterns
+ *  antérieurs au champ n'ont pas à être ré-annotés pour rester exacts. */
+export const MEDIA_DEFAULT = ['slide', 'web'];
 
 export function readJson(path) {
   return JSON.parse(readFileSync(path, 'utf8'));
@@ -38,6 +51,7 @@ export function loadPatterns() {
     });
 }
 
+/** Un pattern pointe sa référence par `ref` ; le fichier de tokens porte le même id. */
 export function loadSystems() {
   if (!existsSync(DIRS.systems)) return [];
   return readdirSync(DIRS.systems)
@@ -49,6 +63,71 @@ export function loadSystems() {
 export function systemToCss(sys) {
   const lines = Object.entries(sys.tokens || {}).map(([k, v]) => `  ${k}: ${v};`);
   return `:root {\n${lines.join('\n')}\n}`;
+}
+
+/** Les médias d'un pattern, défaut compris. Une seule fonction pour que l'index, la recherche
+ *  et les émetteurs ne puissent pas diverger sur ce que « pas de champ media » veut dire. */
+export function mediaOf(p) {
+  return p.media?.length ? p.media : MEDIA_DEFAULT;
+}
+
+/** Le cadre déclaré d'un pattern (`geometry.frame`), ou une valeur de repli. Sert aux rendus
+ *  qui doivent réserver une cellule AVANT de savoir ce que le fragment mesure vraiment. */
+export function frameOf(p, fallback = [430, 340]) {
+  const f = p.geometry?.frame;
+  return Array.isArray(f) && f.length === 2 ? f : fallback;
+}
+
+export const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+
+/** Capture un fichier local en PNG avec Chrome headless. Zéro réseau, zéro dépendance npm :
+ *  un PNG produit par un simulateur ne prouverait rien (cf. bin/render.mjs). */
+export function shot(file, out, w, h) {
+  if (!existsSync(CHROME)) {
+    console.error(`Chrome introuvable (${CHROME}). Adapte la constante CHROME dans bin/lib.mjs.`);
+    process.exit(1);
+  }
+  execFileSync(
+    CHROME,
+    ['--headless=new', '--disable-gpu', '--hide-scrollbars', '--force-device-scale-factor=1',
+     '--default-background-color=00000000', `--window-size=${w},${h}`,
+     `--screenshot=${out}`, `file://${file}`],
+    { stdio: ['ignore', 'ignore', 'pipe'] }
+  );
+  if (!existsSync(out)) {
+    console.error('Chrome n’a produit aucun PNG.');
+    process.exit(1);
+  }
+  return out;
+}
+
+/** Fait tourner une page locale dans Chrome et récupère le JSON qu'elle a écrit dans
+ *  `<pre id="vl-out">`. C'est le seul canal de sortie d'un Chrome headless sans protocole de
+ *  debug : la page calcule, dépose son résultat dans le DOM, `--dump-dom` le ramène.
+ *  Même mécanique que bin/check.mjs — factorisée pour qu'un second outil qui MESURE ne
+ *  réinvente pas un canal qui aurait ses propres pièges. */
+export function dumpJson(file) {
+  if (!existsSync(CHROME)) {
+    console.error(`Chrome introuvable (${CHROME}). Adapte la constante CHROME dans bin/lib.mjs.`);
+    process.exit(1);
+  }
+  const dom = execFileSync(
+    CHROME,
+    ['--headless=new', '--disable-gpu', '--hide-scrollbars', '--virtual-time-budget=1500',
+     '--dump-dom', `file://${file}`],
+    { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] }
+  );
+  const m = dom.match(/<pre id="vl-out">([\s\S]*?)<\/pre>/);
+  if (!m) throw new Error('la page n’a rien écrit dans <pre id="vl-out">');
+  const txt = m[1].replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+  return JSON.parse(txt);
+}
+
+/** Sépare un fragment en markup + contenu du bloc <style>. Les patterns portent leur CSS
+ *  avec eux (c'est ce qui les rend autonomes) : tout émetteur doit savoir le récupérer. */
+export function splitFragment(html) {
+  const m = (html || '').match(/<style>([\s\S]*?)<\/style>/i);
+  return { markup: (html || '').replace(/<style>[\s\S]*?<\/style>/i, '').trim(), css: m ? m[1] : '' };
 }
 
 export function sql(statements) {

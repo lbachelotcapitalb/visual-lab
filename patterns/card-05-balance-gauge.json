@@ -1,0 +1,129 @@
+{
+  "name": "Carte solde à jauge compteur",
+  "family": "card",
+  "ref": "ref-11-finance-dashboard-mint",
+  "intent": "Montrer un solde et sa progression dans un grand panneau menthe : une jauge « compteur » (part acquise en plein, part restante en hachures) surmonte un chiffre héros posé en bas, la tendance en regard.",
+  "when_to_use": "Carte centrale d'un dashboard où un montant unique doit dominer ET porter une notion d'avancement vers un objectif. Le panneau teinté plein la distingue des cartes de détail.",
+  "avoid_when": "Il n'y a pas de progression à raconter (la jauge devient un ornement — un simple grand chiffre suffit), ou il faut plusieurs séries : une jauge ne lit qu'un ratio à la fois.",
+  "tags": [
+    "carte",
+    "solde",
+    "jauge",
+    "compteur",
+    "gauge",
+    "progression",
+    "dashboard",
+    "menthe",
+    "panneau",
+    "chiffre-hero"
+  ],
+  "vars": [
+    {
+      "name": "--vl-mint",
+      "role": "aplat du panneau + fond des hachures",
+      "default": "#B4E3A0"
+    },
+    {
+      "name": "--vl-mint-deep",
+      "role": "trait des hachures (reste à courir)",
+      "default": "#8FCE72"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "arc acquis de la jauge + chiffre héros",
+      "default": "#181A17"
+    },
+    {
+      "name": "--vl-lilac-deep",
+      "role": "curseur de la jauge",
+      "default": "#9A8ADE"
+    },
+    {
+      "name": "--vl-radius-sub",
+      "role": "rayon du panneau interne",
+      "default": "20px"
+    }
+  ],
+  "slots": [
+    "title",
+    "nav",
+    "gauge",
+    "trend",
+    "figure"
+  ],
+  "geometry": {
+    "root": ".vl-balance",
+    "frame": [
+      556,
+      470
+    ],
+    "ratios": {
+      "pad_over_width": 0.054,
+      "panel_over_height": 0.72
+    },
+    "type_px": {
+      "title": 18,
+      "figure": 46,
+      "avg": 11
+    },
+    "pad_ratio": {
+      "top": 0.064,
+      "x": 0.054,
+      "bottom": 0.064
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "marges intérieures ≈ 5,4 % de la largeur",
+      "measure": "num('.vl-balance','paddingLeft') / W",
+      "expect": 0.054,
+      "tol": 0.02
+    },
+    {
+      "name": "le panneau menthe occupe l'essentiel de la carte (> 65 % de la hauteur)",
+      "measure": "box('.vl-panel').h / H",
+      "min": 0.65
+    },
+    {
+      "name": "jauge centrée horizontalement dans le panneau (± 4 px)",
+      "measure": "Math.abs((box('.vl-gauge').left + box('.vl-gauge').w / 2) - (box('.vl-panel').left + box('.vl-panel').w / 2))",
+      "max": 4
+    },
+    {
+      "name": "chiffre héros ancré en bas-DROITE du panneau (au-delà du milieu)",
+      "measure": "box('.vl-balance__big').left / W",
+      "min": 0.5
+    },
+    {
+      "name": "tendance ancrée en bas-GAUCHE, à gauche du chiffre héros (pas de recouvrement)",
+      "measure": "box('.vl-balance__big').left - box('.vl-balance__stat').right",
+      "min": 8
+    },
+    {
+      "name": "chiffre et tendance sur la MÊME ligne de pied (± 12 px)",
+      "measure": "Math.abs(box('.vl-balance__big').bottom - box('.vl-balance__stat').bottom)",
+      "max": 12
+    },
+    {
+      "name": "le chiffre héros appartient à l'échelle display : ≥ 40 px",
+      "measure": "num('.vl-balance__big','fontSize')",
+      "min": 40
+    },
+    {
+      "name": "contraste du titre ≥ 7 (il nomme la carte)",
+      "measure": "contrast('.vl-balance__title')",
+      "min": 7
+    },
+    {
+      "name": "contraste du chiffre héros sur la menthe ≥ 4,5",
+      "measure": "contrast('.vl-balance__big')",
+      "min": 4.5
+    },
+    {
+      "name": "aucun débordement du contenu hors de la carte",
+      "measure": "overflow('.vl-balance')",
+      "max": 0
+    }
+  ],
+  "notes": "La jauge est un demi-cercle « arc-en-ciel » (ouvert vers le bas) coupé en deux : l'arc plein noir porte l'acquis, l'arc hachuré (fond menthe + traits menthe-profond via <pattern>) porte le reste à courir, un curseur lilas marque la position. Le panneau est en position:relative et les trois blocs (jauge, tendance, chiffre) en absolute : c'est ce qui permet d'ancrer le chiffre en bas-droite et la tendance en bas-gauche sans qu'ils se disputent la place — deux benchmarks vérifient le non-recouvrement et l'alignement de pied. Le contraste du chiffre sur menthe (≥ 4,5) est atteignable en encre noire, donc exigé."
+}

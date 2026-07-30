@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Exporte un deck SLIDE PAR SLIDE, chacune à sa taille réelle.
-//   node bin/slides.mjs decks/ref-04.html            → proofs/ref-04/slide-01.png … slide-10.png
-//   node bin/slides.mjs decks/ref-03.html 1120 410   → dimensions forcées
-//   node bin/slides.mjs decks/ref-04.html --only 4   → une seule slide (boucle de correction)
+//   node bin/slides.mjs decks/ref-04-swiss-investor-blue.html            → proofs/<deck>/slide-01.png …
+//   node bin/slides.mjs decks/ref-03-bento-dark-pitch.html 1120 410   → dimensions forcées
+//   node bin/slides.mjs decks/ref-04-swiss-investor-blue.html --only 4   → une seule slide (boucle de correction)
 //
 // C'est le livrable de référence d'un lot : une planche-contact réduite ne permet PAS de
 // juger une slide (à 50 %, la micro-typo de 8 px devient illisible et les écarts se cachent).
@@ -21,7 +21,7 @@ if (!existsSync(CHROME)) {
 const argv = process.argv.slice(2);
 const deck = resolve(ROOT, argv[0] || '');
 if (!existsSync(deck)) {
-  console.error(`Deck introuvable : ${deck}\nUsage : node bin/slides.mjs decks/ref-NN.html [w h] [--only N]`);
+  console.error(`Deck introuvable : ${deck}\nUsage : node bin/slides.mjs decks/ref-NN-<slug>.html [w h] [--only N]`);
   process.exit(1);
 }
 

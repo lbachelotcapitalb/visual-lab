@@ -3,7 +3,7 @@
 // RÉELLE du DOM, et confronte chaque assertion du bloc `benchmarks` de son .json.
 //
 //   node bin/check.mjs                        → tous les patterns qui déclarent des benchmarks
-//   node bin/check.mjs pat-stat-block-accent  → un seul
+//   node bin/check.mjs card-03-stat-accent    → un seul
 //   node bin/check.mjs --report               → mesures brutes en plus des verdicts
 //
 // POURQUOI : « regarder » un rendu attrape les fautes grossières, pas les dérives de 6 % —
@@ -161,9 +161,9 @@ const tmp = join(ROOT, '.check.html');
 mkdirSync(DIRS.proofs, { recursive: true });
 
 for (const p of patterns) {
-  const sys = systems.get(p.system);
+  const sys = systems.get(p.ref);
   if (!sys) {
-    console.error(`✗ ${p.id} : système "${p.system}" inconnu — impossible de mesurer.`);
+    console.error(`✗ ${p.id} : référence "${p.ref}" inconnue — impossible de mesurer.`);
     failures++;
     continue;
   }

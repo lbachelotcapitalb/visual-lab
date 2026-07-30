@@ -20,14 +20,14 @@ grille de vignettes ni `transform: scale()` dans `decks/ref-NN.html`. Les deux v
 **dérivent** :
 
 ```bash
-node bin/slides.mjs decks/ref-NN.html
+node bin/slides.mjs decks/ref-NN-<slug>.html
 ```
 
 → `proofs/ref-NN/slide-01.png` … une image par slide, pleine taille. **C'est la preuve qui
 compte** : à 50 %, une micro-typo de 8 px est illisible et les écarts se cachent.
 
 ```bash
-node bin/board.mjs decks/ref-NN.html
+node bin/board.mjs decks/ref-NN-<slug>.html
 ```
 
 → `proofs/ref-NN.png`, la planche-contact. Elle sert à juger **le rythme d'ensemble** (ordre
@@ -49,9 +49,9 @@ seule, `ref-02` un visuel unique, `ref-07` et `ref-08` sont des pages web.
    reconstitution fidèle et **complète** — le deck doit compter exactement le nombre de
    slides annoncé par la spec, aucune n'est facultative. Le `:root` du système est en dur
    dans le fichier.
-4. Exporter et **regarder chaque slide** : `node bin/slides.mjs decks/ref-NN.html`, puis
+4. Exporter et **regarder chaque slide** : `node bin/slides.mjs decks/ref-NN-<slug>.html`, puis
    ouvrir les PNG un par un. Corriger, ré-exporter (`--only N` pour une seule slide).
-   Finir par `node bin/board.mjs decks/ref-NN.html` pour juger le rythme d'ensemble.
+   Finir par `node bin/board.mjs decks/ref-NN-<slug>.html` pour juger le rythme d'ensemble.
    Ne pas passer à l'étape 5 avant que ça ressemble.
 5. **Extraire** les patterns listés pour cette référence : un `.html` (fragment autonome,
    couleurs en `--vl-*` uniquement) + un `.json` (intention, quand l'employer, quand
@@ -112,36 +112,36 @@ headless, squelette de création. Audit écrit des 10 références → `SPEC-SOU
 Ajout du 30/07 : `bin/slides.mjs` (export slide par slide, pleine taille) et
 `bin/board.mjs` (planche-contact dérivée) — les deux vues d'un deck écrit en format slides.
 
-### ✅ Lot 1 — `ref-02` ghost-icon-claim (29/07/2026)
-`sys-02`, `decks/ref-02.html`, 3 patterns : `pat-card-ghost-icon-claim`,
-`pat-type-mixed-family-emphasis`, `pat-icon-ghost` (règle).
+### ✅ Lot 1 — `ref-02-ghost-icon-claim` (29/07/2026)
+Tokens + deck, **1 pattern retenu** : `card-01-ghost-icon`. Les deux autres
+(emphase par changement de famille typo, règle de l'icône fantôme) ont été élagués le 30/07 :
+une idée qui tient dans sa phrase de description n'a pas besoin d'être archivée.
 **C'est le gabarit de forme** — le relire avant d'attaquer un lot.
 
-### ✅ Lot 2 — `ref-03` bento-dark-pitch (29/07/2026)
-`sys-03`, `decks/ref-03.html` — 4 slides 1120×410, déjà au format slides (vérifié le 30/07,
-export dans `proofs/ref-03/`). 7 patterns : `pat-layout-bento-nested`,
-`pat-badge-pill-outline`, `pat-tile-kpi`, `pat-chart-isotype`, `pat-chart-bars-stadium`,
-`pat-type-inline-highlight-pill`, `pat-icon-circle-arrow`.
+### ✅ Lot 2 — `ref-03-bento-dark-pitch` (29/07/2026)
+Tokens + deck — 4 slides 1120×410, déjà au format slides (vérifié le 30/07).
+**3 patterns retenus** : `layout-01-nested-bento`, `chart-01-stadium-bars`, `chart-02-isotype`.
+Élagués le 30/07 : la pilule à filet, la tuile KPI, le surlignage en pilule, la flèche
+dans un rond — quatre micro-éléments qu'on réécrit de tête.
 
-### ✅ Lot 3 — `ref-04` swiss-investor-blue (30/07/2026)
-`decks/ref-04.html` — **10 slides 1600×900 au format slides**, rythme des fonds respecté,
-exportées une par une dans `proofs/ref-04/`. 5 patterns :
-`pat-layout-swiss-header-footer`, `pat-title-monster-caps`, `pat-list-numbered-giant`,
-`pat-toc-two-column`, `pat-deck-rhythm-fullbleed` (`kind: rule`, pas de HTML).
-`sys-04.json` était déjà écrit et n'a pas eu besoin d'être retouché.
+### ✅ Lot 3 — `ref-04-swiss-investor-blue` (30/07/2026)
+Deck — **10 slides 1600×900 au format slides**, rythme des fonds respecté, exportées une par
+une. **3 patterns retenus** : `layout-02-swiss-frame`, `list-01-giant-numbers`,
+`list-03-two-column-toc`. Élagués le 30/07 : le titre en grosses capitales et la règle de
+rythme des fonds pleins (aucun rendu).
 
 ### ⬜ Lot 4 — `ref-05` proposal-acid-yellow
 **8 slides** (format slides, une section par slide). Neutre + **un** accent fluo, header
 tri-parti, astérisque de marque.
-Patterns : `pat-header-tripartite`, `pat-mark-asterisk`, `pat-cards-numbered-steps`,
-`pat-title-hyphen-break`, `pat-accent-single-fluo` (`kind: rule`).
+Patterns : `header-tripartite`, `mark-asterisk`, `cards-numbered-steps`,
+`title-hyphen-break`, `accent-single-fluo` (règle éditoriale — à extraire seulement si elle a un rendu).
 
 ### ✅ Lot 5 — `ref-06` orange-notched (30/07/2026)
 **8 slides.** La signature est le **coin chanfreiné** (`clip-path`).
-Patterns : `pat-shape-notched-card`, `pat-title-leading-rule`, `pat-list-index-rules`,
-`pat-stat-block-accent`.
+Patterns : `shape-notched-corner`, `title-leading-rule`, `list-02-ruled-index`,
+`card-03-stat-accent`, `card-02-notched-brief`.
 
-**Fait le 30/07/2026 : la reconstitution.** `systems/sys-06.json` et `decks/ref-06.html` —
+**Fait le 30/07/2026 : la reconstitution.** `systems/ref-06-orange-notched.json` et `decks/ref-06-orange-notched.html` —
 **8 slides 1600×900**, preuves `proofs/ref-06/slide-01..08.png` + planche `proofs/ref-06.png`.
 
 Deux corrections CONTRE la spec, au vu du visuel source :
@@ -160,9 +160,8 @@ libellé en haut et son texte en bas d'une carte de 450 px de haut créent un vi
 qui se lit comme un oubli. Hauteur bornée (300–340 px) et c'est la rangée qui cède la place.
 
 **Patterns extraits le 30/07** — 5 au lieu des 4 prévus (Léo a pointé la carte de second rang
-comme une vignette à part entière) : `pat-shape-notched-card` (primitive),
-`pat-stat-block-accent`, `pat-card-notched-brief`, `pat-title-leading-rule`,
-`pat-list-index-rules`. **41 benchmarks, tous verts** (`node bin/check.mjs`), rendus PNG regardés
+comme une vignette à part entière) : `shape-notched-corner`, `card-03-stat-accent`,
+`card-02-notched-brief`, `title-leading-rule`, `list-02-ruled-index`. **41 benchmarks, tous verts** (`node bin/check.mjs`), rendus PNG regardés
 un par un.
 
 Ce lot a fait naître l'outillage que les suivants doivent réutiliser :
@@ -187,12 +186,12 @@ Trois pièges payés ici, à ne pas repayer :
 
 ### ⬜ Lot 6 — `ref-07` retro-brand-hero
 Page web, carte flottante sur photo, wordmark géant bas-gauche, triptyque portrait
-haut-droite. Patterns : `pat-hero-card-on-photo`, `pat-nav-three-zone`,
-`pat-hero-wordmark-bottom-left`, `pat-image-triptych`.
+haut-droite. Patterns : `hero-card-on-photo`, `nav-three-zone`,
+`hero-wordmark-bottom-left`, `image-triptych`.
 
 ### 🟡 Lot 7 — `ref-08` swiss-studio-hero — reconstitution faite, patterns à extraire
 **Fait le 30/07/2026, HORS ordre** (demande directe de Léo sur le visuel source) :
-`systems/sys-08.json` et `decks/ref-08.html` — **la slide seule, 1140×848, bord à bord** :
+`systems/ref-08-swiss-studio-hero.json` et `decks/ref-08-swiss-studio-hero.html` — **la slide seule, 1140×848, bord à bord** :
 pas de décor de maquette (photo d'intérieur, ombre portée) autour. Une première version le
 portait ; retirée le 30/07 — un décor oblige à recadrer chaque export à la main, et ce n'est
 pas la slide. Preuve `proofs/ref-08/slide-01.png`. Les trois photos sont remplacées par des
@@ -208,27 +207,27 @@ avait été écrite en supposant une carte plus petite :
 - statement **27px sur 3 lignes**, pas 15px sur 2.
 - carte **#F6F5F2**, pas #FFFFFF : elle est éclairée par la pièce.
 
-**Reste à faire** : les patterns. `pat-hero-statement-first`,
-`pat-type-registered-superscript`, et surtout la preuve du lot — que
-`pat-hero-card-on-photo` et `pat-image-triptych` (lot 6, pas encore écrits) produisent
+**Reste à faire** : les patterns. `hero-statement-first`,
+`type-registered-superscript`, et surtout la preuve du lot — que
+`hero-card-on-photo` et `image-triptych` (lot 6, pas encore écrits) produisent
 ref-07 ET ref-08 **par variables**, sans duplication. Le tableau des différences est dans
 la spec. Faire le lot 6 d'abord, puis revenir extraire ici.
 
 ### ⬜ Lot 8 — `ref-09` zine-annotated-blue
-**12 slides** — la plus grosse planche du corpus, prévoir la session entière. Le lot le plus technique : `pat-annotation-marker` est un générateur SVG de
+**12 slides** — la plus grosse planche du corpus, prévoir la session entière. Le lot le plus technique : `annotation-marker` est un générateur SVG de
 tracés manuscrits (ovale d'encerclement, flèche courbe, soulignement ondulé, zigzag) dont
 **l'irrégularité des points de contrôle est la fonctionnalité** — un tracé régulier
 redevient une forme géométrique et l'effet tombe. C'est le plus fort différenciateur
 anti-« AI slop » du corpus.
-Patterns : `pat-annotation-marker`, `pat-type-lowercase-editorial`, `pat-type-vertical-rail`.
+Patterns : `annotation-marker`, `type-lowercase-editorial`, `type-vertical-rail`.
 
 ### 🟡 Lot 9 — `ref-10` campaign-board-red — reconstitution faite, patterns à extraire
 **3 slides.** Typo condensée écrasée, collage d'images en overlay, tableau à filets.
-Patterns : `pat-type-condensed-stack`, `pat-mark-paren-number`, `pat-table-hairline-rules`,
-`pat-layout-image-collage-overlay`, `pat-type-micro-caps-block`.
+Patterns : `type-condensed-stack`, `mark-paren-number`, `table-hairline-rules`,
+`layout-image-collage-overlay`, `type-micro-caps-block`.
 
 **Fait le 30/07/2026, hors ordre** (demande directe de Léo sur le visuel source) :
-`systems/sys-10.json` et `decks/ref-10.html` — **3 slides 1600×900**, preuves
+`systems/ref-10-campaign-board-red.json` et `decks/ref-10-campaign-board-red.html` — **3 slides 1600×900**, preuves
 `proofs/ref-10/slide-01..03.png` + planche `proofs/ref-10.png`. Le fond de planche taupe et
 la signature « @ALOHA DESIGN » ne sont PAS reproduits : décor de contact sheet, pas slides.
 Les six photos sont des compositions SVG génératives (robe de vache, veste rouge satinée,
@@ -244,8 +243,8 @@ recopiées de la spec : cf. le piège documenté dans `fonts/FONTS.md`.
 ### ⬜ Lot 10 — `ref-01` bento-pills-2030
 1 slide de couverture, purement géométrique. Reconstruire **à plat** : ne pas reproduire la
 perspective ni l'ombre de la photo d'origine.
-Patterns : `pat-layout-bento-primitives`, `pat-shape-teardrop`, `pat-shape-toggle`,
-`pat-fill-gradient-stadium`.
+Patterns : `layout-bento-primitives`, `shape-teardrop`, `shape-toggle`,
+`fill-gradient-stadium`.
 
 ### ⬜ Lot 11 — Composition
 Ce qui transforme la collection en outil :
@@ -299,11 +298,11 @@ Fais ce lot et lui seul, en suivant la « Procédure d'un lot » de la ROADMAP.
 Le livrable est un deck AU FORMAT SLIDES : une <section class="slide"> par slide, à sa
 taille réelle, autant de slides que la spec en annonce (aucune n'est facultative), et
 AUCUNE grille de vignettes dans le fichier. Gabarits de forme : decks/ref-04.html pour
-la structure d'un deck, patterns/pat-tile-kpi.* pour un pattern.
+la structure d'un deck, patterns/card-03-stat-accent.* pour un pattern.
 
-Ne me rends pas la main avant d'avoir exporté `node bin/slides.mjs decks/ref-NN.html`
+Ne me rends pas la main avant d'avoir exporté `node bin/slides.mjs decks/ref-NN-<slug>.html`
 et REGARDÉ chaque slide en pleine taille, écarts corrigés. Finis par
-`node bin/board.mjs decks/ref-NN.html` pour vérifier le rythme d'ensemble.
+`node bin/board.mjs decks/ref-NN-<slug>.html` pour vérifier le rythme d'ensemble.
 
 Termine par : node bin/index.mjs, les PNG de chaque pattern, la case cochée ici, et
 un commit.

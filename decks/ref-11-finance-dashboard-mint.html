@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ref-11 — finance dashboard (menthe & lilas)</title>
+<style>
+@import url("../fonts/fonts.css");
+
+/* ref-11-finance-dashboard-mint — reconstitution fidèle. UNE slide : la planche sage (le fond) porte les 4 cartes,
+   avec une marge de planche du même ordre que l'écart inter-cartes → le petit liseré de fond
+   qui fait lire les cartes comme des objets posés. */
+:root {
+  --vl-bg: #E6EAE4;
+  --vl-board: #E6EAE4;
+  --vl-surface-light: #FFFFFF;
+  --vl-surface-soft: #F1F2EF;
+  --vl-surface-dark: #141414;
+  --vl-mint: #B4E3A0;
+  --vl-mint-deep: #8FCE72;
+  --vl-lilac: #B6ABE6;
+  --vl-lilac-deep: #9A8ADE;
+  --vl-ink: #181A17;
+  --vl-ink-muted: #7C817A;
+  --vl-ink-invert: #FFFFFF;
+  --vl-ink-invert-muted: #9CA09A;
+  --vl-hairline: #E3E5E1;
+  --vl-hairline-invert: #333333;
+  --vl-radius-card: 26px;
+  --vl-radius-sub: 20px;
+  --vl-radius-chip: 14px;
+  --vl-gap: 20px;
+  --vl-font: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 40px;
+  display: flex; justify-content: center;
+  background: #cfd6cd;
+  font-family: var(--vl-font);
+  color: var(--vl-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ————— la planche (fond) et le bento des 4 cartes ————— */
+.slide {
+  width: 1160px; height: 900px; padding: 28px;
+  background: var(--vl-board);
+  display: flex; gap: var(--vl-gap);
+}
+.col { display: flex; flex-direction: column; gap: var(--vl-gap); }
+.col--left  { flex: 0 0 556px; }
+.col--right { flex: 1; }
+
+/* briques communes */
+.card {
+  background: var(--vl-surface-light);
+  border-radius: var(--vl-radius-card);
+  padding: 30px;
+  display: flex; flex-direction: column;
+}
+.card--dark { background: var(--vl-surface-dark); color: var(--vl-ink-invert); }
+
+.h-title  { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.h-sub    { margin: 2px 0 0; font-size: 11px; font-weight: 500; color: var(--vl-ink-muted); }
+.h-sub--i { color: var(--vl-ink-invert-muted); }
+.micro    { font-size: 11px; font-weight: 500; color: var(--vl-ink-muted); }
+.micro--i { color: var(--vl-ink-invert-muted); }
+.figure   { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
+.figure-xl{ font-size: 46px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px; border-radius: 999px;
+  border: 1px solid var(--vl-hairline-invert);
+  font-size: 12px; font-weight: 500; color: inherit;
+}
+.pill--soft { background: var(--vl-surface-soft); border: none; color: var(--vl-ink); }
+.circ {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid var(--vl-hairline);
+  display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+}
+.circ svg { width: 14px; height: 14px; }
+.arrow-up { display: inline-block; }
+
+/* ═══════════════ CARTE 1 · Sales statistics (aplat noir) ═══════════════ */
+.vl-sales { height: 330px; }
+.vl-sales__head { display: flex; justify-content: space-between; align-items: flex-start; }
+.vl-sales__foot { margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end; }
+.vl-sales__num  { color: var(--vl-ink-invert); }
+.vl-bars { display: flex; align-items: flex-end; gap: 22px; }
+.vl-bars__grp { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.vl-bars__stack { width: 58px; display: flex; flex-direction: column; gap: 5px; justify-content: flex-end; }
+.vl-bars__mint  { background: var(--vl-mint);  border-radius: 12px; }
+.vl-bars__lilac { background: var(--vl-lilac); border-radius: 12px; }
+.vl-bars__lab { font-size: 11px; font-weight: 500; color: var(--vl-ink-invert-muted); }
+
+/* ═══════════════ CARTE 2 · Recent Transactions (blanc) ═══════════════ */
+.vl-txn { height: 208px; }
+.vl-txn__head { display: flex; justify-content: space-between; align-items: flex-start; }
+.vl-txn__id { display: flex; gap: 14px; align-items: center; }
+.vl-txn__badge {
+  width: 42px; height: 42px; border-radius: 13px; background: var(--vl-surface-dark);
+  display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+}
+.vl-txn__badge svg { width: 20px; height: 20px; }
+.vl-txn__avatars { display: flex; align-items: center; }
+.vl-txn__av {
+  width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--vl-surface-light);
+  margin-left: -10px;
+}
+.vl-txn__av:first-child { margin-left: 0; }
+.vl-txn__av--1 { background: linear-gradient(135deg, var(--vl-mint), var(--vl-mint-deep)); }
+.vl-txn__av--2 { background: linear-gradient(135deg, var(--vl-lilac), var(--vl-lilac-deep)); }
+.vl-txn__menu {
+  width: 38px; height: 38px; border-radius: 50%; background: var(--vl-lilac);
+  color: var(--vl-surface-dark); margin-left: -10px;
+  display: inline-flex; align-items: center; justify-content: center; font-weight: 700; letter-spacing: 1px;
+}
+.vl-txn__row {
+  margin-top: auto; display: flex; align-items: center; gap: 14px;
+  background: var(--vl-surface-soft); border-radius: var(--vl-radius-sub); padding: 16px 20px;
+}
+.vl-txn__coin {
+  width: 34px; height: 34px; border-radius: 50%; background: var(--vl-surface-dark);
+  display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+}
+.vl-txn__coin svg { width: 16px; height: 16px; }
+.vl-txn__pair { flex: 1; font-size: 15px; font-weight: 600; }
+.vl-dots { font-weight: 700; color: var(--vl-ink-muted); letter-spacing: 1px; }
+
+/* ═══════════════ CARTE 3 · Current balance (jauge) ═══════════════ */
+.vl-balance { flex: 1; }
+.vl-balance__head { display: flex; justify-content: space-between; align-items: center; }
+.vl-balance__nav { display: flex; gap: 10px; }
+.vl-panel {
+  margin-top: 22px; flex: 1; position: relative;
+  background: var(--vl-mint); border-radius: var(--vl-radius-sub); padding: 24px;
+  overflow: hidden;
+}
+.vl-panel__chip {
+  width: 42px; height: 42px; border-radius: 50%; background: var(--vl-surface-light);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.vl-panel__chip svg { width: 18px; height: 18px; }
+.vl-gauge { position: absolute; left: 50%; top: 46%; transform: translate(-50%,-50%); width: 300px; }
+.vl-balance__stat { position: absolute; left: 24px; bottom: 22px; }
+.vl-balance__big  { position: absolute; right: 24px; bottom: 20px; }
+
+/* ═══════════════ CARTE 4 · Market forecast (timeline + prévisions) ═══════════════ */
+.vl-forecast { flex: 1; flex-direction: row; gap: 24px; padding: 28px; }
+.vl-forecast__left { flex: 0 0 43%; display: flex; flex-direction: column; }
+.vl-forecast__head { display: flex; gap: 12px; align-items: center; margin-bottom: 22px; }
+.vl-forecast__chip {
+  width: 34px; height: 34px; border-radius: 50%; background: var(--vl-mint);
+  display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+}
+.vl-forecast__chip svg { width: 16px; height: 16px; }
+.vl-forecast__ttl { margin: 0; font-size: 18px; font-weight: 600; line-height: 1.12; letter-spacing: -0.01em; }
+.vl-tl { position: relative; padding-left: 22px; display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
+.vl-tl::before { content:""; position:absolute; left:5px; top:6px; bottom:6px; width:2px; background: var(--vl-hairline); }
+.vl-tl__it { position: relative; }
+.vl-tl__it::before {
+  content:""; position:absolute; left:-22px; top:3px; width:11px; height:11px; border-radius:50%;
+  background: var(--vl-surface-light); border:2px solid var(--vl-ink-muted);
+}
+.vl-tl__it--now::before { background: var(--vl-ink); border-color: var(--vl-ink); }
+.vl-tl__y { font-size: 14px; font-weight: 700; }
+.vl-tl__d { font-size: 11px; font-weight: 500; color: var(--vl-ink-muted); margin-top: 2px; max-width: 20ch; }
+
+.vl-forecast__right { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+.vl-fc { border-radius: var(--vl-radius-sub); padding: 20px; display: flex; flex-direction: column; }
+.vl-fc--mint  { background: var(--vl-mint);  flex: 0 0 auto; }
+.vl-fc--lilac { background: var(--vl-lilac); flex: 1; }
+.vl-fc__top { display: flex; justify-content: space-between; align-items: flex-start; }
+.vl-fc__big { margin-top: 8px; }
+.vl-fc__delta {
+  align-self: flex-start; margin-top: 12px; padding: 5px 12px; border-radius: 999px;
+  background: rgba(255,255,255,.65); font-size: 12px; font-weight: 600;
+}
+.vl-progress { margin-top: 16px; height: 9px; border-radius: 999px; background: var(--vl-surface-dark); position: relative; }
+.vl-progress__fill { position:absolute; left:0; top:0; bottom:0; width:74%; border-radius:999px; background: var(--vl-mint-deep); }
+.vl-progress__knob { position:absolute; left:74%; top:50%; width:15px; height:15px; border-radius:50%; background: var(--vl-lilac-deep); border:2px solid var(--vl-surface-light); transform: translate(-50%,-50%); }
+.vl-spark { margin-top: auto; }
+</style>
+</head>
+<body>
+
+<section class="slide">
+
+  <!-- ══════════ COLONNE GAUCHE ══════════ -->
+  <div class="col col--left">
+
+    <!-- CARTE 1 · Sales statistics -->
+    <div class="card card--dark vl-sales">
+      <div class="vl-sales__head">
+        <div>
+          <h2 class="h-title">Sales statistics</h2>
+          <p class="h-sub h-sub--i">Updated 1 days ago</p>
+        </div>
+        <span class="pill">Monthly
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </span>
+      </div>
+      <div class="vl-sales__foot">
+        <div>
+          <span class="micro micro--i">Visitors
+            <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </span>
+          <div class="figure-xl vl-sales__num" style="margin-top:8px">2,025</div>
+        </div>
+        <div class="vl-bars">
+          <div class="vl-bars__grp">
+            <div class="vl-bars__stack">
+              <div class="vl-bars__mint"  style="height:52px"></div>
+              <div class="vl-bars__lilac" style="height:38px"></div>
+            </div>
+            <span class="vl-bars__lab">September</span>
+          </div>
+          <div class="vl-bars__grp">
+            <div class="vl-bars__stack">
+              <div class="vl-bars__mint"  style="height:96px"></div>
+              <div class="vl-bars__lilac" style="height:34px"></div>
+            </div>
+            <span class="vl-bars__lab">November</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARTE 3 · Current balance -->
+    <div class="card vl-balance">
+      <div class="vl-balance__head">
+        <h2 class="h-title">Current balance</h2>
+        <div class="vl-balance__nav">
+          <span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></span>
+          <span class="circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        </div>
+      </div>
+      <div class="vl-panel">
+        <span class="vl-panel__chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--vl-ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 16l3-4 3 2 4-6"/></svg>
+        </span>
+        <svg class="vl-gauge" viewBox="0 0 300 168" fill="none">
+          <defs>
+            <pattern id="vlhatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+              <rect width="8" height="8" fill="var(--vl-mint)"/>
+              <line x1="0" y1="0" x2="0" y2="8" stroke="var(--vl-mint-deep)" stroke-width="4"/>
+            </pattern>
+          </defs>
+          <path d="M25 150 A125 125 0 0 1 128.3 26.9" stroke="var(--vl-ink)" stroke-width="20" stroke-linecap="round"/>
+          <path d="M128.3 26.9 A125 125 0 0 1 275 150" stroke="url(#vlhatch)" stroke-width="20" stroke-linecap="round"/>
+          <circle cx="252" cy="78" r="10" fill="var(--vl-lilac-deep)" stroke="var(--vl-surface-light)" stroke-width="3"/>
+        </svg>
+        <div class="vl-balance__stat">
+          <div style="font-size:17px;font-weight:700">14%
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:0"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </div>
+          <div class="micro" style="color:var(--vl-ink-on-mint);margin-top:2px">Avg score: 18,324$</div>
+        </div>
+        <div class="vl-balance__big figure-xl">15,368$</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ COLONNE DROITE ══════════ -->
+  <div class="col col--right">
+
+    <!-- CARTE 2 · Recent Transactions -->
+    <div class="card vl-txn">
+      <div class="vl-txn__head">
+        <div class="vl-txn__id">
+          <span class="vl-txn__badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--vl-surface-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>
+          </span>
+          <div>
+            <h2 class="h-title">Recent Transactions</h2>
+            <p class="h-sub">Sell currency</p>
+          </div>
+        </div>
+        <div class="vl-txn__avatars">
+          <span class="vl-txn__av vl-txn__av--1"></span>
+          <span class="vl-txn__av vl-txn__av--2"></span>
+          <span class="vl-txn__menu">···</span>
+        </div>
+      </div>
+      <div class="vl-txn__row">
+        <span class="vl-txn__coin">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--vl-surface-light)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 8h5a2.5 2.5 0 0 1 0 5H9zM9 13h6a2.5 2.5 0 0 1 0 5H9zM10 6v12"/></svg>
+        </span>
+        <span class="vl-txn__pair">12,53 ETH/I BTC</span>
+        <span class="vl-dots">⋮</span>
+      </div>
+    </div>
+
+    <!-- CARTE 4 · Market forecast -->
+    <div class="card vl-forecast">
+      <div class="vl-forecast__left">
+        <div class="vl-forecast__head">
+          <span class="vl-forecast__chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--vl-ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4 10-11"/></svg>
+          </span>
+          <h3 class="vl-forecast__ttl">Market<br>forecast</h3>
+        </div>
+        <div class="vl-tl">
+          <div class="vl-tl__it"><div class="vl-tl__y">2023</div><div class="vl-tl__d">Explosive growth of DeFi</div></div>
+          <div class="vl-tl__it"><div class="vl-tl__y">2024</div><div class="vl-tl__d">Mainstream adoption of CBDCs</div></div>
+          <div class="vl-tl__it"><div class="vl-tl__y">2025</div><div class="vl-tl__d">1 BTC reaches $500K</div></div>
+          <div class="vl-tl__it vl-tl__it--now"><div class="vl-tl__y">2027</div><div class="vl-tl__d">Widespread retail use</div></div>
+        </div>
+      </div>
+
+      <div class="vl-forecast__right">
+        <div class="vl-fc vl-fc--mint">
+          <div class="vl-fc__top">
+            <span class="micro" style="color:var(--vl-ink-on-mint)">BTC price</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--vl-ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg>
+          </div>
+          <div class="figure vl-fc__big">21,105$</div>
+          <span class="vl-fc__delta">+28,21%</span>
+          <div class="vl-progress"><div class="vl-progress__fill"></div><div class="vl-progress__knob"></div></div>
+        </div>
+        <div class="vl-fc vl-fc--lilac">
+          <span class="micro" style="color:var(--vl-ink-on-lilac)">Market cap forecast</span>
+          <div class="figure vl-fc__big">1,3trln$</div>
+          <svg class="vl-spark" viewBox="0 0 240 70" fill="none" preserveAspectRatio="none" width="100%" height="64">
+            <polyline points="6,58 52,48 98,52 150,30 196,22 234,8" stroke="var(--vl-mint-deep)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="52" cy="48" r="4.5" fill="var(--vl-surface-light)" stroke="var(--vl-mint-deep)" stroke-width="2.5"/>
+            <circle cx="150" cy="30" r="4.5" fill="var(--vl-surface-light)" stroke="var(--vl-mint-deep)" stroke-width="2.5"/>
+            <circle cx="234" cy="8" r="4.5" fill="var(--vl-mint-deep)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</body>
+</html>

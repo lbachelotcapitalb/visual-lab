@@ -1,0 +1,100 @@
+{
+  "name": "Titre à filet d'accent collé",
+  "family": "title",
+  "ref": "ref-06-orange-notched",
+  "intent": "Marquer le titre d'une slide d'un filet vertical d'accent sans ajouter ni couleur au texte ni élément décoratif : le filet est le seul accent du titre, et il est collé au mot.",
+  "when_to_use": "Titre de slide en capitales grasses sur 1 à 3 lignes, dans un deck qui répète ce marqueur d'une slide à l'autre — c'est sa répétition qui en fait une charte.",
+  "avoid_when": "Le titre est déjà coloré ou posé sur un aplat d'accent (deux accents se neutralisent), ou il est centré : un filet collé à un bloc centré désaxe la composition sans rien signifier.",
+  "tags": [
+    "titre",
+    "filet",
+    "barre",
+    "accent",
+    "typo",
+    "capitales",
+    "deck",
+    "marqueur",
+    "leading-rule"
+  ],
+  "vars": [
+    {
+      "name": "--vl-orange",
+      "role": "couleur du filet",
+      "default": "#F2551E"
+    },
+    {
+      "name": "--vl-black",
+      "role": "couleur du titre",
+      "default": "#141414"
+    }
+  ],
+  "slots": [
+    "title"
+  ],
+  "geometry": {
+    "root": ".vl-tlr",
+    "frame": [
+      760,
+      160
+    ],
+    "ratios": {
+      "rule_width_over_font_size": 0.081
+    },
+    "type_px": {
+      "title": 74
+    },
+    "pad_ratio": {
+      "top": 0,
+      "x": 0,
+      "bottom": 0
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "filet ≈ 8 % du corps du titre (6 px pour 74 px)",
+      "measure": "num('.vl-tlr','borderLeftWidth') / num('.vl-tlr','fontSize')",
+      "expect": 0.081,
+      "tol": 0.03
+    },
+    {
+      "name": "filet COLLÉ : aucun padding entre le filet et la première lettre",
+      "measure": "num('.vl-tlr','paddingLeft')",
+      "expect": 0,
+      "tol": 0
+    },
+    {
+      "name": "le filet court sur toute la hauteur du bloc (variante bloc)",
+      "measure": "box('.vl-tlr').h / (num('.vl-tlr','fontSize') * 1.05 * 2)",
+      "min": 0.95,
+      "max": 1.05
+    },
+    {
+      "name": "variante en ligne : filet à hauteur de capitale (70 à 85 % du corps)",
+      "measure": "box('.vl-tlr-inline').h / num('.vl-tlr-right','fontSize')",
+      "min": 0.7,
+      "max": 0.85
+    },
+    {
+      "name": "les deux variantes ont la MÊME épaisseur de filet",
+      "measure": "Math.abs(num('.vl-tlr','borderLeftWidth') - box('.vl-tlr-inline').w)",
+      "expect": 0,
+      "tol": 0.5
+    },
+    {
+      "name": "titre en capitales",
+      "measure": "cs('.vl-tlr','textTransform') === 'uppercase' ? 1 : 0",
+      "expect": 1
+    },
+    {
+      "name": "contraste du titre ≥ 7",
+      "measure": "contrast('.vl-tlr')",
+      "min": 7
+    }
+  ],
+  "pptx": {
+    "primitive": "rect_rule",
+    "emitter": "kit/vl_pptx.py:title_leading_rule",
+    "pattern": "title-leading-rule"
+  },
+  "notes": "La faute à ne pas commettre : mettre un `border-right` sur un titre aligné à droite. Le filet court alors le long des deux lignes et devient un bord de cadre — c'est arrivé sur `SALES|STRATEGY` au premier jet de ref-06. Il faut la variante EN LIGNE, un `<span>` vide de 6 px à hauteur de capitale, posé après le dernier caractère du premier mot. En .pptx, le filet est un rectangle plein aligné sur la boîte de texte, avec un décalage NUL — la boîte de texte de python-pptx a une marge interne par défaut (0,05\") qu'il faut annuler, sinon le filet se décolle."
+}

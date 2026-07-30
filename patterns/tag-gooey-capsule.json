@@ -1,0 +1,141 @@
+{
+  "name": "Capsule néon soudée — mot-clé + glyphe",
+  "family": "tag",
+  "ref": "ref-12-neon-capsule-tags",
+  "intent": "Faire d'un mot-clé un OBJET : un contour continu qui soude un cercle de glyphe à une pilule de texte par deux congés concaves, pour qu'un terme isolé pèse autant qu'un titre sans être plus gros.",
+  "when_to_use": "Valoriser des mots-clés, des noms de produits, de modules, d'offres ou de compétences sur une slide, un hero ou une couverture — seul, ou empilé en liste. C'est le pattern quand il faut donner du poids à des termes qui n'ont ni chiffre ni phrase autour.",
+  "avoid_when": "Le libellé dépasse deux mots (la pilule devient une barre et le cou n'est plus lisible), l'élément est cliquable (ça ressemble à un bouton et le cou casse la cible), ou l'icône doit être COMPRISE — à 0,6u dans un cercle, elle marque une catégorie, elle n'explique rien.",
+  "tags": [
+    "capsule",
+    "pilule",
+    "etiquette",
+    "tag",
+    "mot-cle",
+    "keyword",
+    "neon",
+    "contour",
+    "outline",
+    "icone",
+    "soudure",
+    "gooey",
+    "sombre",
+    "slide",
+    "hero"
+  ],
+  "vars": [
+    {
+      "name": "--vl-neon",
+      "role": "le trait ET le texte — c'est la seule couleur du pattern",
+      "default": "#4FE383"
+    },
+    {
+      "name": "--vl-cap-u",
+      "role": "l'unité dont TOUTE la géométrie dérive (hauteur de rangée = 1,255 × u)",
+      "default": "56px"
+    }
+  ],
+  "slots": [
+    "icon",
+    "label"
+  ],
+  "geometry": {
+    "root": ".vl-cap",
+    "frame": [
+      241,
+      70
+    ],
+    "ratios": {
+      "head_over_height": 1.4562,
+      "label_over_height": 0.8406,
+      "stroke_over_height": 0.0438,
+      "font_over_height": 0.494,
+      "icon_over_height": 0.478,
+      "circle_r_over_u": 0.6,
+      "cap_r_over_u": 0.5,
+      "fillet_r_over_u": 0.28,
+      "centres_gap_over_u": 1.2
+    },
+    "type_px": {
+      "label": 34.7
+    },
+    "pad_ratio": {
+      "top": 0,
+      "x": 0.143,
+      "bottom": 0
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "tête (cercle + cou + calotte) ≈ 1,456 × la hauteur de rangée",
+      "measure": "box('.vl-cap__head').w / H",
+      "expect": 1.4562,
+      "tol": 0.02
+    },
+    {
+      "name": "pilule ≈ 84 % de la hauteur : le cercle déborde en haut ET en bas",
+      "measure": "box('.vl-cap__label').h / H",
+      "expect": 0.8406,
+      "tol": 0.01
+    },
+    {
+      "name": "trait unique — la bordure de la pilule vaut 4,4 % de la hauteur (= le stroke SVG)",
+      "measure": "num('.vl-cap__label','borderTopWidth') / H",
+      "expect": 0.0438,
+      "tol": 0.005
+    },
+    {
+      "name": "contour continu : la pilule commence là où la tête finit (±0,6 px)",
+      "measure": "Math.abs(box('.vl-cap__label').left - box('.vl-cap__head').right)",
+      "max": 0.6
+    },
+    {
+      "name": "contour continu : la calotte droite est collée à la pilule (±0,6 px)",
+      "measure": "Math.abs(box('.vl-cap__tail').left - box('.vl-cap__label').right)",
+      "max": 0.6
+    },
+    {
+      "name": "pilule centrée sur la tête — débord haut = débord bas",
+      "measure": "Math.abs((box('.vl-cap__label').top - box('.vl-cap__head').top) - (box('.vl-cap__head').bottom - box('.vl-cap__label').bottom))",
+      "max": 0.6
+    },
+    {
+      "name": "les trois pièces pavent la capsule sans trou ni recouvrement",
+      "measure": "box('.vl-cap').w - (box('.vl-cap__head').w + box('.vl-cap__label').w + box('.vl-cap__tail').w)",
+      "expect": 0,
+      "tol": 0.6
+    },
+    {
+      "name": "corps ≈ 49 % de la hauteur de rangée (le mot remplit la pilule)",
+      "measure": "num('.vl-cap__label','fontSize') / H",
+      "expect": 0.494,
+      "tol": 0.03
+    },
+    {
+      "name": "capitales — la capsule ne prend pas de bas-de-casse",
+      "measure": "cs('.vl-cap__label','textTransform') === 'uppercase' ? 1 : 0",
+      "expect": 1
+    },
+    {
+      "name": "glyphe centré dans le cercle : centre à (H/2, H/2), ±1 px",
+      "measure": "Math.max(Math.abs(box('.vl-cap__icon').left + box('.vl-cap__icon').w / 2 - H / 2), Math.abs(box('.vl-cap__icon').top + box('.vl-cap__icon').h / 2 - H / 2))",
+      "max": 1
+    },
+    {
+      "name": "glyphe entre 40 % et 55 % du diamètre du cercle — au-delà il touche le trait",
+      "measure": "box('.vl-cap__icon').w / H",
+      "min": 0.4,
+      "max": 0.55
+    },
+    {
+      "name": "le mot respire plus à droite (calotte ronde) qu'à gauche (jonction droite)",
+      "measure": "num('.vl-cap__label','paddingRight') / num('.vl-cap__label','paddingLeft')",
+      "min": 1.2
+    },
+    {
+      "name": "contraste du mot ≥ 4,5 — le néon sur le vert sombre n'a aucune excuse",
+      "measure": "contrast('.vl-cap__label')",
+      "min": 4.5
+    }
+  ],
+  "notes": "La difficulté du pattern n'est pas le dessin, c'est la LARGEUR VARIABLE : le contour doit rester continu quel que soit le mot. D'où le découpage en trois pièces — tête fixe (cercle + les deux congés + calotte gauche, un seul <path>), corps élastique (les deux droites en bordures CSS), calotte droite fixe. Les droites du corps prolongent les extrémités du tracé au pixel près parce que le SVG est rendu à l'échelle exacte (viewBox 1.8275 × 1.255 pour une boîte de 1.8275u × 1.255u, donc 1 unité de viewBox = 1u) et que son stroke-width (0.055) est le même nombre que --sw (0.055u). Casser cette égalité — un SVG en preserveAspectRatio non uniforme, une hauteur de pilule qui ne suit plus — rouvre le contour et la signature tombe. La géométrie du cou est calculée, pas dessinée à l'œil : les congés de rayon 0,28u sont TANGENTS extérieurement au cercle (0,6u) et à la calotte (0,5u) distants de 1,2u d'entraxe, ce qui place leurs centres à (±0,6692u, ±0,5715u) et les points de tangence à x = 0,4563u sur le cercle et x = 0,8597u sur la calotte. Ces six nombres sont solidaires : changer le rayon du cercle sans recalculer les congés produit un raccord qui casse — visible à 3 px, invisible sur une maquette réduite, et c'est exactement ce que les benchmarks de continuité attrapent. Les quatre glyphes (éclair, croix directionnelle, rayons, cadre) sont REDESSINÉS : la référence n'existe pas sur disque, seule sa géométrie a survécu."
+}

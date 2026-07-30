@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Planche-contact d'un deck : toutes les slides réduites, en grille, sur un seul PNG.
-//   node bin/board.mjs decks/ref-04.html              → proofs/ref-04.png (2 colonnes, 50 %)
-//   node bin/board.mjs decks/ref-09.html 3 0.34       → 3 colonnes à 34 %
+//   node bin/board.mjs decks/ref-04-swiss-investor-blue.html              → proofs/<deck>.png (2 colonnes, 50 %)
+//   node bin/board.mjs decks/ref-09-zine-annotated-blue.html 3 0.34       → 3 colonnes à 34 %
 //
 // DÉRIVÉ, jamais source : le deck s'écrit une slide par section, à sa taille réelle. C'est
 // ce script qui met les slides en grille — pas le HTML du deck, qui ne doit rien savoir de
@@ -20,7 +20,7 @@ if (!existsSync(CHROME)) {
 const argv = process.argv.slice(2);
 const deck = resolve(ROOT, argv[0] || '');
 if (!existsSync(deck)) {
-  console.error(`Deck introuvable : ${deck}\nUsage : node bin/board.mjs decks/ref-NN.html [colonnes] [échelle]`);
+  console.error(`Deck introuvable : ${deck}\nUsage : node bin/board.mjs decks/ref-NN-<slug>.html [colonnes] [échelle]`);
   process.exit(1);
 }
 

@@ -1,0 +1,88 @@
+<!-- card-06-forecast-timeline — fragment autonome. Couleurs via --vl-* uniquement, aucune valeur en dur. -->
+<div class="vl-forecast">
+  <div class="vl-forecast__left">
+    <div class="vl-forecast__head">
+      <span class="vl-forecast__chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--vl-ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4 10-11"/></svg>
+      </span>
+      <h3 class="vl-forecast__ttl">Market<br>forecast</h3>
+    </div>
+    <div class="vl-tl">
+      <div class="vl-tl__it"><div class="vl-tl__y">2023</div><div class="vl-tl__d">Explosive growth of DeFi</div></div>
+      <div class="vl-tl__it"><div class="vl-tl__y">2024</div><div class="vl-tl__d">Mainstream adoption of CBDCs</div></div>
+      <div class="vl-tl__it"><div class="vl-tl__y">2025</div><div class="vl-tl__d">1 BTC reaches $500K</div></div>
+      <div class="vl-tl__it vl-tl__it--now"><div class="vl-tl__y">2027</div><div class="vl-tl__d">Widespread retail use</div></div>
+    </div>
+  </div>
+
+  <div class="vl-forecast__right">
+    <div class="vl-fc vl-fc--mint">
+      <div class="vl-fc__top">
+        <span class="vl-fc__kicker vl-fc__kicker--mint">BTC price</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--vl-ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg>
+      </div>
+      <div class="vl-fc__big">21,105$</div>
+      <span class="vl-fc__delta">+28,21%</span>
+      <div class="vl-progress"><div class="vl-progress__fill"></div><div class="vl-progress__knob"></div></div>
+    </div>
+    <div class="vl-fc vl-fc--lilac">
+      <span class="vl-fc__kicker vl-fc__kicker--lilac">Market cap forecast</span>
+      <div class="vl-fc__big">1,3trln$</div>
+      <svg class="vl-spark" viewBox="0 0 240 70" fill="none" preserveAspectRatio="none" width="100%" height="64">
+        <polyline points="6,58 52,48 98,52 150,30 196,22 234,8" stroke="var(--vl-mint-deep)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="52" cy="48" r="4.5" fill="var(--vl-surface-light)" stroke="var(--vl-mint-deep)" stroke-width="2.5"/>
+        <circle cx="150" cy="30" r="4.5" fill="var(--vl-surface-light)" stroke="var(--vl-mint-deep)" stroke-width="2.5"/>
+        <circle cx="234" cy="8" r="4.5" fill="var(--vl-mint-deep)"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Carte prévision : à gauche une TIMELINE verticale (jalons datés, dernier point plein =
+   horizon), à droite une pile de deux sous-cartes teintées — menthe (valeur constatée +
+   jauge de progression) sur lilas (projection + courbe). Menthe = présent, lilas = futur. */
+.vl-forecast {
+  width: 528px; height: 560px;
+  background: var(--vl-surface-light); color: var(--vl-ink);
+  border-radius: var(--vl-radius-card); padding: 28px;
+  display: flex; flex-direction: row; gap: 24px;
+  font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+.vl-forecast__left { flex: 0 0 43%; display: flex; flex-direction: column; }
+.vl-forecast__head { display: flex; gap: 12px; align-items: center; margin-bottom: 22px; }
+.vl-forecast__chip {
+  width: 34px; height: 34px; border-radius: 50%; background: var(--vl-mint);
+  display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+}
+.vl-forecast__chip svg { width: 16px; height: 16px; }
+.vl-forecast__ttl { margin: 0; font-size: 18px; font-weight: 600; line-height: 1.12; letter-spacing: -0.01em; }
+.vl-tl { position: relative; padding-left: 22px; display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
+.vl-tl::before { content: ""; position: absolute; left: 5px; top: 6px; bottom: 6px; width: 2px; background: var(--vl-hairline); }
+.vl-tl__it { position: relative; }
+.vl-tl__it::before {
+  content: ""; position: absolute; left: -22px; top: 3px; width: 11px; height: 11px; border-radius: 50%;
+  background: var(--vl-surface-light); border: 2px solid var(--vl-ink-muted);
+}
+.vl-tl__it--now::before { background: var(--vl-ink); border-color: var(--vl-ink); }
+.vl-tl__y { font-size: 14px; font-weight: 700; }
+.vl-tl__d { font-size: 11px; font-weight: 500; color: var(--vl-ink-muted); margin-top: 2px; max-width: 20ch; }
+
+.vl-forecast__right { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+.vl-fc { border-radius: var(--vl-radius-sub); padding: 20px; display: flex; flex-direction: column; }
+.vl-fc--mint  { background: var(--vl-mint);  flex: 0 0 auto; }
+.vl-fc--lilac { background: var(--vl-lilac); flex: 1; }
+.vl-fc__top { display: flex; justify-content: space-between; align-items: flex-start; }
+.vl-fc__kicker { font-size: 11px; font-weight: 500; }
+.vl-fc__kicker--mint  { color: var(--vl-ink-on-mint); }
+.vl-fc__kicker--lilac { color: var(--vl-ink-on-lilac); }
+.vl-fc__big { margin-top: 8px; font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
+.vl-fc__delta {
+  align-self: flex-start; margin-top: 12px; padding: 5px 12px; border-radius: 999px;
+  background: var(--vl-surface-light); font-size: 12px; font-weight: 600; color: var(--vl-ink-on-mint);
+}
+.vl-progress { margin-top: 16px; height: 9px; border-radius: 999px; background: var(--vl-surface-dark); position: relative; }
+.vl-progress__fill { position: absolute; left: 0; top: 0; bottom: 0; width: 74%; border-radius: 999px; background: var(--vl-mint-deep); }
+.vl-progress__knob { position: absolute; left: 74%; top: 50%; width: 15px; height: 15px; border-radius: 50%; background: var(--vl-lilac-deep); border: 2px solid var(--vl-surface-light); transform: translate(-50%,-50%); }
+.vl-spark { margin-top: auto; }
+</style>

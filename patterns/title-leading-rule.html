@@ -1,0 +1,28 @@
+<!-- title-leading-rule — le filet vertical d'accent COLLÉ au titre. Deux variantes, et il
+     faut les deux : en bloc (titre aligné à gauche) et en ligne (titre aligné à droite).
+     Couleurs via --vl-* uniquement. -->
+<div class="vl-tlr-demo">
+  <h2 class="vl-tlr">Presentation<br>content index</h2>
+
+  <h2 class="vl-tlr-right">Sales<span class="vl-tlr-inline"></span><br>strategy</h2>
+</div>
+
+<style>
+.vl-tlr-demo { display: flex; flex-direction: column; gap: 64px; width: 760px; }
+.vl-tlr, .vl-tlr-right {
+  margin: 0; font-size: 74px; line-height: 1.05; font-weight: 800;
+  letter-spacing: -0.005em; text-transform: uppercase; color: var(--vl-black);
+}
+/* AUCUN padding-left : le filet touche le premier caractère. Un espace, même de 4 px, le
+   transforme en ornement posé à côté du titre ; collé, il se lit comme une lettre du mot. */
+.vl-tlr { border-left: 6px solid var(--vl-orange); padding-left: 0; }
+
+/* Variante EN LIGNE, pour un titre aligné à droite. Un `border-right` sur le bloc dessinerait
+   une barre le long des DEUX lignes et se lirait comme un bord de cadre : ici le filet suit
+   le dernier caractère du premier mot, à hauteur de capitale. */
+.vl-tlr-right { text-align: right; }
+.vl-tlr-inline {
+  display: inline-block; width: 6px; height: 0.76em;
+  background: var(--vl-orange); vertical-align: -0.02em;
+}
+</style>

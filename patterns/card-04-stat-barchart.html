@@ -1,0 +1,65 @@
+<!-- card-04-stat-barchart — fragment autonome. Couleurs via --vl-* uniquement, aucune valeur en dur. -->
+<div class="vl-sales">
+  <div class="vl-sales__head">
+    <div>
+      <h2 class="vl-sales__title">Sales statistics</h2>
+      <p class="vl-sales__sub">Updated 1 days ago</p>
+    </div>
+    <span class="vl-sales__pill">Monthly
+      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </span>
+  </div>
+  <div class="vl-sales__foot">
+    <div>
+      <span class="vl-sales__kicker">Visitors
+        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-1px"><path d="M7 17L17 7M8 7h9v9"/></svg>
+      </span>
+      <div class="vl-sales__num">2,025</div>
+    </div>
+    <div class="vl-bars">
+      <div class="vl-bars__grp">
+        <div class="vl-bars__stack">
+          <div class="vl-bars__mint"  style="height:52px"></div>
+          <div class="vl-bars__lilac" style="height:38px"></div>
+        </div>
+        <span class="vl-bars__lab">September</span>
+      </div>
+      <div class="vl-bars__grp">
+        <div class="vl-bars__stack">
+          <div class="vl-bars__mint"  style="height:96px"></div>
+          <div class="vl-bars__lilac" style="height:34px"></div>
+        </div>
+        <span class="vl-bars__lab">November</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Carte statistique de premier rang : aplat noir, en-tête haut / KPI + histogramme bas,
+   collés par margin-top:auto. Les barres empilent MENTHE (part principale) sur LILAS
+   (part de second temps) — la couleur y encode le rang, pas la décoration. */
+.vl-sales {
+  width: 556px; height: 330px;
+  background: var(--vl-surface-dark); color: var(--vl-ink-invert);
+  border-radius: var(--vl-radius-card); padding: 30px;
+  display: flex; flex-direction: column;
+  font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+.vl-sales__head { display: flex; justify-content: space-between; align-items: flex-start; }
+.vl-sales__title { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.vl-sales__sub { margin: 2px 0 0; font-size: 11px; font-weight: 500; color: var(--vl-ink-invert-muted); }
+.vl-sales__pill {
+  display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px;
+  border: 1px solid var(--vl-hairline-invert); font-size: 12px; font-weight: 500; color: inherit;
+}
+.vl-sales__foot { margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end; }
+.vl-sales__kicker { font-size: 11px; font-weight: 500; color: var(--vl-ink-invert-muted); }
+.vl-sales__num { margin-top: 8px; font-size: 46px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; color: var(--vl-ink-invert); }
+.vl-bars { display: flex; align-items: flex-end; gap: 22px; }
+.vl-bars__grp { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.vl-bars__stack { width: 58px; display: flex; flex-direction: column; gap: 5px; }
+.vl-bars__mint  { background: var(--vl-mint);  border-radius: 12px; }
+.vl-bars__lilac { background: var(--vl-lilac); border-radius: 12px; }
+.vl-bars__lab { font-size: 11px; font-weight: 500; color: var(--vl-ink-invert-muted); }
+</style>

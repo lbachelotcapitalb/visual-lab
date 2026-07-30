@@ -1,0 +1,77 @@
+<!-- layout-02-swiss-frame — fragment autonome. Couleurs via --vl-* uniquement.
+     Deux variantes empilées : fond clair (filet noir à 9 %) et fond plein (filet blanc à 20 %). -->
+<div class="vl-swiss vl-swiss--light">
+  <div class="vl-swiss__bar vl-swiss__bar--head">
+    <span class="vl-swiss__mark">+travel</span>
+    <span>Business model</span>
+    <span>Series A — 2026</span>
+  </div>
+
+  <div class="vl-swiss__body">
+    <h2 class="vl-swiss__demo">Zone de contenu</h2>
+    <p class="vl-swiss__note">La marge est unique (48 px) et vaut pour les quatre côtés :
+      header, footer et contenu sont alignés sur la même verticale.</p>
+  </div>
+
+  <div class="vl-swiss__bar vl-swiss__bar--foot">
+    <span>+travel.com</span>
+    <span>Investor relations</span>
+    <span>06 / 10</span>
+  </div>
+</div>
+
+<div class="vl-swiss vl-swiss--fill">
+  <div class="vl-swiss__bar vl-swiss__bar--head">
+    <span class="vl-swiss__mark">+travel</span>
+    <span>Traction</span>
+    <span>Series A — 2026</span>
+  </div>
+
+  <div class="vl-swiss__body">
+    <h2 class="vl-swiss__demo">Même cadre, fond plein</h2>
+    <p class="vl-swiss__note">Seule la couleur du filet change. Rien d'autre ne bouge : c'est
+      ce qui fait tenir l'alternance des fonds d'une slide à l'autre.</p>
+  </div>
+
+  <div class="vl-swiss__bar vl-swiss__bar--foot">
+    <span>+travel.com</span>
+    <span>Investor relations</span>
+    <span>08 / 10</span>
+  </div>
+</div>
+
+<style>
+/* Le cadre entier tient en trois règles : une marge unique, deux barres en micro-typo, un
+   filet d'un pixel. Les trois zones de chaque barre sont des colonnes de largeur ÉGALE
+   (`flex: 1`) — c'est ce qui garde la mention centrale optiquement au centre même quand les
+   textes de gauche et de droite n'ont pas la même longueur. */
+.vl-swiss {
+  --vl-margin: 48px;
+  padding: var(--vl-margin);
+  display: flex; flex-direction: column;
+  min-height: 300px; margin-bottom: 24px;
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+.vl-swiss--light { background: var(--vl-white); color: var(--vl-black); }
+.vl-swiss--fill  { background: var(--vl-blue);  color: var(--vl-white); }
+
+.vl-swiss__bar {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 8px; line-height: 1.4; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border-color: var(--vl-hairline); border-style: solid; border-width: 0;
+}
+.vl-swiss--fill .vl-swiss__bar { border-color: var(--vl-hairline-invert); }
+.vl-swiss__bar--head { padding-bottom: 14px; border-bottom-width: 1px; }
+.vl-swiss__bar--foot { margin-top: auto; padding-top: 14px; border-top-width: 1px; }
+.vl-swiss__bar > * { flex: 1; }
+.vl-swiss__bar > :nth-child(2) { text-align: center; }
+.vl-swiss__bar > :last-child { text-align: right; }
+/* La marque échappe à la micro-typo : c'est le seul élément des barres qui a un poids. */
+.vl-swiss__mark { font-size: 13px; font-weight: 900; letter-spacing: -0.02em; text-transform: none; }
+
+.vl-swiss__body { padding: 40px 0; }
+.vl-swiss__demo { margin: 0; font-size: 40px; font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; }
+.vl-swiss__note { margin: 16px 0 0; max-width: 52ch; font-size: 13px; line-height: 1.5; color: var(--vl-ink-muted); }
+.vl-swiss--fill .vl-swiss__note { color: var(--vl-ink-muted-invert); }
+</style>

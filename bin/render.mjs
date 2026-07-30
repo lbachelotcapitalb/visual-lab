@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Preuve visuelle : rend un fichier HTML en PNG avec Chrome headless, en local, sans réseau.
-//   node bin/render.mjs decks/ref-02.html                → proofs/ref-02.png (1600x900)
-//   node bin/render.mjs decks/ref-04.html 1600 4800      → planche haute
-//   node bin/render.mjs --pattern pat-tile-kpi           → rend le pattern seul sur son système
+//   node bin/render.mjs decks/ref-02-ghost-icon-claim.html  → proofs/<nom>.png (1600x900)
+//   node bin/render.mjs decks/ref-04-swiss-investor-blue.html 1600 4800
+//   node bin/render.mjs --pattern card-03-stat-accent    → le pattern seul sur sa référence
 //
 // Pourquoi Chrome et pas Playwright : rien à installer, et le rendu est celui d’un vrai
 // moteur — un PNG produit par un simulateur ne prouverait rien.
@@ -31,7 +31,7 @@ if (argv[0] === '--pattern') {
     console.error(`Pattern "${id}" introuvable.`);
     process.exit(1);
   }
-  const sys = loadSystems().find((s) => s.id === p.system);
+  const sys = loadSystems().find((s) => s.id === p.ref);
   tmp = join(ROOT, `.render-${id}.html`);
   writeFileSync(
     tmp,

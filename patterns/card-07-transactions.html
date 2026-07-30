@@ -1,0 +1,68 @@
+<!-- card-07-transactions — fragment autonome. Couleurs via --vl-* uniquement, aucune valeur en dur. -->
+<div class="vl-txn">
+  <div class="vl-txn__head">
+    <div class="vl-txn__id">
+      <span class="vl-txn__badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--vl-ink-invert)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg>
+      </span>
+      <div>
+        <h2 class="vl-txn__title">Recent Transactions</h2>
+        <p class="vl-txn__sub">Sell currency</p>
+      </div>
+    </div>
+    <div class="vl-txn__avatars">
+      <span class="vl-txn__av vl-txn__av--1"></span>
+      <span class="vl-txn__av vl-txn__av--2"></span>
+      <span class="vl-txn__menu">···</span>
+    </div>
+  </div>
+  <div class="vl-txn__row">
+    <span class="vl-txn__coin">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--vl-ink-invert)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 8h5a2.5 2.5 0 0 1 0 5H9zM9 13h6a2.5 2.5 0 0 1 0 5H9zM10 6v12"/></svg>
+    </span>
+    <span class="vl-txn__pair">12,53 ETH/I BTC</span>
+    <span class="vl-txn__dots">⋮</span>
+  </div>
+</div>
+
+<style>
+/* Carte de transaction : en-tête (badge + identité + pile d'avatars) en haut, UNE ligne de
+   valeur sur aplat doux collée en bas par margin-top:auto. La pile d'avatars se recouvre en
+   marge négative — c'est ce chevauchement qui la lit comme un groupe et non comme une file. */
+.vl-txn {
+  width: 528px; height: 208px;
+  background: var(--vl-surface-light); color: var(--vl-ink);
+  border-radius: var(--vl-radius-card); padding: 26px;
+  display: flex; flex-direction: column;
+  font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+.vl-txn__head { display: flex; justify-content: space-between; align-items: flex-start; }
+.vl-txn__id { display: flex; gap: 14px; align-items: center; }
+.vl-txn__badge {
+  width: 42px; height: 42px; border-radius: 13px; background: var(--vl-surface-dark);
+  display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+}
+.vl-txn__badge svg { width: 20px; height: 20px; }
+.vl-txn__title { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.vl-txn__sub { margin: 2px 0 0; font-size: 11px; font-weight: 500; color: var(--vl-ink-muted); }
+.vl-txn__avatars { display: flex; align-items: center; }
+.vl-txn__av { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--vl-surface-light); margin-left: -10px; }
+.vl-txn__av:first-child { margin-left: 0; }
+.vl-txn__av--1 { background: linear-gradient(135deg, var(--vl-mint), var(--vl-mint-deep)); }
+.vl-txn__av--2 { background: linear-gradient(135deg, var(--vl-lilac), var(--vl-lilac-deep)); }
+.vl-txn__menu {
+  width: 38px; height: 38px; border-radius: 50%; background: var(--vl-lilac); color: var(--vl-surface-dark);
+  margin-left: -10px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; letter-spacing: 1px;
+}
+.vl-txn__row {
+  margin-top: auto; display: flex; align-items: center; gap: 14px;
+  background: var(--vl-surface-soft); border-radius: var(--vl-radius-sub); padding: 16px 20px;
+}
+.vl-txn__coin {
+  width: 34px; height: 34px; border-radius: 50%; background: var(--vl-surface-dark);
+  display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;
+}
+.vl-txn__coin svg { width: 16px; height: 16px; }
+.vl-txn__pair { flex: 1; font-size: 15px; font-weight: 600; }
+.vl-txn__dots { font-weight: 700; color: var(--vl-ink-muted); letter-spacing: 1px; }
+</style>

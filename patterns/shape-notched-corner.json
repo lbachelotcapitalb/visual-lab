@@ -1,0 +1,73 @@
+{
+  "name": "Carte à coin chanfreiné",
+  "family": "shape",
+  "ref": "ref-06-orange-notched",
+  "intent": "Donner à un aplat coloré une signature de forme reconnaissable — UN coin coupé à 45° — sans rien ajouter au contenu ni recourir à un rayon, une ombre ou un liseré.",
+  "when_to_use": "Sur les aplats d'accent d'un deck ou d'une landing qui doivent se reconnaître d'une slide à l'autre : carte statistique, carte de second rang, pastille de glyphe. Une seule orientation par famille de contenu.",
+  "avoid_when": "Sur une image (la coupe se lit comme un recadrage raté), sur une carte du même fond que la slide (la coupe devient invisible et le lecteur ne voit qu'un angle sale), ou sur plus d'un coin — deux coins coupés font un losange, pas une signature.",
+  "tags": [
+    "chanfrein",
+    "notch",
+    "coin",
+    "clip-path",
+    "carte",
+    "aplat",
+    "forme",
+    "signature",
+    "deck",
+    "corporate"
+  ],
+  "vars": [
+    {
+      "name": "--vl-notch",
+      "role": "longueur de la coupe à 45° (≈ 7,5 % de la largeur de la carte)",
+      "default": "32px"
+    },
+    {
+      "name": "--vl-orange",
+      "role": "aplat d'accent",
+      "default": "#F2551E"
+    },
+    {
+      "name": "--vl-steel",
+      "role": "aplat de second rang",
+      "default": "#C6D0CF"
+    }
+  ],
+  "slots": [],
+  "geometry": {
+    "root": ".vl-nc--br",
+    "frame": [
+      208,
+      200
+    ],
+    "ratios": {
+      "notch_over_width": 0.075
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "chanfrein ≈ 7,5 % de la largeur (br)",
+      "measure": "notch('.vl-nc--br') / W",
+      "expect": 0.075,
+      "tol": 0.025
+    },
+    {
+      "name": "les 4 orientations coupent de la MÊME longueur",
+      "measure": "Math.max(notch('.vl-nc--br'),notch('.vl-nc--tr'),notch('.vl-nc--bl'),notch('.vl-nc--tl')) - Math.min(notch('.vl-nc--br'),notch('.vl-nc--tr'),notch('.vl-nc--bl'),notch('.vl-nc--tl'))",
+      "expect": 0,
+      "tol": 0.5
+    },
+    {
+      "name": "un seul coin coupé : la coupe reste sous 12 % de la petite dimension",
+      "measure": "notch('.vl-nc--br') / Math.min(W, H)",
+      "max": 0.2
+    }
+  ],
+  "pptx": {
+    "primitive": "notched_rect",
+    "emitter": "kit/vl_pptx.py:notched_card",
+    "pattern": "shape-notched-corner"
+  },
+  "notes": "La coupe se fait en LONGUEUR, pas en pourcentage : `clip-path: polygon(... calc(100% - var(--vl-notch)) ...)`. Un pourcentage résout indépendamment sur X et Y, donc la coupe n'est plus à 45° dès que la carte n'est pas carrée — c'est la faute qui rend la charte méconnaissable. Le token vaut ~7,5 % de la largeur de la carte : à l'échelle d'une slide 1600×900, 32 à 36 px. En .pptx la même forme se fabrique en freeform 5 points (voir `pptx.emitter`), pas en rectangle à coin arrondi."
+}

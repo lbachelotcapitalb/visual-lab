@@ -1,0 +1,27 @@
+<!-- shape-notched-corner — la surface chanfreinée seule, 4 orientations.
+     Couleurs via --vl-* uniquement. La taille du chanfrein est une LONGUEUR (px), jamais un
+     pourcentage : en % le clip-path résout chaque axe séparément et la coupe n'est plus à 45°
+     sur un rectangle non carré. -->
+<div class="vl-nc-row">
+  <div class="vl-nc vl-nc--br" style="background:var(--vl-orange)"></div>
+  <div class="vl-nc vl-nc--tr" style="background:var(--vl-steel)"></div>
+  <div class="vl-nc vl-nc--bl" style="background:var(--vl-orange)"></div>
+  <div class="vl-nc vl-nc--tl" style="background:var(--vl-steel)"></div>
+</div>
+
+<style>
+/* Grille 2×2 et non rangée de 4 : les tuiles de démonstration doivent avoir la PROPORTION
+   d'une vraie carte (~430×300). Quatre tuiles côte à côte sur 880 px donnent 200 px de large,
+   où le même chanfrein pèse 17 % — la démo mentirait sur le pattern qu'elle illustre. */
+.vl-nc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 880px; }
+.vl-nc {
+  /* ~7,5 % de la largeur de la carte : en dessous de 5 % la coupe passe pour un défaut de
+     rendu, au-delà de 10 % elle devient un losange et vole la vedette au contenu. */
+  --vl-nc-size: var(--vl-notch, 32px);
+  height: 300px;
+}
+.vl-nc--br { clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--vl-nc-size)), calc(100% - var(--vl-nc-size)) 100%, 0 100%); }
+.vl-nc--tr { clip-path: polygon(0 0, calc(100% - var(--vl-nc-size)) 0, 100% var(--vl-nc-size), 100% 100%, 0 100%); }
+.vl-nc--bl { clip-path: polygon(0 0, 100% 0, 100% 100%, var(--vl-nc-size) 100%, 0 calc(100% - var(--vl-nc-size))); }
+.vl-nc--tl { clip-path: polygon(var(--vl-nc-size) 0, 100% 0, 100% 100%, 0 100%, 0 var(--vl-nc-size)); }
+</style>

@@ -1,0 +1,23 @@
+{
+  "name": "Gris fantôme — argument unique",
+  "notes": "Système monochrome à 5 valeurs de gris, sans aucune couleur. Toute la hiérarchie est portée par la LUMINOSITÉ et la GRAISSE, jamais par la teinte. L'icône est volontairement sous le seuil de contraste (ΔL ≈ 4 % avec la carte) : elle donne le volume, pas l'information — l'information est dans le titre. Ne jamais « corriger » ce contraste en croyant à un bug d'accessibilité : l'icône est décorative et doit être marquée aria-hidden.",
+  "tokens": {
+    "--vl-bg": "#F7F7F7",
+    "--vl-surface": "#EDEDED",
+    "--vl-ghost": "#E2E2E2",
+    "--vl-ink": "#444444",
+    "--vl-muted": "#A9A9A9",
+    "--vl-radius-card": "48px",
+    "--vl-pad-card": "60px 76px",
+    "--vl-gutter": "90px"
+  },
+  "type": {
+    "display": "-apple-system, BlinkMacSystemFont, \"Helvetica Neue\", Inter, Arial, sans-serif",
+    "body": "-apple-system, BlinkMacSystemFont, \"Helvetica Neue\", Inter, Arial, sans-serif",
+    "accent": "Georgia, \"Times New Roman\", \"Iowan Old Style\", serif",
+    "scale": {
+      "title": "52px / 1.18 / 700 / -0.015em",
+      "subtitle": "25px / 1.35 / 400 / 0"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+<!-- list-03-two-column-toc — fragment autonome. Couleurs via --vl-* uniquement. -->
+<div class="vl-toc-demo">
+  <div class="vl-toc-demo__title">
+    <h2 class="vl-toc__head">Table of<br>content</h2>
+    <p class="vl-toc__note">Twelve sections, twenty minutes. The numbers start on section eight.</p>
+  </div>
+
+  <!-- Ordre de lecture : les entrées sont écrites 01, 07, 02, 08… car la grille remplit par
+       LIGNES. C'est ce qui donne 01-06 à gauche et 07-12 à droite sans quitter le HTML. -->
+  <ol class="vl-toc">
+    <li><span>01</span><span>Table of content</span></li>
+    <li><span>07</span><span>Team</span></li>
+    <li><span>02</span><span>Problem</span></li>
+    <li><span>08</span><span>Traction</span></li>
+    <li><span>03</span><span>Product</span></li>
+    <li><span>09</span><span>Competition</span></li>
+    <li><span>04</span><span>Solution</span></li>
+    <li><span>10</span><span>Financials</span></li>
+    <li><span>05</span><span>Market</span></li>
+    <li><span>11</span><span>Roadmap</span></li>
+    <li><span>06</span><span>Business model</span></li>
+    <li><span>12</span><span>Ask / closing</span></li>
+  </ol>
+</div>
+
+<style>
+/* Un sommaire de deck n'est pas une liste de liens : il se lit en un coup d'œil et se
+   referme. D'où 11 px en capitales, un filet par entrée, et rien d'autre. */
+.vl-toc-demo {
+  display: flex; gap: 64px; align-items: stretch;
+  padding: 48px; min-height: 560px;
+  background: var(--vl-blue); color: var(--vl-white);
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+.vl-toc-demo__title { flex: 0 0 40%; }
+.vl-toc__head {
+  margin: 0;
+  font-size: 76px; line-height: 0.92; font-weight: 900;
+  letter-spacing: -0.02em; text-transform: uppercase;
+}
+.vl-toc__note {
+  margin: 28px 0 0; max-width: 34ch;
+  font-size: 13px; line-height: 1.5; color: var(--vl-ink-muted-invert);
+}
+
+/* Bloc compact CENTRÉ dans la hauteur (`align-content: center`). Étirer les 6 lignes sur
+   toute la hauteur détache chaque filet de son entrée et l'écart se lit comme un accident. */
+.vl-toc {
+  flex: 1; margin: 0; padding: 0; list-style: none;
+  display: grid; grid-template-columns: 1fr 1fr; column-gap: 64px;
+  align-content: center;
+}
+.vl-toc li {
+  display: flex; gap: 20px; padding: 22px 0;
+  border-bottom: 1px solid var(--vl-hairline-invert);
+  font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+}
+/* Le numéro s'efface, le libellé porte : l'inverse ferait lire la numérotation avant les
+   sections. */
+.vl-toc li span:first-child { color: var(--vl-ink-muted-invert); }
+</style>

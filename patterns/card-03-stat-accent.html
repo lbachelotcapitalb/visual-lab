@@ -1,0 +1,41 @@
+<!-- card-03-stat-accent — vignette statistique sur aplat d'accent, coin chanfreiné.
+     Couleurs via --vl-* uniquement. Quatre zones dans un ordre FIXE : micro-libellé, chiffre,
+     glyphe de coin, puis le corps collé en bas. -->
+<div class="vl-stat">
+  <div class="vl-stat__head">
+    <div>
+      <p class="vl-stat__kicker">Potential</p>
+      <span class="vl-stat__figure">156%</span>
+    </div>
+    <span class="vl-stat__arrow">&#8599;</span>
+  </div>
+  <p class="vl-stat__body">Compound growth of the addressable segment over the last four
+    reported years.</p>
+</div>
+
+<style>
+.vl-stat {
+  --vl-nc-size: var(--vl-notch, 32px);
+  width: 430px; height: 340px;
+  padding: 32px 34px 36px;
+  background: var(--vl-orange); color: var(--vl-white);
+  display: flex; flex-direction: column;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--vl-nc-size)), calc(100% - var(--vl-nc-size)) 100%, 0 100%);
+}
+.vl-stat__head { display: flex; align-items: flex-start; }
+.vl-stat__kicker {
+  margin: 0 0 16px; font-size: 12px; line-height: 1.4; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; opacity: .85;
+}
+/* Le chiffre est ~5× le micro-libellé : c'est ce SAUT, et l'absence de taille intermédiaire,
+   qui fait lire la vignette d'un coup d'œil. Rapprocher les deux corps la rend bavarde. */
+.vl-stat__figure { font-size: 64px; line-height: 1; font-weight: 800; letter-spacing: -0.02em; }
+.vl-stat__arrow { margin-left: auto; font-size: 34px; line-height: 1; }
+/* Collé en bas (`margin-top:auto`) : le vide entre le chiffre et le corps est ASSUMÉ, il
+   sépare la donnée de son commentaire. Centrer le bloc à la place ne remplirait rien — ça
+   couperait le vide en deux et le ferait lire comme un oubli. */
+.vl-stat__body {
+  margin: auto 0 0; max-width: 32ch;
+  font-size: 17px; line-height: 1.55; color: var(--vl-ink-muted-invert);
+}
+</style>

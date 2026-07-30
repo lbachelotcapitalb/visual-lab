@@ -1,0 +1,68 @@
+<!-- card-05-balance-gauge — fragment autonome. Couleurs via --vl-* uniquement, aucune valeur en dur. -->
+<div class="vl-balance">
+  <div class="vl-balance__head">
+    <h2 class="vl-balance__title">Current balance</h2>
+    <div class="vl-balance__nav">
+      <span class="vl-balance__circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></span>
+      <span class="vl-balance__circ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+    </div>
+  </div>
+  <div class="vl-panel">
+    <span class="vl-panel__chip">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--vl-ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M8 16l3-4 3 2 4-6"/></svg>
+    </span>
+    <svg class="vl-gauge" viewBox="0 0 300 168" fill="none">
+      <defs>
+        <pattern id="vlhatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <rect width="8" height="8" fill="var(--vl-mint)"/>
+          <line x1="0" y1="0" x2="0" y2="8" stroke="var(--vl-mint-deep)" stroke-width="4"/>
+        </pattern>
+      </defs>
+      <path class="vl-gauge__done" d="M25 150 A125 125 0 0 1 128.3 26.9" stroke="var(--vl-ink)" stroke-width="20" stroke-linecap="round"/>
+      <path class="vl-gauge__todo" d="M128.3 26.9 A125 125 0 0 1 275 150" stroke="url(#vlhatch)" stroke-width="20" stroke-linecap="round"/>
+      <circle class="vl-gauge__knob" cx="252" cy="78" r="10" fill="var(--vl-lilac-deep)" stroke="var(--vl-surface-light)" stroke-width="3"/>
+    </svg>
+    <div class="vl-balance__stat">
+      <div class="vl-balance__pct">14%
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M8 7h9v9"/></svg>
+      </div>
+      <div class="vl-balance__avg">Avg score: 18,324$</div>
+    </div>
+    <div class="vl-balance__big">15,368$</div>
+  </div>
+</div>
+
+<style>
+/* Carte de solde : en-tête léger (titre + navigation), puis un GRAND panneau menthe qui
+   occupe la carte et porte une jauge « compteur » — arc noir = acquis, arc hachuré = reste
+   à courir, avec un curseur lilas. Chiffre héros en bas-droit, tendance en bas-gauche. */
+.vl-balance {
+  width: 556px; height: 470px;
+  background: var(--vl-surface-light); color: var(--vl-ink);
+  border-radius: var(--vl-radius-card); padding: 30px;
+  display: flex; flex-direction: column;
+  font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+.vl-balance__head { display: flex; justify-content: space-between; align-items: center; }
+.vl-balance__title { margin: 0; font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.vl-balance__nav { display: flex; gap: 10px; }
+.vl-balance__circ {
+  width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--vl-hairline);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.vl-balance__circ svg { width: 14px; height: 14px; }
+.vl-panel {
+  margin-top: 22px; flex: 1; position: relative;
+  background: var(--vl-mint); border-radius: var(--vl-radius-sub); padding: 24px; overflow: hidden;
+}
+.vl-panel__chip {
+  width: 42px; height: 42px; border-radius: 50%; background: var(--vl-surface-light);
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.vl-panel__chip svg { width: 18px; height: 18px; }
+.vl-gauge { position: absolute; left: 50%; top: 48%; transform: translate(-50%,-50%); width: 300px; }
+.vl-balance__stat { position: absolute; left: 24px; bottom: 22px; }
+.vl-balance__pct { font-size: 17px; font-weight: 700; color: var(--vl-ink); }
+.vl-balance__avg { font-size: 11px; font-weight: 500; color: var(--vl-ink-on-mint); margin-top: 2px; }
+.vl-balance__big { position: absolute; right: 24px; bottom: 20px; font-size: 46px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; color: var(--vl-ink); }
+</style>

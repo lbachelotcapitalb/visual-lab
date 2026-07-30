@@ -1,0 +1,39 @@
+{
+  "name": "Dashboard bento clair — menthe & lilas",
+  "notes": "Système de dashboard produit : quatre CARTES flottent sur une planche sage claire, avec un écart régulier entre elles ET une marge de planche du même ordre autour — c'est ce liseré de fond qui fait lire les cartes comme des objets posés, pas comme une grille. Trois surfaces de carte (blanche par défaut, une noire de premier rang, des sous-cartes teintées) et DEUX accents qui portent du sens : la MENTHE code la valeur positive / le montant en avant, le LILAS code la projection / le second temps (segment inférieur d'une barre, prévision de cap). Les accents ne colorent jamais le fond d'une carte entière blanche — seulement des sous-cartes, des barres et des jauges — sinon ils cessent d'être un signal. Le rayon décroît avec l'imbrication (carte 26 → sous-carte 20) et cette décroissance porte la hiérarchie sans un seul trait de séparation.",
+  "tokens": {
+    "--vl-bg": "#E6EAE4",
+    "--vl-board": "#E6EAE4",
+    "--vl-surface-light": "#FFFFFF",
+    "--vl-surface-soft": "#F1F2EF",
+    "--vl-surface-dark": "#141414",
+    "--vl-mint": "#B4E3A0",
+    "--vl-mint-deep": "#8FCE72",
+    "--vl-lilac": "#B6ABE6",
+    "--vl-lilac-deep": "#9A8ADE",
+    "--vl-ink": "#181A17",
+    "--vl-ink-muted": "#7C817A",
+    "--vl-ink-on-mint": "#3D5A30",
+    "--vl-ink-on-lilac": "#3E3270",
+    "--vl-ink-invert": "#FFFFFF",
+    "--vl-ink-invert-muted": "#9CA09A",
+    "--vl-hairline": "#E3E5E1",
+    "--vl-hairline-invert": "#333333",
+    "--vl-radius-card": "26px",
+    "--vl-radius-sub": "20px",
+    "--vl-radius-chip": "14px",
+    "--vl-gap": "20px"
+  },
+  "type": {
+    "display": "Inter, -apple-system, \"Helvetica Neue\", Arial, sans-serif",
+    "body": "Inter, -apple-system, \"Helvetica Neue\", Arial, sans-serif",
+    "scale": {
+      "figure-xl": "46px / 1 / 700 / -0.02em",
+      "figure": "30px / 1.04 / 700 / -0.02em",
+      "title": "18px / 1.15 / 600 / -0.01em",
+      "lead": "15px / 1.3 / 500",
+      "body": "13px / 1.45 / 400",
+      "micro": "11px / 1.35 / 500"
+    }
+  }
+}

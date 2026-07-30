@@ -1,0 +1,57 @@
+{
+  "name": "Carte-argument à icône fantôme",
+  "family": "card",
+  "ref": "ref-02-ghost-icon-claim",
+  "intent": "Asséner UN seul argument sur toute une largeur, avec une icône énorme mais presque invisible qui donne du volume sans voler l'attention au titre.",
+  "when_to_use": "Bloc de réassurance ou de promesse produit (confidentialité, garantie, engagement) sur une landing ou une slide. Un argument par carte, jamais deux.",
+  "avoid_when": "Il y a plus d'une idée à faire passer, ou l'icône doit être comprise (ici elle est décorative). Pour une rangée de 3 bénéfices, prendre un pattern de grille, pas celui-ci.",
+  "tags": [
+    "carte",
+    "argument",
+    "reassurance",
+    "icone",
+    "confidentialite",
+    "landing",
+    "hero",
+    "monochrome",
+    "claim"
+  ],
+  "vars": [
+    {
+      "name": "--vl-surface",
+      "role": "fond de la carte",
+      "default": "#EDEDED"
+    },
+    {
+      "name": "--vl-ghost",
+      "role": "couleur de l'icône, à ~4 % de luminosité du fond de carte",
+      "default": "#E2E2E2"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "couleur du titre",
+      "default": "#444444"
+    },
+    {
+      "name": "--vl-muted",
+      "role": "couleur du sous-titre",
+      "default": "#A9A9A9"
+    },
+    {
+      "name": "--vl-ghost-size",
+      "role": "largeur de la colonne icône",
+      "default": "250px"
+    },
+    {
+      "name": "--vl-gutter",
+      "role": "gouttière icône / texte",
+      "default": "90px"
+    }
+  ],
+  "slots": [
+    "icon",
+    "title",
+    "subtitle"
+  ],
+  "notes": "Trois proportions font tout le pattern et se dérèglent vite : (1) l'icône fait au moins 3× la hauteur du titre, (2) son contraste avec le fond de carte reste sous ~5 % de luminosité, (3) le sous-titre ne dépasse pas 46 caractères par ligne. Grossir l'icône sans baisser son contraste casse la hiérarchie et la carte devient une carte à pictogramme banale. Le fragment serif du titre est un simple changement de famille typographique à corps égal — il ne mérite pas son propre pattern."
+}

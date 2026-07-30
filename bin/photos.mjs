@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // photos.mjs — sourcing d'images libres, TRIÉ PAR PALETTE, sur deux fonds.
 //
-//   node bin/photos.mjs --slug ref-10 --palette sys-10 --n 3 \
+//   node bin/photos.mjs --slug ref-10-campaign-board-red --palette ref-10-campaign-board-red --n 3 \
 //     --query "cow hide close up" --query "red satin jacket"
 //
 //   node bin/photos.mjs --provider met --slug musee --palette "#1B44D8" --query "ceramic" --scan 40
@@ -11,7 +11,7 @@
 // Ce qui fait tenir une planche d'images n'est pas la qualité de chaque photo, c'est leur
 // CASTING commun : ref-10 tient parce que ses six photos portent toutes du rouge ou du brun.
 // Le tri est donc la fonctionnalité, pas un bonus. Il se fait par ΔE76 en CIELAB contre une
-// palette cible (un `sys-NN` du dépôt, ou une liste de hex).
+// palette cible (un id de référence du dépôt, ou une liste de hex).
 //
 // ————— les deux fonds —————
 //   pexels  photo éditoriale contemporaine. CLÉ REQUISE (gratuite, 25 000 req/mois,
@@ -60,7 +60,7 @@ for (let i = 0; i < argv.length; i++) {
 }
 if (!slug || !queries.length) {
   console.error(`Usage : node bin/photos.mjs --slug <dossier> --query "<mots>" [--query …]
-  [--provider pexels|met] [--n 6] [--palette sys-NN|"#hex,#hex"] [--tol 42]
+  [--provider pexels|met] [--n 6] [--palette <ref-NN-…>|"#hex,#hex"] [--tol 42]
   [--orientation portrait|landscape|square] [--scan 24] [--any]`);
   process.exit(1);
 }
@@ -83,13 +83,13 @@ function resolvePalette(spec) {
   if (!spec) return [];
   if (spec.startsWith('#')) return spec.split(',').map((s) => s.trim()).filter((s) => /^#[0-9a-fA-F]{6}$/.test(s));
   const sys = loadSystems().find((s) => s.id === spec);
-  if (!sys) { console.error(`Système "${spec}" inconnu.`); process.exit(1); }
+  if (!sys) { console.error(`Référence "${spec}" inconnue (systems/).`); process.exit(1); }
   // Un système mélange couleurs et mesures dans le même objet de tokens : ne garder que les hex.
   return Object.values(sys.tokens || {}).filter((v) => typeof v === 'string' && /^#[0-9a-fA-F]{6}$/.test(v));
 }
 const targets = any ? [] : resolvePalette(palette);
 if (!any && !targets.length) {
-  console.error('Aucune couleur cible : donne --palette (sys-NN ou "#hex,#hex"), ou assume --any.');
+  console.error('Aucune couleur cible : donne --palette (ref-NN-… ou "#hex,#hex"), ou assume --any.');
   process.exit(1);
 }
 

@@ -42,23 +42,38 @@ un fragment réglé pour 1600 px de large donne un corps de 10,2 pt s'il est con
 ## Arborescence
 
 ```
+INDEX.md               LE POINT D'ENTRÉE : catalogue de routage + détail — GÉNÉRÉ, jamais édité
+index.json             le même pour la machine (ratios, benchmarks, tokens) — GÉNÉRÉ
+patterns/<id>.json     métadonnées d'un pattern (intention, quand l'employer, quand l'éviter)
+patterns/<id>.html     le fragment autonome correspondant
+systems/<ref>.json     les tokens d'une référence (palette, typo, rayons, notes de charte)
+decks/<ref>.html       la reconstitution fidèle de la référence, au format slides
 SPEC-SOURCES.md   l'audit des 10 références — REMPLACE les images, qui n'existent pas sur disque
 ROADMAP.md        le découpage en lots + le prompt de continuation
-systems/sys-NN.json    les tokens d'une référence (palette, typo, rayons, notes de charte)
-patterns/pat-*.json    métadonnées d'un pattern (intention, quand l'employer, quand l'éviter)
-patterns/pat-*.html    le fragment autonome correspondant
-decks/ref-NN.html      la reconstitution fidèle d'une référence complète, au format slides
 fonts/                 les 3 polices du corpus (OFL, dans le dépôt) + fonts.css
 fonts/FONTS.md         quelle police pour quelle référence, et comment la brancher
-assets/photos/<slug>/   récoltes d'images libres : manifest.json VERSIONNÉ, .jpg gitignorés
+assets/photos/<ref>/   récoltes d'images libres : manifest.json VERSIONNÉ, .jpg gitignorés
 bin/                   les outils (index, recherche, rendu, export slides, planche, création, CHECK)
 kit/vl_pptx.py         le pont vers le .pptx : émetteurs + audit mathématique (lit index.json)
-INDEX.md               le catalogue lisible — GÉNÉRÉ par bin/index.mjs, jamais édité à la main
-index.json             le même, pour la machine (ratios, benchmarks, tokens) — GÉNÉRÉ
-patterns.db            index SQLite — REGÉNÉRABLE, gitignoré
+patterns.db            index SQLite pour la recherche plein texte — REGÉNÉRABLE, gitignoré
 proofs/                PNG de vérification — régénérables, gitignorés
-proofs/ref-NN/         un PNG par slide du deck (export bin/slides.mjs)
+proofs/<ref>/          un PNG par slide du deck (export bin/slides.mjs)
 ```
+
+## Nomenclature
+
+Deux séries de noms, et pas une de plus.
+
+- **Un pattern** : `<famille>[-NN]-<mots simples>` — `card-03-stat-accent`, `chart-02-isotype`,
+  `title-leading-rule`. Le numéro n'apparaît **que si la famille en compte plusieurs** ;
+  `bin/new.mjs` renumérote l'existant tout seul quand un deuxième arrive. Les familles sont un
+  vocabulaire fermé — `card`, `chart`, `layout`, `list`, `shape`, `tag`, `title` — et le préfixe
+  du fichier DOIT être la famille déclarée : `bin/index.mjs` refuse d'indexer sinon. Le nom du
+  fichier est la taxonomie, il n'y a pas de second champ qui pourrait la contredire.
+- **Une référence** : `ref-NN-<slug>`, le NN étant celui de [SPEC-SOURCES.md](SPEC-SOURCES.md).
+  Le même id nomme ses tokens (`systems/<ref>.json`), sa reconstitution (`decks/<ref>.html`),
+  ses photos (`assets/photos/<ref>/`) et ses preuves (`proofs/<ref>/`). Les trous dans la
+  numérotation sont les lots non faits, pas des oublis.
 
 **Le disque est la source de vérité, pas la base.** `patterns.db`, `INDEX.md` et `index.json`
 sont des index reconstruits à la demande par `bin/index.mjs` : ils se lisent, ils ne s'éditent
@@ -74,7 +89,7 @@ déclare donc ses `benchmarks` : des expressions mesurées dans un vrai navigate
 
 ```bash
 node bin/check.mjs                        # tous les patterns qui déclarent des benchmarks
-node bin/check.mjs pat-stat-block-accent  # un seul
+node bin/check.mjs card-03-stat-accent    # un seul
 node bin/check.mjs --report               # avec les mesures brutes et l'expression
 ```
 
@@ -113,38 +128,38 @@ node bin/search.mjs "argument reassurance"
 ```
 
 ```bash
-node bin/search.mjs --show pat-card-ghost-icon-claim
+node bin/search.mjs --show card-01-ghost-icon
 ```
 
-Autres entrées : `--list` (tout, groupé par référence), `--kind chart`, `--source ref-03`.
+Autres entrées : `--list` (tout, groupé par référence), `--family chart`, `--ref ref-03`.
 
 Prouver un rendu en PNG (Chrome headless, aucun réseau) :
 
 ```bash
-node bin/render.mjs decks/ref-02.html 1500 660
+node bin/render.mjs decks/ref-02-ghost-icon-claim.html 1500 660
 ```
 
 ```bash
-node bin/render.mjs --pattern pat-card-ghost-icon-claim
+node bin/render.mjs --pattern card-01-ghost-icon
 ```
 
 Un deck s'écrit **une slide par `<section class="slide">`, à sa taille réelle** ; les deux
 vues se dérivent. Slide par slide, en pleine taille — c'est la preuve qui compte :
 
 ```bash
-node bin/slides.mjs decks/ref-04.html
+node bin/slides.mjs decks/ref-04-swiss-investor-blue.html
 ```
 
 Planche-contact réduite, pour juger le rythme d'ensemble (jamais une slide) :
 
 ```bash
-node bin/board.mjs decks/ref-04.html
+node bin/board.mjs decks/ref-04-swiss-investor-blue.html
 ```
 
 Créer un pattern avec les champs obligatoires déjà en place :
 
 ```bash
-node bin/new.mjs pat-tile-kpi --source ref-03-bento-dark-pitch --system sys-03 --kind component
+node bin/new.mjs card stat-accent --ref ref-06-orange-notched
 ```
 
 ### Sourcer des photos : par PALETTE, jamais « les huit premières »
@@ -164,7 +179,7 @@ Deux fonds, deux économies :
 ```bash
 node ~/Documents/Claude/Projects/cartographie-it/bw-get.mjs \
   --item "Pexels — API" --field PEXELS_API_KEY --as PEXELS_API_KEY \
-  --exec 'node bin/photos.mjs --slug ref-10 --palette sys-10 --n 3 \
+  --exec 'node bin/photos.mjs --slug ref-10-campaign-board-red --palette ref-10-campaign-board-red --n 3 \
     --query "cow hide close up" --query "red satin jacket"'
 ```
 
@@ -173,12 +188,12 @@ node bin/photos.mjs --provider met --slug musee --palette "#E33A22" --query "red
 ```
 
 La clé vit dans le coffre, **jamais** dans un fichier de réglages ni en argument. `--palette`
-prend un `sys-NN` ou une liste de hex ; `--any` assume l'absence de tri ; `--tol` règle le seuil
+prend un id de référence ou une liste de hex ; `--any` assume l'absence de tri ; `--tol` règle le seuil
 (42 par défaut) ; `--orientation portrait|landscape|square`.
 
 Trois constats payés, à ne pas repayer :
 
-- **Une cible neutre ne prouve aucun casting.** Le crème `#EDEAE3` de sys-10 a fait passer une
+- **Une cible neutre ne prouve aucun casting.** Le crème `#EDEAE3` de ref-10 a fait passer une
   route bleu-gris à la première récolte — un gris est à ΔE modéré de tous les gris du monde. Les
   cibles peu chromatiques sont écartées d'office (sauf palette entièrement neutre) ; passe les
   ACCENTS, pas la couleur du papier.
@@ -194,7 +209,7 @@ Chaque récolte écrit `manifest.json` (crédits, licence, `avg_color`, ΔE, dim
 **versionné**, il permet de re-télécharger à l'identique — et un `board.html` pour regarder :
 
 ```bash
-node bin/render.mjs assets/photos/ref-10/board.html 1600 1180
+node bin/render.mjs assets/photos/ref-10-campaign-board-red/board.html 1600 1180
 ```
 
 Les `.jpg` sont gitignorés : la doctrine du dépôt interdit le poids binaire dans l'historique,
@@ -205,9 +220,9 @@ comme pour `proofs/`.
 `bin/index.mjs` **refuse d'écrire la base** si un pattern ne respecte pas le contrat — une
 bibliothèque à moitié indexée qui se tait coûte plus cher qu'une erreur bruyante.
 
-1. `kind` dans le vocabulaire fermé : `primitive`, `component`, `layout`, `chart`, `type`, `rule`.
-2. `name`, `source`, `intent` et au moins un `tag` renseignés (sans tag, il est introuvable).
-3. Un fichier `.html` existe, sauf pour `kind: rule` (une règle éditoriale n'a pas de rendu).
+1. `family` dans le vocabulaire fermé (cf. Nomenclature) ET égale au préfixe du nom de fichier.
+2. `name`, `ref`, `intent` et au moins un `tag` renseignés (sans tag, il est introuvable).
+3. Un fichier `.html` existe : un pattern sans rendu n'est pas un pattern, c'est une note.
 4. **Aucune couleur hexadécimale en dur dans le HTML** : tout passe par une variable `--vl-*`.
    C'est ce qui rend un pattern rejouable sur une autre charte.
 5. Le fragment est autonome : collé dans une page vide avec le `:root` de son système, il
@@ -226,20 +241,21 @@ disponible dans `deck-builder`) : `geometry.ratios` (les rapports qui font la ch
 
 ## État
 
-4 lots sur 12 faits : socle, `ref-02` (3 patterns), `ref-03` (7 patterns dont la data-viz),
-`ref-04` (5 patterns, planche de 10 slides).
-`ref-08` (hero web « Studioform® ») a été reconstitué hors ordre le 30/07 — `sys-08` et
-`decks/ref-08.html` sont là, ses patterns restent à extraire (ils dépendent du lot 6).
-`ref-06` (pitch deck orange chanfreiné) est FINI depuis le 30/07 — `sys-06`, `decks/ref-06.html`
-(8 slides prouvées) et ses **5 patterns extraits, tous vérifiés par benchmarks**
-(`pat-shape-notched-card`, `pat-stat-block-accent`, `pat-card-notched-brief`,
-`pat-title-leading-rule`, `pat-list-index-rules`). C'est le lot qui a apporté l'outillage de
-mesure (`bin/check.mjs`), l'index versionné (`INDEX.md` / `index.json`) et le pont .pptx
-(`kit/vl_pptx.py`).
-`ref-10` (planche de campagne rouge) est reconstitué depuis le 30/07 — `sys-10` et
-`decks/ref-10.html`, 3 slides prouvées ; ses 5 patterns restent à extraire.
-Reste 4 références à reproduire, une par lot. Suite et prompt de reprise :
-[ROADMAP.md](ROADMAP.md).
+**17 patterns**, après l'élagage du 30/07 : neuf entrées ont été retirées parce qu'elles ne
+survivaient pas au test d'utilité — une pilule à filet, une flèche dans un rond, un titre en
+grosses capitales, trois « règles » qui n'avaient aucun rendu. Un pattern se garde s'il porte
+une COMPOSITION qu'on ne réécrit pas de tête, ou une géométrie mesurée ; pas s'il tient dans sa
+propre phrase de description.
+
+8 références sur 12 reconstituées. Le décompte par référence — patterns extraits, deck présent —
+est dans le tableau « Références » d'[INDEX.md](INDEX.md), qui est GÉNÉRÉ : c'est la seule
+version qui ne peut pas mentir. Deux références ont leur deck mais pas encore leurs patterns
+(`ref-08-swiss-studio-hero`, `ref-10-campaign-board-red`), et `ref-12-neon-capsule-tags` a ses
+patterns sans deck.
+
+`ref-06-orange-notched` est le lot qui a apporté le reste de l'outillage : la mesure
+(`bin/check.mjs`), l'index versionné (`INDEX.md` / `index.json`) et le pont .pptx
+(`kit/vl_pptx.py`). Suite et prompt de reprise : [ROADMAP.md](ROADMAP.md).
 
 **Typographie** : les polices vivent dans le dépôt (`fonts/`, licences OFL) et se branchent
 par `@import url("../fonts/fonts.css")` **dans** le bloc `<style>` du deck — jamais par une

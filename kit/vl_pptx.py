@@ -84,10 +84,10 @@ def geom(pid: str, key: str):
 
 
 def tokens(pid: str) -> dict:
-    """Les tokens du système du pattern, en hexadécimal."""
+    """Les tokens de la référence du pattern, en hexadécimal."""
     pat = pattern(pid)
-    for s in index()["systems"]:
-        if s["id"] == pat["system"]:
+    for s in index()["refs"]:
+        if s["id"] == pat["ref"]:
             return s["tokens"]
     return {}
 
@@ -205,8 +205,8 @@ def _text(slide, x, y, w, h, runs, anchor=MSO_ANCHOR.TOP, align=PP_ALIGN.LEFT):
 # ————————————————————————— les vignettes —————————————————————————
 
 def stat_block(slide, x_in, y_in, w_in, h_in, kicker: str, figure: str, body: str,
-               pid: str = "pat-stat-block-accent", body_pt: float = FLOOR_BODY_PT) -> dict:
-    """Vignette statistique sur aplat d'accent (cf. `pat-stat-block-accent`).
+               pid: str = "card-03-stat-accent", body_pt: float = FLOOR_BODY_PT) -> dict:
+    """Vignette statistique sur aplat d'accent (cf. `card-03-stat-accent`).
     Retourne les mesures pour `audit()`."""
     x, y, w, h = (Inches(v) for v in (x_in, y_in, w_in, h_in))
     pads = geom(pid, "pad_ratio")
@@ -249,8 +249,8 @@ def stat_block(slide, x_in, y_in, w_in, h_in, kicker: str, figure: str, body: st
 
 
 def brief_card(slide, x_in, y_in, w_in, h_in, label: str, body: str,
-               pid: str = "pat-card-notched-brief", body_pt: float = FLOOR_BODY_PT) -> dict:
-    """Carte chanfreinée de second rang (cf. `pat-card-notched-brief`). Le chanfrein est en
+               pid: str = "card-02-notched-brief", body_pt: float = FLOOR_BODY_PT) -> dict:
+    """Carte chanfreinée de second rang (cf. `card-02-notched-brief`). Le chanfrein est en
     HAUT-droit : c'est l'orientation, pas la couleur, qui la distingue de la vignette
     d'accent — un tirage N&B doit encore faire la différence."""
     x, y, w, h = (Inches(v) for v in (x_in, y_in, w_in, h_in))
@@ -287,8 +287,8 @@ def brief_card(slide, x_in, y_in, w_in, h_in, label: str, body: str,
 
 
 def title_leading_rule(slide, x_in, y_in, w_in, lines: list[str],
-                       pid: str = "pat-title-leading-rule", title_pt: float = 34.0) -> dict:
-    """Titre en capitales précédé du filet d'accent COLLÉ (cf. `pat-title-leading-rule`).
+                       pid: str = "title-leading-rule", title_pt: float = 34.0) -> dict:
+    """Titre en capitales précédé du filet d'accent COLLÉ (cf. `title-leading-rule`).
     Le filet est un rectangle plein de la hauteur du bloc de texte, posé à décalage nul."""
     rule_w = int(Pt(title_pt) * geom(pid, "ratios")["rule_width_over_font_size"])
     x, y, w = Inches(x_in), Inches(y_in), Inches(w_in)

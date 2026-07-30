@@ -1,0 +1,22 @@
+{
+  "name": "Néon vert — étiquettes capsules sur fond sombre",
+  "notes": "Toute la charte tient dans UN trait : un filet néon d'épaisseur constante sur un vert forêt très sombre, et rien d'autre — aucun aplat, aucune ombre, aucune seconde couleur. Ce qui la rend reconnaissable n'est pas la couleur mais la FORME : le glyphe et le mot ne sont pas deux objets posés côte à côte, ils sont un seul contour continu, soudé par deux congés concaves (le « cou »). Un contour interrompu entre le cercle et la pilule, ou deux formes qui se chevauchent, cassent la signature — c'est la soudure qui fait l'identité. L'épaisseur du trait est un RATIO de la hauteur de capsule (5,5 %) et jamais un pixel fixe : à l'échelle d'une slide 1600 px la capsule fait ~70 px de haut et le trait ~3 px, mais le même fragment doit tenir à 40 px comme à 200 px. La largeur de la pilule est pilotée par le MOT, jamais réglée à la main : c'est ce qui donne le rythme en dents de scie de la pile, et une pile où toutes les capsules feraient la même largeur perdrait tout son intérêt. Le néon ne sert jamais de fond : c'est un trait et du texte, sinon il vibre. Contraste mesuré du néon sur le fond : 8,9:1 — largement au-dessus du seuil, ce qui autorise le corps fin sans réserve.",
+  "tokens": {
+    "--vl-bg": "#26331F",
+    "--vl-neon": "#4FE383",
+    "--vl-neon-soft": "#4FE38344",
+    "--vl-ink-invert": "#FFFFFF",
+    "--vl-cap-u": "56px",
+    "--vl-margin": "60px"
+  },
+  "type": {
+    "display": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+    "body": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+    "scale": {
+      "capsule": "0.62 × u / 1 / 500 / 0.005em / UPPERCASE",
+      "title": "68px / 1.05 / 700 / -0.01em / UPPERCASE",
+      "body": "17px / 1.5 / 400",
+      "micro": "12px / 1.4 / 600 / 0.12em / UPPERCASE"
+    }
+  }
+}

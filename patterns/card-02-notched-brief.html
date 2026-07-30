@@ -1,0 +1,39 @@
+<!-- card-02-notched-brief — carte de second rang : libellé en haut, explication collée en bas.
+     Couleurs via --vl-* uniquement. Chanfrein sur le coin HAUT-droit, à l'inverse de la carte
+     d'accent : c'est l'orientation qui distingue les deux rangs, pas la seule couleur. -->
+<div class="vl-brief-row">
+  <div class="vl-brief">
+    <p class="vl-brief__label">Business<br>professionals</p>
+    <p class="vl-brief__body">Operations and finance leads in companies of 50 to 500 people,
+      buying to replace a stack of spreadsheets and one ageing licence.</p>
+  </div>
+  <div class="vl-brief">
+    <p class="vl-brief__label">General<br>consumers</p>
+    <p class="vl-brief__body">The end customers of those operators, who never see the platform
+      but feel it in delivery times and in what a promised date is worth.</p>
+  </div>
+</div>
+
+<style>
+.vl-brief-row { display: flex; gap: 32px; width: 892px; }
+.vl-brief {
+  --vl-nc-size: var(--vl-notch, 32px);
+  flex: 1; height: 340px;
+  padding: 32px 34px 36px;
+  background: var(--vl-steel); color: var(--vl-black);
+  display: flex; flex-direction: column;
+  clip-path: polygon(0 0, calc(100% - var(--vl-nc-size)) 0, 100% var(--vl-nc-size), 100% 100%, 0 100%);
+}
+/* Le libellé reste en micro-capitales : il nomme la catégorie, il ne raconte rien. Le passer
+   en gros corps ferait de cette carte de second rang une concurrente de la carte d'accent. */
+.vl-brief__label {
+  margin: 0; font-size: 12px; line-height: 1.4; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+}
+/* Collé en bas : dans une rangée, c'est ce qui aligne les explications entre elles quelle que
+   soit la longueur des libellés — sans lui la rangée se désaligne au premier changement. */
+.vl-brief__body {
+  margin: auto 0 0;
+  font-size: 17px; line-height: 1.55; color: var(--vl-ink-on-steel);
+}
+</style>

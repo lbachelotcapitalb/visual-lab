@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ref-02 — ghost icon claim</title>
+<style>
+/* ref-02-ghost-icon-claim — reconstitution fidèle de la référence. Cadre de rendu : 1500 × 660. */
+:root {
+  --vl-bg: #F7F7F7;
+  --vl-surface: #EDEDED;
+  --vl-ghost: #E2E2E2;
+  --vl-ink: #444444;
+  --vl-muted: #A9A9A9;
+  --vl-radius-card: 48px;
+  --vl-pad-card: 60px 76px;
+  --vl-gutter: 90px;
+  --vl-font-display: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Inter, Arial, sans-serif;
+  --vl-font-accent: Georgia, "Times New Roman", "Iowan Old Style", serif;
+  --vl-size-title: 52px;
+  --vl-size-sub: 25px;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0 46px;
+  background: var(--vl-bg);
+  font-family: var(--vl-font-display);
+  -webkit-font-smoothing: antialiased;
+}
+.frame { width: 100%; }
+</style>
+</head>
+<body>
+<div class="frame">
+
+<section class="vl-ghost-claim">
+  <div class="vl-ghost-claim__icon" aria-hidden="true">
+    <svg viewBox="0 0 200 240" fill="none" stroke="currentColor" stroke-width="27"
+         stroke-linecap="round" stroke-linejoin="round">
+      <g transform="rotate(-4 100 130)">
+        <rect x="48" y="122" width="118" height="92" rx="46" fill="currentColor" stroke="none"/>
+        <path d="M68 62 V142"/>
+        <path d="M98 50 V142"/>
+        <path d="M128 57 V142"/>
+        <path d="M157 76 V142"/>
+        <path d="M64 150 C 40 152, 26 166, 26 186"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="vl-ghost-claim__body">
+    <h2 class="vl-ghost-claim__title">ego <em>(lite)</em> doesn't collect<br>any data</h2>
+    <p class="vl-ghost-claim__sub">Bookmarks, browsing history, cookies, passwords, every page
+      you load — all stored on your computer, we can't access them.</p>
+  </div>
+</section>
+
+</div>
+
+<style>
+.vl-ghost-claim {
+  display: flex;
+  align-items: center;
+  gap: var(--vl-gutter);
+  padding: var(--vl-pad-card);
+  border-radius: var(--vl-radius-card);
+  background: var(--vl-surface);
+}
+.vl-ghost-claim__icon { flex: 0 0 250px; color: var(--vl-ghost); line-height: 0; }
+.vl-ghost-claim__icon svg { width: 100%; height: auto; display: block; }
+.vl-ghost-claim__body { min-width: 0; }
+.vl-ghost-claim__title {
+  margin: 0 0 26px;
+  font-size: var(--vl-size-title);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.015em;
+  color: var(--vl-ink);
+}
+.vl-ghost-claim__title em {
+  font-family: var(--vl-font-accent);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.04em;
+}
+.vl-ghost-claim__sub {
+  margin: 0;
+  max-width: 46ch;
+  font-size: var(--vl-size-sub);
+  line-height: 1.35;
+  color: var(--vl-muted);
+}
+</style>
+</body>
+</html>

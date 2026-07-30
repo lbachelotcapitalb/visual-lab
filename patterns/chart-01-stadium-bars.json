@@ -1,0 +1,47 @@
+{
+  "name": "Barres à sommet arrondi",
+  "family": "chart",
+  "ref": "ref-03-bento-dark-pitch",
+  "intent": "Un histogramme réduit à l'essentiel : des barres à sommet en demi-cercle, aucune ligne d'axe, des légendes en pilules.",
+  "when_to_use": "Trois à six valeurs d'une même série sur un axe temporel, dans un deck. La progression doit se voir en une seconde, sans lecture de grille.",
+  "avoid_when": "Il faut comparer plusieurs séries, lire des valeurs précises, ou les écarts sont faibles — le sommet arrondi mange quelques pixels de hauteur et fausse la comparaison fine. Dans ce cas : barres droites et axe gradué.",
+  "tags": [
+    "graphique",
+    "barres",
+    "histogramme",
+    "dataviz",
+    "deck",
+    "revenus",
+    "progression",
+    "arrondi",
+    "axe"
+  ],
+  "vars": [
+    {
+      "name": "--vl-accent",
+      "role": "barres intermédiaires",
+      "default": "#CFE3F5"
+    },
+    {
+      "name": "--vl-accent-2",
+      "role": "barres intermédiaires",
+      "default": "#8FBBE4"
+    },
+    {
+      "name": "--vl-accent-3",
+      "role": "barre de fin de série",
+      "default": "#5E9BD6"
+    },
+    {
+      "name": "--vl-surface-tile",
+      "role": "fond des pilules d'axe",
+      "default": "#3A3A3A"
+    }
+  ],
+  "slots": [
+    "values",
+    "bars",
+    "axis"
+  ],
+  "notes": "Le sommet est un demi-cercle COMPLET : le rayon vaut la moitié de la largeur de barre (999px sature au bon endroit). Un rayon plus petit fait « bouton » ; arrondir aussi le bas ferait flotter la barre au-dessus de sa ligne de base. Le dégradé de couleur suit l'ordre chronologique et sert de second signal de progression — ne pas colorer par catégorie. Aucun axe tracé : les pilules de légende font la ligne de base, un trait en plus ne dirait rien."
+}

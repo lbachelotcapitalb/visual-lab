@@ -1,0 +1,118 @@
+{
+  "name": "Sommaire à filets numérotés",
+  "family": "list",
+  "ref": "ref-06-orange-notched",
+  "intent": "Lister les sections d'un document en donnant à chacune son libellé, une ligne d'explication et son numéro à droite, séparées par un filet fin qui appartient à l'entrée qu'il suit.",
+  "when_to_use": "Sommaire d'un deck ou d'une proposition, 3 à 6 entrées, en colonne de droite face au titre. Aussi valable pour une liste d'étapes ou de livrables numérotés.",
+  "avoid_when": "Plus de 6 entrées (les filets deviennent une trame et plus personne ne lit), ou les entrées n'ont pas d'explication — une liste de libellés nus n'a pas besoin de cette structure, un simple empilement suffit.",
+  "tags": [
+    "sommaire",
+    "index",
+    "toc",
+    "liste",
+    "filet",
+    "numero",
+    "hairline",
+    "deck",
+    "etapes"
+  ],
+  "vars": [
+    {
+      "name": "--vl-hairline",
+      "role": "filet sous chaque entrée (opacité comprise)",
+      "default": "#00000015"
+    },
+    {
+      "name": "--vl-black",
+      "role": "libellé et numéro",
+      "default": "#141414"
+    },
+    {
+      "name": "--vl-ink-muted",
+      "role": "explication",
+      "default": "#6F6F6C"
+    }
+  ],
+  "slots": [
+    "label",
+    "desc",
+    "number"
+  ],
+  "geometry": {
+    "root": ".vl-idx",
+    "frame": [
+      700,
+      420
+    ],
+    "ratios": {
+      "label_over_desc": 1.41
+    },
+    "type_px": {
+      "label": 24,
+      "desc": 17
+    },
+    "pad_ratio": {
+      "top": 0.043,
+      "x": 0,
+      "bottom": 0.043
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "numéro et libellé alignés sur la MÊME première ligne",
+      "measure": "Math.abs(box('.vl-idx__row:first-child .vl-idx__no').top - box('.vl-idx__row:first-child .vl-idx__label').top)",
+      "expect": 0,
+      "tol": 2
+    },
+    {
+      "name": "numéro et libellé au MÊME corps",
+      "measure": "num('.vl-idx__no','fontSize') / num('.vl-idx__label','fontSize')",
+      "expect": 1,
+      "tol": 0.01
+    },
+    {
+      "name": "saut libellé / explication entre 1,2 et 1,8 (proche = famille, loin = titre)",
+      "measure": "num('.vl-idx__label','fontSize') / num('.vl-idx__desc','fontSize')",
+      "min": 1.2,
+      "max": 1.8
+    },
+    {
+      "name": "filet fin : 1 px, pas un trait",
+      "measure": "num('.vl-idx__row','borderBottomWidth')",
+      "max": 1.5
+    },
+    {
+      "name": "toutes les entrées ont le même padding vertical",
+      "measure": "Math.abs(num('.vl-idx__row:nth-child(2)','paddingTop') - num('.vl-idx__row:nth-child(3)','paddingTop')) + Math.abs(num('.vl-idx__row:nth-child(2)','paddingBottom') - num('.vl-idx__row:nth-child(3)','paddingBottom'))",
+      "expect": 0,
+      "tol": 0.5
+    },
+    {
+      "name": "la 1re entrée n'a pas de padding haut (le bloc commence à sa ligne)",
+      "measure": "num('.vl-idx__row:first-child','paddingTop')",
+      "expect": 0,
+      "tol": 0
+    },
+    {
+      "name": "le filet reste collé à son entrée : gouttière ≤ 45 % du pas",
+      "measure": "(box('.vl-idx__row:nth-child(2)').top - box('.vl-idx__row:nth-child(1)').bottom) / (box('.vl-idx__row:nth-child(2)').top - box('.vl-idx__row:nth-child(1)').top)",
+      "max": 0.45
+    },
+    {
+      "name": "explication bornée à ~44 caractères",
+      "measure": "box('.vl-idx__desc').w / num('.vl-idx__desc','fontSize')",
+      "max": 25
+    },
+    {
+      "name": "contraste de l'explication ≥ 4,5",
+      "measure": "contrast('.vl-idx__desc')",
+      "min": 4.5
+    }
+  ],
+  "pptx": {
+    "primitive": "rows_hairline",
+    "emitter": "kit/vl_pptx.py:index_rows",
+    "pattern": "list-02-ruled-index"
+  },
+  "notes": "Deux pièges. (1) Ne JAMAIS répartir les entrées avec `space-between` pour remplir la hauteur : le filet s'éloigne de l'entrée qu'il ferme et l'écart se lit comme un bug. Si la colonne est trop courte pour la zone, on centre le bloc compact (`align-content: center`) et on assume le vide autour — c'est ce que fait ref-06 slide 02. (2) Le numéro s'aligne en HAUT (`align-items: flex-start`), pas au centre de l'entrée : une explication qui passe à trois lignes ferait dériver un numéro centré et la colonne de droite ne tiendrait plus. En .pptx, le filet est un rectangle de 1 px de haut — une bordure de forme y est rendue plus épaisse et plus sombre."
+}

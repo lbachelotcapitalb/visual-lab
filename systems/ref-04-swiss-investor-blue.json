@@ -1,0 +1,29 @@
+{
+  "name": "Suisse maximaliste — investor deck bleu",
+  "notes": "Trois fonds PLEINS (blanc, bleu, noir) qui alternent d'une slide à l'autre : le tempo du deck est porté par cette alternance, pas par des ornements. Aucun rayon nulle part — cartes, images et blocs sont à angle vif, c'est la signature. Le bleu n'est jamais une couleur d'accent posée sur du blanc : il occupe la slide entière ou il colore un chiffre, rien entre les deux. Toute la hiérarchie tient sur DEUX corps : le titre-monstre (76px) et le micro-texte (8 à 13px) — il n'y a délibérément pas de taille intermédiaire, et c'est ce vide qui donne la tension.",
+  "tokens": {
+    "--vl-bg": "#D9D2C7",
+    "--vl-board": "#D9D2C7",
+    "--vl-blue": "#1B44D8",
+    "--vl-black": "#0D0D0D",
+    "--vl-white": "#FFFFFF",
+    "--vl-ink-muted": "#6E6E6E",
+    "--vl-ink-muted-invert": "#D3D3D3",
+    "--vl-hairline": "#00000018",
+    "--vl-hairline-invert": "#FFFFFF33",
+    "--vl-ph-a": "#C9C9C9",
+    "--vl-ph-b": "#5A5A5A",
+    "--vl-margin": "48px"
+  },
+  "type": {
+    "display": "\"Helvetica Neue\", Inter, Arial, \"Archivo Black\", sans-serif",
+    "body": "\"Helvetica Neue\", Inter, Arial, sans-serif",
+    "scale": {
+      "monster": "76px / 0.92 / 900 / -0.02em / UPPERCASE",
+      "lead": "26px / 1.2 / 500",
+      "number-giant": "88px / 1 / 900 / -0.03em",
+      "body": "13px / 1.5 / 400",
+      "micro": "8px / 1.4 / 500 / 0.12em / UPPERCASE"
+    }
+  }
+}
