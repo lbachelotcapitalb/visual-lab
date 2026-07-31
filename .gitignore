@@ -13,3 +13,6 @@ kit/__pycache__/
 assets/photos/**/*.jpg
 assets/photos/**/*.png
 assets/photos/**/board.html
+
+# Images sources des reverses : binaires, et ce sont des visuels TIERS.
+assets/refs/

@@ -67,6 +67,12 @@ fonts/                 les 3 polices du corpus (OFL, dans le dépôt) + fonts.cs
 fonts/FONTS.md         quelle police pour quelle référence, et comment la brancher
 assets/photos/<ref>/   récoltes d'images libres : manifest.json VERSIONNÉ, .jpg gitignorés
 bin/                   les outils (index, recherche, rendu, export slides, planche, création, CHECK, ÉMETTEURS)
+bin/ingest.mjs         AMONT : pose l'image source sur le disque (presse-papiers ⌘C, ou fichier)
+bin/palette.mjs        AMONT : palette quantifiée, pipette exacte (--at), zoom (--crop --zoom)
+bin/new-ref.mjs        ouvre un lot : section de spec + systems/ + deck au format PPT 1600×900
+bin/check-deck.mjs     le lint de COMPOSITION : format, couches, couche 1:1 redondante
+bin/diff.mjs           rendu ET source côte à côte — le contrôle de fidélité
+assets/refs/<ref>.png  les images sources des reverses — GITIGNORÉES (visuels tiers)
 bin/contact-sheet.mjs  la planche-contact des PATTERNS : choisir à l'œil parmi 10-20 vignettes
 bin/emit.mjs           sortir un pattern vers un autre média (inline, email) — refuse si ça ne tient pas
 kit/vl_pptx.py         le pont vers le .pptx : émetteurs + audit mathématique (lit index.json)

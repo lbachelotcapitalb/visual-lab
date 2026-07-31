@@ -104,6 +104,30 @@ Léo colle une image (une slide, une planche de campagne, un hero, une carte). O
 réutilisable. **L'ordre compte, et les deux premiers points sont ceux qui coûtent le plus cher
 quand on les saute.**
 
+### 0. Poser l'image sur le DISQUE — sans elle, tout le reste se fait en aveugle
+
+Une image **collée** dans la conversation n'existe nulle part sur le disque : je la vois, je ne
+peux ni la pipetter, ni la zoomer, ni la relire après coup — et la comparaison rendu ↔ source
+meurt avec la session. Vérifié le 31/07 : l'app n'en dépose aucune copie.
+
+```bash
+node bin/ingest.mjs ref-NN-<slug>                    # depuis le PRESSE-PAPIERS (⌘C sur l'image)
+node bin/ingest.mjs ref-NN-<slug> ~/Desktop/x.png    # ou depuis un fichier
+```
+
+**Un ⌘C au lieu d'un ⌘V suffit** : `ingest.mjs` sort le flavor image du presse-papiers en
+AppleScript et le range dans `assets/refs/` (gitignoré — ce sont des visuels tiers). À partir de
+là, on RELÈVE au lieu de deviner :
+
+```bash
+node bin/palette.mjs ref-NN-<slug>                   # couleurs dominantes + part de surface
+node bin/palette.mjs ref-NN-<slug> --at 120,340      # pipette : le hex EXACT d'un pixel
+node bin/palette.mjs ref-NN-<slug> --crop 0,0,400,200 --zoom 3   # un zoom à REGARDER
+```
+
+Si Léo n'a que collé l'image, on travaille quand même — mais la spec porte des `≈` et le premier
+`#hex` faux part dans un `systems/` pour toujours. **Demande le ⌘C.**
+
 ### 1. Isoler la vraie slide — l'image la noie presque toujours
 
 Une image apportée contient rarement une slide et rien d'autre : plusieurs slides sur une même
@@ -146,7 +170,14 @@ ne peut la deviner.
 ### 3. Reconstituer d'abord, généraliser ensuite — et TOUJOURS au format PPT
 
 **La finalité du dépôt, ce sont des slides PowerPoint.** Un deck se livre donc toujours en
-dimensions PPT :
+dimensions PPT — et ce n'est pas à écrire à la main, l'outil pose le squelette exact :
+
+```bash
+node bin/new-ref.mjs ref-NN-<slug> "Nom lisible de la charte"
+```
+
+Il crée la section de spec (rubriques obligatoires pré-remplies), `systems/<ref>.json` et
+`decks/<ref>.html` avec :
 
 ```css
 .slide { width: 1600px; height: 900px; }   /* 16:9 — non négociable */
@@ -188,9 +219,11 @@ Le champ `media` déclare où le pattern est censé servir — c'est une intenti
 ### 5. La boucle de contrôle, sans en sauter une
 
 ```bash
+node bin/check-deck.mjs <ref>             # la COMPOSITION : format, couches, marge de page
 node bin/index.mjs                        # refuse d'indexer un pattern hors contrat
 node bin/check.mjs <id>                   # sort en code 1 tant qu'un seuil n'est pas tenu
 node bin/render.mjs --pattern <id>        # et REGARDER
+node bin/diff.mjs <ref>                   # rendu ET source côte à côte — la fidélité
 ```
 
 Les benchmarks ne sont pas une formalité administrative : ce sont eux qui rendent le pattern
@@ -198,12 +231,20 @@ rejouable. Un pattern sans assertion mesurable est une capture d'écran avec des
 Écris-les en **ratios** de la racine (`geometry.root`), jamais en pixels : un ratio survit au
 changement d'échelle, un pixel non.
 
-**Mais un benchmark ne mesure que l'INTÉRIEUR d'un pattern — jamais la composition d'ensemble.**
-Sur `ref-13`, 55 assertions étaient vertes sur un écran qui portait une couche de trop. La
-fidélité se juge en **comparant le rendu à l'image source pendant qu'elle est encore dans le
-contexte** : c'est le seul moment où c'est possible, et la mesure ne le remplace pas. Quand un
-défaut a échappé au harnais, il devient une assertion (`« DEUX couches et pas trois »` de
-`layout-03-glass-board` est née comme ça).
+**Un benchmark de pattern ne mesure que l'INTÉRIEUR d'un pattern — jamais la composition
+d'ensemble.** Sur `ref-13`, 55 assertions étaient vertes sur un écran qui portait une couche de
+trop. D'où les deux contrôles qui l'encadrent :
+
+- `bin/check-deck.mjs` mesure la SLIDE : format PPT et ratio 16:9, absence de marge de page,
+  profondeur des couches ≤ 3, et surtout **la couche 1:1** — une surface qui n'en encadre
+  qu'une seule est redondante. Rejoué sur la version fautive de `ref-13`, il sort ses cinq
+  fautes ; sur la corrigée, il est vert.
+- `bin/diff.mjs` met le rendu et la source **côte à côte**. Tant que la source vivait seulement
+  dans le contexte, la fidélité reposait sur ma mémoire — c'est exactement là que la couche de
+  trop est passée.
+
+Quand un défaut a malgré tout échappé au harnais, il devient une assertion
+(`« DEUX couches et pas trois »` de `layout-03-glass-board` est née comme ça).
 
 **Amender l'outil fait partie du lot.** Une référence qui casse un détecteur corrige le
 détecteur, dans le MÊME commit — `ref-13` a obligé `bin/check.mjs` à compositer les couches
