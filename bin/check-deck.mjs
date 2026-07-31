@@ -47,12 +47,18 @@ const PROBE = `(() => {
       }
       for (const k of el.children) if (!['STYLE','SCRIPT'].includes(k.tagName)) walk(k, depth + (surface ? 1 : 0));
     })(slide, 1);
-    out.push({ n, w: Math.round(b.width), h: Math.round(b.height), pageChrome,
+    out.push({ n, slides: document.querySelectorAll('.slide').length,
+               w: Math.round(b.width), h: Math.round(b.height), pageChrome,
                depth: Math.max(...layers.filter((l) => l.container).map((l) => l.depth), 1),
                sole: layers.filter((l) => l.sole).map((l) => l.sel + ' (profondeur ' + l.depth + ')') });
   }
   return out;
 })()`;
+
+// Échappatoire assumée : une référence qui n'est PAS une slide (hero web, bandeau de landing)
+// n'a pas à tenir le 16:9. Elle le déclare en clair dans son deck, avec sa raison — un lint
+// toujours rouge est un lint qu'on finit par ignorer, mais une exemption muette est pire.
+const FREE = /<!--\s*vl:stage\s+libre\s*—\s*([^>]*?)-->/;
 
 function probe(src) {
   const tmp = join(ROOT, `.deckprobe-${process.pid}.html`);
@@ -73,11 +79,19 @@ function probe(src) {
 let fail = 0;
 for (const f of decks) {
   console.log(`\n${basename(f, '.html')}`);
+  const free = (readFileSync(join(DIRS.decks, f), 'utf8').match(FREE) || [])[1];
   for (const s of probe(join(DIRS.decks, f))) {
     const t = (ok, msg) => { console.log(`  ${ok ? '✓' : '✗'} slide ${s.n + 1} · ${msg}`); if (!ok) fail++; };
-    t(s.w === STAGE[0] && s.h === STAGE[1], `format PPT ${STAGE[0]}×${STAGE[1]} (mesuré ${s.w}×${s.h})`);
-    t(Math.abs(s.w / s.h - 16 / 9) < 0.01, 'ratio 16:9');
-    t(!s.pageChrome, 'aucune marge de page sous la slide — elle se lit comme une couche');
+    if (free) console.log(`  ~ slide ${s.n + 1} · format libre assumé (${s.w}×${s.h}) — ${free.trim()}`);
+    else {
+      t(s.w === STAGE[0] && s.h === STAGE[1], `format PPT ${STAGE[0]}×${STAGE[1]} (mesuré ${s.w}×${s.h})`);
+      t(Math.abs(s.w / s.h - 16 / 9) < 0.01, 'ratio 16:9');
+    }
+    // La marge de page n'est un défaut que sur un deck d'UNE slide : là, la page EST la slide
+    // et le liseré contrasté se lit comme une couche de plus (faute de ref-13). Sur un deck
+    // multi-slides, c'est l'espace ENTRE les slides — il n'existe pas dans l'export slide par
+    // slide, et le signaler dix fois noierait les vrais défauts.
+    if (s.slides === 1) t(!s.pageChrome, 'aucune marge de page sous la slide — elle se lit comme une couche');
     t(s.depth <= MAX_DEPTH, `profondeur des couches ≤ ${MAX_DEPTH} (mesurée ${s.depth})`);
     t(!s.sole.length, s.sole.length
       ? `couche 1:1 redondante — ${s.sole.join(', ')} : n'encadre qu'UNE surface, garder celle du dessus`

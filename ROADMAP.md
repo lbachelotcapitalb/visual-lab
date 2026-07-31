@@ -318,6 +318,25 @@ pattern n'est écrit POUR ces canaux, « bibliothèque tous médias » reste une
   (`build-livetext-psd.mjs`) comme quatrième sortie du dépôt, au lieu de le laisser prisonnier
   d'un skill de comm.
 
+### ⬜ Dette de format — 2 decks antérieurs à la règle PPT (relevée le 31/07)
+
+`bin/check-deck.mjs` mesure la composition d'une slide (format, ratio, marge de page,
+profondeur des couches, couche 1:1 redondante). Passé sur tout le dépôt, il sort **12 défauts
+sur 2 decks**, tous antérieurs à la règle « un deck se livre au format PPT 1600×900 » :
+
+| deck | mesuré | à reprendre |
+|---|---|---|
+| `ref-03-bento-dark-pitch` | 4 slides en 1120×410 | rééchelonner les 4 slides ; `chart-01`, `chart-02` et `layout-01` en héritent, leurs `geometry.frame` sont donc à refaire |
+| `ref-11-finance-dashboard-mint` | 1160×900, marge de page, profondeur 4 | rééchelonner ; `card-04` à `card-07` en héritent |
+
+`ref-08-swiss-studio-hero` **n'est pas une dette** : c'est un hero de page web, il déclare son
+format libre en clair dans son deck (`<!-- vl:stage libre — … -->`) et le lint le range en `~`.
+Une exemption muette aurait été pire qu'un lint rouge.
+
+Ce n'est pas un lot urgent : ces decks sont justes à l'œil et leurs patterns sont verts. Mais
+tant qu'il n'est pas fait, **`node bin/check-deck.mjs` sans argument sort en code 1** — et un
+contrôle durablement rouge finit par être ignoré. À faire ou à assumer explicitement.
+
 ---
 
 ## Règles de travail, valables dans tous les lots
