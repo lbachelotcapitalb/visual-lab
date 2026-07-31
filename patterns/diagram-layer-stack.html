@@ -1,0 +1,111 @@
+<!-- diagram-layer-stack — fragment autonome. Couleurs via --vl-* uniquement, aucune valeur en dur. -->
+<figure class="vl-layers">
+  <div class="vl-layers__stack" aria-hidden="true">
+    <div class="vl-layers__plane vl-layers__plane--1"></div>
+    <div class="vl-layers__plane vl-layers__plane--2"></div>
+    <div class="vl-layers__plane vl-layers__plane--3"></div>
+  </div>
+
+  <div class="vl-layers__row vl-layers__row--1">
+    <span class="vl-layers__rule"></span>
+    <h3 class="vl-layers__name">Interface</h3>
+    <p class="vl-layers__note">Every surface a customer touches — web, mobile, in-store screen</p>
+  </div>
+  <div class="vl-layers__row vl-layers__row--2">
+    <span class="vl-layers__rule"></span>
+    <h3 class="vl-layers__name">Services</h3>
+    <p class="vl-layers__note">The rules that make the product behave the same way on all three</p>
+  </div>
+  <div class="vl-layers__row vl-layers__row--3">
+    <span class="vl-layers__rule"></span>
+    <h3 class="vl-layers__name">Data</h3>
+    <p class="vl-layers__note">One store of record — nothing above it keeps a copy of its own</p>
+  </div>
+</figure>
+
+<style>
+/* Un objet décomposé en COUCHES ORDONNÉES, où le rang est l'information : la couche du dessus
+   est celle qu'on voit, les suivantes la portent. Deux mécanismes, et pas un de plus —
+   l'empilement (chaque plan décalé d'un pas constant, le plus haut au premier plan) et
+   l'OPACITÉ, qui décroît d'un rapport CONSTANT d'une couche à la suivante. Ni ombre, ni
+   perspective, ni seconde teinte : c'est ce qui permet de rejouer le schéma sur n'importe
+   quelle charte en ne changeant qu'une couleur.
+   Le pas vaut 0,57 × la hauteur d'un plan. Au-dessus de 0,5, le CENTRE d'une couche échappe au
+   plan qui la surplombe — condition nécessaire pour que son filet en sorte ; en dessous, les
+   plans se noient les uns dans les autres et la pile devient une tache.
+   Le filet de rappel naît SOUS le losange et n'apparaît qu'en en sortant : sa longueur visible
+   est dictée par la forme, jamais posée à la main. Il est calé sur le centre de SA couche —
+   la référence d'origine le laisse dériver et confie la correspondance à l'ordre de lecture,
+   ce qui est un pari dès que le schéma est technique. */
+.vl-layers {
+  --vl-plane-w: 330px;
+  --vl-plane-h: 175px;
+  --vl-pitch: 100px;            /* 0,57 × la hauteur d'un plan */
+  --vl-rule-x: 216px;           /* 0,655 × la largeur d'un plan : le filet naît sous le losange */
+  --vl-label-x: 430px;
+  --vl-pad-y: 22px;
+  --vl-name-line: 26px;         /* la ligne du titre : c'est sur SON milieu que le filet se cale */
+
+  position: relative;
+  width: 1040px;
+  height: 420px;
+  margin: 0;
+  font-family: Archivo, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+.vl-layers__stack {
+  position: absolute; left: 0; top: var(--vl-pad-y);
+  width: var(--vl-plane-w);
+  height: calc(var(--vl-plane-h) + 2 * var(--vl-pitch));
+}
+
+/* Le losange : un carré vu en projection isométrique, donc deux fois plus large que haut. */
+.vl-layers__plane {
+  position: absolute;
+  left: 0;
+  width: var(--vl-plane-w);
+  height: var(--vl-plane-h);
+  background: var(--vl-coral);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+/* Rang, décalage et opacité au même endroit : ajouter une couche, c'est ajouter UNE règle
+   (un pas de plus, un z-index de moins, l'alpha suivant de la raison géométrique). */
+.vl-layers__plane--1 { top: 0;                            opacity: var(--vl-layer-alpha-1); z-index: 3; }
+.vl-layers__plane--2 { top: var(--vl-pitch);              opacity: var(--vl-layer-alpha-2); z-index: 2; }
+.vl-layers__plane--3 { top: calc(2 * var(--vl-pitch));    opacity: var(--vl-layer-alpha-3); z-index: 1; }
+
+/* Une rangée par couche. Ce qui se cale sur le centre du plan n'est PAS le centre de la rangée
+   mais le milieu de la ligne de TITRE : le filet doit toucher le mot qui nomme la couche, pas
+   l'interligne entre le titre et son explication. La rangée passe SOUS les plans (z-index 0) :
+   seul le filet les rencontre, et c'est exactement l'effet recherché. */
+.vl-layers__row {
+  position: absolute;
+  z-index: 0;
+  left: var(--vl-label-x);
+  width: calc(100% - var(--vl-label-x));
+  /* le centre du plan de rang 1, moins la demi-ligne de titre */
+  top: calc(var(--vl-pad-y) + var(--vl-plane-h) / 2 - var(--vl-name-line) / 2);
+}
+.vl-layers__row--2 { margin-top: var(--vl-pitch); }
+.vl-layers__row--3 { margin-top: calc(2 * var(--vl-pitch)); }
+.vl-layers__rule {
+  position: absolute;
+  top: calc(var(--vl-name-line) / 2);
+  left: calc(var(--vl-rule-x) - var(--vl-label-x));
+  width: calc(var(--vl-label-x) - var(--vl-rule-x) - 28px);
+  height: 1px;
+  background: var(--vl-hairline);
+}
+.vl-layers__name {
+  margin: 0;
+  font-size: 22px; font-weight: 300; line-height: var(--vl-name-line);
+  letter-spacing: var(--vl-track-title); text-transform: uppercase;
+  color: var(--vl-ink);
+}
+.vl-layers__note {
+  margin: 9px 0 0;
+  font-size: 14px; font-weight: 400; line-height: 1.7;
+  letter-spacing: var(--vl-track-body); text-transform: uppercase;
+  color: var(--vl-ink-muted);
+}
+</style>

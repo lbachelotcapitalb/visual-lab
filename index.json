@@ -5,6 +5,7 @@
   "families": [
     "card",
     "chart",
+    "diagram",
     "layout",
     "list",
     "shape",
@@ -19,9 +20,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 22,
-    "refs": 9,
-    "checkable": 15
+    "patterns": 24,
+    "refs": 11,
+    "checkable": 17
   },
   "patterns": [
     {
@@ -1178,6 +1179,233 @@
       "html": "patterns/card-09-gradient-metric-curve.html"
     },
     {
+      "id": "card-10-kpi-notch-tile",
+      "name": "Vignette de preuve chiffrée à double chanfrein",
+      "family": "card",
+      "ref": "ref-15-lilac-notched-kpi",
+      "media": [
+        "slide",
+        "web"
+      ],
+      "intent": "Poser UNE preuve chiffrée dans une vignette presque carrée à silhouette de ticket — tuile d'icône en haut, chiffre et son suffixe sur la même ligne de base, libellé collé dessous, commentaire relégué en bas à droite — et n'en accentuer qu'une seule dans la rangée, par le fond et rien d'autre.",
+      "when_to_use": "Bande de trois à quatre preuves de même rang sur une landing ou une slide « pourquoi nous » : taux, gain de temps, volume. Une seule vignette prend la variante `--accent`, celle qu'on veut faire lire en premier.",
+      "avoid_when": "Il n'y a qu'un chiffre à montrer (la rangée n'existe plus, et l'accent n'a plus rien à surpasser), le commentaire dépasse deux lignes courtes (il rejoint le libellé et le décalage à droite devient illisible), ou plusieurs vignettes sont colorées — deux accents dans une rangée annulent le seul geste de hiérarchie du système.",
+      "tags": [
+        "stat",
+        "chiffre",
+        "kpi",
+        "pourcentage",
+        "vignette",
+        "carte",
+        "rangee",
+        "accent",
+        "chanfrein",
+        "notch",
+        "icone",
+        "tuile",
+        "landing",
+        "preuve",
+        "saas"
+      ],
+      "vars": [
+        {
+          "name": "--vl-card",
+          "role": "fond de la vignette neutre",
+          "default": "#FCFBFF"
+        },
+        {
+          "name": "--vl-violet",
+          "role": "départ du dégradé d'accent, et couleur du glyphe sur la vignette neutre",
+          "default": "#6B3FE4"
+        },
+        {
+          "name": "--vl-violet-light",
+          "role": "arrivée du dégradé ET couleur de repli — le point le plus clair, donc celui que la mesure de contraste doit lire",
+          "default": "#9A7BF0"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "chiffre et libellé sur la vignette neutre",
+          "default": "#2E2166"
+        },
+        {
+          "name": "--vl-ink-muted",
+          "role": "note du bas sur la vignette neutre (relevée à #9B96C4, remontée pour tenir 4,5:1)",
+          "default": "#6E67A0"
+        },
+        {
+          "name": "--vl-tile",
+          "role": "aplat de la tuile d'icône, vignette neutre",
+          "default": "#EBE7FB"
+        },
+        {
+          "name": "--vl-tile-invert",
+          "role": "aplat de la tuile d'icône sur l'accent (blanc translucide)",
+          "default": "rgba(255,255,255,0.22)"
+        },
+        {
+          "name": "--vl-notch",
+          "role": "longueur du chanfrein, posée sur les DEUX coins de la diagonale",
+          "default": "46px"
+        },
+        {
+          "name": "--vl-radius",
+          "role": "rayon des deux coins non coupés",
+          "default": "17px"
+        }
+      ],
+      "slots": [
+        "tile",
+        "num",
+        "suffix",
+        "label",
+        "note"
+      ],
+      "geometry": {
+        "root": ".vl-kpi",
+        "frame": [
+          420,
+          450
+        ],
+        "ratios": {
+          "width_over_height": 0.933,
+          "notch_over_width": 0.11,
+          "radius_over_width": 0.04,
+          "pad_x_over_width": 0.09,
+          "tile_over_width": 0.188,
+          "gutter_over_width": 0.102,
+          "figure_over_label": 3.18,
+          "suffix_over_figure": 0.426,
+          "note_top_over_height": 0.795
+        },
+        "type_px": {
+          "num": 108,
+          "suffix": 46,
+          "label": 34,
+          "note": 20
+        },
+        "pad_ratio": {
+          "top": 0.09,
+          "x": 0.09,
+          "bottom": 0.081
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "vignette presque carrée, un rien plus haute que large",
+          "measure": "W / H",
+          "expect": 0.933,
+          "tol": 0.03
+        },
+        {
+          "name": "chanfrein ≈ 11 % de la largeur",
+          "measure": "notch('.vl-kpi') / W",
+          "expect": 0.11,
+          "tol": 0.02
+        },
+        {
+          "name": "le polygone porte 6 sommets : DEUX coins coupés, pas un ni quatre",
+          "measure": "(cs('.vl-kpi','clipPath').match(/,/g) || []).length + 1",
+          "expect": 6,
+          "tol": 0
+        },
+        {
+          "name": "la coupe commence au coin haut-droit (l'autre est son opposé sur la diagonale)",
+          "measure": "notchCorner('.vl-kpi') === 'tr' ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "les coins non coupés gardent un rayon ≈ 4 % de la largeur",
+          "measure": "num('.vl-kpi','borderTopLeftRadius') / W",
+          "expect": 0.04,
+          "tol": 0.015
+        },
+        {
+          "name": "marge intérieure gauche ≈ 9 % de la largeur",
+          "measure": "num('.vl-kpi','paddingLeft') / W",
+          "expect": 0.09,
+          "tol": 0.02
+        },
+        {
+          "name": "tuile d'icône carrée",
+          "measure": "box('.vl-kpi__tile').w / box('.vl-kpi__tile').h",
+          "expect": 1,
+          "tol": 0.02
+        },
+        {
+          "name": "la tuile reste un repère, jamais un sujet : ≤ 22 % de la largeur",
+          "measure": "box('.vl-kpi__tile').w / W",
+          "max": 0.22
+        },
+        {
+          "name": "saut typographique chiffre / libellé ≥ 2,8",
+          "measure": "num('.vl-kpi__num','fontSize') / num('.vl-kpi__label','fontSize')",
+          "min": 2.8
+        },
+        {
+          "name": "le suffixe pèse entre 35 % et 50 % du chiffre",
+          "measure": "num('.vl-kpi__suffix','fontSize') / num('.vl-kpi__num','fontSize')",
+          "min": 0.35,
+          "max": 0.5
+        },
+        {
+          "name": "le suffixe est posé À DROITE du chiffre, jamais dessous",
+          "measure": "box('.vl-kpi__suffix').left - box('.vl-kpi__num').right",
+          "max": 14,
+          "min": -1
+        },
+        {
+          "name": "lignes de base alignées : l'écart de fond de boîte reste sous 10 % du corps du chiffre",
+          "measure": "Math.abs(box('.vl-kpi__num').bottom - box('.vl-kpi__suffix').bottom) / num('.vl-kpi__num','fontSize')",
+          "max": 0.1
+        },
+        {
+          "name": "libellé collé au chiffre : moins d'un demi-corps de libellé les sépare",
+          "measure": "(box('.vl-kpi__label').top - box('.vl-kpi__figure').bottom) / num('.vl-kpi__label','fontSize')",
+          "max": 0.5
+        },
+        {
+          "name": "la note est bien en bas (haut du bloc entre 72 % et 88 % de la hauteur)",
+          "measure": "box('.vl-kpi__note').top / H",
+          "min": 0.72,
+          "max": 0.88
+        },
+        {
+          "name": "la note est au fer à DROITE : c'est son bord droit qui colle la marge",
+          "measure": "W - num('.vl-kpi','paddingRight') - box('.vl-kpi__note').right",
+          "expect": 0,
+          "tol": 1.5
+        },
+        {
+          "name": "la note tient dans la moitié droite : c'est un aparté, pas un paragraphe",
+          "measure": "box('.vl-kpi__note').left / W",
+          "min": 0.4
+        },
+        {
+          "name": "la note s'arrête AVANT le chanfrein du bas-gauche",
+          "measure": "box('.vl-kpi__note').left - num('.vl-kpi','paddingLeft')",
+          "min": 0
+        },
+        {
+          "name": "contraste du chiffre ≥ 3 (mesuré sur l'extrémité CLAIRE du dégradé)",
+          "measure": "contrast('.vl-kpi__num')",
+          "min": 3
+        },
+        {
+          "name": "contraste de la note ≥ 3 — c'est elle qui plafonne, pas le chiffre",
+          "measure": "contrast('.vl-kpi__note')",
+          "min": 3
+        },
+        {
+          "name": "aucun débordement du contenu hors de la vignette",
+          "measure": "overflow('.vl-kpi')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/card-10-kpi-notch-tile.html"
+    },
+    {
       "id": "chart-01-stadium-bars",
       "name": "Barres à sommet arrondi",
       "family": "chart",
@@ -1421,6 +1649,196 @@
       ],
       "pptx": null,
       "html": "patterns/chart-03-accent-column-callout.html"
+    },
+    {
+      "id": "diagram-layer-stack",
+      "name": "Pile de couches isométriques légendées",
+      "family": "diagram",
+      "ref": "ref-14-layer-stack-coral",
+      "media": [
+        "slide",
+        "web"
+      ],
+      "intent": "Montrer qu'un objet — un produit, une marque, un système logiciel — se décompose en couches ORDONNÉES dont le rang est l'information : des losanges isométriques empilés, d'opacité décroissante, chacun relié par un filet au nom de sa couche et à une ligne d'explication.",
+      "when_to_use": "Trois à cinq couches, un ordre qui compte (ce qu'on touche en haut, ce qui porte en bas), et une phrase à dire sur chacune : interface / services / données, essence / valeur / vision, produit / méthode / recherche.",
+      "avoid_when": "Les éléments sont de même rang (une pile dit une hiérarchie, même quand on ne la pense pas), leur nombre dépasse cinq (les losanges du bas s'effacent avant d'être comptés), ou une grandeur doit se lire : ici rien n'est proportionnel à rien — c'est un schéma, pas un graphique.",
+      "tags": [
+        "schema",
+        "diagramme",
+        "couches",
+        "layers",
+        "pile",
+        "empilement",
+        "isometrique",
+        "losange",
+        "architecture",
+        "stack",
+        "frontend",
+        "backend",
+        "hierarchie",
+        "filet",
+        "legende",
+        "opacite",
+        "profondeur"
+      ],
+      "vars": [
+        {
+          "name": "--vl-coral",
+          "role": "la teinte UNIQUE des couches — c'est l'opacité, pas la couleur, qui distingue les rangs",
+          "default": "#E4886A"
+        },
+        {
+          "name": "--vl-layer-alpha-1",
+          "role": "opacité de la couche de tête (la seule pleine)",
+          "default": "1"
+        },
+        {
+          "name": "--vl-layer-alpha-2",
+          "role": "opacité de la deuxième couche",
+          "default": "0.44"
+        },
+        {
+          "name": "--vl-layer-alpha-3",
+          "role": "opacité de la troisième couche — même rapport à la deuxième que la deuxième à la première",
+          "default": "0.18"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "le nom de la couche",
+          "default": "#3A3835"
+        },
+        {
+          "name": "--vl-ink-muted",
+          "role": "la ligne d'explication",
+          "default": "#6E6863"
+        },
+        {
+          "name": "--vl-hairline",
+          "role": "le filet de rappel entre un plan et son libellé",
+          "default": "#97918C"
+        },
+        {
+          "name": "--vl-track-title",
+          "role": "approche des titres en capitales",
+          "default": "0.13em"
+        },
+        {
+          "name": "--vl-track-body",
+          "role": "approche du corps en capitales",
+          "default": "0.05em"
+        }
+      ],
+      "slots": [
+        "name",
+        "note"
+      ],
+      "geometry": {
+        "root": ".vl-layers",
+        "frame": [
+          1040,
+          420
+        ],
+        "ratios": {
+          "plane_h_over_w": 0.53,
+          "pitch_over_plane_h": 0.571,
+          "plane_w_over_width": 0.317,
+          "rule_start_over_plane_w": 0.655,
+          "label_x_over_width": 0.413
+        },
+        "type_px": {
+          "name": 22,
+          "note": 14
+        },
+        "pad_ratio": {
+          "top": 0.0212,
+          "x": 0,
+          "bottom": 0.0212
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "un plan est un carré en projection isométrique : deux fois plus large que haut",
+          "measure": "box('.vl-layers__plane--1').h / box('.vl-layers__plane--1').w",
+          "expect": 0.53,
+          "tol": 0.04
+        },
+        {
+          "name": "le pas est le même entre toutes les couches (une pile irrégulière se lit comme un accident)",
+          "measure": "Math.abs((box('.vl-layers__plane--2').top - box('.vl-layers__plane--1').top) - (box('.vl-layers__plane--3').top - box('.vl-layers__plane--2').top))",
+          "max": 1
+        },
+        {
+          "name": "le pas vaut 0,57 hauteur de plan : assez pour que les plans se distinguent, assez peu pour qu'ils fassent pile",
+          "measure": "(box('.vl-layers__plane--2').top - box('.vl-layers__plane--1').top) / box('.vl-layers__plane--1').h",
+          "expect": 0.571,
+          "tol": 0.05
+        },
+        {
+          "name": "le centre d'une couche échappe au plan qui la surplombe — sans quoi son filet ne peut pas en sortir",
+          "measure": "Math.min(...[[1,2],[2,3]].map(([a,b]) => (box('.vl-layers__plane--'+b).top + box('.vl-layers__plane--'+b).h/2) - box('.vl-layers__plane--'+a).bottom))",
+          "min": 2
+        },
+        {
+          "name": "l'opacité décroît d'un rapport CONSTANT d'une couche à la suivante (progression géométrique)",
+          "measure": "(num('.vl-layers__plane--2','opacity') / num('.vl-layers__plane--1','opacity')) / (num('.vl-layers__plane--3','opacity') / num('.vl-layers__plane--2','opacity'))",
+          "expect": 1,
+          "tol": 0.15
+        },
+        {
+          "name": "la couche de tête est la seule pleine",
+          "measure": "num('.vl-layers__plane--1','opacity')",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "la dernière couche est un fantôme : au moins 4 fois plus effacée que la première",
+          "measure": "num('.vl-layers__plane--1','opacity') / num('.vl-layers__plane--3','opacity')",
+          "min": 4
+        },
+        {
+          "name": "chaque filet est à la hauteur du centre de SA couche : la correspondance est géométrique, pas déduite de l'ordre",
+          "measure": "Math.max(...[1,2,3].map(i => Math.abs(box('.vl-layers__row--'+i+' .vl-layers__rule').top - (box('.vl-layers__plane--'+i).top + box('.vl-layers__plane--'+i).h/2))))",
+          "max": 2
+        },
+        {
+          "name": "chaque filet touche le milieu de la ligne de titre, pas l'interligne sous elle",
+          "measure": "Math.max(...[1,2,3].map(i => Math.abs(box('.vl-layers__row--'+i+' .vl-layers__rule').top - (box('.vl-layers__row--'+i+' .vl-layers__name').top + box('.vl-layers__row--'+i+' .vl-layers__name').h/2))))",
+          "max": 2
+        },
+        {
+          "name": "le filet naît SOUS le losange (à 0,655 de sa largeur) : sa longueur visible est dictée par la forme",
+          "measure": "(box('.vl-layers__row--1 .vl-layers__rule').left - box('.vl-layers__plane--1').left) / box('.vl-layers__plane--1').w",
+          "expect": 0.655,
+          "tol": 0.05
+        },
+        {
+          "name": "le filet s'arrête avant le texte : il désigne, il ne souligne pas",
+          "measure": "box('.vl-layers__row--1 .vl-layers__name').left - box('.vl-layers__row--1 .vl-layers__rule').right",
+          "min": 16
+        },
+        {
+          "name": "la colonne de libellés et la pile occupent la même bande verticale",
+          "measure": "Math.abs((box('.vl-layers__row--1').top + box('.vl-layers__row--3').bottom) / 2 - (box('.vl-layers__plane--1').top + box('.vl-layers__plane--3').bottom) / 2) / H",
+          "max": 0.05
+        },
+        {
+          "name": "plancher de lisibilité : le corps ne descend pas sous 1,2 % de la largeur du schéma",
+          "measure": "num('.vl-layers__note','fontSize') / W",
+          "min": 0.012
+        },
+        {
+          "name": "contraste de la ligne d'explication sur le fond ≥ 4,5",
+          "measure": "contrast('.vl-layers__note')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement hors du cadre du schéma",
+          "measure": "overflow('.vl-layers')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/diagram-layer-stack.html"
     },
     {
       "id": "layout-01-nested-bento",
@@ -2724,6 +3142,69 @@
           "title": "15px / 1.2 / 500 / -0.01em",
           "body": "13px / 1.35 / 500",
           "micro": "11px / 1.3 / 400"
+        }
+      }
+    },
+    {
+      "id": "ref-14-layer-stack-coral",
+      "name": "Schéma de couches — corail sur blanc cassé",
+      "patterns": [
+        "diagram-layer-stack"
+      ],
+      "deck": "decks/ref-14-layer-stack-coral.html",
+      "tokens": {
+        "--vl-bg": "#F1EFEC",
+        "--vl-coral": "#E4886A",
+        "--vl-layer-alpha-1": "1",
+        "--vl-layer-alpha-2": "0.44",
+        "--vl-layer-alpha-3": "0.18",
+        "--vl-ink": "#3A3835",
+        "--vl-ink-muted": "#6E6863",
+        "--vl-hairline": "#97918C",
+        "--vl-track-title": "0.13em",
+        "--vl-track-body": "0.05em"
+      },
+      "type": {
+        "display": "Archivo, -apple-system, \"Helvetica Neue\", Arial, sans-serif",
+        "body": "Archivo, -apple-system, \"Helvetica Neue\", Arial, sans-serif",
+        "scale": {
+          "title": "34px / 1.2 / 300 / 0.13em / uppercase",
+          "body": "21px / 1.75 / 400 / 0.05em / uppercase"
+        }
+      }
+    },
+    {
+      "id": "ref-15-lilac-notched-kpi",
+      "name": "Lavande SaaS à vignettes chanfreinées",
+      "patterns": [
+        "card-10-kpi-notch-tile"
+      ],
+      "deck": "decks/ref-15-lilac-notched-kpi.html",
+      "tokens": {
+        "--vl-bg": "#F4F4FB",
+        "--vl-card": "#FCFBFF",
+        "--vl-white": "#FFFFFF",
+        "--vl-violet": "#6B3FE4",
+        "--vl-violet-light": "#9A7BF0",
+        "--vl-figure": "#4C1FD6",
+        "--vl-ink": "#2E2166",
+        "--vl-ink-muted": "#6E67A0",
+        "--vl-tile": "#EBE7FB",
+        "--vl-tile-invert": "rgba(255,255,255,0.22)",
+        "--vl-on-accent": "#FFFFFF",
+        "--vl-on-accent-muted": "#FFFFFF",
+        "--vl-notch": "46px",
+        "--vl-radius": "17px",
+        "--vl-margin": "120px"
+      },
+      "type": {
+        "display": "Montserrat, Poppins, Inter, \"Helvetica Neue\", Arial, sans-serif",
+        "body": "Montserrat, Poppins, Inter, \"Helvetica Neue\", Arial, sans-serif",
+        "scale": {
+          "figure": "108px / 1 / 800 / -0.03em",
+          "suffix": "46px / 1 / 800 / -0.01em",
+          "label": "34px / 1.25 / 700 / -0.01em",
+          "note": "20px / 1.45 / 500"
         }
       }
     }

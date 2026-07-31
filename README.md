@@ -82,8 +82,10 @@ Deux séries de noms, et pas une de plus.
 - **Un pattern** : `<famille>[-NN]-<mots simples>` — `card-03-stat-accent`, `chart-02-isotype`,
   `title-leading-rule`. Le numéro n'apparaît **que si la famille en compte plusieurs** ;
   `bin/new.mjs` renumérote l'existant tout seul quand un deuxième arrive. Les familles sont un
-  vocabulaire fermé — `card`, `chart`, `layout`, `list`, `shape`, `tag`, `title` — et le préfixe
-  du fichier DOIT être la famille déclarée : `bin/index.mjs` refuse d'indexer sinon. Le nom du
+  vocabulaire fermé — `card`, `chart`, `diagram`, `layout`, `list`, `shape`, `tag`, `title` — et
+  `diagram` n'est pas `chart` : un `chart` porte des DONNÉES (une valeur mesurée décide de la
+  géométrie), un `diagram` porte une STRUCTURE (couches, flux, appartenance), où rien n'est
+  proportionnel à quoi que ce soit. Le préfixe du fichier DOIT être la famille déclarée : `bin/index.mjs` refuse d'indexer sinon. Le nom du
   fichier est la taxonomie, il n'y a pas de second champ qui pourrait la contredire.
 - **Une référence** : `ref-NN-<slug>`, le NN étant celui de [SPEC-SOURCES.md](SPEC-SOURCES.md).
   Le même id nomme ses tokens (`systems/<ref>.json`), sa reconstitution (`decks/<ref>.html`),
@@ -305,7 +307,7 @@ disponible dans `deck-builder`) : `geometry.ratios` (les rapports qui font la ch
 
 ## État
 
-**22 patterns**, après l'élagage du 30/07 : neuf entrées ont été retirées parce qu'elles ne
+**24 patterns**, après l'élagage du 30/07 : neuf entrées ont été retirées parce qu'elles ne
 survivaient pas au test d'utilité — une pilule à filet, une flèche dans un rond, un titre en
 grosses capitales, trois « règles » qui n'avaient aucun rendu. Un pattern se garde s'il porte
 une COMPOSITION qu'on ne réécrit pas de tête, ou une géométrie mesurée ; pas s'il tient dans sa
@@ -316,6 +318,13 @@ est dans le tableau « Références » d'[INDEX.md](INDEX.md), qui est GÉNÉRÉ
 version qui ne peut pas mentir. Deux références ont leur deck mais pas encore leurs patterns
 (`ref-08-swiss-studio-hero`, `ref-10-campaign-board-red`), et `ref-12-neon-capsule-tags` a ses
 patterns sans deck.
+
+**31/07/2026 — `ref-14-layer-stack-coral`** : le premier **schéma** du corpus, au sens propre —
+une figure qui explique une STRUCTURE et non une donnée. D'où la famille `diagram`, qui n'est pas
+`chart`. Une pile de losanges isométriques dont la profondeur est encodée **sans ombre, sans
+perspective et sans seconde teinte** : par l'ordre d'empilement et par une opacité qui décroît
+d'un rapport constant (× 0,42). Les recouvrements ne sont jamais dessinés, ils sont composités —
+c'est ce qui rend le schéma rejouable sur une autre charte en ne changeant qu'UNE couleur.
 
 **31/07/2026 — `ref-13-glass-fintech-dashboard`** : la première référence en **verre dépoli**
 (deux couches — un fond en dégradé qui accueille, des modules translucides posés dessus — et

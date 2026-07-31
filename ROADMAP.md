@@ -364,6 +364,37 @@ Termine par : node bin/index.mjs, les PNG de chaque pattern, la case cochée ici
 un commit.
 ```
 
+### ✅ Lot 15 — `ref-14` layer-stack-coral (31/07/2026)
+Référence apportée hors corpus initial : un visuel unique (≈ 888 × 494, pas un deck) — une pile
+de plans isométriques légendée, demandée pour **schématiser les couches d'un logiciel** (front,
+services, données). Menée en parallèle du lot `ref-15` dans le même dépôt.
+- ✅ `SPEC-SOURCES.md` § `ref-14`, écrite AVANT le code.
+- ✅ `systems/ref-14-layer-stack-coral.json` — une seule teinte, et la profondeur portée par
+  l'OPACITÉ : rapport constant (× 0,42) d'une couche à la suivante, jamais une soustraction
+  régulière. À pas soustractif, la troisième couche reste trop dense et la pile paraît plate.
+- ✅ `decks/ref-14-layer-stack-coral.html` — une planche **1600×900**, rendue et comparée à la
+  source pendant qu'elle était encore dans le contexte, y compris la dérive des filets.
+- ✅ **Nouvelle famille `diagram`** (`bin/lib.mjs`, README) : un `chart` porte des DONNÉES, un
+  `diagram` porte une STRUCTURE. Les confondre ferait chercher un schéma d'architecture dans la
+  famille des histogrammes. Premier membre : `diagram-layer-stack`, 15 benchmarks, tous verts.
+- ✅ Écart assumé avec la source, écrit dans les notes du pattern : la référence laisse les
+  filets DÉRIVER (les blocs de texte coulent, la correspondance repose sur l'ordre de lecture) ;
+  le pattern verrouille chaque filet sur le centre de SA couche. « C'est le troisième donc c'est
+  celui du bas » n'est pas une correspondance dès que le schéma est technique. Le benchmark
+  « le centre d'une couche échappe au plan du dessus » tient le seuil de pas (> 0,5 Hp) sans
+  lequel le filet ne peut plus sortir du losange.
+- ✅ Outillage : `bin/render.mjs --pattern` importe désormais `fonts/fonts.css`, comme
+  `bin/check.mjs` le faisait déjà. Sans ça, le contrôle mathématique mesurait Archivo et la
+  preuve visuelle montrait Helvetica — deux harnais qui ne regardent pas le même rendu.
+- ⚠️ Le piège du lot : **deux sessions qui mesurent en même temps dans le même dépôt se
+  marchent dessus.** `bin/check.mjs` et `bin/render.mjs` écrivent leur fichier temporaire à la
+  RACINE, sous un nom prévisible ; un `node bin/check.mjs` complet lancé pendant le lot parallèle
+  a rendu 12 faux échecs sur `card-05` et `chart-03` (mesures croisées, cadres d'un autre
+  pattern). Repassés verts à l'unité, sans un octet changé. Le correctif propre — un nom de
+  temporaire unique par processus — reste à faire.
+- ⬜ Pas d'émetteur `.pptx` : `pptx.emitter` n'est pas déclaré, le pattern n'est donc pas encore
+  disponible dans `deck-builder`.
+
 ### ✅ Lot 16 — `ref-15` lilac-notched-kpi (31/07/2026)
 Référence apportée hors corpus initial, fournie en **crop horizontal** (≈ 813 × 297) : une bande
 de trois preuves chiffrées d'une landing SaaS, sans le titre de section ni le reste de la page.

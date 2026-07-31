@@ -36,6 +36,10 @@ if (argv[0] === '--pattern') {
   writeFileSync(
     tmp,
     `<!doctype html><meta charset="utf-8"><style>
+/* Le fichier temporaire est écrit à la RACINE du dépôt : le chemin est donc le même que dans
+   bin/check.mjs. Les deux harnais doivent brancher les MÊMES polices — sans cet import, le
+   contrôle mathématique mesurait Archivo et la preuve visuelle montrait Helvetica. */
+@import url("fonts/fonts.css");
 ${sys ? systemToCss(sys) : ''}
 *{box-sizing:border-box} body{margin:0;padding:64px;background:var(--vl-bg,#fff);
 font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Inter,Arial,sans-serif}

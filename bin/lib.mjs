@@ -17,8 +17,12 @@ export const DIRS = {
 
 /** Le vocabulaire fermé des familles. C'est AUSSI le préfixe du nom de fichier : un pattern
  *  `card-03-stat-accent` est de famille `card`, et bin/index.mjs le vérifie. Une taxonomie
- *  unique — l'ancien couple kind/famille disait deux fois la même chose et se contredisait. */
-export const FAMILIES = ['card', 'chart', 'layout', 'list', 'shape', 'tag', 'title'];
+ *  unique — l'ancien couple kind/famille disait deux fois la même chose et se contredisait.
+ *  `diagram` ≠ `chart` : un `chart` porte des DONNÉES (une valeur mesurée décide de la
+ *  géométrie), un `diagram` porte une STRUCTURE (couches, flux, appartenance) — rien n'y est
+ *  proportionnel à quoi que ce soit. Les confondre ferait chercher un schéma d'architecture
+ *  dans la famille des histogrammes. */
+export const FAMILIES = ['card', 'chart', 'diagram', 'layout', 'list', 'shape', 'tag', 'title'];
 
 /** Le vocabulaire fermé des MÉDIAS de destination. Un pattern déclare où il est censé servir ;
  *  c'est ce qui permet à un producteur (deck, mailing, flyer, post) de ne piocher que dans ce

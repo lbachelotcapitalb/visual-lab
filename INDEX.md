@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-22 patterns · 9 références · 15 vérifiés par benchmarks mesurés.
+24 patterns · 11 références · 17 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -14,7 +14,7 @@
    → `node bin/render.mjs --pattern <id>` et REGARDER.
 
 **Nomenclature** — un pattern se nomme `<famille>[-NN]-<mots>`, le numéro n'apparaissant que
-si la famille en compte plusieurs. Familles : card, chart, layout, list, shape, tag, title. Une référence se nomme
+si la famille en compte plusieurs. Familles : card, chart, diagram, layout, list, shape, tag, title. Une référence se nomme
 `ref-NN-<slug>` et porte le même id dans `systems/` (ses tokens) et `decks/` (sa reconstitution).
 
 **Médias** — où un pattern est censé servir : slide, web, email, print, social. C'est une INTENTION de
@@ -35,9 +35,11 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `card-07-transactions` | Poser un intitulé de flux (badge + titre + acteurs) en haut d'une carte blanche et sa ligne de valeur unique sur aplat doux collée en bas, sans jamais faire de la carte un tableau. | slide web | 8 | ref-11-finance-dashboard-mint |
 | `card-08-orb-chain-total` | Poser un total en chiffre héros et le décomposer juste en dessous en une chaîne de disques tangents dont un seul — le plus gros et le seul coloré — porte le support principal, les actions empilées à l'opposé. | slide web | 10 | ref-13-glass-fintech-dashboard |
 | `card-09-gradient-metric-curve` | Faire de la seule carte colorée d'un écran le porteur d'un indicateur unique : la pile libellé / chiffre / cadrage en haut-gauche, une courbe sans axe qui traverse la carte derrière elle, annotée à ses deux extrémités seulement. | slide web | 10 | ref-13-glass-fintech-dashboard |
+| `card-10-kpi-notch-tile` | Poser UNE preuve chiffrée dans une vignette presque carrée à silhouette de ticket — tuile d'icône en haut, chiffre et son suffixe sur la même ligne de base, libellé collé dessous, commentaire relégué en bas à droite — et n'en accentuer qu'une seule dans la rangée, par le fond et rien d'autre. | slide web | 20 | ref-15-lilac-notched-kpi |
 | `chart-01-stadium-bars` | Un histogramme réduit à l'essentiel : des barres à sommet en demi-cercle, aucune ligne d'axe, des légendes en pilules. | slide web | — | ref-03-bento-dark-pitch |
 | `chart-02-isotype` | Raconter une proportion en unités comptables (24 pictogrammes sur 40) au lieu d'un pourcentage abstrait. | slide web | — | ref-03-bento-dark-pitch |
 | `chart-03-accent-column-callout` | Donner la forme d'une série en quelques colonnes flottantes sans axe ni graduation, et n'en chiffrer qu'une seule — la courante — par une info-bulle sombre ancrée à sa colonne. | slide web | 11 | ref-13-glass-fintech-dashboard |
+| `diagram-layer-stack` | Montrer qu'un objet — un produit, une marque, un système logiciel — se décompose en couches ORDONNÉES dont le rang est l'information : des losanges isométriques empilés, d'opacité décroissante, chacun relié par un filet au nom de sa couche et à une ligne d'explication. | slide web | 15 | ref-14-layer-stack-coral |
 | `layout-01-nested-bento` | Structurer une slide dense en trois niveaux (carte → sous-carte → tuile) sans une seule bordure ni ombre, en ne faisant décroître que le rayon et le padding. | slide web | — | ref-03-bento-dark-pitch |
 | `layout-02-swiss-frame` | Poser le cadre d'une slide de deck : une marge unique, deux barres de micro-typo à trois zones et un filet d'un pixel — de quoi rendre une suite de slides reconnaissable sans y ajouter le moindre ornement. | slide web | — | ref-04-swiss-investor-blue |
 | `layout-03-glass-board` | Emboîter les surfaces d'un écran dense en DEUX couches seulement, sans un trait ni une couleur de séparation : un fond en dégradé qui accueille, et des modules de blanc translucide posés dessus, flou d'arrière-plan compris. | slide web | 11 | ref-13-glass-fintech-dashboard |
@@ -127,6 +129,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-blue, --vl-blue-light, --vl-ink-invert, --vl-ink-invert-muted, --vl-surface-glass-soft
 - tags : carte, kpi, indicateur, courbe, sparkline, degrade, aplat, annotation, trajectoire, dashboard, premier-rang
 
+**card-10-kpi-notch-tile** — Vignette de preuve chiffrée à double chanfrein
+
+- employer : Bande de trois à quatre preuves de même rang sur une landing ou une slide « pourquoi nous » : taux, gain de temps, volume. Une seule vignette prend la variante `--accent`, celle qu'on veut faire lire en premier.
+- éviter : Il n'y a qu'un chiffre à montrer (la rangée n'existe plus, et l'accent n'a plus rien à surpasser), le commentaire dépasse deux lignes courtes (il rejoint le libellé et le décalage à droite devient illisible), ou plusieurs vignettes sont colorées — deux accents dans une rangée annulent le seul geste de hiérarchie du système.
+- à remplir : tile, num, suffix, label, note
+- variables : --vl-card, --vl-violet, --vl-violet-light, --vl-ink, --vl-ink-muted, --vl-tile, --vl-tile-invert, --vl-notch, --vl-radius
+- tags : stat, chiffre, kpi, pourcentage, vignette, carte, rangee, accent, chanfrein, notch, icone, tuile, landing, preuve, saas
+
 ### chart
 
 **chart-01-stadium-bars** — Barres à sommet arrondi
@@ -152,6 +162,16 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - à remplir : title, period, columns, callout
 - variables : --vl-surface-glass, --vl-surface-glass-strong, --vl-blue, --vl-blue-light, --vl-surface-dark
 - tags : histogramme, barres, colonnes, accent, info-bulle, tooltip, serie, periode, dashboard, sans-axe, verre
+
+### diagram
+
+**diagram-layer-stack** — Pile de couches isométriques légendées
+
+- employer : Trois à cinq couches, un ordre qui compte (ce qu'on touche en haut, ce qui porte en bas), et une phrase à dire sur chacune : interface / services / données, essence / valeur / vision, produit / méthode / recherche.
+- éviter : Les éléments sont de même rang (une pile dit une hiérarchie, même quand on ne la pense pas), leur nombre dépasse cinq (les losanges du bas s'effacent avant d'être comptés), ou une grandeur doit se lire : ici rien n'est proportionnel à rien — c'est un schéma, pas un graphique.
+- à remplir : name, note
+- variables : --vl-coral, --vl-layer-alpha-1, --vl-layer-alpha-2, --vl-layer-alpha-3, --vl-ink, --vl-ink-muted, --vl-hairline, --vl-track-title, --vl-track-body
+- tags : schema, diagramme, couches, layers, pile, empilement, isometrique, losange, architecture, stack, frontend, backend, hierarchie, filet, legende, opacite, profondeur
 
 ### layout
 
@@ -258,5 +278,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-11-finance-dashboard-mint` | Dashboard bento clair — menthe & lilas | `card-04-stat-barchart`, `card-05-balance-gauge`, `card-06-forecast-timeline`, `card-07-transactions` | `decks/ref-11-finance-dashboard-mint.html` |
 | `ref-12-neon-capsule-tags` | Néon vert — étiquettes capsules sur fond sombre | `tag-gooey-capsule` | — |
 | `ref-13-glass-fintech-dashboard` | Dashboard en verre dépoli — lavande & bleu | `card-08-orb-chain-total`, `card-09-gradient-metric-curve`, `chart-03-accent-column-callout`, `layout-03-glass-board`, `list-04-due-rows` | `decks/ref-13-glass-fintech-dashboard.html` |
+| `ref-14-layer-stack-coral` | Schéma de couches — corail sur blanc cassé | `diagram-layer-stack` | `decks/ref-14-layer-stack-coral.html` |
+| `ref-15-lilac-notched-kpi` | Lavande SaaS à vignettes chanfreinées | `card-10-kpi-notch-tile` | `decks/ref-15-lilac-notched-kpi.html` |
 
 Ce que chaque référence fait, sa palette et sa typo : [SPEC-SOURCES.md](SPEC-SOURCES.md).

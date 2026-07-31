@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ref-14 — layer stack coral</title>
+<style>
+/* ref-14-layer-stack-coral — reconstitution FIDÈLE de la référence. Une seule planche,
+   cadre 1600 × 900 (l'original mesurait ≈ 888 × 494, facteur 1.80).
+   Fidélité assumée y compris là où le pattern extrait fera autrement : ici les filets sont
+   calés sur la ligne de titre et DÉRIVENT par rapport au centre de leur plan — c'est l'ordre
+   qui porte la correspondance. Cf. SPEC-SOURCES.md § ref-14. */
+@import url("../fonts/fonts.css");
+:root {
+  --vl-bg: #F1EFEC;
+  --vl-coral: #E4886A;
+  --vl-layer-alpha-1: 1;
+  --vl-layer-alpha-2: 0.44;
+  --vl-layer-alpha-3: 0.18;
+  --vl-ink: #3A3835;
+  --vl-ink-muted: #6E6863;
+  --vl-hairline: #97918C;
+  --vl-track-title: 0.13em;
+  --vl-track-body: 0.05em;
+  --vl-font: Archivo, -apple-system, "Helvetica Neue", Arial, sans-serif;
+
+  /* La géométrie relevée, en une seule place. */
+  --plane-w: 508px;
+  --plane-h: 270px;
+  --pitch: 153px;
+  --stack-x: 176px;
+  --stack-y: 112px;
+  --rule-x: 509px;   /* x commun des trois filets : 0.655 × la largeur d'un plan */
+  --rule-w: 256px;
+  --label-x: 805px;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--vl-bg); font-family: var(--vl-font); -webkit-font-smoothing: antialiased; }
+
+.slide {
+  position: relative;
+  width: 1600px; height: 900px;
+  overflow: hidden;
+  background: var(--vl-bg);
+}
+
+/* ── La pile ──────────────────────────────────────────────────────────────────────────
+   Trois losanges identiques, décalés d'un pas constant, empilés du plus dense au plus
+   pâle. Le rang est donné par l'opacité seule : aucune ombre, aucun liseré, aucune
+   seconde teinte. Les recouvrements ne sont pas dessinés — ils sont le résultat de la
+   composition alpha, et c'est ce qui donne au visuel sa seule variation de densité. */
+.plane {
+  position: absolute;
+  left: var(--stack-x);
+  width: var(--plane-w); height: var(--plane-h);
+  background: var(--vl-coral);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+.plane--1 { top: var(--stack-y); opacity: var(--vl-layer-alpha-1); z-index: 3; }
+.plane--2 { top: calc(var(--stack-y) + var(--pitch)); opacity: var(--vl-layer-alpha-2); z-index: 2; }
+.plane--3 { top: calc(var(--stack-y) + 2 * var(--pitch)); opacity: var(--vl-layer-alpha-3); z-index: 1; }
+
+/* Les filets partent tous du même x, SOUS les plans : leur longueur visible est dictée par
+   la forme du losange, jamais posée à la main. Un filet qui commencerait au sommet droit
+   se lirait comme une flèche ; celui-ci se lit comme une coupe. */
+.rule {
+  position: absolute;
+  left: var(--rule-x); width: var(--rule-w); height: 1px;
+  background: var(--vl-hairline);
+  z-index: 0;
+}
+.rule--1 { top: 189px; }
+.rule--2 { top: 380px; }
+.rule--3 { top: 607px; }
+
+/* ── La colonne de libellés ───────────────────────────────────────────────────────────
+   Des blocs qui COULENT, avec un écart constant : le bloc du milieu a deux lignes de
+   corps, le premier une seule, et la colonne l'assume au lieu de forcer un pas fixe. */
+.labels {
+  position: absolute;
+  left: var(--label-x); top: 168px; width: 649px;
+  display: flex; flex-direction: column; gap: 99px;
+}
+.labels h2 {
+  margin: 0;
+  font-size: 34px; font-weight: 300; line-height: 1.2;
+  letter-spacing: var(--vl-track-title); text-transform: uppercase;
+  color: var(--vl-ink);
+}
+.labels p {
+  margin: 14px 0 0;
+  font-size: 21px; font-weight: 400; line-height: 1.75;
+  letter-spacing: var(--vl-track-body); text-transform: uppercase;
+  color: var(--vl-ink-muted);
+}
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <div class="plane plane--1"></div>
+  <div class="plane plane--2"></div>
+  <div class="plane plane--3"></div>
+
+  <div class="rule rule--1"></div>
+  <div class="rule rule--2"></div>
+  <div class="rule rule--3"></div>
+
+  <div class="labels">
+    <div>
+      <h2>Signature</h2>
+      <p>The one promise made on every surface</p>
+    </div>
+    <div>
+      <h2>Core value</h2>
+      <p>Twelve years of field research turned into a method that anyone on the team can apply</p>
+    </div>
+    <div>
+      <h2>Vision</h2>
+      <p>A product that reaches past its own category and changes what the next one looks like</p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

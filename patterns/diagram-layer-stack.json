@@ -1,0 +1,188 @@
+{
+  "name": "Pile de couches isométriques légendées",
+  "family": "diagram",
+  "ref": "ref-14-layer-stack-coral",
+  "intent": "Montrer qu'un objet — un produit, une marque, un système logiciel — se décompose en couches ORDONNÉES dont le rang est l'information : des losanges isométriques empilés, d'opacité décroissante, chacun relié par un filet au nom de sa couche et à une ligne d'explication.",
+  "when_to_use": "Trois à cinq couches, un ordre qui compte (ce qu'on touche en haut, ce qui porte en bas), et une phrase à dire sur chacune : interface / services / données, essence / valeur / vision, produit / méthode / recherche.",
+  "avoid_when": "Les éléments sont de même rang (une pile dit une hiérarchie, même quand on ne la pense pas), leur nombre dépasse cinq (les losanges du bas s'effacent avant d'être comptés), ou une grandeur doit se lire : ici rien n'est proportionnel à rien — c'est un schéma, pas un graphique.",
+  "media": [
+    "slide",
+    "web"
+  ],
+  "tags": [
+    "schema",
+    "diagramme",
+    "couches",
+    "layers",
+    "pile",
+    "empilement",
+    "isometrique",
+    "losange",
+    "architecture",
+    "stack",
+    "frontend",
+    "backend",
+    "hierarchie",
+    "filet",
+    "legende",
+    "opacite",
+    "profondeur"
+  ],
+  "vars": [
+    {
+      "name": "--vl-coral",
+      "role": "la teinte UNIQUE des couches — c'est l'opacité, pas la couleur, qui distingue les rangs",
+      "default": "#E4886A"
+    },
+    {
+      "name": "--vl-layer-alpha-1",
+      "role": "opacité de la couche de tête (la seule pleine)",
+      "default": "1"
+    },
+    {
+      "name": "--vl-layer-alpha-2",
+      "role": "opacité de la deuxième couche",
+      "default": "0.44"
+    },
+    {
+      "name": "--vl-layer-alpha-3",
+      "role": "opacité de la troisième couche — même rapport à la deuxième que la deuxième à la première",
+      "default": "0.18"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "le nom de la couche",
+      "default": "#3A3835"
+    },
+    {
+      "name": "--vl-ink-muted",
+      "role": "la ligne d'explication",
+      "default": "#6E6863"
+    },
+    {
+      "name": "--vl-hairline",
+      "role": "le filet de rappel entre un plan et son libellé",
+      "default": "#97918C"
+    },
+    {
+      "name": "--vl-track-title",
+      "role": "approche des titres en capitales",
+      "default": "0.13em"
+    },
+    {
+      "name": "--vl-track-body",
+      "role": "approche du corps en capitales",
+      "default": "0.05em"
+    }
+  ],
+  "slots": [
+    "name",
+    "note"
+  ],
+  "geometry": {
+    "root": ".vl-layers",
+    "frame": [
+      1040,
+      420
+    ],
+    "ratios": {
+      "plane_h_over_w": 0.53,
+      "pitch_over_plane_h": 0.571,
+      "plane_w_over_width": 0.317,
+      "rule_start_over_plane_w": 0.655,
+      "label_x_over_width": 0.413
+    },
+    "type_px": {
+      "name": 22,
+      "note": 14
+    },
+    "pad_ratio": {
+      "top": 0.0212,
+      "x": 0,
+      "bottom": 0.0212
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "un plan est un carré en projection isométrique : deux fois plus large que haut",
+      "measure": "box('.vl-layers__plane--1').h / box('.vl-layers__plane--1').w",
+      "expect": 0.53,
+      "tol": 0.04
+    },
+    {
+      "name": "le pas est le même entre toutes les couches (une pile irrégulière se lit comme un accident)",
+      "measure": "Math.abs((box('.vl-layers__plane--2').top - box('.vl-layers__plane--1').top) - (box('.vl-layers__plane--3').top - box('.vl-layers__plane--2').top))",
+      "max": 1
+    },
+    {
+      "name": "le pas vaut 0,57 hauteur de plan : assez pour que les plans se distinguent, assez peu pour qu'ils fassent pile",
+      "measure": "(box('.vl-layers__plane--2').top - box('.vl-layers__plane--1').top) / box('.vl-layers__plane--1').h",
+      "expect": 0.571,
+      "tol": 0.05
+    },
+    {
+      "name": "le centre d'une couche échappe au plan qui la surplombe — sans quoi son filet ne peut pas en sortir",
+      "measure": "Math.min(...[[1,2],[2,3]].map(([a,b]) => (box('.vl-layers__plane--'+b).top + box('.vl-layers__plane--'+b).h/2) - box('.vl-layers__plane--'+a).bottom))",
+      "min": 2
+    },
+    {
+      "name": "l'opacité décroît d'un rapport CONSTANT d'une couche à la suivante (progression géométrique)",
+      "measure": "(num('.vl-layers__plane--2','opacity') / num('.vl-layers__plane--1','opacity')) / (num('.vl-layers__plane--3','opacity') / num('.vl-layers__plane--2','opacity'))",
+      "expect": 1,
+      "tol": 0.15
+    },
+    {
+      "name": "la couche de tête est la seule pleine",
+      "measure": "num('.vl-layers__plane--1','opacity')",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "la dernière couche est un fantôme : au moins 4 fois plus effacée que la première",
+      "measure": "num('.vl-layers__plane--1','opacity') / num('.vl-layers__plane--3','opacity')",
+      "min": 4
+    },
+    {
+      "name": "chaque filet est à la hauteur du centre de SA couche : la correspondance est géométrique, pas déduite de l'ordre",
+      "measure": "Math.max(...[1,2,3].map(i => Math.abs(box('.vl-layers__row--'+i+' .vl-layers__rule').top - (box('.vl-layers__plane--'+i).top + box('.vl-layers__plane--'+i).h/2))))",
+      "max": 2
+    },
+    {
+      "name": "chaque filet touche le milieu de la ligne de titre, pas l'interligne sous elle",
+      "measure": "Math.max(...[1,2,3].map(i => Math.abs(box('.vl-layers__row--'+i+' .vl-layers__rule').top - (box('.vl-layers__row--'+i+' .vl-layers__name').top + box('.vl-layers__row--'+i+' .vl-layers__name').h/2))))",
+      "max": 2
+    },
+    {
+      "name": "le filet naît SOUS le losange (à 0,655 de sa largeur) : sa longueur visible est dictée par la forme",
+      "measure": "(box('.vl-layers__row--1 .vl-layers__rule').left - box('.vl-layers__plane--1').left) / box('.vl-layers__plane--1').w",
+      "expect": 0.655,
+      "tol": 0.05
+    },
+    {
+      "name": "le filet s'arrête avant le texte : il désigne, il ne souligne pas",
+      "measure": "box('.vl-layers__row--1 .vl-layers__name').left - box('.vl-layers__row--1 .vl-layers__rule').right",
+      "min": 16
+    },
+    {
+      "name": "la colonne de libellés et la pile occupent la même bande verticale",
+      "measure": "Math.abs((box('.vl-layers__row--1').top + box('.vl-layers__row--3').bottom) / 2 - (box('.vl-layers__plane--1').top + box('.vl-layers__plane--3').bottom) / 2) / H",
+      "max": 0.05
+    },
+    {
+      "name": "plancher de lisibilité : le corps ne descend pas sous 1,2 % de la largeur du schéma",
+      "measure": "num('.vl-layers__note','fontSize') / W",
+      "min": 0.012
+    },
+    {
+      "name": "contraste de la ligne d'explication sur le fond ≥ 4,5",
+      "measure": "contrast('.vl-layers__note')",
+      "min": 4.5
+    },
+    {
+      "name": "aucun débordement hors du cadre du schéma",
+      "measure": "overflow('.vl-layers')",
+      "max": 0
+    }
+  ],
+  "notes": "Le pas à 0,57 hauteur de plan n'est pas un goût : sous 0,5, le centre d'une couche passe sous le plan qui la surplombe et son filet ne peut plus en sortir — le schéma perd sa correspondance avant de perdre sa lisibilité, et rien ne le signale. C'est le benchmark « le centre échappe au plan du dessus » qui tient ce seuil. L'opacité suit une progression GÉOMÉTRIQUE (× 0,42) et non une soustraction régulière : à pas soustractif constant, la troisième couche reste trop dense et la pile paraît plate. Les recouvrements ne sont jamais dessinés — ils sont composités par le navigateur, et c'est ce qui rend le schéma thémable en ne changeant qu'UNE couleur. Écart assumé avec la référence : elle laisse les filets DÉRIVER (les blocs de texte coulent avec un écart constant, la correspondance repose sur l'ordre de lecture) ; ici chaque filet est verrouillé sur le centre de sa couche, parce que « c'est le troisième donc c'est celui du bas » n'est pas une correspondance dès que le schéma est technique. Pour passer à 4 ou 5 couches : un plan et une rangée de plus avec le `--i` suivant, un alpha qui poursuit la même raison géométrique, et une hauteur de cadre = hauteur de plan + (n − 1) × pas + 2 × padding."
+}

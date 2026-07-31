@@ -1,0 +1,24 @@
+{
+  "name": "Schéma de couches — corail sur blanc cassé",
+  "notes": "Système de SCHÉMA, pas de tableau de bord : une seule teinte, aucun cadre, aucune ombre, aucun rayon. Tout le sens est porté par deux choses — l'ordre d'empilement et l'OPACITÉ, qui décroît d'une couche à l'autre selon un rapport constant (≈ 0.42 ×, une progression géométrique et non une soustraction régulière). La conséquence est qu'on peut lire le rang d'une couche sans légende : la plus dense est devant. Les recouvrements ne sont jamais dessinés, ils sont composités — deux translucides superposées donnent α₂ + α₃(1−α₂), et c'est le seul dégradé du système. Deux niveaux de typo seulement, tout en capitales à large approche : un titre qui nomme la couche, un corps qui la qualifie. Aucun chiffre, aucune icône, aucune puce — le rang EST l'information, et tout ajout la dilue.",
+  "tokens": {
+    "--vl-bg": "#F1EFEC",
+    "--vl-coral": "#E4886A",
+    "--vl-layer-alpha-1": "1",
+    "--vl-layer-alpha-2": "0.44",
+    "--vl-layer-alpha-3": "0.18",
+    "--vl-ink": "#3A3835",
+    "--vl-ink-muted": "#6E6863",
+    "--vl-hairline": "#97918C",
+    "--vl-track-title": "0.13em",
+    "--vl-track-body": "0.05em"
+  },
+  "type": {
+    "display": "Archivo, -apple-system, \"Helvetica Neue\", Arial, sans-serif",
+    "body": "Archivo, -apple-system, \"Helvetica Neue\", Arial, sans-serif",
+    "scale": {
+      "title": "34px / 1.2 / 300 / 0.13em / uppercase",
+      "body": "21px / 1.75 / 400 / 0.05em / uppercase"
+    }
+  }
+}
