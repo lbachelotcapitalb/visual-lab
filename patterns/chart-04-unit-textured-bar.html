@@ -1,0 +1,92 @@
+<!-- chart-04-unit-textured-bar — fragment autonome. Couleurs via --vl-* uniquement, aucune valeur en dur. -->
+<div class="vl-utb" data-unit="3000" data-scale-h="400" data-scale-v="84000">
+  <div class="vl-utb__plot">
+    <div class="vl-utb__col">
+      <div class="vl-utb__value">84 000 €</div>
+      <div class="vl-utb__bar" data-value="84000" style="height:400px"></div>
+    </div>
+    <div class="vl-utb__col">
+      <div class="vl-utb__value">45 000 €</div>
+      <div class="vl-utb__bar" data-value="45000" style="height:214.3px"></div>
+    </div>
+    <div class="vl-utb__col">
+      <div class="vl-utb__value">12 000 €</div>
+      <div class="vl-utb__bar is-muted" data-value="12000" style="height:57.1px"></div>
+    </div>
+  </div>
+
+  <div class="vl-utb__foot">
+    <div class="vl-utb__label">option A</div>
+    <div class="vl-utb__label">option B</div>
+    <div class="vl-utb__label">northbeam</div>
+  </div>
+
+  <div class="vl-utb__unit">une case = 3 000 € · hauteur exactement proportionnelle</div>
+</div>
+
+<style>
+/* LA HAUTEUR PORTE LA VALEUR, LA TEXTURE PORTE L'UNITÉ — jamais l'inverse.
+   La barre est mise à l'échelle par sa hauteur ; la texture, elle, est un
+   PEIGNE de période constante qui dit ce que vaut un cran. Compter les crans
+   doit redonner la valeur, mais personne n'a à le faire : le montant est écrit
+   au-dessus. C'est ce qui sépare ce pattern d'un isotype (où compter EST la
+   lecture) et d'un histogramme nu (où l'unité reste implicite). */
+.vl-utb{
+  --vl-utb-period:14.286px;          /* 3 000 € ramenés à l'échelle 400 px / 84 000 € */
+  width:704px;
+  font-family:"Hanken Grotesk",Inter,system-ui,sans-serif;
+  color:var(--vl-near);
+}
+
+.vl-utb__plot{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:56px;
+  align-items:end;
+  border-bottom:var(--vl-rule) solid var(--vl-ink);
+}
+.vl-utb__col{display:flex;flex-direction:column;justify-content:flex-end}
+
+.vl-utb__value{
+  font-family:Newsreader,Georgia,serif;
+  font-size:47px;line-height:1.12;text-align:center;
+  margin-bottom:14px;
+  color:var(--vl-near);
+}
+
+/* Le peigne est tiré DU BAS : c'est le pied de la barre qui est calé sur la
+   ligne de base, donc c'est de là que les crans doivent partir. Un peigne tiré
+   du haut décale la phase d'une barre à l'autre et les crans cessent de
+   s'aligner horizontalement — le lecteur y voit une erreur avant d'y voir une
+   unité. */
+.vl-utb__bar{
+  width:100%;
+  box-shadow:inset 0 0 0 var(--vl-rule) var(--vl-ink);
+  background:repeating-linear-gradient(
+    to top,
+    var(--vl-ink) 0 calc(var(--vl-utb-period) - 1.8px),
+    var(--vl-paper) calc(var(--vl-utb-period) - 1.8px) var(--vl-utb-period));
+}
+.vl-utb__bar.is-muted{
+  background:repeating-linear-gradient(
+    to top,
+    var(--vl-ink-faint) 0 calc(var(--vl-utb-period) - 1.8px),
+    var(--vl-paper) calc(var(--vl-utb-period) - 1.8px) var(--vl-utb-period));
+}
+
+.vl-utb__foot{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:56px;
+  margin-top:20px;
+}
+.vl-utb__label{
+  font-family:"DM Mono",ui-monospace,monospace;
+  font-size:22px;line-height:1.42;color:var(--vl-ink);
+  text-align:center;white-space:nowrap;
+}
+
+.vl-utb__unit{
+  margin-top:26px;padding-top:18px;
+  border-top:1px solid var(--vl-ink-faint);
+  font-family:"DM Mono",ui-monospace,monospace;
+  font-size:22px;line-height:1.42;letter-spacing:.04em;
+  color:var(--vl-ink);text-transform:uppercase;
+}
+</style>

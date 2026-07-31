@@ -20,9 +20,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 24,
-    "refs": 11,
-    "checkable": 17
+    "patterns": 26,
+    "refs": 12,
+    "checkable": 19
   },
   "patterns": [
     {
@@ -1651,6 +1651,163 @@
       "html": "patterns/chart-03-accent-column-callout.html"
     },
     {
+      "id": "chart-04-unit-textured-bar",
+      "name": "Barre à unité déclarée",
+      "family": "chart",
+      "ref": "ref-16-cobalt-graph-paper",
+      "media": [
+        "slide",
+        "web",
+        "print"
+      ],
+      "intent": "Donner à un histogramme une UNITÉ visible sans lui faire porter le comptage : la hauteur de la barre est exactement proportionnelle à la valeur, la texture qui la remplit est un peigne dont la période vaut une unité déclarée, et le montant exact est écrit au-dessus — la texture donne l'échelle, elle ne compte jamais à la place du chiffre.",
+      "when_to_use": "Sur une comparaison de deux à quatre montants dont l'écart EST le message (coût cumulé, budget, dette), quand le lecteur doit sentir l'ordre de grandeur avant de lire les chiffres. Excellent sur une charte à deux couleurs, où la texture remplace l'aplat plein sans rien coûter en palette.",
+      "avoid_when": "Au-delà de quatre barres — le peigne devient du bruit moiré ; sur une série temporelle, où l'unité de l'axe suffit ; ou quand la plus petite valeur descend sous deux périodes, la texture disparaissant alors dans un trait plein qui MENT sur l'échelle (un benchmark le refuse).",
+      "tags": [
+        "histogramme",
+        "barres",
+        "unité",
+        "échelle",
+        "texture",
+        "peigne",
+        "coût",
+        "comparaison",
+        "cumulé",
+        "isotype",
+        "deux couleurs",
+        "monochrome"
+      ],
+      "vars": [
+        {
+          "name": "--vl-utb-period",
+          "role": "période du peigne = UNE unité déclarée, à l'échelle du tracé",
+          "default": "14.286px"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "encre des barres et du chrome",
+          "default": "#1F2BE0"
+        },
+        {
+          "name": "--vl-ink-faint",
+          "role": "barre atténuée — la valeur qu'on ne veut PAS voir dominer",
+          "default": "rgba(31,43,224,0.20)"
+        },
+        {
+          "name": "--vl-paper",
+          "role": "papier, et creux du peigne",
+          "default": "#F0EBDE"
+        },
+        {
+          "name": "--vl-near",
+          "role": "encre du montant écrit",
+          "default": "#14163A"
+        },
+        {
+          "name": "--vl-rule",
+          "role": "épaisseur de la ligne de base et du liseré",
+          "default": "1.25px"
+        }
+      ],
+      "slots": [
+        {
+          "name": "value",
+          "role": "le montant EXACT, écrit au-dessus de chaque barre — jamais facultatif"
+        },
+        {
+          "name": "label",
+          "role": "l'identité de la barre, sur UNE ligne"
+        },
+        {
+          "name": "unit",
+          "role": "la phrase qui déclare l'unité et l'exactitude de l'échelle — c'est le contrat du pattern"
+        }
+      ],
+      "geometry": {
+        "root": ".vl-utb",
+        "frame": [
+          704,
+          620
+        ],
+        "ratios": {
+          "plot_height_over_width": 0.568,
+          "gap_over_width": 0.08,
+          "period_over_plot_height": 0.0357,
+          "value_over_label": 2.14
+        },
+        "type_px": {
+          "value": 47,
+          "label": 22,
+          "unit": 22
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "LE CONTRAT — le rapport des hauteurs EST le rapport des valeurs",
+          "measure": "(box('.vl-utb__col:nth-child(2) .vl-utb__bar').h / box('.vl-utb__col:nth-child(1) .vl-utb__bar').h) / (Number($('.vl-utb__col:nth-child(2) .vl-utb__bar').dataset.value) / Number($('.vl-utb__col:nth-child(1) .vl-utb__bar').dataset.value))",
+          "expect": 1,
+          "tol": 0.01
+        },
+        {
+          "name": "le contrat tient aussi sur la plus petite barre",
+          "measure": "(box('.vl-utb__col:nth-child(3) .vl-utb__bar').h / box('.vl-utb__col:nth-child(1) .vl-utb__bar').h) / (Number($('.vl-utb__col:nth-child(3) .vl-utb__bar').dataset.value) / Number($('.vl-utb__col:nth-child(1) .vl-utb__bar').dataset.value))",
+          "expect": 1,
+          "tol": 0.01
+        },
+        {
+          "name": "la période du peigne vaut EXACTEMENT l'unité déclarée",
+          "measure": "parseFloat(getComputedStyle($('.vl-utb')).getPropertyValue('--vl-utb-period')) / (Number($('.vl-utb').dataset.unit) * Number($('.vl-utb').dataset.scaleH) / Number($('.vl-utb').dataset.scaleV))",
+          "expect": 1,
+          "tol": 0.02
+        },
+        {
+          "name": "la plus petite barre garde au moins DEUX périodes — sinon la texture ment",
+          "measure": "box('.vl-utb__col:nth-child(3) .vl-utb__bar').h / parseFloat(getComputedStyle($('.vl-utb')).getPropertyValue('--vl-utb-period'))",
+          "min": 2
+        },
+        {
+          "name": "chaque barre porte son montant écrit",
+          "measure": "[1,2,3].every((i) => text('.vl-utb__col:nth-child(' + i + ') .vl-utb__value').length > 0) ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "le montant est AU-DESSUS de la barre, jamais dedans",
+          "measure": "box('.vl-utb__col:nth-child(1) .vl-utb__value').bottom <= box('.vl-utb__col:nth-child(1) .vl-utb__bar').top ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "les barres reposent sur UNE ligne de base commune",
+          "measure": "Math.max(box('.vl-utb__col:nth-child(1) .vl-utb__bar').bottom, box('.vl-utb__col:nth-child(2) .vl-utb__bar').bottom, box('.vl-utb__col:nth-child(3) .vl-utb__bar').bottom) - Math.min(box('.vl-utb__col:nth-child(1) .vl-utb__bar').bottom, box('.vl-utb__col:nth-child(2) .vl-utb__bar').bottom, box('.vl-utb__col:nth-child(3) .vl-utb__bar').bottom)",
+          "expect": 0,
+          "tol": 0.5
+        },
+        {
+          "name": "la phrase d'unité est présente — c'est elle qui rend le peigne lisible",
+          "measure": "text('.vl-utb__unit').length > 12 ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "le montant écrit domine son libellé d'un cran franc",
+          "measure": "num('.vl-utb__value','fontSize') / num('.vl-utb__label','fontSize')",
+          "expect": 2.14,
+          "tol": 0.25
+        }
+      ],
+      "pptx": {
+        "primitive": "textured_bar",
+        "note": "En .pptx le peigne se fait en remplissage à motif (pattern fill) à pas fixe, pas en N rectangles empilés : au-delà de ~30 crans le fichier devient illisible à l'édition, et c'est le fichier que le client ouvre."
+      },
+      "html": "patterns/chart-04-unit-textured-bar.html"
+    },
+    {
       "id": "diagram-layer-stack",
       "name": "Pile de couches isométriques légendées",
       "family": "diagram",
@@ -2112,6 +2269,190 @@
       ],
       "pptx": null,
       "html": "patterns/layout-03-glass-board.html"
+    },
+    {
+      "id": "layout-04-graph-paper-cells",
+      "name": "Papier millimétré et ses cases",
+      "family": "layout",
+      "ref": "ref-16-cobalt-graph-paper",
+      "media": [
+        "slide",
+        "web",
+        "print"
+      ],
+      "intent": "Faire d'une trame de papier millimétré le TON du fond, puis y poser des objets qui sont des cases de cette trame — pas de la matière posée dessus : le pas de la grille de cellules et la marge qui la centre sont des multiples entiers du pas de la trame, si bien que le contenu paraît découpé dans le papier.",
+      "when_to_use": "Quand le sujet se compte en unités discrètes — demi-journées, sièges, jours, tickets, sites — et qu'on veut que le fond le dise avant le texte. Aussi comme socle de deck : la trame reste sur toutes les slides et fait la reconnaissance d'une slide à l'autre sans qu'aucun ornement ne soit ajouté.",
+      "avoid_when": "Quand le sujet est continu (une courbe, un flux, une durée), quand la charte a déjà un motif — deux trames se battent et aucune ne gagne — ou dès que du texte de lecture devrait passer PAR-DESSUS la trame à plus de ~14 % d'opacité : le fond ne réduit jamais la lisibilité du premier plan, c'est la seule loi que ce pattern peut faire tomber.",
+      "tags": [
+        "papier millimétré",
+        "graph paper",
+        "trame",
+        "grille",
+        "fond",
+        "calendrier",
+        "demi-journée",
+        "case",
+        "cellule",
+        "isotype",
+        "deux couleurs",
+        "monochrome",
+        "verdict",
+        "trois états"
+      ],
+      "vars": [
+        {
+          "name": "--vl-grid",
+          "role": "encre de la trame — TENUE entre 6 et 14 % d'opacité",
+          "default": "rgba(31,43,224,0.10)"
+        },
+        {
+          "name": "--vl-grid-step",
+          "role": "période de la trame — l'unité dont tout le reste est un multiple",
+          "default": "35.2px"
+        },
+        {
+          "name": "--vl-cell-pitch",
+          "role": "pas d'une case (bord à bord) — DOIT être un multiple entier du pas de trame",
+          "default": "70.4px"
+        },
+        {
+          "name": "--vl-cell-gap",
+          "role": "gouttière entre deux cases, prise DANS le pas",
+          "default": "6px"
+        },
+        {
+          "name": "--vl-paper",
+          "role": "papier",
+          "default": "#F0EBDE"
+        },
+        {
+          "name": "--vl-paper-2",
+          "role": "case neutralisée (non ouvré)",
+          "default": "#E6E0CE"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "encre d'accent — case pleine, filet, libellé mono",
+          "default": "#1F2BE0"
+        },
+        {
+          "name": "--vl-ink-faint",
+          "role": "liseré d'une case vide",
+          "default": "rgba(31,43,224,0.20)"
+        },
+        {
+          "name": "--vl-near",
+          "role": "encre de lecture",
+          "default": "#14163A"
+        },
+        {
+          "name": "--vl-rule",
+          "role": "épaisseur du liseré",
+          "default": "1.25px"
+        },
+        {
+          "name": "--vl-margin",
+          "role": "retrait haut et bas du panneau",
+          "default": "92px"
+        }
+      ],
+      "slots": [
+        {
+          "name": "head",
+          "role": "libellé mono de la grille, centré"
+        },
+        {
+          "name": "grid",
+          "role": "les cases — 7 colonnes par défaut, l'en-tête de jours compris"
+        },
+        {
+          "name": "legend",
+          "role": "la clé des trois états ; obligatoire dès que deux états coexistent"
+        }
+      ],
+      "geometry": {
+        "root": ".vl-gpc",
+        "frame": [
+          704,
+          600
+        ],
+        "ratios": {
+          "grid_step_over_width": 0.05,
+          "cell_pitch_over_grid_step": 2,
+          "side_margin_over_grid_step": 3,
+          "gap_over_cell_pitch": 0.085
+        },
+        "type_px": {
+          "head": 22,
+          "day": 22,
+          "legend": 22
+        },
+        "pad_ratio": {
+          "top": 0.131,
+          "x": 0.15,
+          "bottom": 0.131
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "la période de trame vaut 5 % de la largeur",
+          "measure": "parseFloat(cs('.vl-gpc','backgroundSize')) / W",
+          "expect": 0.05,
+          "tol": 0.005
+        },
+        {
+          "name": "LE GESTE — le pas des cases est un multiple ENTIER du pas de trame",
+          "measure": "(box('.vl-gpc__cell:nth-of-type(2)').left - box('.vl-gpc__cell:nth-of-type(1)').left) / parseFloat(cs('.vl-gpc','backgroundSize'))",
+          "expect": 2,
+          "tol": 0.04
+        },
+        {
+          "name": "la marge qui centre la grille est elle aussi un multiple entier du pas de trame",
+          "measure": "box('.vl-gpc__grid').left / parseFloat(cs('.vl-gpc','backgroundSize'))",
+          "expect": 3,
+          "tol": 0.04
+        },
+        {
+          "name": "la trame RECULE — opacité tenue entre 6 et 14 %",
+          "measure": "parseFloat((cs('.vl-gpc','backgroundImage').match(/rgba?\\([^)]*?,\\s*([0-9.]+)\\s*\\)/) || [0,0])[1])",
+          "min": 0.06,
+          "max": 0.14
+        },
+        {
+          "name": "les trois états de case partagent EXACTEMENT la même boîte",
+          "measure": "Math.max(box('.vl-gpc__cell.is-full').w, box('.vl-gpc__cell.is-half').w, box('.vl-gpc__cell.is-off').w) - Math.min(box('.vl-gpc__cell.is-full').w, box('.vl-gpc__cell.is-half').w, box('.vl-gpc__cell.is-off').w)",
+          "expect": 0,
+          "tol": 0.5
+        },
+        {
+          "name": "une case est carrée",
+          "measure": "box('.vl-gpc__cell.is-full').w / box('.vl-gpc__cell.is-full').h",
+          "expect": 1,
+          "tol": 0.02
+        },
+        {
+          "name": "la demi-case remplit la MOITIÉ de sa case, à 2 % près",
+          "measure": "box('.vl-gpc__cell.is-half > b').h / box('.vl-gpc__cell.is-half').h",
+          "expect": 0.5,
+          "tol": 0.02
+        },
+        {
+          "name": "le texte posé SUR la trame reste au-dessus du plancher WCAG",
+          "measure": "contrast('.vl-gpc__legend')",
+          "min": 4.5
+        },
+        {
+          "name": "la gouttière est prise DANS le pas — elle ne le gonfle jamais",
+          "measure": "(box('.vl-gpc__cell:nth-of-type(1)').w + parseFloat(cs('.vl-gpc__grid','columnGap'))) / (box('.vl-gpc__cell:nth-of-type(2)').left - box('.vl-gpc__cell:nth-of-type(1)').left)",
+          "expect": 1,
+          "tol": 0.02
+        }
+      ],
+      "pptx": {
+        "primitive": "cell_grid",
+        "note": "En .pptx la trame se pose en image de fond de MASQUE (une seule fois), jamais en 400 rectangles ; les cases restent des formes, seules elles portent la donnée."
+      },
+      "html": "patterns/layout-04-graph-paper-cells.html"
     },
     {
       "id": "list-01-giant-numbers",
@@ -3205,6 +3546,40 @@
           "suffix": "46px / 1 / 800 / -0.01em",
           "label": "34px / 1.25 / 700 / -0.01em",
           "note": "20px / 1.45 / 500"
+        }
+      }
+    },
+    {
+      "id": "ref-16-cobalt-graph-paper",
+      "name": "Papier millimétré cobalt",
+      "patterns": [
+        "chart-04-unit-textured-bar",
+        "layout-04-graph-paper-cells"
+      ],
+      "deck": "decks/ref-16-cobalt-graph-paper.html",
+      "tokens": {
+        "--vl-paper": "#F0EBDE",
+        "--vl-paper-2": "#E6E0CE",
+        "--vl-ink": "#1F2BE0",
+        "--vl-ink-faint": "rgba(31,43,224,0.20)",
+        "--vl-grid": "rgba(31,43,224,0.10)",
+        "--vl-near": "#14163A",
+        "--vl-grid-step": "35.2px",
+        "--vl-cell-pitch": "70.4px",
+        "--vl-cell-gap": "6px",
+        "--vl-rule": "1.25px",
+        "--vl-margin": "92px"
+      },
+      "type": {
+        "display": "Newsreader, Georgia, \"Times New Roman\", serif",
+        "body": "\"Hanken Grotesk\", Inter, system-ui, sans-serif",
+        "mono": "\"DM Mono\", ui-monospace, SFMono-Regular, Menlo, monospace",
+        "scale": {
+          "title": "123px / 0.96 / 400 / -0.008em",
+          "headline": "57px / 1.1 / 400 / -0.005em",
+          "figure": "47px / 1.12 / 400",
+          "body": "25px / 1.5 / 400",
+          "mono": "22px / 1.42 / 400 / 0.06em"
         }
       }
     }

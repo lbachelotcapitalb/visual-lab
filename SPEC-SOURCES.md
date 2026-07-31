@@ -768,3 +768,55 @@ d'empilement. C'est aussi le premier visuel du corpus dont le sujet est un objet
   libellés. Le pattern **verrouille le filet sur le centre de SA couche**, là où la référence le
   laisse dériver : dans un schéma technique (front / service / données), « c'est le troisième
   donc c'est celui du bas » n'est pas une correspondance, c'est un pari.
+
+---
+
+## ref-16-cobalt-graph-paper
+
+**Nature** — **Pas un reverse d'image tierce.** Composition maison, née d'une esquisse de deck
+validée par Léo le 31/07/2026. La palette et le principe de trame permanente dérivent du modèle
+`cobalt-grid` du pack `zarazhangrui/frontend-slides` (MIT) ; la composition en *cases de la
+trame*, les trois états de case et la barre à unité déclarée sont ajoutés ici et n'existent pas
+dans la source. Aucune image n'est donc à ingérer : cette section EST la source.
+
+**Ce qu'il faut isoler** — **DEUX couches, jamais trois** : le papier (qui porte la trame) et
+les modules posés dessus. Un panneau de groupement intermédiaire est explicitement écarté — il
+n'encadrerait que les deux modules et serait une couche 1:1 redondante. Écarté aussi : toute
+marge de page contrastée sous la slide.
+
+**Palette**
+
+| rôle | valeur | note |
+|---|---|---|
+| papier | `#F0EBDE` | crème chaud, jamais blanc |
+| case neutralisée | `#E6E0CE` | le papier assombri de ~4 % — non ouvré, jour mort |
+| encre d'accent | `#1F2BE0` | 6,9:1 sur le papier — titre, filet, chiffre, case pleine |
+| liseré de case vide | `rgba(31,43,224,0.20)` | aplat, jamais du texte |
+| trame | `rgba(31,43,224,0.10)` | **tenue entre 6 et 14 %** — au-delà elle traverse le texte |
+| encre de lecture | `#14163A` | 14,6:1 — le même bleu poussé au noir, pour les paragraphes |
+
+**Typo** — Newsreader (serif éditorial, titres et chiffres), Hanken Grotesk (corps), DM Mono
+(chrome, libellés, unités). Échelle en fraction de la largeur de slide (`Ws` = 1600) :
+
+| rang | ratio | ce que ça porte |
+|---|---|---|
+| titre de couverture | `0.0769 Ws` | 123 px |
+| titre assertif | `0.0356 Ws` | 57 px |
+| chiffre au-dessus d'une barre | `0.0294 Ws` | 47 px |
+| corps | `0.0156 Ws` | 25 px |
+| mono de chrome | `0.0138 Ws` | 22 px |
+
+**Géométrie** — tout dérive d'une seule valeur, le **pas de trame** = `0.022 Ws` (35,2 px à
+1600). Le pas d'une grille de cases vaut **2 pas de trame** ; la marge qui centre cette grille
+en vaut **3**. C'est cette divisibilité, et elle seule, qui fait que les objets paraissent
+découpés dans le papier au lieu d'y être posés — la retirer ne casse rien visiblement, elle
+dissout simplement le système.
+
+**Patterns extraits**
+- `layout-04-graph-paper-cells` — la trame comme ton du papier, et les cases qui l'habitent ;
+  trois états encodés par la FORME (pleine / à moitié / vide), la charte n'ayant pas de
+  troisième couleur à dépenser.
+- `chart-04-unit-textured-bar` — la barre dont la hauteur porte la valeur, la texture l'unité,
+  et le texte le montant exact : trois rôles, trois porteurs, aucun qui fasse le travail d'un
+  autre.
+

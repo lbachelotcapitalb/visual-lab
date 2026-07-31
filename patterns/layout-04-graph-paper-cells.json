@@ -1,0 +1,119 @@
+{
+  "name": "Papier millimétré et ses cases",
+  "family": "layout",
+  "ref": "ref-16-cobalt-graph-paper",
+  "intent": "Faire d'une trame de papier millimétré le TON du fond, puis y poser des objets qui sont des cases de cette trame — pas de la matière posée dessus : le pas de la grille de cellules et la marge qui la centre sont des multiples entiers du pas de la trame, si bien que le contenu paraît découpé dans le papier.",
+  "when_to_use": "Quand le sujet se compte en unités discrètes — demi-journées, sièges, jours, tickets, sites — et qu'on veut que le fond le dise avant le texte. Aussi comme socle de deck : la trame reste sur toutes les slides et fait la reconnaissance d'une slide à l'autre sans qu'aucun ornement ne soit ajouté.",
+  "avoid_when": "Quand le sujet est continu (une courbe, un flux, une durée), quand la charte a déjà un motif — deux trames se battent et aucune ne gagne — ou dès que du texte de lecture devrait passer PAR-DESSUS la trame à plus de ~14 % d'opacité : le fond ne réduit jamais la lisibilité du premier plan, c'est la seule loi que ce pattern peut faire tomber.",
+  "media": [
+    "slide",
+    "web",
+    "print"
+  ],
+  "tags": [
+    "papier millimétré",
+    "graph paper",
+    "trame",
+    "grille",
+    "fond",
+    "calendrier",
+    "demi-journée",
+    "case",
+    "cellule",
+    "isotype",
+    "deux couleurs",
+    "monochrome",
+    "verdict",
+    "trois états"
+  ],
+  "vars": [
+    { "name": "--vl-grid", "role": "encre de la trame — TENUE entre 6 et 14 % d'opacité", "default": "rgba(31,43,224,0.10)" },
+    { "name": "--vl-grid-step", "role": "période de la trame — l'unité dont tout le reste est un multiple", "default": "35.2px" },
+    { "name": "--vl-cell-pitch", "role": "pas d'une case (bord à bord) — DOIT être un multiple entier du pas de trame", "default": "70.4px" },
+    { "name": "--vl-cell-gap", "role": "gouttière entre deux cases, prise DANS le pas", "default": "6px" },
+    { "name": "--vl-paper", "role": "papier", "default": "#F0EBDE" },
+    { "name": "--vl-paper-2", "role": "case neutralisée (non ouvré)", "default": "#E6E0CE" },
+    { "name": "--vl-ink", "role": "encre d'accent — case pleine, filet, libellé mono", "default": "#1F2BE0" },
+    { "name": "--vl-ink-faint", "role": "liseré d'une case vide", "default": "rgba(31,43,224,0.20)" },
+    { "name": "--vl-near", "role": "encre de lecture", "default": "#14163A" },
+    { "name": "--vl-rule", "role": "épaisseur du liseré", "default": "1.25px" },
+    { "name": "--vl-margin", "role": "retrait haut et bas du panneau", "default": "92px" }
+  ],
+  "slots": [
+    { "name": "head", "role": "libellé mono de la grille, centré" },
+    { "name": "grid", "role": "les cases — 7 colonnes par défaut, l'en-tête de jours compris" },
+    { "name": "legend", "role": "la clé des trois états ; obligatoire dès que deux états coexistent" }
+  ],
+  "geometry": {
+    "root": ".vl-gpc",
+    "frame": [704, 600],
+    "ratios": {
+      "grid_step_over_width": 0.05,
+      "cell_pitch_over_grid_step": 2,
+      "side_margin_over_grid_step": 3,
+      "gap_over_cell_pitch": 0.085
+    },
+    "type_px": { "head": 22, "day": 22, "legend": 22 },
+    "pad_ratio": { "top": 0.131, "x": 0.15, "bottom": 0.131 }
+  },
+  "benchmarks": [
+    {
+      "name": "la période de trame vaut 5 % de la largeur",
+      "measure": "parseFloat(cs('.vl-gpc','backgroundSize')) / W",
+      "expect": 0.05,
+      "tol": 0.005
+    },
+    {
+      "name": "LE GESTE — le pas des cases est un multiple ENTIER du pas de trame",
+      "measure": "(box('.vl-gpc__cell:nth-of-type(2)').left - box('.vl-gpc__cell:nth-of-type(1)').left) / parseFloat(cs('.vl-gpc','backgroundSize'))",
+      "expect": 2,
+      "tol": 0.04
+    },
+    {
+      "name": "la marge qui centre la grille est elle aussi un multiple entier du pas de trame",
+      "measure": "box('.vl-gpc__grid').left / parseFloat(cs('.vl-gpc','backgroundSize'))",
+      "expect": 3,
+      "tol": 0.04
+    },
+    {
+      "name": "la trame RECULE — opacité tenue entre 6 et 14 %",
+      "measure": "parseFloat((cs('.vl-gpc','backgroundImage').match(/rgba?\\([^)]*?,\\s*([0-9.]+)\\s*\\)/) || [0,0])[1])",
+      "min": 0.06,
+      "max": 0.14
+    },
+    {
+      "name": "les trois états de case partagent EXACTEMENT la même boîte",
+      "measure": "Math.max(box('.vl-gpc__cell.is-full').w, box('.vl-gpc__cell.is-half').w, box('.vl-gpc__cell.is-off').w) - Math.min(box('.vl-gpc__cell.is-full').w, box('.vl-gpc__cell.is-half').w, box('.vl-gpc__cell.is-off').w)",
+      "expect": 0,
+      "tol": 0.5
+    },
+    {
+      "name": "une case est carrée",
+      "measure": "box('.vl-gpc__cell.is-full').w / box('.vl-gpc__cell.is-full').h",
+      "expect": 1,
+      "tol": 0.02
+    },
+    {
+      "name": "la demi-case remplit la MOITIÉ de sa case, à 2 % près",
+      "measure": "box('.vl-gpc__cell.is-half > b').h / box('.vl-gpc__cell.is-half').h",
+      "expect": 0.5,
+      "tol": 0.02
+    },
+    {
+      "name": "le texte posé SUR la trame reste au-dessus du plancher WCAG",
+      "measure": "contrast('.vl-gpc__legend')",
+      "min": 4.5
+    },
+    {
+      "name": "la gouttière est prise DANS le pas — elle ne le gonfle jamais",
+      "measure": "(box('.vl-gpc__cell:nth-of-type(1)').w + parseFloat(cs('.vl-gpc__grid','columnGap'))) / (box('.vl-gpc__cell:nth-of-type(2)').left - box('.vl-gpc__cell:nth-of-type(1)').left)",
+      "expect": 1,
+      "tol": 0.02
+    }
+  ],
+  "pptx": {
+    "primitive": "cell_grid",
+    "note": "En .pptx la trame se pose en image de fond de MASQUE (une seule fois), jamais en 400 rectangles ; les cases restent des formes, seules elles portent la donnée."
+  },
+  "notes": "LE PIÈGE À NE PAS REFAIRE : dessiner la demi-case avec `linear-gradient(to bottom, ink 50%, transparent 50%)`. Le rendu est identique, mais un point d'arrêt de dégradé ne se mesure pas — `getBoundingClientRect()` ne le voit pas, et le pattern perd sa seule assertion intéressante. La demi-case est donc un enfant `<b>` à `height:50%`, ce qui la rend mesurable et, accessoirement, animable.\n\nDEUXIÈME PIÈGE : gonfler le pas avec la gouttière. Si `--vl-cell-pitch` est la LARGEUR de la case et que le `gap` s'y ajoute, le pas réel devient 76,4 pour un pas de trame de 35,2 — plus un multiple entier, et le geste s'effondre en silence : rien ne casse, la grille cesse simplement d'appartenir au papier. La gouttière est donc PRISE dans le pas (`width = pitch - gap`), et un benchmark le vérifie.\n\nPOURQUOI TROIS ÉTATS ET PAS TROIS COULEURS : sur une charte à deux couleurs il n'y a pas de troisième teinte à dépenser. La forme prend le relais — pleine / à moitié / vide — et le résultat est plus honnête qu'un feu tricolore, parce qu'un demi-remplissage DIT « à moitié » là où un orange demande une légende pour être compris. Le pattern impose donc la légende dès que deux états coexistent.\n\nÉCHELLE : valeurs à l'échelle d'une slide 1600×900. Sur un autre format, on ré-ancre le pas de trame sur la largeur (5 %) et on dérive tout le reste des ratios — jamais l'inverse."
+}

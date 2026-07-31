@@ -1,0 +1,110 @@
+<!-- layout-04-graph-paper-cells — fragment autonome. Couleurs via --vl-* uniquement, aucune valeur en dur. -->
+<div class="vl-gpc">
+  <div class="vl-gpc__head">Semaine type — northbeam</div>
+
+  <div class="vl-gpc__grid">
+    <span class="vl-gpc__day">L</span><span class="vl-gpc__day">M</span><span class="vl-gpc__day">M</span>
+    <span class="vl-gpc__day">J</span><span class="vl-gpc__day">V</span><span class="vl-gpc__day">S</span>
+    <span class="vl-gpc__day">D</span>
+
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-half"><b></b></i>
+    <i class="vl-gpc__cell is-off"></i><i class="vl-gpc__cell is-off"></i>
+
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-half"><b></b></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-off"></i><i class="vl-gpc__cell is-off"></i>
+
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-off"></i><i class="vl-gpc__cell is-off"></i>
+
+    <i class="vl-gpc__cell is-half"><b></b></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-half"><b></b></i>
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-off"></i><i class="vl-gpc__cell is-off"></i>
+
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-off"></i><i class="vl-gpc__cell is-off"></i>
+  </div>
+
+  <div class="vl-gpc__legend">
+    <span><i class="vl-gpc__sw is-full"></i>journée pleine</span>
+    <span><i class="vl-gpc__sw is-half"><b></b></i>demi-journée</span>
+    <span><i class="vl-gpc__sw"></i>non ouvré</span>
+  </div>
+</div>
+
+<style>
+/* LA TRAME EST LE TON DU PAPIER, PAS UN ORNEMENT — elle vit sur la racine et ne
+   s'éteint jamais. Tenue à ~10 % d'opacité : au-delà elle traverse le texte. */
+.vl-gpc{
+  position:relative;
+  width:704px;                       /* 20 pas de trame exactement */
+  padding:var(--vl-margin) 0;
+  background-color:var(--vl-paper);
+  background-image:
+    linear-gradient(to right,  var(--vl-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--vl-grid) 1px, transparent 1px);
+  background-size:var(--vl-grid-step) var(--vl-grid-step);
+  color:var(--vl-near);
+  font-family:"Hanken Grotesk",Inter,system-ui,sans-serif;
+}
+
+.vl-gpc__head{
+  font-family:"DM Mono",ui-monospace,monospace;
+  font-size:22px;letter-spacing:.06em;line-height:1;
+  color:var(--vl-ink);
+  text-align:center;
+  margin-bottom:26px;
+}
+
+/* LE PAS DES CASES EST UN MULTIPLE ENTIER DU PAS DE LA TRAME (×2), et la marge
+   qui centre la grille en est un autre (×3) : les cases sont DÉCOUPÉES dans le
+   papier, elles n'y sont pas posées. C'est tout le geste du système. */
+.vl-gpc__grid{
+  display:grid;
+  grid-template-columns:repeat(7,calc(var(--vl-cell-pitch) - var(--vl-cell-gap)));
+  gap:var(--vl-cell-gap);
+  margin:0 calc(var(--vl-grid-step) * 3);
+}
+
+.vl-gpc__day{
+  font-family:"DM Mono",ui-monospace,monospace;
+  font-size:22px;line-height:1;color:var(--vl-ink);opacity:.6;
+  text-align:center;padding-bottom:10px;
+}
+
+/* TROIS ÉTATS, UNE SEULE ENCRE — c'est la FORME qui encode la catégorie.
+   Sur une charte à deux couleurs, un verdict à trois états n'a pas d'autre issue,
+   et il se lit aussi bien qu'un feu tricolore sans en emprunter la palette. */
+.vl-gpc__cell,
+.vl-gpc__sw{
+  display:block;aspect-ratio:1;
+  box-shadow:inset 0 0 0 var(--vl-rule) var(--vl-ink-faint);
+  background:transparent;
+}
+.vl-gpc__cell.is-full,
+.vl-gpc__sw.is-full{background:var(--vl-ink);box-shadow:none}
+.vl-gpc__cell.is-off{background:var(--vl-paper-2)}
+
+/* la demi-case est un ENFANT à 50 % de haut, pas un dégradé : une hauteur se
+   mesure, un point d'arrêt de dégradé non — et un pattern qui ne se mesure pas
+   n'est qu'une capture d'écran avec des mots autour. */
+.vl-gpc__cell.is-half,
+.vl-gpc__sw.is-half{position:relative}
+.vl-gpc__cell.is-half > b,
+.vl-gpc__sw.is-half > b{
+  position:absolute;inset:0 0 auto 0;height:50%;
+  background:var(--vl-ink);display:block;
+}
+
+.vl-gpc__legend{
+  display:flex;flex-wrap:wrap;gap:14px 32px;
+  margin:30px calc(var(--vl-grid-step) * 3) 0;
+  font-family:"DM Mono",ui-monospace,monospace;
+  font-size:22px;line-height:1.42;color:var(--vl-ink);
+}
+.vl-gpc__legend span{display:flex;align-items:center;gap:12px}
+.vl-gpc__sw{width:24px;height:24px;flex:none}
+</style>

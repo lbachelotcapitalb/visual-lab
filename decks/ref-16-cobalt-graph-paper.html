@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>ref-16-cobalt-graph-paper — reconstitution</title>
+<style>
+@import url("../fonts/fonts.css");
+@import url("https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300..600&family=Hanken+Grotesk:wght@400;600&family=DM+Mono:wght@400&display=swap");
+
+/* ref-16-cobalt-graph-paper — reconstitution. UNE <section class="slide"> par slide,
+   au format PPT 1600×900. DEUX couches et pas trois : le papier (qui porte la trame)
+   et les modules posés dessus. Aucun panneau intermédiaire — il n'encadrerait que les
+   deux modules et serait donc redondant (cf. SKILL.md, la couche 1:1). */
+:root {
+  --vl-paper: #F0EBDE;
+  --vl-paper-2: #E6E0CE;
+  --vl-ink: #1F2BE0;
+  --vl-ink-faint: rgba(31,43,224,0.20);
+  --vl-grid: rgba(31,43,224,0.10);
+  --vl-near: #14163A;
+  --vl-grid-step: 35.2px;
+  --vl-cell-pitch: 70.4px;
+  --vl-cell-gap: 6px;
+  --vl-rule: 1.25px;
+  --vl-margin: 92px;
+  --vl-font: "Hanken Grotesk", Inter, system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; display: flex; background: var(--vl-paper);
+       font-family: var(--vl-font); color: var(--vl-near); -webkit-font-smoothing: antialiased; }
+
+/* LA TRAME EST LE TON DU PAPIER : elle vit sur la slide, pas sur un module. */
+.slide { position: relative; width: 1600px; height: 900px; padding: 56px 92px; overflow: hidden;
+         background-color: var(--vl-paper);
+         background-image:
+           linear-gradient(to right,  var(--vl-grid) 1px, transparent 1px),
+           linear-gradient(to bottom, var(--vl-grid) 1px, transparent 1px);
+         background-size: var(--vl-grid-step) var(--vl-grid-step); }
+
+.rule { position: absolute; left: 92px; right: 92px; height: var(--vl-rule); background: var(--vl-ink); }
+.rule--t { top: 46px; }
+.rule--b { bottom: 46px; }
+.chrome { position: absolute; left: 92px; right: 92px; top: 64px; display: flex;
+          justify-content: space-between; font-family: "DM Mono", ui-monospace, monospace;
+          font-size: 22px; letter-spacing: .06em; color: var(--vl-ink); }
+
+.band { height: 100%; padding: 76px 0 54px; display: grid;
+        grid-template-columns: 704px 704px; gap: 8px; align-items: center; justify-content: space-between; }
+
+/* les deux fragments héritent du système ; leur propre <style> suit ci-dessous */
+.vl-gpc { padding: 0 !important; background-image: none !important; background-color: transparent !important; }
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <div class="rule rule--t"></div>
+  <div class="chrome"><span>NORTHBEAM — RELEVÉ INTERNE</span><span>PAPIER MILLIMÉTRÉ COBALT</span></div>
+  <div class="band">
+<div class="vl-gpc">
+  <div class="vl-gpc__head">Semaine type — northbeam</div>
+
+  <div class="vl-gpc__grid">
+    <span class="vl-gpc__day">L</span><span class="vl-gpc__day">M</span><span class="vl-gpc__day">M</span>
+    <span class="vl-gpc__day">J</span><span class="vl-gpc__day">V</span><span class="vl-gpc__day">S</span>
+    <span class="vl-gpc__day">D</span>
+
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-half"><b></b></i>
+    <i class="vl-gpc__cell is-off"></i><i class="vl-gpc__cell is-off"></i>
+
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-half"><b></b></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-off"></i><i class="vl-gpc__cell is-off"></i>
+
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-off"></i><i class="vl-gpc__cell is-off"></i>
+
+    <i class="vl-gpc__cell is-half"><b></b></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-half"><b></b></i>
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-off"></i><i class="vl-gpc__cell is-off"></i>
+
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-full"></i><i class="vl-gpc__cell is-full"></i>
+    <i class="vl-gpc__cell is-off"></i><i class="vl-gpc__cell is-off"></i>
+  </div>
+
+  <div class="vl-gpc__legend">
+    <span><i class="vl-gpc__sw is-full"></i>journée pleine</span>
+    <span><i class="vl-gpc__sw is-half"><b></b></i>demi-journée</span>
+    <span><i class="vl-gpc__sw"></i>non ouvré</span>
+  </div>
+</div>
+
+<style>
+/* LA TRAME EST LE TON DU PAPIER, PAS UN ORNEMENT — elle vit sur la racine et ne
+   s'éteint jamais. Tenue à ~10 % d'opacité : au-delà elle traverse le texte. */
+.vl-gpc{
+  position:relative;
+  width:704px;                       /* 20 pas de trame exactement */
+  padding:var(--vl-margin) 0;
+  background-color:var(--vl-paper);
+  background-image:
+    linear-gradient(to right,  var(--vl-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--vl-grid) 1px, transparent 1px);
+  background-size:var(--vl-grid-step) var(--vl-grid-step);
+  color:var(--vl-near);
+  font-family:"Hanken Grotesk",Inter,system-ui,sans-serif;
+}
+
+.vl-gpc__head{
+  font-family:"DM Mono",ui-monospace,monospace;
+  font-size:22px;letter-spacing:.06em;line-height:1;
+  color:var(--vl-ink);
+  text-align:center;
+  margin-bottom:26px;
+}
+
+/* LE PAS DES CASES EST UN MULTIPLE ENTIER DU PAS DE LA TRAME (×2), et la marge
+   qui centre la grille en est un autre (×3) : les cases sont DÉCOUPÉES dans le
+   papier, elles n'y sont pas posées. C'est tout le geste du système. */
+.vl-gpc__grid{
+  display:grid;
+  grid-template-columns:repeat(7,calc(var(--vl-cell-pitch) - var(--vl-cell-gap)));
+  gap:var(--vl-cell-gap);
+  margin:0 calc(var(--vl-grid-step) * 3);
+}
+
+.vl-gpc__day{
+  font-family:"DM Mono",ui-monospace,monospace;
+  font-size:22px;line-height:1;color:var(--vl-ink);opacity:.6;
+  text-align:center;padding-bottom:10px;
+}
+
+/* TROIS ÉTATS, UNE SEULE ENCRE — c'est la FORME qui encode la catégorie.
+   Sur une charte à deux couleurs, un verdict à trois états n'a pas d'autre issue,
+   et il se lit aussi bien qu'un feu tricolore sans en emprunter la palette. */
+.vl-gpc__cell,
+.vl-gpc__sw{
+  display:block;aspect-ratio:1;
+  box-shadow:inset 0 0 0 var(--vl-rule) var(--vl-ink-faint);
+  background:transparent;
+}
+.vl-gpc__cell.is-full,
+.vl-gpc__sw.is-full{background:var(--vl-ink);box-shadow:none}
+.vl-gpc__cell.is-off{background:var(--vl-paper-2)}
+
+/* la demi-case est un ENFANT à 50 % de haut, pas un dégradé : une hauteur se
+   mesure, un point d'arrêt de dégradé non — et un pattern qui ne se mesure pas
+   n'est qu'une capture d'écran avec des mots autour. */
+.vl-gpc__cell.is-half,
+.vl-gpc__sw.is-half{position:relative}
+.vl-gpc__cell.is-half > b,
+.vl-gpc__sw.is-half > b{
+  position:absolute;inset:0 0 auto 0;height:50%;
+  background:var(--vl-ink);display:block;
+}
+
+.vl-gpc__legend{
+  display:flex;flex-wrap:wrap;gap:14px 32px;
+  margin:30px calc(var(--vl-grid-step) * 3) 0;
+  font-family:"DM Mono",ui-monospace,monospace;
+  font-size:22px;line-height:1.42;color:var(--vl-ink);
+}
+.vl-gpc__legend span{display:flex;align-items:center;gap:12px}
+.vl-gpc__sw{width:24px;height:24px;flex:none}
+</style>
+
+<div class="vl-utb" data-unit="3000" data-scale-h="400" data-scale-v="84000">
+  <div class="vl-utb__plot">
+    <div class="vl-utb__col">
+      <div class="vl-utb__value">84 000 €</div>
+      <div class="vl-utb__bar" data-value="84000" style="height:400px"></div>
+    </div>
+    <div class="vl-utb__col">
+      <div class="vl-utb__value">45 000 €</div>
+      <div class="vl-utb__bar" data-value="45000" style="height:214.3px"></div>
+    </div>
+    <div class="vl-utb__col">
+      <div class="vl-utb__value">12 000 €</div>
+      <div class="vl-utb__bar is-muted" data-value="12000" style="height:57.1px"></div>
+    </div>
+  </div>
+
+  <div class="vl-utb__foot">
+    <div class="vl-utb__label">option A</div>
+    <div class="vl-utb__label">option B</div>
+    <div class="vl-utb__label">northbeam</div>
+  </div>
+
+  <div class="vl-utb__unit">une case = 3 000 € · hauteur exactement proportionnelle</div>
+</div>
+
+<style>
+/* LA HAUTEUR PORTE LA VALEUR, LA TEXTURE PORTE L'UNITÉ — jamais l'inverse.
+   La barre est mise à l'échelle par sa hauteur ; la texture, elle, est un
+   PEIGNE de période constante qui dit ce que vaut un cran. Compter les crans
+   doit redonner la valeur, mais personne n'a à le faire : le montant est écrit
+   au-dessus. C'est ce qui sépare ce pattern d'un isotype (où compter EST la
+   lecture) et d'un histogramme nu (où l'unité reste implicite). */
+.vl-utb{
+  --vl-utb-period:14.286px;          /* 3 000 € ramenés à l'échelle 400 px / 84 000 € */
+  width:704px;
+  font-family:"Hanken Grotesk",Inter,system-ui,sans-serif;
+  color:var(--vl-near);
+}
+
+.vl-utb__plot{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:56px;
+  align-items:end;
+  border-bottom:var(--vl-rule) solid var(--vl-ink);
+}
+.vl-utb__col{display:flex;flex-direction:column;justify-content:flex-end}
+
+.vl-utb__value{
+  font-family:Newsreader,Georgia,serif;
+  font-size:47px;line-height:1.12;text-align:center;
+  margin-bottom:14px;
+  color:var(--vl-near);
+}
+
+/* Le peigne est tiré DU BAS : c'est le pied de la barre qui est calé sur la
+   ligne de base, donc c'est de là que les crans doivent partir. Un peigne tiré
+   du haut décale la phase d'une barre à l'autre et les crans cessent de
+   s'aligner horizontalement — le lecteur y voit une erreur avant d'y voir une
+   unité. */
+.vl-utb__bar{
+  width:100%;
+  box-shadow:inset 0 0 0 var(--vl-rule) var(--vl-ink);
+  background:repeating-linear-gradient(
+    to top,
+    var(--vl-ink) 0 calc(var(--vl-utb-period) - 1.8px),
+    var(--vl-paper) calc(var(--vl-utb-period) - 1.8px) var(--vl-utb-period));
+}
+.vl-utb__bar.is-muted{
+  background:repeating-linear-gradient(
+    to top,
+    var(--vl-ink-faint) 0 calc(var(--vl-utb-period) - 1.8px),
+    var(--vl-paper) calc(var(--vl-utb-period) - 1.8px) var(--vl-utb-period));
+}
+
+.vl-utb__foot{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:56px;
+  margin-top:20px;
+}
+.vl-utb__label{
+  font-family:"DM Mono",ui-monospace,monospace;
+  font-size:22px;line-height:1.42;color:var(--vl-ink);
+  text-align:center;white-space:nowrap;
+}
+
+.vl-utb__unit{
+  margin-top:26px;padding-top:18px;
+  border-top:1px solid var(--vl-ink-faint);
+  font-family:"DM Mono",ui-monospace,monospace;
+  font-size:22px;line-height:1.42;letter-spacing:.04em;
+  color:var(--vl-ink);text-transform:uppercase;
+}
+</style>
+
+  </div>
+  <div class="rule rule--b"></div>
+</section>
+
+</body>
+</html>

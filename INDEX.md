@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-24 patterns · 11 références · 17 vérifiés par benchmarks mesurés.
+26 patterns · 12 références · 19 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -39,10 +39,12 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `chart-01-stadium-bars` | Un histogramme réduit à l'essentiel : des barres à sommet en demi-cercle, aucune ligne d'axe, des légendes en pilules. | slide web | — | ref-03-bento-dark-pitch |
 | `chart-02-isotype` | Raconter une proportion en unités comptables (24 pictogrammes sur 40) au lieu d'un pourcentage abstrait. | slide web | — | ref-03-bento-dark-pitch |
 | `chart-03-accent-column-callout` | Donner la forme d'une série en quelques colonnes flottantes sans axe ni graduation, et n'en chiffrer qu'une seule — la courante — par une info-bulle sombre ancrée à sa colonne. | slide web | 11 | ref-13-glass-fintech-dashboard |
+| `chart-04-unit-textured-bar` | Donner à un histogramme une UNITÉ visible sans lui faire porter le comptage : la hauteur de la barre est exactement proportionnelle à la valeur, la texture qui la remplit est un peigne dont la période vaut une unité déclarée, et le montant exact est écrit au-dessus — la texture donne l'échelle, elle ne compte jamais à la place du chiffre. | slide web print | 9 | ref-16-cobalt-graph-paper |
 | `diagram-layer-stack` | Montrer qu'un objet — un produit, une marque, un système logiciel — se décompose en couches ORDONNÉES dont le rang est l'information : des losanges isométriques empilés, d'opacité décroissante, chacun relié par un filet au nom de sa couche et à une ligne d'explication. | slide web | 15 | ref-14-layer-stack-coral |
 | `layout-01-nested-bento` | Structurer une slide dense en trois niveaux (carte → sous-carte → tuile) sans une seule bordure ni ombre, en ne faisant décroître que le rayon et le padding. | slide web | — | ref-03-bento-dark-pitch |
 | `layout-02-swiss-frame` | Poser le cadre d'une slide de deck : une marge unique, deux barres de micro-typo à trois zones et un filet d'un pixel — de quoi rendre une suite de slides reconnaissable sans y ajouter le moindre ornement. | slide web | — | ref-04-swiss-investor-blue |
 | `layout-03-glass-board` | Emboîter les surfaces d'un écran dense en DEUX couches seulement, sans un trait ni une couleur de séparation : un fond en dégradé qui accueille, et des modules de blanc translucide posés dessus, flou d'arrière-plan compris. | slide web | 11 | ref-13-glass-fintech-dashboard |
+| `layout-04-graph-paper-cells` | Faire d'une trame de papier millimétré le TON du fond, puis y poser des objets qui sont des cases de cette trame — pas de la matière posée dessus : le pas de la grille de cellules et la marge qui la centre sont des multiples entiers du pas de la trame, si bien que le contenu paraît découpé dans le papier. | slide web print | 9 | ref-16-cobalt-graph-paper |
 | `list-01-giant-numbers` | Aligner trois à quatre arguments de même rang en colonnes, chacun ouvert par un numéro ou un chiffre démesuré qui sert à la fois de repère de lecture et de seule tache de couleur du bloc. | slide web | — | ref-04-swiss-investor-blue |
 | `list-02-ruled-index` | Lister les sections d'un document en donnant à chacune son libellé, une ligne d'explication et son numéro à droite, séparées par un filet fin qui appartient à l'entrée qu'il suit. | slide web | 9 | ref-06-orange-notched |
 | `list-03-two-column-toc` | Faire tenir un sommaire de dix à quatorze sections sur une seule slide, en deux colonnes numérotées, lisible d'un coup d'œil et refermable aussitôt. | slide web | — | ref-04-swiss-investor-blue |
@@ -163,6 +165,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-surface-glass, --vl-surface-glass-strong, --vl-blue, --vl-blue-light, --vl-surface-dark
 - tags : histogramme, barres, colonnes, accent, info-bulle, tooltip, serie, periode, dashboard, sans-axe, verre
 
+**chart-04-unit-textured-bar** — Barre à unité déclarée
+
+- employer : Sur une comparaison de deux à quatre montants dont l'écart EST le message (coût cumulé, budget, dette), quand le lecteur doit sentir l'ordre de grandeur avant de lire les chiffres. Excellent sur une charte à deux couleurs, où la texture remplace l'aplat plein sans rien coûter en palette.
+- éviter : Au-delà de quatre barres — le peigne devient du bruit moiré ; sur une série temporelle, où l'unité de l'axe suffit ; ou quand la plus petite valeur descend sous deux périodes, la texture disparaissant alors dans un trait plein qui MENT sur l'échelle (un benchmark le refuse).
+- à remplir : [object Object], [object Object], [object Object]
+- variables : --vl-utb-period, --vl-ink, --vl-ink-faint, --vl-paper, --vl-near, --vl-rule
+- tags : histogramme, barres, unité, échelle, texture, peigne, coût, comparaison, cumulé, isotype, deux couleurs, monochrome
+
 ### diagram
 
 **diagram-layer-stack** — Pile de couches isométriques légendées
@@ -198,6 +208,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - à remplir : modules, sub
 - variables : --vl-grad-1, --vl-grad-3, --vl-surface-glass, --vl-surface-glass-strong, --vl-sheen, --vl-blur, --vl-margin
 - tags : ecran, verre, glassmorphism, depoli, flou, backdrop, degrade, deux-couches, dashboard, translucide, profondeur
+
+**layout-04-graph-paper-cells** — Papier millimétré et ses cases
+
+- employer : Quand le sujet se compte en unités discrètes — demi-journées, sièges, jours, tickets, sites — et qu'on veut que le fond le dise avant le texte. Aussi comme socle de deck : la trame reste sur toutes les slides et fait la reconnaissance d'une slide à l'autre sans qu'aucun ornement ne soit ajouté.
+- éviter : Quand le sujet est continu (une courbe, un flux, une durée), quand la charte a déjà un motif — deux trames se battent et aucune ne gagne — ou dès que du texte de lecture devrait passer PAR-DESSUS la trame à plus de ~14 % d'opacité : le fond ne réduit jamais la lisibilité du premier plan, c'est la seule loi que ce pattern peut faire tomber.
+- à remplir : [object Object], [object Object], [object Object]
+- variables : --vl-grid, --vl-grid-step, --vl-cell-pitch, --vl-cell-gap, --vl-paper, --vl-paper-2, --vl-ink, --vl-ink-faint, --vl-near, --vl-rule, --vl-margin
+- tags : papier millimétré, graph paper, trame, grille, fond, calendrier, demi-journée, case, cellule, isotype, deux couleurs, monochrome, verdict, trois états
 
 ### list
 
@@ -280,5 +298,6 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-13-glass-fintech-dashboard` | Dashboard en verre dépoli — lavande & bleu | `card-08-orb-chain-total`, `card-09-gradient-metric-curve`, `chart-03-accent-column-callout`, `layout-03-glass-board`, `list-04-due-rows` | `decks/ref-13-glass-fintech-dashboard.html` |
 | `ref-14-layer-stack-coral` | Schéma de couches — corail sur blanc cassé | `diagram-layer-stack` | `decks/ref-14-layer-stack-coral.html` |
 | `ref-15-lilac-notched-kpi` | Lavande SaaS à vignettes chanfreinées | `card-10-kpi-notch-tile` | `decks/ref-15-lilac-notched-kpi.html` |
+| `ref-16-cobalt-graph-paper` | Papier millimétré cobalt | `chart-04-unit-textured-bar`, `layout-04-graph-paper-cells` | `decks/ref-16-cobalt-graph-paper.html` |
 
 Ce que chaque référence fait, sa palette et sa typo : [SPEC-SOURCES.md](SPEC-SOURCES.md).

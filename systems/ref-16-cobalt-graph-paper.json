@@ -1,0 +1,29 @@
+{
+  "name": "Papier millimétré cobalt",
+  "notes": "DEUX COULEURS, ET LA GRILLE EST LA TROISIÈME. Un papier crème, une encre cobalt, et une trame de papier millimétré qui vit en permanence derrière la slide — pas un ornement de fond, mais le TON du papier. La contrainte à deux couleurs est ce qui donne sa force au système : puisqu'aucune troisième teinte n'est disponible pour encoder une catégorie, c'est la FORME de l'objet qui l'encode — case pleine, case à moitié, case vide. Un verdict à trois états se lit donc sans jamais recourir à un vert, un orange et un rouge.\n\nCE QUI FAIT LA COMPOSITION, ET QU'AUCUNE COPIE DE COULEURS NE DONNE : les objets posés sur la slide sont des CASES DE LA TRAME. Le pas de toute grille de cellules est un multiple entier de la période de la trame, et la marge qui centre cette grille en est un autre — si bien qu'un calendrier, un histogramme ou une matrice de verdicts semblent découpés dans le papier plutôt que posés dessus. C'est la seule idée à retenir du système ; tout le reste en découle.\n\nLA TRAME DOIT RECULER. Elle est tenue entre 6 et 14 % d'opacité : en dessous elle disparaît et le papier redevient un aplat, au-dessus elle traverse le texte et la loi non négociable de la maison tombe (« le fond ne réduit jamais la lisibilité du premier plan »). Le benchmark de contraste de layout-04 mesure le texte POSÉ SUR la trame, pas à côté.\n\nENCRE DE LECTURE ≠ ENCRE D'ACCENT. Le cobalt #1F2BE0 mesure 6,9:1 sur le crème : il porte un titre, un filet, un chiffre, une case — mais il fatigue sur un paragraphe. Les corps de lecture prennent #14163A, le même bleu poussé au noir, 14,6:1. Les trois états de case ne sont jamais en jeu côté contraste : ce sont des aplats, pas du texte.\n\nÉCHELLE : les valeurs ci-dessous sont à l'échelle d'une slide 1600×900. Les patterns héritent de CES valeurs — c'est le système qui porte l'échelle, jamais le fragment.\n\nORIGINE : composition maison. La palette et le principe de trame permanente dérivent du modèle `cobalt-grid` du pack `zarazhangrui/frontend-slides` (MIT) ; la composition en cases-de-la-trame, les trois états de case et la barre à unité déclarée sont ajoutés ici et n'existent pas dans la source.",
+  "tokens": {
+    "--vl-paper": "#F0EBDE",
+    "--vl-paper-2": "#E6E0CE",
+    "--vl-ink": "#1F2BE0",
+    "--vl-ink-faint": "rgba(31,43,224,0.20)",
+    "--vl-grid": "rgba(31,43,224,0.10)",
+    "--vl-near": "#14163A",
+    "--vl-grid-step": "35.2px",
+    "--vl-cell-pitch": "70.4px",
+    "--vl-cell-gap": "6px",
+    "--vl-rule": "1.25px",
+    "--vl-margin": "92px"
+  },
+  "type": {
+    "display": "Newsreader, Georgia, \"Times New Roman\", serif",
+    "body": "\"Hanken Grotesk\", Inter, system-ui, sans-serif",
+    "mono": "\"DM Mono\", ui-monospace, SFMono-Regular, Menlo, monospace",
+    "scale": {
+      "title": "123px / 0.96 / 400 / -0.008em",
+      "headline": "57px / 1.1 / 400 / -0.005em",
+      "figure": "47px / 1.12 / 400",
+      "body": "25px / 1.5 / 400",
+      "mono": "22px / 1.42 / 400 / 0.06em"
+    }
+  }
+}
