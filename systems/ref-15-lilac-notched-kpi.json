@@ -1,0 +1,31 @@
+{
+  "name": "Lavande SaaS à vignettes chanfreinées",
+  "notes": "Deux gestes portent la charte, et pas un de plus. PREMIER : le double chanfrein sur la DIAGONALE (haut-droit + bas-gauche, 0,11 × la largeur de vignette), les deux autres coins restant arrondis (0,04) — une silhouette de ticket. À ne pas confondre avec ref-06, dont le chanfrein est UNIQUE et sans rayon : là-bas c'est une signature d'aplat, ici c'est une signature de vignette, et elle se pose aussi bien sur le neutre que sur l'accent. SECOND : le contraste de rangée — trois vignettes de composition identique dont UNE SEULE change de fond. C'est le fond qui hiérarchise ; ni la taille, ni la graisse, ni la place ne bougent. Deux vignettes colorées dans la même rangée détruisent le geste. La note du bas est le seul élément aligné à droite de tout le système : c'est ce décalage, et lui seul, qui la fait lire comme un aparté et non comme la suite du libellé. CONTRASTE : la note relevée sur l'image (#9B96C4 sur blanc) plafonne à 2,79:1, sous le seuil de 4,5 d'un corps de ce rang ; elle est posée à #6E67A0 (5,18:1), un ton plus sombre, écart invisible à l'œil. Même arbitrage que ref-06 sur son encre grise. DÉGRADÉ : --vl-violet-light est à la fois l'arrivée du dégradé ET la couleur de repli déclarée sur la vignette d'accent, délibérément — bin/check.mjs lit background-color et jamais background-image, donc le repli doit être le point le PLUS CLAIR de l'aplat, sinon la mesure de contraste devient optimiste (6,03:1 mesuré sur le départ, contre 3,20:1 réels au coin bas-droite). ÉCHELLE : les ratios de SPEC-SOURCES.md ont été relevés sur un crop de 813 px de large ; ce système est à l'échelle d'une slide 1600×900, vignette de 420 px. Les patterns héritent de CES valeurs — c'est le système qui porte l'échelle, jamais le fragment.",
+  "tokens": {
+    "--vl-bg": "#F4F4FB",
+    "--vl-card": "#FCFBFF",
+    "--vl-white": "#FFFFFF",
+    "--vl-violet": "#6B3FE4",
+    "--vl-violet-light": "#9A7BF0",
+    "--vl-figure": "#4C1FD6",
+    "--vl-ink": "#2E2166",
+    "--vl-ink-muted": "#6E67A0",
+    "--vl-tile": "#EBE7FB",
+    "--vl-tile-invert": "rgba(255,255,255,0.22)",
+    "--vl-on-accent": "#FFFFFF",
+    "--vl-on-accent-muted": "#FFFFFF",
+    "--vl-notch": "46px",
+    "--vl-radius": "17px",
+    "--vl-margin": "120px"
+  },
+  "type": {
+    "display": "Montserrat, Poppins, Inter, \"Helvetica Neue\", Arial, sans-serif",
+    "body": "Montserrat, Poppins, Inter, \"Helvetica Neue\", Arial, sans-serif",
+    "scale": {
+      "figure": "108px / 1 / 800 / -0.03em",
+      "suffix": "46px / 1 / 800 / -0.01em",
+      "label": "34px / 1.25 / 700 / -0.01em",
+      "note": "20px / 1.45 / 500"
+    }
+  }
+}

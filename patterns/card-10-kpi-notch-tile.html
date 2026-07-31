@@ -1,0 +1,84 @@
+<!-- card-10-kpi-notch-tile — vignette de preuve chiffrée, double chanfrein sur la diagonale.
+     Couleurs via --vl-* uniquement. Quatre zones dans un ordre FIXE : tuile d'icône, chiffre +
+     suffixe sur la même ligne de base, libellé collé dessous, note collée en bas À DROITE.
+     La classe de base est la vignette NEUTRE ; `vl-kpi--accent` est la variante d'aplat, et il
+     n'y en a qu'UNE par rangée — c'est le fond qui hiérarchise, rien d'autre ne bouge. -->
+<div class="vl-kpi vl-kpi--accent">
+  <span class="vl-kpi__tile" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+         stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11.9 14.9 9 12a21 21 0 0 1 1.9-3.8A12.6 12.6 0 0 1 21.5 2.4c0 2.7-.8 7.3-5.9 10.8a21 21 0 0 1-3.7 1.7Z"/>
+      <path d="M9 12H4.2s.5-3 2-3.9c1.6-1 4.9 0 4.9 0"/>
+      <path d="M11.9 14.9v4.7s3-.5 3.9-2c1-1.6 0-4.9 0-4.9"/>
+      <path d="M4.6 16.6c-1.5 1.2-2 4.9-2 4.9s3.7-.5 4.9-2c.7-.8.7-2.1-.1-2.8a2.1 2.1 0 0 0-2.8-.1Z"/>
+    </svg>
+  </span>
+  <p class="vl-kpi__figure"><span class="vl-kpi__num">80</span><span class="vl-kpi__suffix">%</span></p>
+  <p class="vl-kpi__label">Faster Reporting</p>
+  <p class="vl-kpi__note">Generate reports<br>instantly with AI</p>
+</div>
+
+<style>
+.vl-kpi {
+  --vl-nc: var(--vl-notch, 46px);
+  --vl-r: var(--vl-radius, 17px);
+  width: 420px; height: 450px;
+  padding: 38px 38px 34px;
+  box-sizing: border-box;
+  display: flex; flex-direction: column;
+  background: var(--vl-card);
+  color: var(--vl-ink);
+  border-radius: var(--vl-r);
+  /* Le double chanfrein est sur la DIAGONALE (haut-droit + bas-gauche) et les deux autres
+     coins gardent leur rayon : c'est cette dissymétrie qui fait la silhouette de ticket.
+     Couper les quatre coins donnerait un octogone — une forme, pas une signature. */
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--vl-nc)) 0,
+    100% var(--vl-nc),
+    100% 100%,
+    var(--vl-nc) 100%,
+    0 calc(100% - var(--vl-nc))
+  );
+  font-family: Montserrat, Poppins, Inter, "Helvetica Neue", Arial, sans-serif;
+}
+/* La vignette d'accent : le dégradé monte du violet plein (coin bas-gauche, celui qui est
+   chanfreiné) vers le lilas clair du coin haut-droit. `background-color` déclare l'extrémité
+   CLAIRE — c'est le point le plus défavorable de la carte, et le seul que la mesure de
+   contraste sait lire ; y poser le violet du départ rendrait la mesure flatteuse. */
+.vl-kpi--accent {
+  background-color: var(--vl-violet-light);
+  background-image: linear-gradient(45deg, var(--vl-violet) 0%, var(--vl-violet) 18%, var(--vl-violet-light) 100%);
+  color: var(--vl-on-accent);
+}
+.vl-kpi__tile {
+  width: 79px; height: 79px; border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--vl-tile); color: var(--vl-violet);
+}
+.vl-kpi--accent .vl-kpi__tile { background: var(--vl-tile-invert); color: var(--vl-on-accent); }
+.vl-kpi__tile svg { width: 38px; height: 38px; }
+/* Le chiffre est ~3,2× le libellé qu'il surplombe, et le suffixe ~0,42× le chiffre : le
+   suffixe reste sur la ligne de base du nombre (`baseline`), il ne passe jamais à la ligne —
+   un `%` orphelin sur sa ligne casse l'unité et la vignette se met à compter deux choses. */
+.vl-kpi__figure {
+  margin: 26px 0 0;
+  display: flex; align-items: baseline; gap: 4px;
+  line-height: 1;
+}
+.vl-kpi__num { font-size: 108px; font-weight: 800; letter-spacing: -0.03em; }
+.vl-kpi__suffix { font-size: 46px; font-weight: 800; letter-spacing: -0.01em; }
+.vl-kpi__label {
+  margin: 12px 0 0;
+  font-size: 34px; line-height: 1.25; font-weight: 700; letter-spacing: -0.01em;
+}
+/* Collée en bas (`margin-top:auto`) ET au fer à DROITE (`align-self`) : c'est le seul élément
+   de la vignette qui n'est pas aligné à gauche, et ce décalage est ce qui la fait lire comme
+   un aparté. Le vide au-dessus est assumé — il sépare la donnée de son commentaire. */
+.vl-kpi__note {
+  margin: auto 0 0; align-self: flex-end; text-align: right;
+  font-size: 20px; line-height: 1.45; font-weight: 500;
+  color: var(--vl-ink-muted);
+}
+.vl-kpi--accent .vl-kpi__note { color: var(--vl-on-accent-muted); }
+</style>

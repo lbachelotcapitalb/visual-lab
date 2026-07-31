@@ -364,6 +364,32 @@ Termine par : node bin/index.mjs, les PNG de chaque pattern, la case cochée ici
 un commit.
 ```
 
+### ✅ Lot 16 — `ref-15` lilac-notched-kpi (31/07/2026)
+Référence apportée hors corpus initial, fournie en **crop horizontal** (≈ 813 × 297) : une bande
+de trois preuves chiffrées d'une landing SaaS, sans le titre de section ni le reste de la page.
+Numérotée `ref-15` et non `ref-14` — le numéro était déjà pris par un lot mené en parallèle dans
+le même dépôt, constaté sur disque avant le commit.
+- ✅ `SPEC-SOURCES.md` § `ref-15`, écrite AVANT le code — l'image collée n'existe pas sur disque.
+- ✅ `systems/ref-15-lilac-notched-kpi.json` — deux gestes seulement : le double chanfrein sur la
+  diagonale (là où `ref-06` n'en coupe qu'UN, sans rayon) et le contraste de rangée (une seule
+  vignette colorée sur trois).
+- ✅ `decks/ref-15-lilac-notched-kpi.html` — une slide **1600×900 (PPT)** portant la bande seule,
+  rendue et comparée à la source pendant qu'elle était encore dans le contexte.
+- ✅ 1 pattern : `card-10-kpi-notch-tile` — 20 benchmarks, tous verts. Créé avec `--force` :
+  `bin/new.mjs` le rapprochait de `card-02-notched-brief` sur le mot « notch », mais celui-ci ne
+  porte aucun chiffre, aucun accent et un chanfrein unique. L'arbitrage est écrit dans les notes
+  du pattern, pas seulement dans un commit.
+- ✅ `fonts/` : **Montserrat variable** (OFL) ajoutée — la première géométrique du dépôt. Inter
+  rendait le `99` trop étroit, Archivo trop mécanique. Registre `fonts/FONTS.md` à jour.
+- ✅ Le piège du lot, consigné : `bin/check.mjs` lit `background-color` et jamais
+  `background-image`. Sur un aplat en dégradé, la couleur de repli doit donc être l'extrémité la
+  plus CLAIRE (3,20:1 mesurés) et non le départ saturé (6,03:1) — sinon la mesure de contraste
+  garde le point le plus flatteur au lieu du plus défavorable.
+- ✅ `node bin/index.mjs` vert (24 patterns, 11 références) une fois le lot parallèle réparé de
+  son côté. `INDEX.md` / `index.json` sont régénérés mais **laissés hors de ce commit** : ils
+  décrivent aussi le pattern du lot parallèle, encore non versionné, et un index qui référence
+  des fichiers absents du dépôt ment plus qu'un index en retard. Ils partent avec l'autre lot.
+
 ## Ce qui reste, en un coup d'œil
 
 Decks à produire : `ref-05` (8 slides) · `ref-09` (12).

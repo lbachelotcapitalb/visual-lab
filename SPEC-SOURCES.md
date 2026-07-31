@@ -620,3 +620,151 @@ benchmark « DEUX couches et pas trois » de `layout-03-glass-board` existe pour
 - `card-09-gradient-metric-curve` — le KPI sur aplat coloré avec sa courbe annotée aux deux bouts.
 - `chart-03-accent-column-callout` — l'histogramme à colonne unique accentuée et info-bulle.
 - `list-04-due-rows` — la liste d'échéances à quatre zones, une ligne surlignée.
+
+## ref-15-lilac-notched-kpi
+
+**Nature** — Bande de preuves chiffrées d'une landing SaaS (« pourquoi nous »), fournie en
+**crop horizontal** (≈ 813 × 297) : on ne voit ni le titre de la section (coupé en haut) ni le
+reste de la page. Trois vignettes de même rang alignées, la troisième — et elle seule — sur
+aplat coloré. C'est la seule référence du corpus dont la source n'est pas une slide entière :
+elle est remise à plat en **une slide 1600 × 900** portant la bande centrée, ce qui est la
+lecture honnête de ce qui est visible, et rien de plus.
+
+**Ce qu'il faut isoler** — la vignette, et le contraste de rangée qui lui donne son sens : deux
+vignettes neutres, une accentuée. Le geste de forme est un **double chanfrein sur la
+diagonale** (haut-droit + bas-gauche), les deux autres coins restant arrondis — une silhouette
+de ticket, distincte du chanfrein UNIQUE de `ref-06` qui, lui, est une signature d'aplat.
+
+**Palette** (relevés `≈`, l'image est un JPEG compressé)
+
+| rôle | valeur |
+|---|---|
+| fond de section (lavande blanchie) | `#F4F4FB` |
+| vignette neutre (blanc à peine teinté) | `#FCFBFF` |
+| accent, départ du dégradé (haut-gauche) | `#6B3FE4` |
+| accent, arrivée du dégradé (bas-droite) | `#9A7BF0` |
+| chiffre sur vignette neutre | `#4C1FD6` |
+| encre du libellé | `#2E2166` |
+| encre de la note | relevé `≈ #9B96C4`, **posé à `#6E67A0`** |
+| tuile d'icône, neutre | `#EBE7FB` |
+| tuile d'icône, sur accent | blanc à ≈ 22 % |
+
+La note relevée à `#9B96C4` sur blanc plafonne à **2,79:1** — sous le seuil de 4,5 exigé d'un
+corps de ce rang. Elle est posée un ton plus sombre (`#6E67A0`, **5,18:1**), écart invisible à
+l'œil. Même arbitrage que `ref-06` sur son encre grise : on ne recopie pas une faute de
+contraste au nom de la fidélité.
+
+**Typo** — grotesk géométrique à `g` simple (Poppins / Montserrat), graisses 500/700/800.
+Échelle exprimée en **fraction de la largeur de vignette** (`Wc`), pas en px :
+
+| rang | ratio | ce que ça porte |
+|---|---|---|
+| chiffre | `0.26 Wc` | `99` |
+| suffixe | `0.42 ×` le chiffre | `%`, calé sur la même ligne de base |
+| libellé | `0.082 Wc` | `Data Accuracy` |
+| note | `0.047 Wc` | le commentaire de deux lignes, en bas à droite |
+
+**Géométrie de la vignette** — ratio `Wc / Hc ≈ 0.93` (presque carrée, un rien plus haute).
+Gouttière de rangée `= 0.102 Wc`. Chanfrein `= 0.11 Wc` sur les coins **haut-droit et
+bas-gauche** ; rayon `= 0.04 Wc` sur les deux autres. Marge intérieure `= 0.09 Wc`.
+Tuile d'icône carrée `= 0.188 Wc`, rayon `0.048 Wc`, glyphe en trait de `0.005 Wc`.
+
+**Quatre zones dans un ordre fixe**, du haut vers le bas :
+1. la tuile d'icône, seule sur sa ligne, calée en haut-gauche ;
+2. le chiffre et son suffixe, sur la même ligne de base — le suffixe ne descend jamais à la
+   ligne, sinon le chiffre perd son unité ;
+3. le libellé, collé sous le chiffre (interligne serré : c'est UN bloc, pas deux) ;
+4. la note, **collée en bas ET alignée à droite** — c'est le seul élément de la vignette qui
+   n'est pas au fer à gauche, et c'est ce décalage qui la fait lire comme un aparté.
+
+Le vide entre le libellé et la note (≈ 12 % de la hauteur) est assumé, comme dans
+`card-03-stat-accent` : il sépare la donnée de son commentaire.
+
+**Ce que cette référence apporte au corpus** — le **contraste de rangée** : trois vignettes de
+même composition dont une seule change de fond, ce qui hiérarchise sans changer une taille ni
+un mot. Et une deuxième grammaire de chanfrein (deux coins sur la diagonale, avec rayon sur les
+autres), là où `ref-06` n'en connaissait qu'une (un coin, aucun rayon).
+
+**Le piège du lot** — le dégradé rend la mesure de contraste optimiste : `bin/check.mjs` lit
+`background-color`, jamais `background-image`. La couleur de repli déclarée est donc l'extrémité
+**CLAIRE** du dégradé (`#9A7BF0`), pas la sombre : c'est le point le plus défavorable de la
+carte, et c'est celui-là que le benchmark doit garder. Poser le repli à la couleur de départ
+aurait mesuré 6,03:1 là où le coin bas-droite ne vaut que 3,20:1.
+
+**Patterns extraits**
+- `card-10-kpi-notch-tile` — la vignette elle-même, ses quatre zones et son double chanfrein.
+
+---
+
+## ref-14-layer-stack-coral
+
+**Nature** — Visuel unique (planche de marque, ≈ 16:9), pas un deck : une **pile de plans
+isométriques** à gauche, une colonne de trois libellés à droite, chacun relié à la pile par un
+filet horizontal. Aucun cadre, aucune carte, aucune ombre — le fond est nu.
+
+**Intention** — Dire qu'un objet se décompose en **couches empilées et ordonnées**, où le rang
+compte : la couche du dessus est celle qu'on voit / qu'on touche, les suivantes la portent. La
+sémantique n'est pas dans la couleur (une seule teinte) mais dans **l'opacité décroissante** —
+plus on descend, plus la couche s'efface, exactement comme une fondation dont on ne parle pas.
+
+**Palette** — une seule teinte, déclinée par transparence sur le fond.
+- fond `#F1EFEC` (blanc cassé chaud)
+- corail `#E4886A` — la SEULE couleur du visuel
+- couche 1 (dessus) : corail à `1.00` → rendu `#E4886A`
+- couche 2 : corail à `≈ 0.44` → rendu observé `≈ #F0BCA9`
+- couche 3 : corail à `≈ 0.18` → rendu observé `≈ #F9DDD3`
+- encre de titre `#3A3835`, corps `#6E6863`, filet `#97918C`
+
+Le rapport d'une opacité à la suivante est **constant** (`≈ 0.42 ×`) : c'est une progression
+géométrique, pas une soustraction régulière. C'est ce qui fait que la troisième couche est
+presque un fantôme sans que la deuxième paraisse déjà pâle. Le recouvrement de deux couches
+translucides **s'additionne** naturellement (`α₂ + α₃(1−α₂)`) : la zone commune est plus dense
+que chacune — c'est le seul dégradé du visuel, et il est calculé par le compositeur, pas dessiné.
+
+**Géométrie** (relevés sur l'image d'origine ≈ 888 × 494, convertis pour une slide 1600 × 900,
+facteur `1.80` — les valeurs marquées `≈` sont estimées à l'œil)
+
+| grandeur | valeur 1600 × 900 | en ratio |
+|---|---|---|
+| largeur d'un plan `Wp` | `508` | `0.318 Ws` |
+| hauteur d'un plan `Hp` | `270` | `0.531 Wp` |
+| pas vertical entre deux plans | `≈ 154` | `≈ 0.57 Hp` |
+| hauteur totale de la pile (3 plans) | `≈ 578` | `Hp × (1 + 2 × 0.57)` |
+| bord gauche de la pile | `177` | `0.111 Ws` |
+| début des filets (x commun) | `510` | `0.319 Ws` |
+| fin des filets = début des libellés | `766 / 805` | `0.479 / 0.503 Ws` |
+| largeur de la colonne de libellés | `≈ 649` | `0.406 Ws` |
+
+Un plan est un **losange** — un carré vu en projection isométrique, donc deux fois plus large
+que haut à un cheveu près (`Hp/Wp = 0.53`, l'isométrie pure donnant `0.577`). Le pas à `0.57 Hp`
+est le chiffre qui porte tout le visuel : au-dessus de `0.5 Hp`, le **centre** d'une couche
+échappe au plan qui la surplombe — c'est ce qui laisse le filet en sortir. En dessous, les plans
+se noient les uns dans les autres et la pile devient une tache.
+
+**Les filets** partent tous du **même x**, situé au centre horizontal de la pile, et sont tracés
+**sous** les plans : ils n'apparaissent qu'en sortant du losange, si bien que leur longueur
+visible est dictée par la forme et non par une valeur posée à la main.
+
+**La colonne de libellés** — trois blocs `titre + corps`, coulant les uns sous les autres avec un
+écart constant (`≈ 0.046 Ws`), pas sur un pas fixe : le bloc du milieu a deux lignes de corps, le
+premier une seule, et le visuel l'assume. La conséquence est que **les filets dérivent** par
+rapport aux plans (le premier passe au-dessus du centre de son plan, le dernier en dessous) :
+c'est l'ORDRE qui porte la correspondance, pas l'alignement. Colonne et pile occupent la même
+bande verticale, centres à `≈ 3 %` près.
+
+**Typo** — un grotesk clair, tout en capitales, sur deux niveaux seulement.
+- titre : `≈ 34 px` (1600), graisse `300`, `letter-spacing: 0.13em`, encre `#3A3835`
+- corps : `≈ 21 px`, graisse `400`, `letter-spacing: 0.05em`, `line-height: 1.75`, `#6E6863`
+Aucun chiffre, aucune puce, aucune icône : le titre EST le repère de rang.
+
+**Ce que cette référence apporte au corpus** — le premier **schéma** (au sens propre : une figure
+qui explique une structure, pas une donnée) et la première fois que la **profondeur** est encodée
+sans ombre, sans perspective et sans seconde couleur — seulement par l'opacité et par l'ordre
+d'empilement. C'est aussi le premier visuel du corpus dont le sujet est un objet abstrait
+(une marque, un produit, un logiciel) plutôt qu'un contenu.
+
+**Patterns extraits**
+- `diagram-layer-stack` — la pile de plans isométriques, ses filets de rappel et sa colonne de
+  libellés. Le pattern **verrouille le filet sur le centre de SA couche**, là où la référence le
+  laisse dériver : dans un schéma technique (front / service / données), « c'est le troisième
+  donc c'est celui du bas » n'est pas une correspondance, c'est un pari.
