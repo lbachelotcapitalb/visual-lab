@@ -101,32 +101,70 @@ rendrait du gris en silence serait pire qu'une erreur.
 ## VERSER — reverse-engineering d'un visuel apporté par Léo
 
 Léo colle une image (une slide, une planche de campagne, un hero, une carte). On en tire du code
-réutilisable. **L'ordre compte, et le premier point est celui qui coûte le plus cher quand on
-l'oublie.**
+réutilisable. **L'ordre compte, et les deux premiers points sont ceux qui coûtent le plus cher
+quand on les saute.**
 
-### 1. Écrire la spec AVANT de coder — l'image ne survit pas à la session
+### 1. Isoler la vraie slide — l'image la noie presque toujours
+
+Une image apportée contient rarement une slide et rien d'autre : plusieurs slides sur une même
+planche, une slide posée **en petit dans un board plus grand**, une maquette photographiée en
+perspective, des cartes coupées par le bord du cadre, un fond de présentation. **On reproduit la
+slide, pas l'image.** Ce qui n'est là que pour présenter — fond de planche, ombre de maquette,
+perspective, éléments amputés — ne se reconstruit pas ; on le note dans la spec pour mémoire.
+
+**Compter les couches, et savoir en retirer.** Un écran en compte **trois au grand maximum**
+(fond → panneau → module). La règle qui tranche :
+
+> Quand deux couches **encadrent la même chose** — l'une contient l'autre avec une marge et rien
+> d'autre — il n'y en a qu'**UNE**, et c'est **celle du dessus** qu'on garde.
+
+Deux fautes payées sur `ref-13` : une planche intermédiaire qui n'encadrait que les quatre
+modules, et la marge de page du deck (un fond de « table » contrasté). Chacune divisait l'écart
+de blanc entre les couches et écrasait la profondeur — et **aucun alignement ne casse** quand on
+en empile une de trop, donc rien ne le signale.
+
+Corollaire, pendant toute la phase de fidélité : **n'ajoute AUCUN élément absent de la source.**
+Deux halos flous inventés « pour donner de la matière au verre » ont coûté une reprise complète.
+Si tu crois qu'il en faut un, tu le signales à Léo — tu ne le glisses pas.
+
+### 2. Écrire la spec AVANT de coder — l'image ne survit pas à la session
 
 L'image collée dans une conversation **n'existe pas sur disque** et personne ne pourra la
 retrouver. Si la session est nettoyée avant que le pattern soit fini, tout est perdu. Donc :
 d'abord une section dans `SPEC-SOURCES.md` (id `ref-NN-<slug>`, palette relevée en hex, typo,
-géométrie, ce que fait chaque zone), et c'est ELLE qui remplace l'image pour toute la suite. Les
-lots déjà faits sont le gabarit à copier.
+géométrie, ce que fait chaque zone, **et ce qui a été écarté au point 1**), et c'est ELLE qui
+remplace l'image pour toute la suite. Les lots déjà faits sont le gabarit à copier.
+
+**Les ratios s'ancrent sur la LARGEUR DE SLIDE, jamais sur un objet interne.** Sur `ref-13` ils
+étaient exprimés en fraction de « largeur de planche » : la planche a disparu à la correction, et
+les cinq patterns ont dû être réécrits. La largeur de slide est le seul invariant qui survit à
+une refonte de composition.
 
 Si la spec paraît plus mince que l'image, le seul recours est que Léo recolle l'image : personne
 ne peut la deviner.
 
-### 2. Reconstituer d'abord, généraliser ensuite
+### 3. Reconstituer d'abord, généraliser ensuite — et TOUJOURS au format PPT
 
-**Fidélité d'abord.** On reconstruit la référence complète au plus près de la spec — pour un deck,
-une `<section class="slide">` par slide à sa taille réelle, autant de slides que la spec en
-annonce — PUIS on en extrait les patterns. Jamais l'inverse : un pattern inventé avant d'avoir vu
-le rendu entier est toujours faux, parce qu'on ne sait pas encore ce qui est une signature du
+**La finalité du dépôt, ce sont des slides PowerPoint.** Un deck se livre donc toujours en
+dimensions PPT :
+
+```css
+.slide { width: 1600px; height: 900px; }   /* 16:9 — non négociable */
+```
+
+Une `<section class="slide">` par slide, autant de slides que la spec en annonce. **Le cadrage de
+la source ne dicte rien** : un crop portrait, une photo inclinée, une bande horizontale se
+remettent à plat DANS ce format. Et pas de « table » sous la slide (marge de page contrastée) :
+c'est une couche de plus au sens du point 1.
+
+**Fidélité d'abord**, ensuite seulement l'extraction : un pattern inventé avant d'avoir vu le
+rendu entier est toujours faux, parce qu'on ne sait pas encore ce qui est une signature du
 système et ce qui est un accident de cette slide-là.
 
 Les tokens de la référence vont dans `systems/<ref>.json` : c'est le SYSTÈME qui porte l'échelle
 et la palette, jamais le fragment.
 
-### 3. Créer le pattern — et laisser l'outil refuser les doublons
+### 4. Créer le pattern — solidaire de son deck, et sans doublon
 
 ```bash
 node bin/new.mjs card stat-accent --ref ref-06-orange-notched
@@ -139,10 +177,15 @@ se garde s'il porte une **composition** ou une **géométrie mesurée** ; pas s'
 propre phrase de description. Quand c'est une variante, on enrichit l'existant (tokens, slots)
 plutôt que d'en créer un second.
 
+**`geometry.frame` est la dimension RÉELLE du module sur la slide 1600×900** — pas une taille
+choisie pour que la vignette soit jolie isolée. Conséquence directe : **si le deck change de
+format, les extractions sont fausses. On les refait, on ne les rafistole pas.** (`ref-13` : cinq
+patterns repris intégralement après le passage en PPT.)
+
 Le champ `media` déclare où le pattern est censé servir — c'est une intention de routage, que
 `bin/emit.mjs` confronte ensuite à la réalité de la cible.
 
-### 4. La boucle de contrôle, sans en sauter une
+### 5. La boucle de contrôle, sans en sauter une
 
 ```bash
 node bin/index.mjs                        # refuse d'indexer un pattern hors contrat
@@ -155,15 +198,39 @@ rejouable. Un pattern sans assertion mesurable est une capture d'écran avec des
 Écris-les en **ratios** de la racine (`geometry.root`), jamais en pixels : un ratio survit au
 changement d'échelle, un pixel non.
 
-Et l'inverse est vrai aussi — les chiffres ne disent pas si c'est fidèle. **Compare le rendu à
-l'image source pendant qu'elle est encore dans le contexte**, c'est le seul moment où c'est
-possible.
+**Mais un benchmark ne mesure que l'INTÉRIEUR d'un pattern — jamais la composition d'ensemble.**
+Sur `ref-13`, 55 assertions étaient vertes sur un écran qui portait une couche de trop. La
+fidélité se juge en **comparant le rendu à l'image source pendant qu'elle est encore dans le
+contexte** : c'est le seul moment où c'est possible, et la mesure ne le remplace pas. Quand un
+défaut a échappé au harnais, il devient une assertion (`« DEUX couches et pas trois »` de
+`layout-03-glass-board` est née comme ça).
 
-### 5. Clore
+**Amender l'outil fait partie du lot.** Une référence qui casse un détecteur corrige le
+détecteur, dans le MÊME commit — `ref-13` a obligé `bin/check.mjs` à compositer les couches
+translucides pour établir un fond effectif, faute de quoi tout système en verre sortait illisible
+à tort.
 
-`node bin/index.mjs`, la planche-contact régénérée si la sélection a bougé, la case cochée dans
-`ROADMAP.md`, un commit. Charge `verify` : la preuve (le PNG regardé, la sortie de `check`) est le
-livrable que Léo review — il ne reteste pas derrière.
+### 6. Clore — le livrable est du HTML et du JSON
+
+**Ce que la bibliothèque porte : `patterns/*.html`, `patterns/*.json`, `systems/*.json`,
+`decks/*.html`. Rien d'autre.** Les PNG servent PENDANT le reverse (regarder, comparer à la
+source, arbitrer) — après coup on les supprime pour ne pas les accumuler ; `proofs/` est un
+dérivé jetable, déjà gitignoré. Rendre hors dépôt quand c'est possible.
+
+`node bin/index.mjs` · `INDEX.md`/`index.json` régénérés · la case cochée dans `ROADMAP.md` · la
+doc touchée à jour dans le MÊME commit · **autocommit sans demander**.
+
+**Le commit nomme les chemins du lot — jamais `git add -A`.** Le dépôt est partagé : une autre
+session peut travailler sur `ref-NN+1` en parallèle (vécu le 31/07), et un `-A` emporte son
+travail en cours dans ton commit.
+
+```bash
+git add SPEC-SOURCES.md ROADMAP.md systems/ref-NN-<slug>.json decks/ref-NN-<slug>.html \
+        patterns/<id>.json patterns/<id>.html INDEX.md index.json
+```
+
+Charge `verify` : la preuve (le rendu regardé, la sortie de `check`) est le livrable que Léo
+review — il ne reteste pas derrière.
 
 ---
 
@@ -200,6 +267,8 @@ livrable que Léo review — il ne reteste pas derrière.
 
 ## Définition de « terminé »
 
-`bin/index.mjs` passe · `bin/check.mjs` est vert sur le pattern touché · son PNG a été **regardé**
-(et comparé à la source, pour un versement) · `INDEX.md`/`index.json` sont régénérés et commités ·
-la doc touchée par le changement est à jour dans le MÊME commit.
+`bin/index.mjs` passe · `bin/check.mjs` est vert sur le pattern touché · son rendu a été
+**regardé** (et comparé à la source, pour un versement) · le deck est aux **dimensions PPT
+1600×900** · le nombre de couches du rendu est celui de la source · `INDEX.md`/`index.json` sont
+régénérés · la doc touchée est à jour dans le MÊME commit · les PNG de travail sont supprimés ·
+le commit nomme ses chemins et part **sans demander**.
