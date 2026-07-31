@@ -169,8 +169,9 @@ ne peut la deviner.
 
 ### 3. Reconstituer d'abord, généraliser ensuite — et TOUJOURS au format PPT
 
-**La finalité du dépôt, ce sont des slides PowerPoint.** Un deck se livre donc toujours en
-dimensions PPT — et ce n'est pas à écrire à la main, l'outil pose le squelette exact :
+**visual-lab héberge des visuels de plusieurs dimensions** (slides, heros web, vignettes
+social). Mais **une référence qui est une SLIDE se livre toujours en dimensions PPT** — c'est
+la finalité, et ce n'est pas à écrire à la main, l'outil pose le squelette exact :
 
 ```bash
 node bin/new-ref.mjs ref-NN-<slug> "Nom lisible de la charte"
@@ -180,7 +181,20 @@ Il crée la section de spec (rubriques obligatoires pré-remplies), `systems/<re
 `decks/<ref>.html` avec :
 
 ```css
-.slide { width: 1600px; height: 900px; }   /* 16:9 — non négociable */
+.slide { width: 1600px; height: 900px; }   /* 16:9 — non négociable pour une slide */
+```
+
+1600 px de large parce que c'est la largeur que `kit/vl_pptx.py` suppose pour convertir un
+fragment en .pptx. `deck-builder`, lui, compose sur 1920×1080 : **ce n'est pas une
+contradiction** — deux producteurs, deux scènes, et seuls les RATIOS voyagent de l'un à
+l'autre (cf. `README.md`, « les pixels ne voyagent pas, les rapports oui »). Ne rouvre pas ce
+faux débat.
+
+Une référence qui **n'est pas** une slide déclare sa scène en clair dans son deck, sinon le
+lint la refuse — l'exemption est visible dans le fichier qu'elle exempte :
+
+```html
+<!-- vl:stage web — hero de page, le format PPT n'a pas de sens ici -->
 ```
 
 Une `<section class="slide">` par slide, autant de slides que la spec en annonce. **Le cadrage de

@@ -10,7 +10,10 @@ import { join, basename } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { ROOT, DIRS, CHROME } from './lib.mjs';
 
-const STAGE = [1600, 900];   // format PPT 16:9 — même constante que bin/new-ref.mjs
+// La scène d'une SLIDE dans visual-lab : 16:9, et 1600 px de large parce que c'est la largeur
+// que `kit/vl_pptx.py` suppose pour convertir un fragment en .pptx. deck-builder, lui, compose
+// sur 1920×1080 : ce n'est pas une contradiction, seuls les RATIOS voyagent entre les deux.
+const STAGE = [1600, 900];   // même constante que bin/new-ref.mjs
 const MAX_DEPTH = 3;         // fond → panneau → module, et pas un de plus
 
 const wanted = process.argv.slice(2).filter((a) => !a.startsWith('--'));
@@ -55,10 +58,13 @@ const PROBE = `(() => {
   return out;
 })()`;
 
-// Échappatoire assumée : une référence qui n'est PAS une slide (hero web, bandeau de landing)
-// n'a pas à tenir le 16:9. Elle le déclare en clair dans son deck, avec sa raison — un lint
-// toujours rouge est un lint qu'on finit par ignorer, mais une exemption muette est pire.
-const FREE = /<!--\s*vl:stage\s+libre\s*—\s*([^>]*?)-->/;
+// visual-lab héberge des visuels de PLUSIEURS dimensions ; seule une référence qui est une
+// SLIDE doit tenir le format PPT. Une référence d'un autre média (hero web, vignette social,
+// affiche) déclare sa scène EN CLAIR dans son deck, avec sa raison :
+//     <!-- vl:stage web — hero de page, le 16:9 n'a pas de sens ici -->
+// Absent = slide, donc format PPT exigé. Un lint toujours rouge finit par être ignoré, mais
+// une exemption muette est pire : la déclaration est visible dans le fichier qu'elle exempte.
+const STAGE_DECL = /<!--\s*vl:stage\s+(slide|web|social|print)\s*(?:—\s*([^>]*?))?-->/;
 
 function probe(src) {
   const tmp = join(ROOT, `.deckprobe-${process.pid}.html`);
@@ -79,10 +85,11 @@ function probe(src) {
 let fail = 0;
 for (const f of decks) {
   console.log(`\n${basename(f, '.html')}`);
-  const free = (readFileSync(join(DIRS.decks, f), 'utf8').match(FREE) || [])[1];
+  const decl = readFileSync(join(DIRS.decks, f), 'utf8').match(STAGE_DECL);
+  const free = decl && decl[1] !== 'slide' ? `${decl[1]} — ${(decl[2] || 'scène propre à ce média').trim()}` : null;
   for (const s of probe(join(DIRS.decks, f))) {
     const t = (ok, msg) => { console.log(`  ${ok ? '✓' : '✗'} slide ${s.n + 1} · ${msg}`); if (!ok) fail++; };
-    if (free) console.log(`  ~ slide ${s.n + 1} · format libre assumé (${s.w}×${s.h}) — ${free.trim()}`);
+    if (free) console.log(`  ~ vue ${s.n + 1} · média déclaré : ${free}  (${s.w}×${s.h})`);
     else {
       t(s.w === STAGE[0] && s.h === STAGE[1], `format PPT ${STAGE[0]}×${STAGE[1]} (mesuré ${s.w}×${s.h})`);
       t(Math.abs(s.w / s.h - 16 / 9) < 0.01, 'ratio 16:9');

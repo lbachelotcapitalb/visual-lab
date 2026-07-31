@@ -91,8 +91,10 @@ l'histoire.
 
 ## 7. Plancher de lisibilité — et un plancher n'est pas une cible
 
-Chaque média exprime le plancher dans son unité (14 pt côté .pptx = 28 px sur une scène 1920 —
-1 pt = 2 px exactement). Ce qui est transverse, c'est la conséquence : **un corps qui franchit
+Chaque média exprime le plancher dans son unité (14 pt côté .pptx = 28 px sur la scène 1920 de
+`deck-builder` — 1 pt = 2 px exactement ; sur la scène 1600 de visual-lab, le même plancher vaut
+23 px). **Le nombre absolu appartient à la scène du producteur, pas à la doctrine** : ce qui est
+commun, c'est le plancher en points. Ce qui est transverse, c'est la conséquence : **un corps qui franchit
 tout juste le plancher n'est pas lisible pour autant**, parce que l'œil le compare à son voisin,
 pas à un tableau. Une légende autonome — sous un grand chiffre, sur une couverture — appartient
 à l'échelle d'affichage, pas à celle du corps.

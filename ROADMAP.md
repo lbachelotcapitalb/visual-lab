@@ -329,9 +329,15 @@ sur 2 decks**, tous antérieurs à la règle « un deck se livre au format PPT 1
 | `ref-03-bento-dark-pitch` | 4 slides en 1120×410 | rééchelonner les 4 slides ; `chart-01`, `chart-02` et `layout-01` en héritent, leurs `geometry.frame` sont donc à refaire |
 | `ref-11-finance-dashboard-mint` | 1160×900, marge de page, profondeur 4 | rééchelonner ; `card-04` à `card-07` en héritent |
 
-`ref-08-swiss-studio-hero` **n'est pas une dette** : c'est un hero de page web, il déclare son
-format libre en clair dans son deck (`<!-- vl:stage libre — … -->`) et le lint le range en `~`.
-Une exemption muette aurait été pire qu'un lint rouge.
+`ref-08-swiss-studio-hero` **n'est pas une dette** : visual-lab héberge des visuels de plusieurs
+dimensions, et seule une référence qui EST une slide doit tenir le format PPT. ref-08 est un hero
+de page web ; il déclare son média en clair dans son deck (`<!-- vl:stage web — … -->`) et le lint
+le range en `~`. Une exemption muette aurait été pire qu'un lint rouge.
+
+Et pour couper court au faux débat qui a déjà été rouvert une fois : **la scène 1600×900 de
+visual-lab et la scène 1920×1080 de `deck-builder` ne se contredisent pas.** 1600 est la largeur
+que `kit/vl_pptx.py` suppose pour convertir un fragment en .pptx ; 1920 est celle sur laquelle
+deck-builder compose. Les deux sont en 16:9, et seuls les RATIOS voyagent de l'un à l'autre.
 
 Ce n'est pas un lot urgent : ces decks sont justes à l'œil et leurs patterns sont verts. Mais
 tant qu'il n'est pas fait, **`node bin/check-deck.mjs` sans argument sort en code 1** — et un
