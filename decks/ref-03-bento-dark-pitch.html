@@ -26,6 +26,8 @@
   --vl-font: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Inter, Arial, sans-serif;
 }
 * { box-sizing: border-box; }
+/* Deck multi-slides : la marge de page est l'espace ENTRE les slides, elle n'existe pas dans
+   l'export slide par slide (bin/slides.mjs). */
 body {
   margin: 0; padding: 36px;
   display: flex; flex-direction: column; gap: 26px; align-items: center;
@@ -34,64 +36,71 @@ body {
   color: var(--vl-ink);
   -webkit-font-smoothing: antialiased;
 }
-.slide { width: 1120px; height: 410px; display: flex; gap: var(--vl-gap); }
+/* La planche EST la scène : son liseré autour des cartes vient du padding de la slide, pas
+   d'un panneau intermédiaire. Sans lui, l'export slide par slide rogne les rayons des cartes. */
+.slide { width: 1600px; height: 900px; padding: 30px; background: var(--vl-board);
+         display: flex; gap: var(--vl-gap); }
+/* Une slide dont l'unique carte est de la MÊME famille de teinte que la planche : les deux
+   ne font qu'une couche, la slide porte directement la surface. */
+.slide--dark { padding: 0; background: var(--vl-surface-dark); color: var(--vl-ink-invert); }
 
 /* ————— briques communes ————— */
-.card       { border-radius: var(--vl-radius-card); padding: 36px; }
+.card       { border-radius: var(--vl-radius-card); padding: 52px; }
 .card--light{ background: var(--vl-surface-light); }
 .card--dark { background: var(--vl-surface-dark); color: var(--vl-ink-invert); }
-.sub        { border-radius: var(--vl-radius-sub); padding: 24px; }
-.tile       { border-radius: var(--vl-radius-tile); padding: 18px; display: flex; flex-direction: column; }
+.sub        { border-radius: var(--vl-radius-sub); padding: 34px; }
+.tile       { border-radius: var(--vl-radius-tile); padding: 26px; display: flex; flex-direction: column; }
 
-.title { margin: 0; font-size: 44px; font-weight: 500; line-height: 1.06; letter-spacing: -0.02em; }
-.body  { margin: 0; font-size: 14px; line-height: 1.5; color: var(--vl-ink-muted); }
+.title { margin: 0; font-size: 62px; font-weight: 500; line-height: 1.06; letter-spacing: -0.02em; }
+.body  { margin: 0; font-size: 20px; line-height: 1.5; color: var(--vl-ink-muted); }
 .body--invert { color: var(--vl-ink-invert-muted); }
-.micro { font-size: 11px; line-height: 1.35; color: var(--vl-ink-muted); }
+.micro { font-size: 15px; line-height: 1.35; color: var(--vl-ink-muted); }
 .micro--invert { color: var(--vl-ink-invert-muted); }
-.figure    { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; }
-.figure--xl{ font-size: 56px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+.figure    { font-size: 48px; font-weight: 700; letter-spacing: -0.01em; }
+.figure--xl{ font-size: 104px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
 
 /* badge pilule outline */
 .pill {
   display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 16px; border-radius: 999px;
+  padding: 9px 23px; border-radius: 999px;
   border: 1px solid var(--vl-hairline);
-  font-size: 12px; line-height: 1; color: inherit;
+  font-size: 17px; line-height: 1; color: inherit;
 }
 .pill--invert { border-color: var(--vl-hairline-invert); }
 .pill--solid  { background: var(--vl-surface-light); color: var(--vl-ink); border: none; font-weight: 500; }
 
 /* flèche dans un cercle outline */
 .circ {
-  width: 36px; height: 36px; border-radius: 50%;
+  width: 52px; height: 52px; border-radius: 50%;
   border: 1px solid var(--vl-hairline);
   display: inline-flex; align-items: center; justify-content: center;
 }
-.circ svg { width: 14px; height: 14px; }
-.ico { width: 18px; height: 18px; display: block; }
+.circ svg { width: 20px; height: 20px; }
+.ico { width: 26px; height: 26px; display: block; }
 
 /* isotype : matrice de pictogrammes « personne », taux de remplissage par nth-child */
-.iso { display: grid; grid-template-columns: repeat(10, 1fr); gap: 6px 5px; width: 195px; }
-.iso i { position: relative; display: block; width: 13px; height: 18px; color: var(--vl-surface-light); }
+.iso { display: grid; grid-template-columns: repeat(10, 30px); gap: 10px 8px; width: max-content; }
+.iso i { position: relative; display: block; width: 30px; height: 41px; color: var(--vl-surface-light); }
 .iso i::before {
   content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-  width: 6.5px; height: 6.5px; border-radius: 50%; background: currentColor;
+  width: 15px; height: 15px; border-radius: 50%; background: currentColor;
 }
 .iso i::after {
-  content: ""; position: absolute; bottom: 0; left: 0; width: 13px; height: 9.5px;
+  content: ""; position: absolute; bottom: 0; left: 0; width: 30px; height: 22px;
   border-radius: 6px 6px 3px 3px; background: currentColor;
 }
 .iso i:nth-child(-n+24) { color: var(--vl-accent-2); }
 
 /* barres à sommet arrondi (stadium-top) + axe en pilules */
-.bars { display: flex; align-items: flex-end; gap: 20px; }
-.bars .col { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-.bars .val { font-size: 13px; color: var(--vl-ink-invert); }
-.bars .bar { width: 56px; border-radius: 999px 999px 0 0; }
-.axis { display: flex; gap: 22px; margin-top: 10px; }
-.axis span {
-  width: 56px; text-align: center; padding: 5px 0; border-radius: 999px;
-  background: var(--vl-surface-tile); color: var(--vl-ink-invert-muted); font-size: 11px;
+.bars { display: flex; align-items: flex-end; justify-content: center; gap: 34px; }
+.bars .col { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.bars .col .axis-pill { margin-top: 10px; }
+.bars .val { font-size: 20px; color: var(--vl-ink-invert); }
+.bars .bar { width: 96px; border-radius: 999px 999px 0 0; }
+.axis { display: none; }  /* la légende vit DANS sa colonne, cf. .col > .axis-pill */
+.axis-pill {
+  width: 96px; text-align: center; padding: 7px 0; border-radius: 999px;
+  background: var(--vl-surface-tile); color: var(--vl-ink-invert-muted); font-size: 15px;
 }
 
 /* mot surligné par une pilule inversée, dans le flux du texte */
@@ -150,7 +159,7 @@ body {
         product-market fit and accelerating enterprise adoption.</p>
     </div>
 
-    <div style="display:flex;gap:12px;margin-top:auto;height:232px">
+    <div style="display:flex;gap:12px;margin-top:auto;height:520px">
       <div class="sub" style="flex:0 0 62%;background:var(--vl-surface-dark);
            color:var(--vl-ink-invert);display:flex;flex-direction:column">
         <span class="micro micro--invert" style="align-self:flex-end">60% of Main Goal already achieved</span>
@@ -188,9 +197,12 @@ body {
   </div>
 </section>
 
-<!-- ————————————————— C · Projected Revenue ————————————————— -->
-<section class="slide">
-  <div class="card card--dark" style="flex:1;display:flex;gap:44px">
+<!-- ————————————————— C · Projected Revenue —————————————————
+     La carte sombre et la planche sombre ne faisaient qu'UNE couche (Δ de teinte mesuré à 87) :
+     elles sont fusionnées, la slide EST la surface. Les slides à carte BLANCHE gardent leur
+     liseré de planche, lui porte la signature du deck (Δ = 627). -->
+<section class="slide slide--dark">
+  <div style="flex:1;display:flex;gap:44px;padding:52px">
     <div style="flex:0 0 38%;display:flex;flex-direction:column">
       <h2 class="title">Projected<br>Revenue</h2>
       <div style="margin-top:20px"><span class="pill pill--invert">by year</span></div>
@@ -202,15 +214,15 @@ body {
     <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:8px">
       <div class="bars">
         <div class="col"><span class="val">1.8M</span>
-          <span class="bar" style="height:78px;background:var(--vl-surface-light)"></span></div>
+          <span class="bar" style="height:245px;background:var(--vl-surface-light)"></span><span class="axis-pill">2025</span></div>
         <div class="col"><span class="val">$2.5M</span>
-          <span class="bar" style="height:108px;background:var(--vl-accent)"></span></div>
+          <span class="bar" style="height:340px;background:var(--vl-accent)"></span><span class="axis-pill">2026</span></div>
         <div class="col"><span class="val">$3.6M</span>
-          <span class="bar" style="height:155px;background:var(--vl-accent-2)"></span></div>
+          <span class="bar" style="height:488px;background:var(--vl-accent-2)"></span><span class="axis-pill">2027</span></div>
         <div class="col"><span class="val">$4.4M</span>
-          <span class="bar" style="height:190px;background:var(--vl-accent-3)"></span></div>
+          <span class="bar" style="height:598px;background:var(--vl-accent-3)"></span><span class="axis-pill">2028</span></div>
       </div>
-      <div class="axis"><span>2025</span><span>2026</span><span>2027</span><span>2028</span></div>
+      
     </div>
   </div>
 </section>

@@ -32,10 +32,11 @@
   --vl-font: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
 }
 * { box-sizing: border-box; }
+/* Pas de « table » sous la slide : la marge de page se lit comme une couche de plus. */
 body {
-  margin: 0; padding: 40px;
-  display: flex; justify-content: center;
-  background: #cfd6cd;
+  margin: 0; padding: 0;
+  display: flex;
+  background: var(--vl-board);
   font-family: var(--vl-font);
   color: var(--vl-ink);
   -webkit-font-smoothing: antialiased;
@@ -43,12 +44,12 @@ body {
 
 /* ————— la planche (fond) et le bento des 4 cartes ————— */
 .slide {
-  width: 1160px; height: 900px; padding: 28px;
+  width: 1600px; height: 900px; padding: 28px;
   background: var(--vl-board);
   display: flex; gap: var(--vl-gap);
 }
 .col { display: flex; flex-direction: column; gap: var(--vl-gap); }
-.col--left  { flex: 0 0 556px; }
+.col--left  { flex: 0 0 776px; }
 .col--right { flex: 1; }
 
 /* briques communes */

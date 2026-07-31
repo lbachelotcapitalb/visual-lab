@@ -54,8 +54,8 @@
   "geometry": {
     "root": ".vl-balance",
     "frame": [
-      556,
-      470
+      776,
+      494
     ],
     "ratios": {
       "pad_over_width": 0.054,

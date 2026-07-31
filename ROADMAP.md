@@ -318,16 +318,32 @@ pattern n'est écrit POUR ces canaux, « bibliothèque tous médias » reste une
   (`build-livetext-psd.mjs`) comme quatrième sortie du dépôt, au lieu de le laisser prisonnier
   d'un skill de comm.
 
-### ⬜ Dette de format — 2 decks antérieurs à la règle PPT (relevée le 31/07)
+### ✅ Dette de format — résorbée le 31/07 (relevée et soldée le même jour)
 
-`bin/check-deck.mjs` mesure la composition d'une slide (format, ratio, marge de page,
-profondeur des couches, couche 1:1 redondante). Passé sur tout le dépôt, il sort **12 défauts
-sur 2 decks**, tous antérieurs à la règle « un deck se livre au format PPT 1600×900 » :
+`bin/check-deck.mjs` sortait **12 défauts sur 2 decks** antérieurs à la règle « une slide se
+livre au format PPT 1600×900 ». Les deux sont repris :
 
-| deck | mesuré | à reprendre |
+| deck | avant | ce qui a été fait |
 |---|---|---|
-| `ref-03-bento-dark-pitch` | 4 slides en 1120×410 | rééchelonner les 4 slides ; `chart-01`, `chart-02` et `layout-01` en héritent, leurs `geometry.frame` sont donc à refaire |
-| `ref-11-finance-dashboard-mint` | 1160×900, marge de page, profondeur 4 | rééchelonner ; `card-04` à `card-07` en héritent |
+| `ref-11-finance-dashboard-mint` | 1160×900, marge de page, profondeur 4 | scène 1600×900, marge de page retirée, colonne gauche 556 → 776 ; les 4 patterns `card-04` à `card-07` recalés sur les dimensions RÉELLES de leurs modules (776×330, 776×494, 748×616, 748×208), benchmarks toujours verts |
+| `ref-03-bento-dark-pitch` | 4 slides en 1120×410 | scène 1600×900 + liseré de planche ; échelle typo ×1,4 ; la data-viz suit la scène au lieu de flotter dans un vide (barres 56 → 96 px et hauteurs ×3,1, isotypes 13 → 30 px) ; la slide 3 fusionne sa carte sombre et sa planche sombre, qui ne faisaient qu'une couche |
+
+Deux constats que le lot a payés :
+
+- **La légende d'un axe appartient à SA colonne.** Elle vivait dans une rangée séparée avec sa
+  propre gouttière : à la première variation de largeur de colonne, les pilules d'années
+  dérivaient sous les mauvaises barres. Déplacée dans la colonne, elle reste centrée quelles
+  que soient les mesures.
+- **`chart-01`, `chart-02` et `layout-01` n'avaient rien à recaler** : contrairement à ce que
+  cette entrée annonçait, ils ne déclarent ni `geometry.root` ni `geometry.frame`. Un pattern
+  n'est solidaire de son deck que s'il déclare un cadre — c'est le cas des quatre de `ref-11`,
+  pas de ceux de `ref-03`.
+
+**Calibration du seuil de la couche 1:1**, mesurée et non devinée (somme des écarts RGB des
+couleurs effectives) : carte blanche sur planche sombre `Δ = 627` (composition, le liseré porte
+la signature du deck) · carte sombre sur planche sombre `Δ = 87` (redondance) · planche
+translucide sur fond en dégradé, la faute de `ref-13`, `Δ = 82` (redondance). Le seuil est à
+**120** : il sépare les deux familles sans les frôler.
 
 `ref-08-swiss-studio-hero` **n'est pas une dette** : visual-lab héberge des visuels de plusieurs
 dimensions, et seule une référence qui EST une slide doit tenir le format PPT. ref-08 est un hero
@@ -339,9 +355,7 @@ visual-lab et la scène 1920×1080 de `deck-builder` ne se contredisent pas.** 1
 que `kit/vl_pptx.py` suppose pour convertir un fragment en .pptx ; 1920 est celle sur laquelle
 deck-builder compose. Les deux sont en 16:9, et seuls les RATIOS voyagent de l'un à l'autre.
 
-Ce n'est pas un lot urgent : ces decks sont justes à l'œil et leurs patterns sont verts. Mais
-tant qu'il n'est pas fait, **`node bin/check-deck.mjs` sans argument sort en code 1** — et un
-contrôle durablement rouge finit par être ignoré. À faire ou à assumer explicitement.
+**`node bin/check-deck.mjs` sans argument est vert : 10 decks conformes.**
 
 ---
 

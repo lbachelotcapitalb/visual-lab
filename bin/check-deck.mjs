@@ -14,7 +14,9 @@ import { ROOT, DIRS, CHROME } from './lib.mjs';
 // que `kit/vl_pptx.py` suppose pour convertir un fragment en .pptx. deck-builder, lui, compose
 // sur 1920×1080 : ce n'est pas une contradiction, seuls les RATIOS voyagent entre les deux.
 const STAGE = [1600, 900];   // même constante que bin/new-ref.mjs
-const MAX_DEPTH = 3;         // fond → panneau → module, et pas un de plus
+// Couches empilées AU-DESSUS de la scène. La scène (.slide) ne compte pas : c'est le support.
+// 3 = carte → sous-carte → tuile, le maximum documenté du corpus (layout-01-nested-bento).
+const MAX_DEPTH = 3;
 
 const wanted = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const decks = readdirSync(DIRS.decks).filter((f) => f.endsWith('.html'))
@@ -27,6 +29,26 @@ const PROBE = `(() => {
     return p.length === 4 ? p[3] : (p.length === 3 ? 1 : 0); };
   const isSurface = (el) => { const s = getComputedStyle(el);
     return alpha(s.backgroundColor) > 0.02 || s.backgroundImage !== 'none'; };
+  // Couleur EFFECTIVE d'une surface : les couches translucides sont compositées sur leurs
+  // ancêtres, comme dans bin/check.mjs. Sans ça, deux verres à 30 % et 45 % se comparent à
+  // leurs valeurs déclarées et paraissent très différents alors qu'ils se ressemblent.
+  const effective = (el) => {
+    const layers = [];
+    for (let e = el; e; e = e.parentElement) {
+      const p = (getComputedStyle(e).backgroundColor.match(/[\\d.]+/g) || []).map(Number);
+      if (p.length < 3) continue;
+      const a = p.length === 4 ? p[3] : 1;
+      if (a <= 0) continue;
+      layers.push([p[0], p[1], p[2], a]);
+      if (a >= 1) break;
+    }
+    let out = [255, 255, 255];
+    for (let i = layers.length - 1; i >= 0; i--) {
+      const [r, g, b, a] = layers[i];
+      out = [r * a + out[0] * (1 - a), g * a + out[1] * (1 - a), b * a + out[2] * (1 - a)];
+    }
+    return out;
+  };
   const out = [];
   const body = getComputedStyle(document.body);
   const pageChrome = ['Top','Right','Bottom','Left'].some((d) => parseFloat(body['padding'+d]) > 0);
@@ -42,10 +64,21 @@ const PROBE = `(() => {
         // logo, une orbe sont des feuilles décorées : elles ne créent pas de niveau
         // d'emboîtement, et les compter ferait crier le lint sur toute carte un peu vivante.
         const container = el.querySelector && [...el.querySelectorAll('*')].some(isSurface);
+        // Une couche 1:1 n'est redondante que si elle RESSEMBLE à celle qu'elle encadre.
+        // Seuil calibré sur trois cas mesurés (somme des écarts RGB des couleurs EFFECTIVES) :
+        //   ref-03 slides 2 et 4, carte blanche sur planche sombre      Δ = 627  → composition
+        //   ref-03 slide 3, carte sombre sur planche sombre             Δ =  87  → redondance
+        //   ref-13 fautif, planche translucide sur fond en dégradé      Δ =  82  → redondance
+        // Le matte à fort contraste porte la signature du deck ; deux teintes voisines
+        // empilées ne portent rien. 120 sépare les deux familles sans les frôler.
+        let sole = false;
+        if (kids.length === 1 && surfaceKids.length === 1 && !ownText) {
+          const a = effective(el), b = effective(surfaceKids[0]);
+          sole = Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs(a[2] - b[2]) < 120;
+        }
         layers.push({
           sel: (el.className || el.tagName).toString().split(' ')[0] || el.tagName,
-          depth, container,
-          sole: kids.length === 1 && surfaceKids.length === 1 && !ownText,
+          depth, container, sole,
         });
       }
       for (const k of el.children) if (!['STYLE','SCRIPT'].includes(k.tagName)) walk(k, depth + (surface ? 1 : 0));
@@ -99,9 +132,9 @@ for (const f of decks) {
     // multi-slides, c'est l'espace ENTRE les slides — il n'existe pas dans l'export slide par
     // slide, et le signaler dix fois noierait les vrais défauts.
     if (s.slides === 1) t(!s.pageChrome, 'aucune marge de page sous la slide — elle se lit comme une couche');
-    t(s.depth <= MAX_DEPTH, `profondeur des couches ≤ ${MAX_DEPTH} (mesurée ${s.depth})`);
+    t(s.depth - 1 <= MAX_DEPTH, `couches au-dessus de la scène ≤ ${MAX_DEPTH} (mesuré ${s.depth - 1})`);
     t(!s.sole.length, s.sole.length
-      ? `couche 1:1 redondante — ${s.sole.join(', ')} : n'encadre qu'UNE surface, garder celle du dessus`
+      ? `couche 1:1 redondante — ${s.sole.join(', ')} : n'encadre qu'UNE surface de teinte proche, garder celle du dessus`
       : 'aucune couche 1:1 redondante');
   }
 }

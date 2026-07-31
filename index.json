@@ -429,7 +429,7 @@
       "geometry": {
         "root": ".vl-sales",
         "frame": [
-          556,
+          776,
           330
         ],
         "ratios": {
@@ -564,8 +564,8 @@
       "geometry": {
         "root": ".vl-balance",
         "frame": [
-          556,
-          470
+          776,
+          494
         ],
         "ratios": {
           "pad_over_width": 0.054,
@@ -699,8 +699,8 @@
       "geometry": {
         "root": ".vl-forecast",
         "frame": [
-          528,
-          560
+          748,
+          616
         ],
         "ratios": {
           "pad_over_width": 0.053,
@@ -829,7 +829,7 @@
       "geometry": {
         "root": ".vl-txn",
         "frame": [
-          528,
+          748,
           208
         ],
         "ratios": {

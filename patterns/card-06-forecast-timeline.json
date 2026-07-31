@@ -54,8 +54,8 @@
   "geometry": {
     "root": ".vl-forecast",
     "frame": [
-      528,
-      560
+      748,
+      616
     ],
     "ratios": {
       "pad_over_width": 0.053,
