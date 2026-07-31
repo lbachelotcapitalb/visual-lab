@@ -38,10 +38,12 @@
   --vl-font: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
 }
 * { box-sizing: border-box; }
+/* Pas de « table » sous la slide : une marge de page contrastée AJOUTERAIT une troisième
+   couche à un système qui n'en a que deux. La slide occupe la totalité du rendu. */
 body {
-  margin: 0; padding: 40px;
-  display: flex; justify-content: center;
-  background: #8f9cc2;
+  margin: 0; padding: 0;
+  display: flex;
+  background: var(--vl-bg);
   font-family: var(--vl-font);
   color: var(--vl-ink);
   -webkit-font-smoothing: antialiased;
