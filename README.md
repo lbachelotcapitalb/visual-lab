@@ -318,7 +318,8 @@ version qui ne peut pas mentir. Deux références ont leur deck mais pas encore 
 patterns sans deck.
 
 **31/07/2026 — `ref-13-glass-fintech-dashboard`** : la première référence en **verre dépoli**
-(rien d'opaque sauf l'accent, la hiérarchie portée par le taux de blanc et le flou
+(deux couches — un fond en dégradé qui accueille, des modules translucides posés dessus — et
+rien d'opaque sauf l'accent : la hiérarchie est portée par le taux de blanc et le flou
 d'arrière-plan) et le premier **fond en dégradé** du corpus. Elle a fait bouger l'outillage :
 `bin/check.mjs` composite désormais les couches translucides pour calculer un fond effectif, au
 lieu de sauter tout fond d'`alpha ≤ 0.5` — sans quoi un système en verre sort illisible à tort.

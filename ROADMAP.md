@@ -281,16 +281,21 @@ Ce qui transforme la collection en outil :
 ### ✅ Lot 14 — `ref-13` glass-fintech-dashboard (31/07/2026)
 Référence apportée hors corpus initial, fournie **photographiée en perspective** dans un cadre
 portrait, avec deux cartes coupées sur le bord gauche. Le travail d'isolement fait partie du lot :
-la vraie unité était la planche translucide et ses quatre modules, remise à plat ; les cartes
-amputées ne sont pas reconstruites (elles flottent au-dessus, sans composition exploitable).
+**deux couches** — le fond en dégradé flou qui accueille, et les quatre modules posés dessus —
+remises à plat, au format PPT ; les cartes amputées ne sont pas reconstruites (elles flottent
+au-dessus, sans composition exploitable).
 - ✅ `SPEC-SOURCES.md` § `ref-13`, écrite AVANT le code — palette, échelle typo en fraction de
   la largeur de planche, géométrie des quatre modules.
 - ✅ `systems/ref-13-glass-fintech-dashboard.json` — premier système à tokens **translucides**.
-- ✅ `decks/ref-13-glass-fintech-dashboard.html` — une slide 1440×1040, rendue et comparée à la
-  source pendant qu'elle était encore dans le contexte.
+- ✅ `decks/ref-13-glass-fintech-dashboard.html` — une slide **1600×900 (PPT)**, rendue et
+  comparée à la source pendant qu'elle était encore dans le contexte.
 - ✅ 5 patterns : `layout-03-glass-board`, `card-08-orb-chain-total`,
   `card-09-gradient-metric-curve`, `chart-03-accent-column-callout`, `list-04-due-rows` —
-  55 benchmarks, tous verts.
+  55 benchmarks, tous verts. Leurs `geometry.frame` sont les dimensions RÉELLES des modules
+  sur une slide 1600×900 : un pattern extrait d'un deck hors format aurait des ratios faux.
+- ✅ Reprise après revue de Léo : la première version avait trois couches (fond + planche
+  intermédiaire + modules) et deux halos flous ajoutés, sur une slide 1440×1040. Corrigé —
+  deux couches, format PPT, extractions refaites derrière.
 - ✅ Outillage : `bin/check.mjs` **composite** désormais les couches translucides pour établir
   le fond effectif d'une mesure de contraste (l'ancien seuil `alpha > 0.5` déclarait illisible
   tout système en verre). Les 10 patterns antérieurs restent verts — leurs fonds sont opaques.

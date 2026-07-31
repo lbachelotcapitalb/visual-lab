@@ -5,27 +5,79 @@
   "intent": "Rendre une liste d'échéances balayable sans un seul filet : quatre zones tenues par une grille commune, une seule ligne surlignée, une seule pilule d'imminence, et le montant en unique colonne alignée à droite.",
   "when_to_use": "Trois à six échéances, abonnements ou factures à venir, où l'œil doit trouver l'urgente et comparer les montants sans lire les lignes.",
   "avoid_when": "Il faut plus de quatre informations par ligne (c'est un tableau qu'il faut, avec ses en-têtes), ou plus d'une ligne est urgente : la pilule d'imminence ne code quelque chose que tant qu'elle est unique.",
-  "media": ["slide", "web"],
-  "tags": ["liste", "echeances", "paiements", "abonnements", "lignes", "grille", "montant", "imminence", "surlignage", "dashboard", "verre"],
-  "vars": [
-    { "name": "--vl-surface-glass", "role": "verre de la carte", "default": "rgba(255, 255, 255, 0.45)" },
-    { "name": "--vl-surface-glass-strong", "role": "fond de la ligne surlignée + pastilles de logo", "default": "rgba(255, 255, 255, 0.68)" },
-    { "name": "--vl-blue", "role": "pilule d'imminence (la seule couleur de la liste)", "default": "#4F7CF7" },
-    { "name": "--vl-surface-dark", "role": "aplat du bouton « tout voir »", "default": "#101625" },
-    { "name": "--vl-ink-muted", "role": "dates, second rang de l'identité", "default": "#6B7186" }
+  "media": [
+    "slide",
+    "web"
   ],
-  "slots": ["title", "action", "rows"],
+  "tags": [
+    "liste",
+    "echeances",
+    "paiements",
+    "abonnements",
+    "lignes",
+    "grille",
+    "montant",
+    "imminence",
+    "surlignage",
+    "dashboard",
+    "verre"
+  ],
+  "vars": [
+    {
+      "name": "--vl-surface-glass",
+      "role": "verre de la carte",
+      "default": "rgba(255, 255, 255, 0.45)"
+    },
+    {
+      "name": "--vl-surface-glass-strong",
+      "role": "fond de la ligne surlignée + pastilles de logo",
+      "default": "rgba(255, 255, 255, 0.68)"
+    },
+    {
+      "name": "--vl-blue",
+      "role": "pilule d'imminence (la seule couleur de la liste)",
+      "default": "#4F7CF7"
+    },
+    {
+      "name": "--vl-surface-dark",
+      "role": "aplat du bouton « tout voir »",
+      "default": "#101625"
+    },
+    {
+      "name": "--vl-ink-muted",
+      "role": "dates, second rang de l'identité",
+      "default": "#6B7186"
+    }
+  ],
+  "slots": [
+    "title",
+    "action",
+    "rows"
+  ],
   "geometry": {
     "root": ".vl-due",
-    "frame": [1266, 272],
+    "frame": [
+      1512,
+      254
+    ],
     "ratios": {
-      "identity_over_width": 0.2844,
-      "amount_over_width": 0.0948,
-      "row_over_height": 0.2279,
-      "mark_over_width": 0.0284
+      "identity_over_width": 0.2646,
+      "amount_over_width": 0.086,
+      "row_over_height": 0.2205,
+      "mark_over_width": 0.0238
     },
-    "type_px": { "title": 15, "name": 13, "plan": 13, "amount": 14, "micro": 11 },
-    "pad_ratio": { "top": 0.0205, "x": 0.0221, "bottom": 0.0205 }
+    "type_px": {
+      "title": 15,
+      "name": 13,
+      "plan": 13,
+      "amount": 14,
+      "micro": 11
+    },
+    "pad_ratio": {
+      "top": 0.0159,
+      "x": 0.0185,
+      "bottom": 0.0159
+    }
   },
   "benchmarks": [
     {
@@ -53,7 +105,7 @@
     {
       "name": "la zone d'identité tient ≈ 28 % de la largeur",
       "measure": "box('.vl-due__who').w / W",
-      "expect": 0.2844,
+      "expect": 0.2646,
       "tol": 0.05
     },
     {

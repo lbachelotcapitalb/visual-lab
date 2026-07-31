@@ -5,26 +5,79 @@
   "intent": "Faire de la seule carte colorée d'un écran le porteur d'un indicateur unique : la pile libellé / chiffre / cadrage en haut-gauche, une courbe sans axe qui traverse la carte derrière elle, annotée à ses deux extrémités seulement.",
   "when_to_use": "Un indicateur de premier rang doit émerger d'un tableau de bord par ailleurs neutre, et sa trajectoire compte autant que sa valeur du jour.",
   "avoid_when": "Deux indicateurs se disputent le premier rang (deux cartes colorées et il n'y en a plus aucune), ou les valeurs intermédiaires doivent être lisibles : ici la courbe n'a ni axe ni grille, elle donne une forme, pas des chiffres.",
-  "media": ["slide", "web"],
-  "tags": ["carte", "kpi", "indicateur", "courbe", "sparkline", "degrade", "aplat", "annotation", "trajectoire", "dashboard", "premier-rang"],
-  "vars": [
-    { "name": "--vl-blue", "role": "extrémité saturée de l'aplat", "default": "#4F7CF7" },
-    { "name": "--vl-blue-light", "role": "extrémité claire de l'aplat", "default": "#8FB6FA" },
-    { "name": "--vl-ink-invert", "role": "texte, courbe mesurée et points", "default": "#FFFFFF" },
-    { "name": "--vl-ink-invert-muted", "role": "cadrage temporel + prolongement décoratif de la courbe", "default": "rgba(255, 255, 255, 0.72)" },
-    { "name": "--vl-surface-glass-soft", "role": "bouton rond translucide", "default": "rgba(255, 255, 255, 0.24)" }
+  "media": [
+    "slide",
+    "web"
   ],
-  "slots": ["label", "figure", "sub", "action", "curve", "tags"],
+  "tags": [
+    "carte",
+    "kpi",
+    "indicateur",
+    "courbe",
+    "sparkline",
+    "degrade",
+    "aplat",
+    "annotation",
+    "trajectoire",
+    "dashboard",
+    "premier-rang"
+  ],
+  "vars": [
+    {
+      "name": "--vl-blue",
+      "role": "extrémité saturée de l'aplat",
+      "default": "#4F7CF7"
+    },
+    {
+      "name": "--vl-blue-light",
+      "role": "extrémité claire de l'aplat",
+      "default": "#8FB6FA"
+    },
+    {
+      "name": "--vl-ink-invert",
+      "role": "texte, courbe mesurée et points",
+      "default": "#FFFFFF"
+    },
+    {
+      "name": "--vl-ink-invert-muted",
+      "role": "cadrage temporel + prolongement décoratif de la courbe",
+      "default": "rgba(255, 255, 255, 0.72)"
+    },
+    {
+      "name": "--vl-surface-glass-soft",
+      "role": "bouton rond translucide",
+      "default": "rgba(255, 255, 255, 0.24)"
+    }
+  ],
+  "slots": [
+    "label",
+    "figure",
+    "sub",
+    "action",
+    "curve",
+    "tags"
+  ],
   "geometry": {
     "root": ".vl-metric",
-    "frame": [659, 255],
+    "frame": [
+      790,
+      238
+    ],
     "ratios": {
-      "curve_span_over_width": 0.695,
-      "rise_over_height": 0.408,
-      "btn_over_width": 0.0516
+      "curve_span_over_width": 0.696,
+      "rise_over_height": 0.412,
+      "btn_over_width": 0.043
     },
-    "type_px": { "label": 15, "figure": 32, "micro": 11 },
-    "pad_ratio": { "top": 0.0395, "x": 0.0425, "bottom": 0.0395 }
+    "type_px": {
+      "label": 15,
+      "figure": 32,
+      "micro": 11
+    },
+    "pad_ratio": {
+      "top": 0.0304,
+      "x": 0.0354,
+      "bottom": 0.0304
+    }
   },
   "benchmarks": [
     {

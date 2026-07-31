@@ -518,12 +518,13 @@ donc plus étroit que l'écran qu'il montre. Deux cartes flottantes traînent su
 coupées par le cadre (une liste de transactions blanche opaque : `-$50`, `-$100`, `$120`,
 `-$100`, `-$75`, `-$250` ; et un fragment de carte « …acts / …end » = *Contacts / Send*).
 
-**Ce qu'il faut isoler** — la vraie unité est **la planche translucide et ses quatre modules**,
-remise à plat. Les deux cartes de gauche n'appartiennent pas à la planche : elles flottent
-*au-dessus* d'elle, amputées, et n'ont ni composition ni contenu complet exploitables. Elles
-sont notées ici pour mémoire, elles ne sont **pas** reconstruites. La perspective, elle, est
-un accident de prise de vue : aucun ratio ne se relève sur l'image inclinée, tous ceux qui
-suivent sont exprimés en fraction de la largeur de planche.
+**Ce qu'il faut isoler** — **DEUX couches, et pas une de plus** : le fond en dégradé flou qui
+accueille, et les quatre modules rectangulaires en verre plus clair posés dessus. Remis à plat,
+et au **format PPT (1600 × 900)** comme tout deck du dépôt. Les deux cartes de gauche
+n'appartiennent pas à l'écran : elles flottent *au-dessus*, amputées, et n'ont ni composition ni
+contenu complet exploitables — notées ici pour mémoire, elles ne sont **pas** reconstruites. La
+perspective est un accident de prise de vue : aucun ratio ne se relève sur l'image inclinée,
+tous ceux qui suivent sont exprimés en fraction de la largeur de slide (`Ws`).
 
 **Palette** (relevés `≈`, la photo est floue et légèrement désaturée sur les bords)
 
@@ -545,25 +546,26 @@ Aucune bordure dessinée : les surfaces se séparent par un **liseré de lumièr
 
 **Typo** — grotesk neutre (Inter / Helvetica Neue), graisses 400/500/600/700, `letter-spacing`
 négatif sur les chiffres seulement (≈ `-0.02em`). Échelle, en **fraction de la largeur de
-planche** (`Wp`) — cf. le piège des px de `fonts/FONTS.md` :
+slide** (`Ws` = 1600) — cf. le piège des px de `fonts/FONTS.md` :
 
 | rang | ratio | ce que ça porte |
 |---|---|---|
-| chiffre héros | `0.034 Wp` | `$73,558.00` — le `$` est à `0.55 ×` du nombre, et **bleu** |
-| chiffre de carte | `0.024 Wp` | `85%` |
-| chiffre d'orbe | `0.015 Wp` | `$23,558` |
-| titre de module | `0.011 Wp` | `Expense statistic` |
-| corps | `0.0095 Wp` | montants de liste, libellés de lignes |
-| micro | `0.0080 Wp` | `Visa`, `MAY`, dates |
+| chiffre héros | `0.0275 Ws` | `$73,558.00` — le `$` est à `0.55 ×` du nombre, et **bleu** |
+| chiffre de module | `0.020 Ws` | `85%` |
+| chiffre d'orbe | `0.0125 Ws` | `$23,558` |
+| titre de module | `0.0094 Ws` | `Expense statistic` |
+| corps | `0.0081 Ws` | montants de liste, libellés de lignes |
+| micro | `0.0069 Ws` | `Visa`, `MAY`, dates |
 
-**Géométrie de la planche** — 4 modules, 3 rangées, gouttière unique `g = 0.017 Wp`, marge de
-planche `= 1.2 g` (la planche respire un peu plus que ses cartes ne s'écartent). Hauteur de
-planche ≈ `0.70 Wp`. Rangées, en fraction de la hauteur utile hors gouttières : solde `0.36`, duo `0.31`,
-échéances `0.33`. Le duo se partage `47 / 53` — la carte de santé est la plus large **parce
-qu'elle est la seule colorée** : elle doit tenir le poids visuel du bleu plein.
+**Géométrie de l'écran** — 4 modules, 3 rangées sur une slide 16:9. Gouttière unique
+`g = 0.0138 Ws`, marge de fond `= 2 g` (le fond respire deux fois plus que les modules ne
+s'écartent — c'est ce liseré de dégradé qui les fait lire comme des objets posés). Rangées, en
+fraction de la hauteur utile hors gouttières : solde `0.36`, duo `0.31`, échéances `0.33`. Le duo
+se partage `47 / 53` — le module de santé est le plus large **parce qu'il est le seul coloré** :
+il doit tenir le poids visuel du bleu plein.
 
-Rayons décroissants avec l'imbrication, comme `ref-11` mais en verre : planche `0.030 Wp`,
-carte `0.022 Wp`, pilule `999px`, orbe `50 %`.
+Rayons décroissants avec l'imbrication, comme `ref-11` mais en verre : module `0.0175 Ws`,
+sous-bloc `0.0113 Ws`, pilule `999px`, orbe `50 %`.
 
 **Module 1 — solde et chaîne d'orbes** (pleine largeur)
 - coin haut-droit : bascule de devise, `EUR` en encre atténuée nue + `USD` dans une pilule
@@ -606,8 +608,14 @@ aucune surface n'est opaque sauf l'accent, la hiérarchie ne se joue ni sur la c
 trait mais sur **le taux de blanc et le flou d'arrière-plan**. Et le premier fond en **dégradé**
 (le corpus n'avait que des aplats).
 
+**Le piège du lot, payé une fois** — la première reconstitution avait *trois* couches (fond,
+planche intermédiaire, modules) et deux halos flous ajoutés « pour donner de la matière au
+verre ». Résultat : le fond n'était jamais vu à nu, l'écart de blanc entre les couches se
+divisait, et la profondeur s'écrasait. Rien ne le signalait — aucun alignement ne casse. Le
+benchmark « DEUX couches et pas trois » de `layout-03-glass-board` existe pour ça.
+
 **Patterns extraits**
-- `layout-03-glass-board` — la planche dépolie et sa décroissance d'opacité/rayon.
+- `layout-03-glass-board` — les deux couches (fond dégradé + modules) et leur écart de blanc.
 - `card-08-orb-chain-balance` — le solde et sa chaîne d'orbes tangentes.
 - `card-09-gradient-metric-curve` — le KPI sur aplat coloré avec sa courbe annotée aux deux bouts.
 - `chart-03-accent-column-callout` — l'histogramme à colonne unique accentuée et info-bulle.

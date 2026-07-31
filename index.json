@@ -959,26 +959,26 @@
       "geometry": {
         "root": ".vl-orbc",
         "frame": [
-          1266,
-          299
+          1512,
+          276
         ],
         "ratios": {
-          "orb_over_width": 0.104,
+          "orb_over_width": 0.082,
           "lead_over_orb": 1.242,
-          "overlap_over_orb": 0.061,
-          "actions_over_width": 0.147
+          "overlap_over_orb": 0.0645,
+          "actions_over_width": 0.123
         },
         "type_px": {
           "label": 12,
-          "figure": 45,
+          "figure": 44,
           "orb": 20,
           "orb_lead": 22,
           "micro": 11
         },
         "pad_ratio": {
-          "top": 0.0205,
-          "x": 0.0221,
-          "bottom": 0.0205
+          "top": 0.0159,
+          "x": 0.0185,
+          "bottom": 0.0159
         }
       },
       "benchmarks": [
@@ -1101,13 +1101,13 @@
       "geometry": {
         "root": ".vl-metric",
         "frame": [
-          659,
-          255
+          790,
+          238
         ],
         "ratios": {
-          "curve_span_over_width": 0.695,
-          "rise_over_height": 0.408,
-          "btn_over_width": 0.0516
+          "curve_span_over_width": 0.696,
+          "rise_over_height": 0.412,
+          "btn_over_width": 0.043
         },
         "type_px": {
           "label": 15,
@@ -1115,9 +1115,9 @@
           "micro": 11
         },
         "pad_ratio": {
-          "top": 0.0395,
-          "x": 0.0425,
-          "bottom": 0.0395
+          "top": 0.0304,
+          "x": 0.0354,
+          "bottom": 0.0304
         }
       },
       "benchmarks": [
@@ -1337,14 +1337,14 @@
       "geometry": {
         "root": ".vl-callout",
         "frame": [
-          585,
-          255
+          700,
+          238
         ],
         "ratios": {
-          "col_over_width": 0.0957,
-          "pitch_over_col": 2.08,
-          "bar_radius_over_col": 0.4286,
-          "tall_over_height": 0.6196
+          "col_over_width": 0.0914,
+          "pitch_over_col": 2.219,
+          "bar_radius_over_col": 0.4219,
+          "tall_over_height": 0.5882
         },
         "type_px": {
           "title": 15,
@@ -1353,9 +1353,9 @@
           "tip": 11
         },
         "pad_ratio": {
-          "top": 0.0444,
-          "x": 0.0479,
-          "bottom": 0.0444
+          "top": 0.0343,
+          "x": 0.04,
+          "bottom": 0.0343
         }
       },
       "benchmarks": [
@@ -1379,13 +1379,13 @@
         {
           "name": "le pas vaut environ le double de la largeur de colonne (le vide fait lire l'accent)",
           "measure": "(box('.vl-callout__col:nth-child(2)').left - box('.vl-callout__col:nth-child(1)').left) / box('.vl-callout__col').w",
-          "expect": 2.08,
+          "expect": 2.22,
           "tol": 0.3
         },
         {
           "name": "les colonnes flottent : le rayon vaut ≈ 0,43 × la largeur, en haut ET en bas",
           "measure": "num('.vl-callout__bar','borderBottomLeftRadius') / box('.vl-callout__bar').w",
-          "expect": 0.4286,
+          "expect": 0.4219,
           "tol": 0.06
         },
         {
@@ -1546,25 +1546,25 @@
     },
     {
       "id": "layout-03-glass-board",
-      "name": "Planche en verre dépoli",
+      "name": "Écran en verre dépoli — fond dégradé + modules",
       "family": "layout",
       "ref": "ref-13-glass-fintech-dashboard",
       "media": [
         "slide",
         "web"
       ],
-      "intent": "Emboîter les surfaces d'un écran dense sans un seul trait ni une seule couleur de séparation : un fond en dégradé, puis trois densités de blanc translucide décroissantes, le rayon décroissant avec elles.",
-      "when_to_use": "Dashboard, écran produit ou slide de démo où l'on veut de la profondeur sans ajouter de matière graphique — et où le fond doit rester visible à travers les panneaux (c'est lui qui donne la couleur de l'ensemble).",
-      "avoid_when": "Le support ne rend pas le flou d'arrière-plan (export .pptx, mailing, impression) : le verre s'aplatit alors en trois gris presque identiques et toute la hiérarchie disparaît. Éviter aussi sur un fond uni : sans matière derrière, le dépoli ne se voit pas.",
+      "intent": "Emboîter les surfaces d'un écran dense en DEUX couches seulement, sans un trait ni une couleur de séparation : un fond en dégradé qui accueille, et des modules de blanc translucide posés dessus, flou d'arrière-plan compris.",
+      "when_to_use": "Dashboard, écran produit ou slide de démo où l'on veut de la profondeur sans ajouter de matière graphique — et où le fond doit rester visible à travers les modules (c'est lui qui donne la couleur de l'ensemble).",
+      "avoid_when": "Le support ne rend pas le flou d'arrière-plan (export .pptx, mailing, impression) : le verre s'aplatit en deux gris presque identiques et toute la hiérarchie disparaît. Éviter aussi sur un fond uni — sans dégradé derrière, le dépoli ne se voit pas.",
       "tags": [
-        "planche",
+        "ecran",
         "verre",
         "glassmorphism",
         "depoli",
         "flou",
         "backdrop",
         "degrade",
-        "imbrication",
+        "deux-couches",
         "dashboard",
         "translucide",
         "profondeur"
@@ -1581,13 +1581,8 @@
           "default": "#C8CEDA"
         },
         {
-          "name": "--vl-board",
-          "role": "verre de la planche (blanc à 30 %)",
-          "default": "rgba(255, 255, 255, 0.30)"
-        },
-        {
           "name": "--vl-surface-glass",
-          "role": "verre d'une carte (blanc à 45 %)",
+          "role": "verre d'un module (blanc à 45 %)",
           "default": "rgba(255, 255, 255, 0.45)"
         },
         {
@@ -1604,96 +1599,97 @@
           "name": "--vl-blur",
           "role": "rayon du flou d'arrière-plan",
           "default": "18px"
+        },
+        {
+          "name": "--vl-margin",
+          "role": "marge de fond autour des modules",
+          "default": "44px"
         }
       ],
       "slots": [
-        "board",
-        "card",
+        "modules",
         "sub"
       ],
       "geometry": {
         "root": ".vl-glass-board",
         "frame": [
-          900,
-          560
+          1600,
+          900
         ],
         "ratios": {
-          "board_pad_over_width": 0.0338,
-          "gap_over_width": 0.0275,
-          "board_over_stage": 0.889
+          "margin_over_width": 0.0275,
+          "gap_over_width": 0.01375,
+          "modules_over_width": 0.945
         },
         "type_px": {
           "label": 15,
-          "figure": 42,
+          "figure": 44,
           "sub": 12
         },
         "pad_ratio": {
-          "top": 0.0338,
-          "x": 0.0338,
-          "bottom": 0.0338
+          "top": 0.0275,
+          "x": 0.0275,
+          "bottom": 0.0275
         }
       },
       "benchmarks": [
         {
-          "name": "la carte est plus blanche que la planche (≥ 12 points d'alpha)",
-          "measure": "(Number((cs('.vl-glass-board__card','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1) - (Number((cs('.vl-glass-board__board','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1)",
-          "min": 0.12
+          "name": "le module est translucide : le dégradé passe au travers",
+          "measure": "Number((cs('.vl-glass-board__card','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1",
+          "max": 0.55
         },
         {
-          "name": "le sous-bloc est plus blanc que la carte (≥ 12 points d'alpha)",
+          "name": "le sous-bloc est plus blanc que le module (≥ 12 points d'alpha)",
           "measure": "(Number((cs('.vl-glass-board__sub','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1) - (Number((cs('.vl-glass-board__card','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1)",
           "min": 0.12
         },
         {
-          "name": "aucune surface n'est opaque : la planche laisse passer le fond",
-          "measure": "Number((cs('.vl-glass-board__board','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1",
-          "max": 0.55
-        },
-        {
-          "name": "le rayon décroît avec l'imbrication : planche > carte",
-          "measure": "num('.vl-glass-board__board','borderTopLeftRadius') - num('.vl-glass-board__card','borderTopLeftRadius')",
-          "min": 6
-        },
-        {
-          "name": "le rayon décroît encore : carte > sous-bloc",
+          "name": "le rayon décroît avec l'imbrication : module > sous-bloc",
           "measure": "num('.vl-glass-board__card','borderTopLeftRadius') - num('.vl-glass-board__sub','borderTopLeftRadius')",
           "min": 6
         },
         {
-          "name": "le flou d'arrière-plan est bien posé sur la planche (sinon ce n'est pas du verre)",
-          "measure": "/blur/.test(cs('.vl-glass-board__board','backdropFilter') + cs('.vl-glass-board__board','webkitBackdropFilter')) ? 1 : 0",
+          "name": "le flou d'arrière-plan est bien posé sur le module (sinon ce n'est pas du verre)",
+          "measure": "/blur/.test(cs('.vl-glass-board__card','backdropFilter') + cs('.vl-glass-board__card','webkitBackdropFilter')) ? 1 : 0",
           "expect": 1,
           "tol": 0
         },
         {
           "name": "aucune bordure dessinée : c'est le liseré de lumière qui découpe",
-          "measure": "num('.vl-glass-board__card','borderTopWidth') + num('.vl-glass-board__board','borderTopWidth')",
+          "measure": "num('.vl-glass-board__card','borderTopWidth') + num('.vl-glass-board__sub','borderTopWidth')",
           "max": 0
         },
         {
-          "name": "marge de planche ≥ gouttière (le liseré de fond qui fait flotter les cartes)",
-          "measure": "num('.vl-glass-board__board','paddingLeft') - num('.vl-glass-board__row','columnGap')",
+          "name": "DEUX couches et pas trois : aucun panneau intermédiaire entre le fond et un module",
+          "measure": "[...document.querySelectorAll('.vl-glass-board__card')].filter((e) => e.parentElement.classList.contains('vl-glass-board') || e.parentElement.classList.contains('vl-glass-board__row')).length - document.querySelectorAll('.vl-glass-board__card').length",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "marge de fond ≥ gouttière (le liseré de dégradé qui fait flotter les modules)",
+          "measure": "num('.vl-glass-board','paddingLeft') - num('.vl-glass-board','rowGap')",
           "min": 0
         },
         {
-          "name": "la planche laisse respirer le fond : elle occupe moins de 92 % de la scène",
-          "measure": "box('.vl-glass-board__board').w / W",
-          "max": 0.92
+          "name": "les modules laissent respirer le fond : ils tiennent sous 95 % de la largeur",
+          "measure": "box('.vl-glass-board__card--wide').w / W",
+          "max": 0.95
         },
         {
-          "name": "contraste du libellé sur le verre ≥ 7 (fond effectif = le dégradé, pas le blanc)",
+          "name": "format PPT : la scène est en 16:9",
+          "measure": "W / H",
+          "expect": 1.7778,
+          "tol": 0.01
+        },
+        {
+          "name": "contraste du libellé sur le verre ≥ 7 (fond effectif = le dégradé composité)",
           "measure": "contrast('.vl-glass-board__label')",
           "min": 7
         },
         {
-          "name": "aucun débordement du contenu hors de la planche",
-          "measure": "overflow('.vl-glass-board__board')",
+          "name": "aucun débordement du contenu hors d'un module",
+          "measure": "overflow('.vl-glass-board__card--wide')",
           "max": 0
-        },
-        {
-          "name": "la planche tient entièrement dans la scène, halos compris",
-          "measure": "Math.min(box('.vl-glass-board__board').top, box('.vl-glass-board__board').left, H - box('.vl-glass-board__board').bottom, W - box('.vl-glass-board__board').right)",
-          "min": 24
         }
       ],
       "pptx": null,
@@ -1989,14 +1985,14 @@
       "geometry": {
         "root": ".vl-due",
         "frame": [
-          1266,
-          272
+          1512,
+          254
         ],
         "ratios": {
-          "identity_over_width": 0.2844,
-          "amount_over_width": 0.0948,
-          "row_over_height": 0.2279,
-          "mark_over_width": 0.0284
+          "identity_over_width": 0.2646,
+          "amount_over_width": 0.086,
+          "row_over_height": 0.2205,
+          "mark_over_width": 0.0238
         },
         "type_px": {
           "title": 15,
@@ -2006,9 +2002,9 @@
           "micro": 11
         },
         "pad_ratio": {
-          "top": 0.0205,
-          "x": 0.0221,
-          "bottom": 0.0205
+          "top": 0.0159,
+          "x": 0.0185,
+          "bottom": 0.0159
         }
       },
       "benchmarks": [
@@ -2037,7 +2033,7 @@
         {
           "name": "la zone d'identité tient ≈ 28 % de la largeur",
           "measure": "box('.vl-due__who').w / W",
-          "expect": 0.2844,
+          "expect": 0.2646,
           "tol": 0.05
         },
         {
@@ -2695,10 +2691,9 @@
       "deck": "decks/ref-13-glass-fintech-dashboard.html",
       "tokens": {
         "--vl-bg": "#B4BEDD",
-        "--vl-grad-1": "#A8B4D9",
-        "--vl-grad-2": "#9FAFD8",
+        "--vl-grad-1": "#A3B0DA",
+        "--vl-grad-2": "#98A9D6",
         "--vl-grad-3": "#C8CEDA",
-        "--vl-board": "rgba(255, 255, 255, 0.30)",
         "--vl-surface-glass": "rgba(255, 255, 255, 0.45)",
         "--vl-surface-glass-strong": "rgba(255, 255, 255, 0.68)",
         "--vl-surface-glass-soft": "rgba(255, 255, 255, 0.24)",
@@ -2713,10 +2708,10 @@
         "--vl-ink-muted": "#565C72",
         "--vl-ink-invert": "#FFFFFF",
         "--vl-ink-invert-muted": "rgba(255, 255, 255, 0.72)",
-        "--vl-radius-board": "40px",
         "--vl-radius-card": "28px",
         "--vl-radius-sub": "18px",
         "--vl-gap": "22px",
+        "--vl-margin": "44px",
         "--vl-blur": "18px"
       },
       "type": {

@@ -1,23 +1,23 @@
 {
-  "name": "Planche en verre dépoli",
+  "name": "Écran en verre dépoli — fond dégradé + modules",
   "family": "layout",
   "ref": "ref-13-glass-fintech-dashboard",
-  "intent": "Emboîter les surfaces d'un écran dense sans un seul trait ni une seule couleur de séparation : un fond en dégradé, puis trois densités de blanc translucide décroissantes, le rayon décroissant avec elles.",
-  "when_to_use": "Dashboard, écran produit ou slide de démo où l'on veut de la profondeur sans ajouter de matière graphique — et où le fond doit rester visible à travers les panneaux (c'est lui qui donne la couleur de l'ensemble).",
-  "avoid_when": "Le support ne rend pas le flou d'arrière-plan (export .pptx, mailing, impression) : le verre s'aplatit alors en trois gris presque identiques et toute la hiérarchie disparaît. Éviter aussi sur un fond uni : sans matière derrière, le dépoli ne se voit pas.",
+  "intent": "Emboîter les surfaces d'un écran dense en DEUX couches seulement, sans un trait ni une couleur de séparation : un fond en dégradé qui accueille, et des modules de blanc translucide posés dessus, flou d'arrière-plan compris.",
+  "when_to_use": "Dashboard, écran produit ou slide de démo où l'on veut de la profondeur sans ajouter de matière graphique — et où le fond doit rester visible à travers les modules (c'est lui qui donne la couleur de l'ensemble).",
+  "avoid_when": "Le support ne rend pas le flou d'arrière-plan (export .pptx, mailing, impression) : le verre s'aplatit en deux gris presque identiques et toute la hiérarchie disparaît. Éviter aussi sur un fond uni — sans dégradé derrière, le dépoli ne se voit pas.",
   "media": [
     "slide",
     "web"
   ],
   "tags": [
-    "planche",
+    "ecran",
     "verre",
     "glassmorphism",
     "depoli",
     "flou",
     "backdrop",
     "degrade",
-    "imbrication",
+    "deux-couches",
     "dashboard",
     "translucide",
     "profondeur"
@@ -34,13 +34,8 @@
       "default": "#C8CEDA"
     },
     {
-      "name": "--vl-board",
-      "role": "verre de la planche (blanc à 30 %)",
-      "default": "rgba(255, 255, 255, 0.30)"
-    },
-    {
       "name": "--vl-surface-glass",
-      "role": "verre d'une carte (blanc à 45 %)",
+      "role": "verre d'un module (blanc à 45 %)",
       "default": "rgba(255, 255, 255, 0.45)"
     },
     {
@@ -57,97 +52,98 @@
       "name": "--vl-blur",
       "role": "rayon du flou d'arrière-plan",
       "default": "18px"
+    },
+    {
+      "name": "--vl-margin",
+      "role": "marge de fond autour des modules",
+      "default": "44px"
     }
   ],
   "slots": [
-    "board",
-    "card",
+    "modules",
     "sub"
   ],
   "geometry": {
     "root": ".vl-glass-board",
     "frame": [
-      900,
-      560
+      1600,
+      900
     ],
     "ratios": {
-      "board_pad_over_width": 0.0338,
-      "gap_over_width": 0.0275,
-      "board_over_stage": 0.889
+      "margin_over_width": 0.0275,
+      "gap_over_width": 0.01375,
+      "modules_over_width": 0.945
     },
     "type_px": {
       "label": 15,
-      "figure": 42,
+      "figure": 44,
       "sub": 12
     },
     "pad_ratio": {
-      "top": 0.0338,
-      "x": 0.0338,
-      "bottom": 0.0338
+      "top": 0.0275,
+      "x": 0.0275,
+      "bottom": 0.0275
     }
   },
   "benchmarks": [
     {
-      "name": "la carte est plus blanche que la planche (≥ 12 points d'alpha)",
-      "measure": "(Number((cs('.vl-glass-board__card','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1) - (Number((cs('.vl-glass-board__board','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1)",
-      "min": 0.12
+      "name": "le module est translucide : le dégradé passe au travers",
+      "measure": "Number((cs('.vl-glass-board__card','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1",
+      "max": 0.55
     },
     {
-      "name": "le sous-bloc est plus blanc que la carte (≥ 12 points d'alpha)",
+      "name": "le sous-bloc est plus blanc que le module (≥ 12 points d'alpha)",
       "measure": "(Number((cs('.vl-glass-board__sub','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1) - (Number((cs('.vl-glass-board__card','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1)",
       "min": 0.12
     },
     {
-      "name": "aucune surface n'est opaque : la planche laisse passer le fond",
-      "measure": "Number((cs('.vl-glass-board__board','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1",
-      "max": 0.55
-    },
-    {
-      "name": "le rayon décroît avec l'imbrication : planche > carte",
-      "measure": "num('.vl-glass-board__board','borderTopLeftRadius') - num('.vl-glass-board__card','borderTopLeftRadius')",
-      "min": 6
-    },
-    {
-      "name": "le rayon décroît encore : carte > sous-bloc",
+      "name": "le rayon décroît avec l'imbrication : module > sous-bloc",
       "measure": "num('.vl-glass-board__card','borderTopLeftRadius') - num('.vl-glass-board__sub','borderTopLeftRadius')",
       "min": 6
     },
     {
-      "name": "le flou d'arrière-plan est bien posé sur la planche (sinon ce n'est pas du verre)",
-      "measure": "/blur/.test(cs('.vl-glass-board__board','backdropFilter') + cs('.vl-glass-board__board','webkitBackdropFilter')) ? 1 : 0",
+      "name": "le flou d'arrière-plan est bien posé sur le module (sinon ce n'est pas du verre)",
+      "measure": "/blur/.test(cs('.vl-glass-board__card','backdropFilter') + cs('.vl-glass-board__card','webkitBackdropFilter')) ? 1 : 0",
       "expect": 1,
       "tol": 0
     },
     {
       "name": "aucune bordure dessinée : c'est le liseré de lumière qui découpe",
-      "measure": "num('.vl-glass-board__card','borderTopWidth') + num('.vl-glass-board__board','borderTopWidth')",
+      "measure": "num('.vl-glass-board__card','borderTopWidth') + num('.vl-glass-board__sub','borderTopWidth')",
       "max": 0
     },
     {
-      "name": "marge de planche ≥ gouttière (le liseré de fond qui fait flotter les cartes)",
-      "measure": "num('.vl-glass-board__board','paddingLeft') - num('.vl-glass-board__row','columnGap')",
+      "name": "DEUX couches et pas trois : aucun panneau intermédiaire entre le fond et un module",
+      "measure": "[...document.querySelectorAll('.vl-glass-board__card')].filter((e) => e.parentElement.classList.contains('vl-glass-board') || e.parentElement.classList.contains('vl-glass-board__row')).length - document.querySelectorAll('.vl-glass-board__card').length",
+      "expect": 0,
+      "tol": 0
+    },
+    {
+      "name": "marge de fond ≥ gouttière (le liseré de dégradé qui fait flotter les modules)",
+      "measure": "num('.vl-glass-board','paddingLeft') - num('.vl-glass-board','rowGap')",
       "min": 0
     },
     {
-      "name": "la planche laisse respirer le fond : elle occupe moins de 92 % de la scène",
-      "measure": "box('.vl-glass-board__board').w / W",
-      "max": 0.92
+      "name": "les modules laissent respirer le fond : ils tiennent sous 95 % de la largeur",
+      "measure": "box('.vl-glass-board__card--wide').w / W",
+      "max": 0.95
     },
     {
-      "name": "contraste du libellé sur le verre ≥ 7 (fond effectif = le dégradé, pas le blanc)",
+      "name": "format PPT : la scène est en 16:9",
+      "measure": "W / H",
+      "expect": 1.7778,
+      "tol": 0.01
+    },
+    {
+      "name": "contraste du libellé sur le verre ≥ 7 (fond effectif = le dégradé composité)",
       "measure": "contrast('.vl-glass-board__label')",
       "min": 7
     },
     {
-      "name": "aucun débordement du contenu hors de la planche",
-      "measure": "overflow('.vl-glass-board__board')",
+      "name": "aucun débordement du contenu hors d'un module",
+      "measure": "overflow('.vl-glass-board__card--wide')",
       "max": 0
-    },
-    {
-      "name": "la planche tient entièrement dans la scène, halos compris",
-      "measure": "Math.min(box('.vl-glass-board__board').top, box('.vl-glass-board__board').left, H - box('.vl-glass-board__board').bottom, W - box('.vl-glass-board__board').right)",
-      "min": 24
     }
   ],
-  "notes": "Le contrôle d'alpha est le cœur du pattern : c'est la seule chose qui porte la hiérarchie, et c'est aussi la première à disparaître quand quelqu'un « nettoie » les rgba en couleurs pleines. Trois pièges payés ici : (1) les deux halos flous sont des pseudo-éléments POSITIONNÉS — sans z-index explicite, ils sont peints APRÈS la planche et la recouvrent d'un voile blanc, ce qui délave silencieusement le texte des cartes ; (2) `bgOf()` du harnais remonte au premier fond d'alpha > 0.5, donc il traverse le verre et mesure le contraste contre le DÉGRADÉ — c'est plus sévère que la réalité perçue, et c'est voulu ; (3) un dégradé posé en `background` seul laisse `backgroundColor` transparent : les fonds colorés déclarent donc `background-color` ET `background-image`, sinon aucune mesure de contraste n'est possible. Quatrième piège : `overflow()` compare scrollHeight et clientHeight, or un pseudo-élément décoratif POSITIONNÉ hors du cadre gonfle scrollHeight même sous `overflow: hidden` — la scène sortait à 160 px de « débordement » alors que rien du contenu ne dépassait. Le débordement se mesure donc sur la PLANCHE, et le cadrage de la scène par la distance de la planche à ses quatre bords."
+  "notes": "Le contrôle d'alpha est le cœur du pattern : c'est la seule chose qui porte la hiérarchie, et c'est la première à disparaître quand quelqu'un « nettoie » les rgba en couleurs pleines. Le benchmark « deux couches et pas trois » est là parce que la faute est tentante et invisible à la mesure classique : glisser un panneau translucide de plus entre le fond et les modules ne casse aucun alignement, il écrase juste la profondeur — le fond n'est alors plus jamais vu à nu, et les modules cessent de flotter. Deux pièges payés en plus : (1) `bgOf()` du harnais COMPOSITE les couches translucides pour établir le fond effectif d'une mesure de contraste — un verre à 0,45 n'est ni ignoré ni traité comme opaque ; (2) un dégradé posé en `background` seul laisse `backgroundColor` transparent, les fonds colorés déclarent donc `background-color` ET `background-image`, sinon aucune mesure de contraste n'est possible."
 }

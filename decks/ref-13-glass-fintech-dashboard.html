@@ -8,15 +8,14 @@
 
 /* ref-13-glass-fintech-dashboard — reconstitution fidèle, remise À PLAT (la source est
    photographiée en perspective, et les deux cartes coupées du bord gauche ne font pas partie
-   de la planche : cf. SPEC-SOURCES.md). UNE slide : un fond en dégradé porte une planche de
-   blanc à 30 %, qui porte quatre cartes de blanc à 45 %. Rien n'est opaque sauf l'accent.
-   Les noms de marque de la source sont remplacés (doctrine d'anonymisation du dépôt). */
+   de l'écran : cf. SPEC-SOURCES.md). UNE slide au format PPT (1600×900).
+   DEUX couches, et pas une de plus : le fond en dégradé flou qui ACCUEILLE, et les modules
+   rectangulaires en verre plus clair posés dessus. */
 :root {
   --vl-bg: #B4BEDD;
   --vl-grad-1: #A3B0DA;
   --vl-grad-2: #98A9D6;
   --vl-grad-3: #C8CEDA;
-  --vl-board: rgba(255, 255, 255, 0.30);
   --vl-surface-glass: rgba(255, 255, 255, 0.45);
   --vl-surface-glass-strong: rgba(255, 255, 255, 0.68);
   --vl-surface-glass-soft: rgba(255, 255, 255, 0.24);
@@ -26,14 +25,15 @@
   --vl-blue-light: #8FB6FA;
   --vl-violet: #8B5CF6;
   --vl-violet-deep: #5B7CF0;
+  --vl-violet-halo: rgba(123, 106, 240, 0.42);
   --vl-ink: #1A1F2E;
   --vl-ink-muted: #565C72;
   --vl-ink-invert: #FFFFFF;
   --vl-ink-invert-muted: rgba(255, 255, 255, 0.72);
-  --vl-radius-board: 40px;
   --vl-radius-card: 28px;
   --vl-radius-sub: 18px;
   --vl-gap: 22px;
+  --vl-margin: 44px;
   --vl-blur: 18px;
   --vl-font: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
 }
@@ -47,51 +47,32 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ————— le fond en dégradé : la slide EST le fond ————— */
+/* ————— couche 1 : le fond en dégradé flou, qui accueille les modules ————— */
 .slide {
   position: relative;
-  width: 1440px; height: 1040px;
-  display: flex; align-items: center; justify-content: center;
+  width: 1600px; height: 900px; padding: var(--vl-margin);
+  display: flex; flex-direction: column; gap: var(--vl-gap);
   overflow: hidden;
   background:
     radial-gradient(120% 90% at 12% 4%,  var(--vl-grad-2) 0%, transparent 58%),
     radial-gradient(100% 80% at 88% 96%, var(--vl-grad-3) 0%, transparent 62%),
     linear-gradient(148deg, var(--vl-grad-1) 0%, var(--vl-bg) 46%, var(--vl-grad-3) 100%);
 }
-/* deux halos flous : sans matière derrière, un verre dépoli ne se voit pas */
-.slide::before, .slide::after {
-  content: ""; position: absolute; z-index: 0; border-radius: 50%; filter: blur(90px);
-}
-.slide::before { width: 620px; height: 620px; left: -140px; top: -120px;
-  background: var(--vl-grad-2); opacity: .75; }
-.slide::after  { width: 720px; height: 720px; right: -180px; bottom: -220px;
-  background: var(--vl-grad-3); opacity: .8; }
 
-/* ————— la planche et ses cartes : même verre, deux densités ————— */
-.board {
-  position: relative; z-index: 1;
-  width: 1320px; height: 924px; padding: 27px;
-  display: flex; flex-direction: column; gap: var(--vl-gap);
-  border-radius: var(--vl-radius-board);
-  background: var(--vl-board);
-  backdrop-filter: blur(var(--vl-blur));
-  box-shadow: inset 0 1px 0 var(--vl-sheen), 0 30px 70px rgba(26, 31, 46, 0.10);
-}
+/* ————— couche 2 : les modules ————— */
 .card {
   position: relative;
-  padding: 26px 28px;
+  padding: 24px 28px;
   border-radius: var(--vl-radius-card);
   background: var(--vl-surface-glass);
   backdrop-filter: blur(var(--vl-blur));
   box-shadow: inset 0 1px 0 var(--vl-sheen);
   display: flex; flex-direction: column;
 }
-.row { display: flex; gap: var(--vl-gap); flex: 0 0 255px; }
+.row { display: flex; gap: var(--vl-gap); flex: 0 0 238px; }
 
 /* briques communes */
 .title  { margin: 0; font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
-.micro  { font-size: 11px; font-weight: 400; color: var(--vl-ink-muted); }
-.figure { font-size: 32px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.02; }
 .pill {
   display: inline-flex; align-items: center; justify-content: center;
   padding: 9px 18px; border-radius: 999px;
@@ -104,22 +85,18 @@ body {
   padding: 6px 14px; font-size: 11px; }
 
 /* ————— module 1 : solde + chaîne d'orbes ————— */
-.bal { flex: 0 0 299px; justify-content: space-between; }
+.bal { flex: 0 0 276px; justify-content: space-between; }
 .bal__top { display: flex; align-items: flex-start; justify-content: space-between; }
 .bal__label { display: block; font-size: 12px; font-weight: 500; color: var(--vl-ink-muted); }
-.bal__fig {
-  margin-top: 4px; font-size: 45px; font-weight: 600;
-  letter-spacing: -0.025em; line-height: 1;
-}
-.bal__cur { font-size: .5em; font-weight: 600; color: var(--vl-violet-deep);
-  vertical-align: 0.72em; margin-right: 3px; }
+.bal__fig { margin-top: 4px; font-size: 44px; font-weight: 600; letter-spacing: -0.025em; line-height: 1; }
+.bal__cur { font-size: .5em; font-weight: 600; color: var(--vl-violet-deep); vertical-align: 0.72em; margin-right: 3px; }
 .fx { display: flex; align-items: center; gap: 6px; }
 .fx__off { font-size: 12px; font-weight: 500; color: var(--vl-ink-muted); padding: 0 6px; }
 
 .bal__bottom { display: flex; align-items: center; justify-content: space-between; }
 .orbs { display: flex; align-items: center; }
 .orb {
-  width: 132px; height: 132px; border-radius: 50%;
+  width: 124px; height: 124px; border-radius: 50%;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   background: var(--vl-surface-glass-strong);
   box-shadow: inset 0 1px 0 var(--vl-sheen);
@@ -127,10 +104,9 @@ body {
 }
 .orb + .orb { margin-left: -8px; }
 .orb--lead {
-  width: 164px; height: 164px; z-index: 2;
-  color: var(--vl-ink-invert);
+  width: 154px; height: 154px; z-index: 2; color: var(--vl-ink-invert);
   background: radial-gradient(72% 72% at 32% 26%, var(--vl-violet) 0%, var(--vl-violet-deep) 62%, var(--vl-blue) 100%);
-  box-shadow: 0 0 46px 10px rgba(123, 106, 240, 0.42), inset 0 1px 0 var(--vl-sheen);
+  box-shadow: 0 0 46px 10px var(--vl-violet-halo), inset 0 1px 0 var(--vl-sheen);
 }
 .orb__fig { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
 .orb--lead .orb__fig { font-size: 22px; }
@@ -140,14 +116,13 @@ body {
 .actions .pill { padding: 15px 18px; font-size: 13px; }
 
 /* ————— module 2 : histogramme à colonne accentuée ————— */
-.exp { flex: 0 0 585px; }
+.exp { flex: 0 0 700px; }
 .head { display: flex; align-items: center; justify-content: space-between; }
 .head .pill { padding: 7px 15px; font-size: 11px; }
-.exp__plot { flex: 1; display: flex; align-items: flex-end;
-  justify-content: space-between; padding: 8px 6px 0; }
-.col { width: 56px; display: flex; flex-direction: column; align-items: center; }
+.exp__plot { flex: 1; display: flex; align-items: flex-end; justify-content: space-between; padding: 8px 6px 0; }
+.col { width: 64px; display: flex; flex-direction: column; align-items: center; }
 .col__bar {
-  position: relative; width: 56px; border-radius: 24px;
+  position: relative; width: 64px; border-radius: 27px;
   background: var(--vl-surface-glass-strong);
   box-shadow: inset 0 1px 0 var(--vl-sheen);
 }
@@ -155,13 +130,9 @@ body {
   background: linear-gradient(180deg, var(--vl-blue-light) 0%, var(--vl-blue) 100%);
   box-shadow: none;
 }
-.col__cap { margin-top: 10px; font-size: 10px; font-weight: 500; color: var(--vl-ink-muted);
-  letter-spacing: 0.04em; }
+.col__cap { margin-top: 10px; font-size: 10px; font-weight: 500; color: var(--vl-ink-muted); letter-spacing: 0.04em; }
 .col--on .col__cap { color: var(--vl-ink); font-weight: 600; }
-.tip {
-  position: absolute; left: 8px; top: -34px;
-  display: flex; align-items: center; gap: 8px;
-}
+.tip { position: absolute; left: 10px; top: -34px; display: flex; align-items: center; gap: 8px; }
 .tip__dot { width: 9px; height: 9px; border-radius: 50%; background: var(--vl-surface-dark); }
 .tip__box {
   padding: 6px 12px; border-radius: 999px; white-space: nowrap;
@@ -176,28 +147,24 @@ body {
   box-shadow: none;
 }
 .hlt__curve { position: absolute; inset: 0; }
-.hlt__head { position: relative; z-index: 2; display: flex;
-  align-items: flex-start; justify-content: space-between; }
+.hlt__head { position: relative; z-index: 2; display: flex; align-items: flex-start; justify-content: space-between; }
 .hlt__label { font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
-.hlt__fig { margin-top: 12px; font-size: 32px; font-weight: 600; letter-spacing: -0.025em;
-  line-height: 1; }
+.hlt__fig { margin-top: 12px; font-size: 32px; font-weight: 600; letter-spacing: -0.025em; line-height: 1; }
 .hlt__sub { margin-top: 5px; font-size: 11px; color: var(--vl-ink-invert-muted); }
 .hlt__btn {
   width: 34px; height: 34px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   background: var(--vl-surface-glass-soft); box-shadow: inset 0 1px 0 var(--vl-sheen);
 }
-.hlt__tag { position: absolute; z-index: 2; font-size: 11px; font-weight: 500;
-  color: var(--vl-ink-invert-muted); }
+.hlt__tag { position: absolute; z-index: 2; font-size: 11px; font-weight: 500; color: var(--vl-ink-invert); }
 
 /* ————— module 4 : échéances, 4 zones par ligne ————— */
 .due { flex: 1; }
-.due__list { flex: 1; display: flex; flex-direction: column;
-  justify-content: center; gap: 4px; margin: 0 -14px; }
+.due__list { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 4px; margin: 0 -14px; }
 .due__row {
-  display: grid; grid-template-columns: 360px 170px 1fr 120px;
+  display: grid; grid-template-columns: 400px 190px 1fr 130px;
   align-items: center; gap: 16px;
-  padding: 12px 14px; border-radius: var(--vl-radius-sub);
+  padding: 10px 14px; border-radius: var(--vl-radius-sub);
 }
 .due__row--on { background: var(--vl-surface-glass-strong); box-shadow: inset 0 1px 0 var(--vl-sheen); }
 .who { display: flex; align-items: center; gap: 13px; }
@@ -207,8 +174,7 @@ body {
   background: var(--vl-surface-glass-strong); box-shadow: inset 0 1px 0 var(--vl-sheen);
 }
 .who__name { font-size: 13px; font-weight: 500; letter-spacing: -0.01em; }
-.who__date { margin-top: 2px; font-size: 11px; color: var(--vl-ink-muted); }
-.due__when { font-size: 11px; color: var(--vl-ink-muted); }
+.who__date { display: block; margin-top: 2px; font-size: 11px; color: var(--vl-ink-muted); }
 .due__plan { font-size: 13px; font-weight: 500; }
 .due__amount { font-size: 14px; font-weight: 600; letter-spacing: -0.02em; text-align: right; }
 </style>
@@ -216,166 +182,161 @@ body {
 <body>
 
 <section class="slide">
-  <div class="board">
 
-    <!-- 1 · solde total et chaîne d'orbes -->
-    <div class="card bal">
-      <div class="bal__top">
-        <div>
-          <span class="bal__label">Total balance</span>
-          <div class="bal__fig"><span class="bal__cur">$</span>73,558.00</div>
-        </div>
-        <div class="fx">
-          <span class="fx__off">EUR</span>
-          <span class="pill">USD</span>
-        </div>
+  <!-- 1 · solde total et chaîne d'orbes -->
+  <div class="card bal">
+    <div class="bal__top">
+      <div>
+        <span class="bal__label">Total balance</span>
+        <div class="bal__fig"><span class="bal__cur">$</span>73,558.00</div>
       </div>
-      <div class="bal__bottom">
-        <div class="orbs">
-          <div class="orb">
-            <span class="orb__fig">$10,208</span>
-            <span class="orb__cap">Debit</span>
-          </div>
-          <div class="orb orb--lead">
-            <span class="orb__fig">$23,558</span>
-            <span class="orb__cap">Northbeam</span>
-          </div>
-          <div class="orb">
-            <span class="orb__fig">$39,792</span>
-            <span class="orb__cap">Savings</span>
-          </div>
-        </div>
-        <div class="actions">
-          <span class="pill">Receive Money</span>
-          <span class="pill pill--dark">Send Money</span>
-        </div>
+      <div class="fx">
+        <span class="fx__off">EUR</span>
+        <span class="pill">USD</span>
       </div>
     </div>
-
-    <div class="row">
-
-      <!-- 2 · statistique de dépense -->
-      <div class="card exp">
-        <div class="head">
-          <h3 class="title">Expense statistic</h3>
-          <span class="pill">Monthly</span>
+    <div class="bal__bottom">
+      <div class="orbs">
+        <div class="orb">
+          <span class="orb__fig">$10,208</span>
+          <span class="orb__cap">Debit</span>
         </div>
-        <div class="exp__plot">
-          <div class="col"><div class="col__bar" style="height:87px"></div><span class="col__cap">MAY</span></div>
-          <div class="col"><div class="col__bar" style="height:71px"></div><span class="col__cap">JUN</span></div>
-          <div class="col col--on">
-            <div class="col__bar" style="height:158px">
-              <span class="tip"><span class="tip__dot"></span><span class="tip__box">$45k</span></span>
-            </div>
-            <span class="col__cap">JUL</span>
-          </div>
-          <div class="col"><div class="col__bar" style="height:98px"></div><span class="col__cap">AUG</span></div>
-          <div class="col"><div class="col__bar" style="height:82px"></div><span class="col__cap">SEP</span></div>
+        <div class="orb orb--lead">
+          <span class="orb__fig">$23,558</span>
+          <span class="orb__cap">Northbeam</span>
+        </div>
+        <div class="orb">
+          <span class="orb__fig">$39,792</span>
+          <span class="orb__cap">Savings</span>
         </div>
       </div>
-
-      <!-- 3 · santé financière -->
-      <div class="card hlt">
-        <svg class="hlt__curve" viewBox="0 0 659 255" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M44 200 C 88 182, 108 214, 148 197 C 188 180, 202 206, 238 187
-                   C 274 168, 284 200, 320 173 C 356 146, 372 186, 406 159
-                   C 442 128, 462 128, 502 96"
-                stroke="var(--vl-ink-invert)" stroke-width="2.4" stroke-linecap="round"/>
-          <path d="M502 96 C 536 70, 566 76, 596 110 C 622 140, 640 162, 659 174"
-                stroke="var(--vl-ink-invert-muted)" stroke-width="2" stroke-linecap="round"/>
-          <circle cx="44" cy="200" r="4.5" fill="var(--vl-ink-invert)"/>
-          <circle cx="502" cy="96" r="6" fill="var(--vl-ink-invert)"/>
-        </svg>
-        <span class="hlt__tag" style="left:52px; top:166px">7.26k</span>
-        <span class="hlt__tag" style="left:518px; top:58px">16.75k</span>
-        <div class="hlt__head">
-          <div>
-            <span class="hlt__label">Financial health</span>
-            <div class="hlt__fig">85%</div>
-            <div class="hlt__sub">since last month</div>
-          </div>
-          <span class="hlt__btn">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13.2 6.4A5.4 5.4 0 0 0 3.4 5.2M2.8 9.6a5.4 5.4 0 0 0 9.8 1.2"
-                    stroke="var(--vl-ink-invert)" stroke-width="1.4" stroke-linecap="round"/>
-              <path d="M13.6 2.9v3.6h-3.6M2.4 13.1V9.5h3.6"
-                    stroke="var(--vl-ink-invert)" stroke-width="1.4"
-                    stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </span>
-        </div>
+      <div class="actions">
+        <span class="pill">Receive Money</span>
+        <span class="pill pill--dark">Send Money</span>
       </div>
-
     </div>
+  </div>
 
-    <!-- 4 · échéances -->
-    <div class="card due">
+  <div class="row">
+
+    <!-- 2 · statistique de dépense -->
+    <div class="card exp">
       <div class="head">
-        <h3 class="title">Upcoming payments</h3>
-        <span class="pill pill--dark">View All</span>
+        <h3 class="title">Expense statistic</h3>
+        <span class="pill">Monthly</span>
       </div>
-      <div class="due__list">
-
-        <div class="due__row">
-          <span class="who">
-            <span class="who__mark">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3.4 9.6c1.6-3.6 3-3.6 4.6 0s3 3.6 4.6 0"
-                      stroke="var(--vl-ink)" stroke-width="1.4" stroke-linecap="round"/>
-              </svg>
-            </span>
-            <span>
-              <span class="who__name">Northbeam Pricing</span>
-              <span class="who__date micro" style="display:block">Jul 31</span>
-            </span>
-          </span>
-          <span><span class="pill pill--blue">Today</span></span>
-          <span class="due__plan">Payment Links</span>
-          <span class="due__amount">$1,200</span>
+      <div class="exp__plot">
+        <div class="col"><div class="col__bar" style="height:77px"></div><span class="col__cap">MAY</span></div>
+        <div class="col"><div class="col__bar" style="height:63px"></div><span class="col__cap">JUN</span></div>
+        <div class="col col--on">
+          <div class="col__bar" style="height:140px">
+            <span class="tip"><span class="tip__dot"></span><span class="tip__box">$45k</span></span>
+          </div>
+          <span class="col__cap">JUL</span>
         </div>
+        <div class="col"><div class="col__bar" style="height:87px"></div><span class="col__cap">AUG</span></div>
+        <div class="col"><div class="col__bar" style="height:73px"></div><span class="col__cap">SEP</span></div>
+      </div>
+    </div>
 
-        <div class="due__row due__row--on">
-          <span class="who">
-            <span class="who__mark">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="3.2" y="3.2" width="9.6" height="9.6" rx="2.4"
-                      stroke="var(--vl-ink)" stroke-width="1.4"/>
-                <path d="M8 3.2v9.6M3.2 8h9.6" stroke="var(--vl-ink)" stroke-width="1.4"/>
-              </svg>
-            </span>
-            <span>
-              <span class="who__name">Atlas Membership</span>
-              <span class="who__date micro" style="display:block">Jun 23</span>
-            </span>
-          </span>
-          <span></span>
-          <span class="due__plan">Professional</span>
-          <span class="due__amount">$155</span>
+    <!-- 3 · santé financière -->
+    <div class="card hlt">
+      <svg class="hlt__curve" viewBox="0 0 790 238" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 186 C 100 168, 128 200, 175 182 C 222 164, 240 190, 283 172
+                 C 326 154, 337 184, 380 158 C 423 132, 442 170, 482 145
+                 C 528 116, 555 118, 600 88"
+              stroke="var(--vl-ink-invert)" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M600 88 C 640 62, 675 70, 710 102 C 742 132, 762 152, 790 164"
+              stroke="var(--vl-ink-invert-muted)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="50" cy="186" r="4.5" fill="var(--vl-ink-invert)"/>
+        <circle cx="600" cy="88" r="6" fill="var(--vl-ink-invert)"/>
+      </svg>
+      <span class="hlt__tag" style="left:60px; top:154px">7.26k</span>
+      <span class="hlt__tag" style="left:616px; top:52px">16.75k</span>
+      <div class="hlt__head">
+        <div>
+          <span class="hlt__label">Financial health</span>
+          <div class="hlt__fig">85%</div>
+          <div class="hlt__sub">since last month</div>
         </div>
-
-        <div class="due__row">
-          <span class="who">
-            <span class="who__mark">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="8" cy="8" r="2.4" stroke="var(--vl-ink)" stroke-width="1.4"/>
-                <path d="M8 1.8v2.6M8 11.6v2.6M1.8 8h2.6M11.6 8h2.6M3.6 3.6l1.9 1.9M10.5 10.5l1.9 1.9M12.4 3.6l-1.9 1.9M5.5 10.5l-1.9 1.9"
-                      stroke="var(--vl-ink)" stroke-width="1.3" stroke-linecap="round"/>
-              </svg>
-            </span>
-            <span>
-              <span class="who__name">Relay Subscription</span>
-              <span class="who__date micro" style="display:block">Jul 15</span>
-            </span>
-          </span>
-          <span></span>
-          <span class="due__plan">Relay Business</span>
-          <span class="due__amount">$100</span>
-        </div>
-
+        <span class="hlt__btn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.2 6.4A5.4 5.4 0 0 0 3.4 5.2M2.8 9.6a5.4 5.4 0 0 0 9.8 1.2"
+                  stroke="var(--vl-ink-invert)" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M13.6 2.9v3.6h-3.6M2.4 13.1V9.5h3.6"
+                  stroke="var(--vl-ink-invert)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
       </div>
     </div>
 
   </div>
+
+  <!-- 4 · échéances -->
+  <div class="card due">
+    <div class="head">
+      <h3 class="title">Upcoming payments</h3>
+      <span class="pill pill--dark">View All</span>
+    </div>
+    <div class="due__list">
+
+      <div class="due__row">
+        <span class="who">
+          <span class="who__mark">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3.4 9.6c1.6-3.6 3-3.6 4.6 0s3 3.6 4.6 0" stroke="var(--vl-ink)" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span>
+            <span class="who__name">Northbeam Pricing</span>
+            <span class="who__date">Jul 31</span>
+          </span>
+        </span>
+        <span><span class="pill pill--blue">Today</span></span>
+        <span class="due__plan">Payment Links</span>
+        <span class="due__amount">$1,200</span>
+      </div>
+
+      <div class="due__row due__row--on">
+        <span class="who">
+          <span class="who__mark">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3.2" y="3.2" width="9.6" height="9.6" rx="2.4" stroke="var(--vl-ink)" stroke-width="1.4"/>
+              <path d="M8 3.2v9.6M3.2 8h9.6" stroke="var(--vl-ink)" stroke-width="1.4"/>
+            </svg>
+          </span>
+          <span>
+            <span class="who__name">Atlas Membership</span>
+            <span class="who__date">Jun 23</span>
+          </span>
+        </span>
+        <span></span>
+        <span class="due__plan">Professional</span>
+        <span class="due__amount">$155</span>
+      </div>
+
+      <div class="due__row">
+        <span class="who">
+          <span class="who__mark">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="8" cy="8" r="2.4" stroke="var(--vl-ink)" stroke-width="1.4"/>
+              <path d="M8 1.8v2.6M8 11.6v2.6M1.8 8h2.6M11.6 8h2.6M3.6 3.6l1.9 1.9M10.5 10.5l1.9 1.9M12.4 3.6l-1.9 1.9M5.5 10.5l-1.9 1.9"
+                    stroke="var(--vl-ink)" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span>
+            <span class="who__name">Relay Subscription</span>
+            <span class="who__date">Jul 15</span>
+          </span>
+        </span>
+        <span></span>
+        <span class="due__plan">Relay Business</span>
+        <span class="due__amount">$100</span>
+      </div>
+
+    </div>
+  </div>
+
 </section>
 
 </body>

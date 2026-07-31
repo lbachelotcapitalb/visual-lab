@@ -58,14 +58,14 @@
   "geometry": {
     "root": ".vl-callout",
     "frame": [
-      585,
-      255
+      700,
+      238
     ],
     "ratios": {
-      "col_over_width": 0.0957,
-      "pitch_over_col": 2.08,
-      "bar_radius_over_col": 0.4286,
-      "tall_over_height": 0.6196
+      "col_over_width": 0.0914,
+      "pitch_over_col": 2.219,
+      "bar_radius_over_col": 0.4219,
+      "tall_over_height": 0.5882
     },
     "type_px": {
       "title": 15,
@@ -74,9 +74,9 @@
       "tip": 11
     },
     "pad_ratio": {
-      "top": 0.0444,
-      "x": 0.0479,
-      "bottom": 0.0444
+      "top": 0.0343,
+      "x": 0.04,
+      "bottom": 0.0343
     }
   },
   "benchmarks": [
@@ -100,13 +100,13 @@
     {
       "name": "le pas vaut environ le double de la largeur de colonne (le vide fait lire l'accent)",
       "measure": "(box('.vl-callout__col:nth-child(2)').left - box('.vl-callout__col:nth-child(1)').left) / box('.vl-callout__col').w",
-      "expect": 2.08,
+      "expect": 2.22,
       "tol": 0.3
     },
     {
       "name": "les colonnes flottent : le rayon vaut ≈ 0,43 × la largeur, en haut ET en bas",
       "measure": "num('.vl-callout__bar','borderBottomLeftRadius') / box('.vl-callout__bar').w",
-      "expect": 0.4286,
+      "expect": 0.4219,
       "tol": 0.06
     },
     {

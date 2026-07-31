@@ -40,7 +40,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `chart-03-accent-column-callout` | Donner la forme d'une série en quelques colonnes flottantes sans axe ni graduation, et n'en chiffrer qu'une seule — la courante — par une info-bulle sombre ancrée à sa colonne. | slide web | 11 | ref-13-glass-fintech-dashboard |
 | `layout-01-nested-bento` | Structurer une slide dense en trois niveaux (carte → sous-carte → tuile) sans une seule bordure ni ombre, en ne faisant décroître que le rayon et le padding. | slide web | — | ref-03-bento-dark-pitch |
 | `layout-02-swiss-frame` | Poser le cadre d'une slide de deck : une marge unique, deux barres de micro-typo à trois zones et un filet d'un pixel — de quoi rendre une suite de slides reconnaissable sans y ajouter le moindre ornement. | slide web | — | ref-04-swiss-investor-blue |
-| `layout-03-glass-board` | Emboîter les surfaces d'un écran dense sans un seul trait ni une seule couleur de séparation : un fond en dégradé, puis trois densités de blanc translucide décroissantes, le rayon décroissant avec elles. | slide web | 12 | ref-13-glass-fintech-dashboard |
+| `layout-03-glass-board` | Emboîter les surfaces d'un écran dense en DEUX couches seulement, sans un trait ni une couleur de séparation : un fond en dégradé qui accueille, et des modules de blanc translucide posés dessus, flou d'arrière-plan compris. | slide web | 11 | ref-13-glass-fintech-dashboard |
 | `list-01-giant-numbers` | Aligner trois à quatre arguments de même rang en colonnes, chacun ouvert par un numéro ou un chiffre démesuré qui sert à la fois de repère de lecture et de seule tache de couleur du bloc. | slide web | — | ref-04-swiss-investor-blue |
 | `list-02-ruled-index` | Lister les sections d'un document en donnant à chacune son libellé, une ligne d'explication et son numéro à droite, séparées par un filet fin qui appartient à l'entrée qu'il suit. | slide web | 9 | ref-06-orange-notched |
 | `list-03-two-column-toc` | Faire tenir un sommaire de dix à quatorze sections sur une seule slide, en deux colonnes numérotées, lisible d'un coup d'œil et refermable aussitôt. | slide web | — | ref-04-swiss-investor-blue |
@@ -171,13 +171,13 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-hairline, --vl-hairline-invert, --vl-white, --vl-blue, --vl-ink-muted
 - tags : layout, cadre, header, footer, deck, slide, suisse, filet, micro-typo, grille, marge
 
-**layout-03-glass-board** — Planche en verre dépoli
+**layout-03-glass-board** — Écran en verre dépoli — fond dégradé + modules
 
-- employer : Dashboard, écran produit ou slide de démo où l'on veut de la profondeur sans ajouter de matière graphique — et où le fond doit rester visible à travers les panneaux (c'est lui qui donne la couleur de l'ensemble).
-- éviter : Le support ne rend pas le flou d'arrière-plan (export .pptx, mailing, impression) : le verre s'aplatit alors en trois gris presque identiques et toute la hiérarchie disparaît. Éviter aussi sur un fond uni : sans matière derrière, le dépoli ne se voit pas.
-- à remplir : board, card, sub
-- variables : --vl-grad-1, --vl-grad-3, --vl-board, --vl-surface-glass, --vl-surface-glass-strong, --vl-sheen, --vl-blur
-- tags : planche, verre, glassmorphism, depoli, flou, backdrop, degrade, imbrication, dashboard, translucide, profondeur
+- employer : Dashboard, écran produit ou slide de démo où l'on veut de la profondeur sans ajouter de matière graphique — et où le fond doit rester visible à travers les modules (c'est lui qui donne la couleur de l'ensemble).
+- éviter : Le support ne rend pas le flou d'arrière-plan (export .pptx, mailing, impression) : le verre s'aplatit en deux gris presque identiques et toute la hiérarchie disparaît. Éviter aussi sur un fond uni — sans dégradé derrière, le dépoli ne se voit pas.
+- à remplir : modules, sub
+- variables : --vl-grad-1, --vl-grad-3, --vl-surface-glass, --vl-surface-glass-strong, --vl-sheen, --vl-blur, --vl-margin
+- tags : ecran, verre, glassmorphism, depoli, flou, backdrop, degrade, deux-couches, dashboard, translucide, profondeur
 
 ### list
 

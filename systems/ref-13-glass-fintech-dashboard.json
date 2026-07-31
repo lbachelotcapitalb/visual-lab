@@ -1,12 +1,11 @@
 {
   "name": "Dashboard en verre dépoli — lavande & bleu",
-  "notes": "Système « glassmorphism » : rien n'est opaque sauf l'accent. Un fond en DÉGRADÉ (lavande bleutée → gris-bleu) porte une planche de blanc à 30 %, qui porte des cartes de blanc à 45 %, qui portent des pilules de blanc à 70 % — la hiérarchie se joue sur le TAUX DE BLANC et le flou d'arrière-plan, jamais sur un trait ni sur une couleur. Aucune bordure dessinée : un liseré de lumière (blanc à 45 % en haut, transparent en bas) découpe le verre. Deux accents seulement, et ils codent : le BLEU marque l'imminent et le courant (la colonne du mois en cours, l'échéance du jour, la carte de santé), le VIOLET ne sert qu'au cœur de la chaîne d'orbes (le support principal). L'aplat NOIR est réservé à l'action primaire et à l'info-bulle — c'est le seul niveau au-dessus du bleu, il n'y en a jamais deux en concurrence dans un module. Le rayon décroît avec l'imbrication (planche 40 → carte 28 → sous-bloc 18) et cette décroissance porte l'emboîtement sans un seul filet. L'encre atténuée est le seul token qui s'écarte du relevé (#6B7186 dans la source) : à ce niveau elle sort à 3,5:1 sur le verre, sous le seuil des petits corps qu'elle porte (dates, légendes de période, noms de support). Elle est donc assombrie à #565C72, qui tient 4,7:1 — la source a ce défaut, la bibliothèque ne le capitalise pas.",
+  "notes": "Système « glassmorphism » en DEUX COUCHES : rien n'est opaque sauf l'accent. Un fond en dégradé (lavande bleutée → gris-bleu) accueille directement des modules de blanc à 45 %, qui portent des sous-blocs et des pilules de blanc à 68 % — la hiérarchie se joue sur le TAUX DE BLANC et le flou d'arrière-plan, jamais sur un trait ni sur une couleur. Aucun panneau intermédiaire entre le fond et les modules : il écraserait l'écart de blanc qui fait toute la profondeur. Aucune bordure dessinée : un liseré de lumière (blanc à 45 % en haut, transparent en bas) découpe le verre. Deux accents seulement, et ils codent : le BLEU marque l'imminent et le courant (la colonne du mois en cours, l'échéance du jour, la carte de santé), le VIOLET ne sert qu'au cœur de la chaîne d'orbes (le support principal). L'aplat NOIR est réservé à l'action primaire et à l'info-bulle — c'est le seul niveau au-dessus du bleu, il n'y en a jamais deux en concurrence dans un module. Le rayon décroît avec l'imbrication (planche 40 → carte 28 → sous-bloc 18) et cette décroissance porte l'emboîtement sans un seul filet. L'encre atténuée est le seul token qui s'écarte du relevé (#6B7186 dans la source) : à ce niveau elle sort à 3,5:1 sur le verre, sous le seuil des petits corps qu'elle porte (dates, légendes de période, noms de support). Elle est donc assombrie à #565C72, qui tient 4,7:1 — la source a ce défaut, la bibliothèque ne le capitalise pas.",
   "tokens": {
     "--vl-bg": "#B4BEDD",
-    "--vl-grad-1": "#A8B4D9",
-    "--vl-grad-2": "#9FAFD8",
+    "--vl-grad-1": "#A3B0DA",
+    "--vl-grad-2": "#98A9D6",
     "--vl-grad-3": "#C8CEDA",
-    "--vl-board": "rgba(255, 255, 255, 0.30)",
     "--vl-surface-glass": "rgba(255, 255, 255, 0.45)",
     "--vl-surface-glass-strong": "rgba(255, 255, 255, 0.68)",
     "--vl-surface-glass-soft": "rgba(255, 255, 255, 0.24)",
@@ -21,10 +20,10 @@
     "--vl-ink-muted": "#565C72",
     "--vl-ink-invert": "#FFFFFF",
     "--vl-ink-invert-muted": "rgba(255, 255, 255, 0.72)",
-    "--vl-radius-board": "40px",
     "--vl-radius-card": "28px",
     "--vl-radius-sub": "18px",
     "--vl-gap": "22px",
+    "--vl-margin": "44px",
     "--vl-blur": "18px"
   },
   "type": {

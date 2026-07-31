@@ -5,28 +5,86 @@
   "intent": "Poser un total en chiffre héros et le décomposer juste en dessous en une chaîne de disques tangents dont un seul — le plus gros et le seul coloré — porte le support principal, les actions empilées à l'opposé.",
   "when_to_use": "Un montant unique domine l'écran ET se répartit sur 3 à 4 supports qu'il faut montrer d'un coup d'œil, avec une action primaire à offrir dans le même bloc.",
   "avoid_when": "Les parts ne somment pas au total affiché (la chaîne devient un ornement mensonger), ou il y a plus de quatre supports : au-delà, les disques rétrécissent sous le corps lisible et un tableau fait mieux.",
-  "media": ["slide", "web"],
-  "tags": ["carte", "solde", "total", "orbe", "disque", "chaine", "repartition", "dashboard", "verre", "action-primaire", "chiffre-hero"],
-  "vars": [
-    { "name": "--vl-surface-glass", "role": "verre de la carte", "default": "rgba(255, 255, 255, 0.45)" },
-    { "name": "--vl-surface-glass-strong", "role": "verre des orbes secondaires et des pilules", "default": "rgba(255, 255, 255, 0.68)" },
-    { "name": "--vl-violet", "role": "cœur du dégradé de l'orbe principale", "default": "#8B5CF6" },
-    { "name": "--vl-violet-deep", "role": "aplat de repli de l'orbe + glyphe de devise", "default": "#5B7CF0" },
-    { "name": "--vl-violet-halo", "role": "halo diffus de l'orbe principale", "default": "rgba(123, 106, 240, 0.42)" },
-    { "name": "--vl-surface-dark", "role": "aplat de l'action primaire", "default": "#101625" }
+  "media": [
+    "slide",
+    "web"
   ],
-  "slots": ["label", "figure", "fx", "orbs", "actions"],
+  "tags": [
+    "carte",
+    "solde",
+    "total",
+    "orbe",
+    "disque",
+    "chaine",
+    "repartition",
+    "dashboard",
+    "verre",
+    "action-primaire",
+    "chiffre-hero"
+  ],
+  "vars": [
+    {
+      "name": "--vl-surface-glass",
+      "role": "verre de la carte",
+      "default": "rgba(255, 255, 255, 0.45)"
+    },
+    {
+      "name": "--vl-surface-glass-strong",
+      "role": "verre des orbes secondaires et des pilules",
+      "default": "rgba(255, 255, 255, 0.68)"
+    },
+    {
+      "name": "--vl-violet",
+      "role": "cœur du dégradé de l'orbe principale",
+      "default": "#8B5CF6"
+    },
+    {
+      "name": "--vl-violet-deep",
+      "role": "aplat de repli de l'orbe + glyphe de devise",
+      "default": "#5B7CF0"
+    },
+    {
+      "name": "--vl-violet-halo",
+      "role": "halo diffus de l'orbe principale",
+      "default": "rgba(123, 106, 240, 0.42)"
+    },
+    {
+      "name": "--vl-surface-dark",
+      "role": "aplat de l'action primaire",
+      "default": "#101625"
+    }
+  ],
+  "slots": [
+    "label",
+    "figure",
+    "fx",
+    "orbs",
+    "actions"
+  ],
   "geometry": {
     "root": ".vl-orbc",
-    "frame": [1266, 299],
+    "frame": [
+      1512,
+      276
+    ],
     "ratios": {
-      "orb_over_width": 0.104,
+      "orb_over_width": 0.082,
       "lead_over_orb": 1.242,
-      "overlap_over_orb": 0.061,
-      "actions_over_width": 0.147
+      "overlap_over_orb": 0.0645,
+      "actions_over_width": 0.123
     },
-    "type_px": { "label": 12, "figure": 45, "orb": 20, "orb_lead": 22, "micro": 11 },
-    "pad_ratio": { "top": 0.0205, "x": 0.0221, "bottom": 0.0205 }
+    "type_px": {
+      "label": 12,
+      "figure": 44,
+      "orb": 20,
+      "orb_lead": 22,
+      "micro": 11
+    },
+    "pad_ratio": {
+      "top": 0.0159,
+      "x": 0.0185,
+      "bottom": 0.0159
+    }
   },
   "benchmarks": [
     {
