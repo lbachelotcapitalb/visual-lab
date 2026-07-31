@@ -83,7 +83,7 @@ Le fragment HTML est le rendu de référence. Pour les autres médias, on passe 
 | mailing | `node bin/emit.mjs <id> --target email` | **refuse** ce qu'Outlook ne sait pas rendre |
 | impression / PNG | `node bin/render.mjs --pattern <id>` | un fragment HTML s'imprime tel quel |
 
-**Au 30/07/2026, aucun des 17 patterns ne passe la cible `email`** (flex, `clip-path`, `calc()`,
+**Au 31/07/2026, aucun des 22 patterns ne passe la cible `email`** (flex, `clip-path`, `calc()`,
 SVG inline). Ce n'est pas une panne, c'est le constat : le corpus est de la matière slide/web.
 Pour un mailing, deux issues honnêtes — écrire un pattern nativement email (tables, largeurs
 fixes), ou **rendre le pattern en image et poser l'image**. `node bin/emit.mjs --audit --target

@@ -1,0 +1,89 @@
+<!-- card-08-orb-chain-total — fragment autonome. Couleurs via --vl-* uniquement, aucune valeur en dur. -->
+<div class="vl-orbc">
+  <div class="vl-orbc__top">
+    <div>
+      <span class="vl-orbc__label">Total balance</span>
+      <div class="vl-orbc__fig"><span class="vl-orbc__cur">$</span>73,558.00</div>
+    </div>
+    <div class="vl-orbc__fx">
+      <span class="vl-orbc__off">EUR</span>
+      <span class="vl-orbc__pill">USD</span>
+    </div>
+  </div>
+  <div class="vl-orbc__bottom">
+    <div class="vl-orbc__orbs">
+      <span class="vl-orbc__orb">
+        <span class="vl-orbc__orbfig">$10,208</span>
+        <span class="vl-orbc__orbcap">Debit</span>
+      </span>
+      <span class="vl-orbc__orb vl-orbc__orb--lead">
+        <span class="vl-orbc__orbfig">$23,558</span>
+        <span class="vl-orbc__orbcap">Northbeam</span>
+      </span>
+      <span class="vl-orbc__orb">
+        <span class="vl-orbc__orbfig">$39,792</span>
+        <span class="vl-orbc__orbcap">Savings</span>
+      </span>
+    </div>
+    <div class="vl-orbc__actions">
+      <span class="vl-orbc__pill vl-orbc__pill--lg">Receive Money</span>
+      <span class="vl-orbc__pill vl-orbc__pill--lg vl-orbc__pill--solid">Send Money</span>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Le solde et sa décomposition en CHAÎNE D'ORBES. Trois disques tangents — ils se touchent,
+   ils ne se recouvrent pas — dont la somme FAIT le chiffre héros posé au-dessus : c'est la
+   seule raison d'être de la chaîne, et sans cette égalité elle devient un ornement. L'orbe
+   centrale est la seule colorée et la seule plus grosse (1,24 ×) : la taille et la couleur
+   disent la même chose, le support principal. À droite, deux actions empilées dont UNE seule
+   est pleine — la primaire ; deux aplats en concurrence et le module n'a plus de sortie. */
+.vl-orbc {
+  position: relative; width: 1266px; height: 299px; padding: 26px 28px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-radius: var(--vl-radius-card);
+  background-color: var(--vl-surface-glass);
+  backdrop-filter: blur(var(--vl-blur));
+  box-shadow: inset 0 1px 0 var(--vl-sheen);
+  font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  color: var(--vl-ink);
+}
+.vl-orbc__top { display: flex; align-items: flex-start; justify-content: space-between; }
+.vl-orbc__label { display: block; font-size: 12px; font-weight: 500; color: var(--vl-ink-muted); }
+.vl-orbc__fig { margin-top: 4px; font-size: 45px; font-weight: 600; letter-spacing: -0.025em; line-height: 1; }
+.vl-orbc__cur { font-size: .5em; font-weight: 600; color: var(--vl-violet-deep); vertical-align: 0.72em; margin-right: 3px; }
+.vl-orbc__fx { display: flex; align-items: center; gap: 6px; }
+.vl-orbc__off { font-size: 12px; font-weight: 500; color: var(--vl-ink-muted); padding: 0 6px; }
+.vl-orbc__pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 9px 18px; border-radius: 999px;
+  font-size: 12px; font-weight: 500; color: var(--vl-ink);
+  background-color: var(--vl-surface-glass-strong);
+  box-shadow: inset 0 1px 0 var(--vl-sheen);
+}
+.vl-orbc__pill--lg { padding: 15px 18px; font-size: 13px; }
+.vl-orbc__pill--solid { background-color: var(--vl-surface-dark); color: var(--vl-ink-invert); box-shadow: none; }
+
+.vl-orbc__bottom { display: flex; align-items: center; justify-content: space-between; }
+.vl-orbc__orbs { display: flex; align-items: center; }
+.vl-orbc__orb {
+  width: 132px; height: 132px; border-radius: 50%;
+  display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+  background-color: var(--vl-surface-glass-strong);
+  box-shadow: inset 0 1px 0 var(--vl-sheen);
+}
+.vl-orbc__orb + .vl-orbc__orb { margin-left: -8px; }
+.vl-orbc__orb--lead {
+  width: 164px; height: 164px; z-index: 2; color: var(--vl-ink-invert);
+  background-color: var(--vl-violet-deep);
+  background-image: radial-gradient(72% 72% at 32% 26%, var(--vl-violet) 0%, var(--vl-violet-deep) 62%, var(--vl-blue) 100%);
+  box-shadow: 0 0 46px 10px var(--vl-violet-halo), inset 0 1px 0 var(--vl-sheen);
+}
+.vl-orbc__orbfig { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+.vl-orbc__orb--lead .vl-orbc__orbfig { font-size: 22px; }
+.vl-orbc__orbcap { margin-top: 2px; font-size: 11px; color: var(--vl-ink-muted); }
+.vl-orbc__orb--lead .vl-orbc__orbcap { color: var(--vl-ink-invert-muted); }
+.vl-orbc__actions { display: flex; flex-direction: column; gap: 12px; width: 186px; }
+</style>

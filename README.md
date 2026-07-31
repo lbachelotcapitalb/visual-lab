@@ -113,7 +113,7 @@ node bin/emit.mjs card-03-stat-accent --target email     # contraintes Outlook, 
 node bin/emit.mjs --audit --target email                 # l'état de toute la bibliothèque
 ```
 
-**Au 30/07/2026 : 17/17 en `inline`, 0/17 en `email`.** Ce n'est pas une panne, c'est le constat
+**Au 31/07/2026 : 22/22 en `inline`, 0/22 en `email`.** Ce n'est pas une panne, c'est le constat
 — flex, `clip-path`, `calc()`, SVG inline : le corpus est de la matière slide/web. Pour un
 mailing, deux issues honnêtes : écrire un pattern nativement email (tables, largeurs fixes), ou
 rendre le pattern en image et poser l'image. **Quand `media` et l'audit divergent, c'est le JSON
@@ -305,17 +305,23 @@ disponible dans `deck-builder`) : `geometry.ratios` (les rapports qui font la ch
 
 ## État
 
-**17 patterns**, après l'élagage du 30/07 : neuf entrées ont été retirées parce qu'elles ne
+**22 patterns**, après l'élagage du 30/07 : neuf entrées ont été retirées parce qu'elles ne
 survivaient pas au test d'utilité — une pilule à filet, une flèche dans un rond, un titre en
 grosses capitales, trois « règles » qui n'avaient aucun rendu. Un pattern se garde s'il porte
 une COMPOSITION qu'on ne réécrit pas de tête, ou une géométrie mesurée ; pas s'il tient dans sa
 propre phrase de description.
 
-8 références sur 12 reconstituées. Le décompte par référence — patterns extraits, deck présent —
+9 références sur 13 reconstituées. Le décompte par référence — patterns extraits, deck présent —
 est dans le tableau « Références » d'[INDEX.md](INDEX.md), qui est GÉNÉRÉ : c'est la seule
 version qui ne peut pas mentir. Deux références ont leur deck mais pas encore leurs patterns
 (`ref-08-swiss-studio-hero`, `ref-10-campaign-board-red`), et `ref-12-neon-capsule-tags` a ses
 patterns sans deck.
+
+**31/07/2026 — `ref-13-glass-fintech-dashboard`** : la première référence en **verre dépoli**
+(rien d'opaque sauf l'accent, la hiérarchie portée par le taux de blanc et le flou
+d'arrière-plan) et le premier **fond en dégradé** du corpus. Elle a fait bouger l'outillage :
+`bin/check.mjs` composite désormais les couches translucides pour calculer un fond effectif, au
+lieu de sauter tout fond d'`alpha ≤ 0.5` — sans quoi un système en verre sort illisible à tort.
 
 `ref-06-orange-notched` est le lot qui a apporté le reste de l'outillage : la mesure
 (`bin/check.mjs`), l'index versionné (`INDEX.md` / `index.json`) et le pont .pptx

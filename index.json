@@ -19,9 +19,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 17,
-    "refs": 8,
-    "checkable": 10
+    "patterns": 22,
+    "refs": 9,
+    "checkable": 15
   },
   "patterns": [
     {
@@ -893,6 +893,291 @@
       "html": "patterns/card-07-transactions.html"
     },
     {
+      "id": "card-08-orb-chain-total",
+      "name": "Solde total en chaîne d'orbes",
+      "family": "card",
+      "ref": "ref-13-glass-fintech-dashboard",
+      "media": [
+        "slide",
+        "web"
+      ],
+      "intent": "Poser un total en chiffre héros et le décomposer juste en dessous en une chaîne de disques tangents dont un seul — le plus gros et le seul coloré — porte le support principal, les actions empilées à l'opposé.",
+      "when_to_use": "Un montant unique domine l'écran ET se répartit sur 3 à 4 supports qu'il faut montrer d'un coup d'œil, avec une action primaire à offrir dans le même bloc.",
+      "avoid_when": "Les parts ne somment pas au total affiché (la chaîne devient un ornement mensonger), ou il y a plus de quatre supports : au-delà, les disques rétrécissent sous le corps lisible et un tableau fait mieux.",
+      "tags": [
+        "carte",
+        "solde",
+        "total",
+        "orbe",
+        "disque",
+        "chaine",
+        "repartition",
+        "dashboard",
+        "verre",
+        "action-primaire",
+        "chiffre-hero"
+      ],
+      "vars": [
+        {
+          "name": "--vl-surface-glass",
+          "role": "verre de la carte",
+          "default": "rgba(255, 255, 255, 0.45)"
+        },
+        {
+          "name": "--vl-surface-glass-strong",
+          "role": "verre des orbes secondaires et des pilules",
+          "default": "rgba(255, 255, 255, 0.68)"
+        },
+        {
+          "name": "--vl-violet",
+          "role": "cœur du dégradé de l'orbe principale",
+          "default": "#8B5CF6"
+        },
+        {
+          "name": "--vl-violet-deep",
+          "role": "aplat de repli de l'orbe + glyphe de devise",
+          "default": "#5B7CF0"
+        },
+        {
+          "name": "--vl-violet-halo",
+          "role": "halo diffus de l'orbe principale",
+          "default": "rgba(123, 106, 240, 0.42)"
+        },
+        {
+          "name": "--vl-surface-dark",
+          "role": "aplat de l'action primaire",
+          "default": "#101625"
+        }
+      ],
+      "slots": [
+        "label",
+        "figure",
+        "fx",
+        "orbs",
+        "actions"
+      ],
+      "geometry": {
+        "root": ".vl-orbc",
+        "frame": [
+          1266,
+          299
+        ],
+        "ratios": {
+          "orb_over_width": 0.104,
+          "lead_over_orb": 1.242,
+          "overlap_over_orb": 0.061,
+          "actions_over_width": 0.147
+        },
+        "type_px": {
+          "label": 12,
+          "figure": 45,
+          "orb": 20,
+          "orb_lead": 22,
+          "micro": 11
+        },
+        "pad_ratio": {
+          "top": 0.0205,
+          "x": 0.0221,
+          "bottom": 0.0205
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "l'orbe principale est plus grosse que ses voisines d'un rapport ≈ 1,24",
+          "measure": "box('.vl-orbc__orb--lead').w / box('.vl-orbc__orb').w",
+          "expect": 1.24,
+          "tol": 0.08
+        },
+        {
+          "name": "les orbes se TOUCHENT sans se recouvrir (chevauchement ≤ 10 % du diamètre)",
+          "measure": "(box('.vl-orbc__orb').right - box('.vl-orbc__orb--lead').left) / box('.vl-orbc__orb').w",
+          "min": 0,
+          "max": 0.1
+        },
+        {
+          "name": "le chiffre héros appartient à l'échelle display : ≥ 40 px",
+          "measure": "num('.vl-orbc__fig','fontSize')",
+          "min": 40
+        },
+        {
+          "name": "le chiffre héros pèse au moins le double du chiffre d'une orbe",
+          "measure": "num('.vl-orbc__fig','fontSize') / num('.vl-orbc__orbfig','fontSize')",
+          "min": 2
+        },
+        {
+          "name": "la chaîne laisse la place aux actions : elle occupe moins de la moitié de la largeur",
+          "measure": "box('.vl-orbc__orbs').w / W",
+          "max": 0.5
+        },
+        {
+          "name": "les actions sont ancrées à droite, sans recouvrir la chaîne",
+          "measure": "box('.vl-orbc__actions').left - box('.vl-orbc__orbs').right",
+          "min": 24
+        },
+        {
+          "name": "une seule action pleine : la seconde pilule est opaque, la première non",
+          "measure": "(Number((cs('.vl-orbc__pill--solid','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1) - (Number((cs('.vl-orbc__pill','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1)",
+          "min": 0.25
+        },
+        {
+          "name": "contraste du chiffre héros sur le verre ≥ 7",
+          "measure": "contrast('.vl-orbc__fig')",
+          "min": 7
+        },
+        {
+          "name": "contraste du chiffre de l'orbe principale sur son aplat ≥ 3",
+          "measure": "contrast('.vl-orbc__orb--lead .vl-orbc__orbfig')",
+          "min": 3
+        },
+        {
+          "name": "aucun débordement du contenu hors de la carte",
+          "measure": "overflow('.vl-orbc')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/card-08-orb-chain-total.html"
+    },
+    {
+      "id": "card-09-gradient-metric-curve",
+      "name": "KPI sur aplat coloré à courbe annotée",
+      "family": "card",
+      "ref": "ref-13-glass-fintech-dashboard",
+      "media": [
+        "slide",
+        "web"
+      ],
+      "intent": "Faire de la seule carte colorée d'un écran le porteur d'un indicateur unique : la pile libellé / chiffre / cadrage en haut-gauche, une courbe sans axe qui traverse la carte derrière elle, annotée à ses deux extrémités seulement.",
+      "when_to_use": "Un indicateur de premier rang doit émerger d'un tableau de bord par ailleurs neutre, et sa trajectoire compte autant que sa valeur du jour.",
+      "avoid_when": "Deux indicateurs se disputent le premier rang (deux cartes colorées et il n'y en a plus aucune), ou les valeurs intermédiaires doivent être lisibles : ici la courbe n'a ni axe ni grille, elle donne une forme, pas des chiffres.",
+      "tags": [
+        "carte",
+        "kpi",
+        "indicateur",
+        "courbe",
+        "sparkline",
+        "degrade",
+        "aplat",
+        "annotation",
+        "trajectoire",
+        "dashboard",
+        "premier-rang"
+      ],
+      "vars": [
+        {
+          "name": "--vl-blue",
+          "role": "extrémité saturée de l'aplat",
+          "default": "#4F7CF7"
+        },
+        {
+          "name": "--vl-blue-light",
+          "role": "extrémité claire de l'aplat",
+          "default": "#8FB6FA"
+        },
+        {
+          "name": "--vl-ink-invert",
+          "role": "texte, courbe mesurée et points",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-ink-invert-muted",
+          "role": "cadrage temporel + prolongement décoratif de la courbe",
+          "default": "rgba(255, 255, 255, 0.72)"
+        },
+        {
+          "name": "--vl-surface-glass-soft",
+          "role": "bouton rond translucide",
+          "default": "rgba(255, 255, 255, 0.24)"
+        }
+      ],
+      "slots": [
+        "label",
+        "figure",
+        "sub",
+        "action",
+        "curve",
+        "tags"
+      ],
+      "geometry": {
+        "root": ".vl-metric",
+        "frame": [
+          659,
+          255
+        ],
+        "ratios": {
+          "curve_span_over_width": 0.695,
+          "rise_over_height": 0.408,
+          "btn_over_width": 0.0516
+        },
+        "type_px": {
+          "label": 15,
+          "figure": 32,
+          "micro": 11
+        },
+        "pad_ratio": {
+          "top": 0.0395,
+          "x": 0.0425,
+          "bottom": 0.0395
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "le chiffre pèse au moins le double du libellé qui le nomme",
+          "measure": "num('.vl-metric__fig','fontSize') / num('.vl-metric__label','fontSize')",
+          "min": 2
+        },
+        {
+          "name": "la pile de KPI tient dans la moitié gauche : la courbe garde sa place",
+          "measure": "box('.vl-metric__head').w / W",
+          "min": 0.85
+        },
+        {
+          "name": "le chiffre ne descend pas dans la moitié basse de la carte (là où passe la courbe)",
+          "measure": "box('.vl-metric__fig').bottom / H",
+          "max": 0.5
+        },
+        {
+          "name": "l'annotation d'arrivée est au-dessus de celle de départ : la courbe monte",
+          "measure": "box('.vl-metric__tag--from').top - box('.vl-metric__tag--to').top",
+          "min": 60
+        },
+        {
+          "name": "les deux annotations encadrent la course mesurée (≥ 60 % de la largeur)",
+          "measure": "(box('.vl-metric__tag--to').left - box('.vl-metric__tag--from').left) / W",
+          "min": 0.6
+        },
+        {
+          "name": "exactement deux annotations : on annote les bouts, pas les points intermédiaires",
+          "measure": "document.querySelectorAll('.vl-metric__tag').length",
+          "expect": 2,
+          "tol": 0
+        },
+        {
+          "name": "la courbe est en fond et occupe toute la carte",
+          "measure": "box('.vl-metric__curve').w / W",
+          "expect": 1,
+          "tol": 0.02
+        },
+        {
+          "name": "contraste du chiffre sur l'aplat ≥ 3 (blanc sur bleu saturé)",
+          "measure": "contrast('.vl-metric__fig')",
+          "min": 3
+        },
+        {
+          "name": "contraste du libellé sur l'aplat ≥ 3",
+          "measure": "contrast('.vl-metric__label')",
+          "min": 3
+        },
+        {
+          "name": "aucun débordement du contenu hors de la carte",
+          "measure": "overflow('.vl-metric')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/card-09-gradient-metric-curve.html"
+    },
+    {
       "id": "chart-01-stadium-bars",
       "name": "Barres à sommet arrondi",
       "family": "chart",
@@ -990,6 +1275,152 @@
       "benchmarks": [],
       "pptx": null,
       "html": "patterns/chart-02-isotype.html"
+    },
+    {
+      "id": "chart-03-accent-column-callout",
+      "name": "Histogramme à colonne accentuée et info-bulle",
+      "family": "chart",
+      "ref": "ref-13-glass-fintech-dashboard",
+      "media": [
+        "slide",
+        "web"
+      ],
+      "intent": "Donner la forme d'une série en quelques colonnes flottantes sans axe ni graduation, et n'en chiffrer qu'une seule — la courante — par une info-bulle sombre ancrée à sa colonne.",
+      "when_to_use": "Une série courte (4 à 7 périodes) sert de contexte à UNE valeur qui, elle, doit être lue exactement : mois en cours, dernier trimestre, pic à commenter.",
+      "avoid_when": "Plusieurs valeurs doivent être lues précisément (il faudrait autant d'info-bulles, et l'accent perd tout sens), ou les écarts entre colonnes sont faibles : sans axe, un écart de 5 % ne se voit pas.",
+      "tags": [
+        "histogramme",
+        "barres",
+        "colonnes",
+        "accent",
+        "info-bulle",
+        "tooltip",
+        "serie",
+        "periode",
+        "dashboard",
+        "sans-axe",
+        "verre"
+      ],
+      "vars": [
+        {
+          "name": "--vl-surface-glass",
+          "role": "verre de la carte",
+          "default": "rgba(255, 255, 255, 0.45)"
+        },
+        {
+          "name": "--vl-surface-glass-strong",
+          "role": "colonnes neutres et pilule de période",
+          "default": "rgba(255, 255, 255, 0.68)"
+        },
+        {
+          "name": "--vl-blue",
+          "role": "pied du dégradé de la colonne accentuée",
+          "default": "#4F7CF7"
+        },
+        {
+          "name": "--vl-blue-light",
+          "role": "sommet du dégradé de la colonne accentuée",
+          "default": "#8FB6FA"
+        },
+        {
+          "name": "--vl-surface-dark",
+          "role": "aplat de l'info-bulle et de son point de repère",
+          "default": "#101625"
+        }
+      ],
+      "slots": [
+        "title",
+        "period",
+        "columns",
+        "callout"
+      ],
+      "geometry": {
+        "root": ".vl-callout",
+        "frame": [
+          585,
+          255
+        ],
+        "ratios": {
+          "col_over_width": 0.0957,
+          "pitch_over_col": 2.08,
+          "bar_radius_over_col": 0.4286,
+          "tall_over_height": 0.6196
+        },
+        "type_px": {
+          "title": 15,
+          "pill": 11,
+          "cap": 10,
+          "tip": 11
+        },
+        "pad_ratio": {
+          "top": 0.0444,
+          "x": 0.0479,
+          "bottom": 0.0444
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "une seule colonne accentuée",
+          "measure": "document.querySelectorAll('.vl-callout__col--on').length",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "une seule info-bulle, et elle est portée par la colonne accentuée",
+          "measure": "document.querySelectorAll('.vl-callout__tip').length + (document.querySelector('.vl-callout__col--on .vl-callout__tip') ? 0 : 10)",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "la colonne accentuée est la plus haute de la série",
+          "measure": "box('.vl-callout__col--on .vl-callout__bar').h - Math.max(...[...document.querySelectorAll('.vl-callout__col:not(.vl-callout__col--on) .vl-callout__bar')].map((e) => e.getBoundingClientRect().height))",
+          "min": 20
+        },
+        {
+          "name": "le pas vaut environ le double de la largeur de colonne (le vide fait lire l'accent)",
+          "measure": "(box('.vl-callout__col:nth-child(2)').left - box('.vl-callout__col:nth-child(1)').left) / box('.vl-callout__col').w",
+          "expect": 2.08,
+          "tol": 0.3
+        },
+        {
+          "name": "les colonnes flottent : le rayon vaut ≈ 0,43 × la largeur, en haut ET en bas",
+          "measure": "num('.vl-callout__bar','borderBottomLeftRadius') / box('.vl-callout__bar').w",
+          "expect": 0.4286,
+          "tol": 0.06
+        },
+        {
+          "name": "la série remplit sa carte : la plus haute colonne dépasse 55 % de la hauteur",
+          "measure": "box('.vl-callout__col--on .vl-callout__bar').h / H",
+          "min": 0.55
+        },
+        {
+          "name": "l'info-bulle reste dans la carte (ancrée à la colonne, elle peut en sortir)",
+          "measure": "box('.vl-callout__box').right - W",
+          "max": 0
+        },
+        {
+          "name": "l'info-bulle partage la ligne d'en-tête sans percuter le titre ni la pilule de période",
+          "measure": "Math.min(box('.vl-callout__box').left - box('.vl-callout__title').right, box('.vl-callout__pill').left - box('.vl-callout__box').right)",
+          "min": 8
+        },
+        {
+          "name": "contraste du texte de l'info-bulle sur son aplat ≥ 7",
+          "measure": "contrast('.vl-callout__box')",
+          "min": 7
+        },
+        {
+          "name": "contraste des légendes de période ≥ 4,5 malgré leur petit corps",
+          "measure": "contrast('.vl-callout__cap')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement du contenu hors de la carte",
+          "measure": "overflow('.vl-callout')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/chart-03-accent-column-callout.html"
     },
     {
       "id": "layout-01-nested-bento",
@@ -1112,6 +1543,161 @@
       "benchmarks": [],
       "pptx": null,
       "html": "patterns/layout-02-swiss-frame.html"
+    },
+    {
+      "id": "layout-03-glass-board",
+      "name": "Planche en verre dépoli",
+      "family": "layout",
+      "ref": "ref-13-glass-fintech-dashboard",
+      "media": [
+        "slide",
+        "web"
+      ],
+      "intent": "Emboîter les surfaces d'un écran dense sans un seul trait ni une seule couleur de séparation : un fond en dégradé, puis trois densités de blanc translucide décroissantes, le rayon décroissant avec elles.",
+      "when_to_use": "Dashboard, écran produit ou slide de démo où l'on veut de la profondeur sans ajouter de matière graphique — et où le fond doit rester visible à travers les panneaux (c'est lui qui donne la couleur de l'ensemble).",
+      "avoid_when": "Le support ne rend pas le flou d'arrière-plan (export .pptx, mailing, impression) : le verre s'aplatit alors en trois gris presque identiques et toute la hiérarchie disparaît. Éviter aussi sur un fond uni : sans matière derrière, le dépoli ne se voit pas.",
+      "tags": [
+        "planche",
+        "verre",
+        "glassmorphism",
+        "depoli",
+        "flou",
+        "backdrop",
+        "degrade",
+        "imbrication",
+        "dashboard",
+        "translucide",
+        "profondeur"
+      ],
+      "vars": [
+        {
+          "name": "--vl-grad-1",
+          "role": "extrémité lavande du dégradé de fond",
+          "default": "#A3B0DA"
+        },
+        {
+          "name": "--vl-grad-3",
+          "role": "extrémité claire du dégradé de fond",
+          "default": "#C8CEDA"
+        },
+        {
+          "name": "--vl-board",
+          "role": "verre de la planche (blanc à 30 %)",
+          "default": "rgba(255, 255, 255, 0.30)"
+        },
+        {
+          "name": "--vl-surface-glass",
+          "role": "verre d'une carte (blanc à 45 %)",
+          "default": "rgba(255, 255, 255, 0.45)"
+        },
+        {
+          "name": "--vl-surface-glass-strong",
+          "role": "verre d'un sous-bloc (blanc à 68 %)",
+          "default": "rgba(255, 255, 255, 0.68)"
+        },
+        {
+          "name": "--vl-sheen",
+          "role": "liseré de lumière qui remplace la bordure",
+          "default": "rgba(255, 255, 255, 0.45)"
+        },
+        {
+          "name": "--vl-blur",
+          "role": "rayon du flou d'arrière-plan",
+          "default": "18px"
+        }
+      ],
+      "slots": [
+        "board",
+        "card",
+        "sub"
+      ],
+      "geometry": {
+        "root": ".vl-glass-board",
+        "frame": [
+          900,
+          560
+        ],
+        "ratios": {
+          "board_pad_over_width": 0.0338,
+          "gap_over_width": 0.0275,
+          "board_over_stage": 0.889
+        },
+        "type_px": {
+          "label": 15,
+          "figure": 42,
+          "sub": 12
+        },
+        "pad_ratio": {
+          "top": 0.0338,
+          "x": 0.0338,
+          "bottom": 0.0338
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "la carte est plus blanche que la planche (≥ 12 points d'alpha)",
+          "measure": "(Number((cs('.vl-glass-board__card','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1) - (Number((cs('.vl-glass-board__board','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1)",
+          "min": 0.12
+        },
+        {
+          "name": "le sous-bloc est plus blanc que la carte (≥ 12 points d'alpha)",
+          "measure": "(Number((cs('.vl-glass-board__sub','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1) - (Number((cs('.vl-glass-board__card','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1)",
+          "min": 0.12
+        },
+        {
+          "name": "aucune surface n'est opaque : la planche laisse passer le fond",
+          "measure": "Number((cs('.vl-glass-board__board','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1",
+          "max": 0.55
+        },
+        {
+          "name": "le rayon décroît avec l'imbrication : planche > carte",
+          "measure": "num('.vl-glass-board__board','borderTopLeftRadius') - num('.vl-glass-board__card','borderTopLeftRadius')",
+          "min": 6
+        },
+        {
+          "name": "le rayon décroît encore : carte > sous-bloc",
+          "measure": "num('.vl-glass-board__card','borderTopLeftRadius') - num('.vl-glass-board__sub','borderTopLeftRadius')",
+          "min": 6
+        },
+        {
+          "name": "le flou d'arrière-plan est bien posé sur la planche (sinon ce n'est pas du verre)",
+          "measure": "/blur/.test(cs('.vl-glass-board__board','backdropFilter') + cs('.vl-glass-board__board','webkitBackdropFilter')) ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "aucune bordure dessinée : c'est le liseré de lumière qui découpe",
+          "measure": "num('.vl-glass-board__card','borderTopWidth') + num('.vl-glass-board__board','borderTopWidth')",
+          "max": 0
+        },
+        {
+          "name": "marge de planche ≥ gouttière (le liseré de fond qui fait flotter les cartes)",
+          "measure": "num('.vl-glass-board__board','paddingLeft') - num('.vl-glass-board__row','columnGap')",
+          "min": 0
+        },
+        {
+          "name": "la planche laisse respirer le fond : elle occupe moins de 92 % de la scène",
+          "measure": "box('.vl-glass-board__board').w / W",
+          "max": 0.92
+        },
+        {
+          "name": "contraste du libellé sur le verre ≥ 7 (fond effectif = le dégradé, pas le blanc)",
+          "measure": "contrast('.vl-glass-board__label')",
+          "min": 7
+        },
+        {
+          "name": "aucun débordement du contenu hors de la planche",
+          "measure": "overflow('.vl-glass-board__board')",
+          "max": 0
+        },
+        {
+          "name": "la planche tient entièrement dans la scène, halos compris",
+          "measure": "Math.min(box('.vl-glass-board__board').top, box('.vl-glass-board__board').left, H - box('.vl-glass-board__board').bottom, W - box('.vl-glass-board__board').right)",
+          "min": 24
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/layout-03-glass-board.html"
     },
     {
       "id": "list-01-giant-numbers",
@@ -1342,6 +1928,156 @@
       "benchmarks": [],
       "pptx": null,
       "html": "patterns/list-03-two-column-toc.html"
+    },
+    {
+      "id": "list-04-due-rows",
+      "name": "Liste d'échéances à quatre zones",
+      "family": "list",
+      "ref": "ref-13-glass-fintech-dashboard",
+      "media": [
+        "slide",
+        "web"
+      ],
+      "intent": "Rendre une liste d'échéances balayable sans un seul filet : quatre zones tenues par une grille commune, une seule ligne surlignée, une seule pilule d'imminence, et le montant en unique colonne alignée à droite.",
+      "when_to_use": "Trois à six échéances, abonnements ou factures à venir, où l'œil doit trouver l'urgente et comparer les montants sans lire les lignes.",
+      "avoid_when": "Il faut plus de quatre informations par ligne (c'est un tableau qu'il faut, avec ses en-têtes), ou plus d'une ligne est urgente : la pilule d'imminence ne code quelque chose que tant qu'elle est unique.",
+      "tags": [
+        "liste",
+        "echeances",
+        "paiements",
+        "abonnements",
+        "lignes",
+        "grille",
+        "montant",
+        "imminence",
+        "surlignage",
+        "dashboard",
+        "verre"
+      ],
+      "vars": [
+        {
+          "name": "--vl-surface-glass",
+          "role": "verre de la carte",
+          "default": "rgba(255, 255, 255, 0.45)"
+        },
+        {
+          "name": "--vl-surface-glass-strong",
+          "role": "fond de la ligne surlignée + pastilles de logo",
+          "default": "rgba(255, 255, 255, 0.68)"
+        },
+        {
+          "name": "--vl-blue",
+          "role": "pilule d'imminence (la seule couleur de la liste)",
+          "default": "#4F7CF7"
+        },
+        {
+          "name": "--vl-surface-dark",
+          "role": "aplat du bouton « tout voir »",
+          "default": "#101625"
+        },
+        {
+          "name": "--vl-ink-muted",
+          "role": "dates, second rang de l'identité",
+          "default": "#6B7186"
+        }
+      ],
+      "slots": [
+        "title",
+        "action",
+        "rows"
+      ],
+      "geometry": {
+        "root": ".vl-due",
+        "frame": [
+          1266,
+          272
+        ],
+        "ratios": {
+          "identity_over_width": 0.2844,
+          "amount_over_width": 0.0948,
+          "row_over_height": 0.2279,
+          "mark_over_width": 0.0284
+        },
+        "type_px": {
+          "title": 15,
+          "name": 13,
+          "plan": 13,
+          "amount": 14,
+          "micro": 11
+        },
+        "pad_ratio": {
+          "top": 0.0205,
+          "x": 0.0221,
+          "bottom": 0.0205
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "une seule ligne surlignée",
+          "measure": "document.querySelectorAll('.vl-due__row--on').length",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "une seule pilule d'imminence",
+          "measure": "document.querySelectorAll('.vl-due__flag').length",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "les montants sont alignés à droite sur la même verticale (± 1 px)",
+          "measure": "Math.max(...[...document.querySelectorAll('.vl-due__amount')].map((e) => e.getBoundingClientRect().right)) - Math.min(...[...document.querySelectorAll('.vl-due__amount')].map((e) => e.getBoundingClientRect().right))",
+          "max": 1
+        },
+        {
+          "name": "les libellés d'offre démarrent sur la même verticale (grille commune, pas un flux)",
+          "measure": "Math.max(...[...document.querySelectorAll('.vl-due__plan')].map((e) => e.getBoundingClientRect().left)) - Math.min(...[...document.querySelectorAll('.vl-due__plan')].map((e) => e.getBoundingClientRect().left))",
+          "max": 1
+        },
+        {
+          "name": "la zone d'identité tient ≈ 28 % de la largeur",
+          "measure": "box('.vl-due__who').w / W",
+          "expect": 0.2844,
+          "tol": 0.05
+        },
+        {
+          "name": "aucun filet de séparation entre les lignes",
+          "measure": "num('.vl-due__row','borderBottomWidth') + num('.vl-due__row','borderTopWidth')",
+          "max": 0
+        },
+        {
+          "name": "le surlignage déborde des marges du titre : il tient toute la largeur utile",
+          "measure": "box('.vl-due__row--on').w / W",
+          "min": 0.94
+        },
+        {
+          "name": "le montant est plus lourd que l'offre qu'il chiffre",
+          "measure": "num('.vl-due__amount','fontWeight') - num('.vl-due__plan','fontWeight')",
+          "min": 100
+        },
+        {
+          "name": "contraste du nom d'échéance ≥ 7",
+          "measure": "contrast('.vl-due__name')",
+          "min": 7
+        },
+        {
+          "name": "contraste des dates atténuées ≥ 4,5",
+          "measure": "contrast('.vl-due__date')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste de la pilule d'imminence sur son aplat ≥ 3",
+          "measure": "contrast('.vl-due__flag')",
+          "min": 3
+        },
+        {
+          "name": "aucun débordement du contenu hors de la carte",
+          "measure": "overflow('.vl-due')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/list-04-due-rows.html"
     },
     {
       "id": "shape-notched-corner",
@@ -1943,6 +2679,56 @@
           "title": "68px / 1.05 / 700 / -0.01em / UPPERCASE",
           "body": "17px / 1.5 / 400",
           "micro": "12px / 1.4 / 600 / 0.12em / UPPERCASE"
+        }
+      }
+    },
+    {
+      "id": "ref-13-glass-fintech-dashboard",
+      "name": "Dashboard en verre dépoli — lavande & bleu",
+      "patterns": [
+        "card-08-orb-chain-total",
+        "card-09-gradient-metric-curve",
+        "chart-03-accent-column-callout",
+        "layout-03-glass-board",
+        "list-04-due-rows"
+      ],
+      "deck": "decks/ref-13-glass-fintech-dashboard.html",
+      "tokens": {
+        "--vl-bg": "#B4BEDD",
+        "--vl-grad-1": "#A8B4D9",
+        "--vl-grad-2": "#9FAFD8",
+        "--vl-grad-3": "#C8CEDA",
+        "--vl-board": "rgba(255, 255, 255, 0.30)",
+        "--vl-surface-glass": "rgba(255, 255, 255, 0.45)",
+        "--vl-surface-glass-strong": "rgba(255, 255, 255, 0.68)",
+        "--vl-surface-glass-soft": "rgba(255, 255, 255, 0.24)",
+        "--vl-surface-dark": "#101625",
+        "--vl-sheen": "rgba(255, 255, 255, 0.45)",
+        "--vl-blue": "#4F7CF7",
+        "--vl-blue-light": "#8FB6FA",
+        "--vl-violet": "#8B5CF6",
+        "--vl-violet-deep": "#5B7CF0",
+        "--vl-violet-halo": "rgba(123, 106, 240, 0.42)",
+        "--vl-ink": "#1A1F2E",
+        "--vl-ink-muted": "#565C72",
+        "--vl-ink-invert": "#FFFFFF",
+        "--vl-ink-invert-muted": "rgba(255, 255, 255, 0.72)",
+        "--vl-radius-board": "40px",
+        "--vl-radius-card": "28px",
+        "--vl-radius-sub": "18px",
+        "--vl-gap": "22px",
+        "--vl-blur": "18px"
+      },
+      "type": {
+        "display": "Inter, -apple-system, \"Helvetica Neue\", Arial, sans-serif",
+        "body": "Inter, -apple-system, \"Helvetica Neue\", Arial, sans-serif",
+        "scale": {
+          "figure-xl": "45px / 1 / 600 / -0.025em",
+          "figure": "32px / 1.02 / 600 / -0.025em",
+          "figure-orb": "20px / 1.05 / 600 / -0.02em",
+          "title": "15px / 1.2 / 500 / -0.01em",
+          "body": "13px / 1.35 / 500",
+          "micro": "11px / 1.3 / 400"
         }
       }
     }

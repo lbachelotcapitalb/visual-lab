@@ -1,0 +1,96 @@
+{
+  "name": "Liste d'échéances à quatre zones",
+  "family": "list",
+  "ref": "ref-13-glass-fintech-dashboard",
+  "intent": "Rendre une liste d'échéances balayable sans un seul filet : quatre zones tenues par une grille commune, une seule ligne surlignée, une seule pilule d'imminence, et le montant en unique colonne alignée à droite.",
+  "when_to_use": "Trois à six échéances, abonnements ou factures à venir, où l'œil doit trouver l'urgente et comparer les montants sans lire les lignes.",
+  "avoid_when": "Il faut plus de quatre informations par ligne (c'est un tableau qu'il faut, avec ses en-têtes), ou plus d'une ligne est urgente : la pilule d'imminence ne code quelque chose que tant qu'elle est unique.",
+  "media": ["slide", "web"],
+  "tags": ["liste", "echeances", "paiements", "abonnements", "lignes", "grille", "montant", "imminence", "surlignage", "dashboard", "verre"],
+  "vars": [
+    { "name": "--vl-surface-glass", "role": "verre de la carte", "default": "rgba(255, 255, 255, 0.45)" },
+    { "name": "--vl-surface-glass-strong", "role": "fond de la ligne surlignée + pastilles de logo", "default": "rgba(255, 255, 255, 0.68)" },
+    { "name": "--vl-blue", "role": "pilule d'imminence (la seule couleur de la liste)", "default": "#4F7CF7" },
+    { "name": "--vl-surface-dark", "role": "aplat du bouton « tout voir »", "default": "#101625" },
+    { "name": "--vl-ink-muted", "role": "dates, second rang de l'identité", "default": "#6B7186" }
+  ],
+  "slots": ["title", "action", "rows"],
+  "geometry": {
+    "root": ".vl-due",
+    "frame": [1266, 272],
+    "ratios": {
+      "identity_over_width": 0.2844,
+      "amount_over_width": 0.0948,
+      "row_over_height": 0.2279,
+      "mark_over_width": 0.0284
+    },
+    "type_px": { "title": 15, "name": 13, "plan": 13, "amount": 14, "micro": 11 },
+    "pad_ratio": { "top": 0.0205, "x": 0.0221, "bottom": 0.0205 }
+  },
+  "benchmarks": [
+    {
+      "name": "une seule ligne surlignée",
+      "measure": "document.querySelectorAll('.vl-due__row--on').length",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "une seule pilule d'imminence",
+      "measure": "document.querySelectorAll('.vl-due__flag').length",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "les montants sont alignés à droite sur la même verticale (± 1 px)",
+      "measure": "Math.max(...[...document.querySelectorAll('.vl-due__amount')].map((e) => e.getBoundingClientRect().right)) - Math.min(...[...document.querySelectorAll('.vl-due__amount')].map((e) => e.getBoundingClientRect().right))",
+      "max": 1
+    },
+    {
+      "name": "les libellés d'offre démarrent sur la même verticale (grille commune, pas un flux)",
+      "measure": "Math.max(...[...document.querySelectorAll('.vl-due__plan')].map((e) => e.getBoundingClientRect().left)) - Math.min(...[...document.querySelectorAll('.vl-due__plan')].map((e) => e.getBoundingClientRect().left))",
+      "max": 1
+    },
+    {
+      "name": "la zone d'identité tient ≈ 28 % de la largeur",
+      "measure": "box('.vl-due__who').w / W",
+      "expect": 0.2844,
+      "tol": 0.05
+    },
+    {
+      "name": "aucun filet de séparation entre les lignes",
+      "measure": "num('.vl-due__row','borderBottomWidth') + num('.vl-due__row','borderTopWidth')",
+      "max": 0
+    },
+    {
+      "name": "le surlignage déborde des marges du titre : il tient toute la largeur utile",
+      "measure": "box('.vl-due__row--on').w / W",
+      "min": 0.94
+    },
+    {
+      "name": "le montant est plus lourd que l'offre qu'il chiffre",
+      "measure": "num('.vl-due__amount','fontWeight') - num('.vl-due__plan','fontWeight')",
+      "min": 100
+    },
+    {
+      "name": "contraste du nom d'échéance ≥ 7",
+      "measure": "contrast('.vl-due__name')",
+      "min": 7
+    },
+    {
+      "name": "contraste des dates atténuées ≥ 4,5",
+      "measure": "contrast('.vl-due__date')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste de la pilule d'imminence sur son aplat ≥ 3",
+      "measure": "contrast('.vl-due__flag')",
+      "min": 3
+    },
+    {
+      "name": "aucun débordement du contenu hors de la carte",
+      "measure": "overflow('.vl-due')",
+      "max": 0
+    }
+  ],
+  "notes": "Les deux benchmarks d'alignement (montants à droite, offres à gauche) sont ce qui distingue ce pattern d'une suite de lignes en flex : ils tombent à la première tentative de « laisser le contenu respirer » ligne par ligne, et c'est exactement le moment où une liste cesse d'être balayable. Le surlignage vit en marge négative (`margin: 0 -14px` sur la pile) pour dépasser les marges du titre : une ligne survolée qui s'arrête à l'alignement du texte se lit comme un bloc décalé, pas comme une ligne. La zone d'imminence reste présente et VIDE sur les lignes non urgentes — la supprimer casserait la grille et déplacerait les trois autres colonnes."
+}

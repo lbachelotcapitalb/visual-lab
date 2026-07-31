@@ -1,0 +1,82 @@
+<!-- chart-03-accent-column-callout — fragment autonome. Couleurs via --vl-* uniquement, aucune valeur en dur. -->
+<div class="vl-callout">
+  <div class="vl-callout__head">
+    <h2 class="vl-callout__title">Expense statistic</h2>
+    <span class="vl-callout__pill">Monthly</span>
+  </div>
+  <div class="vl-callout__plot">
+    <span class="vl-callout__col">
+      <span class="vl-callout__bar" style="height:87px"></span>
+      <span class="vl-callout__cap">MAY</span>
+    </span>
+    <span class="vl-callout__col">
+      <span class="vl-callout__bar" style="height:71px"></span>
+      <span class="vl-callout__cap">JUN</span>
+    </span>
+    <span class="vl-callout__col vl-callout__col--on">
+      <span class="vl-callout__bar" style="height:158px">
+        <span class="vl-callout__tip">
+          <span class="vl-callout__dot"></span>
+          <span class="vl-callout__box">$45k</span>
+        </span>
+      </span>
+      <span class="vl-callout__cap">JUL</span>
+    </span>
+    <span class="vl-callout__col">
+      <span class="vl-callout__bar" style="height:98px"></span>
+      <span class="vl-callout__cap">AUG</span>
+    </span>
+    <span class="vl-callout__col">
+      <span class="vl-callout__bar" style="height:82px"></span>
+      <span class="vl-callout__cap">SEP</span>
+    </span>
+  </div>
+</div>
+
+<style>
+/* Un histogramme où UNE seule colonne est accentuée — la courante — et où l'info-bulle ne
+   commente qu'elle. Ni axe, ni graduation, ni valeur sur les autres colonnes : la série donne
+   une forme, l'accent donne le chiffre. Les colonnes sont arrondies EN HAUT ET EN BAS (elles
+   flottent, elles ne sont pas plantées sur une ligne de base), et le pas est à peu près le
+   double de la largeur de colonne — c'est ce vide qui rend l'accent lisible sans le grossir.
+   L'info-bulle est ancrée à la colonne, pas à la carte : elle suit sa valeur quand elle change. */
+.vl-callout {
+  position: relative; width: 585px; height: 255px; padding: 26px 28px;
+  display: flex; flex-direction: column;
+  border-radius: var(--vl-radius-card);
+  background-color: var(--vl-surface-glass);
+  backdrop-filter: blur(var(--vl-blur));
+  box-shadow: inset 0 1px 0 var(--vl-sheen);
+  font-family: Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  color: var(--vl-ink);
+}
+.vl-callout__head { display: flex; align-items: center; justify-content: space-between; }
+.vl-callout__title { margin: 0; font-size: 15px; font-weight: 500; letter-spacing: -0.01em; }
+.vl-callout__pill {
+  display: inline-flex; align-items: center; padding: 7px 15px; border-radius: 999px;
+  font-size: 11px; font-weight: 500;
+  background-color: var(--vl-surface-glass-strong);
+  box-shadow: inset 0 1px 0 var(--vl-sheen);
+}
+.vl-callout__plot { flex: 1; display: flex; align-items: flex-end; justify-content: space-between; padding: 8px 6px 0; }
+.vl-callout__col { width: 56px; display: inline-flex; flex-direction: column; align-items: center; }
+.vl-callout__bar {
+  position: relative; width: 56px; border-radius: 24px;
+  background-color: var(--vl-surface-glass-strong);
+  box-shadow: inset 0 1px 0 var(--vl-sheen);
+}
+.vl-callout__col--on .vl-callout__bar {
+  background-color: var(--vl-blue);
+  background-image: linear-gradient(180deg, var(--vl-blue-light) 0%, var(--vl-blue) 100%);
+  box-shadow: none;
+}
+.vl-callout__cap { margin-top: 10px; font-size: 10px; font-weight: 500; letter-spacing: 0.04em; color: var(--vl-ink-muted); }
+.vl-callout__col--on .vl-callout__cap { color: var(--vl-ink); font-weight: 600; }
+.vl-callout__tip { position: absolute; left: 8px; top: -34px; display: flex; align-items: center; gap: 8px; }
+.vl-callout__dot { width: 9px; height: 9px; border-radius: 50%; background-color: var(--vl-surface-dark); }
+.vl-callout__box {
+  padding: 6px 12px; border-radius: 999px; white-space: nowrap;
+  background-color: var(--vl-surface-dark); color: var(--vl-ink-invert);
+  font-size: 11px; font-weight: 500;
+}
+</style>

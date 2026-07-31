@@ -1,0 +1,153 @@
+{
+  "name": "Planche en verre dépoli",
+  "family": "layout",
+  "ref": "ref-13-glass-fintech-dashboard",
+  "intent": "Emboîter les surfaces d'un écran dense sans un seul trait ni une seule couleur de séparation : un fond en dégradé, puis trois densités de blanc translucide décroissantes, le rayon décroissant avec elles.",
+  "when_to_use": "Dashboard, écran produit ou slide de démo où l'on veut de la profondeur sans ajouter de matière graphique — et où le fond doit rester visible à travers les panneaux (c'est lui qui donne la couleur de l'ensemble).",
+  "avoid_when": "Le support ne rend pas le flou d'arrière-plan (export .pptx, mailing, impression) : le verre s'aplatit alors en trois gris presque identiques et toute la hiérarchie disparaît. Éviter aussi sur un fond uni : sans matière derrière, le dépoli ne se voit pas.",
+  "media": [
+    "slide",
+    "web"
+  ],
+  "tags": [
+    "planche",
+    "verre",
+    "glassmorphism",
+    "depoli",
+    "flou",
+    "backdrop",
+    "degrade",
+    "imbrication",
+    "dashboard",
+    "translucide",
+    "profondeur"
+  ],
+  "vars": [
+    {
+      "name": "--vl-grad-1",
+      "role": "extrémité lavande du dégradé de fond",
+      "default": "#A3B0DA"
+    },
+    {
+      "name": "--vl-grad-3",
+      "role": "extrémité claire du dégradé de fond",
+      "default": "#C8CEDA"
+    },
+    {
+      "name": "--vl-board",
+      "role": "verre de la planche (blanc à 30 %)",
+      "default": "rgba(255, 255, 255, 0.30)"
+    },
+    {
+      "name": "--vl-surface-glass",
+      "role": "verre d'une carte (blanc à 45 %)",
+      "default": "rgba(255, 255, 255, 0.45)"
+    },
+    {
+      "name": "--vl-surface-glass-strong",
+      "role": "verre d'un sous-bloc (blanc à 68 %)",
+      "default": "rgba(255, 255, 255, 0.68)"
+    },
+    {
+      "name": "--vl-sheen",
+      "role": "liseré de lumière qui remplace la bordure",
+      "default": "rgba(255, 255, 255, 0.45)"
+    },
+    {
+      "name": "--vl-blur",
+      "role": "rayon du flou d'arrière-plan",
+      "default": "18px"
+    }
+  ],
+  "slots": [
+    "board",
+    "card",
+    "sub"
+  ],
+  "geometry": {
+    "root": ".vl-glass-board",
+    "frame": [
+      900,
+      560
+    ],
+    "ratios": {
+      "board_pad_over_width": 0.0338,
+      "gap_over_width": 0.0275,
+      "board_over_stage": 0.889
+    },
+    "type_px": {
+      "label": 15,
+      "figure": 42,
+      "sub": 12
+    },
+    "pad_ratio": {
+      "top": 0.0338,
+      "x": 0.0338,
+      "bottom": 0.0338
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "la carte est plus blanche que la planche (≥ 12 points d'alpha)",
+      "measure": "(Number((cs('.vl-glass-board__card','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1) - (Number((cs('.vl-glass-board__board','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1)",
+      "min": 0.12
+    },
+    {
+      "name": "le sous-bloc est plus blanc que la carte (≥ 12 points d'alpha)",
+      "measure": "(Number((cs('.vl-glass-board__sub','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1) - (Number((cs('.vl-glass-board__card','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1)",
+      "min": 0.12
+    },
+    {
+      "name": "aucune surface n'est opaque : la planche laisse passer le fond",
+      "measure": "Number((cs('.vl-glass-board__board','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1",
+      "max": 0.55
+    },
+    {
+      "name": "le rayon décroît avec l'imbrication : planche > carte",
+      "measure": "num('.vl-glass-board__board','borderTopLeftRadius') - num('.vl-glass-board__card','borderTopLeftRadius')",
+      "min": 6
+    },
+    {
+      "name": "le rayon décroît encore : carte > sous-bloc",
+      "measure": "num('.vl-glass-board__card','borderTopLeftRadius') - num('.vl-glass-board__sub','borderTopLeftRadius')",
+      "min": 6
+    },
+    {
+      "name": "le flou d'arrière-plan est bien posé sur la planche (sinon ce n'est pas du verre)",
+      "measure": "/blur/.test(cs('.vl-glass-board__board','backdropFilter') + cs('.vl-glass-board__board','webkitBackdropFilter')) ? 1 : 0",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "aucune bordure dessinée : c'est le liseré de lumière qui découpe",
+      "measure": "num('.vl-glass-board__card','borderTopWidth') + num('.vl-glass-board__board','borderTopWidth')",
+      "max": 0
+    },
+    {
+      "name": "marge de planche ≥ gouttière (le liseré de fond qui fait flotter les cartes)",
+      "measure": "num('.vl-glass-board__board','paddingLeft') - num('.vl-glass-board__row','columnGap')",
+      "min": 0
+    },
+    {
+      "name": "la planche laisse respirer le fond : elle occupe moins de 92 % de la scène",
+      "measure": "box('.vl-glass-board__board').w / W",
+      "max": 0.92
+    },
+    {
+      "name": "contraste du libellé sur le verre ≥ 7 (fond effectif = le dégradé, pas le blanc)",
+      "measure": "contrast('.vl-glass-board__label')",
+      "min": 7
+    },
+    {
+      "name": "aucun débordement du contenu hors de la planche",
+      "measure": "overflow('.vl-glass-board__board')",
+      "max": 0
+    },
+    {
+      "name": "la planche tient entièrement dans la scène, halos compris",
+      "measure": "Math.min(box('.vl-glass-board__board').top, box('.vl-glass-board__board').left, H - box('.vl-glass-board__board').bottom, W - box('.vl-glass-board__board').right)",
+      "min": 24
+    }
+  ],
+  "notes": "Le contrôle d'alpha est le cœur du pattern : c'est la seule chose qui porte la hiérarchie, et c'est aussi la première à disparaître quand quelqu'un « nettoie » les rgba en couleurs pleines. Trois pièges payés ici : (1) les deux halos flous sont des pseudo-éléments POSITIONNÉS — sans z-index explicite, ils sont peints APRÈS la planche et la recouvrent d'un voile blanc, ce qui délave silencieusement le texte des cartes ; (2) `bgOf()` du harnais remonte au premier fond d'alpha > 0.5, donc il traverse le verre et mesure le contraste contre le DÉGRADÉ — c'est plus sévère que la réalité perçue, et c'est voulu ; (3) un dégradé posé en `background` seul laisse `backgroundColor` transparent : les fonds colorés déclarent donc `background-color` ET `background-image`, sinon aucune mesure de contraste n'est possible. Quatrième piège : `overflow()` compare scrollHeight et clientHeight, or un pseudo-élément décoratif POSITIONNÉ hors du cadre gonfle scrollHeight même sous `overflow: hidden` — la scène sortait à 160 px de « débordement » alors que rien du contenu ne dépassait. Le débordement se mesure donc sur la PLANCHE, et le cadrage de la scène par la distance de la planche à ses quatre bords."
+}

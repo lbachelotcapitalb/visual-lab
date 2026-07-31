@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-17 patterns · 8 références · 10 vérifiés par benchmarks mesurés.
+22 patterns · 9 références · 15 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -33,13 +33,18 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `card-05-balance-gauge` | Montrer un solde et sa progression dans un grand panneau menthe : une jauge « compteur » (part acquise en plein, part restante en hachures) surmonte un chiffre héros posé en bas, la tendance en regard. | slide web | 10 | ref-11-finance-dashboard-mint |
 | `card-06-forecast-timeline` | Raconter une trajectoire dans une carte : une timeline verticale de jalons datés à gauche, et à droite deux sous-cartes teintées qui opposent la valeur constatée (menthe, présent) à la projection (lilas, futur). | slide web | 10 | ref-11-finance-dashboard-mint |
 | `card-07-transactions` | Poser un intitulé de flux (badge + titre + acteurs) en haut d'une carte blanche et sa ligne de valeur unique sur aplat doux collée en bas, sans jamais faire de la carte un tableau. | slide web | 8 | ref-11-finance-dashboard-mint |
+| `card-08-orb-chain-total` | Poser un total en chiffre héros et le décomposer juste en dessous en une chaîne de disques tangents dont un seul — le plus gros et le seul coloré — porte le support principal, les actions empilées à l'opposé. | slide web | 10 | ref-13-glass-fintech-dashboard |
+| `card-09-gradient-metric-curve` | Faire de la seule carte colorée d'un écran le porteur d'un indicateur unique : la pile libellé / chiffre / cadrage en haut-gauche, une courbe sans axe qui traverse la carte derrière elle, annotée à ses deux extrémités seulement. | slide web | 10 | ref-13-glass-fintech-dashboard |
 | `chart-01-stadium-bars` | Un histogramme réduit à l'essentiel : des barres à sommet en demi-cercle, aucune ligne d'axe, des légendes en pilules. | slide web | — | ref-03-bento-dark-pitch |
 | `chart-02-isotype` | Raconter une proportion en unités comptables (24 pictogrammes sur 40) au lieu d'un pourcentage abstrait. | slide web | — | ref-03-bento-dark-pitch |
+| `chart-03-accent-column-callout` | Donner la forme d'une série en quelques colonnes flottantes sans axe ni graduation, et n'en chiffrer qu'une seule — la courante — par une info-bulle sombre ancrée à sa colonne. | slide web | 11 | ref-13-glass-fintech-dashboard |
 | `layout-01-nested-bento` | Structurer une slide dense en trois niveaux (carte → sous-carte → tuile) sans une seule bordure ni ombre, en ne faisant décroître que le rayon et le padding. | slide web | — | ref-03-bento-dark-pitch |
 | `layout-02-swiss-frame` | Poser le cadre d'une slide de deck : une marge unique, deux barres de micro-typo à trois zones et un filet d'un pixel — de quoi rendre une suite de slides reconnaissable sans y ajouter le moindre ornement. | slide web | — | ref-04-swiss-investor-blue |
+| `layout-03-glass-board` | Emboîter les surfaces d'un écran dense sans un seul trait ni une seule couleur de séparation : un fond en dégradé, puis trois densités de blanc translucide décroissantes, le rayon décroissant avec elles. | slide web | 12 | ref-13-glass-fintech-dashboard |
 | `list-01-giant-numbers` | Aligner trois à quatre arguments de même rang en colonnes, chacun ouvert par un numéro ou un chiffre démesuré qui sert à la fois de repère de lecture et de seule tache de couleur du bloc. | slide web | — | ref-04-swiss-investor-blue |
 | `list-02-ruled-index` | Lister les sections d'un document en donnant à chacune son libellé, une ligne d'explication et son numéro à droite, séparées par un filet fin qui appartient à l'entrée qu'il suit. | slide web | 9 | ref-06-orange-notched |
 | `list-03-two-column-toc` | Faire tenir un sommaire de dix à quatorze sections sur une seule slide, en deux colonnes numérotées, lisible d'un coup d'œil et refermable aussitôt. | slide web | — | ref-04-swiss-investor-blue |
+| `list-04-due-rows` | Rendre une liste d'échéances balayable sans un seul filet : quatre zones tenues par une grille commune, une seule ligne surlignée, une seule pilule d'imminence, et le montant en unique colonne alignée à droite. | slide web | 12 | ref-13-glass-fintech-dashboard |
 | `shape-notched-corner` | Donner à un aplat coloré une signature de forme reconnaissable — UN coin coupé à 45° — sans rien ajouter au contenu ni recourir à un rayon, une ombre ou un liseré. | slide web | 3 | ref-06-orange-notched |
 | `tag-gooey-capsule` | Faire d'un mot-clé un OBJET : un contour continu qui soude un cercle de glyphe à une pilule de texte par deux congés concaves, pour qu'un terme isolé pèse autant qu'un titre sans être plus gros. | slide web | 13 | ref-12-neon-capsule-tags |
 | `title-leading-rule` | Marquer le titre d'une slide d'un filet vertical d'accent sans ajouter ni couleur au texte ni élément décoratif : le filet est le seul accent du titre, et il est collé au mot. | slide web | 7 | ref-06-orange-notched |
@@ -106,6 +111,22 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-surface-soft, --vl-surface-dark, --vl-lilac, --vl-radius-card
 - tags : carte, transaction, avatars, pile, flux, dashboard, blanc, ligne-valeur, crypto
 
+**card-08-orb-chain-total** — Solde total en chaîne d'orbes
+
+- employer : Un montant unique domine l'écran ET se répartit sur 3 à 4 supports qu'il faut montrer d'un coup d'œil, avec une action primaire à offrir dans le même bloc.
+- éviter : Les parts ne somment pas au total affiché (la chaîne devient un ornement mensonger), ou il y a plus de quatre supports : au-delà, les disques rétrécissent sous le corps lisible et un tableau fait mieux.
+- à remplir : label, figure, fx, orbs, actions
+- variables : --vl-surface-glass, --vl-surface-glass-strong, --vl-violet, --vl-violet-deep, --vl-violet-halo, --vl-surface-dark
+- tags : carte, solde, total, orbe, disque, chaine, repartition, dashboard, verre, action-primaire, chiffre-hero
+
+**card-09-gradient-metric-curve** — KPI sur aplat coloré à courbe annotée
+
+- employer : Un indicateur de premier rang doit émerger d'un tableau de bord par ailleurs neutre, et sa trajectoire compte autant que sa valeur du jour.
+- éviter : Deux indicateurs se disputent le premier rang (deux cartes colorées et il n'y en a plus aucune), ou les valeurs intermédiaires doivent être lisibles : ici la courbe n'a ni axe ni grille, elle donne une forme, pas des chiffres.
+- à remplir : label, figure, sub, action, curve, tags
+- variables : --vl-blue, --vl-blue-light, --vl-ink-invert, --vl-ink-invert-muted, --vl-surface-glass-soft
+- tags : carte, kpi, indicateur, courbe, sparkline, degrade, aplat, annotation, trajectoire, dashboard, premier-rang
+
 ### chart
 
 **chart-01-stadium-bars** — Barres à sommet arrondi
@@ -124,6 +145,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-accent-2, --vl-surface-light
 - tags : graphique, isotype, pictogramme, proportion, pourcentage, dataviz, comptage, part
 
+**chart-03-accent-column-callout** — Histogramme à colonne accentuée et info-bulle
+
+- employer : Une série courte (4 à 7 périodes) sert de contexte à UNE valeur qui, elle, doit être lue exactement : mois en cours, dernier trimestre, pic à commenter.
+- éviter : Plusieurs valeurs doivent être lues précisément (il faudrait autant d'info-bulles, et l'accent perd tout sens), ou les écarts entre colonnes sont faibles : sans axe, un écart de 5 % ne se voit pas.
+- à remplir : title, period, columns, callout
+- variables : --vl-surface-glass, --vl-surface-glass-strong, --vl-blue, --vl-blue-light, --vl-surface-dark
+- tags : histogramme, barres, colonnes, accent, info-bulle, tooltip, serie, periode, dashboard, sans-axe, verre
+
 ### layout
 
 **layout-01-nested-bento** — Bento à cartes imbriquées
@@ -141,6 +170,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - à remplir : mark, section, meta, body, footer-left, footer-center, footer-right
 - variables : --vl-hairline, --vl-hairline-invert, --vl-white, --vl-blue, --vl-ink-muted
 - tags : layout, cadre, header, footer, deck, slide, suisse, filet, micro-typo, grille, marge
+
+**layout-03-glass-board** — Planche en verre dépoli
+
+- employer : Dashboard, écran produit ou slide de démo où l'on veut de la profondeur sans ajouter de matière graphique — et où le fond doit rester visible à travers les panneaux (c'est lui qui donne la couleur de l'ensemble).
+- éviter : Le support ne rend pas le flou d'arrière-plan (export .pptx, mailing, impression) : le verre s'aplatit alors en trois gris presque identiques et toute la hiérarchie disparaît. Éviter aussi sur un fond uni : sans matière derrière, le dépoli ne se voit pas.
+- à remplir : board, card, sub
+- variables : --vl-grad-1, --vl-grad-3, --vl-board, --vl-surface-glass, --vl-surface-glass-strong, --vl-sheen, --vl-blur
+- tags : planche, verre, glassmorphism, depoli, flou, backdrop, degrade, imbrication, dashboard, translucide, profondeur
 
 ### list
 
@@ -168,6 +205,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - à remplir : head, note, entries
 - variables : --vl-blue, --vl-hairline-invert, --vl-ink-muted-invert
 - tags : sommaire, toc, agenda, numerotation, colonnes, deck, slide, navigation, filet, suisse
+
+**list-04-due-rows** — Liste d'échéances à quatre zones
+
+- employer : Trois à six échéances, abonnements ou factures à venir, où l'œil doit trouver l'urgente et comparer les montants sans lire les lignes.
+- éviter : Il faut plus de quatre informations par ligne (c'est un tableau qu'il faut, avec ses en-têtes), ou plus d'une ligne est urgente : la pilule d'imminence ne code quelque chose que tant qu'elle est unique.
+- à remplir : title, action, rows
+- variables : --vl-surface-glass, --vl-surface-glass-strong, --vl-blue, --vl-surface-dark, --vl-ink-muted
+- tags : liste, echeances, paiements, abonnements, lignes, grille, montant, imminence, surlignage, dashboard, verre
 
 ### shape
 
@@ -212,5 +257,6 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | — | `decks/ref-10-campaign-board-red.html` |
 | `ref-11-finance-dashboard-mint` | Dashboard bento clair — menthe & lilas | `card-04-stat-barchart`, `card-05-balance-gauge`, `card-06-forecast-timeline`, `card-07-transactions` | `decks/ref-11-finance-dashboard-mint.html` |
 | `ref-12-neon-capsule-tags` | Néon vert — étiquettes capsules sur fond sombre | `tag-gooey-capsule` | — |
+| `ref-13-glass-fintech-dashboard` | Dashboard en verre dépoli — lavande & bleu | `card-08-orb-chain-total`, `card-09-gradient-metric-curve`, `chart-03-accent-column-callout`, `layout-03-glass-board`, `list-04-due-rows` | `decks/ref-13-glass-fintech-dashboard.html` |
 
 Ce que chaque référence fait, sa palette et sa typo : [SPEC-SOURCES.md](SPEC-SOURCES.md).

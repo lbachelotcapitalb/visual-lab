@@ -133,7 +133,14 @@ l'aplat orange (2,77:1, sous le seuil de 3:1) a été rattrapé — l'audit .ppt
 harnais HTML non.
 
 Corollaire : un détecteur qui crie à tort est un détecteur qu'on finit par ignorer. Un faux
-positif récurrent se corrige **dans le détecteur**, on ne l'ignore pas à la main.
+positif récurrent se corrige **dans le détecteur**, on ne l'ignore pas à la main. Deuxième cas
+payé, 31/07 : le fond effectif du harnais de contraste remontait aux ancêtres jusqu'au premier
+fond d'`alpha > 0.5`. Un verre à 0,45 était donc traité comme inexistant et un verre à 0,51
+comme opaque — une falaise qui déclarait illisible tout un système en verre dépoli. Les couches
+translucides sont maintenant **compositées** ; le seuil arbitraire a disparu. Ce qui reste vrai
+en revanche, et qui n'est PAS un faux positif : sur un fond translucide, l'encre atténuée d'un
+relevé passe très souvent sous 4,5:1 pour les petits corps qu'elle porte. C'est un défaut de la
+source, il se corrige dans le **système** (token assombri), jamais en baissant le seuil.
 
 ---
 

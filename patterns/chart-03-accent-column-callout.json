@@ -1,0 +1,144 @@
+{
+  "name": "Histogramme à colonne accentuée et info-bulle",
+  "family": "chart",
+  "ref": "ref-13-glass-fintech-dashboard",
+  "intent": "Donner la forme d'une série en quelques colonnes flottantes sans axe ni graduation, et n'en chiffrer qu'une seule — la courante — par une info-bulle sombre ancrée à sa colonne.",
+  "when_to_use": "Une série courte (4 à 7 périodes) sert de contexte à UNE valeur qui, elle, doit être lue exactement : mois en cours, dernier trimestre, pic à commenter.",
+  "avoid_when": "Plusieurs valeurs doivent être lues précisément (il faudrait autant d'info-bulles, et l'accent perd tout sens), ou les écarts entre colonnes sont faibles : sans axe, un écart de 5 % ne se voit pas.",
+  "media": [
+    "slide",
+    "web"
+  ],
+  "tags": [
+    "histogramme",
+    "barres",
+    "colonnes",
+    "accent",
+    "info-bulle",
+    "tooltip",
+    "serie",
+    "periode",
+    "dashboard",
+    "sans-axe",
+    "verre"
+  ],
+  "vars": [
+    {
+      "name": "--vl-surface-glass",
+      "role": "verre de la carte",
+      "default": "rgba(255, 255, 255, 0.45)"
+    },
+    {
+      "name": "--vl-surface-glass-strong",
+      "role": "colonnes neutres et pilule de période",
+      "default": "rgba(255, 255, 255, 0.68)"
+    },
+    {
+      "name": "--vl-blue",
+      "role": "pied du dégradé de la colonne accentuée",
+      "default": "#4F7CF7"
+    },
+    {
+      "name": "--vl-blue-light",
+      "role": "sommet du dégradé de la colonne accentuée",
+      "default": "#8FB6FA"
+    },
+    {
+      "name": "--vl-surface-dark",
+      "role": "aplat de l'info-bulle et de son point de repère",
+      "default": "#101625"
+    }
+  ],
+  "slots": [
+    "title",
+    "period",
+    "columns",
+    "callout"
+  ],
+  "geometry": {
+    "root": ".vl-callout",
+    "frame": [
+      585,
+      255
+    ],
+    "ratios": {
+      "col_over_width": 0.0957,
+      "pitch_over_col": 2.08,
+      "bar_radius_over_col": 0.4286,
+      "tall_over_height": 0.6196
+    },
+    "type_px": {
+      "title": 15,
+      "pill": 11,
+      "cap": 10,
+      "tip": 11
+    },
+    "pad_ratio": {
+      "top": 0.0444,
+      "x": 0.0479,
+      "bottom": 0.0444
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "une seule colonne accentuée",
+      "measure": "document.querySelectorAll('.vl-callout__col--on').length",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "une seule info-bulle, et elle est portée par la colonne accentuée",
+      "measure": "document.querySelectorAll('.vl-callout__tip').length + (document.querySelector('.vl-callout__col--on .vl-callout__tip') ? 0 : 10)",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "la colonne accentuée est la plus haute de la série",
+      "measure": "box('.vl-callout__col--on .vl-callout__bar').h - Math.max(...[...document.querySelectorAll('.vl-callout__col:not(.vl-callout__col--on) .vl-callout__bar')].map((e) => e.getBoundingClientRect().height))",
+      "min": 20
+    },
+    {
+      "name": "le pas vaut environ le double de la largeur de colonne (le vide fait lire l'accent)",
+      "measure": "(box('.vl-callout__col:nth-child(2)').left - box('.vl-callout__col:nth-child(1)').left) / box('.vl-callout__col').w",
+      "expect": 2.08,
+      "tol": 0.3
+    },
+    {
+      "name": "les colonnes flottent : le rayon vaut ≈ 0,43 × la largeur, en haut ET en bas",
+      "measure": "num('.vl-callout__bar','borderBottomLeftRadius') / box('.vl-callout__bar').w",
+      "expect": 0.4286,
+      "tol": 0.06
+    },
+    {
+      "name": "la série remplit sa carte : la plus haute colonne dépasse 55 % de la hauteur",
+      "measure": "box('.vl-callout__col--on .vl-callout__bar').h / H",
+      "min": 0.55
+    },
+    {
+      "name": "l'info-bulle reste dans la carte (ancrée à la colonne, elle peut en sortir)",
+      "measure": "box('.vl-callout__box').right - W",
+      "max": 0
+    },
+    {
+      "name": "l'info-bulle partage la ligne d'en-tête sans percuter le titre ni la pilule de période",
+      "measure": "Math.min(box('.vl-callout__box').left - box('.vl-callout__title').right, box('.vl-callout__pill').left - box('.vl-callout__box').right)",
+      "min": 8
+    },
+    {
+      "name": "contraste du texte de l'info-bulle sur son aplat ≥ 7",
+      "measure": "contrast('.vl-callout__box')",
+      "min": 7
+    },
+    {
+      "name": "contraste des légendes de période ≥ 4,5 malgré leur petit corps",
+      "measure": "contrast('.vl-callout__cap')",
+      "min": 4.5
+    },
+    {
+      "name": "aucun débordement du contenu hors de la carte",
+      "measure": "overflow('.vl-callout')",
+      "max": 0
+    }
+  ],
+  "notes": "Deux bornes protègent l'accent, et elles tirent en sens inverse : la colonne accentuée doit être la plus haute (sinon l'œil accentue la mauvaise), et son info-bulle — ancrée à la COLONNE, donc libre de sortir de la carte — doit rester dans le cadre et sous l'en-tête. C'est ce couple qui rend le pattern rejouable sur d'autres valeurs : dès que la série change, l'un des deux casse avant le rendu. Le rayon est mesuré en BAS : c'est le seul endroit où l'on voit si les colonnes flottent ou si elles sont plantées sur une ligne de base absente. L'info-bulle monte au niveau de l'en-tête : c'est voulu, la colonne accentuée est haute et la bulle la surmonte. Ce qui est mesuré n'est donc pas un dégagement vertical (il n'y en a pas) mais le dégagement HORIZONTAL avec ses deux voisins de ligne, titre à gauche et pilule de période à droite."
+}

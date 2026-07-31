@@ -507,3 +507,108 @@ capsule pilotée par son mot. Le bord droit sort du cadre : la liste montrée es
 **Ce que cette référence apporte au corpus** — le premier **fond sombre** de la bibliothèque,
 et la première forme dont la signature est une **soudure** et non une coupe (`ref-06`) ou un
 rayon (`ref-03`).
+
+---
+
+## ref-13-glass-fintech-dashboard
+
+**Nature** — Écran de dashboard fintech, fourni **photographié en perspective** : la maquette
+est inclinée d'environ −10° et fuyante vers la gauche, et le cadre est **portrait** (≈ 2:3),
+donc plus étroit que l'écran qu'il montre. Deux cartes flottantes traînent sur le bord gauche,
+coupées par le cadre (une liste de transactions blanche opaque : `-$50`, `-$100`, `$120`,
+`-$100`, `-$75`, `-$250` ; et un fragment de carte « …acts / …end » = *Contacts / Send*).
+
+**Ce qu'il faut isoler** — la vraie unité est **la planche translucide et ses quatre modules**,
+remise à plat. Les deux cartes de gauche n'appartiennent pas à la planche : elles flottent
+*au-dessus* d'elle, amputées, et n'ont ni composition ni contenu complet exploitables. Elles
+sont notées ici pour mémoire, elles ne sont **pas** reconstruites. La perspective, elle, est
+un accident de prise de vue : aucun ratio ne se relève sur l'image inclinée, tous ceux qui
+suivent sont exprimés en fraction de la largeur de planche.
+
+**Palette** (relevés `≈`, la photo est floue et légèrement désaturée sur les bords)
+
+| rôle | valeur |
+|---|---|
+| fond, haut-gauche (lavande bleutée) | `#A8B4D9` |
+| fond, cœur saturé | `#9FAFD8` |
+| fond, bas-droite (gris-bleu clair) | `#C8CEDA` |
+| planche (blanc à ≈ 30 % sur flou d'arrière-plan) | perçue `#D9DEEA` |
+| carte (blanc à ≈ 45 %) | perçue `#E6E9F1` |
+| bleu d'accent | `#4F7CF7` |
+| violet de l'orbe centrale | `#8B5CF6` → `#5B7CF0` |
+| encre | `#1A1F2E` |
+| encre atténuée | `#6B7186` |
+| aplat noir des boutons | `#101625` |
+
+Aucune bordure dessinée : les surfaces se séparent par un **liseré de lumière** (blanc à
+≈ 45 % en haut/gauche, transparent en bas) — c'est lui, et non un trait, qui découpe le verre.
+
+**Typo** — grotesk neutre (Inter / Helvetica Neue), graisses 400/500/600/700, `letter-spacing`
+négatif sur les chiffres seulement (≈ `-0.02em`). Échelle, en **fraction de la largeur de
+planche** (`Wp`) — cf. le piège des px de `fonts/FONTS.md` :
+
+| rang | ratio | ce que ça porte |
+|---|---|---|
+| chiffre héros | `0.034 Wp` | `$73,558.00` — le `$` est à `0.55 ×` du nombre, et **bleu** |
+| chiffre de carte | `0.024 Wp` | `85%` |
+| chiffre d'orbe | `0.015 Wp` | `$23,558` |
+| titre de module | `0.011 Wp` | `Expense statistic` |
+| corps | `0.0095 Wp` | montants de liste, libellés de lignes |
+| micro | `0.0080 Wp` | `Visa`, `MAY`, dates |
+
+**Géométrie de la planche** — 4 modules, 3 rangées, gouttière unique `g = 0.017 Wp`, marge de
+planche `= 1.2 g` (la planche respire un peu plus que ses cartes ne s'écartent). Hauteur de
+planche ≈ `0.70 Wp`. Rangées, en fraction de la hauteur utile hors gouttières : solde `0.36`, duo `0.31`,
+échéances `0.33`. Le duo se partage `47 / 53` — la carte de santé est la plus large **parce
+qu'elle est la seule colorée** : elle doit tenir le poids visuel du bleu plein.
+
+Rayons décroissants avec l'imbrication, comme `ref-11` mais en verre : planche `0.030 Wp`,
+carte `0.022 Wp`, pilule `999px`, orbe `50 %`.
+
+**Module 1 — solde et chaîne d'orbes** (pleine largeur)
+- coin haut-droit : bascule de devise, `EUR` en encre atténuée nue + `USD` dans une pilule
+  blanche pleine. L'état actif est **la pilule**, pas la couleur du texte.
+- coin haut-gauche : micro-libellé `Total balance`, puis le chiffre héros.
+- centre : **trois orbes tangentes en chaîne**, l'orbe centrale plus grosse (`1.24 ×` les
+  latérales) et seule colorée (dégradé violet→bleu, halo diffus qui bave sur ses voisines).
+  Diamètre latéral ≈ `0.10 Wp`. Chevauchement ≈ `0.06 ×` le diamètre : elles se **touchent**,
+  elles ne se recouvrent pas. Chaque orbe porte un montant et, dessous, le nom du support.
+  La somme des trois FAIT le chiffre héros — c'est la seule raison d'être de la chaîne.
+- bord droit : deux actions empilées, `Receive Money` en verre et `Send Money` en aplat noir.
+  Une seule action pleine : c'est elle, la primaire.
+
+**Module 2 — statistique de dépense** (47 % de la rangée)
+- en-tête : titre à gauche, pilule blanche `Monthly` à droite (sélecteur de période).
+- 5 colonnes `MAY…SEP`, sommets ET pieds arrondis (`r = 0.42 ×` la largeur de colonne),
+  colonnes en verre pâle sauf **une seule** en dégradé bleu (`JUL`), la colonne courante.
+- la colonne d'accent porte une **info-bulle noire** `$45k` posée en haut-droite, avec un
+  point de repère noir sur le sommet de la colonne. Hauteurs relevées (fraction de la plus
+  haute) : `0.55 / 0.45 / 1 / 0.62 / 0.52`.
+
+**Module 3 — santé financière** (53 % de la rangée) — la **seule carte opaque et colorée** de
+la planche : dégradé bleu (haut-gauche `#4F7CF7` → bas-droite `#8FB6FA`).
+- coin haut-droit : bouton rond translucide, glyphe de rafraîchissement.
+- pile haut-gauche : libellé, `85%`, `since last month`.
+- une **courbe blanche** traverse toute la carte, lissée, avec un point à chaque extrémité
+  annotée : `7.26k` (bas-gauche, départ) et `16.75k` (haut-droite, arrivée). La courbe
+  **repart en descendant** après le second point, en blanc atténué : ce qui est mesuré s'arrête
+  au point, la suite est du décor et se lit comme tel.
+
+**Module 4 — échéances** (pleine largeur)
+- en-tête : titre à gauche, pilule noire `View All` à droite.
+- 3 lignes, chacune en **quatre zones** : identité (pastille de logo + nom + date en dessous),
+  échéance (pilule bleue `Today` pour l'imminente, sinon la date en encre atténuée), libellé
+  d'offre, montant aligné à droite.
+- **une seule ligne est surlignée** (fond blanc plus dense, rayon de carte) : le survol.
+
+**Ce que cette référence apporte au corpus** — le premier **système en verre dépoli** :
+aucune surface n'est opaque sauf l'accent, la hiérarchie ne se joue ni sur la couleur ni sur un
+trait mais sur **le taux de blanc et le flou d'arrière-plan**. Et le premier fond en **dégradé**
+(le corpus n'avait que des aplats).
+
+**Patterns extraits**
+- `layout-03-glass-board` — la planche dépolie et sa décroissance d'opacité/rayon.
+- `card-08-orb-chain-balance` — le solde et sa chaîne d'orbes tangentes.
+- `card-09-gradient-metric-curve` — le KPI sur aplat coloré avec sa courbe annotée aux deux bouts.
+- `chart-03-accent-column-callout` — l'histogramme à colonne unique accentuée et info-bulle.
+- `list-04-due-rows` — la liste d'échéances à quatre zones, une ligne surlignée.

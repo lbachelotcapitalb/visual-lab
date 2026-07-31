@@ -278,8 +278,32 @@ Ce qui transforme la collection en outil :
      et elles sont dans l'historique depuis le premier commit — les retirer imposerait de
      réécrire tout l'historique pour un gain nul une fois l'anonymisation faite.
 
+### ✅ Lot 14 — `ref-13` glass-fintech-dashboard (31/07/2026)
+Référence apportée hors corpus initial, fournie **photographiée en perspective** dans un cadre
+portrait, avec deux cartes coupées sur le bord gauche. Le travail d'isolement fait partie du lot :
+la vraie unité était la planche translucide et ses quatre modules, remise à plat ; les cartes
+amputées ne sont pas reconstruites (elles flottent au-dessus, sans composition exploitable).
+- ✅ `SPEC-SOURCES.md` § `ref-13`, écrite AVANT le code — palette, échelle typo en fraction de
+  la largeur de planche, géométrie des quatre modules.
+- ✅ `systems/ref-13-glass-fintech-dashboard.json` — premier système à tokens **translucides**.
+- ✅ `decks/ref-13-glass-fintech-dashboard.html` — une slide 1440×1040, rendue et comparée à la
+  source pendant qu'elle était encore dans le contexte.
+- ✅ 5 patterns : `layout-03-glass-board`, `card-08-orb-chain-total`,
+  `card-09-gradient-metric-curve`, `chart-03-accent-column-callout`, `list-04-due-rows` —
+  55 benchmarks, tous verts.
+- ✅ Outillage : `bin/check.mjs` **composite** désormais les couches translucides pour établir
+  le fond effectif d'une mesure de contraste (l'ancien seuil `alpha > 0.5` déclarait illisible
+  tout système en verre). Les 10 patterns antérieurs restent verts — leurs fonds sont opaques.
+- ✅ Le token `--vl-ink-muted` s'écarte volontairement du relevé (#6B7186 → #565C72) : à la
+  valeur de la source, dates et légendes sortent à 3,5:1 sur le verre. La bibliothèque ne
+  capitalise pas le défaut de la source.
+
+**Ce que le corpus gagne** : le verre dépoli, le fond en dégradé, et deux trous comblés de la
+liste « ce que personne ne couvre » — un graphique en ligne (`card-09`) et une liste dense de
+données alignées (`list-04`).
+
 ### ⬜ Lot 13 — Sortir du slide/web (ouvert le 31/07)
-Le constat mesuré : `node bin/emit.mjs --audit --target email` donne **0/17**. Tant qu'aucun
+Le constat mesuré : `node bin/emit.mjs --audit --target email` donne **0/22**. Tant qu'aucun
 pattern n'est écrit POUR ces canaux, « bibliothèque tous médias » reste une intention.
 - ⬜ Deux ou trois patterns nativement `email` (tables, largeurs fixes, zéro flex/calc/SVG) —
   le premier vrai test du champ `media` et de l'émetteur.
@@ -337,7 +361,7 @@ un commit.
 
 ## Ce qui reste, en un coup d'œil
 
-Decks à produire : `ref-05` (8 slides) · `ref-06` (8) · `ref-09` (12) · `ref-10` (3).
+Decks à produire : `ref-05` (8 slides) · `ref-09` (12).
 Non-decks à produire : `ref-07` et `ref-08` (pages web) · `ref-01` (couverture seule).
 Outillage : composition (11) — reste `compose.mjs` · skill + carte (12) — reste karto et
 l'arbitrage publication · sortir du slide/web (13) — email, social, PSD.

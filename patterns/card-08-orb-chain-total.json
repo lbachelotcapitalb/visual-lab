@@ -1,0 +1,86 @@
+{
+  "name": "Solde total en chaîne d'orbes",
+  "family": "card",
+  "ref": "ref-13-glass-fintech-dashboard",
+  "intent": "Poser un total en chiffre héros et le décomposer juste en dessous en une chaîne de disques tangents dont un seul — le plus gros et le seul coloré — porte le support principal, les actions empilées à l'opposé.",
+  "when_to_use": "Un montant unique domine l'écran ET se répartit sur 3 à 4 supports qu'il faut montrer d'un coup d'œil, avec une action primaire à offrir dans le même bloc.",
+  "avoid_when": "Les parts ne somment pas au total affiché (la chaîne devient un ornement mensonger), ou il y a plus de quatre supports : au-delà, les disques rétrécissent sous le corps lisible et un tableau fait mieux.",
+  "media": ["slide", "web"],
+  "tags": ["carte", "solde", "total", "orbe", "disque", "chaine", "repartition", "dashboard", "verre", "action-primaire", "chiffre-hero"],
+  "vars": [
+    { "name": "--vl-surface-glass", "role": "verre de la carte", "default": "rgba(255, 255, 255, 0.45)" },
+    { "name": "--vl-surface-glass-strong", "role": "verre des orbes secondaires et des pilules", "default": "rgba(255, 255, 255, 0.68)" },
+    { "name": "--vl-violet", "role": "cœur du dégradé de l'orbe principale", "default": "#8B5CF6" },
+    { "name": "--vl-violet-deep", "role": "aplat de repli de l'orbe + glyphe de devise", "default": "#5B7CF0" },
+    { "name": "--vl-violet-halo", "role": "halo diffus de l'orbe principale", "default": "rgba(123, 106, 240, 0.42)" },
+    { "name": "--vl-surface-dark", "role": "aplat de l'action primaire", "default": "#101625" }
+  ],
+  "slots": ["label", "figure", "fx", "orbs", "actions"],
+  "geometry": {
+    "root": ".vl-orbc",
+    "frame": [1266, 299],
+    "ratios": {
+      "orb_over_width": 0.104,
+      "lead_over_orb": 1.242,
+      "overlap_over_orb": 0.061,
+      "actions_over_width": 0.147
+    },
+    "type_px": { "label": 12, "figure": 45, "orb": 20, "orb_lead": 22, "micro": 11 },
+    "pad_ratio": { "top": 0.0205, "x": 0.0221, "bottom": 0.0205 }
+  },
+  "benchmarks": [
+    {
+      "name": "l'orbe principale est plus grosse que ses voisines d'un rapport ≈ 1,24",
+      "measure": "box('.vl-orbc__orb--lead').w / box('.vl-orbc__orb').w",
+      "expect": 1.24,
+      "tol": 0.08
+    },
+    {
+      "name": "les orbes se TOUCHENT sans se recouvrir (chevauchement ≤ 10 % du diamètre)",
+      "measure": "(box('.vl-orbc__orb').right - box('.vl-orbc__orb--lead').left) / box('.vl-orbc__orb').w",
+      "min": 0,
+      "max": 0.1
+    },
+    {
+      "name": "le chiffre héros appartient à l'échelle display : ≥ 40 px",
+      "measure": "num('.vl-orbc__fig','fontSize')",
+      "min": 40
+    },
+    {
+      "name": "le chiffre héros pèse au moins le double du chiffre d'une orbe",
+      "measure": "num('.vl-orbc__fig','fontSize') / num('.vl-orbc__orbfig','fontSize')",
+      "min": 2
+    },
+    {
+      "name": "la chaîne laisse la place aux actions : elle occupe moins de la moitié de la largeur",
+      "measure": "box('.vl-orbc__orbs').w / W",
+      "max": 0.5
+    },
+    {
+      "name": "les actions sont ancrées à droite, sans recouvrir la chaîne",
+      "measure": "box('.vl-orbc__actions').left - box('.vl-orbc__orbs').right",
+      "min": 24
+    },
+    {
+      "name": "une seule action pleine : la seconde pilule est opaque, la première non",
+      "measure": "(Number((cs('.vl-orbc__pill--solid','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1) - (Number((cs('.vl-orbc__pill','backgroundColor').match(/[\\d.]+/g)||[0,0,0,1])[3]) || 1)",
+      "min": 0.25
+    },
+    {
+      "name": "contraste du chiffre héros sur le verre ≥ 7",
+      "measure": "contrast('.vl-orbc__fig')",
+      "min": 7
+    },
+    {
+      "name": "contraste du chiffre de l'orbe principale sur son aplat ≥ 3",
+      "measure": "contrast('.vl-orbc__orb--lead .vl-orbc__orbfig')",
+      "min": 3
+    },
+    {
+      "name": "aucun débordement du contenu hors de la carte",
+      "measure": "overflow('.vl-orbc')",
+      "max": 0
+    }
+  ],
+  "notes": "Le chevauchement est le réglage le plus fragile du pattern : à 0 les disques flottent et la chaîne se lit comme trois vignettes indépendantes, au-delà de 10 % du diamètre l'orbe centrale mange le chiffre de sa voisine. Le benchmark borne des DEUX côtés pour cette raison. L'orbe principale déclare `background-color` sous son `background-image` — sans quoi le harnais mesure le contraste contre le fond de page et le blanc sur violet sort à tort en échec ; 3:1 est le seuil honnête pour du blanc sur un bleu-violet saturé, pas 4,5. Le halo passe par une variable (`--vl-violet-halo`) et non par un rgba en dur : le contrat du dépôt l'exige, et c'est ce qui permet de rejouer la carte sur une autre charte sans garder une lueur violette orpheline."
+}

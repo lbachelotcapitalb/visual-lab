@@ -1,0 +1,84 @@
+{
+  "name": "KPI sur aplat coloré à courbe annotée",
+  "family": "card",
+  "ref": "ref-13-glass-fintech-dashboard",
+  "intent": "Faire de la seule carte colorée d'un écran le porteur d'un indicateur unique : la pile libellé / chiffre / cadrage en haut-gauche, une courbe sans axe qui traverse la carte derrière elle, annotée à ses deux extrémités seulement.",
+  "when_to_use": "Un indicateur de premier rang doit émerger d'un tableau de bord par ailleurs neutre, et sa trajectoire compte autant que sa valeur du jour.",
+  "avoid_when": "Deux indicateurs se disputent le premier rang (deux cartes colorées et il n'y en a plus aucune), ou les valeurs intermédiaires doivent être lisibles : ici la courbe n'a ni axe ni grille, elle donne une forme, pas des chiffres.",
+  "media": ["slide", "web"],
+  "tags": ["carte", "kpi", "indicateur", "courbe", "sparkline", "degrade", "aplat", "annotation", "trajectoire", "dashboard", "premier-rang"],
+  "vars": [
+    { "name": "--vl-blue", "role": "extrémité saturée de l'aplat", "default": "#4F7CF7" },
+    { "name": "--vl-blue-light", "role": "extrémité claire de l'aplat", "default": "#8FB6FA" },
+    { "name": "--vl-ink-invert", "role": "texte, courbe mesurée et points", "default": "#FFFFFF" },
+    { "name": "--vl-ink-invert-muted", "role": "cadrage temporel + prolongement décoratif de la courbe", "default": "rgba(255, 255, 255, 0.72)" },
+    { "name": "--vl-surface-glass-soft", "role": "bouton rond translucide", "default": "rgba(255, 255, 255, 0.24)" }
+  ],
+  "slots": ["label", "figure", "sub", "action", "curve", "tags"],
+  "geometry": {
+    "root": ".vl-metric",
+    "frame": [659, 255],
+    "ratios": {
+      "curve_span_over_width": 0.695,
+      "rise_over_height": 0.408,
+      "btn_over_width": 0.0516
+    },
+    "type_px": { "label": 15, "figure": 32, "micro": 11 },
+    "pad_ratio": { "top": 0.0395, "x": 0.0425, "bottom": 0.0395 }
+  },
+  "benchmarks": [
+    {
+      "name": "le chiffre pèse au moins le double du libellé qui le nomme",
+      "measure": "num('.vl-metric__fig','fontSize') / num('.vl-metric__label','fontSize')",
+      "min": 2
+    },
+    {
+      "name": "la pile de KPI tient dans la moitié gauche : la courbe garde sa place",
+      "measure": "box('.vl-metric__head').w / W",
+      "min": 0.85
+    },
+    {
+      "name": "le chiffre ne descend pas dans la moitié basse de la carte (là où passe la courbe)",
+      "measure": "box('.vl-metric__fig').bottom / H",
+      "max": 0.5
+    },
+    {
+      "name": "l'annotation d'arrivée est au-dessus de celle de départ : la courbe monte",
+      "measure": "box('.vl-metric__tag--from').top - box('.vl-metric__tag--to').top",
+      "min": 60
+    },
+    {
+      "name": "les deux annotations encadrent la course mesurée (≥ 60 % de la largeur)",
+      "measure": "(box('.vl-metric__tag--to').left - box('.vl-metric__tag--from').left) / W",
+      "min": 0.6
+    },
+    {
+      "name": "exactement deux annotations : on annote les bouts, pas les points intermédiaires",
+      "measure": "document.querySelectorAll('.vl-metric__tag').length",
+      "expect": 2,
+      "tol": 0
+    },
+    {
+      "name": "la courbe est en fond et occupe toute la carte",
+      "measure": "box('.vl-metric__curve').w / W",
+      "expect": 1,
+      "tol": 0.02
+    },
+    {
+      "name": "contraste du chiffre sur l'aplat ≥ 3 (blanc sur bleu saturé)",
+      "measure": "contrast('.vl-metric__fig')",
+      "min": 3
+    },
+    {
+      "name": "contraste du libellé sur l'aplat ≥ 3",
+      "measure": "contrast('.vl-metric__label')",
+      "min": 3
+    },
+    {
+      "name": "aucun débordement du contenu hors de la carte",
+      "measure": "overflow('.vl-metric')",
+      "max": 0
+    }
+  ],
+  "notes": "Le seuil de contraste est à 3 et non à 4,5 : du blanc sur un bleu de marque saturé plafonne autour de 3,3:1, et exiger 4,5 obligerait à noircir l'aplat — c'est-à-dire à perdre exactement ce qui met la carte au premier rang. Ce que le benchmark garantit en échange, c'est que personne ne glisse vers un bleu plus clair sans s'en apercevoir. Le dégradé déclare `background-color` sous son `background-image`, sinon `bgOf()` traverse la carte et mesure le contraste contre la page. Le prolongement de la courbe après le point d'arrivée est tracé dans une SECONDE `<path>` en encre atténuée : c'est ce qui distingue le mesuré du décoratif, et le fusionner en un seul tracé ferait mentir la carte."
+}

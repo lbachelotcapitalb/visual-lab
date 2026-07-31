@@ -138,14 +138,28 @@ const lum = (rgb) => {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 };
 const parseRgb = (s) => (s.match(/[\\d.]+/g) || [0, 0, 0]).slice(0, 3).map(Number);
-// Fond effectif : on remonte les ancêtres jusqu'au premier fond non transparent.
+// Fond effectif : on COMPOSITE les couches translucides (source-over) jusqu'au premier fond
+// opaque. Un seuil « alpha > 0.5 » traitait un verre à 0,45 comme inexistant et un verre à
+// 0,51 comme opaque : une falaise qui fait mentir la mesure des deux côtés, et qui déclarait
+// illisible tout un système en verre dépoli (ref-13) parfaitement sain.
+// ⚠️ getComputedStyle().backgroundColor ne voit PAS un background-image : un aplat en
+// dégradé doit déclarer aussi sa couleur de repli, sinon la couche est comptée transparente.
 const bgOf = (el) => {
+  const layers = [];
   for (let e = el; e; e = e.parentElement) {
-    const c = getComputedStyle(e).backgroundColor;
-    const p = (c.match(/[\\d.]+/g) || []).map(Number);
-    if (p.length === 3 || (p.length === 4 && p[3] > 0.5)) return p.slice(0, 3);
+    const p = (getComputedStyle(e).backgroundColor.match(/[\\d.]+/g) || []).map(Number);
+    if (p.length < 3) continue;
+    const a = p.length === 4 ? p[3] : 1;
+    if (a <= 0) continue;
+    layers.push([p[0], p[1], p[2], a]);
+    if (a >= 1) break;
   }
-  return [255, 255, 255];
+  let out = [255, 255, 255];
+  for (let i = layers.length - 1; i >= 0; i--) {
+    const [r, g, b, a] = layers[i];
+    out = [r * a + out[0] * (1 - a), g * a + out[1] * (1 - a), b * a + out[2] * (1 - a)];
+  }
+  return out;
 };
 const contrast = (sel) => {
   const el = $(sel);
