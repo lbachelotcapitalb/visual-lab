@@ -1,5 +1,18 @@
 # visual-lab
 
+## Sommaire
+
+- Ce que ce dépôt est, et n'est pas
+- Ce qui est la source de vérité d'un pattern
+- Arborescence
+- Nomenclature
+- Médias et émetteurs — un pattern, plusieurs sorties
+- Choisir à l'œil : la planche-contact des patterns
+- Le contrôle : mathématique d'abord, visuel ensuite — en boucle
+- Utilisation
+- Contrat d'un pattern
+- État
+
 > Dépôt **public** sous [licence MIT](LICENSE). Trois réserves, détaillées dans
 > [NOTICE.md](NOTICE.md) : les polices de `fonts/` restent sous OFL, les photographies ne sont
 > pas dans le dépôt (seuls les manifestes le sont, crédits et licence par image), et les

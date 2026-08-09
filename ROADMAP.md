@@ -1,5 +1,15 @@
 # ROADMAP — visual-lab
 
+## Sommaire
+
+- Le livrable d'un lot est un DECK AU FORMAT SLIDES
+- Procédure d'un lot (identique à chaque fois)
+- Acquis techniques à réutiliser (gagnés sur les lots faits)
+- Lots
+- Règles de travail, valables dans tous les lots
+- Prompt de reprise (à coller dans une session nettoyée)
+- Ce qui reste, en un coup d'œil
+
 **But final : les 10 visuels du corpus reproduits en HTML**, et de chacun, les patterns
 atomiques extraits en fragments réutilisables — pour pouvoir ensuite retravailler dessus et
 composer d'autres slides, visuels ou pages.

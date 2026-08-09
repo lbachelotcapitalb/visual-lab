@@ -2,18 +2,17 @@
 name: visual-lab
 description: >-
   Bibliothèque de patterns visuels HTML/JSON réutilisables (~/visual-lab) — la MATIÈRE dans
-  laquelle toute production visuelle vient piocher (slide, mailing, post, bannière, flyer,
-  landing), et la porte par laquelle on y VERSE de nouveaux visuels par reverse-engineering.
+  laquelle toute production visuelle vient piocher (slide, mailing, post, bannière, flyer),
+  et la porte par laquelle on y VERSE de nouveaux visuels par reverse-engineering.
   Utilise-le quand Léo colle une image et dit « reverse ça », « transforme ce visuel en code »,
-  « ajoute ça à la bibliothèque », « on en fait un pattern » ; quand il demande « qu'est-ce
-  qu'on a déjà pour X », « montre-moi ce qu'il y a en carte / en graphique », « propose-moi
-  des visuels », « sors-moi ce pattern » ; et OBLIGATOIREMENT avant d'inventer une composition
+  « ajoute ça à la bibliothèque » ; quand il demande « qu'est-ce qu'on a déjà pour X »,
+  « montre-moi ce qu'il y a en carte / en graphique », « propose-moi des visuels »,
+  « sors-moi ce pattern » ; et OBLIGATOIREMENT avant d'inventer une composition
   visuelle de zéro, quel que soit le média — le plan de production se confronte à la
-  bibliothèque avant d'écrire une ligne. Complète deck-builder (qui PRODUIT des slides et
-  applique la doctrine côté .pptx/HTML), bestfront (la boucle de vérification front),
-  frontend-design (qui INVENTE une direction) et theme-factory (qui applique un thème
-  existant) : ici c'est la matière déjà validée à l'œil ET à la mesure, plus l'outillage
-  qui la mesure, la rend, la range et l'émet vers un autre média.
+  bibliothèque avant d'écrire une ligne. Complète deck-builder (qui PRODUIT des slides),
+  bestfront (la boucle de vérification front), frontend-design (qui INVENTE une direction)
+  et theme-factory (qui applique un thème existant) : ici c'est la matière déjà validée à
+  l'œil ET à la mesure, plus l'outillage qui la mesure, la rend et la range.
 ---
 
 # visual-lab — consulter la bibliothèque, et y verser
@@ -26,12 +25,13 @@ copie divergerait :
 
 | quoi | où |
 |---|---|
-| le catalogue (une ligne par pattern, c'est là qu'on choisit) | `INDEX.md` — **GÉNÉRÉ**, jamais édité |
+| le catalogue (une ligne par pattern, c'est là qu'on choisit) | [INDEX.md](INDEX.md) — **GÉNÉRÉ**, jamais édité |
 | le même pour la machine (ratios, benchmarks, tokens) | `index.json` — **GÉNÉRÉ** |
-| le contrat d'un pattern, la nomenclature, les outils | `README.md` |
-| les lois de mise en page, tous médias | `DOCTRINE.md` |
-| l'audit des références sources (les images n'existent PAS sur disque) | `SPEC-SOURCES.md` |
-| ce qui reste à faire, lot par lot | `ROADMAP.md` |
+| le contrat d'un pattern, la nomenclature, les outils | [README.md](README.md) |
+| les lois de mise en page, tous médias | [DOCTRINE.md](DOCTRINE.md) |
+| l'audit des références sources (les images n'existent PAS sur disque) | [SPEC-SOURCES.md](SPEC-SOURCES.md) |
+| ce qui reste à faire, lot par lot | [ROADMAP.md](ROADMAP.md) |
+| ce que la licence MIT ne couvre PAS (polices, images sources) | [NOTICE.md](NOTICE.md) — **à lire avant toute diffusion** |
 
 ---
 

@@ -1,6 +1,6 @@
 # FONTS — le registre typographique du corpus
 
-Quatre fichiers couvrent les onze références. Ils sont **dans le dépôt** (le réseau est
+Neuf fichiers couvrent les douze références. Ils sont **dans le dépôt** (le réseau est
 périssable, le rendu doit rester hors-ligne), sous licence **OFL** — licences à côté des
 `.ttf`. Point d'entrée unique : [`fonts.css`](fonts.css).
 
@@ -25,7 +25,7 @@ est écrit à la racine) :
 Vérifié le 30/07/2026 : Chrome headless charge bien ces `.ttf` en `file://`, sans
 `--allow-file-access-from-files` (`document.fonts.check()` → `true` pour toutes).
 
-## Les quatre familles embarquées
+## Les sept familles embarquées
 
 | famille | fichier | axes | ce qu'elle couvre |
 |---|---|---|---|
@@ -33,6 +33,23 @@ Vérifié le 30/07/2026 : Chrome headless charge bien ces `.ttf` en `file://`, s
 | **Inter** | `Inter-variable.ttf` | `wght 100→900`, `opsz` | le substitut d'Helvetica Neue pour les références « grotesk neutre » |
 | **Montserrat** | `Montserrat-variable.ttf` | `wght 100→900` | la seule **géométrique** : fûts ronds, `a` à deux étages, chiffres larges — les références SaaS lavande |
 | **Anton** | `Anton-Regular.ttf` | une seule graisse | titre condensé quand Archivo à `wdth 62` manque encore de tension |
+| **Newsreader** | `Newsreader-variable.ttf` + `Newsreader-Italic-variable.ttf` | `wght 200→800`, `opsz 6→72` | la **seule serif** du dépôt — titres et corps de lecture de ref-16 |
+| **Hanken Grotesk** | `HankenGrotesk-variable.ttf` | `wght 100→900` | grotesk **humaniste** — cartouches en capitales espacées de ref-16 |
+| **DM Mono** | `DMMono-Regular.ttf`, `DMMono-Medium.ttf` | 400 et 500, **non variable** | folios, sources, chiffres de tableau de ref-16 |
+
+### Le trio de ref-16 (« papier millimétré »)
+
+Trois pièges, tous vérifiés le 01/08/2026 :
+
+1. **L'italique de Newsreader est un deuxième fichier.** Sur une serif de lecture, l'italique
+   est un dessin distinct — `opsz` ne le fabrique pas, et sans le fichier le navigateur
+   **penche le romain**, ce qui se voit au premier `<em>` d'un titre à 62px.
+2. **DM Mono n'est pas variable.** Déclarer `font-weight: 400 500` sur le seul fichier
+   Regular fait **synthétiser** le 500 : les fûts s'épaississent de travers sur les chiffres,
+   précisément là où ce mono sert. Deux `@font-face`, deux fichiers.
+3. **Hanken Grotesk plutôt que Montserrat pour les capitales espacées.** À
+   `letter-spacing: .12em`, la géométrique s'ouvre trop et le cartouche se délite ;
+   l'humaniste tient. Pas d'italique embarquée : le corpus ne l'appelle jamais en sans.
 
 **`font-stretch` n'est pas décoratif** : sur une variable, il déplace un vrai axe de dessin.
 Étirer une police non variable avec `transform: scaleX()` déforme les fûts et se voit

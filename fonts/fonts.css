@@ -46,3 +46,54 @@
   font-style: normal;
   font-display: block;
 }
+
+/* ── Le trio « papier millimétré » (ref-16-cobalt-graph-paper) ────────────────
+   Une seule serif de lecture, une grotesk humaniste, un mono de chiffres. C'est
+   le seul jeu du dépôt qui porte une SERIF : les autres références n'en ont pas. */
+
+/* Newsreader — variable, deux fichiers (romain + italique : les italiques d'une
+   serif de lecture sont un dessin distinct, pas une inclinaison, et `opsz` ne
+   les fabrique pas). L'axe `opsz` reste automatique : à 148px le titre prend le
+   dessin display, à 30px le dessin de labeur, sans réglage. */
+@font-face {
+  font-family: "Newsreader";
+  src: url("Newsreader-variable.ttf") format("truetype-variations");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Newsreader";
+  src: url("Newsreader-Italic-variable.ttf") format("truetype-variations");
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: block;
+}
+
+/* Hanken Grotesk — variable. Humaniste, pas géométrique : ses capitales tiennent
+   le `letter-spacing: .12em` des cartouches sans se déliter, là où Montserrat
+   s'ouvre trop. Pas d'italique embarquée : le corpus ne l'appelle jamais en sans. */
+@font-face {
+  font-family: "Hanken Grotesk";
+  src: url("HankenGrotesk-variable.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+
+/* DM Mono — PAS variable : deux fichiers statiques, 400 et 500. Ne pas déclarer
+   `font-weight: 400 500` sur un seul fichier, le navigateur synthétiserait le gras. */
+@font-face {
+  font-family: "DM Mono";
+  src: url("DMMono-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "DM Mono";
+  src: url("DMMono-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: block;
+}

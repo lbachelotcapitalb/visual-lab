@@ -1,5 +1,19 @@
 # DOCTRINE — les lois de mise en page de la maison
 
+## Sommaire
+
+- 1. Remplir l'espace — aucun vide oisif
+- 2. Alignement inter-cartes — même départ, on grandit vers le bas
+- 3. Le quadrillage invisible
+- 4. La forme ET la couleur encodent la catégorie
+- 5. Un fait, un lieu
+- 6. Titres assertifs, pas étiquettes
+- 7. Plancher de lisibilité — et un plancher n'est pas une cible
+- 8. Justification — un arbitrage MESURÉ, jamais un goût
+- 9. Tokens — rien à la main
+- 10. Mesurer d'abord, regarder ensuite — et poser l'assertion des DEUX côtés
+- Les trous — ce que personne ne mesure encore
+
 Ce fichier ne contient **que ce qui ne dépend pas du média**. Une vignette obéit aux mêmes lois
 qu'elle finisse sur une slide, dans une page web, dans un mailing ou sur un flyer — ce qui
 change, c'est le moteur qui la rend et l'outil qui la mesure, pas la loi.

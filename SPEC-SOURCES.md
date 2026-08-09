@@ -1,5 +1,24 @@
 # SPEC-SOURCES — audit des 10 références visuelles
 
+## Sommaire
+
+- ref-01-bento-pills-2030
+- ref-02-ghost-icon-claim
+- ref-03-bento-dark-pitch
+- ref-04-swiss-investor-blue
+- ref-05-proposal-acid-yellow
+- ref-06-orange-notched
+- ref-07-retro-brand-hero
+- ref-08-swiss-studio-hero
+- ref-09-zine-annotated-blue
+- ref-10-campaign-board-red
+- Vue d'ensemble — ce que le corpus couvre
+- ref-12-neon-capsule-tags
+- ref-13-glass-fintech-dashboard
+- ref-15-lilac-notched-kpi
+- ref-14-layer-stack-coral
+- ref-16-cobalt-graph-paper
+
 > **Ce fichier remplace les images.** Les visuels d'origine ont été fournis collés dans une
 > session Claude Code (29/07/2026) : ils ne sont **pas** sur le disque et ne survivront pas à
 > une session nettoyée. Tout le reverse-engineering des lots suivants se fait à partir de

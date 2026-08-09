@@ -1,5 +1,12 @@
 # INDEX — visual-lab en un fichier
 
+## Sommaire
+
+- Comment se servir de ce fichier
+- Catalogue
+- Détail
+- Références
+
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
 26 patterns · 12 références · 19 vérifiés par benchmarks mesurés.
