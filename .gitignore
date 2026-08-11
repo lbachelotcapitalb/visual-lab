@@ -18,7 +18,10 @@ assets/photos/**/board.html
 assets/refs/
 # Temporaires des sondes, écrits à la RACINE sous un nom prévisible : un contrôle interrompu
 # en laisse un derrière lui, et il finit dans un `git add` distrait.
-.check.html
+.check-*.html
+.frame-probe-*.html
+.avg-1px-*.png
+.contact-sheet*.html
 .deckprobe-*.html
 .diff-*.html
 .palette-*.png

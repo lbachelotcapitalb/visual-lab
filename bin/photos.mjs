@@ -137,7 +137,7 @@ function bestMatch(avg) {
 // référencent des voisins hors cadre (donc 0), si bien que l'octet brut EST la valeur.
 const hex2 = (v) => Math.max(0, Math.min(255, v)).toString(16).padStart(2, '0');
 function avgColorOfFile(file) {
-  const tmp = join(ROOT, '.avg-1px.png');
+  const tmp = join(ROOT, `.avg-1px-${process.pid}.png`);
   try {
     execFileSync('sips', ['-z', '1', '1', file, '-s', 'format', 'png', '--out', tmp], { stdio: 'ignore' });
     const d = readFileSync(tmp);

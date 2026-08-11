@@ -32,7 +32,7 @@ if (argv[0] === '--pattern') {
     process.exit(1);
   }
   const sys = loadSystems().find((s) => s.id === p.ref);
-  tmp = join(ROOT, `.render-${id}.html`);
+  tmp = join(ROOT, `.render-${id}-${process.pid}.html`);
   writeFileSync(
     tmp,
     `<!doctype html><meta charset="utf-8"><style>

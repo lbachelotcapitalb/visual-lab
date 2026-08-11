@@ -95,7 +95,7 @@ const cells = patterns.map((p, i) => {
 
 mkdirSync(DIRS.proofs, { recursive: true });
 // Écrit dans patterns/ : les chemins relatifs éventuels d'un fragment restent valides.
-const tmp = join(DIRS.patterns, '.frame-probe.html');
+const tmp = join(DIRS.patterns, `.frame-probe-${process.pid}.html`);
 writeFileSync(
   tmp,
   `<!doctype html><meta charset="utf-8"><style>${fontsCss}

@@ -97,7 +97,7 @@ ${cells.map((c) => c.css).join('\n')}`;
 mkdirSync(DIRS.proofs, { recursive: true });
 const name = `contact-sheet${suffixe}`;
 // Écrit dans patterns/ : les chemins relatifs éventuels d'un fragment restent valides.
-const tmp = join(DIRS.patterns, `.${name}.html`);
+const tmp = join(DIRS.patterns, `.${name}-${process.pid}.html`);
 
 writeFileSync(
   tmp,

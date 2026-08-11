@@ -179,7 +179,10 @@ window.__VL_EVAL__ = (expr) => eval(expr);
 `;
 
 let failures = 0;
-const tmp = join(ROOT, '.check.html');
+// Nom UNIQUE par processus. Deux sessions qui mesurent en parallèle écrivaient le même
+// fichier : 12 faux échecs sur card-05 et chart-03 le 31/07 (cadres d'un autre pattern),
+// repassés verts à l'unité sans un octet changé. Une chaîne autonome rend ce cas ordinaire.
+const tmp = join(ROOT, `.check-${process.pid}.html`);
 mkdirSync(DIRS.proofs, { recursive: true });
 
 for (const p of patterns) {
