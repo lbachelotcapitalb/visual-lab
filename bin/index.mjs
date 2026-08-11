@@ -3,6 +3,7 @@
 // tout est entièrement recréé à chaque passage. Sort en code 1 si un pattern est invalide —
 // une bibliothèque à moitié indexée qui se tait est pire qu'une erreur.
 import { unlinkSync, existsSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { ROOT, DB, FAMILIES, MEDIA, loadPatterns, loadSystems, mediaOf, sql, q } from './lib.mjs';
 
@@ -216,7 +217,11 @@ writeFileSync(
   ) + '\n'
 );
 
+// La VITRINE se régénère avec l'index, et non à la main : un catalogue à jour à côté d'une
+// vitrine périmée est pire qu'une vitrine absente — on croit regarder l'état du dépôt.
+execFileSync(process.execPath, [join(ROOT, 'bin', 'gallery.mjs')], { stdio: 'ignore' });
+
 console.log(
   `✓ ${patterns.length} pattern(s), ${systems.length} référence(s) → patterns.db · ` +
-    `INDEX.md · index.json  (${withBench.length} vérifiable(s) par bin/check.mjs)`
+    `INDEX.md · index.json · gallery.html  (${withBench.length} vérifiable(s) par bin/check.mjs)`
 );

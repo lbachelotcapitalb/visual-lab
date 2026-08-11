@@ -25,6 +25,7 @@ copie divergerait :
 
 | quoi | où |
 |---|---|
+| **la vitrine — les patterns VIVANTS, à ouvrir dans un navigateur** | [gallery.html](gallery.html) — **GÉNÉRÉ** par `bin/index.mjs` |
 | le catalogue (une ligne par pattern, c'est là qu'on choisit) | [INDEX.md](INDEX.md) — **GÉNÉRÉ**, jamais édité |
 | le même pour la machine (ratios, benchmarks, tokens) | `index.json` — **GÉNÉRÉ** |
 | le contrat d'un pattern, la nomenclature, les outils | [README.md](README.md) |
@@ -51,24 +52,31 @@ node bin/search.mjs --media email                  # ce qui est destiné à un c
 node bin/search.mjs --show card-03-stat-accent     # le fragment + le :root de sa référence
 ```
 
-### Choisir : le texte d'abord, l'image ensuite
+### Choisir : le texte d'abord, la VITRINE HTML ensuite — jamais un PNG
 
 Le routage se fait sur `INDEX.md` — du texte, pas cher, qui dit ce que chaque pattern FAIT.
-Regarder les dix-sept rendus à chaque production serait du gaspillage.
+Regarder trente-huit rendus à chaque production serait du gaspillage.
 
-L'image sert l'étape d'après : **arbitrer entre les finalistes, ou passer une branche en revue
-pour en proposer trois à Léo**. C'est exactement l'usage : une planche, dix à vingt vignettes,
-trois propositions, Léo tranche.
+Pour l'étape d'après — arbitrer entre finalistes, passer une branche en revue, faire trancher
+Léo — c'est [`gallery.html`](gallery.html) qui sert, et **rien d'autre** :
 
 ```bash
-node bin/contact-sheet.mjs --family card --cols 3   # → proofs/contact-sheet-card.png
-node bin/contact-sheet.mjs --media social
-node bin/render.mjs --pattern card-03-stat-accent   # le finaliste, en TAILLE RÉELLE
+node bin/index.mjs && open gallery.html     # la vitrine se régénère AVEC l'index
+node bin/gallery.mjs --family card          # ou filtrée
+node bin/gallery.mjs ref-17 ref-18
 ```
 
-Une planche est un **dérivé** : elle sert à choisir, jamais à juger. Un pattern retenu se regarde
-à sa taille réelle avant d'être posé quelque part — à 45 % on ne voit ni un contraste limite, ni
-un corps sous le plancher.
+**Une planche-contact en PNG est proscrite, et ce n'est pas une préférence.** Une image est une
+COPIE MORTE : elle périme au premier changement de fragment sans que rien ne le signale, on ne
+peut ni zoomer sans bouillie, ni inspecter le DOM, ni copier le code, ni voir le vrai rendu des
+polices — et elle pèse du binaire dans un dépôt qui n'en accepte pas. `gallery.html` rend les
+fragments EUX-MÊMES, chacun sur le sol et les tokens de sa charte, avec son code dépliable :
+ce qu'on regarde est exactement ce qu'on collera.
+
+Corollaire : **on ne livre jamais un PNG à Léo, et on ne lui ouvre jamais un dossier d'images.**
+On lui ouvre `gallery.html`, ou le deck concerné. Un pattern retenu se regarde ensuite à sa
+taille réelle — `open decks/<ref>.html` — avant d'être posé quelque part : à 45 % on ne voit ni
+un contraste limite, ni un corps sous le plancher.
 
 ### Sortir le pattern vers un autre média que le web
 
@@ -256,11 +264,17 @@ Le champ `media` déclare où le pattern est censé servir — c'est une intenti
 
 ```bash
 node bin/check-deck.mjs <ref>             # la COMPOSITION : format, couches, marge de page
-node bin/index.mjs                        # refuse d'indexer un pattern hors contrat
+node bin/index.mjs                        # refuse d'indexer un pattern hors contrat ; régénère la vitrine
 node bin/check.mjs <id>                   # sort en code 1 tant qu'un seuil n'est pas tenu
-node bin/render.mjs --pattern <id>        # et REGARDER
+node bin/render.mjs --pattern <id>        # RASTER DE TRAVAIL — pour MON œil, jamais un livrable
 node bin/diff.mjs <ref>                   # rendu ET source côte à côte — la fidélité
 ```
+
+**Le raster reste nécessaire à l'agent et interdit au livrable.** Je ne peux pas « regarder » du
+HTML : `render.mjs` et `diff.mjs` existent pour que JE voie, et leurs sorties vivent dans
+`proofs/` — gitignoré, supprimé en fin de lot, jamais montré, jamais cité comme preuve à Léo.
+Sa preuve à lui est `gallery.html` et les decks. Confondre les deux, c'est lui livrer une copie
+morte de ce dont il a la version vivante.
 
 Les benchmarks ne sont pas une formalité administrative : ce sont eux qui rendent le pattern
 rejouable. Un pattern sans assertion mesurable est une capture d'écran avec des mots autour.
@@ -290,12 +304,13 @@ translucides pour établir un fond effectif, faute de quoi tout système en verr
 ### 6. Clore — le livrable est du HTML et du JSON
 
 **Ce que la bibliothèque porte : `patterns/*.html`, `patterns/*.json`, `systems/*.json`,
-`decks/*.html`. Rien d'autre.** Les PNG servent PENDANT le reverse (regarder, comparer à la
-source, arbitrer) — après coup on les supprime pour ne pas les accumuler ; `proofs/` est un
-dérivé jetable, déjà gitignoré. Rendre hors dépôt quand c'est possible.
+`decks/*.html`, et la vitrine `gallery.html`. Rien d'autre — et surtout aucune image.** Les PNG
+servent PENDANT le reverse (voir, comparer à la source, arbitrer) ; après coup `proofs/` se
+supprime, il est gitignoré et jetable.
 
-`node bin/index.mjs` · `INDEX.md`/`index.json` régénérés · la case cochée dans `ROADMAP.md` · la
-doc touchée à jour dans le MÊME commit · **autocommit sans demander**.
+`node bin/index.mjs` (qui régénère `INDEX.md`, `index.json` ET `gallery.html` d'un coup — un
+catalogue à jour à côté d'une vitrine périmée est pire qu'une vitrine absente) · la case cochée
+dans `ROADMAP.md` · la doc touchée à jour dans le MÊME commit · **autocommit sans demander**.
 
 **Le commit nomme les chemins du lot — jamais `git add -A`.** Le dépôt est partagé : une autre
 session peut travailler sur `ref-NN+1` en parallèle (vécu le 31/07), et un `-A` emporte son
@@ -344,8 +359,9 @@ review — il ne reteste pas derrière.
 
 ## Définition de « terminé »
 
-`bin/index.mjs` passe · `bin/check.mjs` est vert sur le pattern touché · son rendu a été
-**regardé** (et comparé à la source, pour un versement) · le deck est aux **dimensions PPT
+`bin/index.mjs` passe (donc `gallery.html` est à jour) · `bin/check.mjs` est vert sur le pattern
+touché · son rendu a été **regardé** (et comparé à la source, pour un versement) · le deck est aux **dimensions PPT
 1600×900** · le nombre de couches du rendu est celui de la source · `INDEX.md`/`index.json` sont
-régénérés · la doc touchée est à jour dans le MÊME commit · les PNG de travail sont supprimés ·
-le commit nomme ses chemins et part **sans demander**.
+régénérés · la doc touchée est à jour dans le MÊME commit · les PNG de travail sont supprimés (aucun
+n'est livré ni ouvert à Léo : sa vue, c'est `gallery.html`) · le commit nomme ses chemins et
+part **sans demander**.

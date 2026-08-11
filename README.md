@@ -68,6 +68,7 @@ un fragment réglé pour 1600 px de large donne un corps de 10,2 pt s'il est con
 ```
 SKILL.md               le mode d'emploi opérateur (skill `visual-lab`, symlinké dans ~/.claude/skills)
 DOCTRINE.md            les lois de mise en page de la maison, TOUS MÉDIAS — et qui les mesure
+gallery.html           LA VITRINE : tous les patterns RENDUS, dans un navigateur — GÉNÉRÉ, jamais édité
 INDEX.md               LE POINT D'ENTRÉE : catalogue de routage + détail — GÉNÉRÉ, jamais édité
 index.json             le même pour la machine (ratios, benchmarks, tokens) — GÉNÉRÉ
 patterns/<id>.json     métadonnées d'un pattern (intention, quand l'employer, quand l'éviter)
@@ -86,7 +87,8 @@ bin/new-ref.mjs        ouvre un lot : section de spec + systems/ + deck au forma
 bin/check-deck.mjs     le lint de COMPOSITION : format, couches, couche 1:1 redondante
 bin/diff.mjs           rendu ET source côte à côte — le contrôle de fidélité
 assets/refs/<ref>.png  les images sources des reverses — GITIGNORÉES (visuels tiers)
-bin/contact-sheet.mjs  la planche-contact des PATTERNS : choisir à l'œil parmi 10-20 vignettes
+bin/gallery.mjs        LA VITRINE HTML : les fragments rendus tels quels, code dépliable — jamais un PNG
+bin/contact-sheet.mjs  planche-contact PNG — instrument de mesure INTERNE, jamais un livrable
 bin/emit.mjs           sortir un pattern vers un autre média (inline, email) — refuse si ça ne tient pas
 kit/vl_pptx.py         le pont vers le .pptx : émetteurs + audit mathématique (lit index.json)
 patterns.db            index SQLite pour la recherche plein texte — REGÉNÉRABLE, gitignoré
