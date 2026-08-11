@@ -1,0 +1,170 @@
+{
+  "name": "Bande de trois chiffres pour un mail — colonnes en cellules, filets d'un pixel",
+  "family": "card",
+  "ref": "ref-04-swiss-investor-blue",
+  "intent": "Poser trois indicateurs de même nature en une bande dans un mail, sans aplat de carte ni encadrement : les colonnes sont des cellules à largeur en pourcentage sur une table à disposition fixe — la seule répartition en parts égales qu'Outlook respecte — et les séparateurs sont des filets de cellule, pas des colonnes intercalaires. La couleur ne fait qu'une chose : elle porte les chiffres.",
+  "when_to_use": "Ouvrir ou clore une lettre d'information par trois valeurs comparables (un encours, une variation, un horizon) que le lecteur doit pouvoir saisir sans lire le corps. Le chiffre est court — six signes au plus — et son libellé tient sur une ligne.",
+  "avoid_when": "Les valeurs ne sont pas comparables (la bande impose une lecture de gauche à droite qui n'existe pas), il y en a plus de trois (au-delà, les colonnes tombent sous 120 px et les chiffres se coupent sur mobile), ou la lettre est déjà dense en chiffres — une bande de chiffres au milieu d'un texte de chiffres ne hiérarchise plus rien.",
+  "media": [
+    "email"
+  ],
+  "tags": [
+    "email",
+    "mailing",
+    "newsletter",
+    "chiffre",
+    "kpi",
+    "indicateur",
+    "bande",
+    "colonnes",
+    "filet",
+    "outlook",
+    "table",
+    "stat",
+    "resume"
+  ],
+  "vars": [
+    {
+      "name": "--vl-white",
+      "role": "aplat du bloc — plein, jamais translucide",
+      "default": "#FFFFFF"
+    },
+    {
+      "name": "--vl-black",
+      "role": "filets verticaux de séparation",
+      "default": "#0D0D0D"
+    },
+    {
+      "name": "--vl-blue",
+      "role": "les chiffres — le SEUL élément chromatique de la bande",
+      "default": "#1B44D8"
+    },
+    {
+      "name": "--vl-ink-muted",
+      "role": "libellé au-dessus et note en dessous",
+      "default": "#6E6E6E"
+    }
+  ],
+  "slots": [
+    "label",
+    "fig",
+    "note"
+  ],
+  "geometry": {
+    "root": ".vl-emband",
+    "frame": [
+      520,
+      88
+    ],
+    "ratios": {
+      "column_over_width": 0.3333,
+      "fig_over_label": 3.4,
+      "height_over_width": 0.169,
+      "rule_px": 1
+    },
+    "type_px": {
+      "fig": 34,
+      "label": 10,
+      "note": 10
+    },
+    "pad_ratio": {
+      "top": 0.004,
+      "x": 0.031,
+      "bottom": 0.004
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "520 px — le slot exact de layout-09-email-envelope (600 − 2 × 40)",
+      "measure": "W",
+      "expect": 520,
+      "tol": 0
+    },
+    {
+      "name": "TROIS COLONNES DE MÊME LARGEUR — un filet de cellule ne doit pas décaler la répartition",
+      "measure": "Math.max(...[...document.querySelectorAll('.vl-emband__cell')].map((e) => e.getBoundingClientRect().width)) - Math.min(...[...document.querySelectorAll('.vl-emband__cell')].map((e) => e.getBoundingClientRect().width))",
+      "max": 1.5
+    },
+    {
+      "name": "chaque colonne vaut un tiers de la bande",
+      "measure": "box('.vl-emband__cell').w / W",
+      "expect": 0.3333,
+      "tol": 0.01
+    },
+    {
+      "name": "la bande reste une bande : sa hauteur ne dépasse pas le quart de sa largeur",
+      "measure": "H / W",
+      "max": 0.25
+    },
+    {
+      "name": "les trois colonnes partagent leur ligne haute et leur ligne basse",
+      "measure": "[...document.querySelectorAll('.vl-emband__cell')].reduce((a, e, i, t) => a + Math.abs(e.getBoundingClientRect().top - t[0].getBoundingClientRect().top) + Math.abs(e.getBoundingClientRect().bottom - t[0].getBoundingClientRect().bottom), 0)",
+      "max": 1.5
+    },
+    {
+      "name": "DEUX séparateurs pour trois colonnes : la bande n'est pas encadrée",
+      "measure": "[...document.querySelectorAll('.vl-emband__cell')].filter((e) => parseFloat(getComputedStyle(e).borderLeftWidth) > 0).length",
+      "expect": 2,
+      "tol": 0
+    },
+    {
+      "name": "un séparateur est un filet, pas un trait : un pixel",
+      "measure": "num('.vl-emband__cell--split','borderLeftWidth')",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "aucun rayon — angles vifs, et zéro dégradation dans Outlook",
+      "measure": "['.vl-emband','.vl-emband__cell'].reduce((a, s) => a + parseFloat(getComputedStyle(document.querySelector(s)).borderTopLeftRadius), 0)",
+      "expect": 0,
+      "tol": 0
+    },
+    {
+      "name": "saut typographique chiffre / libellé ≥ 3 — la charte n'a pas de taille intermédiaire",
+      "measure": "num('.vl-emband__fig','fontSize') / num('.vl-emband__label','fontSize')",
+      "min": 3
+    },
+    {
+      "name": "CHAQUE LIBELLÉ ET CHAQUE NOTE TIENNENT SUR UNE LIGNE — au-delà, les colonnes cessent d'avoir la même assise",
+      "measure": "Math.max(...[...document.querySelectorAll('.vl-emband__note, .vl-emband__label')].map((e) => e.getBoundingClientRect().height / parseFloat(getComputedStyle(e).lineHeight)))",
+      "max": 1.05
+    },
+    {
+      "name": "LE CHIFFRE EST LE SEUL ÉLÉMENT CHROMATIQUE — trois, pas un de plus",
+      "measure": "[...document.querySelectorAll('.vl-emband *')].filter((e) => { const c = parseRgb(getComputedStyle(e).color); return Math.max(...c) - Math.min(...c) > 40; }).length",
+      "expect": 3,
+      "tol": 0
+    },
+    {
+      "name": "… et il est vraiment coloré : la couleur du chiffre n'est pas un gris",
+      "measure": "(() => { const c = parseRgb(cs('.vl-emband__fig','color')); return Math.max(...c) - Math.min(...c); })()",
+      "min": 40
+    },
+    {
+      "name": "contraste du chiffre ≥ 4,5",
+      "measure": "contrast('.vl-emband__fig')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste du libellé ≥ 4,5 — c'est le gris qui plafonne, pas le chiffre",
+      "measure": "contrast('.vl-emband__label')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste de la note ≥ 4,5",
+      "measure": "contrast('.vl-emband__note')",
+      "min": 4.5
+    },
+    {
+      "name": "plancher de lisibilité : aucun corps sous 10 px",
+      "measure": "Math.min(...[...document.querySelectorAll('.vl-emband *')].filter((e) => !e.children.length && e.textContent.trim()).map((e) => parseFloat(getComputedStyle(e).fontSize)))",
+      "min": 10
+    },
+    {
+      "name": "aucun débordement",
+      "measure": "overflow('.vl-emband')",
+      "max": 0
+    }
+  ],
+  "notes": "Se pose dans le slot `body` de layout-09-email-envelope, dont il reprend exactement la largeur utile.\n\nLe détail qui rend ce pattern non trivial : sur une table à disposition fixe, la largeur déclarée d'une cellule englobe son padding ET son filet. C'est ce qui permet de poser un séparateur sur deux colonnes sur trois sans décaler la répartition — dans un modèle en boîtes, le même geste aurait élargi deux colonnes d'un pixel chacune. Le benchmark d'égalité des largeurs est là précisément pour attraper le jour où quelqu'un remplacera la table par des `<div>`.\n\nLa bande ne porte aucun aplat de carte, contrairement à son équivalent de slide. Ce n'est pas une simplification : la charte ref-04 n'admet le bleu qu'en surface entière ou en chiffre, et un aplat de carte par colonne aurait introduit la valeur intermédiaire que ce système refuse. Le comptage des éléments chromatiques verrouille la règle.\n\nÉcrit nativement pour le canal : `node bin/emit.mjs card-13-email-figure-band --target email` sort sans bloquant."
+}

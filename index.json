@@ -20,9 +20,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 38,
+    "patterns": 41,
     "refs": 15,
-    "checkable": 31
+    "checkable": 34
   },
   "patterns": [
     {
@@ -1779,6 +1779,178 @@
       ],
       "pptx": null,
       "html": "patterns/card-12-inverted-kpi-row.html"
+    },
+    {
+      "id": "card-13-email-figure-band",
+      "name": "Bande de trois chiffres pour un mail — colonnes en cellules, filets d'un pixel",
+      "family": "card",
+      "ref": "ref-04-swiss-investor-blue",
+      "media": [
+        "email"
+      ],
+      "intent": "Poser trois indicateurs de même nature en une bande dans un mail, sans aplat de carte ni encadrement : les colonnes sont des cellules à largeur en pourcentage sur une table à disposition fixe — la seule répartition en parts égales qu'Outlook respecte — et les séparateurs sont des filets de cellule, pas des colonnes intercalaires. La couleur ne fait qu'une chose : elle porte les chiffres.",
+      "when_to_use": "Ouvrir ou clore une lettre d'information par trois valeurs comparables (un encours, une variation, un horizon) que le lecteur doit pouvoir saisir sans lire le corps. Le chiffre est court — six signes au plus — et son libellé tient sur une ligne.",
+      "avoid_when": "Les valeurs ne sont pas comparables (la bande impose une lecture de gauche à droite qui n'existe pas), il y en a plus de trois (au-delà, les colonnes tombent sous 120 px et les chiffres se coupent sur mobile), ou la lettre est déjà dense en chiffres — une bande de chiffres au milieu d'un texte de chiffres ne hiérarchise plus rien.",
+      "tags": [
+        "email",
+        "mailing",
+        "newsletter",
+        "chiffre",
+        "kpi",
+        "indicateur",
+        "bande",
+        "colonnes",
+        "filet",
+        "outlook",
+        "table",
+        "stat",
+        "resume"
+      ],
+      "vars": [
+        {
+          "name": "--vl-white",
+          "role": "aplat du bloc — plein, jamais translucide",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-black",
+          "role": "filets verticaux de séparation",
+          "default": "#0D0D0D"
+        },
+        {
+          "name": "--vl-blue",
+          "role": "les chiffres — le SEUL élément chromatique de la bande",
+          "default": "#1B44D8"
+        },
+        {
+          "name": "--vl-ink-muted",
+          "role": "libellé au-dessus et note en dessous",
+          "default": "#6E6E6E"
+        }
+      ],
+      "slots": [
+        "label",
+        "fig",
+        "note"
+      ],
+      "geometry": {
+        "root": ".vl-emband",
+        "frame": [
+          520,
+          88
+        ],
+        "ratios": {
+          "column_over_width": 0.3333,
+          "fig_over_label": 3.4,
+          "height_over_width": 0.169,
+          "rule_px": 1
+        },
+        "type_px": {
+          "fig": 34,
+          "label": 10,
+          "note": 10
+        },
+        "pad_ratio": {
+          "top": 0.004,
+          "x": 0.031,
+          "bottom": 0.004
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "520 px — le slot exact de layout-09-email-envelope (600 − 2 × 40)",
+          "measure": "W",
+          "expect": 520,
+          "tol": 0
+        },
+        {
+          "name": "TROIS COLONNES DE MÊME LARGEUR — un filet de cellule ne doit pas décaler la répartition",
+          "measure": "Math.max(...[...document.querySelectorAll('.vl-emband__cell')].map((e) => e.getBoundingClientRect().width)) - Math.min(...[...document.querySelectorAll('.vl-emband__cell')].map((e) => e.getBoundingClientRect().width))",
+          "max": 1.5
+        },
+        {
+          "name": "chaque colonne vaut un tiers de la bande",
+          "measure": "box('.vl-emband__cell').w / W",
+          "expect": 0.3333,
+          "tol": 0.01
+        },
+        {
+          "name": "la bande reste une bande : sa hauteur ne dépasse pas le quart de sa largeur",
+          "measure": "H / W",
+          "max": 0.25
+        },
+        {
+          "name": "les trois colonnes partagent leur ligne haute et leur ligne basse",
+          "measure": "[...document.querySelectorAll('.vl-emband__cell')].reduce((a, e, i, t) => a + Math.abs(e.getBoundingClientRect().top - t[0].getBoundingClientRect().top) + Math.abs(e.getBoundingClientRect().bottom - t[0].getBoundingClientRect().bottom), 0)",
+          "max": 1.5
+        },
+        {
+          "name": "DEUX séparateurs pour trois colonnes : la bande n'est pas encadrée",
+          "measure": "[...document.querySelectorAll('.vl-emband__cell')].filter((e) => parseFloat(getComputedStyle(e).borderLeftWidth) > 0).length",
+          "expect": 2,
+          "tol": 0
+        },
+        {
+          "name": "un séparateur est un filet, pas un trait : un pixel",
+          "measure": "num('.vl-emband__cell--split','borderLeftWidth')",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "aucun rayon — angles vifs, et zéro dégradation dans Outlook",
+          "measure": "['.vl-emband','.vl-emband__cell'].reduce((a, s) => a + parseFloat(getComputedStyle(document.querySelector(s)).borderTopLeftRadius), 0)",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "saut typographique chiffre / libellé ≥ 3 — la charte n'a pas de taille intermédiaire",
+          "measure": "num('.vl-emband__fig','fontSize') / num('.vl-emband__label','fontSize')",
+          "min": 3
+        },
+        {
+          "name": "CHAQUE LIBELLÉ ET CHAQUE NOTE TIENNENT SUR UNE LIGNE — au-delà, les colonnes cessent d'avoir la même assise",
+          "measure": "Math.max(...[...document.querySelectorAll('.vl-emband__note, .vl-emband__label')].map((e) => e.getBoundingClientRect().height / parseFloat(getComputedStyle(e).lineHeight)))",
+          "max": 1.05
+        },
+        {
+          "name": "LE CHIFFRE EST LE SEUL ÉLÉMENT CHROMATIQUE — trois, pas un de plus",
+          "measure": "[...document.querySelectorAll('.vl-emband *')].filter((e) => { const c = parseRgb(getComputedStyle(e).color); return Math.max(...c) - Math.min(...c) > 40; }).length",
+          "expect": 3,
+          "tol": 0
+        },
+        {
+          "name": "… et il est vraiment coloré : la couleur du chiffre n'est pas un gris",
+          "measure": "(() => { const c = parseRgb(cs('.vl-emband__fig','color')); return Math.max(...c) - Math.min(...c); })()",
+          "min": 40
+        },
+        {
+          "name": "contraste du chiffre ≥ 4,5",
+          "measure": "contrast('.vl-emband__fig')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste du libellé ≥ 4,5 — c'est le gris qui plafonne, pas le chiffre",
+          "measure": "contrast('.vl-emband__label')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste de la note ≥ 4,5",
+          "measure": "contrast('.vl-emband__note')",
+          "min": 4.5
+        },
+        {
+          "name": "plancher de lisibilité : aucun corps sous 10 px",
+          "measure": "Math.min(...[...document.querySelectorAll('.vl-emband *')].filter((e) => !e.children.length && e.textContent.trim()).map((e) => parseFloat(getComputedStyle(e).fontSize)))",
+          "min": 10
+        },
+        {
+          "name": "aucun débordement",
+          "measure": "overflow('.vl-emband')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/card-13-email-figure-band.html"
     },
     {
       "id": "chart-01-stadium-bars",
@@ -4177,6 +4349,202 @@
       "html": "patterns/layout-08-sheet-handle-tab.html"
     },
     {
+      "id": "layout-09-email-envelope",
+      "name": "Enveloppe de mailing — garde, colonne de 600, trois aplats pleins",
+      "family": "layout",
+      "ref": "ref-04-swiss-investor-blue",
+      "media": [
+        "email"
+      ],
+      "intent": "Poser la coquille d'un mailing avec ce que le moteur Word d'Outlook sait réellement rendre : une table de garde pleine largeur qui porte le fond, une colonne de 600 px centrée qui porte tout le contenu, et l'espacement entièrement délégué au padding des cellules — jamais à une gouttière, une position ou un calcul. Les trois zones (bandeau, corps, pied) sont trois aplats PLEINS et différents, ce qui est à la fois la signature de la charte et le seul modèle de hiérarchie qu'un client mail rende à l'identique partout.",
+      "when_to_use": "Toute lettre d'information ou mailing transactionnel à composer soi-même : c'est le squelette dans lequel on pose ensuite les blocs de contenu (list-06-email-digest, card-13-email-figure-band, tous deux calibrés sur le slot de 520 px). Le bandeau porte l'émetteur et le numéro d'édition, le pied porte les mentions et le désabonnement — deux zones qu'on ne peut pas omettre et qu'on réécrit sinon à chaque envoi.",
+      "avoid_when": "Le message est une page web déguisée (une landing dans un mail se lit mal et se coupe), il doit tenir plusieurs colonnes de contenu côte à côte au-delà de deux (elles ne s'empilent pas sur mobile sans requête de média, que la plupart des clients ignorent), ou la charte visée repose sur des rayons, des ombres ou des couleurs translucides — Outlook les rend en angles vifs, sans ombre et en couleur pleine, et le résultat n'est plus la charte.",
+      "tags": [
+        "email",
+        "mailing",
+        "newsletter",
+        "lettre",
+        "coquille",
+        "gabarit",
+        "outlook",
+        "table",
+        "600",
+        "bandeau",
+        "pied",
+        "desabonnement",
+        "bouton",
+        "cta",
+        "enveloppe"
+      ],
+      "vars": [
+        {
+          "name": "--vl-bg",
+          "role": "fond de la garde — la couleur de la fenêtre de lecture autour de la colonne",
+          "default": "#D9D2C7"
+        },
+        {
+          "name": "--vl-white",
+          "role": "aplat de la colonne : titre, corps, bouton",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-blue",
+          "role": "aplat du bandeau ET du bouton — la couleur d'action, jamais un accent posé sur du blanc",
+          "default": "#1B44D8"
+        },
+        {
+          "name": "--vl-black",
+          "role": "aplat du pied, et encre du titre",
+          "default": "#0D0D0D"
+        },
+        {
+          "name": "--vl-ink-muted",
+          "role": "rubrique au-dessus du titre",
+          "default": "#6E6E6E"
+        },
+        {
+          "name": "--vl-ink-muted-invert",
+          "role": "mentions légales, sur l'aplat du pied",
+          "default": "#D3D3D3"
+        }
+      ],
+      "slots": [
+        "wordmark",
+        "issue",
+        "kicker",
+        "title",
+        "body",
+        "cta",
+        "legal",
+        "unsub"
+      ],
+      "geometry": {
+        "root": ".vl-emenv__col",
+        "frame": [
+          600,
+          611
+        ],
+        "ratios": {
+          "cell_pad_over_width": 0.0667,
+          "band_pad_y_over_width": 0.0333,
+          "title_over_lede": 2.5,
+          "cta_height_over_width": 0.077
+        },
+        "type_px": {
+          "title": 40,
+          "lede": 16,
+          "wordmark": 15,
+          "cta": 13,
+          "micro": 11
+        },
+        "pad_ratio": {
+          "top": 0.0667,
+          "x": 0.0667,
+          "bottom": 0.05
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "LA COLONNE FAIT EXACTEMENT 600 px — la largeur de sécurité du canal, pas une échelle",
+          "measure": "W",
+          "expect": 600,
+          "tol": 0
+        },
+        {
+          "name": "marge de cellule ≈ 6,7 % de la colonne (40 px)",
+          "measure": "num('.vl-emenv__head','paddingLeft') / W",
+          "expect": 0.0667,
+          "tol": 0.006
+        },
+        {
+          "name": "toutes les zones partagent la MÊME marge latérale — un mail qui décale se lit comme deux mails",
+          "measure": "Math.abs(num('.vl-emenv__head','paddingLeft') - num('.vl-emenv__band','paddingLeft')) + Math.abs(num('.vl-emenv__head','paddingLeft') - num('.vl-emenv__foot','paddingLeft'))",
+          "max": 0.5
+        },
+        {
+          "name": "la colonne est centrée dans la garde",
+          "measure": "Math.abs((0 - box('.vl-emenv').left) - (box('.vl-emenv').right - W))",
+          "max": 1.5
+        },
+        {
+          "name": "TROIS aplats, et trois DIFFÉRENTS : bandeau, corps, pied",
+          "measure": "new Set(['.vl-emenv__band','.vl-emenv__body','.vl-emenv__foot'].map((s) => getComputedStyle(document.querySelector(s)).backgroundColor)).size",
+          "expect": 3,
+          "tol": 0
+        },
+        {
+          "name": "aucun aplat translucide : Outlook ignore l'alpha et rendrait la couleur PLEINE",
+          "measure": "Math.min(...['.vl-emenv__band','.vl-emenv__body','.vl-emenv__foot','.vl-emenv__cta','.vl-emenv__col'].map((s) => { const p = (getComputedStyle(document.querySelector(s)).backgroundColor.match(/[\\d.]+/g) || []).map(Number); return p.length === 4 ? p[3] : 1; }))",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "aucun rayon nulle part — signature de la charte, et zéro dégradation dans Outlook",
+          "measure": "['.vl-emenv__col','.vl-emenv__band','.vl-emenv__cta','.vl-emenv__foot'].reduce((a, s) => a + parseFloat(getComputedStyle(document.querySelector(s)).borderTopLeftRadius), 0)",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "le bouton passe le plancher tactile de 44 px",
+          "measure": "box('.vl-emenv__cta').h",
+          "min": 44
+        },
+        {
+          "name": "le bouton reste un bouton : pas plus de la moitié de la colonne",
+          "measure": "box('.vl-emenv__cta').w / W",
+          "max": 0.5
+        },
+        {
+          "name": "saut typographique titre / corps ≥ 2,4 — la charte n'a pas de taille intermédiaire",
+          "measure": "num('.vl-emenv__title','fontSize') / num('.vl-emenv__lede','fontSize')",
+          "min": 2.4
+        },
+        {
+          "name": "PLANCHER DE LISIBILITÉ : aucun corps de texte sous 10 px, micro-typo comprise",
+          "measure": "Math.min(...[...document.querySelectorAll('.vl-emenv__col *')].filter((e) => !e.children.length && e.textContent.trim()).map((e) => parseFloat(getComputedStyle(e).fontSize)))",
+          "min": 10
+        },
+        {
+          "name": "contraste du nom d'émetteur sur le bandeau ≥ 4,5",
+          "measure": "contrast('.vl-emenv__wordmark')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste du numéro d'édition ≥ 4,5 — c'est le plus petit corps du bandeau",
+          "measure": "contrast('.vl-emenv__issue')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste du libellé de bouton ≥ 4,5",
+          "measure": "contrast('.vl-emenv__ctalink')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste de la rubrique grise ≥ 4,5 — trois lots de suite, la source la plaçait juste dessous",
+          "measure": "contrast('.vl-emenv__kicker')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste des mentions de pied ≥ 4,5",
+          "measure": "contrast('.vl-emenv__legal')",
+          "min": 4.5
+        },
+        {
+          "name": "le désabonnement reste identifiable sans la couleur : il est souligné",
+          "measure": "cs('.vl-emenv__unsub','textDecorationLine').includes('underline') ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "aucun débordement de la colonne",
+          "measure": "overflow('.vl-emenv__col')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/layout-09-email-envelope.html"
+    },
+    {
       "id": "list-01-giant-numbers",
       "name": "Colonnes à numéro géant",
       "family": "list",
@@ -4697,6 +5065,179 @@
       ],
       "pptx": null,
       "html": "patterns/list-05-vitals-strip.html"
+    },
+    {
+      "id": "list-06-email-digest",
+      "name": "Digest de newsletter — entrées numérotées séparées par un filet",
+      "family": "list",
+      "ref": "ref-04-swiss-investor-blue",
+      "media": [
+        "email"
+      ],
+      "intent": "Aligner les trois à six entrées d'une lettre d'information dans un mail, chacune tenant en rubrique, titre, chapô et lien, sans qu'aucune ne se lise comme un encadré : la colonne du numéro est une CELLULE de largeur fixe et la séparation un filet posé en haut de chaque entrée — retiré sur la première, pour que le filet sépare au lieu d'encadrer.",
+      "when_to_use": "Le corps d'une lettre d'information périodique : plusieurs sujets de même rang, chacun résumé en deux lignes et renvoyant vers un article. Le numéro donne un ordre de lecture explicite, ce qui vaut mieux qu'un tri implicite quand tous les titres pèsent le même poids.",
+      "avoid_when": "Une seule entrée (le numéro et le filet n'ont plus rien à séparer, une simple accroche suffit), plus de six (la lettre devient un sommaire et personne ne descend), ou les entrées ne sont pas de même nature — un digest suggère une lecture de haut en bas qui devient fausse dès qu'une entrée est d'un autre genre que les autres.",
+      "tags": [
+        "email",
+        "mailing",
+        "newsletter",
+        "digest",
+        "sommaire",
+        "entrees",
+        "articles",
+        "numerote",
+        "filet",
+        "separateur",
+        "chapo",
+        "lien",
+        "outlook",
+        "table"
+      ],
+      "vars": [
+        {
+          "name": "--vl-white",
+          "role": "aplat du bloc — plein, jamais translucide",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-black",
+          "role": "titres, filets de séparation et lien",
+          "default": "#0D0D0D"
+        },
+        {
+          "name": "--vl-blue",
+          "role": "le numéro d'entrée — le SEUL élément chromatique du bloc",
+          "default": "#1B44D8"
+        },
+        {
+          "name": "--vl-ink-muted",
+          "role": "rubrique et chapô",
+          "default": "#6E6E6E"
+        }
+      ],
+      "slots": [
+        "num",
+        "kicker",
+        "title",
+        "lede",
+        "link"
+      ],
+      "geometry": {
+        "root": ".vl-emdig",
+        "frame": [
+          520,
+          594
+        ],
+        "ratios": {
+          "num_col_over_width": 0.1077,
+          "title_over_lede": 1.27,
+          "num_over_title": 1.37,
+          "item_pad_top_over_width": 0.05
+        },
+        "type_px": {
+          "num": 26,
+          "title": 19,
+          "lede": 15,
+          "kicker": 10,
+          "link": 12
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0.046
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "520 px — le slot exact de layout-09-email-envelope (600 − 2 × 40)",
+          "measure": "W",
+          "expect": 520,
+          "tol": 0
+        },
+        {
+          "name": "colonne du numéro ≈ 10,8 % de la largeur (56 px : le chiffre plus sa gouttière)",
+          "measure": "box('.vl-emdig__num').w / W",
+          "expect": 0.1077,
+          "tol": 0.012
+        },
+        {
+          "name": "LE FILET SÉPARE, IL N'ENCADRE PAS : la première entrée n'a pas de filet haut",
+          "measure": "num('.vl-emdig__item--first','borderTopWidth')",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "… et les deux suivantes en portent un, d'un pixel",
+          "measure": "[...document.querySelectorAll('.vl-emdig__item')].filter((e) => parseFloat(getComputedStyle(e).borderTopWidth) === 1).length",
+          "expect": 2,
+          "tol": 0
+        },
+        {
+          "name": "aucune bordure basse : le bloc ne se referme pas sur lui-même",
+          "measure": "[...document.querySelectorAll('.vl-emdig__item')].reduce((a, e) => a + parseFloat(getComputedStyle(e).borderBottomWidth), 0)",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "LE BLEU NE COLORE QUE LES NUMÉROS — trois éléments chromatiques, pas un de plus",
+          "measure": "[...document.querySelectorAll('.vl-emdig *')].filter((e) => { const c = parseRgb(getComputedStyle(e).color); return Math.max(...c) - Math.min(...c) > 40; }).length",
+          "expect": 3,
+          "tol": 0
+        },
+        {
+          "name": "le numéro pèse plus que le titre qu'il ordonne",
+          "measure": "num('.vl-emdig__num','fontSize') / num('.vl-emdig__title','fontSize')",
+          "min": 1.25
+        },
+        {
+          "name": "saut typographique titre / chapô ≥ 1,2",
+          "measure": "num('.vl-emdig__title','fontSize') / num('.vl-emdig__lede','fontSize')",
+          "min": 1.2
+        },
+        {
+          "name": "les entrées respirent autant qu'elles se séparent : l'air au-dessus du filet vaut au moins un corps de titre",
+          "measure": "num('.vl-emdig__item','paddingBottom') / num('.vl-emdig__title','fontSize')",
+          "min": 1
+        },
+        {
+          "name": "le numéro et sa rubrique partagent leur ligne haute",
+          "measure": "Math.abs(box('.vl-emdig__num').top - box('.vl-emdig__kicker').top)",
+          "max": 4
+        },
+        {
+          "name": "contraste du chapô gris ≥ 4,5 — le piège payé trois lots de suite",
+          "measure": "contrast('.vl-emdig__lede')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste de la rubrique ≥ 4,5 : c'est le plus petit corps du bloc",
+          "measure": "contrast('.vl-emdig__kicker')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste du titre ≥ 7",
+          "measure": "contrast('.vl-emdig__title')",
+          "min": 7
+        },
+        {
+          "name": "contraste du numéro bleu ≥ 4,5",
+          "measure": "contrast('.vl-emdig__num')",
+          "min": 4.5
+        },
+        {
+          "name": "le lien reste identifiable sans la couleur : il est souligné",
+          "measure": "cs('.vl-emdig__link','textDecorationLine').includes('underline') ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "aucun débordement",
+          "measure": "overflow('.vl-emdig')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/list-06-email-digest.html"
     },
     {
       "id": "shape-notched-corner",
@@ -5422,9 +5963,12 @@
       "id": "ref-04-swiss-investor-blue",
       "name": "Suisse maximaliste — investor deck bleu",
       "patterns": [
+        "card-13-email-figure-band",
         "layout-02-swiss-frame",
+        "layout-09-email-envelope",
         "list-01-giant-numbers",
-        "list-03-two-column-toc"
+        "list-03-two-column-toc",
+        "list-06-email-digest"
       ],
       "deck": "decks/ref-04-swiss-investor-blue.html",
       "tokens": {

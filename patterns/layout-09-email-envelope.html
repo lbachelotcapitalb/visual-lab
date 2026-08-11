@@ -1,0 +1,153 @@
+<!-- layout-09-email-envelope — la coquille d'un mailing, écrite NATIVEMENT pour le canal.
+
+     Le corpus est de la matière slide/web : au 11/08/2026 aucun des 38 patterns antérieurs ne
+     passait `bin/emit.mjs --target email`. Celui-ci est écrit à l'envers — on part de ce que le
+     moteur Word d'Outlook sait rendre, et on compose avec ça seulement : deux tables emboîtées
+     (garde pleine largeur + colonne de 600 px centrée), l'espacement porté par le PADDING DES
+     CELLULES et jamais par une gouttière, aucune position, aucun calc(), aucun SVG, aucun rayon,
+     aucune ombre, aucune couleur à canal alpha.
+
+     Les capitales sont ÉCRITES dans le markup et non obtenues par `text-transform` : Outlook
+     n'applique pas la propriété, un titre en bas de casse sortirait en bas de casse.
+
+     Couleurs via --vl-* uniquement. Les trois aplats pleins qui alternent (bandeau, corps, pied)
+     sont la signature de ref-04 — et le seul modèle de hiérarchie qu'un client mail rende à
+     l'identique partout. -->
+<table class="vl-emenv" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+  <tr>
+    <td class="vl-emenv__yard" align="center">
+
+      <table class="vl-emenv__col" role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" align="center">
+
+        <!-- 1 · BANDEAU — premier aplat. Deux cellules, pas un flex : c'est la seule façon
+             d'obtenir « à gauche / à droite » qui tienne dans les six clients majeurs. -->
+        <tr>
+          <td class="vl-emenv__band">
+            <table class="vl-emenv__bandrow" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+              <tr>
+                <td class="vl-emenv__wordmark" align="left">NORTHBEAM</td>
+                <td class="vl-emenv__issue" align="right">ÉDITION 118 · 11 AOÛT</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- 2 · TITRE, CHAPÔ, CORPS — deuxième aplat -->
+        <tr>
+          <td class="vl-emenv__head">
+            <div class="vl-emenv__kicker">LETTRE HEBDOMADAIRE</div>
+            <h1 class="vl-emenv__title">CE QUE LA COURBE DES TAUX NE DIT PAS ENCORE</h1>
+          </td>
+        </tr>
+        <tr>
+          <td class="vl-emenv__body">
+            <p class="vl-emenv__lede">Trois mouvements de la semaine, et ce qu'ils changent pour une
+              allocation qui court sur dix ans. La lettre complète se lit en quatre minutes.</p>
+            <!-- slot body : y poser list-06-email-digest ou card-13-email-figure-band,
+                 tous deux calibrés sur 520 px = 600 − 2 × 40 de marge de cellule. -->
+          </td>
+        </tr>
+
+        <!-- Bouton : le fond et le padding sont portés par la CELLULE, jamais par le lien.
+             Un `<a>` à qui on donne un fond ne remplit rien dans Outlook. -->
+        <tr>
+          <td class="vl-emenv__ctacell" align="left">
+            <table class="vl-emenv__ctabox" role="presentation" cellpadding="0" cellspacing="0" border="0" align="left">
+              <tr>
+                <td class="vl-emenv__cta" align="center">
+                  <a class="vl-emenv__ctalink" href="https://northbeam.invalid/lettre">LIRE LA LETTRE</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- 3 · PIED — troisième aplat. Le désabonnement est SOULIGNÉ : sur un aplat sombre,
+             la couleur seule ne suffit pas à désigner un lien. -->
+        <tr>
+          <td class="vl-emenv__foot">
+            <div class="vl-emenv__legal">NORTHBEAM SAS · 12 QUAI DE LA MÉGISSERIE · 75001 PARIS</div>
+            <div class="vl-emenv__legal">VOUS RECEVEZ CETTE LETTRE PARCE QUE VOUS Y ÊTES ABONNÉ.</div>
+            <div class="vl-emenv__unsubline"><a class="vl-emenv__unsub" href="https://northbeam.invalid/stop">SE DÉSABONNER</a></div>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+
+<style>
+/* La garde : elle n'existe que pour donner un fond à la fenêtre de lecture et pour centrer la
+   colonne. Aucun padding — c'est la colonne qui porte toutes les marges. */
+.vl-emenv { width: 100%; border-collapse: collapse; }
+.vl-emenv__yard {
+  padding: 32px 0;
+  background: var(--vl-bg);
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+/* 600 px : la largeur de sécurité du canal. Ce n'est pas une échelle qu'on pourrait multiplier
+   comme sur une slide — c'est le volet de lecture d'Outlook. Un pixel de plus déclenche la
+   barre horizontale ou la réduction automatique sur mobile. */
+.vl-emenv__col {
+  width: 600px;
+  border-collapse: collapse;
+  background: var(--vl-white);
+  margin: 0 auto;
+}
+.vl-emenv__bandrow { width: 100%; border-collapse: collapse; }
+
+.vl-emenv__band { background: var(--vl-blue); padding: 20px 40px; }
+.vl-emenv__wordmark {
+  color: var(--vl-white);
+  font-size: 15px; line-height: 18px; font-weight: 800; letter-spacing: 0.14em;
+}
+.vl-emenv__issue {
+  color: var(--vl-white);
+  font-size: 11px; line-height: 18px; font-weight: 500; letter-spacing: 0.1em;
+}
+
+.vl-emenv__head { background: var(--vl-white); padding: 40px 40px 0; }
+.vl-emenv__kicker {
+  margin: 0 0 14px;
+  color: var(--vl-ink-muted);
+  font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.14em;
+}
+/* Le titre-monstre du système, ramené au canal. Le rapport titre / corps reste au-dessus de
+   2,4 : c'est lui la signature, pas la valeur en pixels. */
+.vl-emenv__title {
+  margin: 0;
+  color: var(--vl-black);
+  font-size: 40px; line-height: 40px; font-weight: 800; letter-spacing: -0.02em;
+}
+.vl-emenv__body { background: var(--vl-white); padding: 22px 40px 4px; }
+.vl-emenv__lede {
+  margin: 0;
+  color: var(--vl-black);
+  font-size: 16px; line-height: 25px; font-weight: 400;
+}
+
+.vl-emenv__ctacell { background: var(--vl-white); padding: 26px 40px 44px; }
+.vl-emenv__ctabox { border-collapse: collapse; }
+/* 46 px de haut : au-dessus du plancher tactile de 44 px. Le padding est vertical ET
+   horizontal sur la cellule, parce qu'un lien inline ne peut pas grandir une cellule. */
+.vl-emenv__cta { background: var(--vl-blue); padding: 16px 34px; }
+.vl-emenv__ctalink {
+  color: var(--vl-white);
+  font-size: 13px; line-height: 14px; font-weight: 700; letter-spacing: 0.1em;
+  text-decoration: none;
+}
+
+.vl-emenv__foot { background: var(--vl-black); padding: 28px 40px 30px; }
+.vl-emenv__legal {
+  margin: 0 0 7px;
+  color: var(--vl-ink-muted-invert);
+  font-size: 11px; line-height: 16px; font-weight: 500; letter-spacing: 0.04em;
+}
+.vl-emenv__unsubline { margin: 5px 0 0; font-size: 11px; line-height: 16px; }
+.vl-emenv__unsub {
+  color: var(--vl-white);
+  font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.08em;
+  text-decoration: underline;
+}
+</style>

@@ -250,11 +250,50 @@ function emitOne(p, sys) {
 
   const problems = [];
   const cfg = TARGETS[target];
-  const scanned = html + '\n' + atRules.map((a) => `${a.selector}{${a.body}}`).join('\n');
+  // Les commentaires HTML sont retirés AVANT le scan : un pattern écrit pour l'email documente
+  // forcément ce qu'il s'interdit (« aucun calc() », « aucune position absolue »), et le
+  // détecteur lisait ces phrases comme du code — layout-09 a été déclaré non émissible à cause
+  // du mot `calc()` dans son propre commentaire. Même correction que dans bin/index.mjs pour les
+  // entités numériques : un faux positif se corrige dans le détecteur, jamais dans la source.
+  // Les commentaires restent dans la SORTIE — ils ne coûtent rien à un client mail.
+  const scanned =
+    html.replace(/<!--[\s\S]*?-->/g, '') + '\n' + atRules.map((a) => `${a.selector}{${a.body}}`).join('\n');
   for (const [re, why] of cfg.block || []) if (re.test(scanned)) problems.push({ level: 'bloquant', why });
   for (const [re, why] of cfg.warn || []) if (re.test(scanned)) problems.push({ level: 'dégradation', why });
   if (/<svg\b/i.test(html) && target === 'email') {
     problems.push({ level: 'bloquant', why: 'SVG inline — non rendu par Outlook ; exporter en PNG' });
+  }
+  // Une couleur à canal alpha est rendue PLEINE par le moteur Word : un filet à 10 % devient un
+  // trait noir, un verre dépoli devient un aplat. C'est destructeur et non dégradé, donc
+  // bloquant. Le détecteur ne pouvait pas le voir jusqu'ici : il ne cherchait que la propriété
+  // `opacity`, alors que la transparence du corpus vit dans les TOKENS (`rgba(17,17,17,0.55)`
+  // de ref-17, `#00000018` de ref-04), résolus en valeurs juste avant ce scan.
+  if (target === 'email') {
+    const alphaOf = (s) => {
+      const hex = s.match(/^#([0-9a-fA-F]{4}|[0-9a-fA-F]{8})$/);
+      if (hex) {
+        const d = hex[1];
+        return d.length === 4 ? parseInt(d[3] + d[3], 16) / 255 : parseInt(d.slice(6), 16) / 255;
+      }
+      const args = s.slice(s.indexOf('(') + 1, -1).split(/[,/]/).map((x) => x.trim());
+      if (args.length < 4) return 1;
+      const a = args[3];
+      return a.endsWith('%') ? parseFloat(a) / 100 : parseFloat(a);
+    };
+    // Les entités numériques ne sont pas des couleurs : `&#8599;` (la flèche ↗) se lit sinon
+    // comme un `#8599` à quatre chiffres, donc un hex à canal alpha. Même faux positif que
+    // celui payé le 30/07 dans bin/index.mjs, et qui y est corrigé de la même façon.
+    const sansEntites = scanned.replace(/&#x?[0-9a-fA-F]+;/g, '');
+    for (const m of sansEntites.match(/#[0-9a-fA-F]{4}\b|#[0-9a-fA-F]{8}\b|\b(?:rgba|hsla)\([^)]*\)/gi) || []) {
+      const a = alphaOf(m);
+      if (Number.isFinite(a) && a < 1) {
+        problems.push({
+          level: 'bloquant',
+          why: `couleur à canal alpha \`${m}\` — Outlook ignore la transparence et la rend PLEINE`,
+        });
+        break;
+      }
+    }
   }
   if (/var\(--/.test(html)) {
     problems.push({ level: 'bloquant', why: 'variable CSS non résolue — token absent du système choisi' });

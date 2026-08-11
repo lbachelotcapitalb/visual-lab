@@ -1,0 +1,72 @@
+<!-- card-13-email-figure-band — trois chiffres de même nature en une bande, dans un mail.
+
+     Écrit NATIVEMENT pour le canal. Ce que ça change par rapport à la rangée de KPI d'une
+     slide : les colonnes sont des CELLULES à largeur en pourcentage sur une table
+     `table-layout: fixed` — la seule répartition en trois parts égales qu'Outlook respecte —
+     et les séparateurs sont des `border-left` de cellule, pas des éléments intercalaires : une
+     colonne de gouttière de plus rendrait la bande impossible à empiler sur mobile.
+
+     Aucun aplat de carte, aucun rayon, aucune ombre : la charte ref-04 ne connaît que des
+     angles vifs, et c'est aussi ce qu'un client mail rend sans dégradation. Le bleu ne fait
+     qu'une chose — il colore les chiffres.
+
+     520 px = le slot `body` de layout-09-email-envelope (600 − 2 × 40).
+     Couleurs via --vl-* uniquement. -->
+<table class="vl-emband" role="presentation" cellpadding="0" cellspacing="0" border="0" width="520">
+  <tr>
+    <td class="vl-emband__cell" valign="top">
+      <div class="vl-emband__label">ENCOURS SUIVIS</div>
+      <div class="vl-emband__fig">1 240</div>
+      <div class="vl-emband__note">AU 31 JUILLET</div>
+    </td>
+    <td class="vl-emband__cell vl-emband__cell--split" valign="top">
+      <div class="vl-emband__label">ÉCART TYPE</div>
+      <div class="vl-emband__fig">+18,4 %</div>
+      <div class="vl-emband__note">SUR DOUZE MOIS</div>
+    </td>
+    <td class="vl-emband__cell vl-emband__cell--split" valign="top">
+      <div class="vl-emband__label">HORIZON MÉDIAN</div>
+      <div class="vl-emband__fig">9 ans</div>
+      <div class="vl-emband__note">TOUTES POCHES</div>
+    </td>
+  </tr>
+</table>
+
+<style>
+.vl-emband {
+  width: 520px;
+  border-collapse: collapse;
+  background: var(--vl-white);
+  color: var(--vl-black);
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+/* Trois parts égales par le POURCENTAGE et non par une grille : sur une table à disposition
+   fixe, la largeur déclarée d'une cellule englobe son padding et son filet, donc les trois
+   colonnes restent d'aplomb même quand deux d'entre elles portent un séparateur. */
+.vl-emband__cell {
+  width: 33.33%;
+  padding: 2px 16px 2px 0;
+}
+.vl-emband__cell--split {
+  border-left: 1px solid var(--vl-black);
+  padding-left: 18px;
+}
+.vl-emband__label {
+  margin: 0 0 12px;
+  color: var(--vl-ink-muted);
+  font-size: 10px; line-height: 13px; font-weight: 600; letter-spacing: 0.14em;
+}
+/* Le seul élément chromatique de la bande. Deux corps et rien entre les deux : le chiffre
+   pèse plus de trois fois le libellé, et c'est ce vide qui tient la hiérarchie sans couleur
+   de fond ni encadrement. */
+.vl-emband__fig {
+  margin: 0 0 10px;
+  color: var(--vl-blue);
+  font-size: 34px; line-height: 34px; font-weight: 800; letter-spacing: -0.03em;
+}
+.vl-emband__note {
+  margin: 0;
+  color: var(--vl-ink-muted);
+  font-size: 10px; line-height: 15px; font-weight: 500; letter-spacing: 0.06em;
+}
+</style>

@@ -317,11 +317,25 @@ au-dessus, sans composition exploitable).
 liste « ce que personne ne couvre » — un graphique en ligne (`card-09`) et une liste dense de
 données alignées (`list-04`).
 
-### ⬜ Lot 13 — Sortir du slide/web (ouvert le 31/07)
-Le constat mesuré : `node bin/emit.mjs --audit --target email` donne **0/22**. Tant qu'aucun
-pattern n'est écrit POUR ces canaux, « bibliothèque tous médias » reste une intention.
-- ⬜ Deux ou trois patterns nativement `email` (tables, largeurs fixes, zéro flex/calc/SVG) —
-  le premier vrai test du champ `media` et de l'émetteur.
+### ⬜ Lot 13 — Sortir du slide/web (ouvert le 31/07 · volet email SOLDÉ le 11/08)
+Le constat mesuré à l'ouverture : `node bin/emit.mjs --audit --target email` donnait **0/22**.
+Tant qu'aucun pattern n'est écrit POUR ces canaux, « bibliothèque tous médias » reste une
+intention.
+- ✅ **Trois patterns nativement `email`** — `layout-09-email-envelope` (garde + colonne de 600,
+  bandeau / corps / pied, bouton, désabonnement), `list-06-email-digest` (entrées numérotées
+  séparées par un filet) et `card-13-email-figure-band` (trois chiffres en cellules). Adossés à
+  `ref-04-swiss-investor-blue` : la charte du corpus la plus nativement compatible avec le canal
+  — aucun rayon, aucune ombre, aucune couleur translucide, trois aplats pleins qui alternent.
+  Les deux blocs font 520 px = le slot `body` de l'enveloppe (600 − 2 × 40) : ils s'emboîtent
+  sans réglage. **48 benchmarks, tous verts ; 3/41 à l'audit email, et ce sont exactement les
+  trois déclarés `media: ["email"]`.**
+  - Le lot a corrigé l'émetteur DEUX fois, dans le même commit : il ignore désormais les
+    **commentaires HTML** avant de scanner (un pattern email documente ce qu'il s'interdit —
+    `layout-09` était refusé à cause du mot `calc()` dans son propre commentaire), et il **bloque
+    les couleurs à canal alpha**, qu'Outlook rend PLEINES (6 patterns de plus attrapés ; les
+    entités numériques sont retirées avant ce test, `&#8599;` se lisant sinon comme un hex).
+  - Ce que le lot n'a PAS fait, et qu'il ne prétend pas : les 38 autres patterns restent hors
+    canal, et **rien ne mesure encore la composition d'un mailing** — seulement sa faisabilité.
 - ⬜ Un cadre `social` (1080×1350) : rendre une vignette existante à ce format et voir ce qui
   casse (plancher typo au pouce, marges de sécurité).
 - ⬜ Reprendre l'émetteur **PSD live-text** déjà écrit dans `~/.claude/skills/gtm-content/psd/`

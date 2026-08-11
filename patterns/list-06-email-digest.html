@@ -1,0 +1,115 @@
+<!-- list-06-email-digest — le corps d'une newsletter : N entrées numérotées, séparées par un
+     filet, chacune tenant en rubrique / titre / chapô / lien.
+
+     Écrit NATIVEMENT pour le canal mail. Deux conséquences visibles dans le code :
+     — la colonne du numéro est une CELLULE de largeur fixe (`table-layout: fixed`), pas une
+       colonne de grille ni un élément positionné : c'est la seule mise en colonnes que le
+       moteur Word rende à l'identique ;
+     — le filet de séparation est un `border-top` posé sur la cellule de l'entrée, et retiré sur
+       la PREMIÈRE par une classe — pas un `::before`, pas un `:first-child` : ni l'un ni l'autre
+       ne survit à l'inlining que réclame un client mail.
+
+     520 px de large = 600 − 2 × 40 : la mesure exacte du slot `body` de layout-09-email-envelope.
+     Couleurs via --vl-* uniquement. Le bleu ne sert QU'À colorer les numéros — c'est la règle de
+     ref-04 (« il occupe la surface entière ou il colore un chiffre, rien entre les deux »). -->
+<table class="vl-emdig" role="presentation" cellpadding="0" cellspacing="0" border="0" width="520">
+
+  <tr>
+    <td class="vl-emdig__item vl-emdig__item--first">
+      <table class="vl-emdig__grid" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td class="vl-emdig__num" valign="top">01</td>
+          <td class="vl-emdig__txt" valign="top">
+            <div class="vl-emdig__kicker">MARCHÉS</div>
+            <div class="vl-emdig__title">La pente à dix ans se redresse pour la première fois depuis mars</div>
+            <p class="vl-emdig__lede">Le mouvement est lent et il est général : douze des quinze
+              courbes suivies ont bougé dans le même sens sur la semaine.</p>
+            <a class="vl-emdig__link" href="https://northbeam.invalid/1">LIRE →</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="vl-emdig__item">
+      <table class="vl-emdig__grid" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td class="vl-emdig__num" valign="top">02</td>
+          <td class="vl-emdig__txt" valign="top">
+            <div class="vl-emdig__kicker">RÉGLEMENTAIRE</div>
+            <div class="vl-emdig__title">Ce que la révision de norme change pour les contrats longs</div>
+            <p class="vl-emdig__lede">Une seule ligne du texte déplace la frontière entre deux
+              modèles d'évaluation. Elle s'applique aux exercices ouverts en janvier.</p>
+            <a class="vl-emdig__link" href="https://northbeam.invalid/2">LIRE →</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="vl-emdig__item">
+      <table class="vl-emdig__grid" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td class="vl-emdig__num" valign="top">03</td>
+          <td class="vl-emdig__txt" valign="top">
+            <div class="vl-emdig__kicker">ALLOCATION</div>
+            <div class="vl-emdig__title">Trois portefeuilles types, et le seul arbitrage qui les sépare</div>
+            <p class="vl-emdig__lede">À horizon dix ans, l'écart de performance tient à une
+              décision unique — prise une fois, jamais rejouée.</p>
+            <a class="vl-emdig__link" href="https://northbeam.invalid/3">LIRE →</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+</table>
+
+<style>
+.vl-emdig {
+  width: 520px;
+  border-collapse: collapse;
+  background: var(--vl-white);
+  color: var(--vl-black);
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+/* Le filet SÉPARE, il n'encadre pas : posé en haut de chaque entrée, retiré sur la première.
+   Un filet complet ferait une boîte, et une boîte dans un mail se lit comme une pièce jointe. */
+.vl-emdig__item { padding: 26px 0 24px; border-top: 1px solid var(--vl-black); }
+.vl-emdig__item--first { padding-top: 0; border-top-width: 0; }
+
+.vl-emdig__grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
+/* 56 px = le chiffre (30) + sa gouttière (26). Une largeur de CELLULE, donc respectée par
+   Outlook ; une gouttière `gap` ne le serait pas. */
+.vl-emdig__num {
+  width: 56px;
+  color: var(--vl-blue);
+  font-size: 26px; line-height: 26px; font-weight: 800; letter-spacing: -0.02em;
+}
+.vl-emdig__txt { color: var(--vl-black); }
+
+.vl-emdig__kicker {
+  margin: 0 0 8px;
+  color: var(--vl-ink-muted);
+  font-size: 10px; line-height: 13px; font-weight: 600; letter-spacing: 0.14em;
+}
+.vl-emdig__title {
+  margin: 0 0 8px;
+  color: var(--vl-black);
+  font-size: 19px; line-height: 25px; font-weight: 700; letter-spacing: -0.01em;
+}
+.vl-emdig__lede {
+  margin: 0 0 12px;
+  color: var(--vl-ink-muted);
+  font-size: 15px; line-height: 23px; font-weight: 400;
+}
+/* Souligné, et pas seulement coloré : dans un client qui force sa propre couleur de lien,
+   le soulignement est ce qui reste. */
+.vl-emdig__link {
+  color: var(--vl-black);
+  font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: 0.1em;
+  text-decoration: underline;
+}
+</style>

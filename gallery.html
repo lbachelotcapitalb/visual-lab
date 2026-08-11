@@ -81,14 +81,14 @@ body.filtered .map { display:none; }
 <body>
 
 <header class="top">
-  <h1>visual-lab — 38 patterns vivants, 13 chartes</h1>
+  <h1>visual-lab — 41 patterns vivants, 13 chartes</h1>
   <p class="lede">Les fragments sont rendus TELS QUELS : ce que vous voyez est ce que vous collerez. Chaque vignette porte les tokens de sa charte, ses conditions d'emploi et son code à copier. Pour un agent : <code>AGENTS.md</code> puis <code>index.json</code>.</p>
   <div class="bar">
     <input id="q" type="search" placeholder="chercher : kpi, timeline, nuage, heatmap…" autocomplete="off">
     <span class="sep"></span>
     <button class="chip" data-kind="family" data-value="card">card</button><button class="chip" data-kind="family" data-value="chart">chart</button><button class="chip" data-kind="family" data-value="diagram">diagram</button><button class="chip" data-kind="family" data-value="layout">layout</button><button class="chip" data-kind="family" data-value="list">list</button><button class="chip" data-kind="family" data-value="shape">shape</button><button class="chip" data-kind="family" data-value="tag">tag</button><button class="chip" data-kind="family" data-value="title">title</button>
     <span class="sep"></span>
-    <button class="chip" data-kind="media" data-value="slide">slide</button><button class="chip" data-kind="media" data-value="web">web</button><button class="chip" data-kind="media" data-value="print">print</button>
+    <button class="chip" data-kind="media" data-value="slide">slide</button><button class="chip" data-kind="media" data-value="web">web</button><button class="chip" data-kind="media" data-value="email">email</button><button class="chip" data-kind="media" data-value="print">print</button>
     <button id="reset">tout afficher</button>
     <span id="count"></span>
   </div>
@@ -103,7 +103,7 @@ body.filtered .map { display:none; }
       <thead><tr><th>référence</th><th>card</th><th>chart</th><th>diagram</th><th>layout</th><th>list</th><th>shape</th><th>tag</th><th>title</th><th class="tot">total</th></tr></thead>
       <tbody><tr><th><a href="#ref-02-ghost-icon-claim">ref-02-ghost-icon-claim</a></th><td class="has"><button class="jump" data-ref="ref-02-ghost-icon-claim" data-family="card">1</button></td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="tot">1</td></tr>
 <tr><th><a href="#ref-03-bento-dark-pitch">ref-03-bento-dark-pitch</a></th><td class="nil">·</td><td class="has"><button class="jump" data-ref="ref-03-bento-dark-pitch" data-family="chart">2</button></td><td class="nil">·</td><td class="has"><button class="jump" data-ref="ref-03-bento-dark-pitch" data-family="layout">1</button></td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="tot">3</td></tr>
-<tr><th><a href="#ref-04-swiss-investor-blue">ref-04-swiss-investor-blue</a></th><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="has"><button class="jump" data-ref="ref-04-swiss-investor-blue" data-family="layout">1</button></td><td class="has"><button class="jump" data-ref="ref-04-swiss-investor-blue" data-family="list">2</button></td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="tot">3</td></tr>
+<tr><th><a href="#ref-04-swiss-investor-blue">ref-04-swiss-investor-blue</a></th><td class="has"><button class="jump" data-ref="ref-04-swiss-investor-blue" data-family="card">1</button></td><td class="nil">·</td><td class="nil">·</td><td class="has"><button class="jump" data-ref="ref-04-swiss-investor-blue" data-family="layout">2</button></td><td class="has"><button class="jump" data-ref="ref-04-swiss-investor-blue" data-family="list">3</button></td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="tot">6</td></tr>
 <tr><th><a href="#ref-06-orange-notched">ref-06-orange-notched</a></th><td class="has"><button class="jump" data-ref="ref-06-orange-notched" data-family="card">2</button></td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="has"><button class="jump" data-ref="ref-06-orange-notched" data-family="list">1</button></td><td class="has"><button class="jump" data-ref="ref-06-orange-notched" data-family="shape">1</button></td><td class="nil">·</td><td class="has"><button class="jump" data-ref="ref-06-orange-notched" data-family="title">1</button></td><td class="tot">5</td></tr>
 <tr><th><a href="#ref-11-finance-dashboard-mint">ref-11-finance-dashboard-mint</a></th><td class="has"><button class="jump" data-ref="ref-11-finance-dashboard-mint" data-family="card">4</button></td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="tot">4</td></tr>
 <tr><th><a href="#ref-12-neon-capsule-tags">ref-12-neon-capsule-tags</a></th><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="has"><button class="jump" data-ref="ref-12-neon-capsule-tags" data-family="tag">1</button></td><td class="nil">·</td><td class="tot">1</td></tr>
@@ -114,7 +114,7 @@ body.filtered .map { display:none; }
 <tr><th><a href="#ref-17-mono-bento-legal">ref-17-mono-bento-legal</a></th><td class="has"><button class="jump" data-ref="ref-17-mono-bento-legal" data-family="card">1</button></td><td class="nil">·</td><td class="nil">·</td><td class="has"><button class="jump" data-ref="ref-17-mono-bento-legal" data-family="layout">2</button></td><td class="nil">·</td><td class="nil">·</td><td class="has"><button class="jump" data-ref="ref-17-mono-bento-legal" data-family="tag">1</button></td><td class="nil">·</td><td class="tot">4</td></tr>
 <tr><th><a href="#ref-18-lime-sales-dashboard">ref-18-lime-sales-dashboard</a></th><td class="has"><button class="jump" data-ref="ref-18-lime-sales-dashboard" data-family="card">1</button></td><td class="has"><button class="jump" data-ref="ref-18-lime-sales-dashboard" data-family="chart">1</button></td><td class="nil">·</td><td class="has"><button class="jump" data-ref="ref-18-lime-sales-dashboard" data-family="layout">1</button></td><td class="nil">·</td><td class="nil">·</td><td class="has"><button class="jump" data-ref="ref-18-lime-sales-dashboard" data-family="tag">1</button></td><td class="nil">·</td><td class="tot">4</td></tr>
 <tr><th><a href="#ref-19-acid-clinical-timeline">ref-19-acid-clinical-timeline</a></th><td class="nil">·</td><td class="nil">·</td><td class="has"><button class="jump" data-ref="ref-19-acid-clinical-timeline" data-family="diagram">2</button></td><td class="has"><button class="jump" data-ref="ref-19-acid-clinical-timeline" data-family="layout">1</button></td><td class="has"><button class="jump" data-ref="ref-19-acid-clinical-timeline" data-family="list">1</button></td><td class="nil">·</td><td class="nil">·</td><td class="nil">·</td><td class="tot">4</td></tr></tbody>
-      <tfoot><tr><th>total</th><td class="tot">12</td><td class="tot">5</td><td class="tot">3</td><td class="tot">8</td><td class="tot">5</td><td class="tot">1</td><td class="tot">3</td><td class="tot">1</td><td class="tot">38</td></tr></tfoot>
+      <tfoot><tr><th>total</th><td class="tot">13</td><td class="tot">5</td><td class="tot">3</td><td class="tot">9</td><td class="tot">6</td><td class="tot">1</td><td class="tot">3</td><td class="tot">1</td><td class="tot">41</td></tr></tfoot>
     </table>
   </div>
   <p class="orph">Chartes sans aucun pattern extrait : ref-08-swiss-studio-hero · ref-10-campaign-board-red</p>
@@ -730,6 +730,194 @@ body.filtered .map { display:none; }
     <a class="decklink" href="decks/ref-04-swiss-investor-blue.html">voir l'écran entier →</a>
   </div>
   
+<article class="pat" data-family="card" data-media="email"
+         data-ref="ref-04-swiss-investor-blue" data-hay="card-13-email-figure-band card bande de trois chiffres pour un mail — colonnes en cellules, filets d'un pixel poser trois indicateurs de même nature en une bande dans un mail, sans aplat de carte ni encadrement : les colonnes sont des cellules à largeur en pourcentage sur une table à disposition fixe — la seule répartition en parts égales qu'outlook respecte — et les séparateurs sont des filets de cellule, pas des colonnes intercalaires. la couleur ne fait qu'une chose : elle porte les chiffres. ouvrir ou clore une lettre d'information par trois valeurs comparables (un encours, une variation, un horizon) que le lecteur doit pouvoir saisir sans lire le corps. le chiffre est court — six signes au plus — et son libellé tient sur une ligne. les valeurs ne sont pas comparables (la bande impose une lecture de gauche à droite qui n'existe pas), il y en a plus de trois (au-delà, les colonnes tombent sous 120 px et les chiffres se coupent sur mobile), ou la lettre est déjà dense en chiffres — une bande de chiffres au milieu d'un texte de chiffres ne hiérarchise plus rien. email mailing newsletter chiffre kpi indicateur bande colonnes filet outlook table stat resume ref-04-swiss-investor-blue" id="p-card-13-email-figure-band">
+  <header class="pat__head">
+    <h3><a href="#p-card-13-email-figure-band">card-13-email-figure-band</a></h3>
+    <p class="meta">card · email · 17 benchmarks · 520×88</p>
+    <p class="intent">Poser trois indicateurs de même nature en une bande dans un mail, sans aplat de carte ni encadrement : les colonnes sont des cellules à largeur en pourcentage sur une table à disposition fixe — la seule répartition en parts égales qu'Outlook respecte — et les séparateurs sont des filets de cellule, pas des colonnes intercalaires. La couleur ne fait qu'une chose : elle porte les chiffres.</p>
+    <div class="acts">
+      <button class="copy" data-target="src-card-13-email-figure-band">copier le fragment</button>
+      <button class="copy" data-target="tok-card-13-email-figure-band">copier les tokens</button>
+    </div>
+  </header>
+  <!-- Le fragment RÉEL, réduit par « zoom » et NON par « transform ». La différence n'est pas
+       cosmétique : « transform » ne modifie pas le flux, il faut donc lui réserver une hauteur
+       calculée à la main — et tout pattern sans geometry.frame se retrouve rogné ou noyé dans
+       du vide. « zoom » reflue : le parent prend la hauteur réelle du fragment. -->
+  <div class="stage" style="background:#D9D2C7">
+    <div class="scaler" style="zoom:1.0000;--vl-bg:#D9D2C7;--vl-board:#D9D2C7;--vl-blue:#1B44D8;--vl-black:#0D0D0D;--vl-white:#FFFFFF;--vl-ink-muted:#6E6E6E;--vl-ink-muted-invert:#D3D3D3;--vl-hairline:#00000018;--vl-hairline-invert:#FFFFFF33;--vl-ph-a:#C9C9C9;--vl-ph-b:#5A5A5A;--vl-margin:48px">
+      <!-- card-13-email-figure-band — trois chiffres de même nature en une bande, dans un mail.
+
+     Écrit NATIVEMENT pour le canal. Ce que ça change par rapport à la rangée de KPI d'une
+     slide : les colonnes sont des CELLULES à largeur en pourcentage sur une table
+     `table-layout: fixed` — la seule répartition en trois parts égales qu'Outlook respecte —
+     et les séparateurs sont des `border-left` de cellule, pas des éléments intercalaires : une
+     colonne de gouttière de plus rendrait la bande impossible à empiler sur mobile.
+
+     Aucun aplat de carte, aucun rayon, aucune ombre : la charte ref-04 ne connaît que des
+     angles vifs, et c'est aussi ce qu'un client mail rend sans dégradation. Le bleu ne fait
+     qu'une chose — il colore les chiffres.
+
+     520 px = le slot `body` de layout-09-email-envelope (600 − 2 × 40).
+     Couleurs via --vl-* uniquement. -->
+<table class="vl-emband" role="presentation" cellpadding="0" cellspacing="0" border="0" width="520">
+  <tr>
+    <td class="vl-emband__cell" valign="top">
+      <div class="vl-emband__label">ENCOURS SUIVIS</div>
+      <div class="vl-emband__fig">1 240</div>
+      <div class="vl-emband__note">AU 31 JUILLET</div>
+    </td>
+    <td class="vl-emband__cell vl-emband__cell--split" valign="top">
+      <div class="vl-emband__label">ÉCART TYPE</div>
+      <div class="vl-emband__fig">+18,4 %</div>
+      <div class="vl-emband__note">SUR DOUZE MOIS</div>
+    </td>
+    <td class="vl-emband__cell vl-emband__cell--split" valign="top">
+      <div class="vl-emband__label">HORIZON MÉDIAN</div>
+      <div class="vl-emband__fig">9 ans</div>
+      <div class="vl-emband__note">TOUTES POCHES</div>
+    </td>
+  </tr>
+</table>
+    </div>
+  </div>
+  <div class="rules">
+    <p><b>Employer quand</b> — Ouvrir ou clore une lettre d'information par trois valeurs comparables (un encours, une variation, un horizon) que le lecteur doit pouvoir saisir sans lire le corps. Le chiffre est court — six signes au plus — et son libellé tient sur une ligne.</p>
+    <p><b>Éviter quand</b> — Les valeurs ne sont pas comparables (la bande impose une lecture de gauche à droite qui n'existe pas), il y en a plus de trois (au-delà, les colonnes tombent sous 120 px et les chiffres se coupent sur mobile), ou la lettre est déjà dense en chiffres — une bande de chiffres au milieu d'un texte de chiffres ne hiérarchise plus rien.</p>
+  </div>
+  <details>
+    <summary>le code — patterns/card-13-email-figure-band.html</summary>
+    <pre id="src-card-13-email-figure-band"><code>&lt;!-- card-13-email-figure-band — trois chiffres de même nature en une bande, dans un mail.
+
+     Écrit NATIVEMENT pour le canal. Ce que ça change par rapport à la rangée de KPI d'une
+     slide : les colonnes sont des CELLULES à largeur en pourcentage sur une table
+     `table-layout: fixed` — la seule répartition en trois parts égales qu'Outlook respecte —
+     et les séparateurs sont des `border-left` de cellule, pas des éléments intercalaires : une
+     colonne de gouttière de plus rendrait la bande impossible à empiler sur mobile.
+
+     Aucun aplat de carte, aucun rayon, aucune ombre : la charte ref-04 ne connaît que des
+     angles vifs, et c'est aussi ce qu'un client mail rend sans dégradation. Le bleu ne fait
+     qu'une chose — il colore les chiffres.
+
+     520 px = le slot `body` de layout-09-email-envelope (600 − 2 × 40).
+     Couleurs via --vl-* uniquement. --&gt;
+&lt;table class="vl-emband" role="presentation" cellpadding="0" cellspacing="0" border="0" width="520"&gt;
+  &lt;tr&gt;
+    &lt;td class="vl-emband__cell" valign="top"&gt;
+      &lt;div class="vl-emband__label"&gt;ENCOURS SUIVIS&lt;/div&gt;
+      &lt;div class="vl-emband__fig"&gt;1 240&lt;/div&gt;
+      &lt;div class="vl-emband__note"&gt;AU 31 JUILLET&lt;/div&gt;
+    &lt;/td&gt;
+    &lt;td class="vl-emband__cell vl-emband__cell--split" valign="top"&gt;
+      &lt;div class="vl-emband__label"&gt;ÉCART TYPE&lt;/div&gt;
+      &lt;div class="vl-emband__fig"&gt;+18,4 %&lt;/div&gt;
+      &lt;div class="vl-emband__note"&gt;SUR DOUZE MOIS&lt;/div&gt;
+    &lt;/td&gt;
+    &lt;td class="vl-emband__cell vl-emband__cell--split" valign="top"&gt;
+      &lt;div class="vl-emband__label"&gt;HORIZON MÉDIAN&lt;/div&gt;
+      &lt;div class="vl-emband__fig"&gt;9 ans&lt;/div&gt;
+      &lt;div class="vl-emband__note"&gt;TOUTES POCHES&lt;/div&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;style&gt;
+.vl-emband {
+  width: 520px;
+  border-collapse: collapse;
+  background: var(--vl-white);
+  color: var(--vl-black);
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+/* Trois parts égales par le POURCENTAGE et non par une grille : sur une table à disposition
+   fixe, la largeur déclarée d'une cellule englobe son padding et son filet, donc les trois
+   colonnes restent d'aplomb même quand deux d'entre elles portent un séparateur. */
+.vl-emband__cell {
+  width: 33.33%;
+  padding: 2px 16px 2px 0;
+}
+.vl-emband__cell--split {
+  border-left: 1px solid var(--vl-black);
+  padding-left: 18px;
+}
+.vl-emband__label {
+  margin: 0 0 12px;
+  color: var(--vl-ink-muted);
+  font-size: 10px; line-height: 13px; font-weight: 600; letter-spacing: 0.14em;
+}
+/* Le seul élément chromatique de la bande. Deux corps et rien entre les deux : le chiffre
+   pèse plus de trois fois le libellé, et c'est ce vide qui tient la hiérarchie sans couleur
+   de fond ni encadrement. */
+.vl-emband__fig {
+  margin: 0 0 10px;
+  color: var(--vl-blue);
+  font-size: 34px; line-height: 34px; font-weight: 800; letter-spacing: -0.03em;
+}
+.vl-emband__note {
+  margin: 0;
+  color: var(--vl-ink-muted);
+  font-size: 10px; line-height: 15px; font-weight: 500; letter-spacing: 0.06em;
+}
+&lt;/style&gt;</code></pre>
+  </details>
+  <details>
+    <summary>les tokens de ref-04-swiss-investor-blue — systems/ref-04-swiss-investor-blue.json</summary>
+    <pre id="tok-card-13-email-figure-band"><code>:root {
+  --vl-bg: #D9D2C7;
+  --vl-board: #D9D2C7;
+  --vl-blue: #1B44D8;
+  --vl-black: #0D0D0D;
+  --vl-white: #FFFFFF;
+  --vl-ink-muted: #6E6E6E;
+  --vl-ink-muted-invert: #D3D3D3;
+  --vl-hairline: #00000018;
+  --vl-hairline-invert: #FFFFFF33;
+  --vl-ph-a: #C9C9C9;
+  --vl-ph-b: #5A5A5A;
+  --vl-margin: 48px;
+}</code></pre>
+  </details>
+  <style>
+.vl-emband {
+  width: 520px;
+  border-collapse: collapse;
+  background: var(--vl-white);
+  color: var(--vl-black);
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+/* Trois parts égales par le POURCENTAGE et non par une grille : sur une table à disposition
+   fixe, la largeur déclarée d'une cellule englobe son padding et son filet, donc les trois
+   colonnes restent d'aplomb même quand deux d'entre elles portent un séparateur. */
+.vl-emband__cell {
+  width: 33.33%;
+  padding: 2px 16px 2px 0;
+}
+.vl-emband__cell--split {
+  border-left: 1px solid var(--vl-black);
+  padding-left: 18px;
+}
+.vl-emband__label {
+  margin: 0 0 12px;
+  color: var(--vl-ink-muted);
+  font-size: 10px; line-height: 13px; font-weight: 600; letter-spacing: 0.14em;
+}
+/* Le seul élément chromatique de la bande. Deux corps et rien entre les deux : le chiffre
+   pèse plus de trois fois le libellé, et c'est ce vide qui tient la hiérarchie sans couleur
+   de fond ni encadrement. */
+.vl-emband__fig {
+  margin: 0 0 10px;
+  color: var(--vl-blue);
+  font-size: 34px; line-height: 34px; font-weight: 800; letter-spacing: -0.03em;
+}
+.vl-emband__note {
+  margin: 0;
+  color: var(--vl-ink-muted);
+  font-size: 10px; line-height: 15px; font-weight: 500; letter-spacing: 0.06em;
+}
+</style>
+</article>
+
 <article class="pat" data-family="layout" data-media="slide web"
          data-ref="ref-04-swiss-investor-blue" data-hay="layout-02-swiss-frame layout cadre suisse header / footer poser le cadre d'une slide de deck : une marge unique, deux barres de micro-typo à trois zones et un filet d'un pixel — de quoi rendre une suite de slides reconnaissable sans y ajouter le moindre ornement. deck de plus de trois slides qui doit tenir comme un document : le header rappelle la section, le footer numérote. c'est aussi ce qui autorise les fonds pleins à alterner sans que le deck se disloque. slide unique, visuel de réseau social, ou support projeté de loin : à 8 px les barres ne se lisent pas, elles ne sont là que pour tenir la page. layout cadre header footer deck slide suisse filet micro-typo grille marge ref-04-swiss-investor-blue" id="p-layout-02-swiss-frame">
   <header class="pat__head">
@@ -925,6 +1113,356 @@ body.filtered .map { display:none; }
 .vl-swiss__demo { margin: 0; font-size: 40px; font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; }
 .vl-swiss__note { margin: 16px 0 0; max-width: 52ch; font-size: 13px; line-height: 1.5; color: var(--vl-ink-muted); }
 .vl-swiss--fill .vl-swiss__note { color: var(--vl-ink-muted-invert); }
+</style>
+</article>
+
+<article class="pat" data-family="layout" data-media="email"
+         data-ref="ref-04-swiss-investor-blue" data-hay="layout-09-email-envelope layout enveloppe de mailing — garde, colonne de 600, trois aplats pleins poser la coquille d'un mailing avec ce que le moteur word d'outlook sait réellement rendre : une table de garde pleine largeur qui porte le fond, une colonne de 600 px centrée qui porte tout le contenu, et l'espacement entièrement délégué au padding des cellules — jamais à une gouttière, une position ou un calcul. les trois zones (bandeau, corps, pied) sont trois aplats pleins et différents, ce qui est à la fois la signature de la charte et le seul modèle de hiérarchie qu'un client mail rende à l'identique partout. toute lettre d'information ou mailing transactionnel à composer soi-même : c'est le squelette dans lequel on pose ensuite les blocs de contenu (list-06-email-digest, card-13-email-figure-band, tous deux calibrés sur le slot de 520 px). le bandeau porte l'émetteur et le numéro d'édition, le pied porte les mentions et le désabonnement — deux zones qu'on ne peut pas omettre et qu'on réécrit sinon à chaque envoi. le message est une page web déguisée (une landing dans un mail se lit mal et se coupe), il doit tenir plusieurs colonnes de contenu côte à côte au-delà de deux (elles ne s'empilent pas sur mobile sans requête de média, que la plupart des clients ignorent), ou la charte visée repose sur des rayons, des ombres ou des couleurs translucides — outlook les rend en angles vifs, sans ombre et en couleur pleine, et le résultat n'est plus la charte. email mailing newsletter lettre coquille gabarit outlook table 600 bandeau pied desabonnement bouton cta enveloppe ref-04-swiss-investor-blue" id="p-layout-09-email-envelope">
+  <header class="pat__head">
+    <h3><a href="#p-layout-09-email-envelope">layout-09-email-envelope</a></h3>
+    <p class="meta">layout · email · 18 benchmarks · 600×611</p>
+    <p class="intent">Poser la coquille d'un mailing avec ce que le moteur Word d'Outlook sait réellement rendre : une table de garde pleine largeur qui porte le fond, une colonne de 600 px centrée qui porte tout le contenu, et l'espacement entièrement délégué au padding des cellules — jamais à une gouttière, une position ou un calcul. Les trois zones (bandeau, corps, pied) sont trois aplats PLEINS et différents, ce qui est à la fois la signature de la charte et le seul modèle de hiérarchie qu'un client mail rende à l'identique partout.</p>
+    <div class="acts">
+      <button class="copy" data-target="src-layout-09-email-envelope">copier le fragment</button>
+      <button class="copy" data-target="tok-layout-09-email-envelope">copier les tokens</button>
+    </div>
+  </header>
+  <!-- Le fragment RÉEL, réduit par « zoom » et NON par « transform ». La différence n'est pas
+       cosmétique : « transform » ne modifie pas le flux, il faut donc lui réserver une hauteur
+       calculée à la main — et tout pattern sans geometry.frame se retrouve rogné ou noyé dans
+       du vide. « zoom » reflue : le parent prend la hauteur réelle du fragment. -->
+  <div class="stage" style="background:#D9D2C7">
+    <div class="scaler" style="zoom:1.0000;--vl-bg:#D9D2C7;--vl-board:#D9D2C7;--vl-blue:#1B44D8;--vl-black:#0D0D0D;--vl-white:#FFFFFF;--vl-ink-muted:#6E6E6E;--vl-ink-muted-invert:#D3D3D3;--vl-hairline:#00000018;--vl-hairline-invert:#FFFFFF33;--vl-ph-a:#C9C9C9;--vl-ph-b:#5A5A5A;--vl-margin:48px">
+      <!-- layout-09-email-envelope — la coquille d'un mailing, écrite NATIVEMENT pour le canal.
+
+     Le corpus est de la matière slide/web : au 11/08/2026 aucun des 38 patterns antérieurs ne
+     passait `bin/emit.mjs --target email`. Celui-ci est écrit à l'envers — on part de ce que le
+     moteur Word d'Outlook sait rendre, et on compose avec ça seulement : deux tables emboîtées
+     (garde pleine largeur + colonne de 600 px centrée), l'espacement porté par le PADDING DES
+     CELLULES et jamais par une gouttière, aucune position, aucun calc(), aucun SVG, aucun rayon,
+     aucune ombre, aucune couleur à canal alpha.
+
+     Les capitales sont ÉCRITES dans le markup et non obtenues par `text-transform` : Outlook
+     n'applique pas la propriété, un titre en bas de casse sortirait en bas de casse.
+
+     Couleurs via --vl-* uniquement. Les trois aplats pleins qui alternent (bandeau, corps, pied)
+     sont la signature de ref-04 — et le seul modèle de hiérarchie qu'un client mail rende à
+     l'identique partout. -->
+<table class="vl-emenv" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+  <tr>
+    <td class="vl-emenv__yard" align="center">
+
+      <table class="vl-emenv__col" role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" align="center">
+
+        <!-- 1 · BANDEAU — premier aplat. Deux cellules, pas un flex : c'est la seule façon
+             d'obtenir « à gauche / à droite » qui tienne dans les six clients majeurs. -->
+        <tr>
+          <td class="vl-emenv__band">
+            <table class="vl-emenv__bandrow" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+              <tr>
+                <td class="vl-emenv__wordmark" align="left">NORTHBEAM</td>
+                <td class="vl-emenv__issue" align="right">ÉDITION 118 · 11 AOÛT</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- 2 · TITRE, CHAPÔ, CORPS — deuxième aplat -->
+        <tr>
+          <td class="vl-emenv__head">
+            <div class="vl-emenv__kicker">LETTRE HEBDOMADAIRE</div>
+            <h1 class="vl-emenv__title">CE QUE LA COURBE DES TAUX NE DIT PAS ENCORE</h1>
+          </td>
+        </tr>
+        <tr>
+          <td class="vl-emenv__body">
+            <p class="vl-emenv__lede">Trois mouvements de la semaine, et ce qu'ils changent pour une
+              allocation qui court sur dix ans. La lettre complète se lit en quatre minutes.</p>
+            <!-- slot body : y poser list-06-email-digest ou card-13-email-figure-band,
+                 tous deux calibrés sur 520 px = 600 − 2 × 40 de marge de cellule. -->
+          </td>
+        </tr>
+
+        <!-- Bouton : le fond et le padding sont portés par la CELLULE, jamais par le lien.
+             Un `<a>` à qui on donne un fond ne remplit rien dans Outlook. -->
+        <tr>
+          <td class="vl-emenv__ctacell" align="left">
+            <table class="vl-emenv__ctabox" role="presentation" cellpadding="0" cellspacing="0" border="0" align="left">
+              <tr>
+                <td class="vl-emenv__cta" align="center">
+                  <a class="vl-emenv__ctalink" href="https://northbeam.invalid/lettre">LIRE LA LETTRE</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- 3 · PIED — troisième aplat. Le désabonnement est SOULIGNÉ : sur un aplat sombre,
+             la couleur seule ne suffit pas à désigner un lien. -->
+        <tr>
+          <td class="vl-emenv__foot">
+            <div class="vl-emenv__legal">NORTHBEAM SAS · 12 QUAI DE LA MÉGISSERIE · 75001 PARIS</div>
+            <div class="vl-emenv__legal">VOUS RECEVEZ CETTE LETTRE PARCE QUE VOUS Y ÊTES ABONNÉ.</div>
+            <div class="vl-emenv__unsubline"><a class="vl-emenv__unsub" href="https://northbeam.invalid/stop">SE DÉSABONNER</a></div>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+    </div>
+  </div>
+  <div class="rules">
+    <p><b>Employer quand</b> — Toute lettre d'information ou mailing transactionnel à composer soi-même : c'est le squelette dans lequel on pose ensuite les blocs de contenu (list-06-email-digest, card-13-email-figure-band, tous deux calibrés sur le slot de 520 px). Le bandeau porte l'émetteur et le numéro d'édition, le pied porte les mentions et le désabonnement — deux zones qu'on ne peut pas omettre et qu'on réécrit sinon à chaque envoi.</p>
+    <p><b>Éviter quand</b> — Le message est une page web déguisée (une landing dans un mail se lit mal et se coupe), il doit tenir plusieurs colonnes de contenu côte à côte au-delà de deux (elles ne s'empilent pas sur mobile sans requête de média, que la plupart des clients ignorent), ou la charte visée repose sur des rayons, des ombres ou des couleurs translucides — Outlook les rend en angles vifs, sans ombre et en couleur pleine, et le résultat n'est plus la charte.</p>
+  </div>
+  <details>
+    <summary>le code — patterns/layout-09-email-envelope.html</summary>
+    <pre id="src-layout-09-email-envelope"><code>&lt;!-- layout-09-email-envelope — la coquille d'un mailing, écrite NATIVEMENT pour le canal.
+
+     Le corpus est de la matière slide/web : au 11/08/2026 aucun des 38 patterns antérieurs ne
+     passait `bin/emit.mjs --target email`. Celui-ci est écrit à l'envers — on part de ce que le
+     moteur Word d'Outlook sait rendre, et on compose avec ça seulement : deux tables emboîtées
+     (garde pleine largeur + colonne de 600 px centrée), l'espacement porté par le PADDING DES
+     CELLULES et jamais par une gouttière, aucune position, aucun calc(), aucun SVG, aucun rayon,
+     aucune ombre, aucune couleur à canal alpha.
+
+     Les capitales sont ÉCRITES dans le markup et non obtenues par `text-transform` : Outlook
+     n'applique pas la propriété, un titre en bas de casse sortirait en bas de casse.
+
+     Couleurs via --vl-* uniquement. Les trois aplats pleins qui alternent (bandeau, corps, pied)
+     sont la signature de ref-04 — et le seul modèle de hiérarchie qu'un client mail rende à
+     l'identique partout. --&gt;
+&lt;table class="vl-emenv" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"&gt;
+  &lt;tr&gt;
+    &lt;td class="vl-emenv__yard" align="center"&gt;
+
+      &lt;table class="vl-emenv__col" role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" align="center"&gt;
+
+        &lt;!-- 1 · BANDEAU — premier aplat. Deux cellules, pas un flex : c'est la seule façon
+             d'obtenir « à gauche / à droite » qui tienne dans les six clients majeurs. --&gt;
+        &lt;tr&gt;
+          &lt;td class="vl-emenv__band"&gt;
+            &lt;table class="vl-emenv__bandrow" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"&gt;
+              &lt;tr&gt;
+                &lt;td class="vl-emenv__wordmark" align="left"&gt;NORTHBEAM&lt;/td&gt;
+                &lt;td class="vl-emenv__issue" align="right"&gt;ÉDITION 118 · 11 AOÛT&lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/table&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+
+        &lt;!-- 2 · TITRE, CHAPÔ, CORPS — deuxième aplat --&gt;
+        &lt;tr&gt;
+          &lt;td class="vl-emenv__head"&gt;
+            &lt;div class="vl-emenv__kicker"&gt;LETTRE HEBDOMADAIRE&lt;/div&gt;
+            &lt;h1 class="vl-emenv__title"&gt;CE QUE LA COURBE DES TAUX NE DIT PAS ENCORE&lt;/h1&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td class="vl-emenv__body"&gt;
+            &lt;p class="vl-emenv__lede"&gt;Trois mouvements de la semaine, et ce qu'ils changent pour une
+              allocation qui court sur dix ans. La lettre complète se lit en quatre minutes.&lt;/p&gt;
+            &lt;!-- slot body : y poser list-06-email-digest ou card-13-email-figure-band,
+                 tous deux calibrés sur 520 px = 600 − 2 × 40 de marge de cellule. --&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+
+        &lt;!-- Bouton : le fond et le padding sont portés par la CELLULE, jamais par le lien.
+             Un `&lt;a&gt;` à qui on donne un fond ne remplit rien dans Outlook. --&gt;
+        &lt;tr&gt;
+          &lt;td class="vl-emenv__ctacell" align="left"&gt;
+            &lt;table class="vl-emenv__ctabox" role="presentation" cellpadding="0" cellspacing="0" border="0" align="left"&gt;
+              &lt;tr&gt;
+                &lt;td class="vl-emenv__cta" align="center"&gt;
+                  &lt;a class="vl-emenv__ctalink" href="https://northbeam.invalid/lettre"&gt;LIRE LA LETTRE&lt;/a&gt;
+                &lt;/td&gt;
+              &lt;/tr&gt;
+            &lt;/table&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+
+        &lt;!-- 3 · PIED — troisième aplat. Le désabonnement est SOULIGNÉ : sur un aplat sombre,
+             la couleur seule ne suffit pas à désigner un lien. --&gt;
+        &lt;tr&gt;
+          &lt;td class="vl-emenv__foot"&gt;
+            &lt;div class="vl-emenv__legal"&gt;NORTHBEAM SAS · 12 QUAI DE LA MÉGISSERIE · 75001 PARIS&lt;/div&gt;
+            &lt;div class="vl-emenv__legal"&gt;VOUS RECEVEZ CETTE LETTRE PARCE QUE VOUS Y ÊTES ABONNÉ.&lt;/div&gt;
+            &lt;div class="vl-emenv__unsubline"&gt;&lt;a class="vl-emenv__unsub" href="https://northbeam.invalid/stop"&gt;SE DÉSABONNER&lt;/a&gt;&lt;/div&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+
+      &lt;/table&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;style&gt;
+/* La garde : elle n'existe que pour donner un fond à la fenêtre de lecture et pour centrer la
+   colonne. Aucun padding — c'est la colonne qui porte toutes les marges. */
+.vl-emenv { width: 100%; border-collapse: collapse; }
+.vl-emenv__yard {
+  padding: 32px 0;
+  background: var(--vl-bg);
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+/* 600 px : la largeur de sécurité du canal. Ce n'est pas une échelle qu'on pourrait multiplier
+   comme sur une slide — c'est le volet de lecture d'Outlook. Un pixel de plus déclenche la
+   barre horizontale ou la réduction automatique sur mobile. */
+.vl-emenv__col {
+  width: 600px;
+  border-collapse: collapse;
+  background: var(--vl-white);
+  margin: 0 auto;
+}
+.vl-emenv__bandrow { width: 100%; border-collapse: collapse; }
+
+.vl-emenv__band { background: var(--vl-blue); padding: 20px 40px; }
+.vl-emenv__wordmark {
+  color: var(--vl-white);
+  font-size: 15px; line-height: 18px; font-weight: 800; letter-spacing: 0.14em;
+}
+.vl-emenv__issue {
+  color: var(--vl-white);
+  font-size: 11px; line-height: 18px; font-weight: 500; letter-spacing: 0.1em;
+}
+
+.vl-emenv__head { background: var(--vl-white); padding: 40px 40px 0; }
+.vl-emenv__kicker {
+  margin: 0 0 14px;
+  color: var(--vl-ink-muted);
+  font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.14em;
+}
+/* Le titre-monstre du système, ramené au canal. Le rapport titre / corps reste au-dessus de
+   2,4 : c'est lui la signature, pas la valeur en pixels. */
+.vl-emenv__title {
+  margin: 0;
+  color: var(--vl-black);
+  font-size: 40px; line-height: 40px; font-weight: 800; letter-spacing: -0.02em;
+}
+.vl-emenv__body { background: var(--vl-white); padding: 22px 40px 4px; }
+.vl-emenv__lede {
+  margin: 0;
+  color: var(--vl-black);
+  font-size: 16px; line-height: 25px; font-weight: 400;
+}
+
+.vl-emenv__ctacell { background: var(--vl-white); padding: 26px 40px 44px; }
+.vl-emenv__ctabox { border-collapse: collapse; }
+/* 46 px de haut : au-dessus du plancher tactile de 44 px. Le padding est vertical ET
+   horizontal sur la cellule, parce qu'un lien inline ne peut pas grandir une cellule. */
+.vl-emenv__cta { background: var(--vl-blue); padding: 16px 34px; }
+.vl-emenv__ctalink {
+  color: var(--vl-white);
+  font-size: 13px; line-height: 14px; font-weight: 700; letter-spacing: 0.1em;
+  text-decoration: none;
+}
+
+.vl-emenv__foot { background: var(--vl-black); padding: 28px 40px 30px; }
+.vl-emenv__legal {
+  margin: 0 0 7px;
+  color: var(--vl-ink-muted-invert);
+  font-size: 11px; line-height: 16px; font-weight: 500; letter-spacing: 0.04em;
+}
+.vl-emenv__unsubline { margin: 5px 0 0; font-size: 11px; line-height: 16px; }
+.vl-emenv__unsub {
+  color: var(--vl-white);
+  font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.08em;
+  text-decoration: underline;
+}
+&lt;/style&gt;</code></pre>
+  </details>
+  <details>
+    <summary>les tokens de ref-04-swiss-investor-blue — systems/ref-04-swiss-investor-blue.json</summary>
+    <pre id="tok-layout-09-email-envelope"><code>:root {
+  --vl-bg: #D9D2C7;
+  --vl-board: #D9D2C7;
+  --vl-blue: #1B44D8;
+  --vl-black: #0D0D0D;
+  --vl-white: #FFFFFF;
+  --vl-ink-muted: #6E6E6E;
+  --vl-ink-muted-invert: #D3D3D3;
+  --vl-hairline: #00000018;
+  --vl-hairline-invert: #FFFFFF33;
+  --vl-ph-a: #C9C9C9;
+  --vl-ph-b: #5A5A5A;
+  --vl-margin: 48px;
+}</code></pre>
+  </details>
+  <style>
+/* La garde : elle n'existe que pour donner un fond à la fenêtre de lecture et pour centrer la
+   colonne. Aucun padding — c'est la colonne qui porte toutes les marges. */
+.vl-emenv { width: 100%; border-collapse: collapse; }
+.vl-emenv__yard {
+  padding: 32px 0;
+  background: var(--vl-bg);
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+/* 600 px : la largeur de sécurité du canal. Ce n'est pas une échelle qu'on pourrait multiplier
+   comme sur une slide — c'est le volet de lecture d'Outlook. Un pixel de plus déclenche la
+   barre horizontale ou la réduction automatique sur mobile. */
+.vl-emenv__col {
+  width: 600px;
+  border-collapse: collapse;
+  background: var(--vl-white);
+  margin: 0 auto;
+}
+.vl-emenv__bandrow { width: 100%; border-collapse: collapse; }
+
+.vl-emenv__band { background: var(--vl-blue); padding: 20px 40px; }
+.vl-emenv__wordmark {
+  color: var(--vl-white);
+  font-size: 15px; line-height: 18px; font-weight: 800; letter-spacing: 0.14em;
+}
+.vl-emenv__issue {
+  color: var(--vl-white);
+  font-size: 11px; line-height: 18px; font-weight: 500; letter-spacing: 0.1em;
+}
+
+.vl-emenv__head { background: var(--vl-white); padding: 40px 40px 0; }
+.vl-emenv__kicker {
+  margin: 0 0 14px;
+  color: var(--vl-ink-muted);
+  font-size: 11px; line-height: 14px; font-weight: 600; letter-spacing: 0.14em;
+}
+/* Le titre-monstre du système, ramené au canal. Le rapport titre / corps reste au-dessus de
+   2,4 : c'est lui la signature, pas la valeur en pixels. */
+.vl-emenv__title {
+  margin: 0;
+  color: var(--vl-black);
+  font-size: 40px; line-height: 40px; font-weight: 800; letter-spacing: -0.02em;
+}
+.vl-emenv__body { background: var(--vl-white); padding: 22px 40px 4px; }
+.vl-emenv__lede {
+  margin: 0;
+  color: var(--vl-black);
+  font-size: 16px; line-height: 25px; font-weight: 400;
+}
+
+.vl-emenv__ctacell { background: var(--vl-white); padding: 26px 40px 44px; }
+.vl-emenv__ctabox { border-collapse: collapse; }
+/* 46 px de haut : au-dessus du plancher tactile de 44 px. Le padding est vertical ET
+   horizontal sur la cellule, parce qu'un lien inline ne peut pas grandir une cellule. */
+.vl-emenv__cta { background: var(--vl-blue); padding: 16px 34px; }
+.vl-emenv__ctalink {
+  color: var(--vl-white);
+  font-size: 13px; line-height: 14px; font-weight: 700; letter-spacing: 0.1em;
+  text-decoration: none;
+}
+
+.vl-emenv__foot { background: var(--vl-black); padding: 28px 40px 30px; }
+.vl-emenv__legal {
+  margin: 0 0 7px;
+  color: var(--vl-ink-muted-invert);
+  font-size: 11px; line-height: 16px; font-weight: 500; letter-spacing: 0.04em;
+}
+.vl-emenv__unsubline { margin: 5px 0 0; font-size: 11px; line-height: 16px; }
+.vl-emenv__unsub {
+  color: var(--vl-white);
+  font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.08em;
+  text-decoration: underline;
+}
 </style>
 </article>
 
@@ -1289,6 +1827,280 @@ body.filtered .map { display:none; }
 /* Le numéro s'efface, le libellé porte : l'inverse ferait lire la numérotation avant les
    sections. */
 .vl-toc li span:first-child { color: var(--vl-ink-muted-invert); }
+</style>
+</article>
+
+<article class="pat" data-family="list" data-media="email"
+         data-ref="ref-04-swiss-investor-blue" data-hay="list-06-email-digest list digest de newsletter — entrées numérotées séparées par un filet aligner les trois à six entrées d'une lettre d'information dans un mail, chacune tenant en rubrique, titre, chapô et lien, sans qu'aucune ne se lise comme un encadré : la colonne du numéro est une cellule de largeur fixe et la séparation un filet posé en haut de chaque entrée — retiré sur la première, pour que le filet sépare au lieu d'encadrer. le corps d'une lettre d'information périodique : plusieurs sujets de même rang, chacun résumé en deux lignes et renvoyant vers un article. le numéro donne un ordre de lecture explicite, ce qui vaut mieux qu'un tri implicite quand tous les titres pèsent le même poids. une seule entrée (le numéro et le filet n'ont plus rien à séparer, une simple accroche suffit), plus de six (la lettre devient un sommaire et personne ne descend), ou les entrées ne sont pas de même nature — un digest suggère une lecture de haut en bas qui devient fausse dès qu'une entrée est d'un autre genre que les autres. email mailing newsletter digest sommaire entrees articles numerote filet separateur chapo lien outlook table ref-04-swiss-investor-blue" id="p-list-06-email-digest">
+  <header class="pat__head">
+    <h3><a href="#p-list-06-email-digest">list-06-email-digest</a></h3>
+    <p class="meta">list · email · 16 benchmarks · 520×594</p>
+    <p class="intent">Aligner les trois à six entrées d'une lettre d'information dans un mail, chacune tenant en rubrique, titre, chapô et lien, sans qu'aucune ne se lise comme un encadré : la colonne du numéro est une CELLULE de largeur fixe et la séparation un filet posé en haut de chaque entrée — retiré sur la première, pour que le filet sépare au lieu d'encadrer.</p>
+    <div class="acts">
+      <button class="copy" data-target="src-list-06-email-digest">copier le fragment</button>
+      <button class="copy" data-target="tok-list-06-email-digest">copier les tokens</button>
+    </div>
+  </header>
+  <!-- Le fragment RÉEL, réduit par « zoom » et NON par « transform ». La différence n'est pas
+       cosmétique : « transform » ne modifie pas le flux, il faut donc lui réserver une hauteur
+       calculée à la main — et tout pattern sans geometry.frame se retrouve rogné ou noyé dans
+       du vide. « zoom » reflue : le parent prend la hauteur réelle du fragment. -->
+  <div class="stage" style="background:#D9D2C7">
+    <div class="scaler" style="zoom:1.0000;--vl-bg:#D9D2C7;--vl-board:#D9D2C7;--vl-blue:#1B44D8;--vl-black:#0D0D0D;--vl-white:#FFFFFF;--vl-ink-muted:#6E6E6E;--vl-ink-muted-invert:#D3D3D3;--vl-hairline:#00000018;--vl-hairline-invert:#FFFFFF33;--vl-ph-a:#C9C9C9;--vl-ph-b:#5A5A5A;--vl-margin:48px">
+      <!-- list-06-email-digest — le corps d'une newsletter : N entrées numérotées, séparées par un
+     filet, chacune tenant en rubrique / titre / chapô / lien.
+
+     Écrit NATIVEMENT pour le canal mail. Deux conséquences visibles dans le code :
+     — la colonne du numéro est une CELLULE de largeur fixe (`table-layout: fixed`), pas une
+       colonne de grille ni un élément positionné : c'est la seule mise en colonnes que le
+       moteur Word rende à l'identique ;
+     — le filet de séparation est un `border-top` posé sur la cellule de l'entrée, et retiré sur
+       la PREMIÈRE par une classe — pas un `::before`, pas un `:first-child` : ni l'un ni l'autre
+       ne survit à l'inlining que réclame un client mail.
+
+     520 px de large = 600 − 2 × 40 : la mesure exacte du slot `body` de layout-09-email-envelope.
+     Couleurs via --vl-* uniquement. Le bleu ne sert QU'À colorer les numéros — c'est la règle de
+     ref-04 (« il occupe la surface entière ou il colore un chiffre, rien entre les deux »). -->
+<table class="vl-emdig" role="presentation" cellpadding="0" cellspacing="0" border="0" width="520">
+
+  <tr>
+    <td class="vl-emdig__item vl-emdig__item--first">
+      <table class="vl-emdig__grid" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td class="vl-emdig__num" valign="top">01</td>
+          <td class="vl-emdig__txt" valign="top">
+            <div class="vl-emdig__kicker">MARCHÉS</div>
+            <div class="vl-emdig__title">La pente à dix ans se redresse pour la première fois depuis mars</div>
+            <p class="vl-emdig__lede">Le mouvement est lent et il est général : douze des quinze
+              courbes suivies ont bougé dans le même sens sur la semaine.</p>
+            <a class="vl-emdig__link" href="https://northbeam.invalid/1">LIRE →</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="vl-emdig__item">
+      <table class="vl-emdig__grid" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td class="vl-emdig__num" valign="top">02</td>
+          <td class="vl-emdig__txt" valign="top">
+            <div class="vl-emdig__kicker">RÉGLEMENTAIRE</div>
+            <div class="vl-emdig__title">Ce que la révision de norme change pour les contrats longs</div>
+            <p class="vl-emdig__lede">Une seule ligne du texte déplace la frontière entre deux
+              modèles d'évaluation. Elle s'applique aux exercices ouverts en janvier.</p>
+            <a class="vl-emdig__link" href="https://northbeam.invalid/2">LIRE →</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="vl-emdig__item">
+      <table class="vl-emdig__grid" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tr>
+          <td class="vl-emdig__num" valign="top">03</td>
+          <td class="vl-emdig__txt" valign="top">
+            <div class="vl-emdig__kicker">ALLOCATION</div>
+            <div class="vl-emdig__title">Trois portefeuilles types, et le seul arbitrage qui les sépare</div>
+            <p class="vl-emdig__lede">À horizon dix ans, l'écart de performance tient à une
+              décision unique — prise une fois, jamais rejouée.</p>
+            <a class="vl-emdig__link" href="https://northbeam.invalid/3">LIRE →</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+</table>
+    </div>
+  </div>
+  <div class="rules">
+    <p><b>Employer quand</b> — Le corps d'une lettre d'information périodique : plusieurs sujets de même rang, chacun résumé en deux lignes et renvoyant vers un article. Le numéro donne un ordre de lecture explicite, ce qui vaut mieux qu'un tri implicite quand tous les titres pèsent le même poids.</p>
+    <p><b>Éviter quand</b> — Une seule entrée (le numéro et le filet n'ont plus rien à séparer, une simple accroche suffit), plus de six (la lettre devient un sommaire et personne ne descend), ou les entrées ne sont pas de même nature — un digest suggère une lecture de haut en bas qui devient fausse dès qu'une entrée est d'un autre genre que les autres.</p>
+  </div>
+  <details>
+    <summary>le code — patterns/list-06-email-digest.html</summary>
+    <pre id="src-list-06-email-digest"><code>&lt;!-- list-06-email-digest — le corps d'une newsletter : N entrées numérotées, séparées par un
+     filet, chacune tenant en rubrique / titre / chapô / lien.
+
+     Écrit NATIVEMENT pour le canal mail. Deux conséquences visibles dans le code :
+     — la colonne du numéro est une CELLULE de largeur fixe (`table-layout: fixed`), pas une
+       colonne de grille ni un élément positionné : c'est la seule mise en colonnes que le
+       moteur Word rende à l'identique ;
+     — le filet de séparation est un `border-top` posé sur la cellule de l'entrée, et retiré sur
+       la PREMIÈRE par une classe — pas un `::before`, pas un `:first-child` : ni l'un ni l'autre
+       ne survit à l'inlining que réclame un client mail.
+
+     520 px de large = 600 − 2 × 40 : la mesure exacte du slot `body` de layout-09-email-envelope.
+     Couleurs via --vl-* uniquement. Le bleu ne sert QU'À colorer les numéros — c'est la règle de
+     ref-04 (« il occupe la surface entière ou il colore un chiffre, rien entre les deux »). --&gt;
+&lt;table class="vl-emdig" role="presentation" cellpadding="0" cellspacing="0" border="0" width="520"&gt;
+
+  &lt;tr&gt;
+    &lt;td class="vl-emdig__item vl-emdig__item--first"&gt;
+      &lt;table class="vl-emdig__grid" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"&gt;
+        &lt;tr&gt;
+          &lt;td class="vl-emdig__num" valign="top"&gt;01&lt;/td&gt;
+          &lt;td class="vl-emdig__txt" valign="top"&gt;
+            &lt;div class="vl-emdig__kicker"&gt;MARCHÉS&lt;/div&gt;
+            &lt;div class="vl-emdig__title"&gt;La pente à dix ans se redresse pour la première fois depuis mars&lt;/div&gt;
+            &lt;p class="vl-emdig__lede"&gt;Le mouvement est lent et il est général : douze des quinze
+              courbes suivies ont bougé dans le même sens sur la semaine.&lt;/p&gt;
+            &lt;a class="vl-emdig__link" href="https://northbeam.invalid/1"&gt;LIRE →&lt;/a&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+
+  &lt;tr&gt;
+    &lt;td class="vl-emdig__item"&gt;
+      &lt;table class="vl-emdig__grid" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"&gt;
+        &lt;tr&gt;
+          &lt;td class="vl-emdig__num" valign="top"&gt;02&lt;/td&gt;
+          &lt;td class="vl-emdig__txt" valign="top"&gt;
+            &lt;div class="vl-emdig__kicker"&gt;RÉGLEMENTAIRE&lt;/div&gt;
+            &lt;div class="vl-emdig__title"&gt;Ce que la révision de norme change pour les contrats longs&lt;/div&gt;
+            &lt;p class="vl-emdig__lede"&gt;Une seule ligne du texte déplace la frontière entre deux
+              modèles d'évaluation. Elle s'applique aux exercices ouverts en janvier.&lt;/p&gt;
+            &lt;a class="vl-emdig__link" href="https://northbeam.invalid/2"&gt;LIRE →&lt;/a&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+
+  &lt;tr&gt;
+    &lt;td class="vl-emdig__item"&gt;
+      &lt;table class="vl-emdig__grid" role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%"&gt;
+        &lt;tr&gt;
+          &lt;td class="vl-emdig__num" valign="top"&gt;03&lt;/td&gt;
+          &lt;td class="vl-emdig__txt" valign="top"&gt;
+            &lt;div class="vl-emdig__kicker"&gt;ALLOCATION&lt;/div&gt;
+            &lt;div class="vl-emdig__title"&gt;Trois portefeuilles types, et le seul arbitrage qui les sépare&lt;/div&gt;
+            &lt;p class="vl-emdig__lede"&gt;À horizon dix ans, l'écart de performance tient à une
+              décision unique — prise une fois, jamais rejouée.&lt;/p&gt;
+            &lt;a class="vl-emdig__link" href="https://northbeam.invalid/3"&gt;LIRE →&lt;/a&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+
+&lt;/table&gt;
+
+&lt;style&gt;
+.vl-emdig {
+  width: 520px;
+  border-collapse: collapse;
+  background: var(--vl-white);
+  color: var(--vl-black);
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+/* Le filet SÉPARE, il n'encadre pas : posé en haut de chaque entrée, retiré sur la première.
+   Un filet complet ferait une boîte, et une boîte dans un mail se lit comme une pièce jointe. */
+.vl-emdig__item { padding: 26px 0 24px; border-top: 1px solid var(--vl-black); }
+.vl-emdig__item--first { padding-top: 0; border-top-width: 0; }
+
+.vl-emdig__grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
+/* 56 px = le chiffre (30) + sa gouttière (26). Une largeur de CELLULE, donc respectée par
+   Outlook ; une gouttière `gap` ne le serait pas. */
+.vl-emdig__num {
+  width: 56px;
+  color: var(--vl-blue);
+  font-size: 26px; line-height: 26px; font-weight: 800; letter-spacing: -0.02em;
+}
+.vl-emdig__txt { color: var(--vl-black); }
+
+.vl-emdig__kicker {
+  margin: 0 0 8px;
+  color: var(--vl-ink-muted);
+  font-size: 10px; line-height: 13px; font-weight: 600; letter-spacing: 0.14em;
+}
+.vl-emdig__title {
+  margin: 0 0 8px;
+  color: var(--vl-black);
+  font-size: 19px; line-height: 25px; font-weight: 700; letter-spacing: -0.01em;
+}
+.vl-emdig__lede {
+  margin: 0 0 12px;
+  color: var(--vl-ink-muted);
+  font-size: 15px; line-height: 23px; font-weight: 400;
+}
+/* Souligné, et pas seulement coloré : dans un client qui force sa propre couleur de lien,
+   le soulignement est ce qui reste. */
+.vl-emdig__link {
+  color: var(--vl-black);
+  font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: 0.1em;
+  text-decoration: underline;
+}
+&lt;/style&gt;</code></pre>
+  </details>
+  <details>
+    <summary>les tokens de ref-04-swiss-investor-blue — systems/ref-04-swiss-investor-blue.json</summary>
+    <pre id="tok-list-06-email-digest"><code>:root {
+  --vl-bg: #D9D2C7;
+  --vl-board: #D9D2C7;
+  --vl-blue: #1B44D8;
+  --vl-black: #0D0D0D;
+  --vl-white: #FFFFFF;
+  --vl-ink-muted: #6E6E6E;
+  --vl-ink-muted-invert: #D3D3D3;
+  --vl-hairline: #00000018;
+  --vl-hairline-invert: #FFFFFF33;
+  --vl-ph-a: #C9C9C9;
+  --vl-ph-b: #5A5A5A;
+  --vl-margin: 48px;
+}</code></pre>
+  </details>
+  <style>
+.vl-emdig {
+  width: 520px;
+  border-collapse: collapse;
+  background: var(--vl-white);
+  color: var(--vl-black);
+  font-family: "Helvetica Neue", Inter, Arial, sans-serif;
+}
+/* Le filet SÉPARE, il n'encadre pas : posé en haut de chaque entrée, retiré sur la première.
+   Un filet complet ferait une boîte, et une boîte dans un mail se lit comme une pièce jointe. */
+.vl-emdig__item { padding: 26px 0 24px; border-top: 1px solid var(--vl-black); }
+.vl-emdig__item--first { padding-top: 0; border-top-width: 0; }
+
+.vl-emdig__grid { width: 100%; border-collapse: collapse; table-layout: fixed; }
+/* 56 px = le chiffre (30) + sa gouttière (26). Une largeur de CELLULE, donc respectée par
+   Outlook ; une gouttière `gap` ne le serait pas. */
+.vl-emdig__num {
+  width: 56px;
+  color: var(--vl-blue);
+  font-size: 26px; line-height: 26px; font-weight: 800; letter-spacing: -0.02em;
+}
+.vl-emdig__txt { color: var(--vl-black); }
+
+.vl-emdig__kicker {
+  margin: 0 0 8px;
+  color: var(--vl-ink-muted);
+  font-size: 10px; line-height: 13px; font-weight: 600; letter-spacing: 0.14em;
+}
+.vl-emdig__title {
+  margin: 0 0 8px;
+  color: var(--vl-black);
+  font-size: 19px; line-height: 25px; font-weight: 700; letter-spacing: -0.01em;
+}
+.vl-emdig__lede {
+  margin: 0 0 12px;
+  color: var(--vl-ink-muted);
+  font-size: 15px; line-height: 23px; font-weight: 400;
+}
+/* Souligné, et pas seulement coloré : dans un client qui force sa propre couleur de lien,
+   le soulignement est ce qui reste. */
+.vl-emdig__link {
+  color: var(--vl-black);
+  font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: 0.1em;
+  text-decoration: underline;
+}
 </style>
 </article>
 </section>

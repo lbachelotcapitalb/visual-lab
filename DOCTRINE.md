@@ -29,7 +29,8 @@ Ici on nomme la loi une fois, on dit qui la mesure, et on montre les trous.
 | `bestfront` | page/app web | `~/.claude/skills/bestfront/SKILL.md` | `geo-audit.js` (chevauchement, vide de carte, bande morte, quasi-alignement) |
 | `visual-lab` | le pattern lui-même | ce dépôt | `bin/check.mjs` (benchmarks déclarés par pattern) |
 | `gtm-content` | visuel de comm + PSD | `~/.claude/skills/gtm-content/` | contrôle de vides (`maxVoidPct` / `fillPct`) |
-| — | **mailing, flyer, post social** | **rien encore** | **rien encore** — cf. « Les trous » en fin de fichier |
+| `visual-lab` | mailing | ce dépôt, patterns `media: ["email"]` | `bin/emit.mjs --target email` (faisabilité) + `bin/check.mjs` — mais **rien ne mesure la COMPOSITION d'un mailing** |
+| — | **flyer, post social** | **rien encore** | **rien encore** — cf. « Les trous » en fin de fichier |
 
 ---
 
@@ -164,11 +165,17 @@ source, il se corrige dans le **système** (token assombri), jamais en baissant 
 
 Nommer un trou vaut mieux que laisser croire à une couverture.
 
-- **Mailing.** Aucun gate. `bin/emit.mjs --target email` dit si un pattern TIENT dans un client
-  mail, pas si le mailing est bien composé. Au 30/07/2026, **0 pattern sur 17** passe la cible
-  email : le corpus est de la matière slide/web. Pour un mailing, deux issues honnêtes — écrire
-  des patterns nativement email (tables, largeurs fixes, zéro flex), ou **rendre le pattern en
-  image** et poser l'image.
+- **Mailing.** Toujours aucun gate de COMPOSITION : `bin/emit.mjs --target email` dit si un
+  pattern tient dans un client mail, pas si le mailing est bien composé. Ce qui a changé le
+  11/08/2026, c'est la matière — **3 patterns sur 41** passent la cible, et ce sont les trois
+  écrits pour elle (`layout-09-email-envelope` et ses deux blocs de 520 px). Le reste du corpus
+  reste de la matière slide/web ; un pattern reversé d'une slide ne s'y convertit pas.
+  Les lois de mise en page ci-dessus valent dans ce canal comme ailleurs, mais **trois seuils y
+  sont contraints par le moteur et non par le goût** : la largeur (600 px, le volet de lecture
+  d'Outlook), le plancher de lisibilité (aucun corps sous 10 px — un mail se lit à bout de bras,
+  là où une micro-typo de 8 px projetée sur un mur passe très bien), et le plancher tactile d'un
+  bouton (44 px). Le premier fait la seule exception du dépôt à « les benchmarks s'écrivent en
+  ratios » : 600 px n'est pas une échelle qu'on met à l'échelle.
 - **Flyer / impression.** Pas d'émetteur : un fragment HTML s'imprime tel quel (Chrome → PDF).
   Ce qui manque est une doctrine d'encre (aplats pleine page, ombres, dégradés) et l'obligation
   d'embarquer les polices de `fonts/` plutôt qu'une pile système.

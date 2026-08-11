@@ -1,0 +1,194 @@
+{
+  "name": "Enveloppe de mailing — garde, colonne de 600, trois aplats pleins",
+  "family": "layout",
+  "ref": "ref-04-swiss-investor-blue",
+  "intent": "Poser la coquille d'un mailing avec ce que le moteur Word d'Outlook sait réellement rendre : une table de garde pleine largeur qui porte le fond, une colonne de 600 px centrée qui porte tout le contenu, et l'espacement entièrement délégué au padding des cellules — jamais à une gouttière, une position ou un calcul. Les trois zones (bandeau, corps, pied) sont trois aplats PLEINS et différents, ce qui est à la fois la signature de la charte et le seul modèle de hiérarchie qu'un client mail rende à l'identique partout.",
+  "when_to_use": "Toute lettre d'information ou mailing transactionnel à composer soi-même : c'est le squelette dans lequel on pose ensuite les blocs de contenu (list-06-email-digest, card-13-email-figure-band, tous deux calibrés sur le slot de 520 px). Le bandeau porte l'émetteur et le numéro d'édition, le pied porte les mentions et le désabonnement — deux zones qu'on ne peut pas omettre et qu'on réécrit sinon à chaque envoi.",
+  "avoid_when": "Le message est une page web déguisée (une landing dans un mail se lit mal et se coupe), il doit tenir plusieurs colonnes de contenu côte à côte au-delà de deux (elles ne s'empilent pas sur mobile sans requête de média, que la plupart des clients ignorent), ou la charte visée repose sur des rayons, des ombres ou des couleurs translucides — Outlook les rend en angles vifs, sans ombre et en couleur pleine, et le résultat n'est plus la charte.",
+  "media": [
+    "email"
+  ],
+  "tags": [
+    "email",
+    "mailing",
+    "newsletter",
+    "lettre",
+    "coquille",
+    "gabarit",
+    "outlook",
+    "table",
+    "600",
+    "bandeau",
+    "pied",
+    "desabonnement",
+    "bouton",
+    "cta",
+    "enveloppe"
+  ],
+  "vars": [
+    {
+      "name": "--vl-bg",
+      "role": "fond de la garde — la couleur de la fenêtre de lecture autour de la colonne",
+      "default": "#D9D2C7"
+    },
+    {
+      "name": "--vl-white",
+      "role": "aplat de la colonne : titre, corps, bouton",
+      "default": "#FFFFFF"
+    },
+    {
+      "name": "--vl-blue",
+      "role": "aplat du bandeau ET du bouton — la couleur d'action, jamais un accent posé sur du blanc",
+      "default": "#1B44D8"
+    },
+    {
+      "name": "--vl-black",
+      "role": "aplat du pied, et encre du titre",
+      "default": "#0D0D0D"
+    },
+    {
+      "name": "--vl-ink-muted",
+      "role": "rubrique au-dessus du titre",
+      "default": "#6E6E6E"
+    },
+    {
+      "name": "--vl-ink-muted-invert",
+      "role": "mentions légales, sur l'aplat du pied",
+      "default": "#D3D3D3"
+    }
+  ],
+  "slots": [
+    "wordmark",
+    "issue",
+    "kicker",
+    "title",
+    "body",
+    "cta",
+    "legal",
+    "unsub"
+  ],
+  "geometry": {
+    "root": ".vl-emenv__col",
+    "frame": [
+      600,
+      611
+    ],
+    "ratios": {
+      "cell_pad_over_width": 0.0667,
+      "band_pad_y_over_width": 0.0333,
+      "title_over_lede": 2.5,
+      "cta_height_over_width": 0.077
+    },
+    "type_px": {
+      "title": 40,
+      "lede": 16,
+      "wordmark": 15,
+      "cta": 13,
+      "micro": 11
+    },
+    "pad_ratio": {
+      "top": 0.0667,
+      "x": 0.0667,
+      "bottom": 0.05
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "LA COLONNE FAIT EXACTEMENT 600 px — la largeur de sécurité du canal, pas une échelle",
+      "measure": "W",
+      "expect": 600,
+      "tol": 0
+    },
+    {
+      "name": "marge de cellule ≈ 6,7 % de la colonne (40 px)",
+      "measure": "num('.vl-emenv__head','paddingLeft') / W",
+      "expect": 0.0667,
+      "tol": 0.006
+    },
+    {
+      "name": "toutes les zones partagent la MÊME marge latérale — un mail qui décale se lit comme deux mails",
+      "measure": "Math.abs(num('.vl-emenv__head','paddingLeft') - num('.vl-emenv__band','paddingLeft')) + Math.abs(num('.vl-emenv__head','paddingLeft') - num('.vl-emenv__foot','paddingLeft'))",
+      "max": 0.5
+    },
+    {
+      "name": "la colonne est centrée dans la garde",
+      "measure": "Math.abs((0 - box('.vl-emenv').left) - (box('.vl-emenv').right - W))",
+      "max": 1.5
+    },
+    {
+      "name": "TROIS aplats, et trois DIFFÉRENTS : bandeau, corps, pied",
+      "measure": "new Set(['.vl-emenv__band','.vl-emenv__body','.vl-emenv__foot'].map((s) => getComputedStyle(document.querySelector(s)).backgroundColor)).size",
+      "expect": 3,
+      "tol": 0
+    },
+    {
+      "name": "aucun aplat translucide : Outlook ignore l'alpha et rendrait la couleur PLEINE",
+      "measure": "Math.min(...['.vl-emenv__band','.vl-emenv__body','.vl-emenv__foot','.vl-emenv__cta','.vl-emenv__col'].map((s) => { const p = (getComputedStyle(document.querySelector(s)).backgroundColor.match(/[\\d.]+/g) || []).map(Number); return p.length === 4 ? p[3] : 1; }))",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "aucun rayon nulle part — signature de la charte, et zéro dégradation dans Outlook",
+      "measure": "['.vl-emenv__col','.vl-emenv__band','.vl-emenv__cta','.vl-emenv__foot'].reduce((a, s) => a + parseFloat(getComputedStyle(document.querySelector(s)).borderTopLeftRadius), 0)",
+      "expect": 0,
+      "tol": 0
+    },
+    {
+      "name": "le bouton passe le plancher tactile de 44 px",
+      "measure": "box('.vl-emenv__cta').h",
+      "min": 44
+    },
+    {
+      "name": "le bouton reste un bouton : pas plus de la moitié de la colonne",
+      "measure": "box('.vl-emenv__cta').w / W",
+      "max": 0.5
+    },
+    {
+      "name": "saut typographique titre / corps ≥ 2,4 — la charte n'a pas de taille intermédiaire",
+      "measure": "num('.vl-emenv__title','fontSize') / num('.vl-emenv__lede','fontSize')",
+      "min": 2.4
+    },
+    {
+      "name": "PLANCHER DE LISIBILITÉ : aucun corps de texte sous 10 px, micro-typo comprise",
+      "measure": "Math.min(...[...document.querySelectorAll('.vl-emenv__col *')].filter((e) => !e.children.length && e.textContent.trim()).map((e) => parseFloat(getComputedStyle(e).fontSize)))",
+      "min": 10
+    },
+    {
+      "name": "contraste du nom d'émetteur sur le bandeau ≥ 4,5",
+      "measure": "contrast('.vl-emenv__wordmark')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste du numéro d'édition ≥ 4,5 — c'est le plus petit corps du bandeau",
+      "measure": "contrast('.vl-emenv__issue')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste du libellé de bouton ≥ 4,5",
+      "measure": "contrast('.vl-emenv__ctalink')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste de la rubrique grise ≥ 4,5 — trois lots de suite, la source la plaçait juste dessous",
+      "measure": "contrast('.vl-emenv__kicker')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste des mentions de pied ≥ 4,5",
+      "measure": "contrast('.vl-emenv__legal')",
+      "min": 4.5
+    },
+    {
+      "name": "le désabonnement reste identifiable sans la couleur : il est souligné",
+      "measure": "cs('.vl-emenv__unsub','textDecorationLine').includes('underline') ? 1 : 0",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "aucun débordement de la colonne",
+      "measure": "overflow('.vl-emenv__col')",
+      "max": 0
+    }
+  ],
+  "notes": "Premier pattern du corpus écrit NATIVEMENT pour l'email, et non extrait d'une slide. Il inverse la méthode : au lieu de reproduire une composition puis de constater qu'elle ne passe pas la cible, on part des propriétés que le moteur Word rend, et on compose avec celles-là seulement. `node bin/emit.mjs layout-09-email-envelope --target email` sort le HTML à styles aplatis, sans bloquant.\n\nUn benchmark est écrit en PIXELS et non en ratio — la largeur de 600. C'est délibéré et c'est la seule exception du dépôt : 600 px n'est pas une échelle qu'on pourrait multiplier comme les 1600 d'une slide, c'est la largeur du volet de lecture d'Outlook. Un ratio n'aurait rien mesuré, puisqu'il n'y a rien à mettre à l'échelle.\n\nLa charte ref-04 tient sa hiérarchie sur DEUX corps (le titre-monstre et la micro-typo), délibérément sans taille intermédiaire. Le canal impose d'en ajouter une troisième : un corps de lecture à 16 px. Un mail se lit sur un téléphone à bout de bras, et un micro-texte de 8 px — parfaitement lisible projeté sur un mur — y est illisible. Le benchmark de plancher (aucun corps sous 10 px) est là pour que cette entorse soit une décision mesurée et non une dérive.\n\nDeux gestes valent d'être recopiés partout ailleurs : les capitales sont ÉCRITES dans le markup (Outlook n'applique pas `text-transform`, un titre en bas de casse sortirait en bas de casse), et le fond du bouton est porté par la CELLULE et non par le lien (un `<a>` à qui on donne un aplat ne remplit rien dans Outlook)."
+}

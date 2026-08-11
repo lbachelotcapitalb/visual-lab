@@ -154,11 +154,27 @@ node bin/emit.mjs card-03-stat-accent --target email     # contraintes Outlook, 
 node bin/emit.mjs --audit --target email                 # l'état de toute la bibliothèque
 ```
 
-**Au 31/07/2026 : 22/22 en `inline`, 0/22 en `email`.** Ce n'est pas une panne, c'est le constat
-— flex, `clip-path`, `calc()`, SVG inline : le corpus est de la matière slide/web. Pour un
-mailing, deux issues honnêtes : écrire un pattern nativement email (tables, largeurs fixes), ou
-rendre le pattern en image et poser l'image. **Quand `media` et l'audit divergent, c'est le JSON
-qui a tort.**
+**Au 11/08/2026 : 41/41 en `inline`, 3/41 en `email`** — et les trois qui passent sont les trois
+qui ont été ÉCRITS pour ce canal (`layout-09-email-envelope`, `list-06-email-digest`,
+`card-13-email-figure-band`). Les 38 autres ne passent pas, et ce n'est pas une panne : flex,
+`clip-path`, `calc()`, SVG inline, couleurs à canal alpha — le reste du corpus est de la matière
+slide/web. Un pattern reversé d'une slide ne devient pas émissible en mail parce qu'on l'a
+souhaité ; pour un mailing, deux issues honnêtes : partir d'un pattern natif email, ou rendre le
+pattern en image et poser l'image. **Quand `media` et l'audit divergent, c'est le JSON qui a
+tort** — les trois patterns email déclarent `media: ["email"]` et le prouvent.
+
+Écrire ces trois patterns a corrigé l'émetteur deux fois, dans le même lot :
+
+- il **ignore désormais les commentaires HTML** avant de scanner. Un pattern écrit pour l'email
+  documente forcément ce qu'il s'interdit — et `layout-09` a d'abord été déclaré non émissible à
+  cause du mot `calc()` dans son propre commentaire. Un faux positif se corrige dans le
+  détecteur, jamais dans la source ;
+- il **bloque les couleurs à canal alpha** (`rgba(…, 0.55)`, `#00000018`). Outlook ignore la
+  transparence et rend la couleur PLEINE : un filet à 10 % devient un trait noir, un verre dépoli
+  devient un aplat. C'est destructeur, pas dégradé. Le contrôle ne pouvait pas le voir avant,
+  parce qu'il ne cherchait que la propriété `opacity` alors que la transparence du corpus vit
+  dans les TOKENS — il attrape maintenant 6 patterns de plus. Les entités numériques sont
+  retirées avant ce test : `&#8599;` (↗) se lisait sinon comme un hex à quatre chiffres.
 
 Il n'y a **pas** d'émetteur `print` : un fragment HTML s'imprime tel quel (Chrome → PDF).
 Annoncer un émetteur qui ne ferait que recopier le fragment mentirait sur ce que le dépôt sait
@@ -357,8 +373,21 @@ disponible dans `deck-builder`) : `geometry.ratios` (les rapports qui font la ch
 
 ## État
 
-**38 patterns**, dont 31 mesurés par des benchmarks. Le décompte vient de `bin/index.mjs`, pas
+**41 patterns**, dont 34 mesurés par des benchmarks. Le décompte vient de `bin/index.mjs`, pas
 d'ici : la ligne ci-dessus est un ordre de grandeur, [INDEX.md](INDEX.md) est la vérité.
+
+**11/08/2026 — le corpus sort du slide/web : trois patterns écrits NATIVEMENT pour l'email**
+(`layout-09-email-envelope`, `list-06-email-digest`, `card-13-email-figure-band`). Ils inversent
+la méthode du dépôt : au lieu de reverser une composition puis de constater qu'elle ne passe pas
+la cible, on part de ce que le moteur Word d'Outlook sait rendre — tables, largeurs de cellules,
+padding, aplats pleins — et on compose avec cela seulement. Les trois sortent de
+`bin/emit.mjs --target email` sans un seul bloquant, et se posent l'un dans l'autre : les deux
+blocs de contenu font 520 px, soit exactement le slot de l'enveloppe (600 − 2 × 40).
+Ils sont adossés à `ref-04-swiss-investor-blue` parce que c'est la charte du corpus la plus
+nativement compatible avec le canal — aucun rayon, aucune ombre, aucune couleur translucide,
+trois aplats pleins qui alternent : rien de ce qu'un client mail dégrade. Le lot a fait bouger
+l'émetteur (deux corrections, cf. « Médias et émetteurs »), et il ne prétend rien de plus que ce qu'il mesure — les 38 autres
+patterns restent hors canal.
 
 Élagage du 30/07 toujours en vigueur : neuf entrées avaient été retirées parce qu'elles ne
 survivaient pas au test d'utilité — une pilule à filet, une flèche dans un rond, un titre en

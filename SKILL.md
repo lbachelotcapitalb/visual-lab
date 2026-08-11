@@ -112,11 +112,27 @@ Le fragment HTML est le rendu de référence. Pour les autres médias, on passe 
 | mailing | `node bin/emit.mjs <id> --target email` | **refuse** ce qu'Outlook ne sait pas rendre |
 | impression / PNG | `node bin/render.mjs --pattern <id>` | un fragment HTML s'imprime tel quel |
 
-**Au 11/08/2026, aucun des 38 patterns ne passe la cible `email`** (flex, `clip-path`, `calc()`,
-SVG inline). Ce n'est pas une panne, c'est le constat : le corpus est de la matière slide/web.
-Pour un mailing, deux issues honnêtes — écrire un pattern nativement email (tables, largeurs
-fixes), ou **rendre le pattern en image et poser l'image**. `node bin/emit.mjs --audit --target
-email` donne l'état de toute la bibliothèque en un tableau.
+**Au 11/08/2026, 3 patterns sur 41 passent la cible `email` — et ce sont les trois qui ont été
+ÉCRITS pour elle.** Le reste du corpus est reversé de slides, et un pattern de slide ne devient
+pas émissible en mail parce qu'on l'a souhaité : flex, `clip-path`, `calc()`, SVG inline,
+couleurs à canal alpha. `node bin/emit.mjs --audit --target email` donne l'état complet.
+
+**Pour un mailing, on part donc des trois natifs**, et pas d'un pattern de slide qu'on
+essaierait de faire rentrer :
+
+```bash
+node bin/search.mjs --media email      # layout-09-email-envelope · list-06-email-digest · card-13-email-figure-band
+```
+
+`layout-09-email-envelope` est la coquille (garde + colonne de 600, bandeau, corps, pied,
+désabonnement) ; les deux autres sont des blocs de contenu de **520 px**, soit exactement son
+slot `body` (600 − 2 × 40) — ils s'y posent sans réglage. Ce qu'un pattern natif email
+s'interdit, et qui explique pourquoi les autres ne passent pas : aucune gouttière (l'espacement
+vient du padding des CELLULES), aucune position, aucun `calc()`, aucun SVG, aucun rayon, aucune
+ombre, **aucune couleur à canal alpha** (Outlook la rend PLEINE : un filet à 10 % devient un
+trait noir), et les capitales sont ÉCRITES dans le markup — `text-transform` n'y est pas
+appliqué. Troisième issue toujours valable quand aucun natif ne convient : **rendre le pattern
+en image et poser l'image**.
 
 ### Changer de charte
 

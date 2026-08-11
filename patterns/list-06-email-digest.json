@@ -1,0 +1,171 @@
+{
+  "name": "Digest de newsletter — entrées numérotées séparées par un filet",
+  "family": "list",
+  "ref": "ref-04-swiss-investor-blue",
+  "intent": "Aligner les trois à six entrées d'une lettre d'information dans un mail, chacune tenant en rubrique, titre, chapô et lien, sans qu'aucune ne se lise comme un encadré : la colonne du numéro est une CELLULE de largeur fixe et la séparation un filet posé en haut de chaque entrée — retiré sur la première, pour que le filet sépare au lieu d'encadrer.",
+  "when_to_use": "Le corps d'une lettre d'information périodique : plusieurs sujets de même rang, chacun résumé en deux lignes et renvoyant vers un article. Le numéro donne un ordre de lecture explicite, ce qui vaut mieux qu'un tri implicite quand tous les titres pèsent le même poids.",
+  "avoid_when": "Une seule entrée (le numéro et le filet n'ont plus rien à séparer, une simple accroche suffit), plus de six (la lettre devient un sommaire et personne ne descend), ou les entrées ne sont pas de même nature — un digest suggère une lecture de haut en bas qui devient fausse dès qu'une entrée est d'un autre genre que les autres.",
+  "media": [
+    "email"
+  ],
+  "tags": [
+    "email",
+    "mailing",
+    "newsletter",
+    "digest",
+    "sommaire",
+    "entrees",
+    "articles",
+    "numerote",
+    "filet",
+    "separateur",
+    "chapo",
+    "lien",
+    "outlook",
+    "table"
+  ],
+  "vars": [
+    {
+      "name": "--vl-white",
+      "role": "aplat du bloc — plein, jamais translucide",
+      "default": "#FFFFFF"
+    },
+    {
+      "name": "--vl-black",
+      "role": "titres, filets de séparation et lien",
+      "default": "#0D0D0D"
+    },
+    {
+      "name": "--vl-blue",
+      "role": "le numéro d'entrée — le SEUL élément chromatique du bloc",
+      "default": "#1B44D8"
+    },
+    {
+      "name": "--vl-ink-muted",
+      "role": "rubrique et chapô",
+      "default": "#6E6E6E"
+    }
+  ],
+  "slots": [
+    "num",
+    "kicker",
+    "title",
+    "lede",
+    "link"
+  ],
+  "geometry": {
+    "root": ".vl-emdig",
+    "frame": [
+      520,
+      594
+    ],
+    "ratios": {
+      "num_col_over_width": 0.1077,
+      "title_over_lede": 1.27,
+      "num_over_title": 1.37,
+      "item_pad_top_over_width": 0.05
+    },
+    "type_px": {
+      "num": 26,
+      "title": 19,
+      "lede": 15,
+      "kicker": 10,
+      "link": 12
+    },
+    "pad_ratio": {
+      "top": 0,
+      "x": 0,
+      "bottom": 0.046
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "520 px — le slot exact de layout-09-email-envelope (600 − 2 × 40)",
+      "measure": "W",
+      "expect": 520,
+      "tol": 0
+    },
+    {
+      "name": "colonne du numéro ≈ 10,8 % de la largeur (56 px : le chiffre plus sa gouttière)",
+      "measure": "box('.vl-emdig__num').w / W",
+      "expect": 0.1077,
+      "tol": 0.012
+    },
+    {
+      "name": "LE FILET SÉPARE, IL N'ENCADRE PAS : la première entrée n'a pas de filet haut",
+      "measure": "num('.vl-emdig__item--first','borderTopWidth')",
+      "expect": 0,
+      "tol": 0
+    },
+    {
+      "name": "… et les deux suivantes en portent un, d'un pixel",
+      "measure": "[...document.querySelectorAll('.vl-emdig__item')].filter((e) => parseFloat(getComputedStyle(e).borderTopWidth) === 1).length",
+      "expect": 2,
+      "tol": 0
+    },
+    {
+      "name": "aucune bordure basse : le bloc ne se referme pas sur lui-même",
+      "measure": "[...document.querySelectorAll('.vl-emdig__item')].reduce((a, e) => a + parseFloat(getComputedStyle(e).borderBottomWidth), 0)",
+      "expect": 0,
+      "tol": 0
+    },
+    {
+      "name": "LE BLEU NE COLORE QUE LES NUMÉROS — trois éléments chromatiques, pas un de plus",
+      "measure": "[...document.querySelectorAll('.vl-emdig *')].filter((e) => { const c = parseRgb(getComputedStyle(e).color); return Math.max(...c) - Math.min(...c) > 40; }).length",
+      "expect": 3,
+      "tol": 0
+    },
+    {
+      "name": "le numéro pèse plus que le titre qu'il ordonne",
+      "measure": "num('.vl-emdig__num','fontSize') / num('.vl-emdig__title','fontSize')",
+      "min": 1.25
+    },
+    {
+      "name": "saut typographique titre / chapô ≥ 1,2",
+      "measure": "num('.vl-emdig__title','fontSize') / num('.vl-emdig__lede','fontSize')",
+      "min": 1.2
+    },
+    {
+      "name": "les entrées respirent autant qu'elles se séparent : l'air au-dessus du filet vaut au moins un corps de titre",
+      "measure": "num('.vl-emdig__item','paddingBottom') / num('.vl-emdig__title','fontSize')",
+      "min": 1
+    },
+    {
+      "name": "le numéro et sa rubrique partagent leur ligne haute",
+      "measure": "Math.abs(box('.vl-emdig__num').top - box('.vl-emdig__kicker').top)",
+      "max": 4
+    },
+    {
+      "name": "contraste du chapô gris ≥ 4,5 — le piège payé trois lots de suite",
+      "measure": "contrast('.vl-emdig__lede')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste de la rubrique ≥ 4,5 : c'est le plus petit corps du bloc",
+      "measure": "contrast('.vl-emdig__kicker')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste du titre ≥ 7",
+      "measure": "contrast('.vl-emdig__title')",
+      "min": 7
+    },
+    {
+      "name": "contraste du numéro bleu ≥ 4,5",
+      "measure": "contrast('.vl-emdig__num')",
+      "min": 4.5
+    },
+    {
+      "name": "le lien reste identifiable sans la couleur : il est souligné",
+      "measure": "cs('.vl-emdig__link','textDecorationLine').includes('underline') ? 1 : 0",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "aucun débordement",
+      "measure": "overflow('.vl-emdig')",
+      "max": 0
+    }
+  ],
+  "notes": "Se pose dans le slot `body` de layout-09-email-envelope, dont il reprend exactement la largeur utile.\n\nDeux choix d'écriture sont dictés par le canal, et ce sont eux qui distinguent ce pattern de son équivalent web. Le filet du premier item est retiré par une CLASSE (`--first`) et non par `:first-child` : un pseudo-classe n'a pas d'équivalent en attribut `style`, donc elle disparaît à l'inlining que réclame un client mail — `bin/emit.mjs` la refuse d'ailleurs comme sélecteur non inlinable. La colonne du numéro est une cellule à largeur déclarée sur une table à disposition fixe, pas une colonne de grille : c'est la seule mise en colonnes qu'Outlook respecte.\n\nLe benchmark qui compte les éléments chromatiques est écrit en SATURATION et non sur une classe : ajouter plus tard un lien bleu ou une rubrique colorée est exactement la régression qu'un contrôle par classe laisserait passer, et c'est celle qui casse la règle de la charte (« le bleu occupe la surface entière ou il colore un chiffre, rien entre les deux »)."
+}

@@ -70,7 +70,7 @@ proportional to anything).
 
 ```jsonc
 {
-  "counts":   { "patterns": 38, "refs": 15, "checkable": 31 },
+  "counts":   { "patterns": 41, "refs": 15, "checkable": 34 },
   "families": ["card", "chart", "diagram", "layout", "list", "shape", "tag", "title"],
   "media":    ["slide", "web", "email", "print", "social"],
   "patterns": [{
@@ -107,6 +107,15 @@ node bin/check.mjs <id>          # runs the pattern's benchmarks in real Chrome,
 node bin/check-deck.mjs <ref>    # the COMPOSITION: stage format, layer depth, redundant 1:1 layer
 node bin/emit.mjs --audit --target email    # what actually survives an email client
 ```
+
+**Building a mailing?** Start from the three patterns written natively for the channel —
+`node bin/search.mjs --media email`. Everything else in the corpus is reverse-engineered from
+slides and will not survive Outlook's Word engine (flex, `calc()`, inline SVG, alpha colours);
+`--target email` says so, and it is right. `layout-09-email-envelope` is the shell; the two
+content blocks are 520 px wide, which is exactly its `body` slot (600 − 2 × 40), so they drop in
+without adjustment. Anything you write for this channel must hold to the same rules: spacing
+from CELL padding only, no gutters, no positioning, no radius, no shadow, **no alpha colours**
+(Outlook renders them opaque), and capitals typed into the markup — `text-transform` is ignored.
 
 Benchmarks are the point of this repo. They are JS expressions measured in a real browser after
 layout (`box()`, `num()`, `cs()`, `contrast()`, `overflow()`, …), written as **ratios of the

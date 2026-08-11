@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-38 patterns · 15 références · 31 vérifiés par benchmarks mesurés.
+41 patterns · 15 références · 34 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -38,6 +38,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `card-10-kpi-notch-tile` | Poser UNE preuve chiffrée dans une vignette presque carrée à silhouette de ticket — tuile d'icône en haut, chiffre et son suffixe sur la même ligne de base, libellé collé dessous, commentaire relégué en bas à droite — et n'en accentuer qu'une seule dans la rangée, par le fond et rien d'autre. | slide web | 20 | ref-15-lilac-notched-kpi |
 | `card-11-corner-arrow-tile` | Faire d'un module une ENTRÉE cliquable sans bouton ni liseré : le titre en haut à gauche, une flèche oblique ancrée au coin opposé — jamais alignée sur le titre — et l'illustration qui occupe tout le bas de la vignette au lieu d'être centrée dedans. | web slide | 17 | ref-17-mono-bento-legal |
 | `card-12-inverted-kpi-row` | Ouvrir un tableau de bord par trois indicateurs de même nature dont UN SEUL est de premier rang, en lui appliquant deux fois le même geste de hiérarchie : l'aplat inversé ET une colonne 5 % plus large. Chaque carte range ses quatre informations dans le même ordre — libellé en haut, pastille de renvoi ancrée au coin opposé, chiffre poussé en bas, note collée dessous. | web slide | 16 | ref-18-lime-sales-dashboard |
+| `card-13-email-figure-band` | Poser trois indicateurs de même nature en une bande dans un mail, sans aplat de carte ni encadrement : les colonnes sont des cellules à largeur en pourcentage sur une table à disposition fixe — la seule répartition en parts égales qu'Outlook respecte — et les séparateurs sont des filets de cellule, pas des colonnes intercalaires. La couleur ne fait qu'une chose : elle porte les chiffres. | email | 17 | ref-04-swiss-investor-blue |
 | `chart-01-stadium-bars` | Un histogramme réduit à l'essentiel : des barres à sommet en demi-cercle, aucune ligne d'axe, des légendes en pilules. | slide web | — | ref-03-bento-dark-pitch |
 | `chart-02-isotype` | Raconter une proportion en unités comptables (24 pictogrammes sur 40) au lieu d'un pourcentage abstrait. | slide web | — | ref-03-bento-dark-pitch |
 | `chart-03-accent-column-callout` | Donner la forme d'une série en quelques colonnes flottantes sans axe ni graduation, et n'en chiffrer qu'une seule — la courante — par une info-bulle sombre ancrée à sa colonne. | slide web | 11 | ref-13-glass-fintech-dashboard |
@@ -54,11 +55,13 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `layout-06-bento-l-span` | Tenir cinq modules de tailles très différentes sur une VRAIE grille 3 × 3, en n'employant que deux enjambements — un vertical à gauche, un horizontal à droite — qui se CROISENT sans jamais se chevaucher : c'est ce croisement qui supprime toute frontière horizontale continue et fait qu'un écran dense cesse de se lire comme un tableau. | web slide | 17 | ref-17-mono-bento-legal |
 | `layout-07-icon-rail-shell` | Poser le cadre d'un tableau de bord en ne dépensant AUCUNE couleur pour la navigation : un rail d'icônes étroit du même blanc que l'application — séparé par un filet d'un pixel et jamais par un aplat —, un en-tête à recherche en pilule, et un titre de page qui est le seul très grand corps de l'écran. Tout le budget de couleur reste disponible pour les données. | web | 16 | ref-18-lime-sales-dashboard |
 | `layout-08-sheet-handle-tab` | Ouvrir un dossier par-dessus une application sans que la modale se lise comme « une carte de plus » : un voile sombre qui PORTE de l'interface (onglets, fermeture), une feuille claire qui saigne à quelques pixels des bords, et un onglet-poignée titré soudé à cette feuille par DEUX congés concaves — la seule courbe inversée du corpus, et ce qui fait que la poignée appartient à la feuille au lieu de flotter au-dessus d'elle. | web | 17 | ref-19-acid-clinical-timeline |
+| `layout-09-email-envelope` | Poser la coquille d'un mailing avec ce que le moteur Word d'Outlook sait réellement rendre : une table de garde pleine largeur qui porte le fond, une colonne de 600 px centrée qui porte tout le contenu, et l'espacement entièrement délégué au padding des cellules — jamais à une gouttière, une position ou un calcul. Les trois zones (bandeau, corps, pied) sont trois aplats PLEINS et différents, ce qui est à la fois la signature de la charte et le seul modèle de hiérarchie qu'un client mail rende à l'identique partout. | email | 18 | ref-04-swiss-investor-blue |
 | `list-01-giant-numbers` | Aligner trois à quatre arguments de même rang en colonnes, chacun ouvert par un numéro ou un chiffre démesuré qui sert à la fois de repère de lecture et de seule tache de couleur du bloc. | slide web | — | ref-04-swiss-investor-blue |
 | `list-02-ruled-index` | Lister les sections d'un document en donnant à chacune son libellé, une ligne d'explication et son numéro à droite, séparées par un filet fin qui appartient à l'entrée qu'il suit. | slide web | 9 | ref-06-orange-notched |
 | `list-03-two-column-toc` | Faire tenir un sommaire de dix à quatorze sections sur une seule slide, en deux colonnes numérotées, lisible d'un coup d'œil et refermable aussitôt. | slide web | — | ref-04-swiss-investor-blue |
 | `list-04-due-rows` | Rendre une liste d'échéances balayable sans un seul filet : quatre zones tenues par une grille commune, une seule ligne surlignée, une seule pilule d'imminence, et le montant en unique colonne alignée à droite. | slide web | 12 | ref-13-glass-fintech-dashboard |
 | `list-05-vitals-strip` | Aligner cinq mesures hétérogènes sur une seule ligne SANS aucun séparateur : chacune est un couple micro-libellé / valeur, l'unité étant un cran plus petite ET plus claire que le nombre qu'elle suit. C'est ce double affaiblissement de l'unité — taille et encre — qui permet de lire cinq valeurs d'affilée sans filet, sans carte et sans que l'œil confonde un nombre avec l'unité de son voisin. | web slide | 14 | ref-19-acid-clinical-timeline |
+| `list-06-email-digest` | Aligner les trois à six entrées d'une lettre d'information dans un mail, chacune tenant en rubrique, titre, chapô et lien, sans qu'aucune ne se lise comme un encadré : la colonne du numéro est une CELLULE de largeur fixe et la séparation un filet posé en haut de chaque entrée — retiré sur la première, pour que le filet sépare au lieu d'encadrer. | email | 16 | ref-04-swiss-investor-blue |
 | `shape-notched-corner` | Donner à un aplat coloré une signature de forme reconnaissable — UN coin coupé à 45° — sans rien ajouter au contenu ni recourir à un rayon, une ombre ou un liseré. | slide web | 3 | ref-06-orange-notched |
 | `tag-01-gooey-capsule` | Faire d'un mot-clé un OBJET : un contour continu qui soude un cercle de glyphe à une pilule de texte par deux congés concaves, pour qu'un terme isolé pèse autant qu'un titre sans être plus gros. | slide web | 13 | ref-12-neon-capsule-tags |
 | `tag-02-centered-cloud` | Poser une dizaine de mots-clés de même rang au bas d'un module sans en faire une liste : chaque RANGÉE est centrée sur elle-même, si bien que les lignes de largeur inégale dessinent une silhouette de nuage — c'est le centrage par rangée, et pas le centrage du bloc, qui produit l'effet. | web slide | 13 | ref-17-mono-bento-legal |
@@ -166,6 +169,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - à remplir : label, go, fig, note
 - variables : --vl-module, --vl-invert, --vl-ink, --vl-ink-soft, --vl-on-invert, --vl-on-invert-soft, --vl-ramp-2, --vl-radius-module, --vl-gutter
 - tags : kpi, chiffre, stat, rangee, dashboard, tableau-de-bord, carte, inverse, hierarchie, solde, revenu, accent, renvoi
+
+**card-13-email-figure-band** — Bande de trois chiffres pour un mail — colonnes en cellules, filets d'un pixel
+
+- employer : Ouvrir ou clore une lettre d'information par trois valeurs comparables (un encours, une variation, un horizon) que le lecteur doit pouvoir saisir sans lire le corps. Le chiffre est court — six signes au plus — et son libellé tient sur une ligne.
+- éviter : Les valeurs ne sont pas comparables (la bande impose une lecture de gauche à droite qui n'existe pas), il y en a plus de trois (au-delà, les colonnes tombent sous 120 px et les chiffres se coupent sur mobile), ou la lettre est déjà dense en chiffres — une bande de chiffres au milieu d'un texte de chiffres ne hiérarchise plus rien.
+- à remplir : label, fig, note
+- variables : --vl-white, --vl-black, --vl-blue, --vl-ink-muted
+- tags : email, mailing, newsletter, chiffre, kpi, indicateur, bande, colonnes, filet, outlook, table, stat, resume
 
 ### chart
 
@@ -301,6 +312,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-veil, --vl-sheet, --vl-module-hi, --vl-ink, --vl-radius-sheet, --vl-notch, --vl-bleed
 - tags : modale, sheet, feuille, voile, scrim, overlay, onglet, poignee, tab, congé, concave, dossier, fiche, application
 
+**layout-09-email-envelope** — Enveloppe de mailing — garde, colonne de 600, trois aplats pleins
+
+- employer : Toute lettre d'information ou mailing transactionnel à composer soi-même : c'est le squelette dans lequel on pose ensuite les blocs de contenu (list-06-email-digest, card-13-email-figure-band, tous deux calibrés sur le slot de 520 px). Le bandeau porte l'émetteur et le numéro d'édition, le pied porte les mentions et le désabonnement — deux zones qu'on ne peut pas omettre et qu'on réécrit sinon à chaque envoi.
+- éviter : Le message est une page web déguisée (une landing dans un mail se lit mal et se coupe), il doit tenir plusieurs colonnes de contenu côte à côte au-delà de deux (elles ne s'empilent pas sur mobile sans requête de média, que la plupart des clients ignorent), ou la charte visée repose sur des rayons, des ombres ou des couleurs translucides — Outlook les rend en angles vifs, sans ombre et en couleur pleine, et le résultat n'est plus la charte.
+- à remplir : wordmark, issue, kicker, title, body, cta, legal, unsub
+- variables : --vl-bg, --vl-white, --vl-blue, --vl-black, --vl-ink-muted, --vl-ink-muted-invert
+- tags : email, mailing, newsletter, lettre, coquille, gabarit, outlook, table, 600, bandeau, pied, desabonnement, bouton, cta, enveloppe
+
 ### list
 
 **list-01-giant-numbers** — Colonnes à numéro géant
@@ -343,6 +362,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - à remplir : items
 - variables : --vl-ink, --vl-ink-soft
 - tags : constantes, vitals, bandeau, strip, mesure, unite, micro-libelle, fiche, dossier, kpi, sans-filet
+
+**list-06-email-digest** — Digest de newsletter — entrées numérotées séparées par un filet
+
+- employer : Le corps d'une lettre d'information périodique : plusieurs sujets de même rang, chacun résumé en deux lignes et renvoyant vers un article. Le numéro donne un ordre de lecture explicite, ce qui vaut mieux qu'un tri implicite quand tous les titres pèsent le même poids.
+- éviter : Une seule entrée (le numéro et le filet n'ont plus rien à séparer, une simple accroche suffit), plus de six (la lettre devient un sommaire et personne ne descend), ou les entrées ne sont pas de même nature — un digest suggère une lecture de haut en bas qui devient fausse dès qu'une entrée est d'un autre genre que les autres.
+- à remplir : num, kicker, title, lede, link
+- variables : --vl-white, --vl-black, --vl-blue, --vl-ink-muted
+- tags : email, mailing, newsletter, digest, sommaire, entrees, articles, numerote, filet, separateur, chapo, lien, outlook, table
 
 ### shape
 
@@ -397,7 +424,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 |---|---|---|---|
 | `ref-02-ghost-icon-claim` | Gris fantôme — argument unique | `card-01-ghost-icon` | `decks/ref-02-ghost-icon-claim.html` |
 | `ref-03-bento-dark-pitch` | Bento sombre — pitch investisseur | `chart-01-stadium-bars`, `chart-02-isotype`, `layout-01-nested-bento` | `decks/ref-03-bento-dark-pitch.html` |
-| `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `layout-02-swiss-frame`, `list-01-giant-numbers`, `list-03-two-column-toc` | `decks/ref-04-swiss-investor-blue.html` |
+| `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |
 | `ref-06-orange-notched` | Corporate orange chanfreiné | `card-02-notched-brief`, `card-03-stat-accent`, `list-02-ruled-index`, `shape-notched-corner`, `title-leading-rule` | `decks/ref-06-orange-notched.html` |
 | `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | — | `decks/ref-08-swiss-studio-hero.html` |
 | `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | — | `decks/ref-10-campaign-board-red.html` |
