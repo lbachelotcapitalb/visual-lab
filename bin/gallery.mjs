@@ -5,6 +5,9 @@
 //   node bin/gallery.mjs                      → gallery.html (tout)
 //   node bin/gallery.mjs ref-17 ref-18        → filtré sur des références
 //   node bin/gallery.mjs --family card        → filtré sur une famille
+//   node bin/gallery.mjs card-12-inverted-kpi-row chart-05-tile-heatmap --out /tmp/propo.html
+//                                             → une PLANCHE DE PROPOSITION : les finalistes
+//                                               seuls, dans un fichier à part
 //
 // POURQUOI PAS UN PNG. Une planche-contact en image est une COPIE MORTE : elle périme au
 // premier changement de fragment, on ne peut ni zoomer sans bouillie, ni inspecter le DOM,
@@ -23,13 +26,34 @@ import { ROOT, DIRS, loadPatterns, loadSystems, frameOf, mediaOf, splitFragment,
 const argv = process.argv.slice(2);
 const flag = (n) => { const i = argv.indexOf('--' + n); return i === -1 ? null : argv[i + 1]; };
 const family = flag('family');
-const refsArg = argv.filter((a, i) => !a.startsWith('--') && !(i > 0 && argv[i - 1].startsWith('--')));
+const outFlag = flag('out');
+// Les positionnels acceptent AUSSI des identifiants de pattern, et pas seulement des préfixes
+// de référence : sortir trois finalistes doit tenir en une commande, sinon la planche de
+// proposition se refabrique à la main à chaque fois et on cesse de la faire.
+const picks = argv.filter((a, i) => !a.startsWith('--') && !(i > 0 && argv[i - 1].startsWith('--')));
 
 const systems = new Map(loadSystems().map((s) => [s.id, s]));
-let patterns = loadPatterns();
+const all = loadPatterns();
+let patterns = all;
 if (family) patterns = patterns.filter((p) => p.family === family);
-if (refsArg.length) patterns = patterns.filter((p) => refsArg.some((r) => p.ref.startsWith(r)));
+if (picks.length) {
+  patterns = patterns.filter((p) => picks.some((x) => p.id === x || p.ref.startsWith(x)));
+  const inconnus = picks.filter((x) => !all.some((p) => p.id === x || p.ref.startsWith(x)));
+  // Un identifiant mal tapé qui sort silencieusement de la sélection donnerait une planche
+  // à deux options là où on en attendait trois — et personne ne verrait la troisième manquer.
+  if (inconnus.length) { console.error('Inconnu(s) : ' + inconnus.join(', ')); process.exit(1); }
+}
 if (!patterns.length) { console.error('Aucun pattern à montrer.'); process.exit(1); }
+
+const filtered = patterns.length !== all.length;
+// gallery.html EST l'index de la bibliothèque, régénéré par bin/index.mjs. Une planche filtrée
+// écrite à cette place le remplacerait par une vue partielle, et le prochain qui l'ouvre
+// croirait que le dépôt s'est vidé. Une sélection s'écrit ailleurs, point.
+if (filtered && !outFlag) {
+  console.error('Sélection filtrée : donne un fichier de sortie, gallery.html est l\'index complet.\n' +
+    '  node bin/gallery.mjs ' + picks.concat(family ? ['--family', family] : []).join(' ') + ' --out /tmp/proposition.html');
+  process.exit(1);
+}
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = (s) => esc(s).replace(/"/g, '&quot;');
@@ -60,6 +84,13 @@ const refIds = [...byRef.keys()].sort();
 const orphelines = [...systems.keys()].filter((id) => !byRef.has(id)).sort();
 
 const CARD_W = 620;   // largeur utile d'une vignette : le fragment y est mis à l'échelle
+
+// Une planche écrite HORS du dépôt (une proposition dans /tmp) ne peut pas résoudre
+// « fonts/fonts.css » ni « decks/… » en relatif : elle sortirait sans ses polices, donc dans
+// une typographie qui n'est pas celle qu'on fait choisir. Les liens deviennent absolus.
+const OUT_PATH = outFlag ? (outFlag.startsWith('/') ? outFlag : join(process.cwd(), outFlag)) : join(ROOT, 'gallery.html');
+const external = !OUT_PATH.startsWith(ROOT + '/');
+const href = (rel) => (external ? 'file://' + join(ROOT, rel) : rel);
 
 /* ─────────────────────────── LA CARTE D'UN PATTERN ─────────────────────────── */
 const patCard = (p) => {
@@ -129,7 +160,10 @@ const mapRows = refIds.map((refId) => {
 }).join('\n');
 const mapTotals = famsUsed.map((f) => `<td class="tot">${patterns.filter((p) => p.family === f).length}</td>`).join('');
 
-const corpusMap = `
+// Sur une planche FILTRÉE, la carte du corpus ment : elle compte des cases vides pour des
+// chartes qui sont simplement hors sélection, et sa ligne « sans aucun pattern extrait » les
+// déclare vides alors qu'elles sont pleines. Une sélection ne montre pas la carte.
+const corpusMap = filtered ? '' : `
 <section class="map" id="map">
   <h2>La carte du corpus</h2>
   <p class="lede">Références en ligne, familles en colonne. Les cases vides sont l'information utile : elles disent ce que la bibliothèque ne couvre pas encore. Cliquer un chiffre filtre la page.</p>
@@ -147,7 +181,7 @@ const corpusMap = `
 const sections = refIds.map((refId) => {
   const ps = byRef.get(refId);
   const sys = systems.get(refId);
-  const deck = existsSync(join(DIRS.decks, refId + '.html')) ? 'decks/' + refId + '.html' : null;
+  const deck = existsSync(join(DIRS.decks, refId + '.html')) ? href('decks/' + refId + '.html') : null;
   const swatches = Object.entries(sys?.tokens || {})
     .filter(([, v]) => /^#|^rgb/.test(String(v)))
     .map(([k, v]) => `<i title="${attr(k + ' ' + v)}" style="background:${attr(v)}"></i>`).join('');
@@ -256,7 +290,7 @@ const html = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>visual-lab — la bibliothèque, vivante</title>
-<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="${href('fonts/fonts.css')}">
 <style>
 /* GÉNÉRÉ par bin/gallery.mjs — ne pas éditer à la main, la prochaine génération l'écrase.
    Cette page ne porte AUCUNE règle qui pourrait déteindre sur les fragments : tout son style
@@ -333,7 +367,7 @@ body.filtered .map { display:none; }
 <body>
 
 <header class="top">
-  <h1>visual-lab — ${patterns.length} patterns vivants, ${byRef.size} chartes</h1>
+  <h1>${filtered ? `visual-lab — sélection : ${patterns.length} pattern(s)` : `visual-lab — ${patterns.length} patterns vivants, ${byRef.size} chartes`}</h1>
   <p class="lede">Les fragments sont rendus TELS QUELS : ce que vous voyez est ce que vous collerez. Chaque vignette porte les tokens de sa charte, ses conditions d'emploi et son code à copier. Pour un agent : <code>AGENTS.md</code> puis <code>index.json</code>.</p>
   <div class="bar">
     <input id="q" type="search" placeholder="chercher : kpi, timeline, nuage, heatmap…" autocomplete="off">
@@ -354,7 +388,7 @@ ${sections}
 </html>
 `;
 
-const out = join(ROOT, 'gallery.html');
+const out = OUT_PATH;
 writeFileSync(out, html);
 console.log('✓ ' + out + '  (' + patterns.length + ' pattern(s), ' + byRef.size + ' référence(s))');
-console.log("   open gallery.html   — la page de contrôle : du HTML vivant, jamais une image.");
+console.log('   open ' + out + '   — du HTML vivant, jamais une image.');

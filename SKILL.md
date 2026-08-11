@@ -67,9 +67,25 @@ Léo — c'est [`gallery.html`](gallery.html) qui sert, et **rien d'autre** :
 
 ```bash
 node bin/index.mjs && open gallery.html     # la vitrine se régénère AVEC l'index
-node bin/gallery.mjs --family card          # ou filtrée
-node bin/gallery.mjs ref-17 ref-18
 ```
+
+**Et pour PROPOSER — sortir vite trois finalistes à faire trancher avant de construire :**
+
+```bash
+node bin/gallery.mjs card-12-inverted-kpi-row chart-05-tile-heatmap layout-06-bento-l-span \
+  --out ~/Documents/Claude/chantiers/<projet>/propositions.html
+```
+
+Les positionnels acceptent indifféremment des ids de pattern et des préfixes de référence.
+`--out` est **obligatoire** dès qu'on filtre : une planche partielle écrite sur `gallery.html`
+remplacerait l'index de la bibliothèque par un sous-ensemble, et le prochain qui l'ouvre croit
+le dépôt vidé. Une planche hors dépôt reçoit des liens absolus vers les polices et les decks,
+donc elle s'ouvre seule — et elle n'affiche PAS la carte du corpus, qui mentirait en comptant
+comme vides les chartes simplement hors sélection.
+
+Ce n'est pas encore un moodboard décisionnel : le format à options numérotées, témoin explicite
+et avant/après est celui de `bestfront`. Cette planche est la MATIÈRE qu'on y verse — elle
+répond à « qu'est-ce qu'on a », pas à « laquelle tu prends ».
 
 **Une planche-contact en PNG est proscrite, et ce n'est pas une préférence.** Une image est une
 COPIE MORTE : elle périme au premier changement de fragment sans que rien ne le signale, on ne
