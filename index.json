@@ -32,6 +32,7 @@
       "ref": "ref-02-ghost-icon-claim",
       "media": [
         "slide",
+        "social",
         "web"
       ],
       "intent": "Asséner UN seul argument sur toute une largeur, avec une icône énorme mais presque invisible qui donne du volume sans voler l'attention au titre.",
@@ -231,6 +232,7 @@
       "ref": "ref-06-orange-notched",
       "media": [
         "slide",
+        "social",
         "web"
       ],
       "intent": "Faire porter UN chiffre par un aplat d'accent chanfreiné, avec son cadrage (micro-libellé au-dessus) et son commentaire (corps collé en bas), de façon à ce que le chiffre se lise avant le texte.",
@@ -1185,6 +1187,7 @@
       "ref": "ref-15-lilac-notched-kpi",
       "media": [
         "slide",
+        "social",
         "web"
       ],
       "intent": "Poser UNE preuve chiffrée dans une vignette presque carrée à silhouette de ticket — tuile d'icône en haut, chiffre et son suffixe sur la même ligne de base, libellé collé dessous, commentaire relégué en bas à droite — et n'en accentuer qu'une seule dans la rangée, par le fond et rien d'autre.",
@@ -1959,6 +1962,7 @@
       "ref": "ref-03-bento-dark-pitch",
       "media": [
         "slide",
+        "social",
         "web"
       ],
       "intent": "Un histogramme réduit à l'essentiel : des barres à sommet en demi-cercle, aucune ligne d'axe, des légendes en pilules.",
@@ -2203,9 +2207,10 @@
       "family": "chart",
       "ref": "ref-16-cobalt-graph-paper",
       "media": [
+        "print",
         "slide",
-        "web",
-        "print"
+        "social",
+        "web"
       ],
       "intent": "Donner à un histogramme une UNITÉ visible sans lui faire porter le comptage : la hauteur de la barre est exactement proportionnelle à la valeur, la texture qui la remplit est un peigne dont la période vaut une unité déclarée, et le montant exact est écrit au-dessus — la texture donne l'échelle, elle ne compte jamais à la place du chiffre.",
       "when_to_use": "Sur une comparaison de deux à quatre montants dont l'écart EST le message (coût cumulé, budget, dette), quand le lecteur doit sentir l'ordre de grandeur avant de lire les chiffres. Excellent sur une charte à deux couleurs, où la texture remplace l'aplat plein sans rien coûter en palette.",
@@ -3413,9 +3418,10 @@
       "family": "layout",
       "ref": "ref-16-cobalt-graph-paper",
       "media": [
+        "print",
         "slide",
-        "web",
-        "print"
+        "social",
+        "web"
       ],
       "intent": "Faire d'une trame de papier millimétré le TON du fond, puis y poser des objets qui sont des cases de cette trame — pas de la matière posée dessus : le pas de la grille de cellules et la marge qui la centre sont des multiples entiers du pas de la trame, si bien que le contenu paraît découpé dans le papier.",
       "when_to_use": "Quand le sujet se compte en unités discrètes — demi-journées, sièges, jours, tickets, sites — et qu'on veut que le fond le dise avant le texte. Aussi comme socle de deck : la trame reste sur toutes les slides et fait la reconnaissance d'une slide à l'autre sans qu'aucun ornement ne soit ajouté.",
@@ -5324,6 +5330,7 @@
       "ref": "ref-12-neon-capsule-tags",
       "media": [
         "slide",
+        "social",
         "web"
       ],
       "intent": "Faire d'un mot-clé un OBJET : un contour continu qui soude un cercle de glyphe à une pilule de texte par deux congés concaves, pour qu'un terme isolé pèse autant qu'un titre sans être plus gros.",

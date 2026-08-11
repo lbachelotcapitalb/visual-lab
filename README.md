@@ -206,8 +206,24 @@ mentirait sur la seule chose qu'on cherche à savoir. Et la mise à l'échelle e
 analytiquement, jamais obtenue par `zoom` : sous `zoom`, Chrome renvoie une taille de police non
 zoomée à côté d'une boîte zoomée, et la mesure mentirait d'un facteur k sans rien signaler.
 
-Ce que `frame.mjs` ne dit pas : si le post est bien COMPOSÉ. Et la marge de sécurité n'est pas
-une mesure mais une conséquence — l'échelle est justement calculée pour que le pattern y tienne.
+**La mesure autorise la déclaration, elle ne la remplace pas.** Les 10 patterns qui tiennent le
+cadre ont été rendus et REGARDÉS un par un ; **7 portent désormais `media: social`**. Trois ont
+été écartés malgré un contrôle vert, et tous les trois pour la même raison, qui vaut d'être
+nommée : **quand le fond du pattern est le même blanc que le sol du cadre et qu'il n'occupe pas
+tout l'espace, le post n'a plus de bord** — dans un fil, on ne voit pas où le visuel commence
+(`card-11-corner-arrow-tile`, `chart-05-tile-heatmap`). Le troisième, `shape-notched-corner`,
+n'a aucun texte : il passe le plancher typographique par absence de sujet, pas par mérite —
+l'outil le dit lui-même, et une primitive de forme ne devient pas un post parce qu'elle tient
+dans le cadre. Aucun de ces trois défauts n'est mesuré aujourd'hui.
+
+Le débordement, lui, EST mesuré depuis le 11/08 : un descendant qui sort de la boîte de la
+racine (pastille absolue, poignée soudée au bord) sortirait aussi de la zone sûre, et « le
+pattern tient dans la zone sûre » serait alors vrai de la racine et faux du rendu. **Aucun des
+41 patterns ne déborde** — constat vérifié par contre-épreuve : le détecteur rend 0 sur un cas
+sain et 45 px sur un cas construit qui déborde de 45 px.
+
+Ce que `frame.mjs` ne dit toujours pas : si le post est bien COMPOSÉ, et s'il se détache de son
+sol.
 
 Il n'y a **pas** d'émetteur `print` : un fragment HTML s'imprime tel quel (Chrome → PDF).
 Annoncer un émetteur qui ne ferait que recopier le fragment mentirait sur ce que le dépôt sait

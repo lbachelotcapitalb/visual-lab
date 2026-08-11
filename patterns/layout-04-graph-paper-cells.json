@@ -6,9 +6,10 @@
   "when_to_use": "Quand le sujet se compte en unités discrètes — demi-journées, sièges, jours, tickets, sites — et qu'on veut que le fond le dise avant le texte. Aussi comme socle de deck : la trame reste sur toutes les slides et fait la reconnaissance d'une slide à l'autre sans qu'aucun ornement ne soit ajouté.",
   "avoid_when": "Quand le sujet est continu (une courbe, un flux, une durée), quand la charte a déjà un motif — deux trames se battent et aucune ne gagne — ou dès que du texte de lecture devrait passer PAR-DESSUS la trame à plus de ~14 % d'opacité : le fond ne réduit jamais la lisibilité du premier plan, c'est la seule loi que ce pattern peut faire tomber.",
   "media": [
+    "print",
     "slide",
-    "web",
-    "print"
+    "social",
+    "web"
   ],
   "tags": [
     "papier millimétré",
@@ -27,34 +28,98 @@
     "trois états"
   ],
   "vars": [
-    { "name": "--vl-grid", "role": "encre de la trame — TENUE entre 6 et 14 % d'opacité", "default": "rgba(31,43,224,0.10)" },
-    { "name": "--vl-grid-step", "role": "période de la trame — l'unité dont tout le reste est un multiple", "default": "35.2px" },
-    { "name": "--vl-cell-pitch", "role": "pas d'une case (bord à bord) — DOIT être un multiple entier du pas de trame", "default": "70.4px" },
-    { "name": "--vl-cell-gap", "role": "gouttière entre deux cases, prise DANS le pas", "default": "6px" },
-    { "name": "--vl-paper", "role": "papier", "default": "#F0EBDE" },
-    { "name": "--vl-paper-2", "role": "case neutralisée (non ouvré)", "default": "#E6E0CE" },
-    { "name": "--vl-ink", "role": "encre d'accent — case pleine, filet, libellé mono", "default": "#1F2BE0" },
-    { "name": "--vl-ink-faint", "role": "liseré d'une case vide", "default": "rgba(31,43,224,0.20)" },
-    { "name": "--vl-near", "role": "encre de lecture", "default": "#14163A" },
-    { "name": "--vl-rule", "role": "épaisseur du liseré", "default": "1.25px" },
-    { "name": "--vl-margin", "role": "retrait haut et bas du panneau", "default": "92px" }
+    {
+      "name": "--vl-grid",
+      "role": "encre de la trame — TENUE entre 6 et 14 % d'opacité",
+      "default": "rgba(31,43,224,0.10)"
+    },
+    {
+      "name": "--vl-grid-step",
+      "role": "période de la trame — l'unité dont tout le reste est un multiple",
+      "default": "35.2px"
+    },
+    {
+      "name": "--vl-cell-pitch",
+      "role": "pas d'une case (bord à bord) — DOIT être un multiple entier du pas de trame",
+      "default": "70.4px"
+    },
+    {
+      "name": "--vl-cell-gap",
+      "role": "gouttière entre deux cases, prise DANS le pas",
+      "default": "6px"
+    },
+    {
+      "name": "--vl-paper",
+      "role": "papier",
+      "default": "#F0EBDE"
+    },
+    {
+      "name": "--vl-paper-2",
+      "role": "case neutralisée (non ouvré)",
+      "default": "#E6E0CE"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "encre d'accent — case pleine, filet, libellé mono",
+      "default": "#1F2BE0"
+    },
+    {
+      "name": "--vl-ink-faint",
+      "role": "liseré d'une case vide",
+      "default": "rgba(31,43,224,0.20)"
+    },
+    {
+      "name": "--vl-near",
+      "role": "encre de lecture",
+      "default": "#14163A"
+    },
+    {
+      "name": "--vl-rule",
+      "role": "épaisseur du liseré",
+      "default": "1.25px"
+    },
+    {
+      "name": "--vl-margin",
+      "role": "retrait haut et bas du panneau",
+      "default": "92px"
+    }
   ],
   "slots": [
-    { "name": "head", "role": "libellé mono de la grille, centré" },
-    { "name": "grid", "role": "les cases — 7 colonnes par défaut, l'en-tête de jours compris" },
-    { "name": "legend", "role": "la clé des trois états ; obligatoire dès que deux états coexistent" }
+    {
+      "name": "head",
+      "role": "libellé mono de la grille, centré"
+    },
+    {
+      "name": "grid",
+      "role": "les cases — 7 colonnes par défaut, l'en-tête de jours compris"
+    },
+    {
+      "name": "legend",
+      "role": "la clé des trois états ; obligatoire dès que deux états coexistent"
+    }
   ],
   "geometry": {
     "root": ".vl-gpc",
-    "frame": [704, 600],
+    "frame": [
+      704,
+      600
+    ],
     "ratios": {
       "grid_step_over_width": 0.05,
       "cell_pitch_over_grid_step": 2,
       "side_margin_over_grid_step": 3,
       "gap_over_cell_pitch": 0.085
     },
-    "type_px": { "head": 22, "day": 22, "legend": 22 },
-    "pad_ratio": { "top": 0.131, "x": 0.15, "bottom": 0.131 }
+    "type_px": {
+      "head": 22,
+      "day": 22,
+      "legend": 22
+    },
+    "pad_ratio": {
+      "top": 0.131,
+      "x": 0.15,
+      "bottom": 0.131
+    }
   },
   "benchmarks": [
     {

@@ -154,7 +154,17 @@ l'occupation ≥ 45 % de la hauteur utile. Ce qui échoue, échoue presque toujo
 raison de fond : **un pattern très large ne rentre pas dans un cadre 4:5** — à 5,9:1, la rangée
 de KPI ne remplit que 13 % de la hauteur et son texte est divisé par 1,35.
 
-Ce que `frame.mjs` ne dit pas : si le post est bien COMPOSÉ. Aucun outil ne le mesure encore.
+**Sept patterns portent `media: social`** (`node bin/search.mjs --media social`) : ce sont ceux
+qui tiennent le cadre ET qui ont été regardés dedans. Dix passent la mesure — la mesure autorise
+la déclaration, elle ne la remplace pas. Les trois écartés le sont pour un motif que rien ne
+mesure : deux ont un fond du même blanc que le sol du cadre, donc **le post n'a pas de bord**
+dans un fil ; le troisième n'a aucun texte, et l'outil le signale lui-même (« aucun texte —
+plancher non applicable »), ce qui est un ✓ obtenu par absence de sujet.
+
+Ce que `frame.mjs` ne dit pas : si le post est bien COMPOSÉ, ni s'il se détache de son sol.
+Et ce que les sept ne couvrent pas : ce sont tous des vignettes de DONNÉE. Pour une citation
+plein cadre, un décryptage en trois temps ou une vue de carousel, la bibliothèque n'a rien —
+c'est le trou à combler, et il se comble en écrivant, pas en filtrant.
 
 ### Changer de charte
 

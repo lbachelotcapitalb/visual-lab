@@ -7,6 +7,7 @@
   "avoid_when": "Il n'y a qu'un chiffre à montrer (la rangée n'existe plus, et l'accent n'a plus rien à surpasser), le commentaire dépasse deux lignes courtes (il rejoint le libellé et le décalage à droite devient illisible), ou plusieurs vignettes sont colorées — deux accents dans une rangée annulent le seul geste de hiérarchie du système.",
   "media": [
     "slide",
+    "social",
     "web"
   ],
   "tags": [

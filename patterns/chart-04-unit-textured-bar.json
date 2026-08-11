@@ -6,9 +6,10 @@
   "when_to_use": "Sur une comparaison de deux à quatre montants dont l'écart EST le message (coût cumulé, budget, dette), quand le lecteur doit sentir l'ordre de grandeur avant de lire les chiffres. Excellent sur une charte à deux couleurs, où la texture remplace l'aplat plein sans rien coûter en palette.",
   "avoid_when": "Au-delà de quatre barres — le peigne devient du bruit moiré ; sur une série temporelle, où l'unité de l'axe suffit ; ou quand la plus petite valeur descend sous deux périodes, la texture disparaissant alors dans un trait plein qui MENT sur l'échelle (un benchmark le refuse).",
   "media": [
+    "print",
     "slide",
-    "web",
-    "print"
+    "social",
+    "web"
   ],
   "tags": [
     "histogramme",
@@ -25,29 +26,73 @@
     "monochrome"
   ],
   "vars": [
-    { "name": "--vl-utb-period", "role": "période du peigne = UNE unité déclarée, à l'échelle du tracé", "default": "14.286px" },
-    { "name": "--vl-ink", "role": "encre des barres et du chrome", "default": "#1F2BE0" },
-    { "name": "--vl-ink-faint", "role": "barre atténuée — la valeur qu'on ne veut PAS voir dominer", "default": "rgba(31,43,224,0.20)" },
-    { "name": "--vl-paper", "role": "papier, et creux du peigne", "default": "#F0EBDE" },
-    { "name": "--vl-near", "role": "encre du montant écrit", "default": "#14163A" },
-    { "name": "--vl-rule", "role": "épaisseur de la ligne de base et du liseré", "default": "1.25px" }
+    {
+      "name": "--vl-utb-period",
+      "role": "période du peigne = UNE unité déclarée, à l'échelle du tracé",
+      "default": "14.286px"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "encre des barres et du chrome",
+      "default": "#1F2BE0"
+    },
+    {
+      "name": "--vl-ink-faint",
+      "role": "barre atténuée — la valeur qu'on ne veut PAS voir dominer",
+      "default": "rgba(31,43,224,0.20)"
+    },
+    {
+      "name": "--vl-paper",
+      "role": "papier, et creux du peigne",
+      "default": "#F0EBDE"
+    },
+    {
+      "name": "--vl-near",
+      "role": "encre du montant écrit",
+      "default": "#14163A"
+    },
+    {
+      "name": "--vl-rule",
+      "role": "épaisseur de la ligne de base et du liseré",
+      "default": "1.25px"
+    }
   ],
   "slots": [
-    { "name": "value", "role": "le montant EXACT, écrit au-dessus de chaque barre — jamais facultatif" },
-    { "name": "label", "role": "l'identité de la barre, sur UNE ligne" },
-    { "name": "unit", "role": "la phrase qui déclare l'unité et l'exactitude de l'échelle — c'est le contrat du pattern" }
+    {
+      "name": "value",
+      "role": "le montant EXACT, écrit au-dessus de chaque barre — jamais facultatif"
+    },
+    {
+      "name": "label",
+      "role": "l'identité de la barre, sur UNE ligne"
+    },
+    {
+      "name": "unit",
+      "role": "la phrase qui déclare l'unité et l'exactitude de l'échelle — c'est le contrat du pattern"
+    }
   ],
   "geometry": {
     "root": ".vl-utb",
-    "frame": [704, 620],
+    "frame": [
+      704,
+      620
+    ],
     "ratios": {
       "plot_height_over_width": 0.568,
       "gap_over_width": 0.08,
       "period_over_plot_height": 0.0357,
       "value_over_label": 2.14
     },
-    "type_px": { "value": 47, "label": 22, "unit": 22 },
-    "pad_ratio": { "top": 0, "x": 0, "bottom": 0 }
+    "type_px": {
+      "value": 47,
+      "label": 22,
+      "unit": 22
+    },
+    "pad_ratio": {
+      "top": 0,
+      "x": 0,
+      "bottom": 0
+    }
   },
   "benchmarks": [
     {

@@ -184,9 +184,14 @@ Nommer un trou vaut mieux que laisser croire à une couverture.
   11/08/2026 par `bin/frame.mjs --target social` : **10 patterns sur 41** tiennent le cadre. Ce
   qu'il mesure — le plus petit corps une fois le pattern mis à l'échelle du cadre, et
   l'occupation de la hauteur utile. Ce qu'il ne mesure PAS, et qu'il ne faut pas lui faire dire :
-  la composition du post, l'ordre de lecture, ni le respect de la zone sûre — celle-ci est
-  garantie par construction, puisque l'échelle est justement calculée pour que le pattern y
-  tienne. `gtm-content` mesure les vides de SES cartes, ce n'est toujours pas généralisé.
+  la composition du post, l'ordre de lecture, ni **le détachement du visuel par rapport à son
+  sol** — trois des dix patterns qui passent le contrôle ont été écartés à l'œil parce que leur
+  fond est le même blanc que celui du cadre : sans bord, le post n'existe pas dans un fil.
+  Le respect de la zone sûre, lui, EST mesuré : l'échelle garantit que la RACINE y tienne, et un
+  contrôle de débordement vérifie qu'aucun descendant n'en sorte (aucun des 41 n'en sort).
+  D'où la règle qui encadre le champ `media` : **la mesure autorise la déclaration, elle ne la
+  remplace pas** — 10 tiennent le cadre, 7 sont déclarés, après rendu et regard.
+  `gtm-content` mesure les vides de SES cartes, ce n'est toujours pas généralisé.
 
 Quand l'un de ces trous se bouche, la ligne correspondante du tableau d'en-tête se remplit — et
 c'est ce tableau, pas ce paragraphe, qui fait foi.

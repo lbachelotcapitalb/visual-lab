@@ -140,5 +140,10 @@
     "emitter": "kit/vl_pptx.py:stat_block",
     "pattern": "card-03-stat-accent"
   },
-  "notes": "Le vide entre le chiffre et le corps est une DÉCISION, pas un manque : il sépare la donnée de son commentaire. C'est la seule vignette du système où la règle « remplis l'espace » ne s'applique pas telle quelle — mais elle est bornée par benchmark (le corps démarre entre 50 % et 85 % de la hauteur), sinon on retombe sur un bloc qui flotte au milieu. Le corps n'est jamais en blanc pur : un blanc pur à 17 px rivalise avec le chiffre à 64 px et la hiérarchie tombe. Sur l'orange #F2551E, le blanc plafonne à 3,4:1 — donc grand corps seulement, jamais de 11 px. Le benchmark de contraste du CORPS a été ajouté après coup : le harnais HTML ne testait que le chiffre, et c'est l'audit .pptx du kit qui a attrapé le corps à 2,77:1. Quand un contrôle attrape ce que l'autre laisse passer, l'assertion manquante se pose des DEUX côtés."
+  "notes": "Le vide entre le chiffre et le corps est une DÉCISION, pas un manque : il sépare la donnée de son commentaire. C'est la seule vignette du système où la règle « remplis l'espace » ne s'applique pas telle quelle — mais elle est bornée par benchmark (le corps démarre entre 50 % et 85 % de la hauteur), sinon on retombe sur un bloc qui flotte au milieu. Le corps n'est jamais en blanc pur : un blanc pur à 17 px rivalise avec le chiffre à 64 px et la hiérarchie tombe. Sur l'orange #F2551E, le blanc plafonne à 3,4:1 — donc grand corps seulement, jamais de 11 px. Le benchmark de contraste du CORPS a été ajouté après coup : le harnais HTML ne testait que le chiffre, et c'est l'audit .pptx du kit qui a attrapé le corps à 2,77:1. Quand un contrôle attrape ce que l'autre laisse passer, l'assertion manquante se pose des DEUX côtés.",
+  "media": [
+    "slide",
+    "social",
+    "web"
+  ]
 }

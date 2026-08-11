@@ -53,5 +53,10 @@
     "title",
     "subtitle"
   ],
-  "notes": "Trois proportions font tout le pattern et se dérèglent vite : (1) l'icône fait au moins 3× la hauteur du titre, (2) son contraste avec le fond de carte reste sous ~5 % de luminosité, (3) le sous-titre ne dépasse pas 46 caractères par ligne. Grossir l'icône sans baisser son contraste casse la hiérarchie et la carte devient une carte à pictogramme banale. Le fragment serif du titre est un simple changement de famille typographique à corps égal — il ne mérite pas son propre pattern."
+  "notes": "Trois proportions font tout le pattern et se dérèglent vite : (1) l'icône fait au moins 3× la hauteur du titre, (2) son contraste avec le fond de carte reste sous ~5 % de luminosité, (3) le sous-titre ne dépasse pas 46 caractères par ligne. Grossir l'icône sans baisser son contraste casse la hiérarchie et la carte devient une carte à pictogramme banale. Le fragment serif du titre est un simple changement de famille typographique à corps égal — il ne mérite pas son propre pattern.",
+  "media": [
+    "slide",
+    "social",
+    "web"
+  ]
 }

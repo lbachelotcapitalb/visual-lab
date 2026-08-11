@@ -352,10 +352,25 @@ intention.
     MIXTE — un `<p>` de 12 px contenant un `<b>` — n'était compté ni pour lui-même ni par son
     enfant, ce qui déclarait lisible un pattern sur un texte jamais mesuré. Le second faisait
     passer `layout-08` à tort.
-  - Ce que le lot ne fait PAS : la marge de sécurité n'est pas mesurée mais garantie par
-    construction (l'échelle est calculée pour que le pattern y tienne), et **rien ne mesure
-    encore la COMPOSITION d'un post**. Aucun pattern natif social n'a été écrit — la matière
-    reste à produire, le constat est là pour dire quoi.
+  - ✅ **La zone sûre est mesurée, pas supposée** : un contrôle de débordement vérifie qu'aucun
+    descendant ne sort de la boîte de la racine — sans quoi « le pattern tient dans la zone
+    sûre » serait vrai de la racine et faux du rendu. Aucun des 41 n'en sort, et ce zéro est
+    vérifié par CONTRE-ÉPREUVE (le détecteur rend 45 px sur un cas construit qui déborde de
+    45 px) : un contrôle qui ne mord jamais doit prouver qu'il sait mordre.
+  - ✅ **7 patterns portent désormais `media: social`**, sur les 10 qui tiennent le cadre —
+    rendus et regardés un par un, parce que la mesure autorise la déclaration mais ne la
+    remplace pas. Les trois écartés le sont pour un motif que rien ne mesure : `card-11` et
+    `chart-05` ont un fond du même blanc que le sol du cadre, donc **le post n'a pas de bord**
+    dans un fil ; `shape-notched-corner` n'a aucun texte et passe le plancher par absence de
+    sujet, pas par mérite.
+  - ⬜ Ce qui reste : **rien ne mesure la COMPOSITION d'un post**, ni son détachement du sol.
+    Et aucun pattern natif social n'a été écrit — ce n'était pas le manque le plus urgent, le
+    corpus en couvrant déjà sept ; le vrai trou est ailleurs et il est nommé ci-dessous.
+  - ⬜ **Ce que les sept ne couvrent pas** : ce sont tous des vignettes de donnée (un chiffre,
+    un histogramme, une trame). Aucun format ÉDITORIAL — la citation plein cadre, le décryptage
+    en trois temps, la vue de carousel numérotée. C'est ce qu'il faudrait écrire nativement,
+    et c'est un lot à part entière parce qu'il demande d'abord de trancher ce qu'est un post
+    de la maison.
 - ⬜ Reprendre l'émetteur **PSD live-text** déjà écrit dans `~/.claude/skills/gtm-content/psd/`
   (`build-livetext-psd.mjs`) comme quatrième sortie du dépôt, au lieu de le laisser prisonnier
   d'un skill de comm.

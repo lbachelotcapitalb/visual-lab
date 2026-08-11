@@ -132,7 +132,19 @@ const measure = (i) => {
       who = e.className ? '.' + String(e.className).trim().split(/\\s+/).pop() : e.tagName.toLowerCase();
     }
   }
-  return { w: b.width, h: b.height, minType: min === Infinity ? null : min, who };
+  // DÉBORDEMENT HORS RACINE. L'échelle est calculée sur la boîte de la racine ; si un
+  // descendant sort de cette boîte (pastille en position absolue, poignée soudée au bord,
+  // élément translaté), il sortira aussi de la zone sûre — et rien ne le signalerait, parce
+  // que « le pattern tient dans la zone sûre » serait vrai de la RACINE et faux du rendu.
+  // Une garantie « par construction » qui ne mesure pas son hypothèse est une garantie qui
+  // se casse en silence.
+  let bleed = 0;
+  for (const e of el.querySelectorAll('*')) {
+    if (INVISIBLE.has(e.tagName) || !e.getClientRects().length) continue;
+    const r = e.getBoundingClientRect();
+    bleed = Math.max(bleed, b.left - r.left, r.right - b.right, b.top - r.top, r.bottom - b.bottom);
+  }
+  return { w: b.width, h: b.height, minType: min === Infinity ? null : min, who, bleed: Math.max(0, bleed) };
 };
 document.getElementById('vl-out').textContent =
   JSON.stringify(${JSON.stringify(cells.map((_, i) => i))}.map(measure));
@@ -165,6 +177,15 @@ for (const [i, c] of cells.entries()) {
         `(${(typeRatio * 100).toFixed(2)} %, minimum ${(F.minType * 100).toFixed(1)} %)`
     );
   }
+  // La zone sûre n'est plus « garantie par construction » : ce qui la garantissait, c'est que
+  // le rendu tienne dans la boîte de la racine. On le mesure au lieu de le supposer.
+  if (m.bleed * k > marge) {
+    probs.push(
+      `zone sûre : un élément déborde de ${(m.bleed * k).toFixed(0)} px hors de la racine, ` +
+        `soit plus que la marge de ${Math.round(marge)} px — il tombe dans la bande que la ` +
+        `plateforme peut recouvrir ou rogner`
+    );
+  }
   if (fill < F.minFill) {
     probs.push(
       `occupation : le pattern ne remplit que ${(fill * 100).toFixed(0)} % de la hauteur utile ` +
@@ -183,6 +204,7 @@ for (const [i, c] of cells.entries()) {
   lignes.push(
     `${probs.length ? '✗' : '✓'} ${c.p.id.padEnd(30)} ` +
       `×${k.toFixed(2)} · ${typo} · remplit ${(fill * 100).toFixed(0)} % · ` +
+      `${m.bleed > 0.5 ? `déborde ${(m.bleed * k).toFixed(0)} px hors racine · ` : ''}` +
       `${declare ? `déclaré ${target}` : `NON déclaré ${target}`}` +
       (probs.length ? `\n    ${probs.join('\n    ')}` : '')
   );

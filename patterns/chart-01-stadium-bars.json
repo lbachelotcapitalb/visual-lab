@@ -43,5 +43,10 @@
     "bars",
     "axis"
   ],
-  "notes": "Le sommet est un demi-cercle COMPLET : le rayon vaut la moitié de la largeur de barre (999px sature au bon endroit). Un rayon plus petit fait « bouton » ; arrondir aussi le bas ferait flotter la barre au-dessus de sa ligne de base. Le dégradé de couleur suit l'ordre chronologique et sert de second signal de progression — ne pas colorer par catégorie. Aucun axe tracé : les pilules de légende font la ligne de base, un trait en plus ne dirait rien."
+  "notes": "Le sommet est un demi-cercle COMPLET : le rayon vaut la moitié de la largeur de barre (999px sature au bon endroit). Un rayon plus petit fait « bouton » ; arrondir aussi le bas ferait flotter la barre au-dessus de sa ligne de base. Le dégradé de couleur suit l'ordre chronologique et sert de second signal de progression — ne pas colorer par catégorie. Aucun axe tracé : les pilules de légende font la ligne de base, un trait en plus ne dirait rien.",
+  "media": [
+    "slide",
+    "social",
+    "web"
+  ]
 }
