@@ -23,6 +23,11 @@ visuel ; **VERSER** quand Léo apporte un visuel dont il faut garder la composit
 Ce fichier est le mode d'emploi opérateur. Ce qu'il ne recopie pas, parce que ça vit et que la
 copie divergerait :
 
+> **Ce fichier est le manuel de l'OPÉRATEUR, en français.** Un agent extérieur qui arrive sur
+> le dépôt lit [`AGENTS.md`](AGENTS.md) (servi aussi comme `CLAUDE.md`) : court, en anglais,
+> machine-facing. Ne pas dupliquer l'un dans l'autre — AGENTS.md dit comment CONSOMMER la
+> bibliothèque, ce fichier dit comment l'OPÉRER et y verser.
+
 | quoi | où |
 |---|---|
 | **la vitrine — les patterns VIVANTS, à ouvrir dans un navigateur** | [gallery.html](gallery.html) — **GÉNÉRÉ** par `bin/index.mjs` |

@@ -1,13 +1,30 @@
 # visual-lab
 
+**Start here / Commencer ici**
+
+```bash
+node bin/index.mjs && open gallery.html   # la VITRINE : tous les patterns rendus, filtrables
+node bin/search.mjs --show <id>           # un fragment + ses tokens, prêts à coller
+```
+
+> **AI agents: read [`AGENTS.md`](AGENTS.md) first** (also served as `CLAUDE.md`). It is the
+> short, English, machine-facing entry point: what a pattern is, how to consume `index.json`,
+> how to theme, how to verify, and what not to do. Nothing to install, no network, no build.
+>
+> **Humains** : [`gallery.html`](gallery.html) est la page de contrôle — les fragments rendus
+> VIVANTS, une carte du corpus qui montre les trous, une recherche et un bouton « copier » par
+> pattern. Régénérée par `bin/index.mjs`, jamais éditée à la main. Aucune image nulle part :
+> une capture est une copie morte, elle périme en silence.
+
 ## Sommaire
 
+- Start here / Commencer ici
 - Ce que ce dépôt est, et n'est pas
 - Ce qui est la source de vérité d'un pattern
 - Arborescence
 - Nomenclature
 - Médias et émetteurs — un pattern, plusieurs sorties
-- Choisir à l'œil : la planche-contact des patterns
+- Choisir à l'œil : la vitrine `gallery.html`
 - Le contrôle : mathématique d'abord, visuel ensuite — en boucle
 - Utilisation
 - Contrat d'un pattern
@@ -66,7 +83,8 @@ un fragment réglé pour 1600 px de large donne un corps de 10,2 pt s'il est con
 ## Arborescence
 
 ```
-SKILL.md               le mode d'emploi opérateur (skill `visual-lab`, symlinké dans ~/.claude/skills)
+AGENTS.md              LE POINT D'ENTRÉE DES AGENTS (servi aussi comme CLAUDE.md) — court, en anglais
+SKILL.md               le mode d'emploi OPÉRATEUR du mainteneur (français) — utile, pas nécessaire
 DOCTRINE.md            les lois de mise en page de la maison, TOUS MÉDIAS — et qui les mesure
 gallery.html           LA VITRINE : tous les patterns RENDUS, dans un navigateur — GÉNÉRÉ, jamais édité
 INDEX.md               LE POINT D'ENTRÉE : catalogue de routage + détail — GÉNÉRÉ, jamais édité
@@ -147,23 +165,34 @@ Annoncer un émetteur qui ne ferait que recopier le fragment mentirait sur ce qu
 faire. Ce qui compte à l'impression est ailleurs — encre (aplats, ombres, dégradés) et polices
 embarquées depuis `fonts/`.
 
-## Choisir à l'œil : la planche-contact des patterns
+## Choisir à l'œil : la vitrine `gallery.html`
 
-Le routage se fait sur `INDEX.md` — du texte, pas cher. La planche sert l'étape d'après :
-arbitrer entre les finalistes, ou passer une branche en revue pour en proposer trois.
+Le routage se fait sur `INDEX.md` — du texte, pas cher. La vitrine sert l'étape d'après :
+arbitrer entre les finalistes, passer une branche en revue, voir ce qui manque.
 
 ```bash
-node bin/contact-sheet.mjs                          # tout
-node bin/contact-sheet.mjs --family card --cols 3
-node bin/contact-sheet.mjs --media social --scale 0.4
+node bin/index.mjs && open gallery.html     # elle se régénère AVEC le catalogue
+node bin/gallery.mjs --family card          # ou filtrée à la génération
+node bin/gallery.mjs ref-17 ref-18
 ```
 
-Chaque vignette est rendue sur le `:root` de SA référence — une planche qui mélange les chartes
-montre aussi si deux systèmes jurent l'un à côté de l'autre. **Les tailles sont MESURÉES dans
-Chrome avant la mise en grille**, jamais devinées : sept patterns sur dix-sept ne déclarent pas
-de `geometry.frame`, et une planche qui rogne ce qu'elle est censée montrer est pire qu'une
-absence de planche. Une planche reste un dérivé : le pattern retenu se regarde en taille réelle
-(`bin/render.mjs --pattern <id>`) avant d'être posé.
+Ce qu'elle porte, et qui n'existe nulle part ailleurs :
+
+- **les fragments RENDUS**, chacun sur le sol et les tokens de SA charte — quinze systèmes
+  emploient les mêmes noms `--vl-*`, donc les tokens sont posés en style inline sur chaque
+  vignette : un `:root` global les ferait se contaminer ;
+- **une carte du corpus** (références × familles) dont les cases vides sont l'information utile —
+  un catalogue en liste cache exactement ce que la bibliothèque ne couvre pas ;
+- une **recherche** plein texte, des filtres famille/média, et un bouton **copier** par pattern ;
+- les conditions d'emploi (`when_to_use` / `avoid_when`) sous chaque rendu, parce que c'est ce
+  qui empêche de sortir un pattern dans le seul cas où il dessert.
+
+L'échelle passe par `zoom` et non `transform` : `transform` ne reflue pas, il faudrait donc lui
+réserver une hauteur calculée — et les sept patterns qui ne déclarent pas de `geometry.frame` se
+retrouveraient rognés ou noyés dans du vide. **Aucune image nulle part** : une planche-contact en
+PNG périme au premier changement de fragment sans que rien ne le signale. `bin/contact-sheet.mjs`
+et `bin/render.mjs` subsistent comme instruments de mesure internes (sorties dans `proofs/`,
+gitignoré) ; ils ne produisent pas de livrable.
 
 ## Le contrôle : mathématique d'abord, visuel ensuite — en boucle
 
