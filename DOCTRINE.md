@@ -30,7 +30,8 @@ Ici on nomme la loi une fois, on dit qui la mesure, et on montre les trous.
 | `visual-lab` | le pattern lui-même | ce dépôt | `bin/check.mjs` (benchmarks déclarés par pattern) |
 | `gtm-content` | visuel de comm + PSD | `~/.claude/skills/gtm-content/` | contrôle de vides (`maxVoidPct` / `fillPct`) |
 | `visual-lab` | mailing | ce dépôt, patterns `media: ["email"]` | `bin/emit.mjs --target email` (faisabilité) + `bin/check.mjs` — mais **rien ne mesure la COMPOSITION d'un mailing** |
-| — | **flyer, post social** | **rien encore** | **rien encore** — cf. « Les trous » en fin de fichier |
+| `visual-lab` | post social (1080 × 1350) | ce dépôt | `bin/frame.mjs --target social` (plancher typo à l'échelle du cadre, occupation) — mais **rien ne mesure la COMPOSITION d'un post** |
+| — | **flyer** | **rien encore** | **rien encore** — cf. « Les trous » en fin de fichier |
 
 ---
 
@@ -179,8 +180,13 @@ Nommer un trou vaut mieux que laisser croire à une couverture.
 - **Flyer / impression.** Pas d'émetteur : un fragment HTML s'imprime tel quel (Chrome → PDF).
   Ce qui manque est une doctrine d'encre (aplats pleine page, ombres, dégradés) et l'obligation
   d'embarquer les polices de `fonts/` plutôt qu'une pile système.
-- **Post social.** Le cadre (1080×1350) et la lisibilité au pouce ne sont vérifiés nulle part.
-  `gtm-content` mesure les vides de SES cartes, ce n'est pas généralisé.
+- **Post social.** Le cadre (1080×1350) et la lisibilité au pouce sont mesurés depuis le
+  11/08/2026 par `bin/frame.mjs --target social` : **10 patterns sur 41** tiennent le cadre. Ce
+  qu'il mesure — le plus petit corps une fois le pattern mis à l'échelle du cadre, et
+  l'occupation de la hauteur utile. Ce qu'il ne mesure PAS, et qu'il ne faut pas lui faire dire :
+  la composition du post, l'ordre de lecture, ni le respect de la zone sûre — celle-ci est
+  garantie par construction, puisque l'échelle est justement calculée pour que le pattern y
+  tienne. `gtm-content` mesure les vides de SES cartes, ce n'est toujours pas généralisé.
 
 Quand l'un de ces trous se bouche, la ligne correspondante du tableau d'en-tête se remplit — et
 c'est ce tableau, pas ce paragraphe, qui fait foi.

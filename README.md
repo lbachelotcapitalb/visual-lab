@@ -24,6 +24,7 @@ node bin/search.mjs --show <id>           # un fragment + ses tokens, prêts à 
 - Arborescence
 - Nomenclature
 - Médias et émetteurs — un pattern, plusieurs sorties
+- Le cadre — tenir dans le format d'un canal, à la taille où on le regarde
 - Choisir à l'œil : la vitrine `gallery.html`
 - Le contrôle : mathématique d'abord, visuel ensuite — en boucle
 - Utilisation
@@ -108,6 +109,7 @@ assets/refs/<ref>.png  les images sources des reverses — GITIGNORÉES (visuels
 bin/gallery.mjs        LA VITRINE HTML : les fragments rendus tels quels, code dépliable — jamais un PNG
 bin/contact-sheet.mjs  planche-contact PNG — instrument de mesure INTERNE, jamais un livrable
 bin/emit.mjs           sortir un pattern vers un autre média (inline, email) — refuse si ça ne tient pas
+bin/frame.mjs          le pattern tient-il dans le CADRE d'un canal (social 1080×1350), à la taille où on le regarde
 kit/vl_pptx.py         le pont vers le .pptx : émetteurs + audit mathématique (lit index.json)
 patterns.db            index SQLite pour la recherche plein texte — REGÉNÉRABLE, gitignoré
 proofs/                PNG de vérification — régénérables, gitignorés
@@ -175,6 +177,37 @@ tort** — les trois patterns email déclarent `media: ["email"]` et le prouvent
   parce qu'il ne cherchait que la propriété `opacity` alors que la transparence du corpus vit
   dans les TOKENS — il attrape maintenant 6 patterns de plus. Les entités numériques sont
   retirées avant ce test : `&#8599;` (↗) se lisait sinon comme un hex à quatre chiffres.
+
+### Le cadre — tenir dans le format d'un canal, à la taille où on le regarde
+
+Un émetteur répond à « le moteur de la cible sait-il rendre ça ». Il ne répond pas à « à la
+taille où ce sera regardé, est-ce encore lisible ». C'est une autre question, et elle a son
+outil :
+
+```bash
+node bin/frame.mjs --audit --target social                 # l'état de toute la bibliothèque
+node bin/frame.mjs card-03-stat-accent --target social     # un pattern, mesures détaillées
+node bin/frame.mjs card-03-stat-accent card-12-inverted-kpi-row --target social \
+  --out proofs/social.html                                 # et le RENDU, à la largeur d'un téléphone
+```
+
+**Au 11/08/2026 : 10 patterns sur 41 tiennent le cadre `social` (1080 × 1350).** Ce que ça
+mesure : le pattern est mis à l'échelle du cadre (`k = zone sûre ÷ taille du pattern`), puis on
+vérifie que son plus petit corps reste au-dessus du plancher — **2,2 % de la largeur du cadre**,
+soit 24 px sur 1080 — et qu'il occupe au moins 45 % de la hauteur utile. Un pattern peut être
+vert au `check` et vert à l'`emit` tout en étant illisible ici : `check` mesure des RAPPORTS, qui
+survivent au changement d'échelle par construction. C'est exactement là que le trou se cachait —
+`card-12-inverted-kpi-row`, réglé pour 1286 px de large, sort ses notes à 11 px sur 1080 et
+n'occupe que 13 % du cadre.
+
+La sortie `--out` est du HTML : elle rend chaque cadre **à 390 px de large, la largeur d'un
+téléphone**, avec la zone sûre en pointillés. Un cadre montré à 100 % ou réduit « pour tenir »
+mentirait sur la seule chose qu'on cherche à savoir. Et la mise à l'échelle est calculée
+analytiquement, jamais obtenue par `zoom` : sous `zoom`, Chrome renvoie une taille de police non
+zoomée à côté d'une boîte zoomée, et la mesure mentirait d'un facteur k sans rien signaler.
+
+Ce que `frame.mjs` ne dit pas : si le post est bien COMPOSÉ. Et la marge de sécurité n'est pas
+une mesure mais une conséquence — l'échelle est justement calculée pour que le pattern y tienne.
 
 Il n'y a **pas** d'émetteur `print` : un fragment HTML s'imprime tel quel (Chrome → PDF).
 Annoncer un émetteur qui ne ferait que recopier le fragment mentirait sur ce que le dépôt sait

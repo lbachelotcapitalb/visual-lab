@@ -111,6 +111,7 @@ Le fragment HTML est le rendu de référence. Pour les autres médias, on passe 
 | HTML à styles aplatis | `node bin/emit.mjs <id> --target inline` | variables résolues, styles posés sur les éléments |
 | mailing | `node bin/emit.mjs <id> --target email` | **refuse** ce qu'Outlook ne sait pas rendre |
 | impression / PNG | `node bin/render.mjs --pattern <id>` | un fragment HTML s'imprime tel quel |
+| post social | `node bin/frame.mjs <id> --target social` | le pattern tient-il dans 1080 × 1350, **à la taille où on le regarde** |
 
 **Au 11/08/2026, 3 patterns sur 41 passent la cible `email` — et ce sont les trois qui ont été
 ÉCRITS pour elle.** Le reste du corpus est reversé de slides, et un pattern de slide ne devient
@@ -133,6 +134,27 @@ ombre, **aucune couleur à canal alpha** (Outlook la rend PLEINE : un filet à 1
 trait noir), et les capitales sont ÉCRITES dans le markup — `text-transform` n'y est pas
 appliqué. Troisième issue toujours valable quand aucun natif ne convient : **rendre le pattern
 en image et poser l'image**.
+
+### Poser un pattern dans un post social — le CADRE, pas le moteur
+
+Un émetteur dit si le moteur de la cible sait rendre le pattern. Il ne dit rien de la taille à
+laquelle il sera regardé — et c'est là que se perd un visuel social :
+
+```bash
+node bin/frame.mjs --audit --target social                # 10/41 au 11/08/2026
+node bin/frame.mjs <id1> <id2> --target social --out proofs/social.html   # et on REGARDE
+```
+
+La page rend chaque cadre **à 390 px de large, la largeur d'un téléphone** : c'est la seule vue
+qui ne mente pas. Un pattern vert au `check` et vert à l'`emit` peut y être illisible —
+`check` mesure des RAPPORTS, qui survivent au changement d'échelle par construction, donc il ne
+peut pas voir qu'un libellé de 15 px tombe à 11 px une fois la rangée ramenée dans 1080. Deux
+seuils : le plus petit corps ≥ **2,2 % de la largeur du cadre** (24 px sur 1080), et
+l'occupation ≥ 45 % de la hauteur utile. Ce qui échoue, échoue presque toujours pour la même
+raison de fond : **un pattern très large ne rentre pas dans un cadre 4:5** — à 5,9:1, la rangée
+de KPI ne remplit que 13 % de la hauteur et son texte est divisé par 1,35.
+
+Ce que `frame.mjs` ne dit pas : si le post est bien COMPOSÉ. Aucun outil ne le mesure encore.
 
 ### Changer de charte
 

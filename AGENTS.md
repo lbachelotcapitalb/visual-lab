@@ -106,7 +106,17 @@ you shipping a pattern in the one situation where it hurts.
 node bin/check.mjs <id>          # runs the pattern's benchmarks in real Chrome, exits 1 on failure
 node bin/check-deck.mjs <ref>    # the COMPOSITION: stage format, layer depth, redundant 1:1 layer
 node bin/emit.mjs --audit --target email    # what actually survives an email client
+node bin/frame.mjs --audit --target social  # what stays LEGIBLE once scaled into a 1080×1350 post
 ```
+
+Those last two answer different questions and neither replaces `check.mjs`. `emit` asks whether
+the target's engine can render what the fragment asks for; `frame` asks whether, at the size it
+will actually be looked at, the smallest type stays above the floor (2.2 % of the frame width)
+and the pattern fills its frame. A pattern can be green on `check` and green on `emit` and still
+be unreadable in a feed — `check` measures RATIOS, which survive a change of scale by
+construction, so it structurally cannot catch this. At 11/08/2026: **10 of 41** hold the social
+frame. `--out <file.html>` renders the frames at 390 px wide, a phone's width, which is the only
+view that does not lie about legibility.
 
 **Building a mailing?** Start from the three patterns written natively for the channel —
 `node bin/search.mjs --media email`. Everything else in the corpus is reverse-engineered from

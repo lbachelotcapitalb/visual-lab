@@ -336,8 +336,26 @@ intention.
     entités numériques sont retirées avant ce test, `&#8599;` se lisant sinon comme un hex).
   - Ce que le lot n'a PAS fait, et qu'il ne prétend pas : les 38 autres patterns restent hors
     canal, et **rien ne mesure encore la composition d'un mailing** — seulement sa faisabilité.
-- ⬜ Un cadre `social` (1080×1350) : rendre une vignette existante à ce format et voir ce qui
-  casse (plancher typo au pouce, marges de sécurité).
+- ✅ **Un cadre `social` (1080×1350)** — `bin/frame.mjs`, un troisième contrôle à côté de
+  `check` (les rapports internes) et `emit` (le moteur de la cible) : **à la taille où on le
+  regarde**, le plus petit corps reste-t-il au-dessus du plancher, et le pattern remplit-il son
+  cadre ? Verdict : **10/41**. Ce qui casse, casse presque toujours pour la même raison — un
+  pattern très large ne rentre pas dans un 4:5 : `card-12-inverted-kpi-row` (5,87:1) tombe à
+  11 px de texte et 13 % d'occupation. Deux seuils, tous deux en fraction de la largeur du
+  cadre : typo ≥ 2,2 % (24 px sur 1080), occupation ≥ 45 %.
+  - `--out <fichier.html>` rend les cadres **à 390 px de large, la largeur d'un téléphone** :
+    un cadre montré à 100 % ou réduit « pour tenir » mentirait sur la seule chose qu'on cherche
+    à savoir. La zone sûre (6 %) est tracée en pointillés.
+  - Deux pièges de mesure payés à l'écriture, tous deux corrigés dans le détecteur : le bloc
+    `<style>` que chaque fragment porte avec lui était compté comme un texte (sept patterns
+    déclarés sous le plancher à cause d'une feuille de style qui n'affiche rien), et un élément
+    MIXTE — un `<p>` de 12 px contenant un `<b>` — n'était compté ni pour lui-même ni par son
+    enfant, ce qui déclarait lisible un pattern sur un texte jamais mesuré. Le second faisait
+    passer `layout-08` à tort.
+  - Ce que le lot ne fait PAS : la marge de sécurité n'est pas mesurée mais garantie par
+    construction (l'échelle est calculée pour que le pattern y tienne), et **rien ne mesure
+    encore la COMPOSITION d'un post**. Aucun pattern natif social n'a été écrit — la matière
+    reste à produire, le constat est là pour dire quoi.
 - ⬜ Reprendre l'émetteur **PSD live-text** déjà écrit dans `~/.claude/skills/gtm-content/psd/`
   (`build-livetext-psd.mjs`) comme quatrième sortie du dépôt, au lieu de le laisser prisonnier
   d'un skill de comm.
