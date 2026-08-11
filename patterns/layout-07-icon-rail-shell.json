@@ -1,0 +1,54 @@
+{
+  "name": "Coque d'application à rail d'icônes",
+  "family": "layout",
+  "ref": "ref-18-lime-sales-dashboard",
+  "intent": "Poser le cadre d'un tableau de bord en ne dépensant AUCUNE couleur pour la navigation : un rail d'icônes étroit du même blanc que l'application — séparé par un filet d'un pixel et jamais par un aplat —, un en-tête à recherche en pilule, et un titre de page qui est le seul très grand corps de l'écran. Tout le budget de couleur reste disponible pour les données.",
+  "when_to_use": "Application ou tableau de bord à navigation stable de six à dix entrées, sur fond clair : le rail donne l'accès, l'en-tête donne la recherche et le compte, le titre donne le contexte, et le contenu commence dessous en pleine largeur restante. L'entrée active est marquée par l'inversion, jamais par une teinte.",
+  "avoid_when": "La navigation a des libellés (le rail d'icônes seules devient illisible au-delà de huit entrées sans texte), l'application est sombre (le filet d'un pixel disparaît et il faut un vrai aplat de rail), ou la couleur de marque doit être visible en permanence — ce système la réserve aux données, et l'y ramener supprime sa seule règle.",
+  "media": ["web"],
+  "tags": ["coque", "shell", "rail", "sidebar", "navigation", "dashboard", "tableau-de-bord", "recherche", "header", "entete", "titre", "application", "icone"],
+  "vars": [
+    { "name": "--vl-app", "role": "fond de l'application ET du rail — la même valeur, c'est le principe", "default": "#FEFEFE" },
+    { "name": "--vl-module", "role": "aplat des puits d'icône", "default": "#F2F2F2" },
+    { "name": "--vl-hairline", "role": "le filet qui détache le rail — la SEULE séparation de la coque", "default": "#E6E6E6" },
+    { "name": "--vl-invert", "role": "aplat de l'entrée active du rail", "default": "#000000" },
+    { "name": "--vl-ink", "role": "icônes, titre de page", "default": "#0B0B0B" },
+    { "name": "--vl-ink-soft", "role": "texte d'invite de la recherche", "default": "#6B6B6B" },
+    { "name": "--vl-on-invert", "role": "icône de l'entrée active", "default": "#FFFFFF" },
+    { "name": "--vl-rail-w", "role": "largeur du rail", "default": "95px" },
+    { "name": "--vl-radius-pill", "role": "rayon de la recherche et des pilules d'en-tête", "default": "999px" }
+  ],
+  "slots": ["nav", "search", "account", "title", "actions", "content"],
+  "geometry": {
+    "root": ".vl-shell",
+    "frame": [1440, 640],
+    "ratios": {
+      "rail_over_width": 0.066,
+      "header_over_width": 0.048,
+      "search_over_width": 0.299,
+      "title_over_width": 0.046,
+      "margin_over_width": 0.021
+    },
+    "type_px": { "title": 66, "search": 16 },
+    "pad_ratio": { "top": 0.017, "x": 0.021, "bottom": 0 }
+  },
+  "benchmarks": [
+    { "name": "rail étroit : ≈ 6,6 % de la largeur, jamais une colonne", "measure": "box('.vl-shell__rail').w / W", "expect": 0.066, "tol": 0.02 },
+    { "name": "LE RAIL EST DU MÊME BLANC QUE L'APPLICATION — c'est de la coque, pas un module", "measure": "Math.abs(lum(bgOf($('.vl-shell__rail'))) - lum(bgOf($('.vl-shell__main'))))", "max": 0.01 },
+    { "name": "… et il s'en détache par un FILET d'un pixel, seule séparation de la coque", "measure": "num('.vl-shell__rail','borderRightWidth')", "min": 0.5, "max": 1.6 },
+    { "name": "le rail court sur toute la hauteur", "measure": "box('.vl-shell__rail').h / H", "expect": 1, "tol": 0.01 },
+    { "name": "UNE SEULE entrée active dans le rail", "measure": "document.querySelectorAll('.vl-shell__rail .is-on').length", "expect": 1, "tol": 0 },
+    { "name": "l'entrée active est marquée par l'INVERSION, pas par une teinte : son fond est achromatique", "measure": "(() => { const c = parseRgb(cs('.vl-shell__rail .is-on','backgroundColor')); return Math.max(...c) - Math.min(...c); })()", "max": 6 },
+    { "name": "… et c'est un disque", "measure": "num('.vl-shell__rail .is-on','borderTopLeftRadius') / box('.vl-shell__rail .is-on').h", "min": 0.5 },
+    { "name": "la recherche est une pilule", "measure": "num('.vl-shell__search','borderTopLeftRadius') / box('.vl-shell__search').h", "min": 0.5 },
+    { "name": "la recherche occupe environ un tiers de la largeur : assez pour être une zone, pas assez pour être le sujet", "measure": "box('.vl-shell__search').w / W", "min": 0.22, "max": 0.4 },
+    { "name": "le bloc de compte est poussé au bord droit", "measure": "box('.vl-shell__main').right - num('.vl-shell__main','paddingRight') - box('.vl-shell__account').right", "expect": 0, "tol": 1.5 },
+    { "name": "le titre de page est le PLUS GRAND corps de la coque, et de loin", "measure": "num('.vl-shell__title','fontSize') / num('.vl-shell__search','fontSize')", "min": 3 },
+    { "name": "le titre est ferré sur la marge de contenu, comme tout ce qui suivra", "measure": "Math.abs(box('.vl-shell__title').left - (box('.vl-shell__main').left + num('.vl-shell__main','paddingLeft')))", "max": 2 },
+    { "name": "le contenu prend toute la largeur restante", "measure": "box('.vl-shell__content').w / (box('.vl-shell__main').w - num('.vl-shell__main','paddingLeft') - num('.vl-shell__main','paddingRight'))", "expect": 1, "tol": 0.01 },
+    { "name": "aucune ombre nulle part dans la coque", "measure": "['.vl-shell__rail', '.vl-shell__main'].filter((s) => cs(s, 'boxShadow') !== 'none').length", "expect": 0, "tol": 0 },
+    { "name": "contraste de l'invite de recherche ≥ 4,5", "measure": "contrast('.vl-shell__search')", "min": 4.5 },
+    { "name": "aucun débordement de la coque", "measure": "overflow('.vl-shell')", "max": 0 }
+  ],
+  "notes": "La règle qui porte ce pattern est une règle de RENONCEMENT : la navigation ne dépense aucune couleur, pas même pour son entrée active, de sorte que tout le budget chromatique reste disponible pour les données. Deux benchmarks la tiennent — le rail a exactement le blanc de l'application (comparaison de fonds EFFECTIFS, donc valable même si le rail est transparent), et le fond de l'entrée active est achromatique. Un rail teinté ou une pastille active colorée passeraient tous les autres contrôles et détruiraient pourtant le système : sur cet écran l'accent vert ne pèse que 2 % de la surface, et il suffit d'une pastille de plus pour qu'il cesse d'être lu comme une donnée.\n\nLe filet est mesuré des DEUX côtés (entre 0,5 et 1,6 px) : à zéro le rail flotte sans limite, au-delà de deux pixels il redevient une bordure d'encadrement, c'est-à-dire l'ornement que ce système n'a nulle part.\n\nLe fragment livre la coque AVEC son emplacement de contenu vide : ce n'est pas un oubli, c'est le slot. Le benchmark de largeur du contenu (100 % de l'entre-marges) est ce qui garantit que tout ce qu'on y posera sera ferré sur la même marge que le titre — la seule promesse que la coque doit tenir à ce qui vient après elle."
+}

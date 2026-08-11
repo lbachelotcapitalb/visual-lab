@@ -1,0 +1,67 @@
+<!-- list-05-vitals-strip — cinq mesures sur une ligne, sans un seul séparateur.
+     Couleurs via --vl-* uniquement.
+
+     L'UNITÉ EST AFFAIBLIE DEUX FOIS : en taille (la moitié du nombre) ET en encre (le gris du
+     micro-libellé). Un seul des deux ne suffit pas — une unité petite mais à l'encre pleine
+     compte comme un second nombre, une unité claire mais de même corps se lit comme le début
+     de la mesure suivante. C'est le cumul qui permet de se passer de filet.
+
+     La première mesure est qualitative et prend un corps plus grand : c'est le SUJET de la
+     fiche, pas une valeur de plus. Elle reste sous 1,6 fois — au-delà, c'est un titre. -->
+<div class="vl-vitals">
+
+  <span class="vl-vitals__item vl-vitals__lead">
+    <span class="vl-vitals__label">Diagnosys</span>
+    <span class="vl-vitals__value">Hypertension</span>
+  </span>
+
+  <span class="vl-vitals__item">
+    <span class="vl-vitals__label">Heart Rate</span>
+    <span class="vl-vitals__value">89<span class="vl-vitals__unit">bpm</span></span>
+  </span>
+
+  <span class="vl-vitals__item">
+    <span class="vl-vitals__label">Pressure</span>
+    <span class="vl-vitals__value">100<span class="vl-vitals__unit">/67</span></span>
+  </span>
+
+  <span class="vl-vitals__item">
+    <span class="vl-vitals__label">Oxygen</span>
+    <span class="vl-vitals__value">98<span class="vl-vitals__unit">%</span></span>
+  </span>
+
+  <span class="vl-vitals__item">
+    <span class="vl-vitals__label">Temperature</span>
+    <span class="vl-vitals__value">36.8<span class="vl-vitals__unit">°C</span></span>
+  </span>
+
+</div>
+
+<style>
+.vl-vitals {
+  width: 1040px;
+  box-sizing: border-box;
+  display: flex; align-items: flex-end;
+  /* Le vide EST le séparateur. Il est donc exprimé en corps de valeur, jamais en pixels :
+     posé en pixels, il cesserait de séparer au premier changement d'échelle. */
+  column-gap: 46px;
+  color: var(--vl-ink);
+  font-family: Montserrat, Poppins, Inter, "Helvetica Neue", Arial, sans-serif;
+}
+/* Ni fond, ni filet, ni rayon : une mesure n'est pas une carte. Ajouter un fond « juste sur
+   la mesure importante » est exactement ce que les deux assertions négatives interdisent. */
+.vl-vitals__item { display: flex; flex-direction: column; }
+.vl-vitals__label {
+  font-size: 14px; line-height: 1.2; color: var(--vl-ink-soft);
+  margin-bottom: 3px;
+}
+/* line-height 1,2 et pas 1 : à 1, la boîte inline est plus courte que le glyphe et
+   `scrollHeight` dépasse `clientHeight` de 3 px — un débordement invisible à l'œil, mais que
+   le contrôle voit, et il a raison : le bandeau posé dans une rangée serrée rognerait. */
+.vl-vitals__value { font-size: 30px; line-height: 1.2; font-weight: 600; letter-spacing: -0.01em; }
+.vl-vitals__unit {
+  font-size: 15px; font-weight: 500; color: var(--vl-ink-soft);
+  margin-left: 3px;
+}
+.vl-vitals__lead .vl-vitals__value { font-size: 37px; font-weight: 500; }
+</style>

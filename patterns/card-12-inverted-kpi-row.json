@@ -1,0 +1,55 @@
+{
+  "name": "Rangée de KPI dont un seul est inversé — et plus large",
+  "family": "card",
+  "ref": "ref-18-lime-sales-dashboard",
+  "intent": "Ouvrir un tableau de bord par trois indicateurs de même nature dont UN SEUL est de premier rang, en lui appliquant deux fois le même geste de hiérarchie : l'aplat inversé ET une colonne 5 % plus large. Chaque carte range ses quatre informations dans le même ordre — libellé en haut, pastille de renvoi ancrée au coin opposé, chiffre poussé en bas, note collée dessous.",
+  "when_to_use": "Bandeau d'ouverture d'un tableau de bord ou d'un rapport : trois à quatre valeurs comparables (un solde, un revenu, un volume) dont une seule commande l'attention. Le chiffre est court — quatre à six signes — et la note tient sur une ligne.",
+  "avoid_when": "Les valeurs ne sont pas comparables entre elles (la rangée suggère une lecture de gauche à droite qui n'existe pas), il y en a plus de quatre (la carte inversée cesse de dominer et la largeur différenciée devient un défaut d'alignement), ou plusieurs cartes doivent être mises en avant — deux aplats inversés dans une rangée annulent le seul geste de hiérarchie du système.",
+  "media": ["web", "slide"],
+  "tags": ["kpi", "chiffre", "stat", "rangee", "dashboard", "tableau-de-bord", "carte", "inverse", "hierarchie", "solde", "revenu", "accent", "renvoi"],
+  "vars": [
+    { "name": "--vl-module", "role": "aplat des cartes secondaires", "default": "#F2F2F2" },
+    { "name": "--vl-invert", "role": "aplat de la carte de premier rang — UNE SEULE par rangée", "default": "#000000" },
+    { "name": "--vl-ink", "role": "libellé et chiffre sur carte secondaire", "default": "#0B0B0B" },
+    { "name": "--vl-ink-soft", "role": "note de bas de carte", "default": "#6B6B6B" },
+    { "name": "--vl-on-invert", "role": "encre sur la carte inversée", "default": "#FFFFFF" },
+    { "name": "--vl-on-invert-soft", "role": "note sur la carte inversée", "default": "rgba(255,255,255,0.66)" },
+    { "name": "--vl-ramp-2", "role": "liseré de la pastille de renvoi, cartes secondaires", "default": "#CCCCCC" },
+    { "name": "--vl-radius-module", "role": "rayon d'une carte", "default": "29px" },
+    { "name": "--vl-gutter", "role": "gouttière de la rangée", "default": "16px" }
+  ],
+  "slots": ["label", "go", "fig", "note"],
+  "geometry": {
+    "root": ".vl-kpirow",
+    "frame": [1286, 219],
+    "ratios": {
+      "height_over_width": 0.17,
+      "lead_over_second": 1.05,
+      "gutter_over_width": 0.0124,
+      "radius_over_card_width": 0.069,
+      "go_over_card_width": 0.109,
+      "fig_over_label": 3.1
+    },
+    "type_px": { "fig": 62, "label": 20, "note": 15 },
+    "pad_ratio": { "top": 0.137, "x": 0.076, "bottom": 0.119 }
+  },
+  "benchmarks": [
+    { "name": "rangée basse : sa hauteur vaut ≈ 17 % de sa largeur", "measure": "H / W", "expect": 0.17, "tol": 0.03 },
+    { "name": "LA CARTE INVERSÉE EST AUSSI LA PLUS LARGE — le geste de hiérarchie est appliqué deux fois", "measure": "box('.vl-kpirow__card--lead').w / box('.vl-kpirow__card--b').w", "expect": 1.05, "tol": 0.03 },
+    { "name": "… mais à peine : au-delà de 12 % d'écart, ce n'est plus une hiérarchie, c'est une grille cassée", "measure": "box('.vl-kpirow__card--lead').w / box('.vl-kpirow__card--b').w", "max": 1.12 },
+    { "name": "UNE SEULE carte inversée dans la rangée", "measure": "[...document.querySelectorAll('.vl-kpirow > *')].filter((e) => lum(parseRgb(getComputedStyle(e).backgroundColor)) < 0.2).length", "expect": 1, "tol": 0 },
+    { "name": "les trois cartes partagent leur ligne haute et leur ligne basse", "measure": "Math.abs(box('.vl-kpirow__card--lead').top - box('.vl-kpirow__card--c').top) + Math.abs(box('.vl-kpirow__card--lead').bottom - box('.vl-kpirow__card--c').bottom)", "max": 1.5 },
+    { "name": "gouttière ≈ 1,2 % de la largeur de rangée", "measure": "num('.vl-kpirow','columnGap') / W", "expect": 0.0124, "tol": 0.006 },
+    { "name": "la pastille de renvoi est ancrée au coin haut-droit de sa carte", "measure": "box('.vl-kpirow__card--lead').right - num('.vl-kpirow__card--lead','paddingRight') - box('.vl-kpirow__go').right", "expect": 0, "tol": 1.5 },
+    { "name": "la pastille est un disque", "measure": "box('.vl-kpirow__go').w / box('.vl-kpirow__go').h", "expect": 1, "tol": 0.02 },
+    { "name": "le libellé ne court jamais sous la pastille", "measure": "box('.vl-kpirow__go').left - box('.vl-kpirow__label').right", "min": 8 },
+    { "name": "le chiffre est POUSSÉ EN BAS : son haut passe la mi-hauteur de la carte", "measure": "(box('.vl-kpirow__fig').top - box('.vl-kpirow__card--lead').top) / box('.vl-kpirow__card--lead').h", "min": 0.45 },
+    { "name": "saut typographique chiffre / libellé ≥ 2,6", "measure": "num('.vl-kpirow__fig','fontSize') / num('.vl-kpirow__label','fontSize')", "min": 2.6 },
+    { "name": "la note est collée sous le chiffre : moins d'un demi-corps de note les sépare", "measure": "(box('.vl-kpirow__note').top - box('.vl-kpirow__fig').bottom) / num('.vl-kpirow__note','fontSize')", "max": 0.6 },
+    { "name": "aucun liseré sur les cartes", "measure": "num('.vl-kpirow__card--b','borderTopWidth')", "expect": 0, "tol": 0 },
+    { "name": "contraste du chiffre inversé ≥ 4,5", "measure": "contrast('.vl-kpirow__fig')", "min": 4.5 },
+    { "name": "contraste de la note inversée ≥ 4,5 — c'est elle qui plafonne, pas le chiffre", "measure": "contrast('.vl-kpirow__note')", "min": 4.5 },
+    { "name": "aucun débordement de la rangée", "measure": "overflow('.vl-kpirow')", "max": 0 }
+  ],
+  "notes": "Le détail qui fait ce pattern est mesuré, pas approximatif : sur la source, la carte inversée fait 314 px là où les deux autres en font 300 et 305. Cinq pour cent. On serait tenté de lire un défaut d'alignement et de « corriger » vers trois colonnes égales — ce serait supprimer la moitié du geste. Deux benchmarks encadrent donc ce rapport des DEUX côtés : au moins 1,02 (sinon la largeur ne dit plus rien) et au plus 1,12 (au-delà, la rangée cesse d'être une rangée).\n\nLe comptage des aplats sombres est écrit en luminance et non sur une classe : deux cartes inversées posées plus tard par quelqu'un d'autre est exactement la régression qu'un contrôle par classe laisse passer.\n\nLe fragment livré est la rangée ENTIÈRE et non une carte isolée, parce que la règle de ce pattern est une règle de rangée : une carte seule ne peut ni être « la plus large » ni être « la seule inversée ». Livrer la carte aurait donné un objet mesurable sur lequel les deux assertions centrales n'auraient pas pu s'écrire."
+}

@@ -1,0 +1,44 @@
+{
+  "name": "Nuage de mots-clés centré rangée par rangée",
+  "family": "tag",
+  "ref": "ref-17-mono-bento-legal",
+  "intent": "Poser une dizaine de mots-clés de même rang au bas d'un module sans en faire une liste : chaque RANGÉE est centrée sur elle-même, si bien que les lignes de largeur inégale dessinent une silhouette de nuage — c'est le centrage par rangée, et pas le centrage du bloc, qui produit l'effet.",
+  "when_to_use": "Fin d'une vignette de service, pied d'une carte de rubrique, bandeau de compétences : dix à quinze termes courts qu'on veut donner à VOIR en volume plutôt qu'à lire un par un, sans hiérarchie entre eux et sans ordre significatif.",
+  "avoid_when": "L'ordre compte (un nuage le détruit visuellement), les termes sont cliquables et de longueurs très inégales (les cibles deviennent illisibles à balayer), il y en a moins de six — trois rangées sont le minimum pour qu'une silhouette existe — ou l'un d'eux doit être mis en avant : ce système n'a aucune ressource pour distinguer une pilule des autres.",
+  "media": ["web", "slide"],
+  "tags": ["tag", "mot-cle", "keyword", "nuage", "cloud", "pilule", "pill", "chip", "competences", "services", "wrap", "monochrome"],
+  "vars": [
+    { "name": "--vl-object", "role": "aplat d'une pilule — PLUS CLAIR que le module qui la porte", "default": "#FFFFFF" },
+    { "name": "--vl-ink", "role": "texte d'une pilule", "default": "#111111" },
+    { "name": "--vl-radius-pill", "role": "rayon d'une pilule", "default": "999px" }
+  ],
+  "slots": ["items"],
+  "geometry": {
+    "root": ".vl-cloud",
+    "frame": [287, 140],
+    "ratios": {
+      "pill_height_over_width": 0.091,
+      "gap_x_over_width": 0.024,
+      "gap_y_over_width": 0.028,
+      "pad_x_over_pill_height": 0.46
+    },
+    "type_px": { "tag": 11 },
+    "pad_ratio": { "top": 0, "x": 0, "bottom": 0 }
+  },
+  "benchmarks": [
+    { "name": "les pilules passent à la ligne : c'est un nuage, pas une barre qui déborde", "measure": "cs('.vl-cloud','flexWrap') === 'wrap' ? 1 : 0", "expect": 1 },
+    { "name": "CHAQUE RANGÉE est centrée sur elle-même — l'écart à gauche égale l'écart à droite, ligne par ligne", "measure": "(() => { const r = $('.vl-cloud').getBoundingClientRect(); const rows = {}; for (const e of document.querySelectorAll('.vl-cloud > *')) { const b = e.getBoundingClientRect(); const k = Math.round(b.top); (rows[k] = rows[k] || []).push(b); } return Math.max(...Object.values(rows).map((g) => Math.abs((Math.min(...g.map((b) => b.left)) - r.left) - (r.right - Math.max(...g.map((b) => b.right)))))) / r.width; })()", "max": 0.012 },
+    { "name": "au moins TROIS rangées : en dessous, aucune silhouette n'existe", "measure": "new Set([...document.querySelectorAll('.vl-cloud > *')].map((e) => Math.round(e.getBoundingClientRect().top))).size", "min": 3 },
+    { "name": "les rangées sont de largeurs INÉGALES — sinon c'est un pavé centré, pas un nuage", "measure": "(() => { const rows = {}; for (const e of document.querySelectorAll('.vl-cloud > *')) { const b = e.getBoundingClientRect(); const k = Math.round(b.top); (rows[k] = rows[k] || []).push(b); } const w = Object.values(rows).map((g) => Math.max(...g.map((b) => b.right)) - Math.min(...g.map((b) => b.left))); return (Math.max(...w) - Math.min(...w)) / W; })()", "min": 0.06 },
+    { "name": "aucune rangée orpheline : la plus courte porte au moins deux pilules", "measure": "(() => { const rows = {}; for (const e of document.querySelectorAll('.vl-cloud > *')) { const k = Math.round(e.getBoundingClientRect().top); rows[k] = (rows[k] || 0) + 1; } return Math.min(...Object.values(rows)); })()", "min": 2 },
+    { "name": "une pilule EST une pilule : rayon ≥ sa demi-hauteur", "measure": "num('.vl-cloud > *','borderTopLeftRadius') / box('.vl-cloud > *').h", "min": 0.5 },
+    { "name": "la pilule est PLUS CLAIRE que le fond qui la porte — le rang de blanc se dépense vers le haut", "measure": "lum(parseRgb(cs('.vl-cloud > *','backgroundColor'))) - lum(bgOf($('.vl-cloud')))", "min": 0.01 },
+    { "name": "pilule basse : sa hauteur reste sous 12 % de la largeur du nuage", "measure": "box('.vl-cloud > *').h / W", "max": 0.12 },
+    { "name": "la gouttière verticale est un peu plus large que l'horizontale : les rangées se lisent avant les colonnes", "measure": "num('.vl-cloud','rowGap') - num('.vl-cloud','columnGap')", "min": 0, "max": 6 },
+    { "name": "aucun terme ne se coupe : chaque pilule tient sur une ligne", "measure": "[...document.querySelectorAll('.vl-cloud > *')].filter((e) => e.getBoundingClientRect().height > box('.vl-cloud > *').h * 1.4).length", "expect": 0, "tol": 0 },
+    { "name": "aucun liseré sur les pilules", "measure": "num('.vl-cloud > *','borderTopWidth')", "expect": 0, "tol": 0 },
+    { "name": "contraste du texte de pilule ≥ 4,5", "measure": "contrast('.vl-cloud > *')", "min": 4.5 },
+    { "name": "aucun débordement du nuage", "measure": "overflow('.vl-cloud')", "max": 0 }
+  ],
+  "notes": "L'assertion centrale est écrite sur les RANGÉES et pas sur le conteneur, parce que `justify-content: center` seul ne prouve rien : un bloc de pilules ferrées à gauche mais centré dans son module passerait ce contrôle et n'aurait aucune silhouette. La mesure regroupe donc les pilules par ordonnée et vérifie, ligne par ligne, que la marge gauche égale la marge droite.\n\nDeux assertions négatives complètent le geste. « Les rangées sont de largeurs inégales » écarte le pavé centré, qui est visuellement l'exact contraire d'un nuage tout en satisfaisant le centrage. « Aucune rangée orpheline » écarte le cas mesuré pendant le lot : dix termes courts dans un module de 287 px se rangeaient 3/3/3/1, et la pilule seule de la dernière ligne suffit à ruiner la silhouette. Le remède n'est pas dans le CSS — il est dans le choix des termes, et le benchmark est là pour l'imposer.\n\nCe pattern ne double pas tag-01-gooey-capsule : celui-ci fabrique UN objet (un contour continu qui soude un glyphe à un mot), celui-là ne dit rien de la pilule et tout de leur ARRANGEMENT. On peut d'ailleurs servir l'un avec l'autre."
+}

@@ -1,0 +1,40 @@
+{
+  "name": "Bento monochrome, hiérarchie par la surface",
+  "notes": "AUCUNE COULEUR, ET C'EST LA CONTRAINTE QUI FAIT LE SYSTÈME. Trois valeurs de gris et du noir : puisqu'il n'existe pas de teinte pour désigner ce qui compte, c'est la SURFACE qui le fait — un seul module noir sur cinq, et il est aussi le plus grand. Retirer le noir, ou en poser un second, et l'écran n'a plus de point d'entrée.\n\nLE RANG DE BLANC EST UNE RESSOURCE, ET IL SE DÉPENSE DANS CE SENS-LÀ. La page est en #FEFEFE, les modules en #EDEDED, et les objets posés DANS un module (pilules de tags, bouton de la barre de menu, badge du logo) sont en #FFFFFF — un blanc plus clair que la page elle-même. Inverser ce rang, c'est-à-dire poser des modules blancs sur une page grise, casse le système : les objets du troisième niveau n'ont plus aucun blanc disponible au-dessus d'eux et doivent recourir à un liseré, que ce système n'a nulle part.\n\nLA GRILLE EST UNE VRAIE GRILLE 3 × 3, avec deux enjambements en L qui se croisent sans se chevaucher (module A sur les rangées 1-2 de la colonne 1, hero sur les rangées 2-3 des colonnes 2-3). Les modules ne partagent aucune frontière horizontale visible, ce qui pousse à modéliser l'écran en deux colonnes flex indépendantes — c'est faux, et une refonte de contenu le prouve immédiatement : deux colonnes indépendantes se désalignent dès que le texte d'un module change, la grille non.\n\nRIEN N'EST ENCADRÉ. Pas un liseré, pas une ombre, pas un séparateur. Ce sont le rayon (18 px sur un module, 15 sur la barre de menu, 28 sur la page) et la gouttière constante de 19 px qui tiennent la composition.\n\nÉCHELLE : les valeurs ci-dessous sont à l'échelle d'une page WEB de 1440 px de large (la source mesure 1067 ; facteur 1,35). Les patterns héritent de CES valeurs — c'est le système qui porte l'échelle, jamais le fragment.\n\nORIGINE : reverse-engineering d'un visuel tiers (cf. SPEC-SOURCES.md § ref-17). Ce qui est capitalisé est la géométrie ; les illustrations au trait de la source sont remplacées par des compositions SVG génératives.",
+  "tokens": {
+    "--vl-page": "#FEFEFE",
+    "--vl-module": "#EDEDED",
+    "--vl-object": "#FFFFFF",
+    "--vl-invert": "#000000",
+    "--vl-ink": "#111111",
+    "--vl-ink-soft": "#5F5F5F",
+    "--vl-on-invert": "#FFFFFF",
+    "--vl-on-invert-soft": "rgba(255,255,255,0.62)",
+    "--vl-line": "rgba(17,17,17,0.55)",
+    "--vl-radius-page": "38px",
+    "--vl-radius-module": "24px",
+    "--vl-radius-bar": "20px",
+    "--vl-radius-pill": "999px",
+    "--vl-gutter": "26px",
+    "--vl-margin": "57px",
+    "--vl-bar-h": "69px",
+    "--vl-col-1": "343fr",
+    "--vl-col-2": "466fr",
+    "--vl-col-3": "464fr",
+    "--vl-row-1": "302fr",
+    "--vl-row-2": "232fr",
+    "--vl-row-3": "243fr"
+  },
+  "type": {
+    "display": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+    "body": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+    "mono": "\"DM Mono\", ui-monospace, SFMono-Regular, Menlo, monospace",
+    "scale": {
+      "claim": "46px / 1.14 / 500 / -0.02em",
+      "wordmark": "30px / 1.1 / 700 / -0.02em",
+      "title": "23px / 1.24 / 500 / -0.01em",
+      "body": "16px / 1.45 / 500",
+      "tag": "11px / 1.2 / 500"
+    }
+  }
+}

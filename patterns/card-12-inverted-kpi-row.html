@@ -1,0 +1,88 @@
+<!-- card-12-inverted-kpi-row — trois KPI de même nature, un seul de premier rang.
+     Couleurs via --vl-* uniquement. Le fragment est la RANGÉE et non une carte : la règle du
+     pattern est une règle de rangée (« la seule inversée », « la plus large »), et une carte
+     isolée ne peut porter ni l'une ni l'autre.
+
+     Quatre zones dans un ordre FIXE : libellé en haut-gauche, pastille de renvoi ancrée au
+     coin haut-droit, chiffre poussé en bas par `margin-top:auto`, note collée dessous. -->
+<div class="vl-kpirow">
+
+  <article class="vl-kpirow__card vl-kpirow__card--lead">
+    <p class="vl-kpirow__label">Available to payout</p>
+    <span class="vl-kpirow__go" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg>
+    </span>
+    <p class="vl-kpirow__fig">$16.4K</p>
+    <p class="vl-kpirow__note"><b>Payout</b> · $6.1K will be available soon</p>
+  </article>
+
+  <article class="vl-kpirow__card vl-kpirow__card--b">
+    <p class="vl-kpirow__label">Today revenue</p>
+    <span class="vl-kpirow__go" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg>
+    </span>
+    <p class="vl-kpirow__fig">$6.4K</p>
+    <p class="vl-kpirow__note"><b>Payout</b> · $6.1K will be available soon</p>
+  </article>
+
+  <article class="vl-kpirow__card vl-kpirow__card--c">
+    <p class="vl-kpirow__label">Today sessions</p>
+    <span class="vl-kpirow__go" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg>
+    </span>
+    <p class="vl-kpirow__fig">400</p>
+    <p class="vl-kpirow__note"><b>Payout</b> · $6.1K will be available soon</p>
+  </article>
+
+</div>
+
+<style>
+.vl-kpirow {
+  width: 1286px; height: 219px;
+  box-sizing: border-box;
+  display: grid;
+  /* 1,05fr contre 1fr : la carte de premier rang est AUSSI la plus large. Cinq pour cent, pas
+     davantage — au-delà de 12 % la rangée cesse d'être une rangée et se lit comme une grille
+     mal alignée. C'est un écart mesuré sur la source, pas une approximation. */
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr) minmax(0, 1.02fr);
+  gap: var(--vl-gutter, 16px);
+  font-family: Montserrat, Poppins, Inter, "Helvetica Neue", Arial, sans-serif;
+}
+.vl-kpirow__card {
+  position: relative;
+  margin: 0; padding: 30px 32px 26px;
+  box-sizing: border-box;
+  background: var(--vl-module);
+  color: var(--vl-ink);
+  border-radius: var(--vl-radius-module, 29px);
+  display: flex; flex-direction: column;
+}
+/* UNE SEULE carte inversée. Deux annuleraient le seul geste de hiérarchie du système. */
+.vl-kpirow__card--lead { background: var(--vl-invert); color: var(--vl-on-invert); }
+
+.vl-kpirow__label { margin: 0; max-width: 74%; font-size: 20px; font-weight: 500; }
+/* Hors du flux, ancrée au coin : la pastille appartient au cadre de la carte, pas à sa
+   phrase. Sur la carte inversée elle est PLEINE, sur les autres elle n'est qu'un liseré —
+   c'est la seule chose qui change entre les deux traitements, en plus du fond. */
+.vl-kpirow__go {
+  position: absolute; top: 26px; right: 32px;
+  width: 46px; height: 46px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: inset 0 0 0 1.4px var(--vl-ramp-2);
+}
+.vl-kpirow__card--lead .vl-kpirow__go {
+  background: var(--vl-on-invert); color: var(--vl-invert); box-shadow: none;
+}
+.vl-kpirow__go svg { width: 20px; height: 20px; }
+/* `margin-top:auto` pousse le chiffre en bas : le vide se met entre le libellé et le nombre,
+   jamais entre le nombre et sa note. C'est ce qui fait lire la carte de haut en bas d'un
+   coup au lieu de la faire parcourir. */
+.vl-kpirow__fig {
+  margin: auto 0 6px;
+  font-size: 62px; line-height: 1; font-weight: 700; letter-spacing: -0.025em;
+}
+.vl-kpirow__note { margin: 0; font-size: 15px; color: var(--vl-ink-soft); }
+.vl-kpirow__note b { font-weight: 600; color: var(--vl-ink); }
+.vl-kpirow__card--lead .vl-kpirow__note { color: var(--vl-on-invert-soft); }
+.vl-kpirow__card--lead .vl-kpirow__note b { color: var(--vl-on-invert); }
+</style>

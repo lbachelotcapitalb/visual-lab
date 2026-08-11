@@ -1,0 +1,67 @@
+<!-- card-11-corner-arrow-tile — la vignette d'entrée d'un bento. Couleurs via --vl-* seulement.
+     Trois zones dans un ordre FIXE : titre au coin haut-gauche, flèche ancrée au coin
+     haut-DROIT (jamais alignée sur le titre, jamais dans le flux), illustration en pleine
+     largeur utile qui pousse l'explication au bas de la vignette.
+     L'illustration est une composition SVG générative : rien de distant, rien qui périme. -->
+<article class="vl-tile">
+  <h3 class="vl-tile__title">Video<br>consultations</h3>
+  <svg class="vl-tile__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M7 17 17 7M8.5 7H17v8.5"/>
+  </svg>
+  <div class="vl-tile__art" aria-hidden="true">
+    <svg viewBox="0 0 300 130" fill="none" stroke="var(--vl-line)" stroke-width="0.9"
+         preserveAspectRatio="xMidYMid meet">
+      <ellipse cx="196" cy="76" rx="86" ry="28"/>
+      <path d="M110 76a86 28 0 0 0 172 0"/>
+      <ellipse cx="196" cy="56" rx="52" ry="17"/>
+      <path d="M144 56v20M248 56v20"/>
+      <ellipse cx="196" cy="76" rx="52" ry="17"/>
+      <circle cx="196" cy="42" r="17"/>
+    </svg>
+  </div>
+  <p class="vl-tile__sub">We run consultations<br>over Zoom or Meet</p>
+</article>
+
+<style>
+.vl-tile {
+  width: 466px; height: 302px;
+  box-sizing: border-box;
+  /* Marge identique sur les quatre bords : la vignette n'a pas de sens de lecture
+     privilégié, et c'est cette égalité qui fait tenir l'ancrage de la flèche. */
+  padding: 28px;
+  position: relative;
+  display: flex; flex-direction: column;
+  background: var(--vl-module);
+  color: var(--vl-ink);
+  border-radius: var(--vl-radius-module, 24px);
+  overflow: hidden;
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+}
+/* Le titre est bridé en largeur pour ne JAMAIS courir sous la flèche. Sans cette bride, un
+   titre de trois mots de plus passe dessous : la position de la flèche reste juste, et la
+   vignette est cassée. C'est pour ça que le benchmark mesure l'ÉCART entre les deux, et pas
+   seulement la position de chacun. */
+.vl-tile__title {
+  margin: 0; max-width: 74%;
+  font-size: 23px; line-height: 1.24; font-weight: 500; letter-spacing: -0.01em;
+}
+/* Hors du flux : la flèche appartient au CADRE de la vignette, pas à sa phrase. */
+.vl-tile__arrow {
+  position: absolute; top: 28px; right: 28px;
+  width: 30px; height: 30px;
+}
+/* Pleine largeur utile, jamais recentrée dans une boîte à elle : une illustration avec ses
+   propres marges ferait une vignette dans la vignette, c'est-à-dire une couche de plus. */
+.vl-tile__art {
+  flex: 1 1 auto; min-height: 0;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 14px;
+}
+.vl-tile__art svg { width: 100%; height: 100%; }
+.vl-tile__sub {
+  margin: 0;
+  font-size: 16px; line-height: 1.45; font-weight: 500;
+  color: var(--vl-ink-soft);
+}
+</style>

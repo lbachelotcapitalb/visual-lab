@@ -59,8 +59,16 @@ const box = (sel) => {
            top: b.top - rootBox.top, left: b.left - rootBox.left,
            right: b.right - rootBox.left, bottom: b.bottom - rootBox.top };
 };
-const num = (sel, prop) => parseFloat(getComputedStyle($(sel))[prop]) || 0;
-const cs = (sel, prop) => getComputedStyle($(sel))[prop];
+// ⚠️ Piège payé : getComputedStyle()['--vl-notch'] rend \`undefined\`, jamais la valeur de la
+// variable — un benchmark écrit sur un token sortait donc 0 sans qu'aucune erreur ne le dise,
+// c'est-à-dire un contrôle rouge pour une raison fausse. Les propriétés personnalisées
+// passent par getPropertyValue().
+const raw = (sel, prop) => {
+  const s = getComputedStyle($(sel));
+  return prop.startsWith('--') ? s.getPropertyValue(prop).trim() : s[prop];
+};
+const num = (sel, prop) => parseFloat(raw(sel, prop)) || 0;
+const cs = (sel, prop) => raw(sel, prop);
 const text = (sel) => $(sel).textContent.trim();
 // Débordement propre : ce que le contenu dépasse de son conteneur.
 const overflow = (sel) => { const e = $(sel); return Math.max(0, e.scrollHeight - e.clientHeight); };

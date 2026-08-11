@@ -20,7 +20,7 @@
 > GÉOMÉTRIE, les textes de démonstration utilisant le nom fictif `northbeam`.
 
 Bibliothèque de **patterns visuels HTML/CSS** reconstruits par reverse-engineering à partir
-d'un corpus de 10 références (decks, planches de campagne, heros web). Objectif : quand il
+d'un corpus de 15 références (decks, planches de campagne, heros web, écrans d'application). Objectif : quand il
 faut produire une slide, un visuel ou une landing, partir d'un pattern qui a fait ses preuves
 plutôt que d'une page blanche — et savoir *pourquoi* il marche.
 
@@ -74,7 +74,7 @@ patterns/<id>.json     métadonnées d'un pattern (intention, quand l'employer, 
 patterns/<id>.html     le fragment autonome correspondant
 systems/<ref>.json     les tokens d'une référence (palette, typo, rayons, notes de charte)
 decks/<ref>.html       la reconstitution fidèle de la référence, au format slides
-SPEC-SOURCES.md   l'audit des 10 références — REMPLACE les images, qui n'existent pas sur disque
+SPEC-SOURCES.md   l'audit des références — REMPLACE les images quand elles ne sont pas, qui n'existent pas sur disque
 ROADMAP.md        le découpage en lots + le prompt de continuation
 fonts/                 les 3 polices du corpus (OFL, dans le dépôt) + fonts.css
 fonts/FONTS.md         quelle police pour quelle référence, et comment la brancher
@@ -326,13 +326,16 @@ disponible dans `deck-builder`) : `geometry.ratios` (les rapports qui font la ch
 
 ## État
 
-**24 patterns**, après l'élagage du 30/07 : neuf entrées ont été retirées parce qu'elles ne
+**38 patterns**, dont 31 mesurés par des benchmarks. Le décompte vient de `bin/index.mjs`, pas
+d'ici : la ligne ci-dessus est un ordre de grandeur, [INDEX.md](INDEX.md) est la vérité.
+
+Élagage du 30/07 toujours en vigueur : neuf entrées avaient été retirées parce qu'elles ne
 survivaient pas au test d'utilité — une pilule à filet, une flèche dans un rond, un titre en
 grosses capitales, trois « règles » qui n'avaient aucun rendu. Un pattern se garde s'il porte
 une COMPOSITION qu'on ne réécrit pas de tête, ou une géométrie mesurée ; pas s'il tient dans sa
 propre phrase de description.
 
-9 références sur 13 reconstituées. Le décompte par référence — patterns extraits, deck présent —
+12 références sur 15 reconstituées. Le décompte par référence — patterns extraits, deck présent —
 est dans le tableau « Références » d'[INDEX.md](INDEX.md), qui est GÉNÉRÉ : c'est la seule
 version qui ne peut pas mentir. Deux références ont leur deck mais pas encore leurs patterns
 (`ref-08-swiss-studio-hero`, `ref-10-campaign-board-red`), et `ref-12-neon-capsule-tags` a ses

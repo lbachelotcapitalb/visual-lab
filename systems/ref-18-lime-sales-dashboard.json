@@ -1,0 +1,41 @@
+{
+  "name": "Tableau de bord achromatique à accent vert dosé",
+  "notes": "UN SEUL ACCENT, ET IL PÈSE 2 % DE L'ÉCRAN. Le vert #5FE85C ne sert qu'à deux choses : la barre courante de l'histogramme (avec son libellé de jour, seul libellé coloré de l'écran) et les cellules fortes de la heatmap. Tout le reste est achromatique. Un vert de cette saturation posé sur plus de 5 % de la surface cesse d'être un accent et devient une couleur de marque — ce qui est un autre système, avec d'autres règles.\n\nDEUX ÉCHELLES COHABITENT DANS LA MÊME GRILLE SANS SE MÉLANGER. La heatmap encode une intensité sur une rampe de GRIS (#E3E3E3 → #CCCCCC → #999999 → #666666 → #000000), le noir étant le maximum. Le vert n'est PAS un cran de cette rampe : c'est une marque de catégorie posée par-dessus. Cela ne tient que parce que l'une des deux échelles est achromatique et l'autre non ; ajouter un second accent coloré rendrait la lecture ambiguë sur-le-champ.\n\nLE MODULE INVERSÉ EST AUSSI LE PLUS LARGE. Dans la rangée de KPI, le seul aplat noir mesure 314 px là où les deux autres en mesurent 300 et 305 (soit 1.05fr 1fr 1fr) : le même geste de hiérarchie est appliqué DEUX fois, par le fond et par la largeur. C'est un détail mesuré, pas une approximation de mise en page.\n\nLE RAIL SE SÉPARE PAR UN FILET, JAMAIS PAR UN FOND. Le rail d'icônes (6,6 % de la largeur) est du même blanc que l'application ; seul un filet d'un pixel l'en détache. Lui donner un fond gris le ferait lire comme un module, alors que c'est de la coque.\n\nÉCHELLE : les valeurs ci-dessous sont à l'échelle d'une application WEB de 1440 px de large (la source mesure 1078 ; facteur 1,336). Les patterns héritent de CES valeurs.\n\nORIGINE : reverse-engineering d'un visuel tiers (cf. SPEC-SOURCES.md § ref-18). Deux couches de mise en scène — fond noir de planche et bezel de tablette — ont été retirées : elles encadraient la même chose.",
+  "tokens": {
+    "--vl-app": "#FEFEFE",
+    "--vl-module": "#F2F2F2",
+    "--vl-module-warm": "#FBF9EC",
+    "--vl-invert": "#000000",
+    "--vl-accent": "#5FE85C",
+    "--vl-ink": "#0B0B0B",
+    "--vl-ink-soft": "#6B6B6B",
+    "--vl-on-invert": "#FFFFFF",
+    "--vl-on-invert-soft": "rgba(255,255,255,0.66)",
+    "--vl-hairline": "#E6E6E6",
+    "--vl-ramp-1": "#E3E3E3",
+    "--vl-ramp-2": "#CCCCCC",
+    "--vl-ramp-3": "#999999",
+    "--vl-ramp-4": "#666666",
+    "--vl-ramp-5": "#000000",
+    "--vl-radius-module": "29px",
+    "--vl-radius-tile": "20px",
+    "--vl-radius-pill": "999px",
+    "--vl-gutter": "16px",
+    "--vl-gutter-row": "11px",
+    "--vl-rail-w": "95px",
+    "--vl-margin": "30px",
+    "--vl-header-h": "69px"
+  },
+  "type": {
+    "display": "Montserrat, Poppins, Inter, \"Helvetica Neue\", Arial, sans-serif",
+    "body": "Montserrat, Poppins, Inter, \"Helvetica Neue\", Arial, sans-serif",
+    "mono": "\"DM Mono\", ui-monospace, SFMono-Regular, Menlo, monospace",
+    "scale": {
+      "page": "66px / 1.06 / 500 / -0.02em",
+      "figure": "62px / 1.0 / 700 / -0.025em",
+      "title": "27px / 1.2 / 500 / -0.01em",
+      "label": "19px / 1.3 / 500",
+      "micro": "16px / 1.35 / 500"
+    }
+  }
+}

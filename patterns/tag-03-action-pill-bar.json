@@ -1,0 +1,51 @@
+{
+  "name": "Barre d'actions en pilules, une seule pleine",
+  "family": "tag",
+  "ref": "ref-18-lime-sales-dashboard",
+  "intent": "Aligner filtres et action principale sur une même ligne sans hiérarchie typographique : toutes les commandes sont des pilules de MÊME hauteur, les filtres portent un puits d'icône plus clair que la pilule qui le contient, et UNE SEULE pilule — la dernière — est pleine. C'est la position et le remplissage qui disent le rang, jamais la taille.",
+  "when_to_use": "Ligne de commandes d'un tableau de bord ou d'un rapport, posée à droite du titre de page : une à trois portées de filtre (période, segment, vue) suivies de l'action qui sort de l'écran (exporter, partager, créer). Un filtre peut porter deux lignes — son intitulé au-dessus de sa valeur — sans changer la hauteur de la barre.",
+  "avoid_when": "Il y a plus de quatre commandes (la ligne devient une barre d'outils et demande des groupes), deux actions sont de premier rang (deux pilules pleines annulent le seul geste de rang), ou les commandes doivent se replier sous le titre : la barre suppose qu'elle tient sur une ligne, et son alignement à droite n'a plus de sens dès qu'elle passe à la ligne.",
+  "media": ["web"],
+  "tags": ["action", "filtre", "pilule", "pill", "barre", "toolbar", "dashboard", "export", "periode", "segment", "cta", "puits", "icone"],
+  "vars": [
+    { "name": "--vl-module", "role": "aplat d'une pilule de filtre", "default": "#F2F2F2" },
+    { "name": "--vl-app", "role": "aplat du puits d'icône — plus clair que la pilule qui le porte", "default": "#FEFEFE" },
+    { "name": "--vl-invert", "role": "aplat de l'unique pilule pleine", "default": "#000000" },
+    { "name": "--vl-ink", "role": "valeur d'un filtre, libellé de l'action", "default": "#0B0B0B" },
+    { "name": "--vl-ink-soft", "role": "intitulé d'un filtre, au-dessus de sa valeur", "default": "#6B6B6B" },
+    { "name": "--vl-on-invert", "role": "encre sur la pilule pleine", "default": "#FFFFFF" },
+    { "name": "--vl-radius-pill", "role": "rayon — toujours une pilule pleine, jamais un rayon franc", "default": "999px" }
+  ],
+  "slots": ["filters", "action"],
+  "geometry": {
+    "root": ".vl-actionbar",
+    "frame": [672, 62],
+    "ratios": {
+      "pill_height_over_width": 0.092,
+      "well_over_pill_height": 0.742,
+      "gap_over_pill_height": 0.194,
+      "value_over_label": 1.23
+    },
+    "type_px": { "value": 16, "label": 13, "action": 17 },
+    "pad_ratio": { "top": 0, "x": 0, "bottom": 0 }
+  },
+  "benchmarks": [
+    { "name": "toutes les pilules ont EXACTEMENT la même hauteur — la taille ne dit jamais le rang", "measure": "(() => { const h = [...document.querySelectorAll('.vl-actionbar > *')].map((e) => e.getBoundingClientRect().height); return Math.max(...h) - Math.min(...h); })()", "max": 1 },
+    { "name": "toutes sont des pilules : rayon ≥ demi-hauteur, sans exception", "measure": "(() => { const r = [...document.querySelectorAll('.vl-actionbar > *')].map((e) => parseFloat(getComputedStyle(e).borderTopLeftRadius) / e.getBoundingClientRect().height); return Math.min(...r); })()", "min": 0.5 },
+    { "name": "UNE SEULE pilule pleine dans la barre", "measure": "[...document.querySelectorAll('.vl-actionbar > *')].filter((e) => lum(parseRgb(getComputedStyle(e).backgroundColor)) < 0.2).length", "expect": 1, "tol": 0 },
+    { "name": "… et c'est la DERNIÈRE : l'action de sortie ferme la ligne", "measure": "document.querySelector('.vl-actionbar').lastElementChild.classList.contains('vl-actionbar__pill--solid') ? 1 : 0", "expect": 1 },
+    { "name": "le puits d'icône est un disque", "measure": "box('.vl-actionbar__well').w / box('.vl-actionbar__well').h", "expect": 1, "tol": 0.02 },
+    { "name": "le puits est PLUS CLAIR que la pilule qui le porte — le rang de blanc se dépense vers le haut", "measure": "lum(parseRgb(cs('.vl-actionbar__well','backgroundColor'))) - lum(parseRgb(cs('.vl-actionbar__pill','backgroundColor')))", "min": 0.01 },
+    { "name": "puits ≈ 74 % de la hauteur de pilule : il loge dedans, il ne la remplit pas", "measure": "box('.vl-actionbar__well').h / box('.vl-actionbar__pill').h", "expect": 0.742, "tol": 0.07 },
+    { "name": "gouttière intérieure constante : l'écart du puits au bord gauche égale son écart au bord haut", "measure": "Math.abs((box('.vl-actionbar__well').left - box('.vl-actionbar__pill').left) - (box('.vl-actionbar__well').top - box('.vl-actionbar__pill').top))", "max": 1.5 },
+    { "name": "l'intitulé est PLUS PETIT que la valeur qu'il coiffe", "measure": "num('.vl-actionbar__value','fontSize') / num('.vl-actionbar__label','fontSize')", "min": 1.15 },
+    { "name": "… mais le saut reste faible : ce n'est pas un titre, c'est un cadrage", "measure": "num('.vl-actionbar__value','fontSize') / num('.vl-actionbar__label','fontSize')", "max": 1.6 },
+    { "name": "la pilule pleine n'a PAS de puits : elle n'est pas un filtre déguisé", "measure": "document.querySelectorAll('.vl-actionbar__pill--solid .vl-actionbar__well').length", "expect": 0, "tol": 0 },
+    { "name": "la barre reste une ligne : aucune pilule ne descend sous la première", "measure": "(() => { const t = [...document.querySelectorAll('.vl-actionbar > *')].map((e) => e.getBoundingClientRect().top); return Math.max(...t) - Math.min(...t); })()", "max": 1 },
+    { "name": "contraste de la valeur d'un filtre ≥ 4,5", "measure": "contrast('.vl-actionbar__value')", "min": 4.5 },
+    { "name": "contraste de l'intitulé ≥ 4,5 — c'est lui qui plafonne", "measure": "contrast('.vl-actionbar__label')", "min": 4.5 },
+    { "name": "contraste du libellé de l'action pleine ≥ 4,5", "measure": "contrast('.vl-actionbar__pill--solid')", "min": 4.5 },
+    { "name": "aucun débordement de la barre", "measure": "overflow('.vl-actionbar')", "max": 0 }
+  ],
+  "notes": "Ce pattern est le seul du corpus où la hiérarchie ne passe NI par la taille NI par la typographie : toutes les pilules ont la même hauteur au pixel près, et c'est le remplissage plus la position finale qui désignent l'action de premier rang. Trois benchmarks tiennent cet équilibre — hauteurs identiques, une seule pilule pleine, et cette pilule est le dernier enfant. Sans la troisième, une pilule pleine posée en tête passerait les deux autres et inverserait la lecture de la ligne.\n\nLe puits d'icône reprend exactement le motif de layout-05-nav-pill-bar : un disque plus clair que la surface qui le contient, à gouttière intérieure constante (l'écart au bord gauche égale l'écart au bord haut). Les deux références n'ont rien à voir l'une avec l'autre, et pourtant la même règle y produit le même objet — c'est un motif de composition, pas une signature de charte.\n\nLe saut typographique intitulé / valeur est encadré des deux côtés : au moins 1,15 (en dessous, l'intitulé cesse d'être un cadrage et se met à concurrencer la valeur) et au plus 1,6 (au-delà, la pilule se met à ressembler à une carte de KPI, ce qu'elle n'est pas)."
+}

@@ -1,0 +1,108 @@
+<!-- layout-08-sheet-handle-tab — une feuille modale ouverte par-dessus une application.
+     Couleurs via --vl-* uniquement.
+
+     LE VOILE RESTE PARCE QU'IL PORTE DE L'INTERFACE (onglets, fermeture). Un bezel de maquette
+     n'en porte jamais : c'est ce test-là qui distingue une couche de système d'une couche de
+     mise en scène, pas l'apparence.
+
+     LA POIGNÉE ET LA FEUILLE SONT UNE SEULE SURFACE, soudées par DEUX CONGÉS CONCAVES — un
+     carré de la couleur de la feuille dans lequel un `radial-gradient` évide un quart de
+     disque. Pas de SVG : la forme doit suivre le token de couleur sans être redessinée. -->
+<div class="vl-sheet">
+
+  <nav class="vl-sheet__tabs">
+    <span class="vl-sheet__tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.4"/><path d="m15.8 15.8 3.4 3.4M9 11h4M11 9v4"/></svg>Treatment Dynamics</span>
+    <span class="vl-sheet__tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5"/></svg>Visits</span>
+    <span class="vl-sheet__tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="m9.5 9.5 5 5"/></svg>Medications</span>
+    <span class="vl-sheet__tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M10 3.5v6L5.5 18a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 9.5v-6M8.5 3.5h7"/></svg>Labs</span>
+  </nav>
+
+  <span class="vl-sheet__close" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/></svg>
+  </span>
+
+  <div class="vl-sheet__panel">
+    <div class="vl-sheet__handle"><h1 class="vl-sheet__title">Cardiology</h1></div>
+    <div class="vl-sheet__content"></div>
+  </div>
+
+</div>
+
+<style>
+.vl-sheet {
+  width: 1440px; height: 929px;
+  box-sizing: border-box;
+  position: relative;
+  background: var(--vl-veil);
+  border-radius: 44px;
+  overflow: hidden;
+  --vl-notch: 40px;
+  font-family: Montserrat, Poppins, Inter, "Helvetica Neue", Arial, sans-serif;
+}
+/* Deux objets vivent sur le VOILE, hors de la feuille : les onglets et la fermeture. C'est ce
+   qui fait de cette couche sombre de l'interface et non un cadre. */
+.vl-sheet__tabs {
+  position: absolute; top: 49px; left: 500px; right: 26px;
+  display: flex; gap: 9px; align-items: center; justify-content: flex-end;
+}
+.vl-sheet__tab {
+  height: 56px; padding: 0 17px;
+  border-radius: var(--vl-radius-pill, 999px);
+  background: var(--vl-module-hi);
+  color: var(--vl-ink);
+  display: flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 500; white-space: nowrap;
+}
+.vl-sheet__tab svg { width: 19px; height: 19px; }
+.vl-sheet__close {
+  position: absolute; left: 15px; top: 42px;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: var(--vl-module-hi);
+  color: var(--vl-ink);
+  display: flex; align-items: center; justify-content: center;
+}
+.vl-sheet__close svg { width: 22px; height: 22px; }
+
+/* La feuille SAIGNE : quelques pixels de voile restent visibles tout autour, à gauche comme à
+   droite. C'est ce liseré de contexte qui dit « il y a quelque chose derrière », et il doit
+   rester fin — au-delà, ce n'est plus une saignée, c'est une marge. */
+.vl-sheet__panel {
+  position: absolute;
+  left: var(--vl-bleed, 20px); right: var(--vl-bleed, 20px);
+  top: 119px; bottom: 21px;
+  padding: var(--vl-margin, 34px);
+  background: var(--vl-sheet);
+  border-radius: var(--vl-radius-sheet, 34px);
+  display: flex; flex-direction: column;
+}
+/* `bottom: 100%` colle la poignée au bord haut de la feuille au pixel près : les deux ne font
+   qu'une surface. `left` la RENTRE — une poignée partant du bord gauche se lirait comme un
+   en-tête de carte, pas comme un onglet. */
+.vl-sheet__handle {
+  position: absolute; left: 66px; bottom: 100%;
+  height: 83px; padding: 0 40px;
+  background: var(--vl-sheet);
+  border-radius: var(--vl-radius-sheet, 34px) var(--vl-radius-sheet, 34px) 0 0;
+  display: flex; align-items: center;
+}
+/* LES DEUX CONGÉS CONCAVES. Chacun est un carré de la couleur de la feuille dont le coin
+   intérieur est évidé par un quart de disque TRANSPARENT. Un seul congé donnerait un onglet
+   de travers ; un dégradé qui ne partirait pas du transparent n'évidérait rien du tout. */
+.vl-sheet__handle::before, .vl-sheet__handle::after {
+  content: ''; position: absolute; bottom: 0;
+  width: var(--vl-notch); height: var(--vl-notch);
+}
+.vl-sheet__handle::before {
+  left: calc(var(--vl-notch) * -1);
+  background: radial-gradient(circle at 0 0, transparent var(--vl-notch), var(--vl-sheet) calc(var(--vl-notch) + 0.5px));
+}
+.vl-sheet__handle::after {
+  right: calc(var(--vl-notch) * -1);
+  background: radial-gradient(circle at 100% 0, transparent var(--vl-notch), var(--vl-sheet) calc(var(--vl-notch) + 0.5px));
+}
+.vl-sheet__title {
+  margin: 0; font-size: 48px; line-height: 1; font-weight: 500; letter-spacing: -0.02em;
+  color: var(--vl-ink);
+}
+.vl-sheet__content { flex: 1 1 auto; min-height: 0; }
+</style>

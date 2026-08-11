@@ -1,0 +1,196 @@
+{
+  "name": "Timeline à branches en équerre",
+  "family": "diagram",
+  "ref": "ref-19-acid-clinical-timeline",
+  "intent": "Accrocher des objets de niveaux différents à une chronologie sans jamais tracer une diagonale : un rail horizontal daté, des jalons ronds accentués posés DESSUS, et des dérivations en équerre arrondie — descente verticale puis départ horizontal — qui mènent aux objets de la période. La diagonale dirait « transition » ; l'équerre dit « appartenance », et c'est la seule chose que ce diagramme a à dire.",
+  "when_to_use": "Historique d'un dossier où chaque période porte plusieurs objets hétérogènes (un traitement, une mesure, un examen) : la position sur le rail donne la date, l'équerre donne le rattachement, et la taille de l'objet dérivé donne son rang. Deux à quatre branches par vue.",
+  "avoid_when": "Les objets sont tous de même nature et de même rang (une simple liste datée est plus lisible), les dates doivent être proportionnelles (rien ici n'est à l'échelle du temps : c'est une structure, pas un graphique), ou il y a plus de cinq branches — les équerres se croisent et l'appartenance redevient illisible.",
+  "media": [
+    "web",
+    "slide"
+  ],
+  "tags": [
+    "timeline",
+    "chronologie",
+    "branche",
+    "equerre",
+    "rail",
+    "jalon",
+    "historique",
+    "dossier",
+    "structure",
+    "derivation",
+    "diagramme"
+  ],
+  "vars": [
+    {
+      "name": "--vl-sheet",
+      "role": "le SOL du diagramme — gris, pour que les objets blancs qu'on y pose montent sans liseré",
+      "default": "#DFDFD7"
+    },
+    {
+      "name": "--vl-accent",
+      "role": "aplat des jalons — ce qu'il faut compter, jamais ce qui va mal",
+      "default": "#F5FE49"
+    },
+    {
+      "name": "--vl-veil-deep",
+      "role": "aplat du seul jalon d'action (ajouter)",
+      "default": "#1B1D1D"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "libellé de période",
+      "default": "#262C2C"
+    },
+    {
+      "name": "--vl-ink-soft",
+      "role": "sous-libellé, tracé des équerres",
+      "default": "#5F615E"
+    },
+    {
+      "name": "--vl-module",
+      "role": "aplat d'un objet dérivé de second rang (pilule)",
+      "default": "#F0EFEB"
+    },
+    {
+      "name": "--vl-module-hi",
+      "role": "aplat d'un objet dérivé de premier rang (carte)",
+      "default": "#FFFFFF"
+    },
+    {
+      "name": "--vl-recover",
+      "role": "extrémité « amélioration » du dégradé de rail — le pendant de --vl-alert",
+      "default": "#7FA88C"
+    },
+    {
+      "name": "--vl-alert",
+      "role": "extrémité « dégradation » du dégradé de rail",
+      "default": "#E8756B"
+    }
+  ],
+  "slots": [
+    "rail",
+    "pins",
+    "branches",
+    "objects"
+  ],
+  "geometry": {
+    "root": ".vl-branchline",
+    "frame": [
+      1330,
+      300
+    ],
+    "ratios": {
+      "rail_thickness_over_height": 0.0067,
+      "pin_over_height": 0.153,
+      "elbow_drop_over_height": 0.32,
+      "elbow_radius_over_drop": 0.146
+    },
+    "type_px": {
+      "month": 22,
+      "week": 13
+    },
+    "pad_ratio": {
+      "top": 0,
+      "x": 0,
+      "bottom": 0
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "le rail est un FILET horizontal, pas une barre",
+      "measure": "box('.vl-branchline__rail').h",
+      "max": 3
+    },
+    {
+      "name": "… et il traverse la vue : au moins 90 % de la largeur",
+      "measure": "box('.vl-branchline__rail').w / W",
+      "min": 0.9
+    },
+    {
+      "name": "les jalons sont posés SUR le rail : leur centre coïncide avec lui",
+      "measure": "(() => { const r = box('.vl-branchline__rail'); return Math.max(...[...document.querySelectorAll('.vl-branchline__pin')].map((e) => { const b = e.getBoundingClientRect(); const c = b.top + b.height / 2 - (window.scrollY || 0); return Math.abs((c - $(window.__VL_ROOT__).getBoundingClientRect().top) - (r.top + r.h / 2)); })); })()",
+      "max": 2.5
+    },
+    {
+      "name": "un jalon est un disque",
+      "measure": "box('.vl-branchline__pin').w / box('.vl-branchline__pin').h",
+      "expect": 1,
+      "tol": 0.02
+    },
+    {
+      "name": "les jalons de période portent l'accent — ce qu'il faut compter",
+      "measure": "(() => { const c = parseRgb(cs('.vl-branchline__pin','backgroundColor')); return Math.max(...c) - Math.min(...c); })()",
+      "min": 60
+    },
+    {
+      "name": "UN SEUL jalon d'action, et il est sombre",
+      "measure": "[...document.querySelectorAll('.vl-branchline__pin')].filter((e) => lum(parseRgb(getComputedStyle(e).backgroundColor)) < 0.2).length",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "L'ÉQUERRE DESCEND D'ABORD, PART À L'HORIZONTALE ENSUITE",
+      "measure": "(() => { const d = $('.vl-branchline__elbow path').getAttribute('d'); return /v/.test(d) && /h/.test(d) && d.indexOf('v') < d.indexOf('h') ? 1 : 0; })()",
+      "expect": 1
+    },
+    {
+      "name": "… et JAMAIS en diagonale : aucun segment oblique dans le tracé",
+      "measure": "/[lL]/.test($('.vl-branchline__elbow path').getAttribute('d')) ? 1 : 0",
+      "expect": 0,
+      "tol": 0
+    },
+    {
+      "name": "le coude est ARRONDI : le tracé porte un arc",
+      "measure": "/[aA]/.test($('.vl-branchline__elbow path').getAttribute('d')) ? 1 : 0",
+      "expect": 1
+    },
+    {
+      "name": "l'équerre part du jalon : leurs abscisses coïncident à quelques pixels près",
+      "measure": "Math.abs((box('.vl-branchline__elbow').left + 12) - (box('.vl-branchline__pin').left + box('.vl-branchline__pin').w / 2))",
+      "max": 14
+    },
+    {
+      "name": "tout ce qui est dérivé est SOUS le rail",
+      "measure": "(() => { const r = box('.vl-branchline__rail'); return Math.min(...[...document.querySelectorAll('.vl-branchline__obj')].map((e) => box('#' + e.id).top)) - (r.top + r.h); })()",
+      "min": 20
+    },
+    {
+      "name": "l'objet dérivé commence APRÈS le départ horizontal de son équerre",
+      "measure": "box('#obj-a').left - box('.vl-branchline__elbow').right",
+      "min": -4
+    },
+    {
+      "name": "l'objet de premier rang est plus large que celui de second rang",
+      "measure": "box('#obj-b').w / box('#obj-a').w",
+      "min": 1.3
+    },
+    {
+      "name": "le sous-libellé est collé sous le libellé de période",
+      "measure": "(box('.vl-branchline__week').top - box('.vl-branchline__month').bottom) / num('.vl-branchline__week','fontSize')",
+      "max": 0.6
+    },
+    {
+      "name": "contraste du libellé de période ≥ 4,5",
+      "measure": "contrast('.vl-branchline__month')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste du sous-libellé ≥ 4,5",
+      "measure": "contrast('.vl-branchline__week')",
+      "min": 4.5
+    },
+    {
+      "name": "les objets dérivés sont PLUS CLAIRS que le sol qui les porte",
+      "measure": "lum(parseRgb(cs('#obj-b','backgroundColor'))) - lum(parseRgb(cs('.vl-branchline','backgroundColor')))",
+      "min": 0.05
+    },
+    {
+      "name": "aucun débordement",
+      "measure": "overflow('.vl-branchline')",
+      "max": 0
+    }
+  ],
+  "notes": "Trois assertions portent l'idée, et elles sont écrites sur le TRACÉ SVG lui-même plutôt que sur des boîtes : l'équerre descend avant de partir à l'horizontale (`v` avant `h`), elle ne contient aucun segment oblique (`l`/`L` interdits), et son coude est un arc (`a`). Une mesure de boîtes n'aurait rien vu — une diagonale reliant les deux mêmes points a exactement la même boîte englobante que l'équerre. C'est le cas d'école où la géométrie mesurable est dans la donnée, pas dans le rendu.\n\nRien n'est proportionnel au temps ici, et c'est assumé : la position d'un jalon dit l'ORDRE, pas la durée. C'est ce qui range ce pattern dans `diagram` et non dans `chart` — un `chart` laisserait une valeur mesurée décider de la géométrie, ce qu'aucune mesure ne fait dans ce fragment.\n\nLe jalon d'action (ajouter une période) est le seul objet sombre du diagramme, et le benchmark le compte : deux jalons sombres rendraient impossible de distinguer une période d'une commande."
+}

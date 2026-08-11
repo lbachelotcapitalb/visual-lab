@@ -1,0 +1,188 @@
+{
+  "name": "Feuille modale à poignée soudée par congés concaves",
+  "family": "layout",
+  "ref": "ref-19-acid-clinical-timeline",
+  "intent": "Ouvrir un dossier par-dessus une application sans que la modale se lise comme « une carte de plus » : un voile sombre qui PORTE de l'interface (onglets, fermeture), une feuille claire qui saigne à quelques pixels des bords, et un onglet-poignée titré soudé à cette feuille par DEUX congés concaves — la seule courbe inversée du corpus, et ce qui fait que la poignée appartient à la feuille au lieu de flotter au-dessus d'elle.",
+  "when_to_use": "Dossier, fiche détaillée ou vue plein écran ouverte depuis une liste, quand le contexte sous-jacent doit rester senti sans être lisible. Le voile accueille la navigation transverse (onglets de section, fermeture), la feuille accueille le contenu, et la poignée porte le titre de ce qu'on a ouvert.",
+  "avoid_when": "La feuille est blanche (les modules blancs qu'elle portera devront s'entourer d'un liseré, et le système n'en a nulle part), le voile ne porte rien (il redevient une simple opacité, et deux rectangles empilés suffisent), ou la vue est une PAGE et non une couche — la poignée dit « ceci est ouvert par-dessus », ce qui devient un mensonge sur une page de plein droit.",
+  "media": [
+    "web"
+  ],
+  "tags": [
+    "modale",
+    "sheet",
+    "feuille",
+    "voile",
+    "scrim",
+    "overlay",
+    "onglet",
+    "poignee",
+    "tab",
+    "congé",
+    "concave",
+    "dossier",
+    "fiche",
+    "application"
+  ],
+  "vars": [
+    {
+      "name": "--vl-veil",
+      "role": "voile sombre — il PORTE de l'interface, ce n'est pas un bezel",
+      "default": "#4A4A48"
+    },
+    {
+      "name": "--vl-sheet",
+      "role": "feuille — GRISE, jamais blanche : c'est ce qui fait monter les modules posés dessus",
+      "default": "#DFDFD7"
+    },
+    {
+      "name": "--vl-module-hi",
+      "role": "aplat des onglets et du bouton de fermeture, posés sur le voile",
+      "default": "#FFFFFF"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "titre de la poignée, libellés d'onglets",
+      "default": "#262C2C"
+    },
+    {
+      "name": "--vl-radius-sheet",
+      "role": "rayon de la feuille ET de la poignée",
+      "default": "34px"
+    },
+    {
+      "name": "--vl-notch",
+      "role": "rayon des DEUX congés concaves qui soudent la poignée à la feuille",
+      "default": "40px"
+    },
+    {
+      "name": "--vl-bleed",
+      "role": "saignée de voile visible autour de la feuille",
+      "default": "20px"
+    }
+  ],
+  "slots": [
+    "tabs",
+    "close",
+    "handle",
+    "content"
+  ],
+  "geometry": {
+    "root": ".vl-sheet",
+    "frame": [
+      1440,
+      929
+    ],
+    "ratios": {
+      "bleed_over_width": 0.0139,
+      "tabbar_over_height": 0.128,
+      "handle_over_width": 0.247,
+      "handle_h_over_height": 0.089,
+      "notch_over_handle_h": 0.482,
+      "close_over_width": 0.042
+    },
+    "type_px": {
+      "handle": 48,
+      "tab": 15
+    },
+    "pad_ratio": {
+      "top": 0.037,
+      "x": 0.024,
+      "bottom": 0.037
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "LA FEUILLE EST GRISE, PAS BLANCHE — c'est ce qui fait monter les modules sans liseré",
+      "measure": "lum(parseRgb(cs('.vl-sheet__panel','backgroundColor')))",
+      "min": 0.5,
+      "max": 0.85
+    },
+    {
+      "name": "le voile est franchement sombre : au moins 6 fois moins lumineux que la feuille",
+      "measure": "lum(parseRgb(cs('.vl-sheet','backgroundColor'))) / lum(parseRgb(cs('.vl-sheet__panel','backgroundColor')))",
+      "max": 0.17
+    },
+    {
+      "name": "LE VOILE PORTE DE L'INTERFACE : au moins deux objets vivent dessus, hors de la feuille",
+      "measure": "[...document.querySelectorAll('.vl-sheet > *')].filter((e) => !e.classList.contains('vl-sheet__panel')).length",
+      "min": 2
+    },
+    {
+      "name": "la saignée de voile est fine et ÉGALE des deux côtés",
+      "measure": "Math.abs(box('.vl-sheet__panel').left - (W - box('.vl-sheet__panel').right))",
+      "max": 1.5
+    },
+    {
+      "name": "… et elle vaut ≈ 1,4 % de la largeur : un liseré de contexte, pas une marge",
+      "measure": "box('.vl-sheet__panel').left / W",
+      "expect": 0.0139,
+      "tol": 0.008
+    },
+    {
+      "name": "LA POIGNÉE EST SOUDÉE : son bas coïncide au pixel près avec le haut de la feuille",
+      "measure": "Math.abs(box('.vl-sheet__handle').bottom - box('.vl-sheet__panel').top)",
+      "max": 1
+    },
+    {
+      "name": "… par DEUX congés, un de chaque côté — pas un seul",
+      "measure": "[getComputedStyle($('.vl-sheet__handle'), '::before').backgroundImage, getComputedStyle($('.vl-sheet__handle'), '::after').backgroundImage].filter((v) => v.includes('radial-gradient')).length",
+      "expect": 2,
+      "tol": 0
+    },
+    {
+      "name": "les congés sont bien CONCAVES : le quart de disque évidé est transparent",
+      "measure": "[getComputedStyle($('.vl-sheet__handle'), '::before').backgroundImage, getComputedStyle($('.vl-sheet__handle'), '::after').backgroundImage].filter((v) => /rgba\\(0,\\s*0,\\s*0,\\s*0\\)/.test(v)).length",
+      "expect": 2,
+      "tol": 0
+    },
+    {
+      "name": "la poignée est RENTRÉE : elle ne part pas du bord gauche de la feuille",
+      "measure": "box('.vl-sheet__handle').left - box('.vl-sheet__panel').left",
+      "min": 20
+    },
+    {
+      "name": "… et elle reste minoritaire : au plus un tiers de la largeur",
+      "measure": "box('.vl-sheet__handle').w / W",
+      "max": 0.34
+    },
+    {
+      "name": "le congé vaut environ la moitié de la hauteur de poignée",
+      "measure": "parseFloat(getComputedStyle($('.vl-sheet__handle'), '::before').width) / box('.vl-sheet__handle').h",
+      "expect": 0.482,
+      "tol": 0.15
+    },
+    {
+      "name": "le bouton de fermeture vit sur le VOILE, à gauche de la poignée",
+      "measure": "box('.vl-sheet__handle').left - box('.vl-sheet__close').right",
+      "min": 4
+    },
+    {
+      "name": "… et c'est un disque",
+      "measure": "box('.vl-sheet__close').w / box('.vl-sheet__close').h",
+      "expect": 1,
+      "tol": 0.02
+    },
+    {
+      "name": "le titre de la poignée est le plus grand corps de la coque",
+      "measure": "num('.vl-sheet__title','fontSize') / num('.vl-sheet__tab','fontSize')",
+      "min": 2.5
+    },
+    {
+      "name": "contraste du titre sur la feuille ≥ 4,5",
+      "measure": "contrast('.vl-sheet__title')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste d'un onglet sur son aplat ≥ 4,5",
+      "measure": "contrast('.vl-sheet__tab')",
+      "min": 4.5
+    },
+    {
+      "name": "aucun débordement de la feuille",
+      "measure": "overflow('.vl-sheet__panel')",
+      "max": 0
+    }
+  ],
+  "notes": "LE TEST QUI TRANCHE ENTRE UN VOILE ET UN BEZEL DE MAQUETTE : le voile PORTE du contenu. Un bezel n'en porte jamais. C'est ce critère — et pas l'apparence — qui a fait garder cette couche sombre alors que les deux autres références du lot en ont perdu une ou deux. Le benchmark le mesure en comptant les enfants directs du voile qui ne sont pas la feuille ; il tomberait rouge sur une modale dont le scrim serait décoratif, et c'est exactement ce qu'on veut savoir.\n\nLE CONGÉ CONCAVE EST LA SEULE COURBE INVERSÉE DU CORPUS. Il est fabriqué par un carré de la couleur de la feuille dans lequel un `radial-gradient` évide un quart de disque à partir du coin — pas par un SVG, pour que la forme suive le token de couleur sans être redessinée. Deux assertions le tiennent : les DEUX pseudo-éléments portent un dégradé radial (un seul congé donnerait un onglet de travers), et ce dégradé démarre bien sur du TRANSPARENT (un congé convexe, ou un congé plein, passerait la première assertion sans rien évider).\n\nLa preuve que poignée et feuille sont une seule surface, et non deux rectangles séparés, vient de la source elle-même : la frontière voile/feuille descend continûment (y=131 à x=200, 150 à x=350, 186 à x=500 sur l'image d'origine). Deux rectangles auraient donné une frontière en marches. C'est le genre de fait qu'un relevé par scan établit et qu'un coup d'œil rate — j'avais d'abord lu une saignée sombre entre les deux.\n\nLa feuille est mesurée en LUMINANCE et bornée des deux côtés (0,5–0,85) : une feuille blanche passerait toute autre vérification et casserait le système au premier module blanc qu'on y pose."
+}

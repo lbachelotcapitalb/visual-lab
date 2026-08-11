@@ -1,0 +1,113 @@
+<!-- diagram-03-time-scrubber — l'axe entier dans une pilule, la tranche affichée en surbrillance.
+     Couleurs via --vl-* uniquement.
+
+     CE QUI REND L'OBJET LISIBLE SANS LÉGENDE n'est pas la fenêtre sombre : c'est qu'elle
+     reprend EXACTEMENT les mêmes pastilles, à la même taille, seulement inversées. Plus
+     petites, elles feraient croire à un second objet ; de même valeur, la fenêtre
+     disparaîtrait. Les deux benchmarks tiennent ce couple ensemble.
+
+     LE COMPTAGE EST UN EXPOSANT : la pastille acide déborde en HAUT et à DROITE de son
+     événement. Centrée, elle deviendrait un badge d'état ; posée dessous, une légende. -->
+<div class="vl-scrub">
+
+  <span class="vl-scrub__now" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2.6"/><path d="M4 10h16M8.5 2.8v4M15.5 2.8v4"/></svg>
+  </span>
+
+  <div class="vl-scrub__scale">
+    <span class="vl-scrub__month">Jan<b>2026</b></span>
+    <span class="vl-scrub__ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5"/></svg></span>
+    <span class="vl-scrub__ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/></svg><span class="vl-scrub__n">6</span></span>
+    <span class="vl-scrub__dots">···</span>
+    <span class="vl-scrub__month">Feb</span>
+    <span class="vl-scrub__ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M10 3.5v6L5.5 18a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 9.5v-6"/></svg></span>
+    <span class="vl-scrub__month">Mar</span>
+    <span class="vl-scrub__dots">···</span>
+    <span class="vl-scrub__month">Apr</span>
+    <span class="vl-scrub__ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5"/></svg></span>
+    <span class="vl-scrub__ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/></svg><span class="vl-scrub__n">2</span></span>
+    <span class="vl-scrub__month">May</span>
+    <span class="vl-scrub__ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5"/></svg></span>
+    <span class="vl-scrub__dots">···</span>
+    <span class="vl-scrub__month">Jun</span>
+    <span class="vl-scrub__ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M10 3.5v6L5.5 18a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 9.5v-6"/></svg></span>
+    <span class="vl-scrub__month">Jul</span>
+    <span class="vl-scrub__ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/></svg><span class="vl-scrub__n">6</span></span>
+  </div>
+
+  <div class="vl-scrub__window">
+    <span class="vl-scrub__grip"></span>
+    <span class="vl-scrub__month">Aug</span>
+    <span class="vl-scrub__ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5"/></svg></span>
+    <span class="vl-scrub__ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/></svg></span>
+    <span class="vl-scrub__ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M10 3.5v6L5.5 18a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 9.5v-6"/></svg><span class="vl-scrub__n">4</span></span>
+    <span class="vl-scrub__month">Sep</span>
+    <span class="vl-scrub__ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5"/></svg></span>
+    <span class="vl-scrub__ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/></svg><span class="vl-scrub__n">2</span></span>
+    <span class="vl-scrub__grip"></span>
+  </div>
+
+</div>
+
+<style>
+.vl-scrub {
+  width: 1330px; height: 74px;
+  box-sizing: border-box;
+  position: relative;
+  padding: 0 8px;
+  background: var(--vl-module-hi);
+  color: var(--vl-ink);
+  border-radius: var(--vl-radius-pill, 999px);
+  display: flex; align-items: center; gap: 10px;
+  font-family: Montserrat, Poppins, Inter, "Helvetica Neue", Arial, sans-serif;
+}
+/* Le SEUL objet sombre hors de la fenêtre. Deux aplats sombres sur l'axe, et on ne sait plus
+   lequel désigne la position courante. */
+.vl-scrub__now {
+  flex: 0 0 auto;
+  width: 58px; height: 58px; border-radius: 50%;
+  background: var(--vl-veil-deep); color: var(--vl-on-veil);
+  display: flex; align-items: center; justify-content: center;
+}
+.vl-scrub__now svg { width: 24px; height: 24px; }
+
+.vl-scrub__scale {
+  flex: 1 1 auto; min-width: 0;
+  display: flex; align-items: center; gap: 8px;
+  padding-right: 410px;   /* la place que la fenêtre occupe par-dessus */
+}
+.vl-scrub__month { font-size: 14px; color: var(--vl-ink); padding: 0 4px; white-space: nowrap; }
+.vl-scrub__month b { display: block; font-size: 12px; font-weight: 500; color: var(--vl-ink-soft); }
+.vl-scrub__ev {
+  position: relative; flex: 0 0 auto;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--vl-module);
+  display: flex; align-items: center; justify-content: center;
+}
+.vl-scrub__ev svg { width: 17px; height: 17px; }
+/* EXPOSANT : la pastille de comptage déborde en haut ET à droite. Centrée elle deviendrait un
+   badge d'état, posée dessous une légende — dans les deux cas elle cesserait de compter. */
+.vl-scrub__n {
+  position: absolute; top: -6px; right: -6px;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 50%;
+  background: var(--vl-accent); color: var(--vl-ink);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+}
+.vl-scrub__dots { color: var(--vl-ink-soft); opacity: 0.55; font-size: 15px; letter-spacing: 2px; }
+
+/* LA FENÊTRE. Posée PAR-DESSUS l'axe (position absolue), elle n'est pas un morceau de la
+   liste : elle la recouvre. Ses pastilles ont la même taille que celles du ruban, seulement
+   inversées — c'est ce qui dit qu'on regarde le même axe. */
+.vl-scrub__window {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  height: 58px; padding: 0 14px;
+  border-radius: var(--vl-radius-pill, 999px);
+  background: var(--vl-veil-deep); color: var(--vl-on-veil);
+  display: flex; align-items: center; gap: 8px;
+}
+.vl-scrub__window .vl-scrub__month { color: var(--vl-on-veil); }
+.vl-scrub__window .vl-scrub__ev { background: rgba(255,255,255,0.14); color: var(--vl-on-veil); }
+.vl-scrub__grip { width: 3px; height: 26px; border-radius: 2px; background: var(--vl-on-veil); opacity: 0.8; }
+</style>

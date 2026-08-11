@@ -16,3 +16,9 @@ assets/photos/**/board.html
 
 # Images sources des reverses : binaires, et ce sont des visuels TIERS.
 assets/refs/
+# Temporaires des sondes, écrits à la RACINE sous un nom prévisible : un contrôle interrompu
+# en laisse un derrière lui, et il finit dans un `git add` distrait.
+.check.html
+.deckprobe-*.html
+.diff-*.html
+.palette-*.png

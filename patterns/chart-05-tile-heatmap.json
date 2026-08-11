@@ -1,0 +1,56 @@
+{
+  "name": "Heatmap en tuiles arrondies, rampe achromatique + marque de catégorie",
+  "family": "chart",
+  "ref": "ref-18-lime-sales-dashboard",
+  "intent": "Lire une matrice canal × période d'un seul coup d'œil, en faisant cohabiter DEUX échelles dans la même grille sans qu'elles se mélangent : une rampe de gris qui encode l'intensité (le noir est le maximum), et une couleur d'accent qui n'est PAS un cran de cette rampe mais une marque de catégorie posée par-dessus. Les cellules sont des tuiles arrondies largement espacées — jamais un damier jointif.",
+  "when_to_use": "Matrice de quatre à six lignes sur quatre à huit colonnes dont on veut la SILHOUETTE et non les valeurs : performance par canal et par semaine, densité d'activité, couverture. Les libellés de lignes vivent hors de la grille, à gauche, sans filet de séparation.",
+  "avoid_when": "Le lecteur doit relire une valeur précise (une heatmap ne se lit pas au chiffre près — il faut un tableau), la matrice dépasse huit colonnes (les tuiles deviennent des traits et le rayon n'a plus de sens), ou l'intensité est déjà encodée par une couleur : deux échelles chromatiques dans une même grille sont indémêlables, et c'est exactement ce que l'achromatisme de la rampe évite ici.",
+  "media": ["web", "slide"],
+  "tags": ["heatmap", "matrice", "grille", "intensite", "rampe", "canal", "dashboard", "tuile", "categorie", "accent", "achromatique", "densite"],
+  "vars": [
+    { "name": "--vl-module", "role": "aplat du module qui porte la matrice", "default": "#F2F2F2" },
+    { "name": "--vl-app", "role": "aplat des pilules d'outil du module", "default": "#FEFEFE" },
+    { "name": "--vl-ramp-1", "role": "cran 1 de la rampe — le plus faible", "default": "#E3E3E3" },
+    { "name": "--vl-ramp-2", "role": "cran 2", "default": "#CCCCCC" },
+    { "name": "--vl-ramp-3", "role": "cran 3", "default": "#999999" },
+    { "name": "--vl-ramp-4", "role": "cran 4", "default": "#666666" },
+    { "name": "--vl-ramp-5", "role": "cran 5 — le maximum de l'échelle d'intensité", "default": "#000000" },
+    { "name": "--vl-accent", "role": "marque de CATÉGORIE — hors rampe, jamais un cran de plus", "default": "#5FE85C" },
+    { "name": "--vl-ink", "role": "titre et libellés de lignes", "default": "#0B0B0B" },
+    { "name": "--vl-ink-soft", "role": "sous-titre du module", "default": "#6B6B6B" },
+    { "name": "--vl-radius-tile", "role": "rayon d'une cellule", "default": "20px" }
+  ],
+  "slots": ["title", "sub", "tools", "rows", "cells"],
+  "geometry": {
+    "root": ".vl-heat",
+    "frame": [605, 431],
+    "ratios": {
+      "label_col_over_width": 0.248,
+      "cell_gap_x_over_width": 0.026,
+      "cell_gap_y_over_width": 0.023,
+      "cell_ratio_w_over_h": 1.67,
+      "radius_over_cell_height": 0.38
+    },
+    "type_px": { "title": 27, "sub": 16, "row": 17 },
+    "pad_ratio": { "top": 0.065, "x": 0.05, "bottom": 0.065 }
+  },
+  "benchmarks": [
+    { "name": "les cellules sont des TUILES, pas un damier : le rayon vaut au moins un tiers de leur hauteur", "measure": "num('.vl-heat__cell','borderTopLeftRadius') / box('.vl-heat__cell').h", "min": 0.33 },
+    { "name": "… et jamais des pilules : le rayon reste sous la demi-hauteur", "measure": "num('.vl-heat__cell','borderTopLeftRadius') / box('.vl-heat__cell').h", "max": 0.5 },
+    { "name": "cellule nettement paysage", "measure": "box('.vl-heat__cell').w / box('.vl-heat__cell').h", "min": 1.2 },
+    { "name": "les tuiles respirent : la gouttière vaut au moins 12 % de la largeur d'une cellule", "measure": "num('.vl-heat__grid','columnGap') / box('.vl-heat__cell').w", "min": 0.12 },
+    { "name": "les libellés de lignes sont HORS de la grille de tuiles", "measure": "box('.vl-heat__cell').left - box('.vl-heat__row').right", "min": 8 },
+    { "name": "aucun filet de séparation entre les lignes", "measure": "num('.vl-heat__row','borderBottomWidth')", "expect": 0, "tol": 0 },
+    { "name": "LA RAMPE EST ACHROMATIQUE : aucun de ses cinq crans n'a de saturation", "measure": "['1','2','3','4','5'].reduce((m, n) => { const c = parseRgb(cs('.vl-heat__cell[data-ramp=\"' + n + '\"]','backgroundColor')); return Math.max(m, Math.max(...c) - Math.min(...c)); }, 0)", "max": 6 },
+    { "name": "L'ACCENT N'EST PAS UN CRAN DE LA RAMPE : il est franchement coloré", "measure": "(() => { const c = parseRgb(cs('.vl-heat__cell[data-v=\"on\"]','backgroundColor')); return Math.max(...c) - Math.min(...c); })()", "min": 60 },
+    { "name": "la rampe est MONOTONE : chaque cran est plus sombre que le précédent", "measure": "(() => { const l = ['1','2','3','4','5'].map((n) => lum(parseRgb(cs('.vl-heat__cell[data-ramp=\"' + n + '\"]','backgroundColor')))); return l.every((v, i) => i === 0 || v < l[i - 1]) ? 1 : 0; })()", "expect": 1 },
+    { "name": "l'accent reste minoritaire : au plus un quart des cellules le portent", "measure": "document.querySelectorAll('.vl-heat__cell[data-v=\"on\"]').length / document.querySelectorAll('.vl-heat__cell').length", "max": 0.28 },
+    { "name": "le titre et son sous-titre sont collés : moins d'un demi-corps de sous-titre les sépare", "measure": "(box('.vl-heat__sub').top - box('.vl-heat__title').bottom) / num('.vl-heat__sub','fontSize')", "max": 0.5 },
+    { "name": "les outils sont poussés au bord droit du module", "measure": "W - num('.vl-heat','paddingRight') - box('.vl-heat__tools').right", "expect": 0, "tol": 1.5 },
+    { "name": "saut typographique titre / libellé de ligne ≥ 1,4", "measure": "num('.vl-heat__title','fontSize') / num('.vl-heat__row','fontSize')", "min": 1.4 },
+    { "name": "contraste des libellés de lignes ≥ 4,5", "measure": "contrast('.vl-heat__row')", "min": 4.5 },
+    { "name": "contraste du sous-titre ≥ 4,5", "measure": "contrast('.vl-heat__sub')", "min": 4.5 },
+    { "name": "aucun débordement du module", "measure": "overflow('.vl-heat')", "max": 0 }
+  ],
+  "notes": "Le pattern ne tient qu'à une condition, et elle est mesurée : la rampe d'intensité est ACHROMATIQUE (écart max-min des canaux RVB ≤ 6 sur chacun de ses cinq crans) et l'accent ne l'est pas (écart ≥ 60). C'est ce qui permet à deux échelles de cohabiter dans une même grille sans devenir indémêlables — l'œil range les gris sur un axe et le vert dans une autre catégorie, sans qu'on ait rien à lui expliquer. Poser un second accent coloré, ou teinter la rampe, casse le pattern quel que soit le soin apporté au reste.\n\nLa monotonie de la rampe est vérifiée à part : cinq gris achromatiques mais désordonnés passeraient le premier contrôle et ne coderaient plus rien. Deux assertions, deux propriétés distinctes.\n\nLe rayon est encadré des DEUX côtés : au moins un tiers de la hauteur de cellule (sinon c'est un damier, et la matrice se met à ressembler à un tableau) et au plus la moitié (sinon ce sont des pilules, et la lecture en colonnes disparaît). C'est le même raisonnement que sur la barre de menu de ref-17 : une borne seule laisse toujours passer l'autre faute.\n\nL'attribut `data-ramp` n'est là que pour la MESURE : il nomme le cran de rampe d'une cellule témoin de chaque niveau, ce qui permet d'écrire les assertions sur des couleurs calculées plutôt que sur les tokens déclarés. Un système thémé qui casserait sa rampe sortirait rouge ici et nulle part ailleurs."
+}

@@ -1,0 +1,57 @@
+{
+  "name": "Bento 3 × 3 à deux enjambements en L",
+  "family": "layout",
+  "ref": "ref-17-mono-bento-legal",
+  "intent": "Tenir cinq modules de tailles très différentes sur une VRAIE grille 3 × 3, en n'employant que deux enjambements — un vertical à gauche, un horizontal à droite — qui se CROISENT sans jamais se chevaucher : c'est ce croisement qui supprime toute frontière horizontale continue et fait qu'un écran dense cesse de se lire comme un tableau.",
+  "when_to_use": "Accueil, sommaire de services, page d'entrée d'application : un contenu principal qui doit dominer sans occuper la moitié de l'écran, un contenu long à gauche (liste, nuage, sommaire), et deux entrées secondaires de même rang en haut. Le module dominant prend l'aplat inversé, et il est le SEUL.",
+  "avoid_when": "Les modules sont de même rang (une grille régulière dit alors la vérité et se refond sans douleur), le contenu du module haut à gauche varie beaucoup en longueur (l'enjambement vertical fige sa hauteur), ou l'écran doit se replier en une colonne sur mobile — les deux enjambements y perdent tout sens et il faut une autre composition, pas une adaptation de celle-ci.",
+  "media": ["web", "slide"],
+  "tags": ["bento", "grille", "grid", "layout", "accueil", "landing", "dashboard", "enjambement", "span", "module", "monochrome", "hierarchie", "hero"],
+  "vars": [
+    { "name": "--vl-module", "role": "aplat des modules neutres", "default": "#EDEDED" },
+    { "name": "--vl-invert", "role": "aplat du module dominant — UN SEUL par écran", "default": "#000000" },
+    { "name": "--vl-ink", "role": "encre sur module neutre", "default": "#111111" },
+    { "name": "--vl-on-invert", "role": "encre sur le module dominant", "default": "#FFFFFF" },
+    { "name": "--vl-gutter", "role": "gouttière UNIQUE, horizontale et verticale", "default": "26px" },
+    { "name": "--vl-radius-module", "role": "rayon d'un module", "default": "24px" }
+  ],
+  "slots": ["a", "b", "c", "hero", "d"],
+  "geometry": {
+    "root": ".vl-bento",
+    "frame": [1326, 830],
+    "ratios": {
+      "gutter_over_width": 0.0196,
+      "col_1_over_inner": 0.269,
+      "col_2_over_inner": 0.366,
+      "col_3_over_inner": 0.364,
+      "row_1_over_inner": 0.389,
+      "row_2_over_inner": 0.298,
+      "row_3_over_inner": 0.313,
+      "a_over_b_height": 1.854,
+      "hero_over_b_width": 2.052,
+      "radius_over_width": 0.018
+    },
+    "type_px": {},
+    "pad_ratio": { "top": 0, "x": 0, "bottom": 0 }
+  },
+  "benchmarks": [
+    { "name": "TROIS colonnes, pas deux : l'écran n'est pas deux piles côte à côte", "measure": "cs('.vl-bento','gridTemplateColumns').trim().split(/\\s+/).length", "expect": 3, "tol": 0 },
+    { "name": "TROIS rangées", "measure": "cs('.vl-bento','gridTemplateRows').trim().split(/\\s+/).length", "expect": 3, "tol": 0 },
+    { "name": "gouttière UNIQUE : l'horizontale et la verticale sont la même valeur", "measure": "Math.abs(num('.vl-bento','columnGap') - num('.vl-bento','rowGap'))", "max": 0.5 },
+    { "name": "gouttière ≈ 2 % de la largeur", "measure": "num('.vl-bento','columnGap') / W", "expect": 0.0196, "tol": 0.006 },
+    { "name": "les trois modules du haut partagent leur ligne supérieure", "measure": "Math.abs(box('.vl-bento__a').top - box('.vl-bento__c').top) + Math.abs(box('.vl-bento__b').top - box('.vl-bento__c').top)", "max": 1.5 },
+    { "name": "l'enjambement vertical : A vaut deux rangées + une gouttière", "measure": "box('.vl-bento__a').h / box('.vl-bento__b').h", "expect": 1.854, "tol": 0.08 },
+    { "name": "l'enjambement horizontal : le hero vaut deux colonnes + une gouttière", "measure": "box('.vl-bento__hero').w / box('.vl-bento__b').w", "expect": 2.052, "tol": 0.08 },
+    { "name": "LES DEUX ENJAMBEMENTS SE CROISENT : le bas de A descend sous le haut du hero", "measure": "box('.vl-bento__a').bottom - box('.vl-bento__hero').top", "min": 40 },
+    { "name": "… mais ils ne se chevauchent JAMAIS : une gouttière pleine les sépare", "measure": "box('.vl-bento__hero').left - box('.vl-bento__a').right", "expect": 26, "tol": 2 },
+    { "name": "le pied de grille est droit : D et le hero finissent sur la même ligne", "measure": "Math.abs(box('.vl-bento__d').bottom - box('.vl-bento__hero').bottom)", "max": 1.5 },
+    { "name": "aucune frontière horizontale continue : le bas de B ne coïncide avec le bas d'aucun de ses voisins de gauche", "measure": "Math.min(Math.abs(box('.vl-bento__b').bottom - box('.vl-bento__a').bottom), Math.abs(box('.vl-bento__b').bottom - box('.vl-bento__d').top))", "min": 20 },
+    { "name": "le module dominant est au moins DEUX fois l'aire d'un module secondaire", "measure": "(box('.vl-bento__hero').w * box('.vl-bento__hero').h) / (box('.vl-bento__b').w * box('.vl-bento__b').h)", "min": 2 },
+    { "name": "UN SEUL aplat sombre dans toute la grille", "measure": "[...document.querySelectorAll('.vl-bento > *')].filter((e) => lum(parseRgb(getComputedStyle(e).backgroundColor)) < 0.2).length", "expect": 1, "tol": 0 },
+    { "name": "aucun liseré sur les modules", "measure": "num('.vl-bento__b','borderTopWidth') + num('.vl-bento__hero','borderTopWidth')", "expect": 0, "tol": 0 },
+    { "name": "aucune ombre portée", "measure": "cs('.vl-bento__b','boxShadow') === 'none' ? 1 : 0", "expect": 1 },
+    { "name": "contraste de l'encre sur le module dominant ≥ 4,5", "measure": "contrast('.vl-bento__hero')", "min": 4.5 },
+    { "name": "aucun débordement de la grille", "measure": "overflow('.vl-bento')", "max": 0 }
+  ],
+  "notes": "Ce pattern n'est PAS une variante de layout-01-nested-bento : celui-ci emboîte des niveaux (carte → sous-carte → tuile) en faisant décroître rayon et padding, celui-là ne compte qu'UN niveau et met tout son propos dans le découpage de la grille. Aucun des deux ne se déduit de l'autre.\n\nLE PIÈGE DU LOT, ET IL EST DOUBLE. Les pistes se déclarent en `minmax(0, …fr)` et la grille en `min-height: 0` : le minimum automatique d'une piste `fr` ET celui d'un item flex valent tous deux `auto`, si bien qu'un module trop plein pousse d'abord sa rangée, puis la page entière — mesuré au premier rendu, 669 px de rangée pour 560 attendus, sans qu'aucun contrôle de pattern ne crie. Les deux gardes sont nécessaires ; aucune ne remplace l'autre.\n\nL'assertion qui porte la signature est « les deux enjambements se CROISENT » : c'est elle qui distingue cette composition d'un bento en deux colonnes indépendantes, lequel passerait tous les autres benchmarks. Elle est doublée d'une assertion négative — « aucune frontière horizontale continue » — parce qu'une grille où le bas de B tomberait sur le bas de A redeviendrait un tableau sans qu'aucune mesure de largeur ne bouge.\n\nLe comptage des aplats sombres est écrit en luminance et non sur une classe : un second module noir posé plus tard par quelqu'un d'autre est exactement le genre de régression qu'un contrôle par classe laisse passer."
+}

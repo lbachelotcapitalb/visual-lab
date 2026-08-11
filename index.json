@@ -20,9 +20,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 26,
-    "refs": 12,
-    "checkable": 19
+    "patterns": 38,
+    "refs": 15,
+    "checkable": 31
   },
   "patterns": [
     {
@@ -1406,6 +1406,381 @@
       "html": "patterns/card-10-kpi-notch-tile.html"
     },
     {
+      "id": "card-11-corner-arrow-tile",
+      "name": "Vignette d'entrée à flèche de coin",
+      "family": "card",
+      "ref": "ref-17-mono-bento-legal",
+      "media": [
+        "web",
+        "slide"
+      ],
+      "intent": "Faire d'un module une ENTRÉE cliquable sans bouton ni liseré : le titre en haut à gauche, une flèche oblique ancrée au coin opposé — jamais alignée sur le titre — et l'illustration qui occupe tout le bas de la vignette au lieu d'être centrée dedans.",
+      "when_to_use": "Grille de services, sommaire de rubriques, tuiles d'entrée d'un accueil : trois à cinq vignettes de même rang dont chacune mène ailleurs. Le titre tient sur deux lignes courtes, l'illustration porte la respiration, et la flèche est le seul signe d'interaction de l'écran.",
+      "avoid_when": "La vignette porte un chiffre (elle devient une carte de KPI, cf. card-10-kpi-notch-tile : le chiffre veut l'aplomb du bas, l'illustration aussi, et les deux ne cohabitent pas), le titre dépasse trois lignes (il rejoint la flèche et le coin cesse d'être libre), ou la vignette n'est pas cliquable — une flèche qui ne mène nulle part est un mensonge d'interface.",
+      "tags": [
+        "vignette",
+        "carte",
+        "tuile",
+        "entree",
+        "service",
+        "rubrique",
+        "fleche",
+        "arrow",
+        "coin",
+        "illustration",
+        "bento",
+        "accueil",
+        "landing",
+        "monochrome"
+      ],
+      "vars": [
+        {
+          "name": "--vl-module",
+          "role": "aplat de la vignette",
+          "default": "#EDEDED"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "titre et flèche",
+          "default": "#111111"
+        },
+        {
+          "name": "--vl-ink-soft",
+          "role": "ligne d'explication sous l'illustration",
+          "default": "#5F5F5F"
+        },
+        {
+          "name": "--vl-line",
+          "role": "trait de l'illustration — une valeur d'encre, pas un gris de fond",
+          "default": "rgba(17,17,17,0.55)"
+        },
+        {
+          "name": "--vl-radius-module",
+          "role": "rayon de la vignette",
+          "default": "24px"
+        }
+      ],
+      "slots": [
+        "title",
+        "art",
+        "sub"
+      ],
+      "geometry": {
+        "root": ".vl-tile",
+        "frame": [
+          466,
+          302
+        ],
+        "ratios": {
+          "width_over_height": 1.543,
+          "radius_over_width": 0.0515,
+          "pad_over_width": 0.06,
+          "arrow_over_width": 0.064,
+          "title_block_over_width": 0.74,
+          "art_over_height": 0.45
+        },
+        "type_px": {
+          "title": 23,
+          "sub": 16
+        },
+        "pad_ratio": {
+          "top": 0.06,
+          "x": 0.06,
+          "bottom": 0.06
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "vignette nettement paysage : W / H ≈ 1,54",
+          "measure": "W / H",
+          "expect": 1.543,
+          "tol": 0.12
+        },
+        {
+          "name": "rayon ≈ 5 % de la largeur",
+          "measure": "num('.vl-tile','borderTopLeftRadius') / W",
+          "expect": 0.0515,
+          "tol": 0.015
+        },
+        {
+          "name": "marge intérieure identique à gauche et en haut : la vignette n'a pas de sens de lecture privilégié",
+          "measure": "Math.abs(num('.vl-tile','paddingLeft') - num('.vl-tile','paddingTop'))",
+          "max": 1
+        },
+        {
+          "name": "la flèche est ANCRÉE au coin : son bord droit colle la marge intérieure",
+          "measure": "W - num('.vl-tile','paddingRight') - box('.vl-tile__arrow').right",
+          "expect": 0,
+          "tol": 1.5
+        },
+        {
+          "name": "… et son bord haut aussi",
+          "measure": "Math.abs(box('.vl-tile__arrow').top - num('.vl-tile','paddingTop'))",
+          "max": 1.5
+        },
+        {
+          "name": "la flèche reste un repère, jamais un sujet : ≤ 9 % de la largeur",
+          "measure": "box('.vl-tile__arrow').w / W",
+          "max": 0.09
+        },
+        {
+          "name": "le titre ne court JAMAIS sous la flèche : au moins 8 px les séparent",
+          "measure": "box('.vl-tile__arrow').left - box('.vl-tile__title').right",
+          "min": 8
+        },
+        {
+          "name": "le titre colle le coin haut-gauche",
+          "measure": "Math.abs(box('.vl-tile__title').left - num('.vl-tile','paddingLeft')) + Math.abs(box('.vl-tile__title').top - num('.vl-tile','paddingTop'))",
+          "max": 3
+        },
+        {
+          "name": "l'illustration occupe toute la largeur utile — elle n'est pas une vignette dans la vignette",
+          "measure": "box('.vl-tile__art').w / (W - num('.vl-tile','paddingLeft') - num('.vl-tile','paddingRight'))",
+          "min": 0.95
+        },
+        {
+          "name": "l'illustration prend au moins 40 % de la hauteur : c'est elle qui porte la respiration",
+          "measure": "box('.vl-tile__art').h / H",
+          "min": 0.4
+        },
+        {
+          "name": "la ligne d'explication est bien en bas",
+          "measure": "box('.vl-tile__sub').bottom / H",
+          "min": 0.86
+        },
+        {
+          "name": "saut typographique titre / explication ≥ 1,35",
+          "measure": "num('.vl-tile__title','fontSize') / num('.vl-tile__sub','fontSize')",
+          "min": 1.35
+        },
+        {
+          "name": "aucun liseré",
+          "measure": "num('.vl-tile','borderTopWidth')",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "aucune ombre portée",
+          "measure": "cs('.vl-tile','boxShadow') === 'none' ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "contraste du titre ≥ 4,5",
+          "measure": "contrast('.vl-tile__title')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste de l'explication ≥ 4,5",
+          "measure": "contrast('.vl-tile__sub')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement",
+          "measure": "overflow('.vl-tile')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/card-11-corner-arrow-tile.html"
+    },
+    {
+      "id": "card-12-inverted-kpi-row",
+      "name": "Rangée de KPI dont un seul est inversé — et plus large",
+      "family": "card",
+      "ref": "ref-18-lime-sales-dashboard",
+      "media": [
+        "web",
+        "slide"
+      ],
+      "intent": "Ouvrir un tableau de bord par trois indicateurs de même nature dont UN SEUL est de premier rang, en lui appliquant deux fois le même geste de hiérarchie : l'aplat inversé ET une colonne 5 % plus large. Chaque carte range ses quatre informations dans le même ordre — libellé en haut, pastille de renvoi ancrée au coin opposé, chiffre poussé en bas, note collée dessous.",
+      "when_to_use": "Bandeau d'ouverture d'un tableau de bord ou d'un rapport : trois à quatre valeurs comparables (un solde, un revenu, un volume) dont une seule commande l'attention. Le chiffre est court — quatre à six signes — et la note tient sur une ligne.",
+      "avoid_when": "Les valeurs ne sont pas comparables entre elles (la rangée suggère une lecture de gauche à droite qui n'existe pas), il y en a plus de quatre (la carte inversée cesse de dominer et la largeur différenciée devient un défaut d'alignement), ou plusieurs cartes doivent être mises en avant — deux aplats inversés dans une rangée annulent le seul geste de hiérarchie du système.",
+      "tags": [
+        "kpi",
+        "chiffre",
+        "stat",
+        "rangee",
+        "dashboard",
+        "tableau-de-bord",
+        "carte",
+        "inverse",
+        "hierarchie",
+        "solde",
+        "revenu",
+        "accent",
+        "renvoi"
+      ],
+      "vars": [
+        {
+          "name": "--vl-module",
+          "role": "aplat des cartes secondaires",
+          "default": "#F2F2F2"
+        },
+        {
+          "name": "--vl-invert",
+          "role": "aplat de la carte de premier rang — UNE SEULE par rangée",
+          "default": "#000000"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "libellé et chiffre sur carte secondaire",
+          "default": "#0B0B0B"
+        },
+        {
+          "name": "--vl-ink-soft",
+          "role": "note de bas de carte",
+          "default": "#6B6B6B"
+        },
+        {
+          "name": "--vl-on-invert",
+          "role": "encre sur la carte inversée",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-on-invert-soft",
+          "role": "note sur la carte inversée",
+          "default": "rgba(255,255,255,0.66)"
+        },
+        {
+          "name": "--vl-ramp-2",
+          "role": "liseré de la pastille de renvoi, cartes secondaires",
+          "default": "#CCCCCC"
+        },
+        {
+          "name": "--vl-radius-module",
+          "role": "rayon d'une carte",
+          "default": "29px"
+        },
+        {
+          "name": "--vl-gutter",
+          "role": "gouttière de la rangée",
+          "default": "16px"
+        }
+      ],
+      "slots": [
+        "label",
+        "go",
+        "fig",
+        "note"
+      ],
+      "geometry": {
+        "root": ".vl-kpirow",
+        "frame": [
+          1286,
+          219
+        ],
+        "ratios": {
+          "height_over_width": 0.17,
+          "lead_over_second": 1.05,
+          "gutter_over_width": 0.0124,
+          "radius_over_card_width": 0.069,
+          "go_over_card_width": 0.109,
+          "fig_over_label": 3.1
+        },
+        "type_px": {
+          "fig": 62,
+          "label": 20,
+          "note": 15
+        },
+        "pad_ratio": {
+          "top": 0.137,
+          "x": 0.076,
+          "bottom": 0.119
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "rangée basse : sa hauteur vaut ≈ 17 % de sa largeur",
+          "measure": "H / W",
+          "expect": 0.17,
+          "tol": 0.03
+        },
+        {
+          "name": "LA CARTE INVERSÉE EST AUSSI LA PLUS LARGE — le geste de hiérarchie est appliqué deux fois",
+          "measure": "box('.vl-kpirow__card--lead').w / box('.vl-kpirow__card--b').w",
+          "expect": 1.05,
+          "tol": 0.03
+        },
+        {
+          "name": "… mais à peine : au-delà de 12 % d'écart, ce n'est plus une hiérarchie, c'est une grille cassée",
+          "measure": "box('.vl-kpirow__card--lead').w / box('.vl-kpirow__card--b').w",
+          "max": 1.12
+        },
+        {
+          "name": "UNE SEULE carte inversée dans la rangée",
+          "measure": "[...document.querySelectorAll('.vl-kpirow > *')].filter((e) => lum(parseRgb(getComputedStyle(e).backgroundColor)) < 0.2).length",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "les trois cartes partagent leur ligne haute et leur ligne basse",
+          "measure": "Math.abs(box('.vl-kpirow__card--lead').top - box('.vl-kpirow__card--c').top) + Math.abs(box('.vl-kpirow__card--lead').bottom - box('.vl-kpirow__card--c').bottom)",
+          "max": 1.5
+        },
+        {
+          "name": "gouttière ≈ 1,2 % de la largeur de rangée",
+          "measure": "num('.vl-kpirow','columnGap') / W",
+          "expect": 0.0124,
+          "tol": 0.006
+        },
+        {
+          "name": "la pastille de renvoi est ancrée au coin haut-droit de sa carte",
+          "measure": "box('.vl-kpirow__card--lead').right - num('.vl-kpirow__card--lead','paddingRight') - box('.vl-kpirow__go').right",
+          "expect": 0,
+          "tol": 1.5
+        },
+        {
+          "name": "la pastille est un disque",
+          "measure": "box('.vl-kpirow__go').w / box('.vl-kpirow__go').h",
+          "expect": 1,
+          "tol": 0.02
+        },
+        {
+          "name": "le libellé ne court jamais sous la pastille",
+          "measure": "box('.vl-kpirow__go').left - box('.vl-kpirow__label').right",
+          "min": 8
+        },
+        {
+          "name": "le chiffre est POUSSÉ EN BAS : son haut passe la mi-hauteur de la carte",
+          "measure": "(box('.vl-kpirow__fig').top - box('.vl-kpirow__card--lead').top) / box('.vl-kpirow__card--lead').h",
+          "min": 0.45
+        },
+        {
+          "name": "saut typographique chiffre / libellé ≥ 2,6",
+          "measure": "num('.vl-kpirow__fig','fontSize') / num('.vl-kpirow__label','fontSize')",
+          "min": 2.6
+        },
+        {
+          "name": "la note est collée sous le chiffre : moins d'un demi-corps de note les sépare",
+          "measure": "(box('.vl-kpirow__note').top - box('.vl-kpirow__fig').bottom) / num('.vl-kpirow__note','fontSize')",
+          "max": 0.6
+        },
+        {
+          "name": "aucun liseré sur les cartes",
+          "measure": "num('.vl-kpirow__card--b','borderTopWidth')",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "contraste du chiffre inversé ≥ 4,5",
+          "measure": "contrast('.vl-kpirow__fig')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste de la note inversée ≥ 4,5 — c'est elle qui plafonne, pas le chiffre",
+          "measure": "contrast('.vl-kpirow__note')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement de la rangée",
+          "measure": "overflow('.vl-kpirow')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/card-12-inverted-kpi-row.html"
+    },
+    {
       "id": "chart-01-stadium-bars",
       "name": "Barres à sommet arrondi",
       "family": "chart",
@@ -1808,7 +2183,208 @@
       "html": "patterns/chart-04-unit-textured-bar.html"
     },
     {
-      "id": "diagram-layer-stack",
+      "id": "chart-05-tile-heatmap",
+      "name": "Heatmap en tuiles arrondies, rampe achromatique + marque de catégorie",
+      "family": "chart",
+      "ref": "ref-18-lime-sales-dashboard",
+      "media": [
+        "web",
+        "slide"
+      ],
+      "intent": "Lire une matrice canal × période d'un seul coup d'œil, en faisant cohabiter DEUX échelles dans la même grille sans qu'elles se mélangent : une rampe de gris qui encode l'intensité (le noir est le maximum), et une couleur d'accent qui n'est PAS un cran de cette rampe mais une marque de catégorie posée par-dessus. Les cellules sont des tuiles arrondies largement espacées — jamais un damier jointif.",
+      "when_to_use": "Matrice de quatre à six lignes sur quatre à huit colonnes dont on veut la SILHOUETTE et non les valeurs : performance par canal et par semaine, densité d'activité, couverture. Les libellés de lignes vivent hors de la grille, à gauche, sans filet de séparation.",
+      "avoid_when": "Le lecteur doit relire une valeur précise (une heatmap ne se lit pas au chiffre près — il faut un tableau), la matrice dépasse huit colonnes (les tuiles deviennent des traits et le rayon n'a plus de sens), ou l'intensité est déjà encodée par une couleur : deux échelles chromatiques dans une même grille sont indémêlables, et c'est exactement ce que l'achromatisme de la rampe évite ici.",
+      "tags": [
+        "heatmap",
+        "matrice",
+        "grille",
+        "intensite",
+        "rampe",
+        "canal",
+        "dashboard",
+        "tuile",
+        "categorie",
+        "accent",
+        "achromatique",
+        "densite"
+      ],
+      "vars": [
+        {
+          "name": "--vl-module",
+          "role": "aplat du module qui porte la matrice",
+          "default": "#F2F2F2"
+        },
+        {
+          "name": "--vl-app",
+          "role": "aplat des pilules d'outil du module",
+          "default": "#FEFEFE"
+        },
+        {
+          "name": "--vl-ramp-1",
+          "role": "cran 1 de la rampe — le plus faible",
+          "default": "#E3E3E3"
+        },
+        {
+          "name": "--vl-ramp-2",
+          "role": "cran 2",
+          "default": "#CCCCCC"
+        },
+        {
+          "name": "--vl-ramp-3",
+          "role": "cran 3",
+          "default": "#999999"
+        },
+        {
+          "name": "--vl-ramp-4",
+          "role": "cran 4",
+          "default": "#666666"
+        },
+        {
+          "name": "--vl-ramp-5",
+          "role": "cran 5 — le maximum de l'échelle d'intensité",
+          "default": "#000000"
+        },
+        {
+          "name": "--vl-accent",
+          "role": "marque de CATÉGORIE — hors rampe, jamais un cran de plus",
+          "default": "#5FE85C"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "titre et libellés de lignes",
+          "default": "#0B0B0B"
+        },
+        {
+          "name": "--vl-ink-soft",
+          "role": "sous-titre du module",
+          "default": "#6B6B6B"
+        },
+        {
+          "name": "--vl-radius-tile",
+          "role": "rayon d'une cellule",
+          "default": "20px"
+        }
+      ],
+      "slots": [
+        "title",
+        "sub",
+        "tools",
+        "rows",
+        "cells"
+      ],
+      "geometry": {
+        "root": ".vl-heat",
+        "frame": [
+          605,
+          431
+        ],
+        "ratios": {
+          "label_col_over_width": 0.248,
+          "cell_gap_x_over_width": 0.026,
+          "cell_gap_y_over_width": 0.023,
+          "cell_ratio_w_over_h": 1.67,
+          "radius_over_cell_height": 0.38
+        },
+        "type_px": {
+          "title": 27,
+          "sub": 16,
+          "row": 17
+        },
+        "pad_ratio": {
+          "top": 0.065,
+          "x": 0.05,
+          "bottom": 0.065
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "les cellules sont des TUILES, pas un damier : le rayon vaut au moins un tiers de leur hauteur",
+          "measure": "num('.vl-heat__cell','borderTopLeftRadius') / box('.vl-heat__cell').h",
+          "min": 0.33
+        },
+        {
+          "name": "… et jamais des pilules : le rayon reste sous la demi-hauteur",
+          "measure": "num('.vl-heat__cell','borderTopLeftRadius') / box('.vl-heat__cell').h",
+          "max": 0.5
+        },
+        {
+          "name": "cellule nettement paysage",
+          "measure": "box('.vl-heat__cell').w / box('.vl-heat__cell').h",
+          "min": 1.2
+        },
+        {
+          "name": "les tuiles respirent : la gouttière vaut au moins 12 % de la largeur d'une cellule",
+          "measure": "num('.vl-heat__grid','columnGap') / box('.vl-heat__cell').w",
+          "min": 0.12
+        },
+        {
+          "name": "les libellés de lignes sont HORS de la grille de tuiles",
+          "measure": "box('.vl-heat__cell').left - box('.vl-heat__row').right",
+          "min": 8
+        },
+        {
+          "name": "aucun filet de séparation entre les lignes",
+          "measure": "num('.vl-heat__row','borderBottomWidth')",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "LA RAMPE EST ACHROMATIQUE : aucun de ses cinq crans n'a de saturation",
+          "measure": "['1','2','3','4','5'].reduce((m, n) => { const c = parseRgb(cs('.vl-heat__cell[data-ramp=\"' + n + '\"]','backgroundColor')); return Math.max(m, Math.max(...c) - Math.min(...c)); }, 0)",
+          "max": 6
+        },
+        {
+          "name": "L'ACCENT N'EST PAS UN CRAN DE LA RAMPE : il est franchement coloré",
+          "measure": "(() => { const c = parseRgb(cs('.vl-heat__cell[data-v=\"on\"]','backgroundColor')); return Math.max(...c) - Math.min(...c); })()",
+          "min": 60
+        },
+        {
+          "name": "la rampe est MONOTONE : chaque cran est plus sombre que le précédent",
+          "measure": "(() => { const l = ['1','2','3','4','5'].map((n) => lum(parseRgb(cs('.vl-heat__cell[data-ramp=\"' + n + '\"]','backgroundColor')))); return l.every((v, i) => i === 0 || v < l[i - 1]) ? 1 : 0; })()",
+          "expect": 1
+        },
+        {
+          "name": "l'accent reste minoritaire : au plus un quart des cellules le portent",
+          "measure": "document.querySelectorAll('.vl-heat__cell[data-v=\"on\"]').length / document.querySelectorAll('.vl-heat__cell').length",
+          "max": 0.28
+        },
+        {
+          "name": "le titre et son sous-titre sont collés : moins d'un demi-corps de sous-titre les sépare",
+          "measure": "(box('.vl-heat__sub').top - box('.vl-heat__title').bottom) / num('.vl-heat__sub','fontSize')",
+          "max": 0.5
+        },
+        {
+          "name": "les outils sont poussés au bord droit du module",
+          "measure": "W - num('.vl-heat','paddingRight') - box('.vl-heat__tools').right",
+          "expect": 0,
+          "tol": 1.5
+        },
+        {
+          "name": "saut typographique titre / libellé de ligne ≥ 1,4",
+          "measure": "num('.vl-heat__title','fontSize') / num('.vl-heat__row','fontSize')",
+          "min": 1.4
+        },
+        {
+          "name": "contraste des libellés de lignes ≥ 4,5",
+          "measure": "contrast('.vl-heat__row')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste du sous-titre ≥ 4,5",
+          "measure": "contrast('.vl-heat__sub')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement du module",
+          "measure": "overflow('.vl-heat')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/chart-05-tile-heatmap.html"
+    },
+    {
+      "id": "diagram-01-layer-stack",
       "name": "Pile de couches isométriques légendées",
       "family": "diagram",
       "ref": "ref-14-layer-stack-coral",
@@ -1995,7 +2571,396 @@
         }
       ],
       "pptx": null,
-      "html": "patterns/diagram-layer-stack.html"
+      "html": "patterns/diagram-01-layer-stack.html"
+    },
+    {
+      "id": "diagram-02-branch-timeline",
+      "name": "Timeline à branches en équerre",
+      "family": "diagram",
+      "ref": "ref-19-acid-clinical-timeline",
+      "media": [
+        "web",
+        "slide"
+      ],
+      "intent": "Accrocher des objets de niveaux différents à une chronologie sans jamais tracer une diagonale : un rail horizontal daté, des jalons ronds accentués posés DESSUS, et des dérivations en équerre arrondie — descente verticale puis départ horizontal — qui mènent aux objets de la période. La diagonale dirait « transition » ; l'équerre dit « appartenance », et c'est la seule chose que ce diagramme a à dire.",
+      "when_to_use": "Historique d'un dossier où chaque période porte plusieurs objets hétérogènes (un traitement, une mesure, un examen) : la position sur le rail donne la date, l'équerre donne le rattachement, et la taille de l'objet dérivé donne son rang. Deux à quatre branches par vue.",
+      "avoid_when": "Les objets sont tous de même nature et de même rang (une simple liste datée est plus lisible), les dates doivent être proportionnelles (rien ici n'est à l'échelle du temps : c'est une structure, pas un graphique), ou il y a plus de cinq branches — les équerres se croisent et l'appartenance redevient illisible.",
+      "tags": [
+        "timeline",
+        "chronologie",
+        "branche",
+        "equerre",
+        "rail",
+        "jalon",
+        "historique",
+        "dossier",
+        "structure",
+        "derivation",
+        "diagramme"
+      ],
+      "vars": [
+        {
+          "name": "--vl-sheet",
+          "role": "le SOL du diagramme — gris, pour que les objets blancs qu'on y pose montent sans liseré",
+          "default": "#DFDFD7"
+        },
+        {
+          "name": "--vl-accent",
+          "role": "aplat des jalons — ce qu'il faut compter, jamais ce qui va mal",
+          "default": "#F5FE49"
+        },
+        {
+          "name": "--vl-veil-deep",
+          "role": "aplat du seul jalon d'action (ajouter)",
+          "default": "#1B1D1D"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "libellé de période",
+          "default": "#262C2C"
+        },
+        {
+          "name": "--vl-ink-soft",
+          "role": "sous-libellé, tracé des équerres",
+          "default": "#5F615E"
+        },
+        {
+          "name": "--vl-module",
+          "role": "aplat d'un objet dérivé de second rang (pilule)",
+          "default": "#F0EFEB"
+        },
+        {
+          "name": "--vl-module-hi",
+          "role": "aplat d'un objet dérivé de premier rang (carte)",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-recover",
+          "role": "extrémité « amélioration » du dégradé de rail — le pendant de --vl-alert",
+          "default": "#7FA88C"
+        },
+        {
+          "name": "--vl-alert",
+          "role": "extrémité « dégradation » du dégradé de rail",
+          "default": "#E8756B"
+        }
+      ],
+      "slots": [
+        "rail",
+        "pins",
+        "branches",
+        "objects"
+      ],
+      "geometry": {
+        "root": ".vl-branchline",
+        "frame": [
+          1330,
+          300
+        ],
+        "ratios": {
+          "rail_thickness_over_height": 0.0067,
+          "pin_over_height": 0.153,
+          "elbow_drop_over_height": 0.32,
+          "elbow_radius_over_drop": 0.146
+        },
+        "type_px": {
+          "month": 22,
+          "week": 13
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "le rail est un FILET horizontal, pas une barre",
+          "measure": "box('.vl-branchline__rail').h",
+          "max": 3
+        },
+        {
+          "name": "… et il traverse la vue : au moins 90 % de la largeur",
+          "measure": "box('.vl-branchline__rail').w / W",
+          "min": 0.9
+        },
+        {
+          "name": "les jalons sont posés SUR le rail : leur centre coïncide avec lui",
+          "measure": "(() => { const r = box('.vl-branchline__rail'); return Math.max(...[...document.querySelectorAll('.vl-branchline__pin')].map((e) => { const b = e.getBoundingClientRect(); const c = b.top + b.height / 2 - (window.scrollY || 0); return Math.abs((c - $(window.__VL_ROOT__).getBoundingClientRect().top) - (r.top + r.h / 2)); })); })()",
+          "max": 2.5
+        },
+        {
+          "name": "un jalon est un disque",
+          "measure": "box('.vl-branchline__pin').w / box('.vl-branchline__pin').h",
+          "expect": 1,
+          "tol": 0.02
+        },
+        {
+          "name": "les jalons de période portent l'accent — ce qu'il faut compter",
+          "measure": "(() => { const c = parseRgb(cs('.vl-branchline__pin','backgroundColor')); return Math.max(...c) - Math.min(...c); })()",
+          "min": 60
+        },
+        {
+          "name": "UN SEUL jalon d'action, et il est sombre",
+          "measure": "[...document.querySelectorAll('.vl-branchline__pin')].filter((e) => lum(parseRgb(getComputedStyle(e).backgroundColor)) < 0.2).length",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "L'ÉQUERRE DESCEND D'ABORD, PART À L'HORIZONTALE ENSUITE",
+          "measure": "(() => { const d = $('.vl-branchline__elbow path').getAttribute('d'); return /v/.test(d) && /h/.test(d) && d.indexOf('v') < d.indexOf('h') ? 1 : 0; })()",
+          "expect": 1
+        },
+        {
+          "name": "… et JAMAIS en diagonale : aucun segment oblique dans le tracé",
+          "measure": "/[lL]/.test($('.vl-branchline__elbow path').getAttribute('d')) ? 1 : 0",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "le coude est ARRONDI : le tracé porte un arc",
+          "measure": "/[aA]/.test($('.vl-branchline__elbow path').getAttribute('d')) ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "l'équerre part du jalon : leurs abscisses coïncident à quelques pixels près",
+          "measure": "Math.abs((box('.vl-branchline__elbow').left + 12) - (box('.vl-branchline__pin').left + box('.vl-branchline__pin').w / 2))",
+          "max": 14
+        },
+        {
+          "name": "tout ce qui est dérivé est SOUS le rail",
+          "measure": "(() => { const r = box('.vl-branchline__rail'); return Math.min(...[...document.querySelectorAll('.vl-branchline__obj')].map((e) => box('#' + e.id).top)) - (r.top + r.h); })()",
+          "min": 20
+        },
+        {
+          "name": "l'objet dérivé commence APRÈS le départ horizontal de son équerre",
+          "measure": "box('#obj-a').left - box('.vl-branchline__elbow').right",
+          "min": -4
+        },
+        {
+          "name": "l'objet de premier rang est plus large que celui de second rang",
+          "measure": "box('#obj-b').w / box('#obj-a').w",
+          "min": 1.3
+        },
+        {
+          "name": "le sous-libellé est collé sous le libellé de période",
+          "measure": "(box('.vl-branchline__week').top - box('.vl-branchline__month').bottom) / num('.vl-branchline__week','fontSize')",
+          "max": 0.6
+        },
+        {
+          "name": "contraste du libellé de période ≥ 4,5",
+          "measure": "contrast('.vl-branchline__month')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste du sous-libellé ≥ 4,5",
+          "measure": "contrast('.vl-branchline__week')",
+          "min": 4.5
+        },
+        {
+          "name": "les objets dérivés sont PLUS CLAIRS que le sol qui les porte",
+          "measure": "lum(parseRgb(cs('#obj-b','backgroundColor'))) - lum(parseRgb(cs('.vl-branchline','backgroundColor')))",
+          "min": 0.05
+        },
+        {
+          "name": "aucun débordement",
+          "measure": "overflow('.vl-branchline')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/diagram-02-branch-timeline.html"
+    },
+    {
+      "id": "diagram-03-time-scrubber",
+      "name": "Ruban temporel à fenêtre de sélection",
+      "family": "diagram",
+      "ref": "ref-19-acid-clinical-timeline",
+      "media": [
+        "web"
+      ],
+      "intent": "Donner à un écran sa position de lecture dans un axe plus long que lui : l'année entière tient dans une pilule claire — mois écrits, événements en pastilles rondes, comptage en exposant acide —, et une FENÊTRE SOMBRE À POIGNÉES posée dessus marque l'intervalle affiché au-dessus. La fenêtre reprend les mêmes pastilles en inverse : c'est ce qui dit qu'on regarde le même axe, et pas un second objet.",
+      "when_to_use": "Sous une vue détaillée qui ne montre qu'une tranche d'un historique long : dossier, journal, calendrier de production. L'axe entier reste lisible, la tranche courante est désignée, et le lecteur sait toujours où il est sans changer d'écran.",
+      "avoid_when": "L'axe tient entièrement dans la vue (le ruban ne désigne alors plus rien), les événements sont trop nombreux pour être des pastilles distinctes (il faut une densité, pas des objets), ou la sélection n'est pas déplaçable — des poignées qui ne se saisissent pas sont un mensonge d'interface.",
+      "tags": [
+        "timeline",
+        "ruban",
+        "scrubber",
+        "brush",
+        "navigateur",
+        "selection",
+        "fenetre",
+        "axe",
+        "historique",
+        "mois",
+        "evenement",
+        "poignee",
+        "minimap"
+      ],
+      "vars": [
+        {
+          "name": "--vl-module-hi",
+          "role": "aplat du ruban",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-module",
+          "role": "aplat d'une pastille d'événement, hors fenêtre",
+          "default": "#F0EFEB"
+        },
+        {
+          "name": "--vl-veil-deep",
+          "role": "aplat de la fenêtre de sélection ET du repère « aujourd'hui »",
+          "default": "#1B1D1D"
+        },
+        {
+          "name": "--vl-accent",
+          "role": "pastille de COMPTAGE, en exposant — jamais une alerte",
+          "default": "#F5FE49"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "libellés de mois hors fenêtre",
+          "default": "#262C2C"
+        },
+        {
+          "name": "--vl-ink-soft",
+          "role": "millésime, séparateurs",
+          "default": "#5F615E"
+        },
+        {
+          "name": "--vl-on-veil",
+          "role": "libellés dans la fenêtre",
+          "default": "#FFFFFF"
+        }
+      ],
+      "slots": [
+        "now",
+        "scale",
+        "window"
+      ],
+      "geometry": {
+        "root": ".vl-scrub",
+        "frame": [
+          1330,
+          74
+        ],
+        "ratios": {
+          "now_over_height": 0.784,
+          "event_over_height": 0.514,
+          "badge_over_event": 0.474,
+          "window_over_width": 0.301,
+          "grip_over_height": 0.351
+        },
+        "type_px": {
+          "month": 14,
+          "badge": 11
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0.006,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "le ruban est une pilule pleine",
+          "measure": "num('.vl-scrub','borderTopLeftRadius') / H",
+          "min": 0.5
+        },
+        {
+          "name": "ruban bas : sa hauteur vaut au plus 8 % de sa largeur",
+          "measure": "H / W",
+          "max": 0.08
+        },
+        {
+          "name": "LA FENÊTRE EST SOMBRE là où le ruban est clair",
+          "measure": "lum(parseRgb(cs('.vl-scrub','backgroundColor'))) / lum(parseRgb(cs('.vl-scrub__window','backgroundColor')))",
+          "min": 6
+        },
+        {
+          "name": "… et c'est une pilule, comme le ruban qui la porte",
+          "measure": "num('.vl-scrub__window','borderTopLeftRadius') / box('.vl-scrub__window').h",
+          "min": 0.5
+        },
+        {
+          "name": "la fenêtre est une TRANCHE : entre 10 % et 45 % de l'axe",
+          "measure": "box('.vl-scrub__window').w / W",
+          "min": 0.1,
+          "max": 0.45
+        },
+        {
+          "name": "la fenêtre tient DANS le ruban, jamais à côté",
+          "measure": "Math.min(box('.vl-scrub__window').left, W - box('.vl-scrub__window').right)",
+          "min": 0
+        },
+        {
+          "name": "DEUX poignées, une à chaque extrémité de la fenêtre",
+          "measure": "document.querySelectorAll('.vl-scrub__grip').length",
+          "expect": 2,
+          "tol": 0
+        },
+        {
+          "name": "les poignées sont AUX BORDS de la fenêtre, pas au milieu",
+          "measure": "(() => { const w = box('.vl-scrub__window'); const g = [...document.querySelectorAll('.vl-scrub__grip')].map((e) => e.getBoundingClientRect()); const r = $(window.__VL_ROOT__).getBoundingClientRect(); const xs = g.map((b) => b.left + b.width / 2 - r.left); return Math.max(Math.abs(Math.min(...xs) - w.left), Math.abs(Math.max(...xs) - w.right)); })()",
+          "max": 24
+        },
+        {
+          "name": "les pastilles de la fenêtre ont la MÊME taille que celles du ruban — c'est le même axe",
+          "measure": "box('.vl-scrub__window .vl-scrub__ev').h / box('.vl-scrub__scale .vl-scrub__ev').h",
+          "expect": 1,
+          "tol": 0.02
+        },
+        {
+          "name": "… mais elles sont INVERSÉES : plus sombres que celles du ruban",
+          "measure": "lum(bgOf($('.vl-scrub__scale .vl-scrub__ev'))) - lum(bgOf($('.vl-scrub__window .vl-scrub__ev')))",
+          "min": 0.3
+        },
+        {
+          "name": "une pastille d'événement est un disque",
+          "measure": "box('.vl-scrub__ev').w / box('.vl-scrub__ev').h",
+          "expect": 1,
+          "tol": 0.02
+        },
+        {
+          "name": "LE COMPTAGE EST EN EXPOSANT : la pastille de comptage déborde en haut ET à droite de son événement",
+          "measure": "(box('.vl-scrub__ev').top - box('.vl-scrub__n').top > 0 && box('.vl-scrub__n').right - box('.vl-scrub__ev').right > 0) ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "le comptage porte l'accent : il compte, il n'alerte pas",
+          "measure": "(() => { const c = parseRgb(cs('.vl-scrub__n','backgroundColor')); return Math.max(...c) - Math.min(...c); })()",
+          "min": 60
+        },
+        {
+          "name": "… et il reste minuscule : au plus la moitié de sa pastille",
+          "measure": "box('.vl-scrub__n').h / box('.vl-scrub__ev').h",
+          "max": 0.55
+        },
+        {
+          "name": "le repère « aujourd'hui » est le seul objet sombre HORS de la fenêtre",
+          "measure": "[...document.querySelectorAll('.vl-scrub__scale *, .vl-scrub__now')].filter((e) => { const p = (getComputedStyle(e).backgroundColor.match(/[\\d.]+/g) || []).map(Number); const a = p.length === 4 ? p[3] : (p.length === 3 ? 1 : 0); return a > 0.9 && lum(p.slice(0, 3)) < 0.2; }).length",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "contraste d'un libellé de mois hors fenêtre ≥ 4,5",
+          "measure": "contrast('.vl-scrub__scale .vl-scrub__month')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste d'un libellé de mois DANS la fenêtre ≥ 4,5",
+          "measure": "contrast('.vl-scrub__window .vl-scrub__month')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement du ruban",
+          "measure": "overflow('.vl-scrub')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/diagram-03-time-scrubber.html"
     },
     {
       "id": "layout-01-nested-bento",
@@ -2455,6 +3420,763 @@
       "html": "patterns/layout-04-graph-paper-cells.html"
     },
     {
+      "id": "layout-05-nav-pill-bar",
+      "name": "Barre de menu en pilule flottante",
+      "family": "layout",
+      "ref": "ref-17-mono-bento-legal",
+      "media": [
+        "web"
+      ],
+      "intent": "Poser la navigation d'une page comme un OBJET posé dans la marge — un aplat arrondi qui flotte au lieu d'un bandeau collé au bord — et n'y employer qu'une seule ressource de hiérarchie : le rang de blanc, le badge de marque et le bouton d'action étant plus CLAIRS que la barre qui les porte.",
+      "when_to_use": "En-tête d'une landing ou d'une application dont le fond est déjà clair, quand la navigation ne doit pas se lire comme un chrome de navigateur : la barre reste dans la marge de page, à la même distance des bords que les modules qui la suivent, et le premier module commence juste dessous.",
+      "avoid_when": "La page défile sous un en-tête collant (une pilule flottante qui se fige au bord perd exactement ce qui la justifie), le fond est sombre ou photographique (le rang de blanc n'a plus de sens : le blanc devient la couleur la plus forte de l'écran), ou la navigation compte plus de cinq entrées — au-delà, les liens rattrapent le bouton et la respiration qui fait l'objet disparaît.",
+      "tags": [
+        "navigation",
+        "menu",
+        "barre",
+        "header",
+        "entete",
+        "pilule",
+        "landing",
+        "logo",
+        "wordmark",
+        "bouton",
+        "cta",
+        "monochrome",
+        "web",
+        "app"
+      ],
+      "vars": [
+        {
+          "name": "--vl-module",
+          "role": "aplat de la barre",
+          "default": "#EDEDED"
+        },
+        {
+          "name": "--vl-object",
+          "role": "blanc des objets posés DANS la barre (badge, bouton) — plus clair que la page",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "wordmark, téléphone, libellé du bouton",
+          "default": "#111111"
+        },
+        {
+          "name": "--vl-ink-soft",
+          "role": "liens de menu (relevé #6E6E6E, posé #5F5F5F pour tenir 4,5:1)",
+          "default": "#5F5F5F"
+        },
+        {
+          "name": "--vl-radius-bar",
+          "role": "rayon de la barre — un rayon franc, JAMAIS une demi-hauteur",
+          "default": "20px"
+        },
+        {
+          "name": "--vl-radius-pill",
+          "role": "rayon du bouton et du badge, eux vraiment en pilule",
+          "default": "999px"
+        }
+      ],
+      "slots": [
+        "badge",
+        "mark",
+        "links",
+        "cta"
+      ],
+      "geometry": {
+        "root": ".vl-navbar",
+        "frame": [
+          1326,
+          69
+        ],
+        "ratios": {
+          "height_over_width": 0.052,
+          "radius_over_height": 0.29,
+          "badge_over_height": 0.696,
+          "cta_over_height": 0.71,
+          "inset_over_height": 0.145,
+          "link_gap_over_height": 0.638
+        },
+        "type_px": {
+          "mark": 30,
+          "link": 16,
+          "cta": 15
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0.0075,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "barre basse : sa hauteur vaut ≈ 5 % de sa largeur",
+          "measure": "H / W",
+          "expect": 0.052,
+          "tol": 0.012
+        },
+        {
+          "name": "un RAYON, pas une pilule : le rayon reste sous 45 % de la hauteur",
+          "measure": "num('.vl-navbar','borderTopLeftRadius') / H",
+          "min": 0.18,
+          "max": 0.45
+        },
+        {
+          "name": "le badge, LUI, est un disque parfait",
+          "measure": "box('.vl-navbar__badge').w / box('.vl-navbar__badge').h",
+          "expect": 1,
+          "tol": 0.02
+        },
+        {
+          "name": "badge ≈ 70 % de la hauteur de barre — il loge dedans, il ne la déborde pas",
+          "measure": "box('.vl-navbar__badge').h / H",
+          "expect": 0.696,
+          "tol": 0.06
+        },
+        {
+          "name": "gouttière constante : l'écart du badge au bord gauche égale son écart au bord haut",
+          "measure": "Math.abs(box('.vl-navbar__badge').left - box('.vl-navbar__badge').top)",
+          "max": 1.5
+        },
+        {
+          "name": "le bouton est PLUS CLAIR que la barre — c'est le seul geste de hiérarchie du système",
+          "measure": "lum(parseRgb(cs('.vl-navbar__cta','backgroundColor'))) - lum(parseRgb(cs('.vl-navbar','backgroundColor')))",
+          "min": 0.01
+        },
+        {
+          "name": "le badge aussi est plus clair que la barre",
+          "measure": "lum(parseRgb(cs('.vl-navbar__badge','backgroundColor'))) - lum(parseRgb(cs('.vl-navbar','backgroundColor')))",
+          "min": 0.01
+        },
+        {
+          "name": "le bouton EST une pilule : son rayon vaut au moins sa demi-hauteur",
+          "measure": "num('.vl-navbar__cta','borderTopLeftRadius') / box('.vl-navbar__cta').h",
+          "min": 0.5
+        },
+        {
+          "name": "le bloc de droite colle la marge intérieure de la barre",
+          "measure": "W - num('.vl-navbar','paddingRight') - box('.vl-navbar__cta').right",
+          "expect": 0,
+          "tol": 1.5
+        },
+        {
+          "name": "le wordmark et les liens ne se touchent jamais : au moins deux hauteurs de barre les séparent",
+          "measure": "(box('.vl-navbar__links').left - box('.vl-navbar__mark').right) / H",
+          "min": 2
+        },
+        {
+          "name": "saut typographique wordmark / lien ≥ 1,7",
+          "measure": "num('.vl-navbar__mark','fontSize') / num('.vl-navbar__links','fontSize')",
+          "min": 1.7
+        },
+        {
+          "name": "aucun liseré : la barre se détache par son aplat, pas par un trait",
+          "measure": "num('.vl-navbar','borderTopWidth')",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "aucune ombre portée",
+          "measure": "cs('.vl-navbar','boxShadow') === 'none' ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "contraste des liens ≥ 4,5 sur l'aplat de la barre",
+          "measure": "contrast('.vl-navbar__links')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste du libellé de bouton ≥ 4,5 sur son blanc",
+          "measure": "contrast('.vl-navbar__cta')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement du contenu hors de la barre",
+          "measure": "overflow('.vl-navbar')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/layout-05-nav-pill-bar.html"
+    },
+    {
+      "id": "layout-06-bento-l-span",
+      "name": "Bento 3 × 3 à deux enjambements en L",
+      "family": "layout",
+      "ref": "ref-17-mono-bento-legal",
+      "media": [
+        "web",
+        "slide"
+      ],
+      "intent": "Tenir cinq modules de tailles très différentes sur une VRAIE grille 3 × 3, en n'employant que deux enjambements — un vertical à gauche, un horizontal à droite — qui se CROISENT sans jamais se chevaucher : c'est ce croisement qui supprime toute frontière horizontale continue et fait qu'un écran dense cesse de se lire comme un tableau.",
+      "when_to_use": "Accueil, sommaire de services, page d'entrée d'application : un contenu principal qui doit dominer sans occuper la moitié de l'écran, un contenu long à gauche (liste, nuage, sommaire), et deux entrées secondaires de même rang en haut. Le module dominant prend l'aplat inversé, et il est le SEUL.",
+      "avoid_when": "Les modules sont de même rang (une grille régulière dit alors la vérité et se refond sans douleur), le contenu du module haut à gauche varie beaucoup en longueur (l'enjambement vertical fige sa hauteur), ou l'écran doit se replier en une colonne sur mobile — les deux enjambements y perdent tout sens et il faut une autre composition, pas une adaptation de celle-ci.",
+      "tags": [
+        "bento",
+        "grille",
+        "grid",
+        "layout",
+        "accueil",
+        "landing",
+        "dashboard",
+        "enjambement",
+        "span",
+        "module",
+        "monochrome",
+        "hierarchie",
+        "hero"
+      ],
+      "vars": [
+        {
+          "name": "--vl-module",
+          "role": "aplat des modules neutres",
+          "default": "#EDEDED"
+        },
+        {
+          "name": "--vl-invert",
+          "role": "aplat du module dominant — UN SEUL par écran",
+          "default": "#000000"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "encre sur module neutre",
+          "default": "#111111"
+        },
+        {
+          "name": "--vl-on-invert",
+          "role": "encre sur le module dominant",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-gutter",
+          "role": "gouttière UNIQUE, horizontale et verticale",
+          "default": "26px"
+        },
+        {
+          "name": "--vl-radius-module",
+          "role": "rayon d'un module",
+          "default": "24px"
+        }
+      ],
+      "slots": [
+        "a",
+        "b",
+        "c",
+        "hero",
+        "d"
+      ],
+      "geometry": {
+        "root": ".vl-bento",
+        "frame": [
+          1326,
+          830
+        ],
+        "ratios": {
+          "gutter_over_width": 0.0196,
+          "col_1_over_inner": 0.269,
+          "col_2_over_inner": 0.366,
+          "col_3_over_inner": 0.364,
+          "row_1_over_inner": 0.389,
+          "row_2_over_inner": 0.298,
+          "row_3_over_inner": 0.313,
+          "a_over_b_height": 1.854,
+          "hero_over_b_width": 2.052,
+          "radius_over_width": 0.018
+        },
+        "type_px": {},
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "TROIS colonnes, pas deux : l'écran n'est pas deux piles côte à côte",
+          "measure": "cs('.vl-bento','gridTemplateColumns').trim().split(/\\s+/).length",
+          "expect": 3,
+          "tol": 0
+        },
+        {
+          "name": "TROIS rangées",
+          "measure": "cs('.vl-bento','gridTemplateRows').trim().split(/\\s+/).length",
+          "expect": 3,
+          "tol": 0
+        },
+        {
+          "name": "gouttière UNIQUE : l'horizontale et la verticale sont la même valeur",
+          "measure": "Math.abs(num('.vl-bento','columnGap') - num('.vl-bento','rowGap'))",
+          "max": 0.5
+        },
+        {
+          "name": "gouttière ≈ 2 % de la largeur",
+          "measure": "num('.vl-bento','columnGap') / W",
+          "expect": 0.0196,
+          "tol": 0.006
+        },
+        {
+          "name": "les trois modules du haut partagent leur ligne supérieure",
+          "measure": "Math.abs(box('.vl-bento__a').top - box('.vl-bento__c').top) + Math.abs(box('.vl-bento__b').top - box('.vl-bento__c').top)",
+          "max": 1.5
+        },
+        {
+          "name": "l'enjambement vertical : A vaut deux rangées + une gouttière",
+          "measure": "box('.vl-bento__a').h / box('.vl-bento__b').h",
+          "expect": 1.854,
+          "tol": 0.08
+        },
+        {
+          "name": "l'enjambement horizontal : le hero vaut deux colonnes + une gouttière",
+          "measure": "box('.vl-bento__hero').w / box('.vl-bento__b').w",
+          "expect": 2.052,
+          "tol": 0.08
+        },
+        {
+          "name": "LES DEUX ENJAMBEMENTS SE CROISENT : le bas de A descend sous le haut du hero",
+          "measure": "box('.vl-bento__a').bottom - box('.vl-bento__hero').top",
+          "min": 40
+        },
+        {
+          "name": "… mais ils ne se chevauchent JAMAIS : une gouttière pleine les sépare",
+          "measure": "box('.vl-bento__hero').left - box('.vl-bento__a').right",
+          "expect": 26,
+          "tol": 2
+        },
+        {
+          "name": "le pied de grille est droit : D et le hero finissent sur la même ligne",
+          "measure": "Math.abs(box('.vl-bento__d').bottom - box('.vl-bento__hero').bottom)",
+          "max": 1.5
+        },
+        {
+          "name": "aucune frontière horizontale continue : le bas de B ne coïncide avec le bas d'aucun de ses voisins de gauche",
+          "measure": "Math.min(Math.abs(box('.vl-bento__b').bottom - box('.vl-bento__a').bottom), Math.abs(box('.vl-bento__b').bottom - box('.vl-bento__d').top))",
+          "min": 20
+        },
+        {
+          "name": "le module dominant est au moins DEUX fois l'aire d'un module secondaire",
+          "measure": "(box('.vl-bento__hero').w * box('.vl-bento__hero').h) / (box('.vl-bento__b').w * box('.vl-bento__b').h)",
+          "min": 2
+        },
+        {
+          "name": "UN SEUL aplat sombre dans toute la grille",
+          "measure": "[...document.querySelectorAll('.vl-bento > *')].filter((e) => lum(parseRgb(getComputedStyle(e).backgroundColor)) < 0.2).length",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "aucun liseré sur les modules",
+          "measure": "num('.vl-bento__b','borderTopWidth') + num('.vl-bento__hero','borderTopWidth')",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "aucune ombre portée",
+          "measure": "cs('.vl-bento__b','boxShadow') === 'none' ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "contraste de l'encre sur le module dominant ≥ 4,5",
+          "measure": "contrast('.vl-bento__hero')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement de la grille",
+          "measure": "overflow('.vl-bento')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/layout-06-bento-l-span.html"
+    },
+    {
+      "id": "layout-07-icon-rail-shell",
+      "name": "Coque d'application à rail d'icônes",
+      "family": "layout",
+      "ref": "ref-18-lime-sales-dashboard",
+      "media": [
+        "web"
+      ],
+      "intent": "Poser le cadre d'un tableau de bord en ne dépensant AUCUNE couleur pour la navigation : un rail d'icônes étroit du même blanc que l'application — séparé par un filet d'un pixel et jamais par un aplat —, un en-tête à recherche en pilule, et un titre de page qui est le seul très grand corps de l'écran. Tout le budget de couleur reste disponible pour les données.",
+      "when_to_use": "Application ou tableau de bord à navigation stable de six à dix entrées, sur fond clair : le rail donne l'accès, l'en-tête donne la recherche et le compte, le titre donne le contexte, et le contenu commence dessous en pleine largeur restante. L'entrée active est marquée par l'inversion, jamais par une teinte.",
+      "avoid_when": "La navigation a des libellés (le rail d'icônes seules devient illisible au-delà de huit entrées sans texte), l'application est sombre (le filet d'un pixel disparaît et il faut un vrai aplat de rail), ou la couleur de marque doit être visible en permanence — ce système la réserve aux données, et l'y ramener supprime sa seule règle.",
+      "tags": [
+        "coque",
+        "shell",
+        "rail",
+        "sidebar",
+        "navigation",
+        "dashboard",
+        "tableau-de-bord",
+        "recherche",
+        "header",
+        "entete",
+        "titre",
+        "application",
+        "icone"
+      ],
+      "vars": [
+        {
+          "name": "--vl-app",
+          "role": "fond de l'application ET du rail — la même valeur, c'est le principe",
+          "default": "#FEFEFE"
+        },
+        {
+          "name": "--vl-module",
+          "role": "aplat des puits d'icône",
+          "default": "#F2F2F2"
+        },
+        {
+          "name": "--vl-hairline",
+          "role": "le filet qui détache le rail — la SEULE séparation de la coque",
+          "default": "#E6E6E6"
+        },
+        {
+          "name": "--vl-invert",
+          "role": "aplat de l'entrée active du rail",
+          "default": "#000000"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "icônes, titre de page",
+          "default": "#0B0B0B"
+        },
+        {
+          "name": "--vl-ink-soft",
+          "role": "texte d'invite de la recherche",
+          "default": "#6B6B6B"
+        },
+        {
+          "name": "--vl-on-invert",
+          "role": "icône de l'entrée active",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-rail-w",
+          "role": "largeur du rail",
+          "default": "95px"
+        },
+        {
+          "name": "--vl-radius-pill",
+          "role": "rayon de la recherche et des pilules d'en-tête",
+          "default": "999px"
+        }
+      ],
+      "slots": [
+        "nav",
+        "search",
+        "account",
+        "title",
+        "actions",
+        "content"
+      ],
+      "geometry": {
+        "root": ".vl-shell",
+        "frame": [
+          1440,
+          640
+        ],
+        "ratios": {
+          "rail_over_width": 0.066,
+          "header_over_width": 0.048,
+          "search_over_width": 0.299,
+          "title_over_width": 0.046,
+          "margin_over_width": 0.021
+        },
+        "type_px": {
+          "title": 66,
+          "search": 16
+        },
+        "pad_ratio": {
+          "top": 0.017,
+          "x": 0.021,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "rail étroit : ≈ 6,6 % de la largeur, jamais une colonne",
+          "measure": "box('.vl-shell__rail').w / W",
+          "expect": 0.066,
+          "tol": 0.02
+        },
+        {
+          "name": "LE RAIL EST DU MÊME BLANC QUE L'APPLICATION — c'est de la coque, pas un module",
+          "measure": "Math.abs(lum(bgOf($('.vl-shell__rail'))) - lum(bgOf($('.vl-shell__main'))))",
+          "max": 0.01
+        },
+        {
+          "name": "… et il s'en détache par un FILET d'un pixel, seule séparation de la coque",
+          "measure": "num('.vl-shell__rail','borderRightWidth')",
+          "min": 0.5,
+          "max": 1.6
+        },
+        {
+          "name": "le rail court sur toute la hauteur",
+          "measure": "box('.vl-shell__rail').h / H",
+          "expect": 1,
+          "tol": 0.01
+        },
+        {
+          "name": "UNE SEULE entrée active dans le rail",
+          "measure": "document.querySelectorAll('.vl-shell__rail .is-on').length",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "l'entrée active est marquée par l'INVERSION, pas par une teinte : son fond est achromatique",
+          "measure": "(() => { const c = parseRgb(cs('.vl-shell__rail .is-on','backgroundColor')); return Math.max(...c) - Math.min(...c); })()",
+          "max": 6
+        },
+        {
+          "name": "… et c'est un disque",
+          "measure": "num('.vl-shell__rail .is-on','borderTopLeftRadius') / box('.vl-shell__rail .is-on').h",
+          "min": 0.5
+        },
+        {
+          "name": "la recherche est une pilule",
+          "measure": "num('.vl-shell__search','borderTopLeftRadius') / box('.vl-shell__search').h",
+          "min": 0.5
+        },
+        {
+          "name": "la recherche occupe environ un tiers de la largeur : assez pour être une zone, pas assez pour être le sujet",
+          "measure": "box('.vl-shell__search').w / W",
+          "min": 0.22,
+          "max": 0.4
+        },
+        {
+          "name": "le bloc de compte est poussé au bord droit",
+          "measure": "box('.vl-shell__main').right - num('.vl-shell__main','paddingRight') - box('.vl-shell__account').right",
+          "expect": 0,
+          "tol": 1.5
+        },
+        {
+          "name": "le titre de page est le PLUS GRAND corps de la coque, et de loin",
+          "measure": "num('.vl-shell__title','fontSize') / num('.vl-shell__search','fontSize')",
+          "min": 3
+        },
+        {
+          "name": "le titre est ferré sur la marge de contenu, comme tout ce qui suivra",
+          "measure": "Math.abs(box('.vl-shell__title').left - (box('.vl-shell__main').left + num('.vl-shell__main','paddingLeft')))",
+          "max": 2
+        },
+        {
+          "name": "le contenu prend toute la largeur restante",
+          "measure": "box('.vl-shell__content').w / (box('.vl-shell__main').w - num('.vl-shell__main','paddingLeft') - num('.vl-shell__main','paddingRight'))",
+          "expect": 1,
+          "tol": 0.01
+        },
+        {
+          "name": "aucune ombre nulle part dans la coque",
+          "measure": "['.vl-shell__rail', '.vl-shell__main'].filter((s) => cs(s, 'boxShadow') !== 'none').length",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "contraste de l'invite de recherche ≥ 4,5",
+          "measure": "contrast('.vl-shell__search')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement de la coque",
+          "measure": "overflow('.vl-shell')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/layout-07-icon-rail-shell.html"
+    },
+    {
+      "id": "layout-08-sheet-handle-tab",
+      "name": "Feuille modale à poignée soudée par congés concaves",
+      "family": "layout",
+      "ref": "ref-19-acid-clinical-timeline",
+      "media": [
+        "web"
+      ],
+      "intent": "Ouvrir un dossier par-dessus une application sans que la modale se lise comme « une carte de plus » : un voile sombre qui PORTE de l'interface (onglets, fermeture), une feuille claire qui saigne à quelques pixels des bords, et un onglet-poignée titré soudé à cette feuille par DEUX congés concaves — la seule courbe inversée du corpus, et ce qui fait que la poignée appartient à la feuille au lieu de flotter au-dessus d'elle.",
+      "when_to_use": "Dossier, fiche détaillée ou vue plein écran ouverte depuis une liste, quand le contexte sous-jacent doit rester senti sans être lisible. Le voile accueille la navigation transverse (onglets de section, fermeture), la feuille accueille le contenu, et la poignée porte le titre de ce qu'on a ouvert.",
+      "avoid_when": "La feuille est blanche (les modules blancs qu'elle portera devront s'entourer d'un liseré, et le système n'en a nulle part), le voile ne porte rien (il redevient une simple opacité, et deux rectangles empilés suffisent), ou la vue est une PAGE et non une couche — la poignée dit « ceci est ouvert par-dessus », ce qui devient un mensonge sur une page de plein droit.",
+      "tags": [
+        "modale",
+        "sheet",
+        "feuille",
+        "voile",
+        "scrim",
+        "overlay",
+        "onglet",
+        "poignee",
+        "tab",
+        "congé",
+        "concave",
+        "dossier",
+        "fiche",
+        "application"
+      ],
+      "vars": [
+        {
+          "name": "--vl-veil",
+          "role": "voile sombre — il PORTE de l'interface, ce n'est pas un bezel",
+          "default": "#4A4A48"
+        },
+        {
+          "name": "--vl-sheet",
+          "role": "feuille — GRISE, jamais blanche : c'est ce qui fait monter les modules posés dessus",
+          "default": "#DFDFD7"
+        },
+        {
+          "name": "--vl-module-hi",
+          "role": "aplat des onglets et du bouton de fermeture, posés sur le voile",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "titre de la poignée, libellés d'onglets",
+          "default": "#262C2C"
+        },
+        {
+          "name": "--vl-radius-sheet",
+          "role": "rayon de la feuille ET de la poignée",
+          "default": "34px"
+        },
+        {
+          "name": "--vl-notch",
+          "role": "rayon des DEUX congés concaves qui soudent la poignée à la feuille",
+          "default": "40px"
+        },
+        {
+          "name": "--vl-bleed",
+          "role": "saignée de voile visible autour de la feuille",
+          "default": "20px"
+        }
+      ],
+      "slots": [
+        "tabs",
+        "close",
+        "handle",
+        "content"
+      ],
+      "geometry": {
+        "root": ".vl-sheet",
+        "frame": [
+          1440,
+          929
+        ],
+        "ratios": {
+          "bleed_over_width": 0.0139,
+          "tabbar_over_height": 0.128,
+          "handle_over_width": 0.247,
+          "handle_h_over_height": 0.089,
+          "notch_over_handle_h": 0.482,
+          "close_over_width": 0.042
+        },
+        "type_px": {
+          "handle": 48,
+          "tab": 15
+        },
+        "pad_ratio": {
+          "top": 0.037,
+          "x": 0.024,
+          "bottom": 0.037
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "LA FEUILLE EST GRISE, PAS BLANCHE — c'est ce qui fait monter les modules sans liseré",
+          "measure": "lum(parseRgb(cs('.vl-sheet__panel','backgroundColor')))",
+          "min": 0.5,
+          "max": 0.85
+        },
+        {
+          "name": "le voile est franchement sombre : au moins 6 fois moins lumineux que la feuille",
+          "measure": "lum(parseRgb(cs('.vl-sheet','backgroundColor'))) / lum(parseRgb(cs('.vl-sheet__panel','backgroundColor')))",
+          "max": 0.17
+        },
+        {
+          "name": "LE VOILE PORTE DE L'INTERFACE : au moins deux objets vivent dessus, hors de la feuille",
+          "measure": "[...document.querySelectorAll('.vl-sheet > *')].filter((e) => !e.classList.contains('vl-sheet__panel')).length",
+          "min": 2
+        },
+        {
+          "name": "la saignée de voile est fine et ÉGALE des deux côtés",
+          "measure": "Math.abs(box('.vl-sheet__panel').left - (W - box('.vl-sheet__panel').right))",
+          "max": 1.5
+        },
+        {
+          "name": "… et elle vaut ≈ 1,4 % de la largeur : un liseré de contexte, pas une marge",
+          "measure": "box('.vl-sheet__panel').left / W",
+          "expect": 0.0139,
+          "tol": 0.008
+        },
+        {
+          "name": "LA POIGNÉE EST SOUDÉE : son bas coïncide au pixel près avec le haut de la feuille",
+          "measure": "Math.abs(box('.vl-sheet__handle').bottom - box('.vl-sheet__panel').top)",
+          "max": 1
+        },
+        {
+          "name": "… par DEUX congés, un de chaque côté — pas un seul",
+          "measure": "[getComputedStyle($('.vl-sheet__handle'), '::before').backgroundImage, getComputedStyle($('.vl-sheet__handle'), '::after').backgroundImage].filter((v) => v.includes('radial-gradient')).length",
+          "expect": 2,
+          "tol": 0
+        },
+        {
+          "name": "les congés sont bien CONCAVES : le quart de disque évidé est transparent",
+          "measure": "[getComputedStyle($('.vl-sheet__handle'), '::before').backgroundImage, getComputedStyle($('.vl-sheet__handle'), '::after').backgroundImage].filter((v) => /rgba\\(0,\\s*0,\\s*0,\\s*0\\)/.test(v)).length",
+          "expect": 2,
+          "tol": 0
+        },
+        {
+          "name": "la poignée est RENTRÉE : elle ne part pas du bord gauche de la feuille",
+          "measure": "box('.vl-sheet__handle').left - box('.vl-sheet__panel').left",
+          "min": 20
+        },
+        {
+          "name": "… et elle reste minoritaire : au plus un tiers de la largeur",
+          "measure": "box('.vl-sheet__handle').w / W",
+          "max": 0.34
+        },
+        {
+          "name": "le congé vaut environ la moitié de la hauteur de poignée",
+          "measure": "parseFloat(getComputedStyle($('.vl-sheet__handle'), '::before').width) / box('.vl-sheet__handle').h",
+          "expect": 0.482,
+          "tol": 0.15
+        },
+        {
+          "name": "le bouton de fermeture vit sur le VOILE, à gauche de la poignée",
+          "measure": "box('.vl-sheet__handle').left - box('.vl-sheet__close').right",
+          "min": 4
+        },
+        {
+          "name": "… et c'est un disque",
+          "measure": "box('.vl-sheet__close').w / box('.vl-sheet__close').h",
+          "expect": 1,
+          "tol": 0.02
+        },
+        {
+          "name": "le titre de la poignée est le plus grand corps de la coque",
+          "measure": "num('.vl-sheet__title','fontSize') / num('.vl-sheet__tab','fontSize')",
+          "min": 2.5
+        },
+        {
+          "name": "contraste du titre sur la feuille ≥ 4,5",
+          "measure": "contrast('.vl-sheet__title')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste d'un onglet sur son aplat ≥ 4,5",
+          "measure": "contrast('.vl-sheet__tab')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement de la feuille",
+          "measure": "overflow('.vl-sheet__panel')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/layout-08-sheet-handle-tab.html"
+    },
+    {
       "id": "list-01-giant-numbers",
       "name": "Colonnes à numéro géant",
       "family": "list",
@@ -2835,6 +4557,148 @@
       "html": "patterns/list-04-due-rows.html"
     },
     {
+      "id": "list-05-vitals-strip",
+      "name": "Bandeau de constantes, sans carte ni filet",
+      "family": "list",
+      "ref": "ref-19-acid-clinical-timeline",
+      "media": [
+        "web",
+        "slide"
+      ],
+      "intent": "Aligner cinq mesures hétérogènes sur une seule ligne SANS aucun séparateur : chacune est un couple micro-libellé / valeur, l'unité étant un cran plus petite ET plus claire que le nombre qu'elle suit. C'est ce double affaiblissement de l'unité — taille et encre — qui permet de lire cinq valeurs d'affilée sans filet, sans carte et sans que l'œil confonde un nombre avec l'unité de son voisin.",
+      "when_to_use": "Bandeau d'état en tête d'une fiche : constantes d'un patient, indicateurs d'une machine, chiffres-clés d'un dossier. La première mesure peut être qualitative et prendre un corps plus grand — c'est le sujet de la fiche, pas une valeur de plus.",
+      "avoid_when": "Les valeurs sont comparables entre elles (une rangée de cartes ou un tableau dit mieux la comparaison), il y en a plus de six (le bandeau se met à défiler et perd son unique atout, la lecture d'un seul coup d'œil), ou l'une d'elles est en alerte : ce bandeau n'a aucune ressource pour le dire, et l'y ajouter demande une couleur que le système réserve ailleurs.",
+      "tags": [
+        "constantes",
+        "vitals",
+        "bandeau",
+        "strip",
+        "mesure",
+        "unite",
+        "micro-libelle",
+        "fiche",
+        "dossier",
+        "kpi",
+        "sans-filet"
+      ],
+      "vars": [
+        {
+          "name": "--vl-ink",
+          "role": "valeur",
+          "default": "#262C2C"
+        },
+        {
+          "name": "--vl-ink-soft",
+          "role": "micro-libellé ET unité — la même encre affaiblie pour les deux",
+          "default": "#5F615E"
+        }
+      ],
+      "slots": [
+        "items"
+      ],
+      "geometry": {
+        "root": ".vl-vitals",
+        "frame": [
+          1040,
+          62
+        ],
+        "ratios": {
+          "gap_over_width": 0.051,
+          "unit_over_value": 0.5,
+          "label_over_value": 0.467,
+          "lead_over_value": 1.233
+        },
+        "type_px": {
+          "lead": 37,
+          "value": 30,
+          "unit": 15,
+          "label": 14
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "une seule ligne : toutes les mesures partagent leur ligne de base basse",
+          "measure": "(() => { const b = [...document.querySelectorAll('.vl-vitals > *')].map((e) => e.getBoundingClientRect().bottom); return Math.max(...b) - Math.min(...b); })()",
+          "max": 1.5
+        },
+        {
+          "name": "AUCUN séparateur : pas un filet entre deux mesures",
+          "measure": "[...document.querySelectorAll('.vl-vitals > *')].reduce((m, e) => m + parseFloat(getComputedStyle(e).borderRightWidth || 0), 0)",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "… et pas de fond non plus : la mesure n'est pas une carte",
+          "measure": "[...document.querySelectorAll('.vl-vitals > *')].filter((e) => { const p = (getComputedStyle(e).backgroundColor.match(/[\\d.]+/g) || []).map(Number); return p.length === 4 ? p[3] > 0 : p.length === 3; }).length",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "le vide qui sépare deux mesures vaut au moins 1,4 corps de valeur — c'est lui, le séparateur",
+          "measure": "num('.vl-vitals','columnGap') / num('.vl-vitals__item:nth-child(2) .vl-vitals__value','fontSize')",
+          "min": 1.4
+        },
+        {
+          "name": "L'UNITÉ EST PLUS PETITE que le nombre qu'elle suit — au plus la moitié",
+          "measure": "num('.vl-vitals__item:nth-child(2) .vl-vitals__unit','fontSize') / num('.vl-vitals__item:nth-child(2) .vl-vitals__value','fontSize')",
+          "max": 0.55
+        },
+        {
+          "name": "… ET PLUS CLAIRE : c'est le double affaiblissement qui rend le bandeau lisible sans filet",
+          "measure": "lum(parseRgb(cs('.vl-vitals__item:nth-child(2) .vl-vitals__unit','color'))) - lum(parseRgb(cs('.vl-vitals__item:nth-child(2) .vl-vitals__value','color')))",
+          "min": 0.05
+        },
+        {
+          "name": "le micro-libellé est AU-DESSUS de sa valeur, jamais à côté",
+          "measure": "box('.vl-vitals__item:nth-child(2) .vl-vitals__value').top - box('.vl-vitals__item:nth-child(2) .vl-vitals__label').bottom",
+          "min": 0,
+          "max": 12
+        },
+        {
+          "name": "… et calé sur le même fer à gauche",
+          "measure": "Math.abs(box('.vl-vitals__item:nth-child(2) .vl-vitals__label').left - box('.vl-vitals__item:nth-child(2) .vl-vitals__value').left)",
+          "max": 1.5
+        },
+        {
+          "name": "le micro-libellé reste un cadrage : au plus la moitié du corps de sa valeur",
+          "measure": "num('.vl-vitals__item:nth-child(2) .vl-vitals__label','fontSize') / num('.vl-vitals__item:nth-child(2) .vl-vitals__value','fontSize')",
+          "max": 0.55
+        },
+        {
+          "name": "la mesure de tête est plus grande que les autres — c'est le sujet de la fiche",
+          "measure": "num('.vl-vitals__lead .vl-vitals__value','fontSize') / num('.vl-vitals__item:nth-child(2) .vl-vitals__value','fontSize')",
+          "min": 1.15
+        },
+        {
+          "name": "… mais elle ne fait pas un titre : au plus 1,6 fois",
+          "measure": "num('.vl-vitals__lead .vl-vitals__value','fontSize') / num('.vl-vitals__item:nth-child(2) .vl-vitals__value','fontSize')",
+          "max": 1.6
+        },
+        {
+          "name": "contraste d'une valeur ≥ 4,5",
+          "measure": "contrast('.vl-vitals__item:nth-child(2) .vl-vitals__value')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste du micro-libellé ≥ 4,5 — c'est lui qui plafonne",
+          "measure": "contrast('.vl-vitals__item:nth-child(2) .vl-vitals__label')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement du bandeau",
+          "measure": "overflow('.vl-vitals')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/list-05-vitals-strip.html"
+    },
+    {
       "id": "shape-notched-corner",
       "name": "Carte à coin chanfreiné",
       "family": "shape",
@@ -2913,7 +4777,7 @@
       "html": "patterns/shape-notched-corner.html"
     },
     {
-      "id": "tag-gooey-capsule",
+      "id": "tag-01-gooey-capsule",
       "name": "Capsule néon soudée — mot-clé + glyphe",
       "family": "tag",
       "ref": "ref-12-neon-capsule-tags",
@@ -3057,7 +4921,326 @@
         }
       ],
       "pptx": null,
-      "html": "patterns/tag-gooey-capsule.html"
+      "html": "patterns/tag-01-gooey-capsule.html"
+    },
+    {
+      "id": "tag-02-centered-cloud",
+      "name": "Nuage de mots-clés centré rangée par rangée",
+      "family": "tag",
+      "ref": "ref-17-mono-bento-legal",
+      "media": [
+        "web",
+        "slide"
+      ],
+      "intent": "Poser une dizaine de mots-clés de même rang au bas d'un module sans en faire une liste : chaque RANGÉE est centrée sur elle-même, si bien que les lignes de largeur inégale dessinent une silhouette de nuage — c'est le centrage par rangée, et pas le centrage du bloc, qui produit l'effet.",
+      "when_to_use": "Fin d'une vignette de service, pied d'une carte de rubrique, bandeau de compétences : dix à quinze termes courts qu'on veut donner à VOIR en volume plutôt qu'à lire un par un, sans hiérarchie entre eux et sans ordre significatif.",
+      "avoid_when": "L'ordre compte (un nuage le détruit visuellement), les termes sont cliquables et de longueurs très inégales (les cibles deviennent illisibles à balayer), il y en a moins de six — trois rangées sont le minimum pour qu'une silhouette existe — ou l'un d'eux doit être mis en avant : ce système n'a aucune ressource pour distinguer une pilule des autres.",
+      "tags": [
+        "tag",
+        "mot-cle",
+        "keyword",
+        "nuage",
+        "cloud",
+        "pilule",
+        "pill",
+        "chip",
+        "competences",
+        "services",
+        "wrap",
+        "monochrome"
+      ],
+      "vars": [
+        {
+          "name": "--vl-object",
+          "role": "aplat d'une pilule — PLUS CLAIR que le module qui la porte",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "texte d'une pilule",
+          "default": "#111111"
+        },
+        {
+          "name": "--vl-radius-pill",
+          "role": "rayon d'une pilule",
+          "default": "999px"
+        }
+      ],
+      "slots": [
+        "items"
+      ],
+      "geometry": {
+        "root": ".vl-cloud",
+        "frame": [
+          287,
+          140
+        ],
+        "ratios": {
+          "pill_height_over_width": 0.091,
+          "gap_x_over_width": 0.024,
+          "gap_y_over_width": 0.028,
+          "pad_x_over_pill_height": 0.46
+        },
+        "type_px": {
+          "tag": 11
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "les pilules passent à la ligne : c'est un nuage, pas une barre qui déborde",
+          "measure": "cs('.vl-cloud','flexWrap') === 'wrap' ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "CHAQUE RANGÉE est centrée sur elle-même — l'écart à gauche égale l'écart à droite, ligne par ligne",
+          "measure": "(() => { const r = $('.vl-cloud').getBoundingClientRect(); const rows = {}; for (const e of document.querySelectorAll('.vl-cloud > *')) { const b = e.getBoundingClientRect(); const k = Math.round(b.top); (rows[k] = rows[k] || []).push(b); } return Math.max(...Object.values(rows).map((g) => Math.abs((Math.min(...g.map((b) => b.left)) - r.left) - (r.right - Math.max(...g.map((b) => b.right)))))) / r.width; })()",
+          "max": 0.012
+        },
+        {
+          "name": "au moins TROIS rangées : en dessous, aucune silhouette n'existe",
+          "measure": "new Set([...document.querySelectorAll('.vl-cloud > *')].map((e) => Math.round(e.getBoundingClientRect().top))).size",
+          "min": 3
+        },
+        {
+          "name": "les rangées sont de largeurs INÉGALES — sinon c'est un pavé centré, pas un nuage",
+          "measure": "(() => { const rows = {}; for (const e of document.querySelectorAll('.vl-cloud > *')) { const b = e.getBoundingClientRect(); const k = Math.round(b.top); (rows[k] = rows[k] || []).push(b); } const w = Object.values(rows).map((g) => Math.max(...g.map((b) => b.right)) - Math.min(...g.map((b) => b.left))); return (Math.max(...w) - Math.min(...w)) / W; })()",
+          "min": 0.06
+        },
+        {
+          "name": "aucune rangée orpheline : la plus courte porte au moins deux pilules",
+          "measure": "(() => { const rows = {}; for (const e of document.querySelectorAll('.vl-cloud > *')) { const k = Math.round(e.getBoundingClientRect().top); rows[k] = (rows[k] || 0) + 1; } return Math.min(...Object.values(rows)); })()",
+          "min": 2
+        },
+        {
+          "name": "une pilule EST une pilule : rayon ≥ sa demi-hauteur",
+          "measure": "num('.vl-cloud > *','borderTopLeftRadius') / box('.vl-cloud > *').h",
+          "min": 0.5
+        },
+        {
+          "name": "la pilule est PLUS CLAIRE que le fond qui la porte — le rang de blanc se dépense vers le haut",
+          "measure": "lum(parseRgb(cs('.vl-cloud > *','backgroundColor'))) - lum(bgOf($('.vl-cloud')))",
+          "min": 0.01
+        },
+        {
+          "name": "pilule basse : sa hauteur reste sous 12 % de la largeur du nuage",
+          "measure": "box('.vl-cloud > *').h / W",
+          "max": 0.12
+        },
+        {
+          "name": "la gouttière verticale est un peu plus large que l'horizontale : les rangées se lisent avant les colonnes",
+          "measure": "num('.vl-cloud','rowGap') - num('.vl-cloud','columnGap')",
+          "min": 0,
+          "max": 6
+        },
+        {
+          "name": "aucun terme ne se coupe : chaque pilule tient sur une ligne",
+          "measure": "[...document.querySelectorAll('.vl-cloud > *')].filter((e) => e.getBoundingClientRect().height > box('.vl-cloud > *').h * 1.4).length",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "aucun liseré sur les pilules",
+          "measure": "num('.vl-cloud > *','borderTopWidth')",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "contraste du texte de pilule ≥ 4,5",
+          "measure": "contrast('.vl-cloud > *')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement du nuage",
+          "measure": "overflow('.vl-cloud')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/tag-02-centered-cloud.html"
+    },
+    {
+      "id": "tag-03-action-pill-bar",
+      "name": "Barre d'actions en pilules, une seule pleine",
+      "family": "tag",
+      "ref": "ref-18-lime-sales-dashboard",
+      "media": [
+        "web"
+      ],
+      "intent": "Aligner filtres et action principale sur une même ligne sans hiérarchie typographique : toutes les commandes sont des pilules de MÊME hauteur, les filtres portent un puits d'icône plus clair que la pilule qui le contient, et UNE SEULE pilule — la dernière — est pleine. C'est la position et le remplissage qui disent le rang, jamais la taille.",
+      "when_to_use": "Ligne de commandes d'un tableau de bord ou d'un rapport, posée à droite du titre de page : une à trois portées de filtre (période, segment, vue) suivies de l'action qui sort de l'écran (exporter, partager, créer). Un filtre peut porter deux lignes — son intitulé au-dessus de sa valeur — sans changer la hauteur de la barre.",
+      "avoid_when": "Il y a plus de quatre commandes (la ligne devient une barre d'outils et demande des groupes), deux actions sont de premier rang (deux pilules pleines annulent le seul geste de rang), ou les commandes doivent se replier sous le titre : la barre suppose qu'elle tient sur une ligne, et son alignement à droite n'a plus de sens dès qu'elle passe à la ligne.",
+      "tags": [
+        "action",
+        "filtre",
+        "pilule",
+        "pill",
+        "barre",
+        "toolbar",
+        "dashboard",
+        "export",
+        "periode",
+        "segment",
+        "cta",
+        "puits",
+        "icone"
+      ],
+      "vars": [
+        {
+          "name": "--vl-module",
+          "role": "aplat d'une pilule de filtre",
+          "default": "#F2F2F2"
+        },
+        {
+          "name": "--vl-app",
+          "role": "aplat du puits d'icône — plus clair que la pilule qui le porte",
+          "default": "#FEFEFE"
+        },
+        {
+          "name": "--vl-invert",
+          "role": "aplat de l'unique pilule pleine",
+          "default": "#000000"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "valeur d'un filtre, libellé de l'action",
+          "default": "#0B0B0B"
+        },
+        {
+          "name": "--vl-ink-soft",
+          "role": "intitulé d'un filtre, au-dessus de sa valeur",
+          "default": "#6B6B6B"
+        },
+        {
+          "name": "--vl-on-invert",
+          "role": "encre sur la pilule pleine",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-radius-pill",
+          "role": "rayon — toujours une pilule pleine, jamais un rayon franc",
+          "default": "999px"
+        }
+      ],
+      "slots": [
+        "filters",
+        "action"
+      ],
+      "geometry": {
+        "root": ".vl-actionbar",
+        "frame": [
+          672,
+          62
+        ],
+        "ratios": {
+          "pill_height_over_width": 0.092,
+          "well_over_pill_height": 0.742,
+          "gap_over_pill_height": 0.194,
+          "value_over_label": 1.23
+        },
+        "type_px": {
+          "value": 16,
+          "label": 13,
+          "action": 17
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "toutes les pilules ont EXACTEMENT la même hauteur — la taille ne dit jamais le rang",
+          "measure": "(() => { const h = [...document.querySelectorAll('.vl-actionbar > *')].map((e) => e.getBoundingClientRect().height); return Math.max(...h) - Math.min(...h); })()",
+          "max": 1
+        },
+        {
+          "name": "toutes sont des pilules : rayon ≥ demi-hauteur, sans exception",
+          "measure": "(() => { const r = [...document.querySelectorAll('.vl-actionbar > *')].map((e) => parseFloat(getComputedStyle(e).borderTopLeftRadius) / e.getBoundingClientRect().height); return Math.min(...r); })()",
+          "min": 0.5
+        },
+        {
+          "name": "UNE SEULE pilule pleine dans la barre",
+          "measure": "[...document.querySelectorAll('.vl-actionbar > *')].filter((e) => lum(parseRgb(getComputedStyle(e).backgroundColor)) < 0.2).length",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "… et c'est la DERNIÈRE : l'action de sortie ferme la ligne",
+          "measure": "document.querySelector('.vl-actionbar').lastElementChild.classList.contains('vl-actionbar__pill--solid') ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "le puits d'icône est un disque",
+          "measure": "box('.vl-actionbar__well').w / box('.vl-actionbar__well').h",
+          "expect": 1,
+          "tol": 0.02
+        },
+        {
+          "name": "le puits est PLUS CLAIR que la pilule qui le porte — le rang de blanc se dépense vers le haut",
+          "measure": "lum(parseRgb(cs('.vl-actionbar__well','backgroundColor'))) - lum(parseRgb(cs('.vl-actionbar__pill','backgroundColor')))",
+          "min": 0.01
+        },
+        {
+          "name": "puits ≈ 74 % de la hauteur de pilule : il loge dedans, il ne la remplit pas",
+          "measure": "box('.vl-actionbar__well').h / box('.vl-actionbar__pill').h",
+          "expect": 0.742,
+          "tol": 0.07
+        },
+        {
+          "name": "gouttière intérieure constante : l'écart du puits au bord gauche égale son écart au bord haut",
+          "measure": "Math.abs((box('.vl-actionbar__well').left - box('.vl-actionbar__pill').left) - (box('.vl-actionbar__well').top - box('.vl-actionbar__pill').top))",
+          "max": 1.5
+        },
+        {
+          "name": "l'intitulé est PLUS PETIT que la valeur qu'il coiffe",
+          "measure": "num('.vl-actionbar__value','fontSize') / num('.vl-actionbar__label','fontSize')",
+          "min": 1.15
+        },
+        {
+          "name": "… mais le saut reste faible : ce n'est pas un titre, c'est un cadrage",
+          "measure": "num('.vl-actionbar__value','fontSize') / num('.vl-actionbar__label','fontSize')",
+          "max": 1.6
+        },
+        {
+          "name": "la pilule pleine n'a PAS de puits : elle n'est pas un filtre déguisé",
+          "measure": "document.querySelectorAll('.vl-actionbar__pill--solid .vl-actionbar__well').length",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "la barre reste une ligne : aucune pilule ne descend sous la première",
+          "measure": "(() => { const t = [...document.querySelectorAll('.vl-actionbar > *')].map((e) => e.getBoundingClientRect().top); return Math.max(...t) - Math.min(...t); })()",
+          "max": 1
+        },
+        {
+          "name": "contraste de la valeur d'un filtre ≥ 4,5",
+          "measure": "contrast('.vl-actionbar__value')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste de l'intitulé ≥ 4,5 — c'est lui qui plafonne",
+          "measure": "contrast('.vl-actionbar__label')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste du libellé de l'action pleine ≥ 4,5",
+          "measure": "contrast('.vl-actionbar__pill--solid')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement de la barre",
+          "measure": "overflow('.vl-actionbar')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/tag-03-action-pill-bar.html"
     },
     {
       "id": "title-leading-rule",
@@ -3415,7 +5598,7 @@
       "id": "ref-12-neon-capsule-tags",
       "name": "Néon vert — étiquettes capsules sur fond sombre",
       "patterns": [
-        "tag-gooey-capsule"
+        "tag-01-gooey-capsule"
       ],
       "deck": null,
       "tokens": {
@@ -3490,7 +5673,7 @@
       "id": "ref-14-layer-stack-coral",
       "name": "Schéma de couches — corail sur blanc cassé",
       "patterns": [
-        "diagram-layer-stack"
+        "diagram-01-layer-stack"
       ],
       "deck": "decks/ref-14-layer-stack-coral.html",
       "tokens": {
@@ -3580,6 +5763,147 @@
           "figure": "47px / 1.12 / 400",
           "body": "25px / 1.5 / 400",
           "mono": "22px / 1.42 / 400 / 0.06em"
+        }
+      }
+    },
+    {
+      "id": "ref-17-mono-bento-legal",
+      "name": "Bento monochrome, hiérarchie par la surface",
+      "patterns": [
+        "card-11-corner-arrow-tile",
+        "layout-05-nav-pill-bar",
+        "layout-06-bento-l-span",
+        "tag-02-centered-cloud"
+      ],
+      "deck": "decks/ref-17-mono-bento-legal.html",
+      "tokens": {
+        "--vl-page": "#FEFEFE",
+        "--vl-module": "#EDEDED",
+        "--vl-object": "#FFFFFF",
+        "--vl-invert": "#000000",
+        "--vl-ink": "#111111",
+        "--vl-ink-soft": "#5F5F5F",
+        "--vl-on-invert": "#FFFFFF",
+        "--vl-on-invert-soft": "rgba(255,255,255,0.62)",
+        "--vl-line": "rgba(17,17,17,0.55)",
+        "--vl-radius-page": "38px",
+        "--vl-radius-module": "24px",
+        "--vl-radius-bar": "20px",
+        "--vl-radius-pill": "999px",
+        "--vl-gutter": "26px",
+        "--vl-margin": "57px",
+        "--vl-bar-h": "69px",
+        "--vl-col-1": "343fr",
+        "--vl-col-2": "466fr",
+        "--vl-col-3": "464fr",
+        "--vl-row-1": "302fr",
+        "--vl-row-2": "232fr",
+        "--vl-row-3": "243fr"
+      },
+      "type": {
+        "display": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+        "body": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+        "mono": "\"DM Mono\", ui-monospace, SFMono-Regular, Menlo, monospace",
+        "scale": {
+          "claim": "46px / 1.14 / 500 / -0.02em",
+          "wordmark": "30px / 1.1 / 700 / -0.02em",
+          "title": "23px / 1.24 / 500 / -0.01em",
+          "body": "16px / 1.45 / 500",
+          "tag": "11px / 1.2 / 500"
+        }
+      }
+    },
+    {
+      "id": "ref-18-lime-sales-dashboard",
+      "name": "Tableau de bord achromatique à accent vert dosé",
+      "patterns": [
+        "card-12-inverted-kpi-row",
+        "chart-05-tile-heatmap",
+        "layout-07-icon-rail-shell",
+        "tag-03-action-pill-bar"
+      ],
+      "deck": "decks/ref-18-lime-sales-dashboard.html",
+      "tokens": {
+        "--vl-app": "#FEFEFE",
+        "--vl-module": "#F2F2F2",
+        "--vl-module-warm": "#FBF9EC",
+        "--vl-invert": "#000000",
+        "--vl-accent": "#5FE85C",
+        "--vl-ink": "#0B0B0B",
+        "--vl-ink-soft": "#6B6B6B",
+        "--vl-on-invert": "#FFFFFF",
+        "--vl-on-invert-soft": "rgba(255,255,255,0.66)",
+        "--vl-hairline": "#E6E6E6",
+        "--vl-ramp-1": "#E3E3E3",
+        "--vl-ramp-2": "#CCCCCC",
+        "--vl-ramp-3": "#999999",
+        "--vl-ramp-4": "#666666",
+        "--vl-ramp-5": "#000000",
+        "--vl-radius-module": "29px",
+        "--vl-radius-tile": "20px",
+        "--vl-radius-pill": "999px",
+        "--vl-gutter": "16px",
+        "--vl-gutter-row": "11px",
+        "--vl-rail-w": "95px",
+        "--vl-margin": "30px",
+        "--vl-header-h": "69px"
+      },
+      "type": {
+        "display": "Montserrat, Poppins, Inter, \"Helvetica Neue\", Arial, sans-serif",
+        "body": "Montserrat, Poppins, Inter, \"Helvetica Neue\", Arial, sans-serif",
+        "mono": "\"DM Mono\", ui-monospace, SFMono-Regular, Menlo, monospace",
+        "scale": {
+          "page": "66px / 1.06 / 500 / -0.02em",
+          "figure": "62px / 1.0 / 700 / -0.025em",
+          "title": "27px / 1.2 / 500 / -0.01em",
+          "label": "19px / 1.3 / 500",
+          "micro": "16px / 1.35 / 500"
+        }
+      }
+    },
+    {
+      "id": "ref-19-acid-clinical-timeline",
+      "name": "Feuille clinique grise sur voile, accent acide",
+      "patterns": [
+        "diagram-02-branch-timeline",
+        "diagram-03-time-scrubber",
+        "layout-08-sheet-handle-tab",
+        "list-05-vitals-strip"
+      ],
+      "deck": "decks/ref-19-acid-clinical-timeline.html",
+      "tokens": {
+        "--vl-veil": "#4A4A48",
+        "--vl-veil-deep": "#1B1D1D",
+        "--vl-sheet": "#DFDFD7",
+        "--vl-module": "#F0EFEB",
+        "--vl-module-hi": "#FFFFFF",
+        "--vl-accent": "#F5FE49",
+        "--vl-alert": "#E8756B",
+        "--vl-recover": "#7FA88C",
+        "--vl-ink": "#262C2C",
+        "--vl-ink-soft": "#5F615E",
+        "--vl-on-veil": "#FFFFFF",
+        "--vl-on-veil-soft": "rgba(255,255,255,0.72)",
+        "--vl-radius-sheet": "34px",
+        "--vl-radius-module": "22px",
+        "--vl-radius-pill": "999px",
+        "--vl-notch": "26px",
+        "--vl-bleed": "20px",
+        "--vl-tabbar-h": "106px",
+        "--vl-ribbon-h": "74px",
+        "--vl-gutter": "18px",
+        "--vl-margin": "34px"
+      },
+      "type": {
+        "display": "Montserrat, Poppins, Inter, \"Helvetica Neue\", Arial, sans-serif",
+        "body": "Montserrat, Poppins, Inter, \"Helvetica Neue\", Arial, sans-serif",
+        "mono": "\"DM Mono\", ui-monospace, SFMono-Regular, Menlo, monospace",
+        "scale": {
+          "sheet": "48px / 1.05 / 500 / -0.02em",
+          "diagnosis": "37px / 1.1 / 500 / -0.015em",
+          "value": "30px / 1.1 / 600 / -0.01em",
+          "label": "24px / 1.2 / 500 / -0.01em",
+          "micro": "14px / 1.3 / 500"
         }
       }
     }

@@ -1,0 +1,52 @@
+{
+  "name": "Vignette d'entrée à flèche de coin",
+  "family": "card",
+  "ref": "ref-17-mono-bento-legal",
+  "intent": "Faire d'un module une ENTRÉE cliquable sans bouton ni liseré : le titre en haut à gauche, une flèche oblique ancrée au coin opposé — jamais alignée sur le titre — et l'illustration qui occupe tout le bas de la vignette au lieu d'être centrée dedans.",
+  "when_to_use": "Grille de services, sommaire de rubriques, tuiles d'entrée d'un accueil : trois à cinq vignettes de même rang dont chacune mène ailleurs. Le titre tient sur deux lignes courtes, l'illustration porte la respiration, et la flèche est le seul signe d'interaction de l'écran.",
+  "avoid_when": "La vignette porte un chiffre (elle devient une carte de KPI, cf. card-10-kpi-notch-tile : le chiffre veut l'aplomb du bas, l'illustration aussi, et les deux ne cohabitent pas), le titre dépasse trois lignes (il rejoint la flèche et le coin cesse d'être libre), ou la vignette n'est pas cliquable — une flèche qui ne mène nulle part est un mensonge d'interface.",
+  "media": ["web", "slide"],
+  "tags": ["vignette", "carte", "tuile", "entree", "service", "rubrique", "fleche", "arrow", "coin", "illustration", "bento", "accueil", "landing", "monochrome"],
+  "vars": [
+    { "name": "--vl-module", "role": "aplat de la vignette", "default": "#EDEDED" },
+    { "name": "--vl-ink", "role": "titre et flèche", "default": "#111111" },
+    { "name": "--vl-ink-soft", "role": "ligne d'explication sous l'illustration", "default": "#5F5F5F" },
+    { "name": "--vl-line", "role": "trait de l'illustration — une valeur d'encre, pas un gris de fond", "default": "rgba(17,17,17,0.55)" },
+    { "name": "--vl-radius-module", "role": "rayon de la vignette", "default": "24px" }
+  ],
+  "slots": ["title", "art", "sub"],
+  "geometry": {
+    "root": ".vl-tile",
+    "frame": [466, 302],
+    "ratios": {
+      "width_over_height": 1.543,
+      "radius_over_width": 0.0515,
+      "pad_over_width": 0.06,
+      "arrow_over_width": 0.064,
+      "title_block_over_width": 0.74,
+      "art_over_height": 0.45
+    },
+    "type_px": { "title": 23, "sub": 16 },
+    "pad_ratio": { "top": 0.06, "x": 0.06, "bottom": 0.06 }
+  },
+  "benchmarks": [
+    { "name": "vignette nettement paysage : W / H ≈ 1,54", "measure": "W / H", "expect": 1.543, "tol": 0.12 },
+    { "name": "rayon ≈ 5 % de la largeur", "measure": "num('.vl-tile','borderTopLeftRadius') / W", "expect": 0.0515, "tol": 0.015 },
+    { "name": "marge intérieure identique à gauche et en haut : la vignette n'a pas de sens de lecture privilégié", "measure": "Math.abs(num('.vl-tile','paddingLeft') - num('.vl-tile','paddingTop'))", "max": 1 },
+    { "name": "la flèche est ANCRÉE au coin : son bord droit colle la marge intérieure", "measure": "W - num('.vl-tile','paddingRight') - box('.vl-tile__arrow').right", "expect": 0, "tol": 1.5 },
+    { "name": "… et son bord haut aussi", "measure": "Math.abs(box('.vl-tile__arrow').top - num('.vl-tile','paddingTop'))", "max": 1.5 },
+    { "name": "la flèche reste un repère, jamais un sujet : ≤ 9 % de la largeur", "measure": "box('.vl-tile__arrow').w / W", "max": 0.09 },
+    { "name": "le titre ne court JAMAIS sous la flèche : au moins 8 px les séparent", "measure": "box('.vl-tile__arrow').left - box('.vl-tile__title').right", "min": 8 },
+    { "name": "le titre colle le coin haut-gauche", "measure": "Math.abs(box('.vl-tile__title').left - num('.vl-tile','paddingLeft')) + Math.abs(box('.vl-tile__title').top - num('.vl-tile','paddingTop'))", "max": 3 },
+    { "name": "l'illustration occupe toute la largeur utile — elle n'est pas une vignette dans la vignette", "measure": "box('.vl-tile__art').w / (W - num('.vl-tile','paddingLeft') - num('.vl-tile','paddingRight'))", "min": 0.95 },
+    { "name": "l'illustration prend au moins 40 % de la hauteur : c'est elle qui porte la respiration", "measure": "box('.vl-tile__art').h / H", "min": 0.4 },
+    { "name": "la ligne d'explication est bien en bas", "measure": "box('.vl-tile__sub').bottom / H", "min": 0.86 },
+    { "name": "saut typographique titre / explication ≥ 1,35", "measure": "num('.vl-tile__title','fontSize') / num('.vl-tile__sub','fontSize')", "min": 1.35 },
+    { "name": "aucun liseré", "measure": "num('.vl-tile','borderTopWidth')", "expect": 0, "tol": 0 },
+    { "name": "aucune ombre portée", "measure": "cs('.vl-tile','boxShadow') === 'none' ? 1 : 0", "expect": 1 },
+    { "name": "contraste du titre ≥ 4,5", "measure": "contrast('.vl-tile__title')", "min": 4.5 },
+    { "name": "contraste de l'explication ≥ 4,5", "measure": "contrast('.vl-tile__sub')", "min": 4.5 },
+    { "name": "aucun débordement", "measure": "overflow('.vl-tile')", "max": 0 }
+  ],
+  "notes": "Deux assertions font tout le pattern, et elles disent la même chose de deux façons : la flèche est ancrée au COIN (bord droit et bord haut collés à la marge), et le titre s'arrête au moins 8 px avant elle. Sans la seconde, un titre de trois mots de plus passe sous la flèche : la mesure de position reste verte et la vignette est cassée. C'est le cas typique où un contrôle ne voit qu'une moitié du geste.\n\nL'illustration est mesurée en LARGEUR UTILE (≥ 95 % de l'entre-marges) et pas en aire : une illustration centrée avec des marges propres à elle est exactement ce que ce pattern refuse — elle ferait une vignette dans la vignette, c'est-à-dire une couche de plus.\n\nCe n'est pas une variante de card-10-kpi-notch-tile : celui-ci porte un chiffre héros et une silhouette chanfreinée, celui-là ni l'un ni l'autre. Le seul point commun est le mot « tuile », et un mot n'est pas une composition."
+}

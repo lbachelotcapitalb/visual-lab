@@ -1,0 +1,52 @@
+{
+  "name": "Barre de menu en pilule flottante",
+  "family": "layout",
+  "ref": "ref-17-mono-bento-legal",
+  "intent": "Poser la navigation d'une page comme un OBJET posé dans la marge — un aplat arrondi qui flotte au lieu d'un bandeau collé au bord — et n'y employer qu'une seule ressource de hiérarchie : le rang de blanc, le badge de marque et le bouton d'action étant plus CLAIRS que la barre qui les porte.",
+  "when_to_use": "En-tête d'une landing ou d'une application dont le fond est déjà clair, quand la navigation ne doit pas se lire comme un chrome de navigateur : la barre reste dans la marge de page, à la même distance des bords que les modules qui la suivent, et le premier module commence juste dessous.",
+  "avoid_when": "La page défile sous un en-tête collant (une pilule flottante qui se fige au bord perd exactement ce qui la justifie), le fond est sombre ou photographique (le rang de blanc n'a plus de sens : le blanc devient la couleur la plus forte de l'écran), ou la navigation compte plus de cinq entrées — au-delà, les liens rattrapent le bouton et la respiration qui fait l'objet disparaît.",
+  "media": ["web"],
+  "tags": ["navigation", "menu", "barre", "header", "entete", "pilule", "landing", "logo", "wordmark", "bouton", "cta", "monochrome", "web", "app"],
+  "vars": [
+    { "name": "--vl-module", "role": "aplat de la barre", "default": "#EDEDED" },
+    { "name": "--vl-object", "role": "blanc des objets posés DANS la barre (badge, bouton) — plus clair que la page", "default": "#FFFFFF" },
+    { "name": "--vl-ink", "role": "wordmark, téléphone, libellé du bouton", "default": "#111111" },
+    { "name": "--vl-ink-soft", "role": "liens de menu (relevé #6E6E6E, posé #5F5F5F pour tenir 4,5:1)", "default": "#5F5F5F" },
+    { "name": "--vl-radius-bar", "role": "rayon de la barre — un rayon franc, JAMAIS une demi-hauteur", "default": "20px" },
+    { "name": "--vl-radius-pill", "role": "rayon du bouton et du badge, eux vraiment en pilule", "default": "999px" }
+  ],
+  "slots": ["badge", "mark", "links", "cta"],
+  "geometry": {
+    "root": ".vl-navbar",
+    "frame": [1326, 69],
+    "ratios": {
+      "height_over_width": 0.052,
+      "radius_over_height": 0.29,
+      "badge_over_height": 0.696,
+      "cta_over_height": 0.71,
+      "inset_over_height": 0.145,
+      "link_gap_over_height": 0.638
+    },
+    "type_px": { "mark": 30, "link": 16, "cta": 15 },
+    "pad_ratio": { "top": 0, "x": 0.0075, "bottom": 0 }
+  },
+  "benchmarks": [
+    { "name": "barre basse : sa hauteur vaut ≈ 5 % de sa largeur", "measure": "H / W", "expect": 0.052, "tol": 0.012 },
+    { "name": "un RAYON, pas une pilule : le rayon reste sous 45 % de la hauteur", "measure": "num('.vl-navbar','borderTopLeftRadius') / H", "min": 0.18, "max": 0.45 },
+    { "name": "le badge, LUI, est un disque parfait", "measure": "box('.vl-navbar__badge').w / box('.vl-navbar__badge').h", "expect": 1, "tol": 0.02 },
+    { "name": "badge ≈ 70 % de la hauteur de barre — il loge dedans, il ne la déborde pas", "measure": "box('.vl-navbar__badge').h / H", "expect": 0.696, "tol": 0.06 },
+    { "name": "gouttière constante : l'écart du badge au bord gauche égale son écart au bord haut", "measure": "Math.abs(box('.vl-navbar__badge').left - box('.vl-navbar__badge').top)", "max": 1.5 },
+    { "name": "le bouton est PLUS CLAIR que la barre — c'est le seul geste de hiérarchie du système", "measure": "lum(parseRgb(cs('.vl-navbar__cta','backgroundColor'))) - lum(parseRgb(cs('.vl-navbar','backgroundColor')))", "min": 0.01 },
+    { "name": "le badge aussi est plus clair que la barre", "measure": "lum(parseRgb(cs('.vl-navbar__badge','backgroundColor'))) - lum(parseRgb(cs('.vl-navbar','backgroundColor')))", "min": 0.01 },
+    { "name": "le bouton EST une pilule : son rayon vaut au moins sa demi-hauteur", "measure": "num('.vl-navbar__cta','borderTopLeftRadius') / box('.vl-navbar__cta').h", "min": 0.5 },
+    { "name": "le bloc de droite colle la marge intérieure de la barre", "measure": "W - num('.vl-navbar','paddingRight') - box('.vl-navbar__cta').right", "expect": 0, "tol": 1.5 },
+    { "name": "le wordmark et les liens ne se touchent jamais : au moins deux hauteurs de barre les séparent", "measure": "(box('.vl-navbar__links').left - box('.vl-navbar__mark').right) / H", "min": 2 },
+    { "name": "saut typographique wordmark / lien ≥ 1,7", "measure": "num('.vl-navbar__mark','fontSize') / num('.vl-navbar__links','fontSize')", "min": 1.7 },
+    { "name": "aucun liseré : la barre se détache par son aplat, pas par un trait", "measure": "num('.vl-navbar','borderTopWidth')", "expect": 0, "tol": 0 },
+    { "name": "aucune ombre portée", "measure": "cs('.vl-navbar','boxShadow') === 'none' ? 1 : 0", "expect": 1 },
+    { "name": "contraste des liens ≥ 4,5 sur l'aplat de la barre", "measure": "contrast('.vl-navbar__links')", "min": 4.5 },
+    { "name": "contraste du libellé de bouton ≥ 4,5 sur son blanc", "measure": "contrast('.vl-navbar__cta')", "min": 4.5 },
+    { "name": "aucun débordement du contenu hors de la barre", "measure": "overflow('.vl-navbar')", "max": 0 }
+  ],
+  "notes": "Le geste qui fait ce pattern n'est ni le rayon ni la pilule : c'est le RANG DE BLANC. La barre est un gris de module, le badge et le bouton sont d'un blanc plus clair que la PAGE elle-même. Deux benchmarks le mesurent en luminance relative parce que c'est la seule formulation qui survive à un changement de charte — dire « le bouton est blanc » serait faux dès qu'on thème le pattern en sombre, dire « le bouton est plus clair que la barre » reste vrai partout.\n\nLe rayon est tenu entre 18 % et 45 % de la hauteur, et cette borne haute est le vrai contrôle : à 50 % la barre devient une pilule pleine, ce qui est une autre forme et un autre système (les liens semblent alors flotter dans un tube). Le bouton, lui, est bien une pilule — la dissymétrie entre les deux est délibérée.\n\nL'assertion « l'écart du badge au bord gauche égale son écart au bord haut » vaut mieux qu'une mesure de padding : elle attrape aussi le cas où le badge est centré verticalement mais collé à gauche, qui passe tous les contrôles de padding et casse pourtant la silhouette.\n\nL'encre des liens est posée à #5F5F5F et non au #6E6E6E relevé sur la source : sur le gris de module #EDEDED, le relevé plafonne à 4,09:1. Écart invisible à l'œil, faute de contraste évitée."
+}

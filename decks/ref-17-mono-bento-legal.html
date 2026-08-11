@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ref-17 — mono bento legal (northbeam)</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+/* ref-17-mono-bento-legal — reconstitution fidèle. Ce n'est PAS un deck : c'est UNE page web.
+   LE FICHIER NE CONTIENT QUE LA PAGE, à sa taille réelle mise à l'échelle 1440 (la source
+   mesure 1067). Le carton de présentation gris #C7C7C7 qui entourait la page dans le visuel
+   d'origine n'est PAS reconstruit : c'est le support du visuel, pas la page — et la page n'y
+   était même pas centrée verticalement (71 px en haut, 57 en bas), ce qui suffit à le prouver.
+
+   Les cinq illustrations au trait de la source (spirale, anneau, cubes, escalier, croix
+   isométrique) sont remplacées par des compositions SVG génératives de même cadrage et de
+   même valeur de gris : aucune URL distante, rien à télécharger, rien qui périme.
+
+   Toutes les couleurs sont dans ce :root ; aucun hex plus bas. */
+:root {
+  --vl-page: #FEFEFE;
+  --vl-module: #EDEDED;
+  --vl-object: #FFFFFF;
+  --vl-invert: #000000;
+  --vl-ink: #111111;
+  --vl-ink-soft: #5F5F5F;
+  --vl-on-invert: #FFFFFF;
+  --vl-on-invert-soft: rgba(255,255,255,0.62);
+  --vl-line: rgba(17,17,17,0.55);
+
+  --vl-radius-page: 38px;
+  --vl-radius-module: 24px;
+  --vl-radius-bar: 20px;
+  --vl-radius-pill: 999px;
+  --vl-gutter: 26px;
+  --vl-margin: 57px;
+  --vl-bar-h: 69px;
+}
+
+/* Aucune marge de page : la page EST la scène. Un liseré de body se lirait comme une couche
+   de plus — c'est exactement la faute que bin/check-deck.mjs attrape. */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--vl-page); }
+body { font-family: Inter, "Helvetica Neue", Arial, sans-serif; color: var(--vl-ink); }
+
+.slide {
+  width: 1440px; height: 1042px;
+  padding: 53px var(--vl-margin);
+  background: var(--vl-page);
+  border-radius: var(--vl-radius-page);
+  display: flex; flex-direction: column; gap: 36px;
+  overflow: hidden;
+}
+
+/* ─────────────────────────── barre de menu ─────────────────────────── */
+/* Elle FLOTTE dans la marge de page : c'est un aplat gris arrondi, pas un bandeau collé au
+   bord. Le bouton et le badge du logo sont en #FFFFFF — un blanc plus clair que la page —
+   parce que le rang de blanc du système se dépense vers le haut. */
+.nav {
+  flex: 0 0 var(--vl-bar-h);
+  background: var(--vl-module);
+  border-radius: var(--vl-radius-bar);
+  display: flex; align-items: center;
+  padding: 0 10px 0 10px;
+}
+.nav__badge {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--vl-object);
+  display: flex; align-items: center; justify-content: center;
+  flex: 0 0 auto;
+}
+.nav__badge svg { width: 22px; height: 22px; }
+.nav__mark {
+  margin-left: 16px;
+  font-size: 30px; font-weight: 700; letter-spacing: -0.02em;
+}
+.nav__links {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 44px;
+  font-size: 16px; font-weight: 500; color: var(--vl-ink-soft);
+}
+.nav__links span { display: inline-flex; align-items: center; gap: 7px; }
+.nav__caret { width: 9px; height: 6px; }
+.nav__phone { color: var(--vl-ink); font-weight: 500; }
+.nav__cta {
+  margin-left: 44px;
+  height: 49px; padding: 0 22px;
+  border-radius: var(--vl-radius-pill);
+  background: var(--vl-object);
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 15px; font-weight: 500; color: var(--vl-ink);
+}
+.nav__cta svg { width: 15px; height: 15px; }
+
+/* ─────────────────────────── grille bento ─────────────────────────── */
+/* 3 colonnes × 3 rangées, gouttière unique, DEUX enjambements en L qui se croisent sans se
+   chevaucher. Les frontières horizontales relevées sur la source sont toutes différentes
+   (188 / 411 / 432 / 602 / 620 / 802) — ce qui pousse à modéliser l'écran en deux colonnes
+   flex indépendantes. C'est faux : avec r1=224, r2=172, r3=180 et 19 de gouttière, les cinq
+   modules retombent EXACTEMENT sur ces frontières. Deux colonnes indépendantes se
+   désaligneraient au premier changement de texte ; la grille, non. */
+.bento {
+  /* `min-height: 0` est NON NÉGOCIABLE : le minimum automatique d'un item flex est `auto`,
+     donc la grille refuse de descendre sous la hauteur de son contenu et POUSSE la page.
+     Les pistes en `minmax(0, …fr)` ne suffisent pas — elles tiennent les rangées entre
+     elles, pas la grille dans la page. Les deux gardes sont nécessaires, aucun ne remplace
+     l'autre (constaté au premier rendu : les rangées mesuraient 669 px pour 560 attendus). */
+  flex: 1 1 auto; min-height: 0;
+  display: grid;
+  /* `minmax(0, …fr)` et pas `…fr` seul : le minimum automatique d'une piste `fr` est
+     `auto`, si bien qu'un module trop plein POUSSE sa rangée et l'écran déborde en silence —
+     la grille cesse alors d'être la grille relevée. Le plancher à 0 la rend inviolable. */
+  grid-template-columns: minmax(0, 343fr) minmax(0, 466fr) minmax(0, 464fr);
+  grid-template-rows: minmax(0, 302fr) minmax(0, 232fr) minmax(0, 243fr);
+  gap: var(--vl-gutter);
+}
+.mod {
+  background: var(--vl-module);
+  border-radius: var(--vl-radius-module);
+  padding: 28px;
+  position: relative;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.mod--a { grid-column: 1; grid-row: 1 / span 2; }
+.mod--b { grid-column: 2; grid-row: 1; }
+.mod--c { grid-column: 3; grid-row: 1; }
+.mod--hero { grid-column: 2 / span 2; grid-row: 2 / span 2; background: var(--vl-invert); color: var(--vl-on-invert); padding: 40px; }
+.mod--d { grid-column: 1; grid-row: 3; }
+
+.mod__title {
+  font-size: 23px; line-height: 1.24; font-weight: 500; letter-spacing: -0.01em;
+  margin: 0; max-width: 74%;
+}
+.mod__sub {
+  font-size: 16px; line-height: 1.45; font-weight: 500; color: var(--vl-ink-soft);
+  margin: 0;
+}
+/* La flèche est ancrée au coin, jamais alignée sur le titre : c'est un repère de module, pas
+   un mot de plus dans la phrase. */
+.mod__arrow { position: absolute; top: 28px; right: 28px; width: 30px; height: 30px; }
+.mod--hero .mod__arrow { top: 40px; right: 40px; width: 42px; height: 42px; }
+.mod__art { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; min-height: 0; }
+.mod__art svg { width: 100%; height: 100%; }
+
+/* ── nuage de tags ──
+   Les pilules se rangent en lignes de largeur INÉGALE, chacune centrée SUR ELLE-MÊME. C'est
+   ce centrage par rangée — et pas le centrage du bloc — qui donne la silhouette de nuage :
+   avec `justify-content: flex-start`, on obtient une liste ; avec un bloc centré mais des
+   rangées ferrées à gauche, on obtient un pavé. */
+.cloud {
+  margin-top: auto;
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 8px 7px;
+}
+.cloud span {
+  background: var(--vl-object);
+  border-radius: var(--vl-radius-pill);
+  padding: 6px 12px;
+  font-size: 11px; font-weight: 500; color: var(--vl-ink);
+  white-space: nowrap;
+}
+
+/* ── hero ── */
+.hero__claim {
+  font-size: 46px; line-height: 1.14; font-weight: 500; letter-spacing: -0.02em;
+  margin: 0; max-width: 46%;
+}
+.hero__foot { margin-top: auto; display: flex; align-items: flex-end; gap: 24px; }
+.hero__kicker {
+  font-size: 17px; line-height: 1.62; font-weight: 500; margin: 0; max-width: 400px;
+}
+/* Le seul geste de mise en avant du système : un segment de texte SURLIGNÉ EN INVERSE. Il ne
+   porte ni couleur ni graisse — sur un système sans couleur, l'inversion est la seule
+   emphase disponible, et elle ne vaut que si elle ne sert qu'une fois. */
+.hero__mark {
+  background: var(--vl-on-invert); color: var(--vl-invert);
+  padding: 1px 5px; border-radius: 3px;
+}
+.hero__social { margin-left: auto; display: flex; gap: 10px; }
+.hero__social i {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--vl-on-invert);
+  display: flex; align-items: center; justify-content: center;
+}
+.hero__social svg { width: 17px; height: 17px; }
+.hero__art { position: absolute; right: 40px; top: 50%; transform: translateY(-50%); width: 46%; }
+</style>
+</head>
+<body>
+
+<!-- vl:stage web — page d'accueil, pas une slide : le format PPT n'a pas de sens ici -->
+<section class="slide">
+
+  <header class="nav">
+    <span class="nav__badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+        <path d="M4 10v4M8 6.5v11M12 3.5v17M16 6.5v11M20 10v4"/>
+      </svg>
+    </span>
+    <span class="nav__mark">northbeam</span>
+    <nav class="nav__links">
+      <span>Services
+        <svg class="nav__caret" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 1.5 6 6.5l5-5"/></svg>
+      </span>
+      <span>Case work</span>
+      <span class="nav__phone">+33 1 84 80 44 55</span>
+      <span class="nav__cta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="8" r="3.4"/><path d="M4.8 20c.7-3.6 3.6-5.6 7.2-5.6s6.5 2 7.2 5.6"/></svg>
+        Client area
+      </span>
+    </nav>
+  </header>
+
+  <div class="bento">
+
+    <!-- A — colonne 1, rangées 1-2 : titre, illustration, nuage de tags collé au bas -->
+    <article class="mod mod--a">
+      <h2 class="mod__title">Legal<br>services</h2>
+      <svg class="mod__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg>
+      <div class="mod__art">
+        <!-- spirale : dix ellipses translatées, la même primitive répétée — une hélice se
+             dessine par répétition, jamais par un tracé unique. -->
+        <svg viewBox="0 0 220 150" fill="none" stroke="var(--vl-line)" stroke-width="0.9" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="110" cy="20" rx="66" ry="15"/>
+          <ellipse cx="110" cy="33" rx="66" ry="15"/>
+          <ellipse cx="110" cy="46" rx="66" ry="15"/>
+          <ellipse cx="110" cy="59" rx="66" ry="15"/>
+          <ellipse cx="110" cy="72" rx="66" ry="15"/>
+          <ellipse cx="110" cy="85" rx="66" ry="15"/>
+          <ellipse cx="110" cy="98" rx="66" ry="15"/>
+          <ellipse cx="110" cy="111" rx="66" ry="15"/>
+          <ellipse cx="110" cy="124" rx="66" ry="15"/>
+          <path d="M44 20v104M176 20v104"/>
+        </svg>
+      </div>
+      <div class="cloud">
+        <span>family law</span><span>commercial disputes</span>
+        <span>property &amp; housing</span><span>tax and duties</span>
+        <span>employment law</span><span>filings</span><span>claims</span>
+        <span>contracts</span><span>case support</span><span>advice</span>
+      </div>
+    </article>
+
+    <!-- B — colonne 2, rangée 1 -->
+    <article class="mod mod--b">
+      <h2 class="mod__title">Video<br>consultations</h2>
+      <svg class="mod__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg>
+      <div class="mod__art">
+        <svg viewBox="0 0 300 150" fill="none" stroke="var(--vl-line)" stroke-width="0.9" preserveAspectRatio="xMidYMid meet">
+          <ellipse cx="196" cy="86" rx="86" ry="28"/>
+          <path d="M110 86a86 28 0 0 0 172 0"/>
+          <ellipse cx="196" cy="66" rx="52" ry="17"/>
+          <path d="M144 66v20M248 66v20"/>
+          <ellipse cx="196" cy="86" rx="52" ry="17"/>
+          <circle cx="196" cy="52" r="17"/>
+        </svg>
+      </div>
+      <p class="mod__sub">We run consultations<br>over Zoom or Meet</p>
+    </article>
+
+    <!-- C — colonne 3, rangée 1 -->
+    <article class="mod mod--c">
+      <h2 class="mod__title">Learning<br>material</h2>
+      <svg class="mod__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg>
+      <div class="mod__art">
+        <svg viewBox="0 0 300 150" fill="none" stroke="var(--vl-line)" stroke-width="0.9" preserveAspectRatio="xMidYMid meet">
+          <g>
+            <path d="M120 44 154 26l34 18-34 18z"/><path d="M120 44v34l34 18V78z"/><path d="M188 44v34l-34 18V78z"/>
+          </g>
+          <g>
+            <path d="M198 78 232 60l34 18-34 18z"/><path d="M198 78v34l34 18v-34z"/><path d="M266 78v34l-34 18v-34z"/>
+          </g>
+          <g>
+            <path d="M62 92 96 74l34 18-34 18z"/><path d="M62 92v34l34 18v-34z"/><path d="M130 92v34l-34 18v-34z"/>
+          </g>
+        </svg>
+      </div>
+      <div class="cloud" style="margin-top:14px;justify-content:flex-start">
+        <span>video</span><span>courses</span><span>articles</span><span>books</span>
+      </div>
+    </article>
+
+    <!-- HERO — colonnes 2-3, rangées 2-3 : le SEUL aplat noir de l'écran, et le seul module
+         qui enjambe deux colonnes. La hiérarchie tient à ces deux faits, pas à sa typo. -->
+    <article class="mod mod--hero">
+      <h2 class="hero__claim">We make life<br>simpler.</h2>
+      <svg class="mod__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg>
+      <div class="hero__art">
+        <svg viewBox="0 0 420 340" fill="none" stroke="var(--vl-on-invert)" stroke-width="1.5" stroke-linejoin="round">
+          <path d="M210 26 296 76 210 126 124 76z"/>
+          <path d="M124 76v66l86 50v-66z"/><path d="M296 76v66l-86 50v-66z"/>
+          <path d="M124 142 38 192l86 50 86-50z"/>
+          <path d="M38 192v66l86 50v-66z"/><path d="M124 242v66l86-50v-66z"/>
+          <path d="M296 142 382 192l-86 50-86-50z"/>
+          <path d="M382 192v66l-86 50v-66z"/><path d="M210 242v66l86-50v-66z"/>
+        </svg>
+      </div>
+      <div class="hero__foot">
+        <p class="hero__kicker">
+          We give people the means to act on their own,<br>
+          <span class="hero__mark">without paying a fortune</span><br>
+          to lawyers where none is needed
+        </p>
+        <div class="hero__social">
+          <i><svg viewBox="0 0 24 24" fill="var(--vl-invert)"><path d="M3 7h3.2c.3 3.4 1.8 5.4 2.9 5.9V7h3v4.4c1.1-.1 2.3-1.5 2.7-4.4H18c-.3 2.3-1.3 4-2.5 4.8 1.3.7 2.6 2.3 3.1 4.6h-3.3c-.4-1.6-1.4-2.9-3.2-3.1V17H9.4C5.9 16.6 3.6 12.9 3 7z"/></svg></i>
+          <i><svg viewBox="0 0 24 24" fill="var(--vl-invert)"><path d="M21.4 7.6c-.2-1.4-.9-2.2-2.3-2.4C17 4.9 12 4.9 12 4.9s-5 0-7.1.3C3.5 5.4 2.8 6.2 2.6 7.6 2.3 9.3 2.3 12 2.3 12s0 2.7.3 4.4c.2 1.4.9 2.2 2.3 2.4 2.1.3 7.1.3 7.1.3s5 0 7.1-.3c1.4-.2 2.1-1 2.3-2.4.3-1.7.3-4.4.3-4.4s0-2.7-.3-4.4zM10 15.2V8.8l5.5 3.2z"/></svg></i>
+          <i><svg viewBox="0 0 24 24" fill="var(--vl-invert)"><path d="M21.6 4.3 3.4 11.2c-.9.4-.9.9-.2 1.1l4.6 1.4 1.8 5.4c.2.6.4.8 1 .3l2.5-2.4 5 3.7c.9.5 1.5.2 1.7-.9L22.5 5c.3-1.2-.3-1.4-.9-.7z"/></svg></i>
+        </div>
+      </div>
+    </article>
+
+    <!-- D — colonne 1, rangée 3 -->
+    <article class="mod mod--d">
+      <h2 class="mod__title">Your steady guide<br>through the law</h2>
+      <div class="mod__art">
+        <!-- escalier : trois marches en projection isométrique, en aplats sombres — c'est le
+             seul objet gris-foncé de l'écran hors hero, et il reste un objet DANS un module. -->
+        <svg viewBox="0 0 240 130" preserveAspectRatio="xMidYMax meet">
+          <g fill="var(--vl-invert)">
+            <path d="M30 96 66 76l36 20-36 21z" opacity="0.88"/>
+            <path d="M30 96v18l36 21V117z" opacity="0.62"/>
+            <path d="M102 96v18l-36 21V117z" opacity="0.44"/>
+            <path d="M84 66 120 46l36 20-36 21z" opacity="0.88"/>
+            <path d="M84 66v18l36 21V87z" opacity="0.62"/>
+            <path d="M156 66v18l-36 21V87z" opacity="0.44"/>
+            <path d="M138 36 174 16l36 20-36 21z" opacity="0.88"/>
+            <path d="M138 36v18l36 21V57z" opacity="0.62"/>
+            <path d="M210 36v18l-36 21V57z" opacity="0.44"/>
+          </g>
+        </svg>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+</body>
+</html>

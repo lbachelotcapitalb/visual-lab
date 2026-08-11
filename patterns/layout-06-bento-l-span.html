@@ -1,0 +1,53 @@
+<!-- layout-06-bento-l-span — cinq modules sur une VRAIE grille 3 × 3, deux enjambements en L.
+     Couleurs via --vl-* uniquement. Ce que le fragment porte, ce n'est pas la décoration des
+     modules (elle est vide à dessein, cf. card-11-corner-arrow-tile pour la vignette) : c'est
+     le DÉCOUPAGE. A enjambe les rangées 1-2 de la colonne 1, le hero enjambe les colonnes 2-3
+     des rangées 2-3 ; les deux se croisent sans se toucher, et c'est ce croisement qui
+     supprime toute frontière horizontale continue. -->
+<div class="vl-bento">
+  <article class="vl-bento__a"><h3>Legal services</h3><p>colonne 1 · rangées 1-2</p></article>
+  <article class="vl-bento__b"><h3>Video consultations</h3><p>colonne 2 · rangée 1</p></article>
+  <article class="vl-bento__c"><h3>Learning material</h3><p>colonne 3 · rangée 1</p></article>
+  <article class="vl-bento__hero"><h3>We make life simpler.</h3><p>colonnes 2-3 · rangées 2-3</p></article>
+  <article class="vl-bento__d"><h3>Your steady guide</h3><p>colonne 1 · rangée 3</p></article>
+</div>
+
+<style>
+.vl-bento {
+  width: 1326px; height: 830px;
+  box-sizing: border-box;
+  display: grid;
+  /* Les colonnes portent le rapport relevé (269 / 366 / 364 millièmes de la largeur utile) ;
+     `minmax(0, …fr)` et pas `…fr` seul, parce que le minimum automatique d'une piste `fr`
+     est `auto` : un module trop plein POUSSERAIT sa rangée et l'écran déborderait en
+     silence — la grille cesserait d'être la grille relevée sans qu'aucun contrôle ne crie. */
+  grid-template-columns: minmax(0, 343fr) minmax(0, 466fr) minmax(0, 464fr);
+  grid-template-rows: minmax(0, 302fr) minmax(0, 232fr) minmax(0, 243fr);
+  gap: var(--vl-gutter, 26px);
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+}
+/* LES DEUX ENJAMBEMENTS. Ils se croisent — le bas de A descend sous le haut du hero — sans
+   jamais se chevaucher : une gouttière pleine les sépare. C'est toute la composition. */
+.vl-bento__a    { grid-column: 1;        grid-row: 1 / span 2; }
+.vl-bento__b    { grid-column: 2;        grid-row: 1; }
+.vl-bento__c    { grid-column: 3;        grid-row: 1; }
+.vl-bento__hero { grid-column: 2 / span 2; grid-row: 2 / span 2; }
+.vl-bento__d    { grid-column: 1;        grid-row: 3; }
+
+.vl-bento > * {
+  margin: 0; padding: 28px;
+  background: var(--vl-module);
+  color: var(--vl-ink);
+  border-radius: var(--vl-radius-module, 24px);
+  display: flex; flex-direction: column; justify-content: space-between;
+  overflow: hidden;
+}
+/* UN SEUL aplat sombre par écran. Le module dominant l'est deux fois — par le fond ET par
+   l'aire : un second noir annulerait le seul point d'entrée d'un système sans couleur. */
+.vl-bento__hero { background: var(--vl-invert); color: var(--vl-on-invert); padding: 40px; }
+
+.vl-bento h3 { margin: 0; font-size: 23px; line-height: 1.24; font-weight: 500; letter-spacing: -0.01em; }
+.vl-bento__hero h3 { font-size: 46px; line-height: 1.14; letter-spacing: -0.02em; max-width: 46%; }
+.vl-bento p { margin: 0; font-size: 16px; font-weight: 500; color: var(--vl-ink-soft); }
+.vl-bento__hero p { color: var(--vl-on-invert-soft); }
+</style>

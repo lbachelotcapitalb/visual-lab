@@ -1,0 +1,50 @@
+<!-- tag-02-centered-cloud — dix mots-clés en nuage. Couleurs via --vl-* uniquement.
+     TOUT le pattern tient dans `flex-wrap: wrap` + `justify-content: center` : chaque rangée
+     se centre SUR ELLE-MÊME, et ce sont les largeurs inégales qui dessinent la silhouette.
+     Un bloc centré dont les rangées seraient ferrées à gauche donnerait un pavé, pas un nuage.
+
+     Le choix des TERMES fait partie du pattern : dix mots trop courts dans un module étroit
+     se rangent 3/3/3/1, et la pilule orpheline de la dernière ligne ruine la silhouette.
+     Le remède est dans la longueur des libellés, pas dans le CSS — d'où le benchmark.
+
+     `.vl-cloud__field` n'est PAS le nuage : c'est le module qui l'accueillera, posé ici pour
+     que la règle de rang de blanc (« la pilule est plus claire que le fond qui la porte »)
+     soit MESURABLE sur le fragment seul. Le nuage, lui, n'a aucun fond propre — le retirer
+     rendrait le fragment collable partout et la règle invérifiable ; on garde donc le champ
+     et on le nomme pour ce qu'il est. -->
+<div class="vl-cloud__field">
+<div class="vl-cloud">
+  <span>family law</span><span>commercial disputes</span>
+  <span>property &amp; housing</span><span>tax and duties</span>
+  <span>employment law</span><span>filings</span><span>claims</span>
+  <span>contracts</span><span>case support</span><span>advice</span>
+</div>
+</div>
+
+<style>
+.vl-cloud__field {
+  width: 343px; padding: 28px;
+  box-sizing: border-box;
+  background: var(--vl-module);
+  border-radius: var(--vl-radius-module, 24px);
+}
+.vl-cloud {
+  width: 287px;
+  box-sizing: border-box;
+  display: flex; flex-wrap: wrap;
+  justify-content: center;
+  /* La gouttière verticale est un cran plus large que l'horizontale : les rangées se lisent
+     alors avant les colonnes, ce qui est la lecture voulue d'un nuage. À gouttières égales,
+     l'œil se met à chercher des colonnes qui n'existent pas. */
+  gap: 8px 7px;
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+}
+.vl-cloud > span {
+  background: var(--vl-object);
+  color: var(--vl-ink);
+  border-radius: var(--vl-radius-pill, 999px);
+  padding: 6px 12px;
+  font-size: 11px; line-height: 1.2; font-weight: 500;
+  white-space: nowrap;
+}
+</style>

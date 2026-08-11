@@ -1,15 +1,8 @@
 # INDEX — visual-lab en un fichier
 
-## Sommaire
-
-- Comment se servir de ce fichier
-- Catalogue
-- Détail
-- Références
-
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-26 patterns · 12 références · 19 vérifiés par benchmarks mesurés.
+38 patterns · 15 références · 31 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -43,21 +36,33 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `card-08-orb-chain-total` | Poser un total en chiffre héros et le décomposer juste en dessous en une chaîne de disques tangents dont un seul — le plus gros et le seul coloré — porte le support principal, les actions empilées à l'opposé. | slide web | 10 | ref-13-glass-fintech-dashboard |
 | `card-09-gradient-metric-curve` | Faire de la seule carte colorée d'un écran le porteur d'un indicateur unique : la pile libellé / chiffre / cadrage en haut-gauche, une courbe sans axe qui traverse la carte derrière elle, annotée à ses deux extrémités seulement. | slide web | 10 | ref-13-glass-fintech-dashboard |
 | `card-10-kpi-notch-tile` | Poser UNE preuve chiffrée dans une vignette presque carrée à silhouette de ticket — tuile d'icône en haut, chiffre et son suffixe sur la même ligne de base, libellé collé dessous, commentaire relégué en bas à droite — et n'en accentuer qu'une seule dans la rangée, par le fond et rien d'autre. | slide web | 20 | ref-15-lilac-notched-kpi |
+| `card-11-corner-arrow-tile` | Faire d'un module une ENTRÉE cliquable sans bouton ni liseré : le titre en haut à gauche, une flèche oblique ancrée au coin opposé — jamais alignée sur le titre — et l'illustration qui occupe tout le bas de la vignette au lieu d'être centrée dedans. | web slide | 17 | ref-17-mono-bento-legal |
+| `card-12-inverted-kpi-row` | Ouvrir un tableau de bord par trois indicateurs de même nature dont UN SEUL est de premier rang, en lui appliquant deux fois le même geste de hiérarchie : l'aplat inversé ET une colonne 5 % plus large. Chaque carte range ses quatre informations dans le même ordre — libellé en haut, pastille de renvoi ancrée au coin opposé, chiffre poussé en bas, note collée dessous. | web slide | 16 | ref-18-lime-sales-dashboard |
 | `chart-01-stadium-bars` | Un histogramme réduit à l'essentiel : des barres à sommet en demi-cercle, aucune ligne d'axe, des légendes en pilules. | slide web | — | ref-03-bento-dark-pitch |
 | `chart-02-isotype` | Raconter une proportion en unités comptables (24 pictogrammes sur 40) au lieu d'un pourcentage abstrait. | slide web | — | ref-03-bento-dark-pitch |
 | `chart-03-accent-column-callout` | Donner la forme d'une série en quelques colonnes flottantes sans axe ni graduation, et n'en chiffrer qu'une seule — la courante — par une info-bulle sombre ancrée à sa colonne. | slide web | 11 | ref-13-glass-fintech-dashboard |
 | `chart-04-unit-textured-bar` | Donner à un histogramme une UNITÉ visible sans lui faire porter le comptage : la hauteur de la barre est exactement proportionnelle à la valeur, la texture qui la remplit est un peigne dont la période vaut une unité déclarée, et le montant exact est écrit au-dessus — la texture donne l'échelle, elle ne compte jamais à la place du chiffre. | slide web print | 9 | ref-16-cobalt-graph-paper |
-| `diagram-layer-stack` | Montrer qu'un objet — un produit, une marque, un système logiciel — se décompose en couches ORDONNÉES dont le rang est l'information : des losanges isométriques empilés, d'opacité décroissante, chacun relié par un filet au nom de sa couche et à une ligne d'explication. | slide web | 15 | ref-14-layer-stack-coral |
+| `chart-05-tile-heatmap` | Lire une matrice canal × période d'un seul coup d'œil, en faisant cohabiter DEUX échelles dans la même grille sans qu'elles se mélangent : une rampe de gris qui encode l'intensité (le noir est le maximum), et une couleur d'accent qui n'est PAS un cran de cette rampe mais une marque de catégorie posée par-dessus. Les cellules sont des tuiles arrondies largement espacées — jamais un damier jointif. | web slide | 16 | ref-18-lime-sales-dashboard |
+| `diagram-01-layer-stack` | Montrer qu'un objet — un produit, une marque, un système logiciel — se décompose en couches ORDONNÉES dont le rang est l'information : des losanges isométriques empilés, d'opacité décroissante, chacun relié par un filet au nom de sa couche et à une ligne d'explication. | slide web | 15 | ref-14-layer-stack-coral |
+| `diagram-02-branch-timeline` | Accrocher des objets de niveaux différents à une chronologie sans jamais tracer une diagonale : un rail horizontal daté, des jalons ronds accentués posés DESSUS, et des dérivations en équerre arrondie — descente verticale puis départ horizontal — qui mènent aux objets de la période. La diagonale dirait « transition » ; l'équerre dit « appartenance », et c'est la seule chose que ce diagramme a à dire. | web slide | 18 | ref-19-acid-clinical-timeline |
+| `diagram-03-time-scrubber` | Donner à un écran sa position de lecture dans un axe plus long que lui : l'année entière tient dans une pilule claire — mois écrits, événements en pastilles rondes, comptage en exposant acide —, et une FENÊTRE SOMBRE À POIGNÉES posée dessus marque l'intervalle affiché au-dessus. La fenêtre reprend les mêmes pastilles en inverse : c'est ce qui dit qu'on regarde le même axe, et pas un second objet. | web | 18 | ref-19-acid-clinical-timeline |
 | `layout-01-nested-bento` | Structurer une slide dense en trois niveaux (carte → sous-carte → tuile) sans une seule bordure ni ombre, en ne faisant décroître que le rayon et le padding. | slide web | — | ref-03-bento-dark-pitch |
 | `layout-02-swiss-frame` | Poser le cadre d'une slide de deck : une marge unique, deux barres de micro-typo à trois zones et un filet d'un pixel — de quoi rendre une suite de slides reconnaissable sans y ajouter le moindre ornement. | slide web | — | ref-04-swiss-investor-blue |
 | `layout-03-glass-board` | Emboîter les surfaces d'un écran dense en DEUX couches seulement, sans un trait ni une couleur de séparation : un fond en dégradé qui accueille, et des modules de blanc translucide posés dessus, flou d'arrière-plan compris. | slide web | 11 | ref-13-glass-fintech-dashboard |
 | `layout-04-graph-paper-cells` | Faire d'une trame de papier millimétré le TON du fond, puis y poser des objets qui sont des cases de cette trame — pas de la matière posée dessus : le pas de la grille de cellules et la marge qui la centre sont des multiples entiers du pas de la trame, si bien que le contenu paraît découpé dans le papier. | slide web print | 9 | ref-16-cobalt-graph-paper |
+| `layout-05-nav-pill-bar` | Poser la navigation d'une page comme un OBJET posé dans la marge — un aplat arrondi qui flotte au lieu d'un bandeau collé au bord — et n'y employer qu'une seule ressource de hiérarchie : le rang de blanc, le badge de marque et le bouton d'action étant plus CLAIRS que la barre qui les porte. | web | 16 | ref-17-mono-bento-legal |
+| `layout-06-bento-l-span` | Tenir cinq modules de tailles très différentes sur une VRAIE grille 3 × 3, en n'employant que deux enjambements — un vertical à gauche, un horizontal à droite — qui se CROISENT sans jamais se chevaucher : c'est ce croisement qui supprime toute frontière horizontale continue et fait qu'un écran dense cesse de se lire comme un tableau. | web slide | 17 | ref-17-mono-bento-legal |
+| `layout-07-icon-rail-shell` | Poser le cadre d'un tableau de bord en ne dépensant AUCUNE couleur pour la navigation : un rail d'icônes étroit du même blanc que l'application — séparé par un filet d'un pixel et jamais par un aplat —, un en-tête à recherche en pilule, et un titre de page qui est le seul très grand corps de l'écran. Tout le budget de couleur reste disponible pour les données. | web | 16 | ref-18-lime-sales-dashboard |
+| `layout-08-sheet-handle-tab` | Ouvrir un dossier par-dessus une application sans que la modale se lise comme « une carte de plus » : un voile sombre qui PORTE de l'interface (onglets, fermeture), une feuille claire qui saigne à quelques pixels des bords, et un onglet-poignée titré soudé à cette feuille par DEUX congés concaves — la seule courbe inversée du corpus, et ce qui fait que la poignée appartient à la feuille au lieu de flotter au-dessus d'elle. | web | 17 | ref-19-acid-clinical-timeline |
 | `list-01-giant-numbers` | Aligner trois à quatre arguments de même rang en colonnes, chacun ouvert par un numéro ou un chiffre démesuré qui sert à la fois de repère de lecture et de seule tache de couleur du bloc. | slide web | — | ref-04-swiss-investor-blue |
 | `list-02-ruled-index` | Lister les sections d'un document en donnant à chacune son libellé, une ligne d'explication et son numéro à droite, séparées par un filet fin qui appartient à l'entrée qu'il suit. | slide web | 9 | ref-06-orange-notched |
 | `list-03-two-column-toc` | Faire tenir un sommaire de dix à quatorze sections sur une seule slide, en deux colonnes numérotées, lisible d'un coup d'œil et refermable aussitôt. | slide web | — | ref-04-swiss-investor-blue |
 | `list-04-due-rows` | Rendre une liste d'échéances balayable sans un seul filet : quatre zones tenues par une grille commune, une seule ligne surlignée, une seule pilule d'imminence, et le montant en unique colonne alignée à droite. | slide web | 12 | ref-13-glass-fintech-dashboard |
+| `list-05-vitals-strip` | Aligner cinq mesures hétérogènes sur une seule ligne SANS aucun séparateur : chacune est un couple micro-libellé / valeur, l'unité étant un cran plus petite ET plus claire que le nombre qu'elle suit. C'est ce double affaiblissement de l'unité — taille et encre — qui permet de lire cinq valeurs d'affilée sans filet, sans carte et sans que l'œil confonde un nombre avec l'unité de son voisin. | web slide | 14 | ref-19-acid-clinical-timeline |
 | `shape-notched-corner` | Donner à un aplat coloré une signature de forme reconnaissable — UN coin coupé à 45° — sans rien ajouter au contenu ni recourir à un rayon, une ombre ou un liseré. | slide web | 3 | ref-06-orange-notched |
-| `tag-gooey-capsule` | Faire d'un mot-clé un OBJET : un contour continu qui soude un cercle de glyphe à une pilule de texte par deux congés concaves, pour qu'un terme isolé pèse autant qu'un titre sans être plus gros. | slide web | 13 | ref-12-neon-capsule-tags |
+| `tag-01-gooey-capsule` | Faire d'un mot-clé un OBJET : un contour continu qui soude un cercle de glyphe à une pilule de texte par deux congés concaves, pour qu'un terme isolé pèse autant qu'un titre sans être plus gros. | slide web | 13 | ref-12-neon-capsule-tags |
+| `tag-02-centered-cloud` | Poser une dizaine de mots-clés de même rang au bas d'un module sans en faire une liste : chaque RANGÉE est centrée sur elle-même, si bien que les lignes de largeur inégale dessinent une silhouette de nuage — c'est le centrage par rangée, et pas le centrage du bloc, qui produit l'effet. | web slide | 13 | ref-17-mono-bento-legal |
+| `tag-03-action-pill-bar` | Aligner filtres et action principale sur une même ligne sans hiérarchie typographique : toutes les commandes sont des pilules de MÊME hauteur, les filtres portent un puits d'icône plus clair que la pilule qui le contient, et UNE SEULE pilule — la dernière — est pleine. C'est la position et le remplissage qui disent le rang, jamais la taille. | web | 16 | ref-18-lime-sales-dashboard |
 | `title-leading-rule` | Marquer le titre d'une slide d'un filet vertical d'accent sans ajouter ni couleur au texte ni élément décoratif : le filet est le seul accent du titre, et il est collé au mot. | slide web | 7 | ref-06-orange-notched |
 
 ## Détail
@@ -146,6 +151,22 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-card, --vl-violet, --vl-violet-light, --vl-ink, --vl-ink-muted, --vl-tile, --vl-tile-invert, --vl-notch, --vl-radius
 - tags : stat, chiffre, kpi, pourcentage, vignette, carte, rangee, accent, chanfrein, notch, icone, tuile, landing, preuve, saas
 
+**card-11-corner-arrow-tile** — Vignette d'entrée à flèche de coin
+
+- employer : Grille de services, sommaire de rubriques, tuiles d'entrée d'un accueil : trois à cinq vignettes de même rang dont chacune mène ailleurs. Le titre tient sur deux lignes courtes, l'illustration porte la respiration, et la flèche est le seul signe d'interaction de l'écran.
+- éviter : La vignette porte un chiffre (elle devient une carte de KPI, cf. card-10-kpi-notch-tile : le chiffre veut l'aplomb du bas, l'illustration aussi, et les deux ne cohabitent pas), le titre dépasse trois lignes (il rejoint la flèche et le coin cesse d'être libre), ou la vignette n'est pas cliquable — une flèche qui ne mène nulle part est un mensonge d'interface.
+- à remplir : title, art, sub
+- variables : --vl-module, --vl-ink, --vl-ink-soft, --vl-line, --vl-radius-module
+- tags : vignette, carte, tuile, entree, service, rubrique, fleche, arrow, coin, illustration, bento, accueil, landing, monochrome
+
+**card-12-inverted-kpi-row** — Rangée de KPI dont un seul est inversé — et plus large
+
+- employer : Bandeau d'ouverture d'un tableau de bord ou d'un rapport : trois à quatre valeurs comparables (un solde, un revenu, un volume) dont une seule commande l'attention. Le chiffre est court — quatre à six signes — et la note tient sur une ligne.
+- éviter : Les valeurs ne sont pas comparables entre elles (la rangée suggère une lecture de gauche à droite qui n'existe pas), il y en a plus de quatre (la carte inversée cesse de dominer et la largeur différenciée devient un défaut d'alignement), ou plusieurs cartes doivent être mises en avant — deux aplats inversés dans une rangée annulent le seul geste de hiérarchie du système.
+- à remplir : label, go, fig, note
+- variables : --vl-module, --vl-invert, --vl-ink, --vl-ink-soft, --vl-on-invert, --vl-on-invert-soft, --vl-ramp-2, --vl-radius-module, --vl-gutter
+- tags : kpi, chiffre, stat, rangee, dashboard, tableau-de-bord, carte, inverse, hierarchie, solde, revenu, accent, renvoi
+
 ### chart
 
 **chart-01-stadium-bars** — Barres à sommet arrondi
@@ -180,15 +201,39 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-utb-period, --vl-ink, --vl-ink-faint, --vl-paper, --vl-near, --vl-rule
 - tags : histogramme, barres, unité, échelle, texture, peigne, coût, comparaison, cumulé, isotype, deux couleurs, monochrome
 
+**chart-05-tile-heatmap** — Heatmap en tuiles arrondies, rampe achromatique + marque de catégorie
+
+- employer : Matrice de quatre à six lignes sur quatre à huit colonnes dont on veut la SILHOUETTE et non les valeurs : performance par canal et par semaine, densité d'activité, couverture. Les libellés de lignes vivent hors de la grille, à gauche, sans filet de séparation.
+- éviter : Le lecteur doit relire une valeur précise (une heatmap ne se lit pas au chiffre près — il faut un tableau), la matrice dépasse huit colonnes (les tuiles deviennent des traits et le rayon n'a plus de sens), ou l'intensité est déjà encodée par une couleur : deux échelles chromatiques dans une même grille sont indémêlables, et c'est exactement ce que l'achromatisme de la rampe évite ici.
+- à remplir : title, sub, tools, rows, cells
+- variables : --vl-module, --vl-app, --vl-ramp-1, --vl-ramp-2, --vl-ramp-3, --vl-ramp-4, --vl-ramp-5, --vl-accent, --vl-ink, --vl-ink-soft, --vl-radius-tile
+- tags : heatmap, matrice, grille, intensite, rampe, canal, dashboard, tuile, categorie, accent, achromatique, densite
+
 ### diagram
 
-**diagram-layer-stack** — Pile de couches isométriques légendées
+**diagram-01-layer-stack** — Pile de couches isométriques légendées
 
 - employer : Trois à cinq couches, un ordre qui compte (ce qu'on touche en haut, ce qui porte en bas), et une phrase à dire sur chacune : interface / services / données, essence / valeur / vision, produit / méthode / recherche.
 - éviter : Les éléments sont de même rang (une pile dit une hiérarchie, même quand on ne la pense pas), leur nombre dépasse cinq (les losanges du bas s'effacent avant d'être comptés), ou une grandeur doit se lire : ici rien n'est proportionnel à rien — c'est un schéma, pas un graphique.
 - à remplir : name, note
 - variables : --vl-coral, --vl-layer-alpha-1, --vl-layer-alpha-2, --vl-layer-alpha-3, --vl-ink, --vl-ink-muted, --vl-hairline, --vl-track-title, --vl-track-body
 - tags : schema, diagramme, couches, layers, pile, empilement, isometrique, losange, architecture, stack, frontend, backend, hierarchie, filet, legende, opacite, profondeur
+
+**diagram-02-branch-timeline** — Timeline à branches en équerre
+
+- employer : Historique d'un dossier où chaque période porte plusieurs objets hétérogènes (un traitement, une mesure, un examen) : la position sur le rail donne la date, l'équerre donne le rattachement, et la taille de l'objet dérivé donne son rang. Deux à quatre branches par vue.
+- éviter : Les objets sont tous de même nature et de même rang (une simple liste datée est plus lisible), les dates doivent être proportionnelles (rien ici n'est à l'échelle du temps : c'est une structure, pas un graphique), ou il y a plus de cinq branches — les équerres se croisent et l'appartenance redevient illisible.
+- à remplir : rail, pins, branches, objects
+- variables : --vl-sheet, --vl-accent, --vl-veil-deep, --vl-ink, --vl-ink-soft, --vl-module, --vl-module-hi, --vl-recover, --vl-alert
+- tags : timeline, chronologie, branche, equerre, rail, jalon, historique, dossier, structure, derivation, diagramme
+
+**diagram-03-time-scrubber** — Ruban temporel à fenêtre de sélection
+
+- employer : Sous une vue détaillée qui ne montre qu'une tranche d'un historique long : dossier, journal, calendrier de production. L'axe entier reste lisible, la tranche courante est désignée, et le lecteur sait toujours où il est sans changer d'écran.
+- éviter : L'axe tient entièrement dans la vue (le ruban ne désigne alors plus rien), les événements sont trop nombreux pour être des pastilles distinctes (il faut une densité, pas des objets), ou la sélection n'est pas déplaçable — des poignées qui ne se saisissent pas sont un mensonge d'interface.
+- à remplir : now, scale, window
+- variables : --vl-module-hi, --vl-module, --vl-veil-deep, --vl-accent, --vl-ink, --vl-ink-soft, --vl-on-veil
+- tags : timeline, ruban, scrubber, brush, navigateur, selection, fenetre, axe, historique, mois, evenement, poignee, minimap
 
 ### layout
 
@@ -223,6 +268,38 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - à remplir : [object Object], [object Object], [object Object]
 - variables : --vl-grid, --vl-grid-step, --vl-cell-pitch, --vl-cell-gap, --vl-paper, --vl-paper-2, --vl-ink, --vl-ink-faint, --vl-near, --vl-rule, --vl-margin
 - tags : papier millimétré, graph paper, trame, grille, fond, calendrier, demi-journée, case, cellule, isotype, deux couleurs, monochrome, verdict, trois états
+
+**layout-05-nav-pill-bar** — Barre de menu en pilule flottante
+
+- employer : En-tête d'une landing ou d'une application dont le fond est déjà clair, quand la navigation ne doit pas se lire comme un chrome de navigateur : la barre reste dans la marge de page, à la même distance des bords que les modules qui la suivent, et le premier module commence juste dessous.
+- éviter : La page défile sous un en-tête collant (une pilule flottante qui se fige au bord perd exactement ce qui la justifie), le fond est sombre ou photographique (le rang de blanc n'a plus de sens : le blanc devient la couleur la plus forte de l'écran), ou la navigation compte plus de cinq entrées — au-delà, les liens rattrapent le bouton et la respiration qui fait l'objet disparaît.
+- à remplir : badge, mark, links, cta
+- variables : --vl-module, --vl-object, --vl-ink, --vl-ink-soft, --vl-radius-bar, --vl-radius-pill
+- tags : navigation, menu, barre, header, entete, pilule, landing, logo, wordmark, bouton, cta, monochrome, web, app
+
+**layout-06-bento-l-span** — Bento 3 × 3 à deux enjambements en L
+
+- employer : Accueil, sommaire de services, page d'entrée d'application : un contenu principal qui doit dominer sans occuper la moitié de l'écran, un contenu long à gauche (liste, nuage, sommaire), et deux entrées secondaires de même rang en haut. Le module dominant prend l'aplat inversé, et il est le SEUL.
+- éviter : Les modules sont de même rang (une grille régulière dit alors la vérité et se refond sans douleur), le contenu du module haut à gauche varie beaucoup en longueur (l'enjambement vertical fige sa hauteur), ou l'écran doit se replier en une colonne sur mobile — les deux enjambements y perdent tout sens et il faut une autre composition, pas une adaptation de celle-ci.
+- à remplir : a, b, c, hero, d
+- variables : --vl-module, --vl-invert, --vl-ink, --vl-on-invert, --vl-gutter, --vl-radius-module
+- tags : bento, grille, grid, layout, accueil, landing, dashboard, enjambement, span, module, monochrome, hierarchie, hero
+
+**layout-07-icon-rail-shell** — Coque d'application à rail d'icônes
+
+- employer : Application ou tableau de bord à navigation stable de six à dix entrées, sur fond clair : le rail donne l'accès, l'en-tête donne la recherche et le compte, le titre donne le contexte, et le contenu commence dessous en pleine largeur restante. L'entrée active est marquée par l'inversion, jamais par une teinte.
+- éviter : La navigation a des libellés (le rail d'icônes seules devient illisible au-delà de huit entrées sans texte), l'application est sombre (le filet d'un pixel disparaît et il faut un vrai aplat de rail), ou la couleur de marque doit être visible en permanence — ce système la réserve aux données, et l'y ramener supprime sa seule règle.
+- à remplir : nav, search, account, title, actions, content
+- variables : --vl-app, --vl-module, --vl-hairline, --vl-invert, --vl-ink, --vl-ink-soft, --vl-on-invert, --vl-rail-w, --vl-radius-pill
+- tags : coque, shell, rail, sidebar, navigation, dashboard, tableau-de-bord, recherche, header, entete, titre, application, icone
+
+**layout-08-sheet-handle-tab** — Feuille modale à poignée soudée par congés concaves
+
+- employer : Dossier, fiche détaillée ou vue plein écran ouverte depuis une liste, quand le contexte sous-jacent doit rester senti sans être lisible. Le voile accueille la navigation transverse (onglets de section, fermeture), la feuille accueille le contenu, et la poignée porte le titre de ce qu'on a ouvert.
+- éviter : La feuille est blanche (les modules blancs qu'elle portera devront s'entourer d'un liseré, et le système n'en a nulle part), le voile ne porte rien (il redevient une simple opacité, et deux rectangles empilés suffisent), ou la vue est une PAGE et non une couche — la poignée dit « ceci est ouvert par-dessus », ce qui devient un mensonge sur une page de plein droit.
+- à remplir : tabs, close, handle, content
+- variables : --vl-veil, --vl-sheet, --vl-module-hi, --vl-ink, --vl-radius-sheet, --vl-notch, --vl-bleed
+- tags : modale, sheet, feuille, voile, scrim, overlay, onglet, poignee, tab, congé, concave, dossier, fiche, application
 
 ### list
 
@@ -259,6 +336,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-surface-glass, --vl-surface-glass-strong, --vl-blue, --vl-surface-dark, --vl-ink-muted
 - tags : liste, echeances, paiements, abonnements, lignes, grille, montant, imminence, surlignage, dashboard, verre
 
+**list-05-vitals-strip** — Bandeau de constantes, sans carte ni filet
+
+- employer : Bandeau d'état en tête d'une fiche : constantes d'un patient, indicateurs d'une machine, chiffres-clés d'un dossier. La première mesure peut être qualitative et prendre un corps plus grand — c'est le sujet de la fiche, pas une valeur de plus.
+- éviter : Les valeurs sont comparables entre elles (une rangée de cartes ou un tableau dit mieux la comparaison), il y en a plus de six (le bandeau se met à défiler et perd son unique atout, la lecture d'un seul coup d'œil), ou l'une d'elles est en alerte : ce bandeau n'a aucune ressource pour le dire, et l'y ajouter demande une couleur que le système réserve ailleurs.
+- à remplir : items
+- variables : --vl-ink, --vl-ink-soft
+- tags : constantes, vitals, bandeau, strip, mesure, unite, micro-libelle, fiche, dossier, kpi, sans-filet
+
 ### shape
 
 **shape-notched-corner** — Carte à coin chanfreiné
@@ -271,13 +356,29 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 
 ### tag
 
-**tag-gooey-capsule** — Capsule néon soudée — mot-clé + glyphe
+**tag-01-gooey-capsule** — Capsule néon soudée — mot-clé + glyphe
 
 - employer : Valoriser des mots-clés, des noms de produits, de modules, d'offres ou de compétences sur une slide, un hero ou une couverture — seul, ou empilé en liste. C'est le pattern quand il faut donner du poids à des termes qui n'ont ni chiffre ni phrase autour.
 - éviter : Le libellé dépasse deux mots (la pilule devient une barre et le cou n'est plus lisible), l'élément est cliquable (ça ressemble à un bouton et le cou casse la cible), ou l'icône doit être COMPRISE — à 0,6u dans un cercle, elle marque une catégorie, elle n'explique rien.
 - à remplir : icon, label
 - variables : --vl-neon, --vl-cap-u
 - tags : capsule, pilule, etiquette, tag, mot-cle, keyword, neon, contour, outline, icone, soudure, gooey, sombre, slide, hero
+
+**tag-02-centered-cloud** — Nuage de mots-clés centré rangée par rangée
+
+- employer : Fin d'une vignette de service, pied d'une carte de rubrique, bandeau de compétences : dix à quinze termes courts qu'on veut donner à VOIR en volume plutôt qu'à lire un par un, sans hiérarchie entre eux et sans ordre significatif.
+- éviter : L'ordre compte (un nuage le détruit visuellement), les termes sont cliquables et de longueurs très inégales (les cibles deviennent illisibles à balayer), il y en a moins de six — trois rangées sont le minimum pour qu'une silhouette existe — ou l'un d'eux doit être mis en avant : ce système n'a aucune ressource pour distinguer une pilule des autres.
+- à remplir : items
+- variables : --vl-object, --vl-ink, --vl-radius-pill
+- tags : tag, mot-cle, keyword, nuage, cloud, pilule, pill, chip, competences, services, wrap, monochrome
+
+**tag-03-action-pill-bar** — Barre d'actions en pilules, une seule pleine
+
+- employer : Ligne de commandes d'un tableau de bord ou d'un rapport, posée à droite du titre de page : une à trois portées de filtre (période, segment, vue) suivies de l'action qui sort de l'écran (exporter, partager, créer). Un filtre peut porter deux lignes — son intitulé au-dessus de sa valeur — sans changer la hauteur de la barre.
+- éviter : Il y a plus de quatre commandes (la ligne devient une barre d'outils et demande des groupes), deux actions sont de premier rang (deux pilules pleines annulent le seul geste de rang), ou les commandes doivent se replier sous le titre : la barre suppose qu'elle tient sur une ligne, et son alignement à droite n'a plus de sens dès qu'elle passe à la ligne.
+- à remplir : filters, action
+- variables : --vl-module, --vl-app, --vl-invert, --vl-ink, --vl-ink-soft, --vl-on-invert, --vl-radius-pill
+- tags : action, filtre, pilule, pill, barre, toolbar, dashboard, export, periode, segment, cta, puits, icone
 
 ### title
 
@@ -301,10 +402,13 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | — | `decks/ref-08-swiss-studio-hero.html` |
 | `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | — | `decks/ref-10-campaign-board-red.html` |
 | `ref-11-finance-dashboard-mint` | Dashboard bento clair — menthe & lilas | `card-04-stat-barchart`, `card-05-balance-gauge`, `card-06-forecast-timeline`, `card-07-transactions` | `decks/ref-11-finance-dashboard-mint.html` |
-| `ref-12-neon-capsule-tags` | Néon vert — étiquettes capsules sur fond sombre | `tag-gooey-capsule` | — |
+| `ref-12-neon-capsule-tags` | Néon vert — étiquettes capsules sur fond sombre | `tag-01-gooey-capsule` | — |
 | `ref-13-glass-fintech-dashboard` | Dashboard en verre dépoli — lavande & bleu | `card-08-orb-chain-total`, `card-09-gradient-metric-curve`, `chart-03-accent-column-callout`, `layout-03-glass-board`, `list-04-due-rows` | `decks/ref-13-glass-fintech-dashboard.html` |
-| `ref-14-layer-stack-coral` | Schéma de couches — corail sur blanc cassé | `diagram-layer-stack` | `decks/ref-14-layer-stack-coral.html` |
+| `ref-14-layer-stack-coral` | Schéma de couches — corail sur blanc cassé | `diagram-01-layer-stack` | `decks/ref-14-layer-stack-coral.html` |
 | `ref-15-lilac-notched-kpi` | Lavande SaaS à vignettes chanfreinées | `card-10-kpi-notch-tile` | `decks/ref-15-lilac-notched-kpi.html` |
 | `ref-16-cobalt-graph-paper` | Papier millimétré cobalt | `chart-04-unit-textured-bar`, `layout-04-graph-paper-cells` | `decks/ref-16-cobalt-graph-paper.html` |
+| `ref-17-mono-bento-legal` | Bento monochrome, hiérarchie par la surface | `card-11-corner-arrow-tile`, `layout-05-nav-pill-bar`, `layout-06-bento-l-span`, `tag-02-centered-cloud` | `decks/ref-17-mono-bento-legal.html` |
+| `ref-18-lime-sales-dashboard` | Tableau de bord achromatique à accent vert dosé | `card-12-inverted-kpi-row`, `chart-05-tile-heatmap`, `layout-07-icon-rail-shell`, `tag-03-action-pill-bar` | `decks/ref-18-lime-sales-dashboard.html` |
+| `ref-19-acid-clinical-timeline` | Feuille clinique grise sur voile, accent acide | `diagram-02-branch-timeline`, `diagram-03-time-scrubber`, `layout-08-sheet-handle-tab`, `list-05-vitals-strip` | `decks/ref-19-acid-clinical-timeline.html` |
 
 Ce que chaque référence fait, sa palette et sa typo : [SPEC-SOURCES.md](SPEC-SOURCES.md).

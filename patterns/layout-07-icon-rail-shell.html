@@ -1,0 +1,138 @@
+<!-- layout-07-icon-rail-shell — la coque d'un tableau de bord, sans une seule couleur.
+     Couleurs via --vl-* uniquement.
+
+     LA RÈGLE EST UN RENONCEMENT : la navigation ne dépense AUCUNE couleur — le rail a
+     exactement le blanc de l'application, l'entrée active est marquée par l'inversion, et le
+     rail ne se détache que par un filet d'un pixel. Tout le budget chromatique reste
+     disponible pour les données, qui n'en consomment que 2 % sur la référence.
+
+     `.vl-shell__content` est VIDE : ce n'est pas un oubli, c'est le slot. Ce qui s'y posera
+     sera ferré sur la même marge que le titre — c'est la seule promesse de la coque. -->
+<div class="vl-shell">
+
+  <aside class="vl-shell__rail">
+    <svg class="vl-shell__logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <circle cx="12" cy="12" r="3.4"/>
+      <path d="M11.2 0h1.6v6h-1.6zM11.2 18h1.6v6h-1.6zM0 11.2h6v1.6H0zM18 11.2h6v1.6h-6z"/>
+      <path d="m3.5 2.4 1.1-1.1 4.2 4.2-1.1 1.1zM15.2 14.1l1.1-1.1 4.2 4.2-1.1 1.1zM2.4 20.5l4.2-4.2 1.1 1.1-4.2 4.2zM14.1 8.8l4.2-4.2 1.1 1.1-4.2 4.2z"/>
+    </svg>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V20H4z"/></svg></i>
+    <i class="is-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg></i>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg></i>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.6-3.6 3.4-5.6 7-5.6s6.4 2 7 5.6"/></svg></i>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h3.2l1.8 2.2h8A1.5 1.5 0 0 1 20 10.7v6.8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5Z"/></svg></i>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 4v8h8"/></svg></i>
+    <span class="vl-shell__spacer"></span>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.2-1.6l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2.8-1.6L14 2h-4l-.4 2.9a7 7 0 0 0-2.8 1.6l-2.3-1-2 3.4 2 1.5a7 7 0 0 0 0 3.2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2.8 1.6L10 22h4l.4-2.9a7 7 0 0 0 2.8-1.6l2.3 1 2-3.4-2-1.5c.1-.5.2-1 .2-1.6Z"/></svg></i>
+  </aside>
+
+  <div class="vl-shell__main">
+    <div class="vl-shell__head">
+      <div class="vl-shell__search">
+        <span class="vl-shell__well" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.4"/><path d="m15.8 15.8 3.4 3.4"/></svg>
+        </span>
+        Search your today analysis
+      </div>
+      <div class="vl-shell__account">
+        <span class="vl-shell__notif">
+          <span class="vl-shell__well" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          </span>
+          Notifications
+          <span class="vl-shell__count">4</span>
+        </span>
+        <span class="vl-shell__avatar" aria-hidden="true">
+          <svg viewBox="0 0 58 58">
+            <rect width="58" height="58" fill="var(--vl-ramp-2)"/>
+            <circle cx="29" cy="23" r="10" fill="var(--vl-ramp-4)"/>
+            <path d="M9 58c1.6-11 9.6-17 20-17s18.4 6 20 17z" fill="var(--vl-ramp-4)"/>
+          </svg>
+        </span>
+      </div>
+    </div>
+
+    <h1 class="vl-shell__title">Your Sales<br>Analysis</h1>
+
+    <!-- le slot : vide à dessein, ferré sur la même marge que le titre -->
+    <div class="vl-shell__content"></div>
+  </div>
+
+</div>
+
+<style>
+.vl-shell {
+  width: 1440px; height: 640px;
+  box-sizing: border-box;
+  display: flex;
+  background: var(--vl-app);
+  color: var(--vl-ink);
+  overflow: hidden;
+  font-family: Montserrat, Poppins, Inter, "Helvetica Neue", Arial, sans-serif;
+}
+/* AUCUN fond propre : le rail hérite du blanc de l'application, et un filet d'un pixel suffit
+   à le détacher. Un aplat gris le ferait lire comme un module, alors que c'est de la coque —
+   et il dépenserait une valeur que le système réserve aux données. */
+.vl-shell__rail {
+  flex: 0 0 var(--vl-rail-w, 95px);
+  border-right: 1px solid var(--vl-hairline);
+  display: flex; flex-direction: column; align-items: center;
+  padding: 26px 0 30px; gap: 20px;
+}
+.vl-shell__logo { width: 34px; height: 34px; margin-bottom: 24px; }
+.vl-shell__rail i {
+  width: 44px; height: 44px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.vl-shell__rail i svg { width: 20px; height: 20px; }
+/* L'inversion, et rien d'autre. Une pastille colorée suffirait à faire perdre à l'accent des
+   données son statut d'exception. */
+.vl-shell__rail i.is-on { background: var(--vl-invert); color: var(--vl-on-invert); border-radius: 50%; }
+.vl-shell__spacer { flex: 1 1 auto; }
+
+.vl-shell__main {
+  flex: 1 1 auto; min-width: 0;
+  padding: 24px 30px 0 29px;
+  display: flex; flex-direction: column;
+}
+.vl-shell__head { height: 69px; display: flex; align-items: center; gap: 16px; }
+.vl-shell__search {
+  width: 430px; height: 58px; padding: 0 26px 0 6px;
+  box-sizing: border-box;
+  border-radius: var(--vl-radius-pill, 999px);
+  box-shadow: inset 0 0 0 1px var(--vl-hairline);
+  display: flex; align-items: center; gap: 14px;
+  font-size: 16px; color: var(--vl-ink-soft);
+}
+.vl-shell__well {
+  flex: 0 0 auto;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--vl-module);
+  color: var(--vl-ink);
+  display: flex; align-items: center; justify-content: center;
+}
+.vl-shell__well svg { width: 19px; height: 19px; }
+.vl-shell__account { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.vl-shell__notif {
+  height: 58px; padding: 0 20px 0 6px;
+  box-sizing: border-box;
+  border-radius: var(--vl-radius-pill, 999px);
+  box-shadow: inset 0 0 0 1px var(--vl-hairline);
+  display: flex; align-items: center; gap: 14px;
+  font-size: 16px; font-weight: 500;
+}
+.vl-shell__count {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--vl-ramp-3); color: var(--vl-on-invert);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 600;
+}
+.vl-shell__avatar { width: 58px; height: 58px; border-radius: 50%; overflow: hidden; }
+.vl-shell__avatar svg { width: 100%; height: 100%; display: block; }
+
+.vl-shell__title {
+  margin: 18px 0 26px;
+  font-size: 66px; line-height: 1.06; font-weight: 500; letter-spacing: -0.02em;
+}
+.vl-shell__content { flex: 1 1 auto; min-height: 0; }
+</style>

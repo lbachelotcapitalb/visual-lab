@@ -1,0 +1,77 @@
+<!-- layout-05-nav-pill-bar — la navigation comme OBJET posé dans la marge, pas comme bandeau.
+     Couleurs via --vl-* uniquement. Trois zones dans un ordre FIXE : badge + wordmark à
+     gauche, liens poussés à droite par `margin-left:auto`, bouton en bout de ligne.
+     Le badge et le bouton sont d'un blanc PLUS CLAIR que la barre : c'est la seule ressource
+     de hiérarchie du système, et elle ne fonctionne que dans ce sens-là. -->
+<header class="vl-navbar">
+  <span class="vl-navbar__badge" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+      <path d="M4 10v4M8 6.5v11M12 3.5v17M16 6.5v11M20 10v4"/>
+    </svg>
+  </span>
+  <span class="vl-navbar__mark">northbeam</span>
+  <nav class="vl-navbar__links">
+    <span>Services
+      <svg class="vl-navbar__caret" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 1.5 6 6.5l5-5"/></svg>
+    </span>
+    <span>Case work</span>
+    <span class="vl-navbar__phone">+33 1 84 80 44 55</span>
+  </nav>
+  <a class="vl-navbar__cta" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="8" r="3.4"/><path d="M4.8 20c.7-3.6 3.6-5.6 7.2-5.6s6.5 2 7.2 5.6"/></svg>
+    Client area
+  </a>
+</header>
+
+<style>
+.vl-navbar {
+  width: 1326px; height: 69px;
+  box-sizing: border-box;
+  /* La marge intérieure vaut la moitié de l'écart vertical du badge : c'est ce qui fait
+     lire le badge comme LOGÉ dans la barre, et non posé dessus. */
+  padding: 0 10px;
+  display: flex; align-items: center;
+  background: var(--vl-module);
+  /* Un rayon franc, jamais 50 % : à demi-hauteur la barre devient un tube et les liens
+     semblent y flotter. La borne haute est le vrai contrôle de ce pattern. */
+  border-radius: var(--vl-radius-bar, 20px);
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+  color: var(--vl-ink);
+}
+.vl-navbar__badge {
+  flex: 0 0 auto;
+  width: 48px; height: 48px;
+  border-radius: var(--vl-radius-pill, 999px);
+  background: var(--vl-object);
+  color: var(--vl-ink);
+  display: flex; align-items: center; justify-content: center;
+}
+.vl-navbar__badge svg { width: 22px; height: 22px; }
+.vl-navbar__mark {
+  margin-left: 16px;
+  font-size: 30px; font-weight: 700; letter-spacing: -0.02em;
+}
+/* `margin-left:auto` et rien d'autre : c'est le vide qui sépare la marque de la navigation,
+   pas un filet ni un changement de fond. */
+.vl-navbar__links {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 44px;
+  font-size: 16px; font-weight: 500;
+  color: var(--vl-ink-soft);
+}
+.vl-navbar__links > span { display: inline-flex; align-items: center; gap: 7px; }
+.vl-navbar__caret { width: 9px; height: 6px; }
+/* Le numéro n'est pas un lien : il passe à l'encre pleine. Une seule information de la
+   navigation a le droit à ce rang, sinon le rang ne veut plus rien dire. */
+.vl-navbar__phone { color: var(--vl-ink); }
+.vl-navbar__cta {
+  margin-left: 44px;
+  height: 49px; padding: 0 22px;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--vl-object);
+  color: var(--vl-ink);
+  border-radius: var(--vl-radius-pill, 999px);
+  font-size: 15px; font-weight: 500; text-decoration: none;
+}
+.vl-navbar__cta svg { width: 15px; height: 15px; }
+</style>

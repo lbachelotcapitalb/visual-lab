@@ -18,6 +18,9 @@
 - ref-15-lilac-notched-kpi
 - ref-14-layer-stack-coral
 - ref-16-cobalt-graph-paper
+- ref-17-mono-bento-legal
+- ref-18-lime-sales-dashboard
+- ref-19-acid-clinical-timeline
 
 > **Ce fichier remplace les images.** Les visuels d'origine ont été fournis collés dans une
 > session Claude Code (29/07/2026) : ils ne sont **pas** sur le disque et ne survivront pas à
@@ -839,3 +842,289 @@ dissout simplement le système.
   et le texte le montant exact : trois rôles, trois porteurs, aucun qui fasse le travail d'un
   autre.
 
+
+---
+
+## ref-17-mono-bento-legal
+
+**Nature** — Page d'accueil d'un cabinet juridique en ligne, fournie en **capture de
+présentation 1200 × 900** : la page n'occupe pas l'image. Première fois du corpus où les images
+sources sont **réellement sur le disque** (`assets/refs/ref-17…png`, gitignorées) : les valeurs
+ci-dessous sont **pipettées et scannées**, pas estimées — les `≈` restants sont signalés comme
+tels.
+
+**Ce qui a été ÉCARTÉ au titre de la mise en scène** — une seule couche, et elle ne se
+reconstruit pas :
+
+- le **fond de planche gris `#C7C7C7`** qui entoure la page (66 px à gauche et à droite, 71 en
+  haut, 57 en bas). C'est le carton de présentation du visuel, pas la page. Asymétrie verticale
+  relevée : la page n'est même pas centrée dans son carton, ce qui suffit à prouver que le
+  carton n'appartient pas à la maquette.
+
+Une fois ce carton retiré il reste **trois couches et pas une de plus** : page blanche →
+modules bento → objets posés dans un module (pilules de tags, badge du logo). C'est la
+profondeur maximale documentée du corpus.
+
+**Géométrie relevée** (scan de runs de couleur sur l'image source, en px de la source)
+
+| objet | mesure source | ratio / largeur de page |
+|---|---|---|
+| page blanche | `x 66..1132`, `y 71..842` → **1067 × 772** | — |
+| marge de page | 44 g. / 42 d. / 39 h. / 40 b. → **42 posés** | `0.039` |
+| barre de menu | `x 110..1090`, `y 110..160` → **981 × 51** | h `0.048` |
+| écart menu → bento | 27 px | `0.025` |
+| gouttière du bento | 19 px | `0.0178` |
+| colonnes du bento | **254 / 345 / 344** (somme 981 avec 2 gouttières) | `0.259 / 0.352 / 0.351` de la largeur utile |
+| rangées du bento | **224 / 172 / 180** (total 614 avec 2 gouttières) | — |
+| rayon de page | `≈ 28` | `0.026` |
+| rayon d'un module | **18** (déduit de l'inset de 9 px à 2 px du bord) | `0.017` |
+| rayon de la barre de menu | `≈ 15` | `0.014` |
+
+**La grille est une vraie grille 3 × 3, et c'est ce qui n'était pas évident.** Les modules ne
+partagent aucune ligne horizontale visible — quatre frontières différentes (`188`, `411/602`,
+`432/620`, `802`) — au point qu'on la reconstruit spontanément en deux colonnes flex
+indépendantes. C'est faux : en posant `r1 = 224`, `r2 = 172`, `r3 = 180` et la gouttière à 19,
+les cinq modules retombent exactement sur les frontières relevées (`224+19+172 = 415` = hauteur
+du module A, `172+19+180 = 371` = hauteur du hero). Le bento est **3 colonnes × 3 rangées** avec
+deux enjambements en L :
+
+```
+┌─────────┬──────────┬──────────┐
+│         │    B     │    C     │   r1  224
+│    A    ├──────────┴──────────┤
+│         │                     │   r2  172
+├─────────┤        HERO         │
+│    D    │                     │   r3  180
+└─────────┴─────────────────────┘
+   c1 254     c2 345    c3 344
+```
+
+`A` = colonne 1, rangées 1–2 · `D` = colonne 1, rangée 3 · `HERO` = colonnes 2–3, rangées 2–3.
+Deux enjambements qui se croisent sans jamais se chevaucher : c'est la signature du système, et
+elle disparaît dès qu'on modélise l'écran en deux colonnes.
+
+**Palette** (quantification + pipette, image PNG non recompressée)
+
+| rôle | valeur | part de surface |
+|---|---|---|
+| carton de présentation — **écarté** | `#C7C7C7` | 23,6 % |
+| page | `#FEFEFE` | 22,7 % |
+| module neutre / barre de menu | `#EDEDED` | 24,0 % |
+| module hero | `#000000` | 22,3 % |
+| pilule de tag (sur module neutre) | `#FFFFFF` | — |
+| encre principale | `#111111` | — |
+| encre secondaire (liens de menu, sous-titre) | relevé `≈ #6E6E6E`, **posé `#5F5F5F`** | — |
+
+L'encre secondaire relevée à `#6E6E6E` sur le gris de module `#EDEDED` plafonne à **4,09:1** —
+sous le seuil de 4,5 exigé d'un corps de ce rang. Elle est posée un ton plus sombre
+(`#5F5F5F`, **4,83:1**), écart invisible à l'œil. Même arbitrage que `ref-06` et `ref-15` : on
+ne recopie pas une faute de contraste au nom de la fidélité.
+
+**Le système n'a AUCUNE couleur.** Trois valeurs de gris et du noir : la hiérarchie est portée
+par la **surface** (un seul module noir sur cinq) et par le **rang de blanc** (page `#FEFEFE` >
+pilule `#FFFFFF` > module `#EDEDED`, soit un blanc plus clair que la page pour les objets posés
+DANS un module gris). Inverser ce rang — module blanc sur page grise — casse le système : les
+pilules n'ont plus de blanc disponible au-dessus d'elles.
+
+**Typo** — grotesk neutre à `g` simple, graisses 500/700 (rendue en **Inter**). Échelle relevée
+sur la source puis exprimée en fraction de la largeur de page `Wp` :
+
+| rang | ratio `Wp` | source (px) | ce que ça porte |
+|---|---|---|---|
+| claim du hero | `0.032` | `≈ 34` | « Упрощаем людям жизнь. » sur deux lignes |
+| titre de module | `0.016` | `≈ 17` | titre de vignette, deux lignes max |
+| wordmark | `0.021` | `≈ 22` | le nom dans la barre de menu |
+| corps / lien de menu | `0.011` | `≈ 12` | liens, sous-titre de module |
+| tag | `0.0075` | `≈ 8` | les douze pilules du nuage |
+
+**Ce qu'il faut isoler** — quatre gestes, aucun décoratif :
+
+1. **La barre de menu en pilule** : un aplat gris arrondi qui flotte DANS la marge de page, un
+   badge circulaire blanc collé à gauche, les liens au centre-droit, et un seul bouton — lui
+   aussi en pilule blanche, donc plus clair que la barre qui le porte.
+2. **La grille bento à enjambements en L** décrite plus haut.
+3. **La vignette à flèche de coin** : titre en haut à gauche, `↗` en haut à droite, illustration
+   au ras du bas — jamais centrée, jamais encadrée.
+4. **Le nuage de tags centré rangée par rangée** : les pilules se rangent en lignes de largeur
+   inégale, chaque ligne centrée sur elle-même, l'ensemble collé au bas du module. C'est le
+   centrage PAR RANGÉE (et pas du bloc) qui donne la silhouette de nuage.
+
+Un cinquième geste est relevé mais **non extrait** : la revendication du hero porte un segment
+de texte **surligné en inverse** (fond blanc, encre noire) sur une seule ligne du sous-titre.
+C'est une variante de mise en avant de texte courant, trop mince pour un pattern à elle seule ;
+elle est portée par le fragment du hero.
+
+**Ce qui n'est PAS repris** — les illustrations au trait (spirale, planète, cubes isométriques,
+escalier 3D) sont des visuels d'auteur : le deck les remplace par des compositions SVG
+génératives de même cadrage et de même valeur de gris. Aucune URL distante.
+
+---
+
+## ref-18-lime-sales-dashboard
+
+**Nature** — Tableau de bord d'analyse des ventes, fourni en capture de présentation
+**1200 × 900** avec l'application enchâssée dans une maquette de tablette.
+
+**Ce qui a été ÉCARTÉ** — **deux** couches de mise en scène, et c'est le point du lot :
+
+- le **fond noir** de la planche (44 px à gauche/droite, 50 en haut/bas) ;
+- le **bezel gris `#595959`** de la tablette (14–15 px tout autour, `x 45..59` et `1142..1154`).
+
+Les deux encadrent la même chose. Appliquer la règle du skill — « quand deux couches encadrent
+la même chose, il n'y en a qu'UNE, et c'est celle du dessus » — les fait tomber toutes les deux :
+ce qui reste est l'application seule, `x 61..1138`, `y 67..833`, soit **1078 × 767**. Le bas de
+l'écran est **coupé par le cadre** : le module « Transactions » n'est visible que sur 73 px. Il
+est reconstruit à sa hauteur d'en-tête et rien de plus — inventer sa suite serait ajouter un
+élément absent de la source.
+
+**Géométrie relevée** (px de la source)
+
+| objet | mesure source | ratio / largeur d'app |
+|---|---|---|
+| application | **1078 × 767** | — |
+| rail d'icônes (gauche) | `x 61..131` → **71** | `0.066` |
+| marge de contenu | `x 154..1116` → **963** utiles, 23 g. / 22 d. | `0.021` |
+| en-tête (recherche + notifications) | `y 85..136` → h **52** | `0.048` |
+| titre de page | `y 150..240` | — |
+| rangée de KPI | `y 266..429` → h **164** | `0.152` |
+| rangée de modules | `y 435..757` → h **323** | `0.30` |
+| gouttière horizontale | 12–14 | `0.012` |
+| gouttière verticale | ≈ 8 | `0.007` |
+| rayon d'un module | `≈ 22` | `0.020` |
+| rayon d'une tuile de heatmap | `≈ 20` | — |
+
+**Colonnes des KPI** : `154..467` / `486..785` / `812..1116`, soit **314 / 300 / 305**. Le
+premier — le seul noir — est **le plus large**, de 4 %. Ce n'est pas une erreur de mesure
+reproductible à la légère : c'est le même geste que l'aplat noir, appliqué à la largeur. La
+rangée se modélise `1.05fr 1fr 1fr`.
+
+**Palette**
+
+| rôle | valeur | part |
+|---|---|---|
+| fond noir de planche — **écarté** | `#000000` | (24,5 % avec le KPI) |
+| bezel — **écarté** | `#595959` | 4,6 % |
+| fond d'application | `#FEFEFE` | 25,2 % |
+| module | `#F2F2F2` | 24,2 % |
+| module « transactions » (crème) | `#FBF9EC` | — |
+| aplat inversé (KPI, tuile forte) | `#000000` | — |
+| **accent vert** | `#5FE85C` | **2,1 %** |
+| rampe de heatmap | `#E3E3E3` → `#CCCCCC` → `#999999` → `#666666` → `#000000` | — |
+
+**L'accent ne pèse que 2,1 % de la surface** et il ne sert qu'à DEUX choses : la barre courante
+de l'histogramme (avec son libellé de jour, seul libellé coloré) et les cellules fortes de la
+heatmap. Un vert de cette saturation posé sur plus de 5 % d'un écran cesse d'être un accent.
+
+**La heatmap n'a pas de troisième dimension.** Elle encode une intensité sur **une rampe de
+gris** dont le noir est le maximum, et le vert n'y est **pas** un cran de la rampe : c'est une
+marque de catégorie posée par-dessus. Deux échelles cohabitent dans une même grille sans se
+mélanger, parce que l'une est achromatique et l'autre non.
+
+**Typo** — grotesk géométrique (rendue en **Montserrat**), graisses 400/500/700.
+
+| rang | ratio / largeur d'app | source (px) | ce que ça porte |
+|---|---|---|---|
+| titre de page | `0.046` | `≈ 50` | « Your Sales Analysis », deux lignes |
+| chiffre de KPI | `0.043` | `≈ 46` | `$16.4K` |
+| titre de module | `0.019` | `≈ 20` | « Sales Funnel », « Orders » |
+| libellé | `0.013` | `≈ 14` | libellés de ligne, jours |
+| micro | `0.011` | `≈ 12` | sous-titres, notes de KPI |
+
+**Ce qu'il faut isoler**
+
+1. **La coque à rail d'icônes** : rail vertical étroit (6,6 % de la largeur), séparé du contenu
+   par un filet et non par une couleur de fond, en-tête à barre de recherche en pilule, et
+   ligne d'actions en pilules à droite du titre.
+2. **La rangée de KPI dont un seul est inversé**, et qui est aussi le plus large.
+3. **La heatmap en tuiles arrondies** avec libellés de lignes hors grille.
+
+**Non extrait, et pourquoi** — l'histogramme (barres à grand rayon, une seule accentuée,
+info-bulle sombre ancrée à la barre courante) est **trop proche de `chart-03-accent-column-callout`**
+(ref-13), qui porte déjà « colonnes sans axe, une seule chiffrée par une info-bulle sombre ».
+La différence tient au rayon des barres et à la couleur du libellé de l'axe : ce sont des
+tokens, pas une composition. On enrichit `chart-03` d'une variante plutôt que d'ouvrir un
+doublon — arbitrage écrit ici pour ne pas être rejoué.
+
+---
+
+## ref-19-acid-clinical-timeline
+
+**Nature** — Dossier patient de cardiologie, ouvert **en feuille modale par-dessus un voile
+sombre**. Capture de présentation **1200 × 900**.
+
+**Ce qui a été ÉCARTÉ** — une seule couche : le **carton jaune acide `#F5FE49`** (57 px à
+gauche/droite, 98 en haut, 101 en bas). Piège du lot : ce jaune est **aussi** la couleur
+d'accent de l'interface (les pastilles de comptage, les zones de graphique). Le carton et
+l'accent partagent le même hex — écarter le carton ne veut donc pas dire écarter la couleur.
+
+**Le voile sombre, lui, RESTE.** Il ne se comporte pas comme un bezel : il porte les onglets et
+le bouton de fermeture, c'est-à-dire de l'interface. Le tester correctement, c'est vérifier
+qu'il porte du contenu — un bezel n'en porte jamais.
+
+Trois couches donc : voile sombre → feuille claire → modules. Plus **l'onglet-poignée**, qui
+n'est pas une quatrième couche mais une extension de la feuille (même valeur, même plan) —
+séparée d'elle par une saignée de voile, et raccordée à sa droite par un **congé concave**.
+
+**Géométrie relevée** (px de la source)
+
+| objet | mesure source | ratio / largeur de voile |
+|---|---|---|
+| voile sombre | `x 57..1142`, `y 98..798` → **1086 × 701** | — |
+| feuille claire | `x 72..1126` → **1055** de large | `0.971` |
+| saignée voile / feuille | 15 px sur les côtés | `0.014` |
+| bande d'onglets | `y 98..≈178` → h **80** | `0.074` |
+| onglet-poignée (titre) | `x ≈122..387` | largeur `0.244` |
+| bouton de fermeture ⌀ | `≈ 56`, à cheval sur le bord | `0.052` |
+| ruban temporel | `y ≈ 726..782`, pleine largeur de feuille | h `0.052` |
+
+**Palette**
+
+| rôle | valeur | part |
+|---|---|---|
+| carton de présentation — **écarté** | `#F5FE49` | 13,7 % |
+| feuille | `#DFDFD7` | 33,5 % |
+| voile / ruban / fenêtre de sélection | `#4A4A48` → `#1B1D1D` | 2,4 % |
+| module | `#F0EFEB` → `#FFFFFF` | 9,2 % |
+| **accent acide** | `#F5FE49` (identique au carton) | — |
+| encre | `#262C2C` | — |
+| tracé « alerte » (ECG, tension) | `≈ #E8756B` |
+| encre secondaire | relevé `≈ #7A7C79`, **posé `#5F615E`** |
+| extrémité « amélioration » du rail | `≈ #7FA88C` | — |
+
+L'encre secondaire relevée à `≈ #7A7C79` sur la feuille `#DFDFD7` plafonne à **4,21:1**. Elle est
+posée à `#5F615E` (**4,61:1**), écart invisible à l'œil. Troisième lot de suite où la source
+place son gris secondaire juste sous le seuil : le relevé se vérifie systématiquement avant
+d'être recopié.
+
+**La feuille est GRISE, pas blanche**, et c'est ce qui rend le système lisible : les modules
+posés dessus sont blancs ou blanc-cassé, donc ils montent au lieu de disparaître. Sur une
+feuille blanche, un module blanc doit s'entourer d'un liseré ou d'une ombre — deux ornements
+que ce système n'a nulle part.
+
+**Typo** — géométrique à `a` rond (rendue en **Montserrat**), graisses 400/500/600.
+
+| rang | ratio / largeur de voile | source (px) | ce que ça porte |
+|---|---|---|---|
+| titre de feuille | `0.033` | `≈ 36` | « Cardiology » dans l'onglet-poignée |
+| diagnostic | `0.026` | `≈ 28` | « Hypertension » |
+| valeur de constante | `0.021` | `≈ 23` | `89 bpm`, `100/67` |
+| libellé de module | `0.017` | `≈ 18` | « Blood Pressure » |
+| micro-libellé | `0.010` | `≈ 11` | « Diagnosys », « Heart Rate » — au-dessus de la valeur |
+
+**Ce qu'il faut isoler**
+
+1. **La feuille modale à onglet-poignée** : voile qui porte des onglets, feuille claire, et la
+   poignée titrée raccordée à la feuille par un congé **concave** — la seule courbe inversée du
+   corpus, et ce qui distingue cette feuille d'une carte de plus.
+2. **Le bandeau de constantes** : une rangée de couples micro-libellé / valeur, sans filet, sans
+   carte, où l'unité est un cran plus petite et plus claire que le nombre qu'elle suit.
+3. **La timeline à branches** : un rail horizontal daté, des jalons ronds accentués, et des
+   dérivations en **équerre arrondie** qui descendent vers des cartes de niveau inférieur.
+4. **Le ruban temporel à fenêtre de sélection** : l'axe complet en pilule claire, les événements
+   en pastilles rondes sous leur mois, une pastille de comptage acide en exposant, et une
+   **fenêtre sombre à poignées** posée sur l'intervalle affiché au-dessus. C'est le seul objet
+   du corpus où un module donne la position de lecture d'un autre.
+
+**Ce qui n'est PAS repris** — les photographies (portrait patient, silhouette anatomique) et les
+tracés d'imagerie réels : le deck les remplace par des compositions SVG génératives de même
+cadrage et de même valeur.

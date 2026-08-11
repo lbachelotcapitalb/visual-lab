@@ -1,0 +1,134 @@
+<!-- diagram-02-branch-timeline — une chronologie qui accroche des objets de rangs différents.
+     Couleurs via --vl-* uniquement.
+
+     AUCUNE DIAGONALE. La dérivation est une ÉQUERRE ARRONDIE : descente verticale, coude en
+     arc, puis départ horizontal. Une diagonale reliant les deux mêmes points aurait la même
+     boîte englobante — c'est pourquoi les benchmarks lisent le TRACÉ SVG (`v` avant `h`,
+     aucun `l`, un `a`) et non des positions de boîtes.
+
+     Rien n'est proportionnel au temps : la position d'un jalon dit l'ORDRE, pas la durée.
+     C'est ce qui range ce fragment dans `diagram` et non dans `chart`. -->
+<div class="vl-branchline">
+
+  <span class="vl-branchline__rail"></span>
+
+  <!-- branche A -->
+  <span class="vl-branchline__pin" style="left:18px">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="5" y="4.5" width="14" height="16" rx="2.4"/><path d="M8.5 9h7M8.5 13h7M9 2.6v3.6M15 2.6v3.6"/></svg>
+  </span>
+  <div class="vl-branchline__label" style="left:18px">
+    <p class="vl-branchline__month">Aug</p>
+    <p class="vl-branchline__week">I Week</p>
+  </div>
+  <svg class="vl-branchline__elbow" style="left:18px" viewBox="0 0 120 96" aria-hidden="true">
+    <path d="M12 0v66a14 14 0 0 0 14 14h94"/>
+  </svg>
+
+  <span class="vl-branchline__obj vl-branchline__pill" id="obj-a" style="left:150px; top:126px">
+    <span class="vl-branchline__well">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="m9.5 9.5 5 5"/></svg>
+    </span>
+    Aspirin <b>x2</b>
+  </span>
+
+  <article class="vl-branchline__obj vl-branchline__card" id="obj-b" style="left:360px; top:104px">
+    <h4>Blood Pressure</h4>
+    <p>Friday · average 160/110</p>
+  </article>
+
+  <!-- branche B -->
+  <span class="vl-branchline__pin" style="left:700px">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="5" y="4.5" width="14" height="16" rx="2.4"/><path d="M8.5 9h7M8.5 13h7M9 2.6v3.6M15 2.6v3.6"/></svg>
+  </span>
+  <div class="vl-branchline__label" style="left:700px">
+    <p class="vl-branchline__month">Sep</p>
+    <p class="vl-branchline__week">I Week</p>
+  </div>
+  <svg class="vl-branchline__elbow" style="left:700px" viewBox="0 0 120 96" aria-hidden="true">
+    <path d="M12 0v66a14 14 0 0 0 14 14h94"/>
+  </svg>
+
+  <span class="vl-branchline__obj vl-branchline__pill" id="obj-c" style="left:832px; top:126px">
+    <span class="vl-branchline__well">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="m9.5 9.5 5 5"/></svg>
+    </span>
+    bisoprolol <b>x3</b>
+  </span>
+
+  <article class="vl-branchline__obj vl-branchline__card" id="obj-d" style="left:1010px; top:104px">
+    <h4>Blood Pressure</h4>
+    <p>Thursday · average 130/90</p>
+  </article>
+
+  <!-- le SEUL jalon sombre : c'est une commande, pas une période -->
+  <span class="vl-branchline__pin vl-branchline__pin--add" style="right:0">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg>
+  </span>
+
+</div>
+
+<style>
+.vl-branchline {
+  width: 1330px; height: 300px;
+  box-sizing: border-box;
+  position: relative;
+  /* Le fond de feuille fait partie du pattern : les objets dérivés sont BLANCS, et un blanc
+     sur blanc ne monte pas. C'est la même règle de rang que partout ailleurs — le sol est
+     gris pour que ce qu'on y pose existe sans liseré. */
+  background: var(--vl-sheet);
+  padding: 0 0 0 0;
+  color: var(--vl-ink);
+  font-family: Montserrat, Poppins, Inter, "Helvetica Neue", Arial, sans-serif;
+}
+/* Un FILET, pas une barre : le rail porte la chronologie, il ne la représente pas. */
+.vl-branchline__rail {
+  position: absolute; left: 40px; right: 60px; top: 22px; height: 2px;
+  background: linear-gradient(90deg, var(--vl-alert) 0%, var(--vl-ink-soft) 46%, var(--vl-recover) 100%);
+}
+/* Posé SUR le rail, centré dessus : un jalon décalé de quelques pixels se met à flotter et la
+   chronologie cesse de se lire comme un axe. */
+.vl-branchline__pin {
+  position: absolute; top: 0;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--vl-accent); color: var(--vl-ink);
+  display: flex; align-items: center; justify-content: center;
+}
+.vl-branchline__pin svg { width: 20px; height: 20px; }
+.vl-branchline__pin--add { background: var(--vl-veil-deep); color: var(--vl-module-hi); }
+
+.vl-branchline__label { position: absolute; top: 46px; }
+.vl-branchline__month { margin: 26px 0 0; font-size: 22px; font-weight: 500; }
+.vl-branchline__week { margin: 2px 0 0; font-size: 13px; color: var(--vl-ink-soft); }
+
+/* L'ÉQUERRE. `v` d'abord, `a` pour le coude, `h` ensuite — dans cet ordre et sans un seul
+   segment oblique. C'est le tracé qui porte le sens : « ceci appartient à cette période »,
+   là où une diagonale dirait « ceci mène à cela ». */
+.vl-branchline__elbow { position: absolute; top: 46px; width: 120px; height: 96px; }
+.vl-branchline__elbow path { fill: none; stroke: var(--vl-ink-soft); stroke-width: 1.6; opacity: 0.55; }
+
+.vl-branchline__pill {
+  position: absolute;
+  height: 54px; padding: 0 20px 0 6px;
+  border-radius: var(--vl-radius-pill, 999px);
+  background: var(--vl-module);
+  display: flex; align-items: center; gap: 12px;
+  font-size: 17px; font-weight: 500; white-space: nowrap;
+}
+.vl-branchline__well {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--vl-module-hi);
+  display: flex; align-items: center; justify-content: center;
+}
+.vl-branchline__well svg { width: 19px; height: 19px; }
+.vl-branchline__pill b { font-weight: 600; }
+/* Le rang de l'objet dérivé se lit à sa TAILLE et à son aplat : la carte de premier rang est
+   plus large et plus claire que la pilule de second rang. */
+.vl-branchline__card {
+  position: absolute;
+  width: 300px; margin: 0; padding: 18px 22px;
+  background: var(--vl-module-hi);
+  border-radius: var(--vl-radius-module, 22px);
+}
+.vl-branchline__card h4 { margin: 0; font-size: 24px; font-weight: 500; letter-spacing: -0.01em; }
+.vl-branchline__card p { margin: 6px 0 0; font-size: 15px; color: var(--vl-ink-soft); }
+</style>

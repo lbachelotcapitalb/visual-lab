@@ -1,0 +1,39 @@
+{
+  "name": "Feuille clinique grise sur voile, accent acide",
+  "notes": "LA FEUILLE EST GRISE, PAS BLANCHE, ET TOUT EN DÉCOULE. Les modules posés dessus sont blancs ou blanc-cassé : ils MONTENT au lieu de disparaître, sans un liseré ni une ombre. Sur une feuille blanche, un module blanc doit s'entourer de quelque chose pour exister — deux ornements que ce système n'a nulle part. Le gris de la feuille (#DFDFD7, légèrement chaud) est donc une décision structurelle, pas un goût.\n\nLE VOILE SOMBRE PORTE DE L'INTERFACE, DONC IL RESTE. Il accueille les onglets et le bouton de fermeture : ce n'est pas un bezel de maquette (un bezel ne porte jamais de contenu), c'est le scrim d'une feuille modale. Le test qui tranche entre les deux est là, et pas dans l'apparence.\n\nL'ONGLET-POIGNÉE N'EST PAS UNE QUATRIÈME COUCHE. Il a la valeur de la feuille et son plan ; il en est séparé par une saignée de voile et raccordé à sa droite par un CONGÉ CONCAVE — la seule courbe inversée du corpus. C'est ce raccord qui le fait lire comme une extension de la feuille et non comme une carte de plus posée sur le voile.\n\nLE JAUNE DU CARTON EST AUSSI L'ACCENT. Le visuel source est présenté sur un carton #F5FE49, et l'interface utilise exactement le même hex pour ses pastilles de comptage et ses zones de graphique. Écarter le carton de présentation ne veut donc pas dire écarter la couleur : le piège est de croire qu'on nettoie l'un en supprimant l'autre.\n\nL'ACCENT NE DIT JAMAIS « ALERTE ». L'acide marque ce qu'il faut COMPTER (une pastille d'exposant, une aire de graphique) ; c'est un rouge saumon (#E8756B) qui marque ce qui va mal. Deux rôles, deux couleurs, aucune des deux ne fait le travail de l'autre.\n\nÉCHELLE : les valeurs ci-dessous sont à l'échelle d'un voile WEB de 1440 px de large (la source mesure 1086 ; facteur 1,326). Les patterns héritent de CES valeurs.\n\nORIGINE : reverse-engineering d'un visuel tiers (cf. SPEC-SOURCES.md § ref-19). Photographies et tracés d'imagerie remplacés par des compositions SVG génératives.",
+  "tokens": {
+    "--vl-veil": "#4A4A48",
+    "--vl-veil-deep": "#1B1D1D",
+    "--vl-sheet": "#DFDFD7",
+    "--vl-module": "#F0EFEB",
+    "--vl-module-hi": "#FFFFFF",
+    "--vl-accent": "#F5FE49",
+    "--vl-alert": "#E8756B",
+    "--vl-recover": "#7FA88C",
+    "--vl-ink": "#262C2C",
+    "--vl-ink-soft": "#5F615E",
+    "--vl-on-veil": "#FFFFFF",
+    "--vl-on-veil-soft": "rgba(255,255,255,0.72)",
+    "--vl-radius-sheet": "34px",
+    "--vl-radius-module": "22px",
+    "--vl-radius-pill": "999px",
+    "--vl-notch": "26px",
+    "--vl-bleed": "20px",
+    "--vl-tabbar-h": "106px",
+    "--vl-ribbon-h": "74px",
+    "--vl-gutter": "18px",
+    "--vl-margin": "34px"
+  },
+  "type": {
+    "display": "Montserrat, Poppins, Inter, \"Helvetica Neue\", Arial, sans-serif",
+    "body": "Montserrat, Poppins, Inter, \"Helvetica Neue\", Arial, sans-serif",
+    "mono": "\"DM Mono\", ui-monospace, SFMono-Regular, Menlo, monospace",
+    "scale": {
+      "sheet": "48px / 1.05 / 500 / -0.02em",
+      "diagnosis": "37px / 1.1 / 500 / -0.015em",
+      "value": "30px / 1.1 / 600 / -0.01em",
+      "label": "24px / 1.2 / 500 / -0.01em",
+      "micro": "14px / 1.3 / 500"
+    }
+  }
+}

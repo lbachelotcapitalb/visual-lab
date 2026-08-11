@@ -83,7 +83,7 @@ Le fragment HTML est le rendu de référence. Pour les autres médias, on passe 
 | mailing | `node bin/emit.mjs <id> --target email` | **refuse** ce qu'Outlook ne sait pas rendre |
 | impression / PNG | `node bin/render.mjs --pattern <id>` | un fragment HTML s'imprime tel quel |
 
-**Au 31/07/2026, aucun des 22 patterns ne passe la cible `email`** (flex, `clip-path`, `calc()`,
+**Au 11/08/2026, aucun des 38 patterns ne passe la cible `email`** (flex, `clip-path`, `calc()`,
 SVG inline). Ce n'est pas une panne, c'est le constat : le corpus est de la matière slide/web.
 Pour un mailing, deux issues honnêtes — écrire un pattern nativement email (tables, largeurs
 fixes), ou **rendre le pattern en image et poser l'image**. `node bin/emit.mjs --audit --target
@@ -116,8 +116,30 @@ node bin/ingest.mjs ref-NN-<slug> ~/Desktop/x.png    # ou depuis un fichier
 ```
 
 **Un ⌘C au lieu d'un ⌘V suffit** : `ingest.mjs` sort le flavor image du presse-papiers en
-AppleScript et le range dans `assets/refs/` (gitignoré — ce sont des visuels tiers). À partir de
-là, on RELÈVE au lieu de deviner :
+AppleScript et le range dans `assets/refs/` (gitignoré — ce sont des visuels tiers).
+
+**Et si Léo a déjà collé plusieurs images d'un coup, elles sont récupérables sans rien lui
+redemander** (établi le 11/08/2026, lot `ref-17`/`18`/`19`) : le transcript de la session les
+porte en base64. Le presse-papiers ne garde que la dernière ; le transcript les garde toutes,
+dans l'ordre.
+
+```bash
+python3 - <<'EOF'
+import json, base64
+p = '/Users/Leo/.claude/projects/<projet>/<session-id>.jsonl'
+noms = ['ref-17-slug', 'ref-18-slug', 'ref-19-slug']   # dans l'ordre du collage
+imgs = [b['source'] for l in open(p) if (d := json.loads(l)).get('message')
+        for b in (d['message'].get('content') or []) if isinstance(b, dict) and b.get('type') == 'image']
+for n, s in zip(noms, imgs):
+    open(f'assets/refs/{n}.jpg', 'wb').write(base64.b64decode(s['data']))
+EOF
+cd assets/refs && for f in *.jpg; do sips -s format png "$f" --out "${f%.jpg}.png" && rm "$f"; done
+```
+
+Le `.png` n'est pas cosmétique : `palette.mjs` et `diff.mjs` construisent leur chemin en
+`assets/refs/<ref>.png` et ne trouveront rien d'autre.
+
+À partir de là, on RELÈVE au lieu de deviner :
 
 ```bash
 node bin/palette.mjs ref-NN-<slug>                   # couleurs dominantes + part de surface

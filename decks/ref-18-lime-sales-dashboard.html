@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ref-18 — lime sales dashboard (northbeam)</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+/* ref-18-lime-sales-dashboard — reconstitution fidèle. Ce n'est PAS un deck : c'est UNE
+   application web. LE FICHIER NE CONTIENT QUE L'APPLICATION, à sa taille réelle mise à
+   l'échelle 1440 (la source mesure 1078).
+
+   DEUX couches de mise en scène ont été retirées, et c'est le point du lot : un fond noir de
+   planche (44 px) ET un bezel de tablette (15 px). Les deux encadrent la même chose — la
+   règle de la maison (« quand deux couches encadrent la même chose, il n'y en a qu'UNE, et
+   c'est celle du dessus ») les fait tomber toutes les deux.
+
+   Le bas de l'écran source est COUPÉ par le cadre : le module « Transactions » n'y est
+   visible que sur 73 px. Il est reconstruit à sa hauteur d'en-tête et rien de plus — inventer
+   sa suite serait ajouter un élément absent de la source.
+
+   Le portrait de l'avatar est remplacé par une composition SVG générative en valeurs de gris :
+   lui donner le disque jaune de la photo d'origine introduirait un SECOND accent, ce que le
+   système interdit. Toutes les couleurs sont dans ce :root ; aucun hex plus bas. */
+:root {
+  --vl-app: #FEFEFE;
+  --vl-module: #F2F2F2;
+  --vl-module-warm: #FBF9EC;
+  --vl-invert: #000000;
+  --vl-accent: #5FE85C;
+  --vl-ink: #0B0B0B;
+  --vl-ink-soft: #6B6B6B;
+  --vl-on-invert: #FFFFFF;
+  --vl-on-invert-soft: rgba(255,255,255,0.66);
+  --vl-hairline: #E6E6E6;
+
+  --vl-ramp-1: #E3E3E3;
+  --vl-ramp-2: #CCCCCC;
+  --vl-ramp-3: #999999;
+  --vl-ramp-4: #666666;
+  --vl-ramp-5: #000000;
+
+  --vl-radius-module: 29px;
+  --vl-radius-tile: 20px;
+  --vl-radius-pill: 999px;
+  --vl-gutter: 16px;
+  --vl-gutter-row: 11px;
+  --vl-rail-w: 95px;
+  --vl-margin: 30px;
+  --vl-header-h: 69px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--vl-app); }
+body { font-family: Montserrat, Poppins, Inter, "Helvetica Neue", Arial, sans-serif; color: var(--vl-ink); }
+
+.slide {
+  width: 1440px; height: 1025px;
+  background: var(--vl-app);
+  display: flex;
+  overflow: hidden;
+}
+
+/* ─────────────────────────── rail d'icônes ───────────────────────────
+   Le rail est du MÊME blanc que l'application : seul un filet d'un pixel l'en détache. Lui
+   donner un fond gris le ferait lire comme un module, alors que c'est de la coque. */
+.rail {
+  flex: 0 0 var(--vl-rail-w);
+  border-right: 1px solid var(--vl-hairline);
+  display: flex; flex-direction: column; align-items: center;
+  padding: 26px 0 30px;
+  gap: 20px;
+}
+.rail__logo { width: 34px; height: 34px; margin-bottom: 24px; }
+.rail i {
+  width: 44px; height: 44px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--vl-ink);
+}
+.rail i svg { width: 20px; height: 20px; }
+/* Un seul élément actif, marqué par l'inversion — jamais par une couleur : sur cet écran
+   l'accent vert est réservé aux données, pas à la navigation. */
+.rail i.is-on { background: var(--vl-invert); color: var(--vl-on-invert); border-radius: 50%; }
+.rail__spacer { flex: 1 1 auto; }
+
+/* ─────────────────────────── contenu ─────────────────────────── */
+.main {
+  flex: 1 1 auto; min-width: 0;
+  padding: 24px var(--vl-margin) 0 29px;
+  display: flex; flex-direction: column;
+}
+
+.head { height: var(--vl-header-h); display: flex; align-items: center; gap: 16px; }
+.search {
+  height: 58px; width: 430px; padding: 0 26px 0 6px;
+  border-radius: var(--vl-radius-pill);
+  background: var(--vl-app);
+  box-shadow: inset 0 0 0 1px var(--vl-hairline);
+  display: flex; align-items: center; gap: 14px;
+  font-size: 16px; color: var(--vl-ink-soft);
+}
+/* Le « puits » d'icône : un disque gris à l'intérieur d'une pilule claire. C'est le motif
+   récurrent de l'écran — il revient dans les pilules d'action et dans les notifications. */
+.well {
+  flex: 0 0 auto;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--vl-module);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--vl-ink);
+}
+.well svg { width: 19px; height: 19px; }
+.head__right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.notif {
+  height: 58px; padding: 0 20px 0 6px;
+  border-radius: var(--vl-radius-pill);
+  box-shadow: inset 0 0 0 1px var(--vl-hairline);
+  display: flex; align-items: center; gap: 14px;
+  font-size: 16px; font-weight: 500;
+}
+.notif__count {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--vl-ramp-3); color: var(--vl-on-invert);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 600;
+}
+.avatar { width: 58px; height: 58px; border-radius: 50%; overflow: hidden; background: var(--vl-module); }
+.avatar svg { width: 100%; height: 100%; display: block; }
+
+.titlebar { display: flex; align-items: flex-start; gap: 20px; padding: 18px 0 26px; }
+.titlebar h1 { margin: 0; font-size: 66px; line-height: 1.06; font-weight: 500; letter-spacing: -0.02em; }
+.actions { margin-left: auto; display: flex; align-items: center; gap: 12px; padding-top: 8px; }
+.pill {
+  height: 62px; padding: 0 22px 0 8px;
+  border-radius: var(--vl-radius-pill);
+  background: var(--vl-module);
+  display: flex; align-items: center; gap: 14px;
+}
+.pill__label { font-size: 13px; color: var(--vl-ink-soft); line-height: 1.25; }
+.pill__value { font-size: 16px; font-weight: 500; line-height: 1.25; }
+.pill .well { background: var(--vl-app); }
+.pill__caret { width: 12px; height: 8px; margin-left: 4px; }
+/* Le seul aplat noir de la barre d'actions, donc la seule action de premier rang. */
+.pill--solid {
+  background: var(--vl-invert); color: var(--vl-on-invert);
+  padding: 0 26px; font-size: 17px; font-weight: 500; gap: 10px;
+}
+.pill--solid svg { width: 15px; height: 15px; }
+
+/* ── rangée de KPI ──
+   Le module inversé est AUSSI le plus large : 1,05fr contre 1fr. Le même geste de hiérarchie
+   est appliqué deux fois — par le fond et par la largeur. */
+.kpis {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr) minmax(0, 1.02fr);
+  gap: var(--vl-gutter);
+  height: 219px;
+}
+.kpi {
+  position: relative;
+  padding: 30px 32px 26px;
+  border-radius: var(--vl-radius-module);
+  background: var(--vl-module);
+  display: flex; flex-direction: column;
+}
+.kpi--solid { background: var(--vl-invert); color: var(--vl-on-invert); }
+.kpi__label { margin: 0; font-size: 20px; font-weight: 500; }
+.kpi__fig { margin: auto 0 6px; font-size: 62px; font-weight: 700; letter-spacing: -0.025em; line-height: 1; }
+.kpi__note { margin: 0; font-size: 15px; color: var(--vl-ink-soft); }
+.kpi__note b { font-weight: 600; color: var(--vl-ink); }
+.kpi--solid .kpi__note { color: var(--vl-on-invert-soft); }
+.kpi--solid .kpi__note b { color: var(--vl-on-invert); }
+.kpi__go {
+  position: absolute; top: 26px; right: 32px;
+  width: 46px; height: 46px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: inset 0 0 0 1.4px var(--vl-ramp-2);
+}
+.kpi--solid .kpi__go { background: var(--vl-on-invert); color: var(--vl-invert); box-shadow: none; }
+.kpi__go svg { width: 20px; height: 20px; }
+
+/* ── rangée de modules ── */
+.mods { display: grid; grid-template-columns: minmax(0, 496fr) minmax(0, 453fr); gap: var(--vl-gutter); flex: 1 1 auto; min-height: 0; margin-top: var(--vl-gutter-row); }
+.mod { background: var(--vl-module); border-radius: var(--vl-radius-module); padding: 28px 30px; display: flex; flex-direction: column; overflow: hidden; }
+.mod__head { display: flex; align-items: flex-start; gap: 14px; }
+.mod__head h2 { margin: 0; font-size: 27px; font-weight: 500; letter-spacing: -0.01em; }
+.mod__head p { margin: 4px 0 0; font-size: 16px; color: var(--vl-ink-soft); }
+.mod__tools { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.chip {
+  height: 46px; padding: 0 22px; border-radius: var(--vl-radius-pill);
+  background: var(--vl-app); display: flex; align-items: center;
+  font-size: 16px; font-weight: 500;
+}
+.iconbtn { width: 46px; height: 46px; border-radius: 50%; background: var(--vl-app); display: flex; align-items: center; justify-content: center; }
+.iconbtn svg { width: 20px; height: 20px; }
+
+/* ── histogramme ── */
+/* Le padding haut de la zone de barres n'est pas une respiration : c'est la PLACE DE
+   L'INFO-BULLE. La barre courante monte à 100 % de la zone, et la bulle se pose au-dessus
+   d'elle — sans cette réserve elle chevauche l'en-tête du module. */
+.bars { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; align-items: end; padding-top: 62px; }
+.bar { display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; gap: 14px; }
+.bar__col { width: 100%; border-radius: var(--vl-radius-tile); background: var(--vl-ramp-1); position: relative; }
+.bar__day { font-size: 17px; color: var(--vl-ink-soft); }
+/* L'accent ne sert QU'ICI et dans la heatmap : la barre courante et son libellé de jour.
+   Un vert de cette saturation posé ailleurs cesserait d'être un accent. */
+.bar.is-on .bar__col { background: var(--vl-accent); }
+.bar.is-on .bar__day { color: var(--vl-accent); font-weight: 600; }
+.bar__tip {
+  position: absolute; left: 50%; top: -19px; transform: translate(-50%, -100%);
+  background: var(--vl-invert); color: var(--vl-on-invert);
+  border-radius: var(--vl-radius-pill); padding: 8px 18px;
+  font-size: 17px; font-weight: 600; white-space: nowrap;
+}
+
+/* ── heatmap ──
+   Deux échelles cohabitent dans la même grille sans se mélanger : une rampe de GRIS pour
+   l'intensité (le noir est le maximum), et le vert comme marque de catégorie posée par
+   dessus. Cela ne tient que parce que l'une est achromatique et l'autre non. */
+.heat { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: 150px repeat(4, 1fr); gap: 18px 16px; align-content: stretch; padding-top: 34px; }
+.heat__row { display: flex; align-items: center; font-size: 17px; }
+.heat__cell { border-radius: var(--vl-radius-tile); background: var(--vl-ramp-1); }
+.heat__cell[data-v="2"] { background: var(--vl-ramp-2); }
+.heat__cell[data-v="3"] { background: var(--vl-ramp-3); }
+.heat__cell[data-v="4"] { background: var(--vl-ramp-4); }
+.heat__cell[data-v="5"] { background: var(--vl-ramp-5); }
+.heat__cell[data-v="on"] { background: var(--vl-accent); }
+
+/* ── module chaud, coupé par le bas du cadre source ── */
+.warm {
+  margin-top: var(--vl-gutter-row);
+  height: 98px; flex: 0 0 98px;
+  background: var(--vl-module-warm);
+  border-radius: var(--vl-radius-module) var(--vl-radius-module) 0 0;
+  padding: 24px 30px 0;
+  display: flex; align-items: flex-start;
+}
+.warm h2 { margin: 0; font-size: 27px; font-weight: 500; letter-spacing: -0.01em; }
+.warm p { margin: 4px 0 0; font-size: 16px; color: var(--vl-ink-soft); }
+</style>
+</head>
+<body>
+
+<!-- vl:stage web — application, pas une slide : le format PPT n'a pas de sens ici -->
+<section class="slide">
+
+  <aside class="rail">
+    <svg class="rail__logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <g><circle cx="12" cy="12" r="3.4"/>
+        <path d="M11.2 0h1.6v6h-1.6zM11.2 18h1.6v6h-1.6zM0 11.2h6v1.6H0zM18 11.2h6v1.6h-6z"/>
+        <path d="m3.5 2.4 1.1-1.1 4.2 4.2-1.1 1.1zM15.2 14.1l1.1-1.1 4.2 4.2-1.1 1.1zM2.4 20.5l4.2-4.2 1.1 1.1-4.2 4.2zM14.1 8.8l4.2-4.2 1.1 1.1-4.2 4.2z"/>
+      </g>
+    </svg>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V20H4z"/></svg></i>
+    <i class="is-on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.6"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.6"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.6"/></svg></i>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg></i>
+    <span style="height:14px"></span>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.6-3.6 3.4-5.6 7-5.6s6.4 2 7 5.6"/></svg></i>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h3.2l1.8 2.2h8A1.5 1.5 0 0 1 20 10.7v6.8a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5Z"/></svg></i>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 6.5A1.5 1.5 0 0 1 5.5 5h13A1.5 1.5 0 0 1 20 6.5v8a1.5 1.5 0 0 1-1.5 1.5H9l-5 4Z"/></svg></i>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="m8.5 15.5 7-7"/><circle cx="9.5" cy="9.5" r="1.1"/><circle cx="14.5" cy="14.5" r="1.1"/></svg></i>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 4v8h8"/></svg></i>
+    <span class="rail__spacer"></span>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M9.7 9.6a2.4 2.4 0 1 1 3.2 2.3v1.4"/><circle cx="12" cy="16.4" r=".9" fill="currentColor" stroke="none"/></svg></i>
+    <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.2-1.6l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2.8-1.6L14 2h-4l-.4 2.9a7 7 0 0 0-2.8 1.6l-2.3-1-2 3.4 2 1.5a7 7 0 0 0 0 3.2l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2.8 1.6L10 22h4l.4-2.9a7 7 0 0 0 2.8-1.6l2.3 1 2-3.4-2-1.5c.1-.5.2-1 .2-1.6Z"/></svg></i>
+  </aside>
+
+  <div class="main">
+
+    <div class="head">
+      <div class="search">
+        <span class="well"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.4"/><path d="m15.8 15.8 3.4 3.4"/></svg></span>
+        Search your today analysis
+      </div>
+      <div class="head__right">
+        <div class="notif">
+          <span class="well"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 10a6 6 0 0 1 12 0c0 4 1.5 5.5 1.5 5.5h-15S6 14 6 10Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg></span>
+          Notifications
+          <span class="notif__count">4</span>
+        </div>
+        <div class="avatar">
+          <!-- avatar génératif : aucune photo, et surtout aucun second accent coloré -->
+          <svg viewBox="0 0 58 58" aria-hidden="true">
+            <rect width="58" height="58" fill="var(--vl-ramp-2)"/>
+            <circle cx="29" cy="23" r="10" fill="var(--vl-ramp-4)"/>
+            <path d="M9 58c1.6-11 9.6-17 20-17s18.4 6 20 17z" fill="var(--vl-ramp-4)"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="titlebar">
+      <h1>Your Sales<br>Analysis</h1>
+      <div class="actions">
+        <span class="pill">
+          <span class="well"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="5.5" width="16" height="14" rx="2.6"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg></span>
+          <span><span class="pill__label">Date</span><br><span class="pill__value">28 Jan – 29 Jan 2026</span></span>
+          <svg class="pill__caret" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 1.5 6 6.5l5-5"/></svg>
+        </span>
+        <span class="pill">
+          <span class="well"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2.2"/><circle cx="15" cy="16" r="2.2"/></svg></span>
+          <span class="pill__value">Funnel</span>
+          <svg class="pill__caret" viewBox="0 0 12 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 1.5 6 6.5l5-5"/></svg>
+        </span>
+        <span class="pill pill--solid">
+          Export as CVS
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <article class="kpi kpi--solid">
+        <p class="kpi__label">Available to payout</p>
+        <span class="kpi__go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg></span>
+        <p class="kpi__fig">$16.4K</p>
+        <p class="kpi__note"><b>Payout</b> · $6.1K will be available soon</p>
+      </article>
+      <article class="kpi">
+        <p class="kpi__label">Today revenue</p>
+        <span class="kpi__go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg></span>
+        <p class="kpi__fig">$6.4K</p>
+        <p class="kpi__note"><b>Payout</b> · $6.1K will be available soon</p>
+      </article>
+      <article class="kpi">
+        <p class="kpi__label">Today sessions</p>
+        <span class="kpi__go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8.5 7H17v8.5"/></svg></span>
+        <p class="kpi__fig">400</p>
+        <p class="kpi__note"><b>Payout</b> · $6.1K will be available soon</p>
+      </article>
+    </div>
+
+    <div class="mods">
+      <section class="mod">
+        <div class="mod__head">
+          <div><h2>Sales Funnel</h2><p>Total view per month</p></div>
+          <div class="mod__tools">
+            <span class="chip">Monthly</span>
+            <span class="iconbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2.2"/><circle cx="15" cy="16" r="2.2"/></svg></span>
+          </div>
+        </div>
+        <div class="bars">
+          <div class="bar"><span class="bar__col" style="height:59%"></span><span class="bar__day">Mon</span></div>
+          <div class="bar"><span class="bar__col" style="height:54%"></span><span class="bar__day">Tue</span></div>
+          <div class="bar"><span class="bar__col" style="height:51%"></span><span class="bar__day">Wed</span></div>
+          <div class="bar is-on"><span class="bar__col" style="height:100%"><span class="bar__tip">243K</span></span><span class="bar__day">Thu</span></div>
+          <div class="bar"><span class="bar__col" style="height:57%"></span><span class="bar__day">Fri</span></div>
+          <div class="bar"><span class="bar__col" style="height:63%"></span><span class="bar__day">Sat</span></div>
+        </div>
+      </section>
+
+      <section class="mod">
+        <div class="mod__head">
+          <div><h2>Orders</h2><p>Based on social media</p></div>
+          <div class="mod__tools">
+            <span class="chip">Monthly</span>
+            <span class="iconbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2.2"/><circle cx="15" cy="16" r="2.2"/></svg></span>
+          </div>
+        </div>
+        <div class="heat">
+          <span class="heat__row">Facebook</span>
+          <span class="heat__cell"></span><span class="heat__cell"></span><span class="heat__cell" data-v="on"></span><span class="heat__cell"></span>
+          <span class="heat__row">Instagram</span>
+          <span class="heat__cell"></span><span class="heat__cell" data-v="on"></span><span class="heat__cell" data-v="5"></span><span class="heat__cell" data-v="5"></span>
+          <span class="heat__row">Tiktok</span>
+          <span class="heat__cell" data-v="on"></span><span class="heat__cell" data-v="on"></span><span class="heat__cell" data-v="3"></span><span class="heat__cell" data-v="4"></span>
+          <span class="heat__row">Whatsapp</span>
+          <span class="heat__cell" data-v="2"></span><span class="heat__cell" data-v="2"></span><span class="heat__cell" data-v="3"></span><span class="heat__cell" data-v="5"></span>
+        </div>
+      </section>
+    </div>
+
+    <!-- coupé par le bas du cadre source : on reconstruit l'en-tête, et rien de plus -->
+    <section class="warm">
+      <div><h2>Transactions</h2><p>456 Total</p></div>
+      <div class="mod__tools" style="margin-left:auto">
+        <span class="chip">Monthly</span>
+        <span class="iconbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2.2"/><circle cx="15" cy="16" r="2.2"/></svg></span>
+        <span class="iconbtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.4"/><path d="m15.8 15.8 3.4 3.4"/></svg></span>
+      </div>
+    </section>
+
+  </div>
+</section>
+
+</body>
+</html>

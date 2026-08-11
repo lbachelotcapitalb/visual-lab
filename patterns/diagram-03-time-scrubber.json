@@ -1,0 +1,189 @@
+{
+  "name": "Ruban temporel à fenêtre de sélection",
+  "family": "diagram",
+  "ref": "ref-19-acid-clinical-timeline",
+  "intent": "Donner à un écran sa position de lecture dans un axe plus long que lui : l'année entière tient dans une pilule claire — mois écrits, événements en pastilles rondes, comptage en exposant acide —, et une FENÊTRE SOMBRE À POIGNÉES posée dessus marque l'intervalle affiché au-dessus. La fenêtre reprend les mêmes pastilles en inverse : c'est ce qui dit qu'on regarde le même axe, et pas un second objet.",
+  "when_to_use": "Sous une vue détaillée qui ne montre qu'une tranche d'un historique long : dossier, journal, calendrier de production. L'axe entier reste lisible, la tranche courante est désignée, et le lecteur sait toujours où il est sans changer d'écran.",
+  "avoid_when": "L'axe tient entièrement dans la vue (le ruban ne désigne alors plus rien), les événements sont trop nombreux pour être des pastilles distinctes (il faut une densité, pas des objets), ou la sélection n'est pas déplaçable — des poignées qui ne se saisissent pas sont un mensonge d'interface.",
+  "media": [
+    "web"
+  ],
+  "tags": [
+    "timeline",
+    "ruban",
+    "scrubber",
+    "brush",
+    "navigateur",
+    "selection",
+    "fenetre",
+    "axe",
+    "historique",
+    "mois",
+    "evenement",
+    "poignee",
+    "minimap"
+  ],
+  "vars": [
+    {
+      "name": "--vl-module-hi",
+      "role": "aplat du ruban",
+      "default": "#FFFFFF"
+    },
+    {
+      "name": "--vl-module",
+      "role": "aplat d'une pastille d'événement, hors fenêtre",
+      "default": "#F0EFEB"
+    },
+    {
+      "name": "--vl-veil-deep",
+      "role": "aplat de la fenêtre de sélection ET du repère « aujourd'hui »",
+      "default": "#1B1D1D"
+    },
+    {
+      "name": "--vl-accent",
+      "role": "pastille de COMPTAGE, en exposant — jamais une alerte",
+      "default": "#F5FE49"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "libellés de mois hors fenêtre",
+      "default": "#262C2C"
+    },
+    {
+      "name": "--vl-ink-soft",
+      "role": "millésime, séparateurs",
+      "default": "#5F615E"
+    },
+    {
+      "name": "--vl-on-veil",
+      "role": "libellés dans la fenêtre",
+      "default": "#FFFFFF"
+    }
+  ],
+  "slots": [
+    "now",
+    "scale",
+    "window"
+  ],
+  "geometry": {
+    "root": ".vl-scrub",
+    "frame": [
+      1330,
+      74
+    ],
+    "ratios": {
+      "now_over_height": 0.784,
+      "event_over_height": 0.514,
+      "badge_over_event": 0.474,
+      "window_over_width": 0.301,
+      "grip_over_height": 0.351
+    },
+    "type_px": {
+      "month": 14,
+      "badge": 11
+    },
+    "pad_ratio": {
+      "top": 0,
+      "x": 0.006,
+      "bottom": 0
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "le ruban est une pilule pleine",
+      "measure": "num('.vl-scrub','borderTopLeftRadius') / H",
+      "min": 0.5
+    },
+    {
+      "name": "ruban bas : sa hauteur vaut au plus 8 % de sa largeur",
+      "measure": "H / W",
+      "max": 0.08
+    },
+    {
+      "name": "LA FENÊTRE EST SOMBRE là où le ruban est clair",
+      "measure": "lum(parseRgb(cs('.vl-scrub','backgroundColor'))) / lum(parseRgb(cs('.vl-scrub__window','backgroundColor')))",
+      "min": 6
+    },
+    {
+      "name": "… et c'est une pilule, comme le ruban qui la porte",
+      "measure": "num('.vl-scrub__window','borderTopLeftRadius') / box('.vl-scrub__window').h",
+      "min": 0.5
+    },
+    {
+      "name": "la fenêtre est une TRANCHE : entre 10 % et 45 % de l'axe",
+      "measure": "box('.vl-scrub__window').w / W",
+      "min": 0.1,
+      "max": 0.45
+    },
+    {
+      "name": "la fenêtre tient DANS le ruban, jamais à côté",
+      "measure": "Math.min(box('.vl-scrub__window').left, W - box('.vl-scrub__window').right)",
+      "min": 0
+    },
+    {
+      "name": "DEUX poignées, une à chaque extrémité de la fenêtre",
+      "measure": "document.querySelectorAll('.vl-scrub__grip').length",
+      "expect": 2,
+      "tol": 0
+    },
+    {
+      "name": "les poignées sont AUX BORDS de la fenêtre, pas au milieu",
+      "measure": "(() => { const w = box('.vl-scrub__window'); const g = [...document.querySelectorAll('.vl-scrub__grip')].map((e) => e.getBoundingClientRect()); const r = $(window.__VL_ROOT__).getBoundingClientRect(); const xs = g.map((b) => b.left + b.width / 2 - r.left); return Math.max(Math.abs(Math.min(...xs) - w.left), Math.abs(Math.max(...xs) - w.right)); })()",
+      "max": 24
+    },
+    {
+      "name": "les pastilles de la fenêtre ont la MÊME taille que celles du ruban — c'est le même axe",
+      "measure": "box('.vl-scrub__window .vl-scrub__ev').h / box('.vl-scrub__scale .vl-scrub__ev').h",
+      "expect": 1,
+      "tol": 0.02
+    },
+    {
+      "name": "… mais elles sont INVERSÉES : plus sombres que celles du ruban",
+      "measure": "lum(bgOf($('.vl-scrub__scale .vl-scrub__ev'))) - lum(bgOf($('.vl-scrub__window .vl-scrub__ev')))",
+      "min": 0.3
+    },
+    {
+      "name": "une pastille d'événement est un disque",
+      "measure": "box('.vl-scrub__ev').w / box('.vl-scrub__ev').h",
+      "expect": 1,
+      "tol": 0.02
+    },
+    {
+      "name": "LE COMPTAGE EST EN EXPOSANT : la pastille de comptage déborde en haut ET à droite de son événement",
+      "measure": "(box('.vl-scrub__ev').top - box('.vl-scrub__n').top > 0 && box('.vl-scrub__n').right - box('.vl-scrub__ev').right > 0) ? 1 : 0",
+      "expect": 1
+    },
+    {
+      "name": "le comptage porte l'accent : il compte, il n'alerte pas",
+      "measure": "(() => { const c = parseRgb(cs('.vl-scrub__n','backgroundColor')); return Math.max(...c) - Math.min(...c); })()",
+      "min": 60
+    },
+    {
+      "name": "… et il reste minuscule : au plus la moitié de sa pastille",
+      "measure": "box('.vl-scrub__n').h / box('.vl-scrub__ev').h",
+      "max": 0.55
+    },
+    {
+      "name": "le repère « aujourd'hui » est le seul objet sombre HORS de la fenêtre",
+      "measure": "[...document.querySelectorAll('.vl-scrub__scale *, .vl-scrub__now')].filter((e) => { const p = (getComputedStyle(e).backgroundColor.match(/[\\d.]+/g) || []).map(Number); const a = p.length === 4 ? p[3] : (p.length === 3 ? 1 : 0); return a > 0.9 && lum(p.slice(0, 3)) < 0.2; }).length",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "contraste d'un libellé de mois hors fenêtre ≥ 4,5",
+      "measure": "contrast('.vl-scrub__scale .vl-scrub__month')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste d'un libellé de mois DANS la fenêtre ≥ 4,5",
+      "measure": "contrast('.vl-scrub__window .vl-scrub__month')",
+      "min": 4.5
+    },
+    {
+      "name": "aucun débordement du ruban",
+      "measure": "overflow('.vl-scrub')",
+      "max": 0
+    }
+  ],
+  "notes": "C'est le seul objet du corpus où un module donne la POSITION DE LECTURE d'un autre. Ce qui le rend lisible sans légende n'est pas la fenêtre sombre — c'est que la fenêtre reprend exactement les mêmes pastilles, à la même taille, seulement inversées. Deux benchmarks tiennent ce couple : taille identique (tolérance 2 %) et luminance franchement différente (écart ≥ 0,3). Changer l'une des deux casse la lecture — des pastilles plus petites dans la fenêtre feraient croire à un second objet, des pastilles de même valeur la feraient disparaître.\n\nLE COMPTAGE EST UN EXPOSANT, ET CE N'EST PAS UNE FAÇON DE PARLER : la pastille acide déborde de son événement en HAUT et à DROITE, ce que le benchmark vérifie sur les deux axes. Centrée, elle deviendrait un badge d'état ; posée dessous, une légende. Elle porte l'accent parce qu'elle compte — l'alerte, dans ce système, est un rouge saumon et n'apparaît jamais ici.\n\nL'assertion « le repère aujourd'hui est le seul objet sombre hors de la fenêtre » protège le contraste de rôle : deux aplats sombres sur l'axe, et on ne sait plus lequel désigne la position courante."
+}

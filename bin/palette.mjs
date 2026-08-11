@@ -91,7 +91,11 @@ if (crop) {
     out[d] = img.px[s]; out[d + 1] = img.px[s + 1]; out[d + 2] = img.px[s + 2];
   }
   mkdirSync(DIRS.proofs, { recursive: true });
-  const f = join(DIRS.proofs, `crop-${ref}-${x}_${y}_${w}x${h}${z > 1 ? `@${z}x` : ''}.png`);
+  // `ref` accepte aussi un CHEMIN (pipetter un rendu, pas seulement une source) : le nom de
+  // sortie doit donc être construit sur le basename, sinon les `/` du chemin fabriquent un
+  // sous-dossier inexistant et l'écriture échoue en ENOENT au dernier moment.
+  const stem = ref.replace(/^.*\//, '').replace(/\.[a-z]+$/i, '');
+  const f = join(DIRS.proofs, `crop-${stem}-${x}_${y}_${w}x${h}${z > 1 ? `@${z}x` : ''}.png`);
   writeFileSync(f, encodePng(w * z, h * z, out));
   console.log(`✓ ${f}  (${w * z}×${h * z}) — à REGARDER, puis à supprimer : proofs/ est jetable.`);
   process.exit(0);

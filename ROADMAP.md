@@ -470,9 +470,54 @@ le même dépôt, constaté sur disque avant le commit.
   décrivent aussi le pattern du lot parallèle, encore non versionné, et un index qui référence
   des fichiers absents du dépôt ment plus qu'un index en retard. Ils partent avec l'autre lot.
 
+### ✅ Lot 17 — `ref-17`, `ref-18`, `ref-19` : trois écrans front-end (11/08/2026)
+
+Trois captures d'interface apportées ensemble — une page d'accueil bento monochrome, un tableau
+de bord de ventes, un dossier clinique en feuille modale. **Premier lot du corpus où les images
+sources sont réellement SUR LE DISQUE** : elles ont été retrouvées en base64 dans le transcript
+de la session (`~/.claude/projects/…/*.jsonl`) et déposées dans `assets/refs/`. Conséquence
+directe sur la méthode : les palettes sont **pipettées** et les géométries **scannées** (runs de
+couleur ligne par ligne), là où les seize lots précédents estimaient à l'œil.
+
+- ✅ `SPEC-SOURCES.md` § `ref-17`, `ref-18`, `ref-19`, écrites AVANT le code.
+- ✅ 3 systèmes + 3 decks au format **`vl:stage web`** (1440 × 1042, 1440 × 1025, 1440 × 929) :
+  aucun des trois n'est une slide, et chacun le déclare dans son propre fichier.
+- ✅ 12 patterns, **194 benchmarks, tous verts** :
+  `layout-05-nav-pill-bar` · `layout-06-bento-l-span` · `card-11-corner-arrow-tile` ·
+  `tag-02-centered-cloud` · `layout-07-icon-rail-shell` · `card-12-inverted-kpi-row` ·
+  `chart-05-tile-heatmap` · `tag-03-action-pill-bar` · `layout-08-sheet-handle-tab` ·
+  `list-05-vitals-strip` · `diagram-02-branch-timeline` · `diagram-03-time-scrubber`.
+- ✅ **Ce qui a été écarté, et c'est le cœur du lot** : un carton de présentation sur `ref-17`,
+  **deux** couches sur `ref-18` (fond noir de planche + bezel de tablette, qui encadraient la
+  même chose), un carton jaune sur `ref-19`. Le voile sombre de `ref-19`, lui, est GARDÉ : il
+  porte des onglets et un bouton de fermeture. Le test qui tranche entre un voile et un bezel
+  est là — **un bezel ne porte jamais de contenu** —, pas dans l'apparence.
+- ✅ **Un arbitrage anti-doublon écrit plutôt que rejoué** : l'histogramme de `ref-18` (colonnes
+  sans axe, une seule accentuée, info-bulle sombre ancrée) n'est PAS extrait — il double
+  `chart-03-accent-column-callout` de `ref-13`, dont il ne diffère que par des tokens.
+- ✅ **Trois outils amendés dans le même lot**, chacun pour une faute qu'il laissait passer :
+  - `bin/diff.mjs` tirait tous les rendus à 1600 × 900 et **amputait** donc toute référence
+    non-slide : le contrôle de fidélité comparait une source entière à un rendu tronqué,
+    c'est-à-dire mentait dans le sens rassurant. Il lit maintenant la scène déclarée.
+  - `bin/check.mjs` : `getComputedStyle()['--vl-notch']` rend `undefined`, jamais la valeur —
+    un benchmark écrit sur un token sortait 0 sans qu'aucune erreur ne le dise. Les propriétés
+    personnalisées passent désormais par `getPropertyValue()`.
+  - `bin/palette.mjs` fabriquait son nom de sortie à partir du chemin d'entrée : pipetter un
+    RENDU (et pas une source) échouait en ENOENT au dernier moment.
+- ✅ **Le piège CSS du lot, payé deux fois** : le minimum automatique d'une piste `fr` ET celui
+  d'un item flex valent tous deux `auto`. Un module trop plein pousse donc sa rangée, puis la
+  page — 669 px de rangée pour 560 attendus, mesuré au premier rendu, sans qu'aucun benchmark
+  de pattern ne crie. Il faut les DEUX gardes : `minmax(0, …fr)` sur les pistes et
+  `min-height: 0` sur la grille. Aucune ne remplace l'autre.
+- ✅ Trois relevés de contraste corrigés (encre secondaire à 4,09 / 4,21:1 sur son propre fond) :
+  **troisième lot de suite** où la source place son gris secondaire juste sous le seuil. Le
+  relevé se vérifie systématiquement avant d'être recopié.
+- ✅ `node bin/index.mjs` vert (38 patterns, 15 références) · `bin/check-deck.mjs` vert sur les
+  14 decks · rendus regardés et comparés à la source.
+
 ## Ce qui reste, en un coup d'œil
 
 Decks à produire : `ref-05` (8 slides) · `ref-09` (12).
-Non-decks à produire : `ref-07` et `ref-08` (pages web) · `ref-01` (couverture seule).
+Non-decks à produire : `ref-07` (page web) · `ref-01` (couverture seule).
 Outillage : composition (11) — reste `compose.mjs` · skill + carte (12) — reste karto et
 l'arbitrage publication · sortir du slide/web (13) — email, social, PSD.

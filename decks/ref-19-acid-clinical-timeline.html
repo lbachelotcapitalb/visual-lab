@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ref-19 — acid clinical timeline (northbeam)</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+/* ref-19-acid-clinical-timeline — reconstitution fidèle. Ce n'est PAS un deck : c'est UNE
+   feuille modale d'application. LE FICHIER NE CONTIENT QUE LA MODALE ET SON VOILE, à leur
+   taille réelle mise à l'échelle 1440 (la source mesure 1086).
+
+   UNE couche de mise en scène a été retirée : le carton jaune acide qui entoure la capture.
+   Piège du lot — ce jaune est AUSSI la couleur d'accent de l'interface (pastilles de
+   comptage, aires de graphique). Écarter le carton ne veut donc pas dire écarter la couleur.
+
+   LE VOILE SOMBRE, LUI, RESTE : il porte les onglets et le bouton de fermeture, c'est-à-dire
+   de l'interface. Un bezel de maquette ne porte jamais de contenu — c'est ce test-là qui
+   tranche, pas l'apparence.
+
+   L'ONGLET-POIGNÉE ET LA FEUILLE SONT UNE SEULE SURFACE. Les scans de colonnes le prouvent :
+   la frontière voile/feuille descend continûment (y=131 à x=200, 150 à x=350, 186 à x=500),
+   c'est un CONGÉ CONCAVE, pas une saignée. Deux rectangles séparés auraient donné une
+   frontière en marches.
+
+   Photographies et tracés d'imagerie remplacés par des compositions SVG génératives.
+   Toutes les couleurs sont dans ce :root ; aucun hex plus bas. */
+:root {
+  --vl-veil: #4A4A48;
+  --vl-veil-deep: #1B1D1D;
+  --vl-sheet: #DFDFD7;
+  --vl-module: #F0EFEB;
+  --vl-module-hi: #FFFFFF;
+  --vl-accent: #F5FE49;
+  --vl-alert: #E8756B;
+  --vl-recover: #7FA88C;
+  --vl-ink: #262C2C;
+  --vl-ink-soft: #5F615E;
+  --vl-on-veil: #FFFFFF;
+  --vl-on-veil-soft: rgba(255,255,255,0.72);
+
+  --vl-radius-sheet: 34px;
+  --vl-radius-module: 22px;
+  --vl-radius-pill: 999px;
+  --vl-notch: 40px;
+  --vl-bleed: 20px;
+  --vl-tabbar-h: 119px;
+  --vl-ribbon-h: 74px;
+  --vl-gutter: 18px;
+  --vl-margin: 34px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--vl-veil); }
+body { font-family: Montserrat, Poppins, Inter, "Helvetica Neue", Arial, sans-serif; color: var(--vl-ink); }
+
+.slide {
+  width: 1440px; height: 929px;
+  background: var(--vl-veil);
+  border-radius: 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ───────────────────── bande d'onglets, posée sur le voile ───────────────────── */
+.tabs {
+  position: absolute; top: 49px; left: 500px; right: 26px;
+  display: flex; gap: 9px; align-items: center; justify-content: flex-end;
+}
+.tab {
+  height: 56px; padding: 0 17px;
+  border-radius: var(--vl-radius-pill);
+  background: var(--vl-module-hi);
+  display: flex; align-items: center; gap: 8px;
+  font-size: 15px; font-weight: 500; color: var(--vl-ink);
+  white-space: nowrap;
+}
+.tab svg { width: 19px; height: 19px; }
+
+/* Le bouton de fermeture flotte sur le voile, à GAUCHE de la poignée : il appartient au
+   voile, pas à la feuille — c'est ce qui le rend disponible quand la feuille défile. */
+.close {
+  position: absolute; left: 15px; top: 42px;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: var(--vl-module-hi);
+  display: flex; align-items: center; justify-content: center;
+}
+.close svg { width: 22px; height: 22px; }
+
+/* ───────────────────── la feuille et sa poignée ─────────────────────
+   Une seule surface en deux morceaux soudés : le rectangle de la feuille, la poignée
+   au-dessus, et DEUX CONGÉS CONCAVES qui raccordent l'une à l'autre. Le congé est un carré
+   de la couleur de la feuille dans lequel un quart de disque est évidé — c'est la seule
+   courbe inversée du corpus, et c'est elle qui fait lire la poignée comme une extension de
+   la feuille plutôt que comme une carte de plus posée sur le voile. */
+.sheet {
+  position: absolute;
+  left: var(--vl-bleed); right: var(--vl-bleed);
+  top: var(--vl-tabbar-h); bottom: 21px;
+  background: var(--vl-sheet);
+  border-radius: var(--vl-radius-sheet);
+  padding: var(--vl-margin);
+  display: flex; flex-direction: column;
+}
+.handle {
+  position: absolute; left: 66px; bottom: 100%;
+  height: 83px; padding: 0 40px;
+  background: var(--vl-sheet);
+  border-radius: var(--vl-radius-sheet) var(--vl-radius-sheet) 0 0;
+  display: flex; align-items: center;
+}
+.handle h1 { margin: 0; font-size: 48px; font-weight: 500; letter-spacing: -0.02em; line-height: 1; }
+.handle::before, .handle::after {
+  content: ''; position: absolute; bottom: 0;
+  width: var(--vl-notch); height: var(--vl-notch);
+}
+.handle::before {
+  left: calc(var(--vl-notch) * -1);
+  background: radial-gradient(circle at 0 0, transparent var(--vl-notch), var(--vl-sheet) calc(var(--vl-notch) + 0.5px));
+}
+.handle::after {
+  right: calc(var(--vl-notch) * -1);
+  background: radial-gradient(circle at 100% 0, transparent var(--vl-notch), var(--vl-sheet) calc(var(--vl-notch) + 0.5px));
+}
+
+/* ───────────────────── en-tête de dossier ───────────────────── */
+.folder { display: flex; gap: var(--vl-gutter); align-items: flex-start; }
+.patient {
+  flex: 0 0 300px;
+  background: var(--vl-module);
+  border-radius: var(--vl-radius-module);
+  padding: 18px 22px;
+  display: flex; align-items: center; gap: 18px;
+}
+.patient__pic { width: 74px; height: 74px; border-radius: 18px; overflow: hidden; flex: 0 0 auto; }
+.patient__pic svg { width: 100%; height: 100%; display: block; }
+.patient__meta { font-size: 13px; color: var(--vl-ink-soft); margin: 0 0 4px; }
+.patient__name { font-size: 22px; font-weight: 500; line-height: 1.15; margin: 0; }
+
+.folder__right { flex: 1 1 auto; min-width: 0; padding-top: 4px; }
+/* Le bandeau de constantes : des couples micro-libellé / valeur, sans filet et sans carte.
+   L'unité est un cran plus petite ET plus claire que le nombre qu'elle suit — c'est ce qui
+   permet de lire cinq mesures d'affilée sans séparateur. */
+.vitals { display: flex; gap: 46px; align-items: flex-end; }
+.vital__label { display: block; font-size: 14px; color: var(--vl-ink-soft); margin-bottom: 3px; }
+.vital__value { font-size: 30px; font-weight: 600; letter-spacing: -0.01em; line-height: 1; }
+.vital__value small { font-size: 15px; font-weight: 500; color: var(--vl-ink-soft); margin-left: 3px; }
+.vital--lead .vital__value { font-size: 37px; font-weight: 500; }
+
+.chips { display: flex; gap: 10px; align-items: center; margin-top: 22px; }
+.chip {
+  height: 46px; padding: 0 22px;
+  border-radius: var(--vl-radius-pill);
+  background: var(--vl-module-hi);
+  display: flex; align-items: center;
+  font-size: 16px; font-weight: 500; white-space: nowrap;
+}
+.chip--icon { width: 46px; padding: 0; justify-content: center; background: var(--vl-module); }
+.chip--icon svg { width: 20px; height: 20px; }
+
+/* ───────────────────── timeline à branches ─────────────────────
+   Un rail horizontal daté, des jalons ronds accentués, et des dérivations en ÉQUERRE ARRONDIE
+   qui descendent vers des cartes de niveau inférieur. Le rail porte la chronologie ; les
+   équerres portent l'appartenance. Aucune des deux n'est proportionnelle à une valeur — c'est
+   une structure, pas un graphique. */
+.timeline { position: relative; flex: 1 1 auto; min-height: 0; margin-top: 26px; overflow: hidden; }
+.rail {
+  position: absolute; left: 40px; right: 60px; top: 22px; height: 2px;
+  background: linear-gradient(90deg, var(--vl-alert) 0%, var(--vl-ink-soft) 46%, var(--vl-recover) 100%);
+}
+.pin {
+  position: absolute; top: 0; width: 46px; height: 46px; border-radius: 50%;
+  background: var(--vl-accent);
+  display: flex; align-items: center; justify-content: center;
+}
+.pin svg { width: 20px; height: 20px; }
+.pin--add { background: var(--vl-veil-deep); color: var(--vl-on-veil); }
+.branch { position: absolute; top: 46px; }
+.branch__month { font-size: 22px; font-weight: 500; margin: 26px 0 0; }
+.branch__week { font-size: 13px; color: var(--vl-ink-soft); margin: 2px 0 0; }
+/* L'équerre : un filet vertical puis un coude arrondi vers la droite. Un trait droit en
+   diagonale dirait « transition » ; l'équerre dit « appartenance ». */
+.elbow { position: absolute; left: 22px; top: 0; width: 120px; height: 96px; }
+.elbow path { fill: none; stroke: var(--vl-ink-soft); stroke-width: 1.6; opacity: 0.55; }
+
+.med {
+  position: absolute;
+  height: 54px; padding: 0 20px 0 6px;
+  border-radius: var(--vl-radius-pill);
+  background: var(--vl-module);
+  display: flex; align-items: center; gap: 12px;
+  font-size: 17px; font-weight: 500; white-space: nowrap;
+}
+.med__well {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--vl-module-hi);
+  display: flex; align-items: center; justify-content: center;
+}
+.med__well svg { width: 19px; height: 19px; }
+.med b { font-weight: 600; }
+
+.tcard {
+  position: absolute;
+  width: 300px; padding: 20px 22px;
+  background: var(--vl-module-hi);
+  border-radius: var(--vl-radius-module);
+}
+.tcard__head { display: flex; align-items: center; gap: 12px; }
+.tcard__head h4 { margin: 0; font-size: 24px; font-weight: 500; letter-spacing: -0.01em; }
+.tcard__btn {
+  margin-left: auto; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--vl-module); display: flex; align-items: center; justify-content: center;
+}
+.tcard__btn svg { width: 18px; height: 18px; }
+.tcard__day { font-size: 13px; color: var(--vl-ink-soft); text-align: right; margin: 4px 0 0; }
+.tcard__plot { position: relative; margin-top: 10px; }
+.tcard__plot svg { display: block; width: 100%; height: 74px; }
+.tcard__bubble {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  background: var(--vl-veil-deep); color: var(--vl-on-veil);
+  border-radius: var(--vl-radius-pill); padding: 5px 14px;
+  font-size: 15px; font-weight: 600; white-space: nowrap;
+}
+.tcard__bubble small { font-weight: 500; opacity: 0.72; }
+.tcard__foot { display: flex; align-items: baseline; margin-top: 10px; font-size: 15px; }
+.tcard__foot b { font-weight: 600; font-size: 19px; margin-left: 6px; }
+.tcard__foot span { margin-left: auto; font-weight: 600; }
+.tcard__foot span.up { color: var(--vl-alert); }
+
+/* ───────────────────── ruban temporel ─────────────────────
+   L'axe complet en pilule claire, les événements en pastilles rondes sous leur mois, une
+   pastille de comptage acide en exposant, et une FENÊTRE SOMBRE À POIGNÉES posée sur
+   l'intervalle affiché au-dessus. C'est le seul objet de l'écran qui donne la position de
+   lecture d'un AUTRE objet. */
+.ribbon {
+  flex: 0 0 var(--vl-ribbon-h); height: var(--vl-ribbon-h);
+  margin-top: 20px;
+  background: var(--vl-module-hi);
+  border-radius: var(--vl-radius-pill);
+  padding: 0 8px;
+  display: flex; align-items: center; gap: 10px;
+  padding-right: 430px;
+}
+.ribbon__now {
+  width: 58px; height: 58px; border-radius: 50%;
+  background: var(--vl-veil-deep); color: var(--vl-on-veil);
+  display: flex; align-items: center; justify-content: center;
+  flex: 0 0 auto;
+}
+.ribbon__now svg { width: 24px; height: 24px; }
+.ribbon__scale { flex: 1 1 auto; display: flex; align-items: center; gap: 8px; min-width: 0; }
+.ribbon__month { font-size: 14px; color: var(--vl-ink-soft); padding: 0 4px; white-space: nowrap; }
+.ribbon__month b { display: block; font-size: 12px; font-weight: 500; }
+.ev {
+  position: relative;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--vl-module);
+  display: flex; align-items: center; justify-content: center;
+  flex: 0 0 auto;
+}
+.ev svg { width: 17px; height: 17px; }
+.ev__n {
+  position: absolute; top: -6px; right: -6px;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 50%;
+  background: var(--vl-accent); color: var(--vl-ink);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600;
+}
+.ribbon__dots { color: var(--vl-ink-soft); opacity: 0.5; font-size: 15px; letter-spacing: 2px; }
+/* La fenêtre de sélection : un aplat sombre à poignées, posé PAR-DESSUS l'axe. Elle reprend
+   les mêmes pastilles, en inverse — ce qui dit qu'on regarde le même axe, pas un autre. */
+.window {
+  position: absolute; right: 42px; bottom: 42px;
+  height: 58px; padding: 0 14px;
+  border-radius: var(--vl-radius-pill);
+  background: var(--vl-veil-deep); color: var(--vl-on-veil);
+  display: flex; align-items: center; gap: 8px;
+  flex: 0 0 auto;
+}
+.window .ribbon__month { color: var(--vl-on-veil-soft); }
+.window .ev { background: rgba(255,255,255,0.14); color: var(--vl-on-veil); }
+.window__grip { width: 3px; height: 26px; border-radius: 2px; background: var(--vl-on-veil-soft); }
+</style>
+</head>
+<body>
+
+<!-- vl:stage web — feuille modale d'application, pas une slide : le format PPT n'a pas de sens ici -->
+<section class="slide">
+
+  <nav class="tabs">
+    <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.4"/><path d="m15.8 15.8 3.4 3.4M9 11h4M11 9v4"/></svg>Treatment Dynamics</span>
+    <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5M9.5 16h3"/></svg>Visits</span>
+    <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="m9.5 9.5 5 5"/></svg>Medications</span>
+    <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M10 3.5v6L5.5 18a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 9.5v-6M8.5 3.5h7"/></svg>Labs</span>
+    <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>Allergies</span>
+    <span class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M8 3c0 6 8 6 8 9s-8 3-8 9M16 3c0 6-8 6-8 9s8 3 8 9M8.6 7h6.8M8.6 17h6.8"/></svg>Genetics</span>
+  </nav>
+
+  <span class="close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/></svg>
+  </span>
+
+  <div class="sheet">
+    <div class="handle"><h1>Cardiology</h1></div>
+
+    <div class="folder">
+      <div class="patient">
+        <span class="patient__pic">
+          <!-- portrait génératif : aucune photo, aucune URL distante -->
+          <svg viewBox="0 0 74 74" aria-hidden="true">
+            <rect width="74" height="74" fill="#C9C6BD"/>
+            <circle cx="37" cy="29" r="13" fill="#8C8579"/>
+            <path d="M10 74c2-14 12-22 27-22s25 8 27 22z" fill="#8C8579"/>
+          </svg>
+        </span>
+        <div>
+          <p class="patient__meta">Female, 24</p>
+          <p class="patient__name">Tiffany<br>Woodward</p>
+        </div>
+      </div>
+
+      <div class="folder__right">
+        <div class="vitals">
+          <span class="vital vital--lead"><span class="vital__label">Diagnosys</span><span class="vital__value">Hypertension</span></span>
+          <span class="vital"><span class="vital__label">Heart Rate</span><span class="vital__value">89<small>bpm</small></span></span>
+          <span class="vital"><span class="vital__label">Pressure</span><span class="vital__value">100<small>/67</small></span></span>
+          <span class="vital"><span class="vital__label">Oxygen</span><span class="vital__value">98<small>%</small></span></span>
+          <span class="vital"><span class="vital__label">Temperature</span><span class="vital__value">36.8<small>°C</small></span></span>
+        </div>
+        <div class="chips">
+          <span class="chip chip--icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="8" cy="17" r="2"/></svg></span>
+          <span class="chip">Office Visits</span>
+          <span class="chip">Medications</span>
+          <span class="chip">Labs</span>
+          <span class="chip">Procedures</span>
+          <span class="chip">Hospitalizations</span>
+          <span class="chip">Imaging</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="rail"></div>
+
+      <!-- branche « Aug » -->
+      <span class="pin" style="left:18px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="5" y="4.5" width="14" height="16" rx="2.4"/><path d="M8.5 9h7M8.5 13h7M8.5 17h4M9 2.6v3.6M15 2.6v3.6"/></svg></span>
+      <div class="branch" style="left:18px">
+        <p class="branch__month">Aug</p>
+        <p class="branch__week">I Week</p>
+        <svg class="elbow" viewBox="0 0 120 96"><path d="M12 0v66a14 14 0 0 0 14 14h94"/></svg>
+      </div>
+      <span class="med" style="left:130px; top:126px">
+        <span class="med__well"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="m9.5 9.5 5 5"/></svg></span>
+        Aspirin <b>x2</b>
+      </span>
+      <article class="tcard" style="left:330px; top:104px">
+        <div class="tcard__head">
+          <h4>Blood Pressure</h4>
+          <span class="tcard__btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 4v5M6.5 9h11M5 9l-2.4 6h4.8zM19 9l-2.4 6h4.8zM8 20h8"/></svg></span>
+        </div>
+        <p class="tcard__day">Friday</p>
+        <div class="tcard__plot">
+          <svg viewBox="0 0 260 74" preserveAspectRatio="none">
+            <path d="M0 40c22-16 40 8 62-2s38-20 62-10 40 20 62 12 40-14 74-6v38H0z" fill="var(--vl-accent)"/>
+            <path d="M0 40c22-16 40 8 62-2s38-20 62-10 40 20 62 12 40-14 74-6" fill="none" stroke="var(--vl-ink)" stroke-width="1.4"/>
+            <path d="M0 62h260" stroke="var(--vl-ink-soft)" stroke-width="1" opacity="0.4"/>
+          </svg>
+          <span class="tcard__bubble">180<small>/120</small></span>
+        </div>
+        <p class="tcard__foot">Average: <b>160</b><small style="margin-left:3px">/110</small><span class="up">+10 ▲</span></p>
+      </article>
+
+      <!-- branche « Sep » -->
+      <span class="pin" style="left:690px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="5" y="4.5" width="14" height="16" rx="2.4"/><path d="M8.5 9h7M8.5 13h7M8.5 17h4M9 2.6v3.6M15 2.6v3.6"/></svg></span>
+      <div class="branch" style="left:690px">
+        <p class="branch__month">Sep</p>
+        <p class="branch__week">I Week</p>
+        <svg class="elbow" viewBox="0 0 120 96"><path d="M12 0v66a14 14 0 0 0 14 14h94"/></svg>
+      </div>
+      <span class="med" style="left:802px; top:104px">
+        <span class="med__well"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="m9.5 9.5 5 5"/></svg></span>
+        bisoprolol <b>x3</b>
+      </span>
+      <span class="med" style="left:802px; top:170px">
+        <span class="med__well"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/><path d="m9.5 9.5 5 5"/></svg></span>
+        Aspirin <b>x2</b>
+      </span>
+      <article class="tcard" style="left:1010px; top:104px">
+        <div class="tcard__head">
+          <h4>Blood Pressure</h4>
+          <span class="tcard__btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 4v5M6.5 9h11M5 9l-2.4 6h4.8zM19 9l-2.4 6h4.8zM8 20h8"/></svg></span>
+        </div>
+        <p class="tcard__day">Thursday</p>
+        <div class="tcard__plot">
+          <svg viewBox="0 0 260 74" preserveAspectRatio="none">
+            <path d="M0 46c24-10 42 6 64-2s38-14 60-6 40 14 62 8 40-10 74-4v32H0z" fill="var(--vl-accent)"/>
+            <path d="M0 46c24-10 42 6 64-2s38-14 60-6 40 14 62 8 40-10 74-4" fill="none" stroke="var(--vl-ink)" stroke-width="1.4"/>
+            <path d="M0 62h260" stroke="var(--vl-ink-soft)" stroke-width="1" opacity="0.4"/>
+          </svg>
+          <span class="tcard__bubble">135<small>/92</small></span>
+        </div>
+        <p class="tcard__foot">Average: <b>130</b><small style="margin-left:3px">/90</small><span>−20 ▼</span></p>
+      </article>
+
+      <!-- la troisième branche de la source, coupée par le bas du cadre : on ne reconstruit
+           que ce qui est visible — l'en-tête des cartes « Symptoms » et « ECG ». -->
+      <article class="tcard" style="left:330px; top:336px; padding-bottom:8px">
+        <div class="tcard__head"><h4>Symptoms</h4></div>
+        <p class="tcard__day" style="text-align:left; margin-top:10px">
+          <span class="chip" style="height:34px; font-size:14px; display:inline-flex">Headache</span>
+        </p>
+      </article>
+      <article class="tcard" style="left:1010px; top:336px; padding-bottom:8px">
+        <div class="tcard__head"><h4>ECG</h4></div>
+        <svg viewBox="0 0 260 40" style="width:100%;height:40px;margin-top:10px" preserveAspectRatio="none" fill="none">
+          <path d="M0 28h26l6-18 5 26 6-8h30l6-18 5 26 6-8h30l6-18 5 26 6-8h30" stroke="var(--vl-ink)" stroke-width="1.6"/>
+          <path d="M0 34h26l6-9 5 13 6-4h30l6-9 5 13 6-4h30" stroke="var(--vl-alert)" stroke-width="1.4" opacity="0.8"/>
+        </svg>
+      </article>
+
+      <span class="pin pin--add" style="right:0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 6v12M6 12h12"/></svg></span>
+    </div>
+
+    <div class="ribbon">
+      <span class="ribbon__now"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2.6"/><path d="M4 10h16M8.5 2.8v4M15.5 2.8v4"/></svg></span>
+      <div class="ribbon__scale">
+        <span class="ribbon__month">Jan<b>2026</b></span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5"/></svg></span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/></svg><span class="ev__n">6</span></span>
+        <span class="ribbon__dots">···</span>
+        <span class="ribbon__month">Feb</span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M10 3.5v6L5.5 18a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 9.5v-6"/></svg></span>
+        <span class="ribbon__month">Mar</span>
+        <span class="ribbon__dots">···</span>
+        <span class="ribbon__month">Apr</span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5"/></svg></span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/></svg><span class="ev__n">2</span></span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M10 3.5v6L5.5 18a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 9.5v-6"/></svg><span class="ev__n">3</span></span>
+        <span class="ribbon__dots">···</span>
+        <span class="ribbon__month">May</span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5"/></svg></span>
+        <span class="ribbon__month">Jun</span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5"/></svg></span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M10 3.5v6L5.5 18a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 9.5v-6"/></svg></span>
+        <span class="ribbon__dots">···</span>
+        <span class="ribbon__month">Jul</span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5"/></svg></span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/></svg><span class="ev__n">6</span></span>
+      </div>
+    </div>
+    <div class="window">
+        <span class="window__grip"></span>
+        <span class="ribbon__month">Aug</span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5"/></svg></span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/></svg></span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M10 3.5v6L5.5 18a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 9.5v-6"/></svg><span class="ev__n">4</span></span>
+        <span class="ribbon__month">Sep</span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="6" y="3.5" width="12" height="17" rx="2.2"/><path d="M9.5 8h5M9.5 12h5"/></svg></span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.4" y="8.6" width="17" height="7" rx="3.5" transform="rotate(-45 12 12)"/></svg><span class="ev__n">2</span></span>
+        <span class="ev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M10 3.5v6L5.5 18a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 9.5v-6"/></svg><span class="ev__n">6</span></span>
+      <span class="window__grip"></span>
+    </div>
+  </div>
+
+</section>
+
+</body>
+</html>

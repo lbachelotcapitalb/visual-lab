@@ -1,0 +1,101 @@
+<!-- chart-05-tile-heatmap — une matrice canal × période lue à la silhouette.
+     Couleurs via --vl-* uniquement.
+
+     DEUX ÉCHELLES DANS UNE MÊME GRILLE, et elles ne se mélangent pas :
+       · `data-ramp` = l'INTENSITÉ, sur une rampe strictement achromatique (le noir est le max) ;
+       · `data-v="on"` = une MARQUE DE CATÉGORIE, franchement colorée, HORS rampe.
+     C'est l'achromatisme de la première qui rend la seconde lisible sans légende. Teinter la
+     rampe, ou poser un second accent, casse le pattern quel que soit le soin du reste.
+
+     `data-ramp` sert aussi à la MESURE : il nomme le cran de chaque cellule, ce qui permet
+     d'écrire les benchmarks sur des couleurs calculées et non sur les tokens déclarés. -->
+<section class="vl-heat">
+  <div class="vl-heat__head">
+    <div>
+      <h2 class="vl-heat__title">Orders</h2>
+      <p class="vl-heat__sub">Based on social media</p>
+    </div>
+    <div class="vl-heat__tools">
+      <span class="vl-heat__chip">Monthly</span>
+      <span class="vl-heat__btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 8h16M4 16h16"/><circle cx="9" cy="8" r="2.2"/><circle cx="15" cy="16" r="2.2"/></svg>
+      </span>
+    </div>
+  </div>
+
+  <div class="vl-heat__grid">
+    <span class="vl-heat__row">Facebook</span>
+    <span class="vl-heat__cell" data-ramp="1"></span>
+    <span class="vl-heat__cell" data-ramp="1"></span>
+    <span class="vl-heat__cell" data-v="on"></span>
+    <span class="vl-heat__cell" data-ramp="1"></span>
+
+    <span class="vl-heat__row">Instagram</span>
+    <span class="vl-heat__cell" data-ramp="1"></span>
+    <span class="vl-heat__cell" data-v="on"></span>
+    <span class="vl-heat__cell" data-ramp="5"></span>
+    <span class="vl-heat__cell" data-ramp="5"></span>
+
+    <span class="vl-heat__row">Tiktok</span>
+    <span class="vl-heat__cell" data-v="on"></span>
+    <span class="vl-heat__cell" data-v="on"></span>
+    <span class="vl-heat__cell" data-ramp="3"></span>
+    <span class="vl-heat__cell" data-ramp="4"></span>
+
+    <span class="vl-heat__row">Whatsapp</span>
+    <span class="vl-heat__cell" data-ramp="2"></span>
+    <span class="vl-heat__cell" data-ramp="2"></span>
+    <span class="vl-heat__cell" data-ramp="3"></span>
+    <span class="vl-heat__cell" data-ramp="5"></span>
+  </div>
+</section>
+
+<style>
+.vl-heat {
+  width: 605px; height: 431px;
+  box-sizing: border-box;
+  padding: 28px 30px;
+  background: var(--vl-module);
+  color: var(--vl-ink);
+  border-radius: var(--vl-radius-module, 29px);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  font-family: Montserrat, Poppins, Inter, "Helvetica Neue", Arial, sans-serif;
+}
+.vl-heat__head { display: flex; align-items: flex-start; gap: 14px; }
+.vl-heat__title { margin: 0; font-size: 27px; font-weight: 500; letter-spacing: -0.01em; }
+.vl-heat__sub { margin: 4px 0 0; font-size: 16px; color: var(--vl-ink-soft); }
+.vl-heat__tools { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.vl-heat__chip {
+  height: 46px; padding: 0 22px; border-radius: var(--vl-radius-pill, 999px);
+  background: var(--vl-app); display: flex; align-items: center;
+  font-size: 16px; font-weight: 500;
+}
+.vl-heat__btn {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--vl-app); display: flex; align-items: center; justify-content: center;
+}
+.vl-heat__btn svg { width: 20px; height: 20px; }
+
+/* La colonne de libellés est une colonne de la MÊME grille, mais sans tuile : les noms de
+   lignes vivent hors du damier, sans filet ni fond. Un filet de séparation ramènerait la
+   matrice à un tableau, ce qu'elle n'est justement pas. */
+.vl-heat__grid {
+  flex: 1 1 auto; min-height: 0;
+  display: grid;
+  grid-template-columns: 150px repeat(4, minmax(0, 1fr));
+  gap: 18px 16px;
+  padding-top: 34px;
+}
+.vl-heat__row { display: flex; align-items: center; font-size: 17px; }
+/* Rayon encadré des DEUX côtés : au moins un tiers de la hauteur de cellule (en dessous,
+   c'est un damier), au plus la moitié (au-delà, ce sont des pilules et la lecture en
+   colonnes disparaît). Une borne seule laisse toujours passer l'autre faute. */
+.vl-heat__cell { border-radius: var(--vl-radius-tile, 20px); background: var(--vl-ramp-1); }
+.vl-heat__cell[data-ramp="2"] { background: var(--vl-ramp-2); }
+.vl-heat__cell[data-ramp="3"] { background: var(--vl-ramp-3); }
+.vl-heat__cell[data-ramp="4"] { background: var(--vl-ramp-4); }
+.vl-heat__cell[data-ramp="5"] { background: var(--vl-ramp-5); }
+/* Hors rampe. Ce n'est pas « un gris de plus », c'est une autre information. */
+.vl-heat__cell[data-v="on"] { background: var(--vl-accent); }
+</style>

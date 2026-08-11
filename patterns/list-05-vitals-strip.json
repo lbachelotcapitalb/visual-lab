@@ -1,0 +1,140 @@
+{
+  "name": "Bandeau de constantes, sans carte ni filet",
+  "family": "list",
+  "ref": "ref-19-acid-clinical-timeline",
+  "intent": "Aligner cinq mesures hétérogènes sur une seule ligne SANS aucun séparateur : chacune est un couple micro-libellé / valeur, l'unité étant un cran plus petite ET plus claire que le nombre qu'elle suit. C'est ce double affaiblissement de l'unité — taille et encre — qui permet de lire cinq valeurs d'affilée sans filet, sans carte et sans que l'œil confonde un nombre avec l'unité de son voisin.",
+  "when_to_use": "Bandeau d'état en tête d'une fiche : constantes d'un patient, indicateurs d'une machine, chiffres-clés d'un dossier. La première mesure peut être qualitative et prendre un corps plus grand — c'est le sujet de la fiche, pas une valeur de plus.",
+  "avoid_when": "Les valeurs sont comparables entre elles (une rangée de cartes ou un tableau dit mieux la comparaison), il y en a plus de six (le bandeau se met à défiler et perd son unique atout, la lecture d'un seul coup d'œil), ou l'une d'elles est en alerte : ce bandeau n'a aucune ressource pour le dire, et l'y ajouter demande une couleur que le système réserve ailleurs.",
+  "media": [
+    "web",
+    "slide"
+  ],
+  "tags": [
+    "constantes",
+    "vitals",
+    "bandeau",
+    "strip",
+    "mesure",
+    "unite",
+    "micro-libelle",
+    "fiche",
+    "dossier",
+    "kpi",
+    "sans-filet"
+  ],
+  "vars": [
+    {
+      "name": "--vl-ink",
+      "role": "valeur",
+      "default": "#262C2C"
+    },
+    {
+      "name": "--vl-ink-soft",
+      "role": "micro-libellé ET unité — la même encre affaiblie pour les deux",
+      "default": "#5F615E"
+    }
+  ],
+  "slots": [
+    "items"
+  ],
+  "geometry": {
+    "root": ".vl-vitals",
+    "frame": [
+      1040,
+      62
+    ],
+    "ratios": {
+      "gap_over_width": 0.051,
+      "unit_over_value": 0.5,
+      "label_over_value": 0.467,
+      "lead_over_value": 1.233
+    },
+    "type_px": {
+      "lead": 37,
+      "value": 30,
+      "unit": 15,
+      "label": 14
+    },
+    "pad_ratio": {
+      "top": 0,
+      "x": 0,
+      "bottom": 0
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "une seule ligne : toutes les mesures partagent leur ligne de base basse",
+      "measure": "(() => { const b = [...document.querySelectorAll('.vl-vitals > *')].map((e) => e.getBoundingClientRect().bottom); return Math.max(...b) - Math.min(...b); })()",
+      "max": 1.5
+    },
+    {
+      "name": "AUCUN séparateur : pas un filet entre deux mesures",
+      "measure": "[...document.querySelectorAll('.vl-vitals > *')].reduce((m, e) => m + parseFloat(getComputedStyle(e).borderRightWidth || 0), 0)",
+      "expect": 0,
+      "tol": 0
+    },
+    {
+      "name": "… et pas de fond non plus : la mesure n'est pas une carte",
+      "measure": "[...document.querySelectorAll('.vl-vitals > *')].filter((e) => { const p = (getComputedStyle(e).backgroundColor.match(/[\\d.]+/g) || []).map(Number); return p.length === 4 ? p[3] > 0 : p.length === 3; }).length",
+      "expect": 0,
+      "tol": 0
+    },
+    {
+      "name": "le vide qui sépare deux mesures vaut au moins 1,4 corps de valeur — c'est lui, le séparateur",
+      "measure": "num('.vl-vitals','columnGap') / num('.vl-vitals__item:nth-child(2) .vl-vitals__value','fontSize')",
+      "min": 1.4
+    },
+    {
+      "name": "L'UNITÉ EST PLUS PETITE que le nombre qu'elle suit — au plus la moitié",
+      "measure": "num('.vl-vitals__item:nth-child(2) .vl-vitals__unit','fontSize') / num('.vl-vitals__item:nth-child(2) .vl-vitals__value','fontSize')",
+      "max": 0.55
+    },
+    {
+      "name": "… ET PLUS CLAIRE : c'est le double affaiblissement qui rend le bandeau lisible sans filet",
+      "measure": "lum(parseRgb(cs('.vl-vitals__item:nth-child(2) .vl-vitals__unit','color'))) - lum(parseRgb(cs('.vl-vitals__item:nth-child(2) .vl-vitals__value','color')))",
+      "min": 0.05
+    },
+    {
+      "name": "le micro-libellé est AU-DESSUS de sa valeur, jamais à côté",
+      "measure": "box('.vl-vitals__item:nth-child(2) .vl-vitals__value').top - box('.vl-vitals__item:nth-child(2) .vl-vitals__label').bottom",
+      "min": 0,
+      "max": 12
+    },
+    {
+      "name": "… et calé sur le même fer à gauche",
+      "measure": "Math.abs(box('.vl-vitals__item:nth-child(2) .vl-vitals__label').left - box('.vl-vitals__item:nth-child(2) .vl-vitals__value').left)",
+      "max": 1.5
+    },
+    {
+      "name": "le micro-libellé reste un cadrage : au plus la moitié du corps de sa valeur",
+      "measure": "num('.vl-vitals__item:nth-child(2) .vl-vitals__label','fontSize') / num('.vl-vitals__item:nth-child(2) .vl-vitals__value','fontSize')",
+      "max": 0.55
+    },
+    {
+      "name": "la mesure de tête est plus grande que les autres — c'est le sujet de la fiche",
+      "measure": "num('.vl-vitals__lead .vl-vitals__value','fontSize') / num('.vl-vitals__item:nth-child(2) .vl-vitals__value','fontSize')",
+      "min": 1.15
+    },
+    {
+      "name": "… mais elle ne fait pas un titre : au plus 1,6 fois",
+      "measure": "num('.vl-vitals__lead .vl-vitals__value','fontSize') / num('.vl-vitals__item:nth-child(2) .vl-vitals__value','fontSize')",
+      "max": 1.6
+    },
+    {
+      "name": "contraste d'une valeur ≥ 4,5",
+      "measure": "contrast('.vl-vitals__item:nth-child(2) .vl-vitals__value')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste du micro-libellé ≥ 4,5 — c'est lui qui plafonne",
+      "measure": "contrast('.vl-vitals__item:nth-child(2) .vl-vitals__label')",
+      "min": 4.5
+    },
+    {
+      "name": "aucun débordement du bandeau",
+      "measure": "overflow('.vl-vitals')",
+      "max": 0
+    }
+  ],
+  "notes": "Le pattern tient à une seule idée, et deux benchmarks la mesurent séparément : l'unité est affaiblie DEUX FOIS, en taille et en encre. Un seul des deux affaiblissements ne suffit pas — une unité petite mais à l'encre pleine se met à compter comme un second nombre, une unité claire mais de même corps se lit comme un mot de la phrase suivante. C'est le cumul qui produit l'effet, d'où deux assertions et non une.\n\nLes deux assertions négatives (aucun filet, aucun fond) sont ce qui distingue ce bandeau d'une rangée de cartes. Elles sont écrites sur TOUS les enfants et pas sur un témoin : c'est exactement le genre de règle qu'on casse en ajoutant un fond « juste sur la mesure importante ».\n\nLe vide entre deux mesures est mesuré en CORPS de valeur (≥ 1,4) et non en pixels : c'est ce vide qui remplace le séparateur, et il doit donc grandir avec la typographie. Exprimé en pixels, il aurait cessé de séparer dès le premier changement d'échelle."
+}
