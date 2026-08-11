@@ -266,7 +266,7 @@ Ce qui transforme la collection en outil :
 - ✅ `bin/contact-sheet.mjs` — planche-contact PNG (tout, ou `--family` / `--ref` / `--media`),
   chaque vignette sur le `:root` de sa référence, tailles MESURÉES dans Chrome avant la grille.
 
-### 🟡 Lot 12 — Skill + carte (31/07/2026)
+### ✅ Lot 12 — Skill + carte (31/07/2026, CLOS)
 - ✅ Skill `visual-lab` : `SKILL.md` à la racine du dépôt, symlink `~/.claude/skills/visual-lab`
   (convention maison). Deux verbes — consulter / verser. Il situe `deck-builder`,
   `theme-factory`, `frontend-design` et `bestfront`.
@@ -564,7 +564,25 @@ couleur ligne par ligne), là où les seize lots précédents estimaient à l'œ
 
 ## Ce qui reste, en un coup d'œil
 
-Decks à produire : `ref-05` (8 slides) · `ref-09` (12).
-Non-decks à produire : `ref-07` (page web) · `ref-01` (couverture seule).
-Outillage : composition (11) — reste `compose.mjs` · skill + carte (12) — reste karto et
-l'arbitrage publication · sortir du slide/web (13) — email, social, PSD.
+**À jour au 11/08/2026.** Le lot 12 est CLOS (karto et l'arbitrage de publication sont tranchés
+depuis le 31/07 — cette ligne l'annonçait encore comme ouvert), et le lot 13 a soldé ses volets
+email et social.
+
+| ce qui reste | nature | ce que ça débloque | poids |
+|---|---|---|---|
+| `ref-07` retro-brand-hero (lot 6) | matière — page web | 4 patterns, et il CONDITIONNE le lot 7 | 1 session |
+| `ref-08` swiss-studio-hero (lot 7) | matière — extraction | le deck existe ; la preuve du lot est que les patterns du lot 6 produisent ref-07 ET ref-08 par VARIABLES | ½ session, après le 6 |
+| `ref-10` campaign-board-red (lot 9) | matière — extraction | le deck existe, aucun pattern extrait | ½ session |
+| `ref-12` neon-capsule-tags | matière — deck manquant | les patterns existent sans reconstitution : le seul trou en sens inverse du corpus | ½ session |
+| `ref-05` proposal-acid-yellow (lot 4) | matière — 8 slides | 5 patterns, dont une règle éditoriale à n'extraire que si elle a un rendu | 1 session |
+| `ref-09` zine-annotated-blue (lot 8) | matière — 12 slides | `annotation-marker` : le générateur de tracés manuscrits, **le plus fort différenciateur anti-« AI slop » du corpus** | 1 session entière |
+| `ref-01` bento-pills-2030 (lot 10) | matière — couverture | primitives géométriques ; à reconstruire À PLAT | ½ session |
+| Formats éditoriaux social (lot 13) | matière — natif canal | les 7 patterns `social` sont TOUS des vignettes de donnée : rien pour une citation, un décryptage, un carousel | 1 session, à cadrer d'abord |
+| `bin/compose.mjs` (lot 11) | outillage | assembler une slide depuis des ids + un système + un contenu JSON, sans copier-coller | ½ session |
+| Émetteur PSD live-text (lot 13) | outillage | reprendre `build-livetext-psd.mjs`, aujourd'hui prisonnier de `gtm-content` | ½ session |
+| Nom de temporaire unique par processus | **dette** | deux sessions en parallèle se marchent dessus : 12 faux échecs déjà payés le 31/07 | 20 min |
+| `pptx.emitter` sur `diagram-01` | **dette** | sans lui, le pattern n'est pas disponible dans `deck-builder` | 20 min |
+
+Ce que rien ne mesure encore, et qui n'est pas dans le tableau parce que ce ne sont pas des
+lots mais des trous nommés : la COMPOSITION d'un mailing, celle d'un post, et le détachement
+d'un visuel par rapport à son sol (cf. DOCTRINE.md, « Les trous »).
