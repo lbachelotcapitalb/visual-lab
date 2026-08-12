@@ -134,72 +134,25 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: (aucun)
+CHECKPOINT_STEP: S7
 
-- [x] **S6.1 — la spec `ref-01` corrigée avant tout code.** Quatre points à trancher dans
-      `SPEC-SOURCES.md` : l'échelle (la spec donne des px sans dire la taille de la cellule),
-      `border-radius: 50%/50%` qui donne une ELLIPSE et non un stadium, le micro-pied
-      (`#C9C7C4` sur `#F5F4F2` = 1,3:1 et ≈ 10 px, deux fois sous le plancher), et la loi
-      d'aspect du bloc (4 colonnes × 3 rangées de cellules CARRÉES plafonne à 4:3 — il ne
-      remplira jamais un 16:9, et c'est démontrable). **Fait (0a9729b)** : la géométrie retenue,
-      la disposition et l'arbitrage des patterns sont tous écrits dans la section `ref-01` de
-      `SPEC-SOURCES.md` — S6.2 à S6.4 n'ont plus rien à décider, seulement à coder ce qui y est.
-      Repères pour la suite : cellule 232, gouttière 19, mosaïque 985 × 734 centrée, rangée
-      d'index 24 px `#6E6C68`, et le rail de la primitive 2 = celui de la primitive 7 (même
-      objet, deux remplissages).
-- [x] **S6.2 — `systems/` + `decks/ref-01-bento-pills-2030.html`** : une slide 1600×900, à plat
-      (ni perspective ni ombre), `check-deck.mjs` vert. **Fait** : les cinq contrôles de
-      composition passent, une seule couche au-dessus de la scène, et la géométrie tombe au
-      centième — mosaïque 985 × 734 à (307,5 ; 58,5), vertical 58,5 + 734 + 25 + 24 + 58,5 = 900
-      exactement, bord droit de la barre à 790,49 pour une frontière c2/c3 à 790,50, encre de
-      « 20 » à 87,99 % de la pilule. Deux pièges relevés en chemin : le flux automatique de la
-      grille comble le creux de r2c4 si le teardrop 8 n'est pas placé explicitement en r3c1 (la
-      planche perdait son seul vide) ; et un enfant dont le fond n'est qu'un `linear-gradient`
-      a une `background-color` transparente, donc `check-deck.mjs` compose sa couleur avec
-      celle du rail et le déclare couche 1:1 redondante — la `background-color` doit déclarer
-      l'extrémité claire du dégradé, comme sur `ref-15`.
-- [x] **S6.3 — `layout-15-primitive-mosaic`** : la grille + les huit primitives, benchmarks en
-      ratios, `check.mjs` vert. **Fait** : 15 benchmarks, verts du premier coup, et le rendu
-      correspond à la disposition de la spec (creux en r2c4, coins droits diagonalement
-      opposés, pastille à gauche). Le benchmark qui porte le lot est celui de la LOI D'ASPECT :
-      il ne se fie pas au calcul, il REPARAMÈTRE le fragment de 0 à 1000 px de gouttière et
-      vérifie que l'aspect reste sous 1,5 — même méthode qu'en S5. Les deux paramètres du
-      pattern sont `--vl-mos-cell` et `--vl-mos-gap` ; les trois rayons en sont des fractions
-      (0,500 / 0,300 / 0,220) et un benchmark garde leur ÉCARTEMENT, faute de quoi squircle et
-      teardrop se confondent et la planche ne porte plus qu'une primitive.
-- [x] **S6.4 — `shape-02-teardrop-quadrant` + `shape-03-stadium-track`** : la forme à un seul
-      coin droit (4 orientations) et le stadium emboîté (rail + pastille / rail + dégradé, qui
-      absorbe le `fill-gradient-stadium` annoncé seul par la spec). **Fait** : 8 + 13
-      benchmarks verts. Les deux patterns portent le MÊME piège, et c'est ce qui les relie à
-      `shape-notched-corner` : un rayon (ou un chanfrein) écrit en `%` se résout par AXE, donc
-      dès que la boîte n'est pas carrée l'arc devient elliptique. Lire la valeur calculée ne
-      le voit pas — Chrome rend le `%` tel quel. Les deux benchmarks qui portent le lot sondent
-      donc la forme PEINTE au point (`elementFromPoint`) sur cinq et six angles : `shape-02` en
-      aplatissant sa cellule à 232 × 160, `shape-03` en DÉRIVANT le rayon attendu de la hauteur
-      au lieu de le lire. Contrainte du harnais relevée en chemin : la fenêtre de `check.mjs`
-      fait 756 × 469, donc tout sondage sous y ≈ 469 rend `null` — le premier rail sondé était
-      le second de la planche et sortait rouge pour une raison fausse. Acquis de `shape-03` :
-      la pastille RONDE n'est pas déclarée, elle tombe de la loi d'emboîtement (rayon du parent
-      moins l'inset), et c'est le benchmark des deux CENTRES DE COURBURE qui le prouve.
-      `media: social` de `shape-02` est mesuré, pas déclaré (`frame.mjs` : ×1,97, remplit 78 %).
-      Effet de bord : `layout-15` citait un `shape-01-notched-corner` qui n'existe pas.
-- [x] **S6.5 — les rendus REGARDÉS** (deck + les 3 patterns), corrections, `proofs/` supprimé.
-      **Fait** : le deck et les deux `shape` sont conformes à la spec — les quatre teardrops
-      pointent chacun le coin qu'ils occupent, la pastille du rail sort ronde, les contours
-      restent concentriques. UN défaut sorti par le seul regard, sur `layout-15` : le fragment
-      ne déclarait aucune `font-family` alors que le corps de l'année est `calc(100cqw / 1,216)`,
-      et 1,216 est la CHASSE d'un grotesk précis. `check.mjs` sert « Helvetica Neue » en tête,
-      `render.mjs` la police système : le benchmark des 88 % était vert pendant que le rendu
-      saturait ~97 % et que les chiffres léchaient le bord de la pilule. Un fragment dont la
-      géométrie dépend d'une police doit l'ÉPINGLER — sinon elle dépend du harnais qui l'ouvre.
-      Corrigé, et devenu une assertion (16ᵉ benchmark) : la saturation est remesurée après avoir
-      imposé un serif à la racine du fragment, et vérifiée identique. Contrôlée rouge sans le
-      correctif, verte avec. Constat non traité, à arbitrer : huit autres patterns portent du
-      texte sans déclarer de famille — aucun ne dérive sa géométrie d'une chasse, donc aucun
-      n'est faux, mais aucun ne rend pareil selon l'outil qui l'ouvre.
-- [x] **S6.6 — gate complet, doc à jour dans le même commit** (ROADMAP lot 10, README « État »,
-      SPEC-SOURCES), commit final + MAJ de PROGRESS. **Fait (d3d8ba0)** : 53 patterns dont 46
-      mesurés, 17 decks, tout vert.
+- [ ] **S7.1 — la spec `ref-05` complétée avant tout code.** La section actuelle de
+      `SPEC-SOURCES.md` tient en 35 lignes : elle donne la palette, la typo, le header et les
+      éléments de signature, mais **pas le plan des 8 slides**, pas la géométrie, pas l'échelle
+      — et son gris de corps est sous le seuil de contraste. Quatre points à trancher et à
+      ÉCRIRE dans la spec : l'échelle (relevé sur une planche à ~1000 px/slide, comme ref-06),
+      le contraste de `#7A7A7A` sur `#EFEFED`, le plan slide par slide, et le sort d'
+      `accent-single-fluo` (règle éditoriale : n'a de rendu que si un objet la porte).
+- [ ] **S7.2 — `systems/ref-05-proposal-acid-yellow.json` + le deck, slides 1 à 4.**
+- [ ] **S7.3 — le deck, slides 5 à 8, `check-deck.mjs` vert** (une seule couche au-dessus de la
+      scène, pas de marge de page, 1600×900).
+- [ ] **S7.4 — `title-…-hyphen-break` + le marqueur astérisque** : la césure volontaire dans un
+      titre display, et le glyphe de marque avec sa règle d'emploi. Benchmarks en ratios.
+- [ ] **S7.5 — `card-…-numbered-steps` + `layout-…-header-tripartite`** : la rangée 01→04 dont
+      une seule carte est accentuée, et le header 3 zones réutilisable hors charte.
+- [ ] **S7.6 — les rendus REGARDÉS** (deck + patterns), corrections, `proofs/` supprimé.
+- [ ] **S7.7 — gate complet, doc à jour dans le même commit** (ROADMAP lot 4, README « État »,
+      SPEC-SOURCES), commit final + MAJ de PROGRESS.
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à
      mesure et poussée en commit `wip(<step>): …`. C'est ce qui permet de reprendre au milieu
