@@ -80,15 +80,111 @@ horizontales) ou 2 rangées (pilule verticale).
 | 7 | `toggle` | `stadium-h` noire contenant un `disc` blanc collé à gauche, inset ≈ 16 px | noir + pastille blanche |
 | 8 | `teardrop` (miroir) | coin droit en bas-gauche : `border-radius: 48px 48px 48px 0` | noir |
 
-**Patterns à extraire**
-- `layout-bento-primitives` — la grille + le jeu de 6 primitives paramétrables.
-- `shape-teardrop` — le squircle à coin unique droit (4 orientations).
-- `shape-toggle` — pilule + pastille (sert aussi de puce/indicateur).
-- `fill-gradient-stadium` — dégradé directionnel contraint à une forme stadium.
-
 **Piège de fidélité** — La photo est en perspective : ne PAS reproduire l'inclinaison ni
 l'ombre. Reconstruire à plat. La perspective sera un pattern séparé (`fx-print-mockup`)
 si Léo le demande un jour.
+
+### Ce que le relevé ne disait pas, et qu'il fallait trancher avant de coder (12/08/2026)
+
+**1. L'échelle. Le relevé donne des pixels sans donner la taille de la cellule** — sans elle,
+`rayon 48`, `gap 18` et `corps 84` ne veulent rien dire, et aucun ratio n'est calculable. Elle
+se DÉDUIT pourtant, de l'exigence que les primitives restent distinctes : le squircle est à
+`0,30 × côté` et le teardrop à 48 px fixes. À côté = 180, les deux arrondis ne sont plus qu'à
+11 % l'un de l'autre et les deux primitives se confondent — or la source les liste comme deux ;
+à côté = 300, le teardrop tombe à 16 % et cesse de se lire comme « arrondi ». La cellule vaut
+donc **220 ± 20**, et c'est cette fourchette, croisée avec la hauteur de slide, qui fige tout
+le reste.
+
+**2. `border-radius: 50%/50%` n'est PAS un stadium, c'est une ELLIPSE.** Les deux pourcentages
+se résolvent sur des axes différents : sur une pilule de 483 × 232, `50%` donne 241,5 de rayon
+horizontal contre 116 de vertical, soit un ovale complet — pas un rectangle à bouts ronds. Le
+stadium s'écrit en LONGUEUR (`calc(hauteur / 2)`), exactement comme le chanfrein de
+`shape-notched-corner` s'écrit en longueur pour rester à 45°. Même famille de piège, même
+correction. C'est le seul endroit de la spec qui était faux, et il l'était sur la primitive la
+plus fréquente de la planche (trois occurrences sur huit).
+
+**3. Le micro-pied est deux fois sous le plancher, et le relevé ne le capitalise pas.**
+`#C9C7C4` sur `#F5F4F2` mesure **1,28:1** — quatrième lot de suite où la source place son gris
+secondaire sous le seuil (cf. `ref-08`, `ref-10`, `ref-13`). Et ≈ 10 px transposés à l'échelle
+de la slide font 11 px là où le plancher de la scène 1600 est de **23 px** (DOCTRINE §7). Les
+deux défauts ont la même cause : c'est un repère d'IMPRIMÉ, lu à 30 cm sur une feuille A4, où
+7,5 pt gris pâle est un usage normal. Transposé sur une slide, il devient illisible deux fois.
+Corrigé : **24 px** et **`#6E6C68`** (4,77:1 mesuré). DOCTRINE §7 offre l'autre issue — couper
+le contenu — mais la rangée d'index porte la nature « couverture de rapport » de la planche :
+sans elle, la mosaïque n'est plus qu'une mosaïque.
+
+**4. Le bloc ne remplira JAMAIS un 16:9, et c'est démontrable.** Une grille de 4 colonnes × 3
+rangées de cellules CARRÉES a pour aspect `(4c + 3g + 2m) / (3c + 2g + 2m)` : il vaut 4/3 à
+gouttière et marge nulles, **décroît** vers 1 quand la marge grandit, et croît avec la gouttière
+vers une borne de **3/2** qu'il n'atteint jamais (limite en `3g/2g`). Le maximum concevable est
+donc 1,5, pour 1,778 demandés — et à gouttière raisonnable on est à 1,34. Poser 1,778 exigerait
+une gouttière NÉGATIVE : aucun réglage ne comble l'écart, c'est une impossibilité, pas un
+arbitrage. Les
+cellules doivent rester carrées : deux discs et deux teardrops en dépendent (un disc dans une
+cellule à 1,43 devient une ellipse, ou laisse 54 px de mou par côté qui détruit le serrage de la
+mosaïque — c'est l'alternative essayée puis écartée). La reconstitution **cale donc le bloc sur
+la HAUTEUR** de slide et le centre : bandes latérales de 307,5 px, qui sont le pourtour de la
+feuille, pas un vide de composition. Précédents du corpus, mêmes raisons : `ref-15` (bande
+centrée, 42 % de la surface) et `ref-12` (pile calée en hauteur).
+
+**Géométrie retenue** (slide 1600 × 900, cellule **c = 232**, gouttière **g = 19**)
+
+| objet | valeur | ratio |
+|---|---|---|
+| cellule | 232 | `0.1450 Wc` |
+| gouttière, constante partout | 19 | `0.0119 Wc` — `0.0819 c`, le relevé (18/220) |
+| mosaïque | 985 × 734 | `0.6156 Wc` — aspect **1,342**, le plafond démontré ci-dessus |
+| marge haute et basse | 58,5 | `0.252 c`, le relevé (56/220) |
+| bandes latérales | 307,5 | ce que la loi 4:3 laisse — pas une marge choisie |
+| pilule / rail (2 cellules) | 483 × 232 | `2c + g`, aspect 2,08 |
+| rayon stadium | 116 | `0.500 c` — hauteur / 2, en longueur |
+| rayon squircle | 69,6 | `0.300 c` |
+| rayon teardrop (3 coins sur 4) | 51,04 | `0.220 c` — 48 × 232/220 |
+| inset du stadium emboîté | 15,78 | `0.068 c` — voir ci-dessous |
+| rangée d'index, corps | 24 | `0.015 Wc`, plancher tenu |
+
+**Trois valeurs unifiées ou posées, faute de relevé** :
+- les deux insets relevés (≈ 14 et ≈ 16) sont à 12 % l'un de l'autre, sous la précision d'un
+  relevé sur photo en perspective : **un seul token** les porte. Deux insets qui ne veulent rien
+  dire, c'est la dette de DOCTRINE §9.
+- la LONGUEUR de la barre en dégradé n'est nulle part dans le relevé — seulement « alignée à
+  gauche », ce qui dit qu'elle ne remplit pas son rail. Elle est posée sur la **ligne de colonne
+  invisible** : son bord droit tombe exactement sur la frontière c2/c3, soit `c − inset` de long
+  (44,8 % du rail). DOCTRINE §3 — quand le relevé est muet, c'est le quadrillage qui tranche,
+  pas le goût.
+- le corps de l'année n'est pas 84 px : c'est une **fonction de la largeur de la pilule**
+  (`calc(100cqw / chasse)`, l'acquis de `title-04`), réglée pour que l'encre sature 88 % de la
+  pilule. À 84 px à l'échelle, « 20 » occupait 44 % de la largeur et 34 % de la hauteur d'une
+  pilule de 483 — un petit bloc centré dans une grande boîte, ce que DOCTRINE §1 nomme
+  précisément comme raté.
+
+**Disposition** — Elle n'est pas inventée : elle est ce que l'inventaire ORDONNÉ (1 → 8) et ses
+portées produisent en placement ligne par ligne.
+
+| | c1 | c2 | c3 | c4 |
+|---|---|---|---|---|
+| r1 | 1 disc rouge | 2 rail + barre en dégradé (2 col.) | ↔ | 3 teardrop, coin droit **haut-droite** |
+| r2 | 4 squircle | 5 pilule « 20 / 30 » (2 rangs) | 6 disc rouge | *creux* |
+| r3 | 8 teardrop, coin droit **bas-gauche** | ↕ | 7 toggle (2 col.) | ↔ |
+
+Onze cellules sur douze : **un seul creux**, en r2c4. Et les deux teardrops sont miroir l'un de
+l'autre parce qu'ils occupent des coins diagonalement opposés — **le coin droit de chacun pointe
+le coin de feuille qu'il occupe**. C'est ce qui interdit de les permuter.
+
+**Patterns extraits — trois là où la spec en annonçait quatre** (12/08/2026)
+
+`fill-gradient-stadium` n'est pas versé seul : « un dégradé directionnel contraint à une forme
+stadium » tient dans sa propre phrase de description, ce que l'élagage du 30/07 interdit. Il
+n'a d'ailleurs pas d'existence propre ici — le dégradé EST le remplissage de l'enfant emboîté.
+Et la primitive 2 et la primitive 7 ne sont pas deux primitives : **c'est le même objet**, un
+rail stadium portant un enfant en inset constant, une fois rempli d'un dégradé, une fois d'une
+pastille. C'est cette identité que le pattern verse ; la spec la manquait en les listant à part.
+
+| pattern | ce qu'il porte |
+|---|---|
+| `layout-15-primitive-mosaic` | la grille : 4 × 3 cellules carrées, gouttière unique, portées 2 col. / 2 rangs, onze douzièmes occupés, et la loi d'aspect qui interdit de l'étirer |
+| `shape-02-teardrop-quadrant` | le carré arrondi à **un seul coin droit**, 4 orientations de même rayon, le coin droit comme pointeur d'orientation |
+| `shape-03-stadium-track` | le rail stadium et son enfant emboîté : rayon en LONGUEUR (jamais `50%`), inset constant sur les quatre côtés, contours **concentriques** — et les deux remplissages (dégradé, pastille) comme deux rôles d'un seul objet |
 
 ---
 
