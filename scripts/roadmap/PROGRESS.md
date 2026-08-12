@@ -2,9 +2,9 @@
 
 STATE: RUNNING
 <!-- RUNNING (continue) | AWAITING_DECISION (halt, présenter le tableau au mainteneur) | BLOCKED (gate rouge, halt) | DONE (fini) | STOPPED (coupé par le mainteneur via `roadmap stop` — ne jamais relancer soi-même) -->
-CURRENT_STEP: S4
+CURRENT_STEP: S5
 UPDATED: 2026-08-12
-LAST_COMMIT: a369f47
+LAST_COMMIT: b5aa899
 
 ## Objectif
 
@@ -75,7 +75,7 @@ règles dures :
       la spec qui tranche, et on corrige les patterns).
 - [x] **S3 — `ref-10-campaign-board-red` : extraire les patterns.** Le deck existe, aucun pattern
       n'en est sorti. Viser 2 à 4 patterns qui portent une composition.
-- [ ] **S4 — `ref-07-retro-brand-hero`.** Page web, pas une slide : le deck déclare sa scène en
+- [x] **S4 — `ref-07-retro-brand-hero`.** Page web, pas une slide : le deck déclare sa scène en
       clair (`<!-- vl:stage web — … -->`) sinon le lint la refuse. Patterns visés :
       `hero-card-on-photo`, `nav-three-zone`, `hero-wordmark-bottom-left`, `image-triptych`.
 - [ ] **S5 — `ref-08-swiss-studio-hero` : extraire les patterns.** DÉPEND DE S4. La preuve du lot
@@ -106,7 +106,7 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: S4
+CHECKPOINT_STEP: (aucun)
 
 - [x] spec `ref-07` complétée (palette relevée→corrigée, ratios ancrés sur la largeur de PAGE,
       ce qui est écarté) + `systems/ref-07-retro-brand-hero.json`
@@ -117,13 +117,29 @@ CHECKPOINT_STEP: S4
 - [x] `layout-12-nav-three-zone` (liens / logo optiquement centré / bouton)
 - [x] `title-03-wordmark-bottom-left` (wordmark calé sur la largeur + contrepoids diagonal)
 - [x] `layout-13-image-triptych` (3 images de même ratio, largeurs égales, gouttière constante)
-- [ ] gate + regard sur le rendu + doc (README/ROADMAP) + commit final
+- [x] gate + regard sur le rendu + doc (README/ROADMAP) + commit final
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à
      mesure et poussée en commit `wip(<step>): …`. C'est ce qui permet de reprendre au milieu
      d'un step après un relais sur seuil de contexte ou un crash. -->
 
 ## Journal (append-only, le plus récent en haut)
+
+- 2026-08-12 — S4 fait (b5aa899). `ref-07` est versée et le corpus porte enfin une PAGE WEB :
+  scène 1440×900 déclarée `vl:stage web`, deux couches (sol photo génératif → carte crème
+  incrustée), quatre patterns. Le lot a corrigé sa spec deux fois, et les deux fois c'est la
+  MESURE qui a tranché contre le texte : le wordmark fait 0,465 Wc et non 0,51 — l'assertion
+  qui en dépendait (« côte à côte les deux blocs ne tiendraient pas ») était donc fausse, ce
+  qui est vrai est la SATURATION de la rangée à 96 % ; et le triptyque a des largeurs égales
+  là où la liste de patterns annonçait l'inverse, contre la table de géométrie de la même
+  spec. Effet de bord d'outillage, celui qui resservira : `overflow()` est le mauvais
+  instrument dès qu'un interligne passe sous 1. La boîte de CONTENU d'une ligne est plus haute
+  que sa boîte de ligne (1,15 em contre 0,82 sur Archivo, soit 24 px qui dépassent),
+  `scrollHeight` le compte, et un pattern parfaitement contenu sort rouge. La containment se
+  mesure sur les BOÎTES ; que le débord soit du vide se prouve au canvas
+  (`actualBoundingBoxDescent` = 1,6 % du corps, le débord optique des capitales rondes, pas un
+  jambage) plutôt que de s'affirmer. Aucune image source sur disque : `bin/diff.mjs`
+  impossible.
 
 - 2026-08-12 — S3 fait. `ref-10` est extraite, et elle rend **trois** patterns quand la spec en
   annonçait cinq : `type-condensed-stack`, `mark-paren-number` et `type-micro-caps-block`
