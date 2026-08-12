@@ -131,6 +131,14 @@ règles dures :
       faire un contrôle. Point de départ mesuré le 12/08 : huit patterns portent du texte sans
       déclarer de famille (`card-02`, `card-03`, `chart-02`, `layout-01`, `layout-13`, `list-02`,
       `tag-01`, `title-01`). _(entré par l'INBOX le 2026-08-12)_
+- [ ] **S16 — Porter la mesure de BANDE MORTE dans `bin/check-deck.mjs`**, en s'inspirant de
+      `geo-audit.js` du skill `bestfront`. _Pourquoi_ : S7 a établi une loi nouvelle dans
+      DOCTRINE §1 (un objet borné change de PLACE, il ne tient pas une colonne) et a conclu
+      lui-même qu'aucune mesure ne la voit — `check-deck` compte les couches, les benchmarks ne
+      voient que l'intérieur d'un pattern. Mais l'outil existe DÉJÀ dans la maison : le tableau
+      de DOCTRINE attribue à `bestfront/geo-audit.js` la mesure des bandes mortes. Une loi
+      énoncée sans mesure se perd au troisième lot ; ici il n'y a même pas à l'inventer, seulement
+      à la porter. _(entré par l'INBOX le 2026-08-12)_
 
 ## Checkpoint intra-step
 
