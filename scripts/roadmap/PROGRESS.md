@@ -120,6 +120,17 @@ règles dures :
       (24 px de faux débord sur Archivo à 0,82). C'est consigné dans les notes de `title-03`,
       pas là où le prochain qui écrit un benchmark le lira.
       _(entré par l'INBOX le 2026-08-12)_
+- [ ] **S15 — Contrôler l'AUTONOMIE TYPOGRAPHIQUE d'un fragment DANS le harnais** : rejouer les
+      benchmarks sous une famille hôte imposée (un serif, par exemple) et exiger que les ratios
+      ne bougent pas. _Pourquoi_ : S6.5 a trouvé un pattern dont le corps dépendait de la police
+      de la page HÔTE, et l'a épinglé — mais seulement pour lui. Le contrat du dépôt (README,
+      point 5) AFFIRME qu'un fragment est autonome ; rien ne le vérifie. Un pattern qui hérite sa
+      métrique de la page rendra autrement chez celui qui le colle, pendant que son benchmark
+      reste vert — le harnais impose sa propre police, donc il ne peut pas voir le défaut qu'il
+      est censé exclure. La contre-épreuve existe déjà, elle a servi une fois : il reste à en
+      faire un contrôle. Point de départ mesuré le 12/08 : huit patterns portent du texte sans
+      déclarer de famille (`card-02`, `card-03`, `chart-02`, `layout-01`, `layout-13`, `list-02`,
+      `tag-01`, `title-01`). _(entré par l'INBOX le 2026-08-12)_
 
 ## Checkpoint intra-step
 
