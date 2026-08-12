@@ -1,0 +1,67 @@
+<!-- layout-12-nav-three-zone — nav en trois zones. Couleurs via --vl-* uniquement.
+
+     LA RÈGLE EST UN CENTRAGE, ET IL N'EST PAS CELUI QU'ON CROIT : le nom est centré sur le
+     CONTENEUR, pas entre ses deux voisins. Les liens de gauche et le bouton de droite n'ont
+     jamais la même largeur ; un `space-between` à trois enfants centrerait le nom entre eux et
+     le ferait dériver de plusieurs dizaines de pixels — une dérive que rien ne signale tant
+     qu'on ne la mesure pas. D'où le positionnement absolu sur l'axe du conteneur. -->
+<div class="vl-n3z">
+
+  <div class="vl-n3z__links">
+    <a href="#">Shop</a><a href="#">Journal</a><a href="#">About</a>
+  </div>
+
+  <div class="vl-n3z__logo">
+    <div class="vl-n3z__name">northbeam</div>
+    <!-- 11 px et pas 9 : une page web se lit à bout de bras dans un navigateur à 1:1, pas
+         projetée. À 9 px l'italique n'a plus d'œil. Cf. DOCTRINE §7. -->
+    <div class="vl-n3z__baseline">the coast is the point</div>
+  </div>
+
+  <a class="vl-n3z__cta" href="#">Get the kit</a>
+
+</div>
+
+<style>
+.vl-n3z {
+  position: relative;
+  width: 1036px; height: 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--vl-card);
+  color: var(--vl-ink);
+  font-family: Archivo, Inter, -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Zone GAUCHE : ferrée sur le bord du conteneur, largeur libre. */
+.vl-n3z__links { display: flex; gap: 26px; }
+.vl-n3z__links a {
+  color: var(--vl-ink); text-decoration: none;
+  font-size: 13px; font-weight: 500; line-height: 1;
+}
+
+/* Zone CENTRALE : sortie du flux. C'est le seul moyen de la caler sur l'axe du CONTENEUR
+   sans que la largeur de ses voisines n'entre dans le calcul. */
+.vl-n3z__logo {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  text-align: center;
+}
+.vl-n3z__name {
+  font-size: 22px; font-weight: 900; line-height: 1;
+  letter-spacing: -0.01em; color: var(--vl-ink);
+}
+.vl-n3z__baseline {
+  margin-top: 5px;
+  font-size: 11px; font-style: italic; font-weight: 400; line-height: 1;
+  color: var(--vl-ink); opacity: 0.72;
+}
+
+/* Zone DROITE : ferrée sur le bord opposé. Le bouton est le seul aplat de la rangée — c'est
+   lui qui porte l'action, et il n'y en a qu'une. */
+.vl-n3z__cta {
+  display: inline-flex; align-items: center;
+  height: 34px; padding: 0 18px;
+  background: var(--vl-accent); color: var(--vl-on-accent);
+  border-radius: var(--vl-radius-pill); text-decoration: none;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+}
+</style>

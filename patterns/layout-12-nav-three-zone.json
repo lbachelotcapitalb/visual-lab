@@ -1,0 +1,146 @@
+{
+  "name": "Nav en trois zones, nom centré sur le conteneur",
+  "family": "layout",
+  "ref": "ref-07-retro-brand-hero",
+  "intent": "Poser une navigation en trois zones — liens à gauche, nom de marque au centre, bouton d'action à droite — dont le nom est calé sur l'axe du CONTENEUR et non entre ses deux voisins. Les zones latérales n'ont jamais la même largeur : un centrage entre elles fait dériver le nom de plusieurs dizaines de pixels, et rien ne le signale tant qu'on ne le mesure pas. La zone centrale sort donc du flux, ce qui est la seule construction où l'axe du nom ne dépend pas de ce qu'on écrit à ses côtés.",
+  "when_to_use": "Nav de page vitrine ou de hero où le nom de marque doit être le point d'équilibre visuel de la rangée, avec une baseline en italique sous le nom et un seul bouton d'action. Tient dans n'importe quel conteneur : c'est l'axe du conteneur qui commande, pas la largeur de la scène.",
+  "avoid_when": "Il y a plus d'une action à droite, ou plus de quatre liens à gauche : les zones latérales finissent par mordre sur le nom, et le pattern n'a alors plus de centre à défendre. Écarter aussi quand le nom de marque est un logotype large — au-delà d'un tiers de la rangée, le centrage optique cesse de se voir et une nav en deux zones est plus honnête.",
+  "media": [
+    "web",
+    "slide"
+  ],
+  "tags": [
+    "nav",
+    "navigation",
+    "header",
+    "menu",
+    "logo",
+    "marque",
+    "bouton",
+    "cta",
+    "trois-zones",
+    "centrage-optique",
+    "baseline"
+  ],
+  "vars": [
+    {
+      "name": "--vl-card",
+      "role": "fond de la rangée — celui du conteneur qui la porte, jamais un aplat propre",
+      "default": "#FBF7EC"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "encre des liens, du nom et de la baseline",
+      "default": "#1E1B18"
+    },
+    {
+      "name": "--vl-accent",
+      "role": "aplat du bouton — le seul de la rangée",
+      "default": "#B2201C"
+    },
+    {
+      "name": "--vl-on-accent",
+      "role": "libellé du bouton, posé sur l'accent",
+      "default": "#FBF7EC"
+    },
+    {
+      "name": "--vl-radius-pill",
+      "role": "rayon du bouton",
+      "default": "4px"
+    }
+  ],
+  "slots": [
+    "links",
+    "brand",
+    "action"
+  ],
+  "geometry": {
+    "root": ".vl-n3z",
+    "frame": [
+      1036,
+      40
+    ],
+    "ratios": {
+      "logo_center_over_frame": 0.5,
+      "cta_h_over_frame_h": 0.85,
+      "links_gap_over_frame": 0.0251,
+      "baseline_over_name_fontsize": 0.5
+    },
+    "type_px": {
+      "name": 22,
+      "links": 13,
+      "cta": 12,
+      "baseline": 11
+    },
+    "pad_ratio": {
+      "top": 0,
+      "x": 0,
+      "bottom": 0
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "le nom est centré sur l'axe du CONTENEUR",
+      "measure": "Math.abs((box('.vl-n3z__logo').left + box('.vl-n3z__logo').right) / 2 - W / 2) / W",
+      "max": 0.004
+    },
+    {
+      "name": "et il n'est PAS centré entre ses deux voisins : la dérive évitée est réelle, pas théorique",
+      "measure": "Math.abs((box('.vl-n3z__links').right + box('.vl-n3z__cta').left) / 2 - W / 2) / W",
+      "min": 0.01
+    },
+    {
+      "name": "les deux zones latérales ont des largeurs INÉGALES — sinon le centrage optique serait sans objet",
+      "measure": "Math.abs(box('.vl-n3z__links').w - box('.vl-n3z__cta').w) / W",
+      "min": 0.02
+    },
+    {
+      "name": "les liens sont ferrés sur le bord gauche du conteneur",
+      "measure": "box('.vl-n3z__links').left / W",
+      "max": 0.002
+    },
+    {
+      "name": "le bouton est ferré sur le bord droit du conteneur",
+      "measure": "(W - box('.vl-n3z__cta').right) / W",
+      "max": 0.002
+    },
+    {
+      "name": "les trois zones ne se chevauchent jamais : du blanc de part et d'autre du nom",
+      "measure": "Math.min(box('.vl-n3z__logo').left - box('.vl-n3z__links').right, box('.vl-n3z__cta').left - box('.vl-n3z__logo').right) / W",
+      "min": 0.03
+    },
+    {
+      "name": "la baseline est SECONDAIRE : au plus 60 % du corps du nom",
+      "measure": "num('.vl-n3z__baseline','fontSize') / num('.vl-n3z__name','fontSize')",
+      "min": 0.35,
+      "max": 0.6
+    },
+    {
+      "name": "plancher de lecture web : la baseline italique ne descend pas sous 11 px (DOCTRINE §7)",
+      "measure": "num('.vl-n3z__baseline','fontSize')",
+      "min": 11
+    },
+    {
+      "name": "contraste des liens de nav sur le fond de la rangée",
+      "measure": "contrast('.vl-n3z__links a')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste de la baseline UNE FOIS SON OPACITÉ COMPOSITÉE — c'est là que la source échoue d'habitude",
+      "measure": "(() => { const el = document.querySelector('.vl-n3z__baseline'); const s = getComputedStyle(el); const o = parseFloat(s.opacity); const c = (s.color.match(/[\\d.]+/g) || []).map(Number); const b = (getComputedStyle(document.querySelector('.vl-n3z')).backgroundColor.match(/[\\d.]+/g) || []).map(Number); const mix = [0,1,2].map((i) => c[i] * o + b[i] * (1 - o)); const L = (p) => { const f = p.map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * f[0] + 0.7152 * f[1] + 0.0722 * f[2]; }; const a = L(mix), d = L(b.slice(0, 3)); const [hi, lo] = a > d ? [a, d] : [d, a]; return (hi + 0.05) / (lo + 0.05); })()",
+      "min": 4.5
+    },
+    {
+      "name": "le bouton est le SEUL aplat de la rangée",
+      "measure": "[...document.querySelectorAll('.vl-n3z *')].filter((e) => { const a = (getComputedStyle(e).backgroundColor.match(/[\\d.]+/g) || []); return a.length === 3 || (a.length === 4 && Number(a[3]) > 0.02); }).length",
+      "expect": 1,
+      "tol": 0.001
+    },
+    {
+      "name": "la rangée tient sur UNE ligne : rien ne déborde en hauteur",
+      "measure": "overflow('.vl-n3z') / H",
+      "max": 0.02
+    }
+  ],
+  "notes": "Le pattern tient tout entier dans un choix de construction qu'on ne voit pas : la zone centrale est SORTIE DU FLUX. Une nav en `space-between` à trois enfants paraît identique et ne l'est pas — les liens (« Shop Journal About ») et le bouton n'ont pas la même largeur, si bien que le milieu entre eux tombe à environ 3 % de la largeur du conteneur à droite de l'axe. Deux benchmarks tiennent la règle des deux côtés : le nom est sur l'axe (écart ≤ 0,4 %), ET le milieu de ses voisins ne l'est PAS (écart ≥ 1 %). Le second est le seul qui empêche quelqu'un de « simplifier » le pattern en un `space-between` — sans lui, une réécriture fautive resterait verte tant que les libellés de démonstration sont équilibrés, et dériverait au premier libellé réel.\n\nLa baseline italique est relevée à 9 px sur la source ; elle est portée à 11 px ici. Une page web se lit à bout de bras dans un navigateur à l'échelle 1:1, pas projetée : à 9 px l'italique d'Archivo n'a plus d'œil. La bibliothèque ne capitalise pas le défaut de sa source (DOCTRINE §7). C'est la seule assertion en pixels du pattern, et c'est normal : un plancher de lisibilité est une grandeur absolue, pas un rapport.\n\nSon contraste se mesure OPACITÉ COMPOSITÉE. Une encre à 72 % sur un fond crème n'a pas le contraste de l'encre pleine, et `getComputedStyle().color` ne le sait pas : le benchmark refait le mélange à la main avant de calculer le rapport. Trois lots de suite, la source plaçait son gris secondaire juste sous 4,5:1 — mesuré sur la couleur déclarée, ce défaut sort vert.\n\nLe fond de la rangée est celui de son conteneur (`--vl-card`) et non un aplat propre : ce pattern est une rangée POSÉE dans une carte (layout-11-hero-card-on-photo sur la référence), pas un bandeau. Un aplat propre en ferait une couche de plus."
+}
