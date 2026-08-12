@@ -4,7 +4,7 @@ STATE: RUNNING
 <!-- RUNNING (continue) | AWAITING_DECISION (halt, présenter le tableau au mainteneur) | BLOCKED (gate rouge, halt) | DONE (fini) | STOPPED (coupé par le mainteneur via `roadmap stop` — ne jamais relancer soi-même) -->
 CURRENT_STEP: S3
 UPDATED: 2026-08-12
-LAST_COMMIT: 671de7c
+LAST_COMMIT: d598955
 
 ## Objectif
 
