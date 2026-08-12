@@ -20,9 +20,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 43,
+    "patterns": 44,
     "refs": 15,
-    "checkable": 36
+    "checkable": 37
   },
   "patterns": [
     {
@@ -5409,6 +5409,199 @@
       "html": "patterns/list-06-email-digest.html"
     },
     {
+      "id": "list-07-hairline-spec-table",
+      "name": "Tableau libellé/valeur à filets débordants",
+      "family": "list",
+      "ref": "ref-10-campaign-board-red",
+      "media": [
+        "slide",
+        "web",
+        "print"
+      ],
+      "intent": "Poser les caractéristiques d'un lot — livrables, formats, cadence — en couples libellé / valeur séparés par des filets d'un pixel et demi qui DÉBORDENT la marge de texte des deux côtés. Le filet n'est pas la bordure d'un bloc, c'est une règle de la page que le module traverse : il part avant le libellé et finit après la valeur, et c'est ce seul décalage qui distingue une table de spécifications d'un encadré.",
+      "when_to_use": "Slide ou page de livrables, de portée, de mentions techniques : deux à cinq couples dont le libellé est un mot et la valeur une énumération. Il complète title-02-condensed-overlay-stack sur la même scène, sous le titre, et n'a besoin d'aucune surface pour tenir.",
+      "avoid_when": "Les valeurs sont des NOMBRES à comparer entre eux, ou il y a plus de deux colonnes : ce module cale sa valeur à droite d'une colonne étroite, ce qui aligne les fins de ligne et non les ordres de grandeur — pour des chiffres, prendre list-04-due-rows. Écarter aussi quand le module ne peut pas déborder la marge de texte de la page (carte, encadré, cellule) : rentré dans un conteneur, le débord disparaît et il ne reste qu'un tableau à filets ordinaire.",
+      "tags": [
+        "tableau",
+        "filets",
+        "hairline",
+        "libellé",
+        "valeur",
+        "spécifications",
+        "livrables",
+        "débord",
+        "capitales",
+        "micro-caps",
+        "campagne"
+      ],
+      "vars": [
+        {
+          "name": "--vl-red",
+          "role": "couleur unique du module — filets ET texte, jamais deux encres",
+          "default": "#C82C15"
+        },
+        {
+          "name": "--vl-hst-rule",
+          "role": "épaisseur du filet ; reste un cheveu, sous 0,4 % de la largeur du module",
+          "default": "2.5px"
+        },
+        {
+          "name": "--vl-hst-inset",
+          "role": "de combien le filet déborde le libellé À GAUCHE — c'est la marge de texte de la page, pas un réglage du module",
+          "default": "12.23%"
+        },
+        {
+          "name": "--vl-hst-tail",
+          "role": "de combien le filet déborde la valeur À DROITE",
+          "default": "4.29%"
+        },
+        {
+          "name": "--vl-hst-val-w",
+          "role": "largeur maximale de la colonne de valeur — elle reste une colonne de mesure, pas un paragraphe",
+          "default": "270px"
+        },
+        {
+          "name": "--vl-hst-size",
+          "role": "corps des micro-capitales, libellé et valeur confondus",
+          "default": "13px"
+        }
+      ],
+      "slots": [
+        "rows"
+      ],
+      "geometry": {
+        "root": ".vl-hst",
+        "frame": [
+          1120,
+          278
+        ],
+        "ratios": {
+          "frame_over_slide_width": 0.7,
+          "rule_over_frame": 0.00223,
+          "inset_over_frame": 0.1223,
+          "tail_over_frame": 0.0429,
+          "value_width_over_frame": 0.2411,
+          "pad_bottom_over_pad_top": 1.43
+        },
+        "type_px": {
+          "label": 13,
+          "value": 13
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "le filet DÉBORDE le libellé par la gauche — la marge de texte de la page",
+          "measure": "(box('.vl-hst__lab').left - box('.vl-hst__row').left) / W",
+          "expect": 0.1223,
+          "tol": 0.012
+        },
+        {
+          "name": "il déborde AUSSI par la droite : le débord n'est pas un simple retrait de bloc",
+          "measure": "(box('.vl-hst__row').right - box('.vl-hst__val').right) / W",
+          "min": 0.025,
+          "max": 0.08
+        },
+        {
+          "name": "le filet traverse TOUT le module, sur toute sa largeur",
+          "measure": "box('.vl-hst__row').w / W",
+          "expect": 1,
+          "tol": 0.002
+        },
+        {
+          "name": "filet en CHEVEU : sous 0,4 % de la largeur du module, et jamais nul",
+          "measure": "num('.vl-hst__row', 'borderTopWidth') / W",
+          "min": 0.0008,
+          "max": 0.004
+        },
+        {
+          "name": "chaque ligne porte son propre filet, la PREMIÈRE comprise",
+          "measure": "[...document.querySelectorAll('.vl-hst__row')].filter((e) => parseFloat(getComputedStyle(e).borderTopWidth) > 0).length / document.querySelectorAll('.vl-hst__row').length",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "AUCUN filet de fermeture en bas — sinon le module redevient un cadre",
+          "measure": "[...document.querySelectorAll('.vl-hst__row')].reduce((a, e) => a + parseFloat(getComputedStyle(e).borderBottomWidth), 0)",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "aucune bordure VERTICALE : les colonnes ne sont pas dessinées, elles sont ferrées",
+          "measure": "[...document.querySelectorAll('.vl-hst__row')].reduce((a, e) => { const s = getComputedStyle(e); return a + parseFloat(s.borderLeftWidth) + parseFloat(s.borderRightWidth); }, 0)",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "aucune SURFACE : ce module est fait de traits, il ne pose pas de fond",
+          "measure": "cs('.vl-hst', 'backgroundColor') === 'rgba(0, 0, 0, 0)' && cs('.vl-hst__row', 'backgroundColor') === 'rgba(0, 0, 0, 0)' ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "respiration ASYMÉTRIQUE : le couple est accroché au filet qui l'ouvre",
+          "measure": "num('.vl-hst__row', 'paddingBottom') / num('.vl-hst__row', 'paddingTop')",
+          "min": 1.2,
+          "max": 2.2
+        },
+        {
+          "name": "la valeur reste une COLONNE étroite, pas un paragraphe pleine largeur",
+          "measure": "box('.vl-hst__val').w / W",
+          "min": 0.14,
+          "max": 0.28
+        },
+        {
+          "name": "la valeur est ferrée à DROITE : ce sont les fins de ligne qui s'alignent",
+          "measure": "cs('.vl-hst__val', 'textAlign') === 'right' ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "le vide entre le libellé et sa valeur est le vrai séparateur du couple",
+          "measure": "(box('.vl-hst__val').left - box('.vl-hst__lab').right) / W",
+          "min": 0.25
+        },
+        {
+          "name": "la valeur COURT sur plusieurs lignes — une énumération, pas une étiquette",
+          "measure": "box('.vl-hst__val').h / num('.vl-hst__val', 'fontSize')",
+          "min": 2.5
+        },
+        {
+          "name": "libellé et valeur PENDENT du filet : leurs premières lignes s'alignent",
+          "measure": "Math.abs(box('.vl-hst__lab').top - box('.vl-hst__val').top) / num('.vl-hst__lab', 'fontSize')",
+          "max": 0.2
+        },
+        {
+          "name": "libellé et valeur partagent le MÊME corps : aucune hiérarchie de taille",
+          "measure": "num('.vl-hst__lab', 'fontSize') / num('.vl-hst__val', 'fontSize')",
+          "expect": 1,
+          "tol": 0.001
+        },
+        {
+          "name": "le libellé tient le plancher de contraste du texte courant",
+          "measure": "contrast('.vl-hst__lab')",
+          "min": 4.5
+        },
+        {
+          "name": "la valeur aussi — c'est le même rouge, il doit passer aux deux endroits",
+          "measure": "contrast('.vl-hst__val')",
+          "min": 4.5
+        },
+        {
+          "name": "rien ne déborde en hauteur : chaque ligne contient son texte",
+          "measure": "overflow('.vl-hst')",
+          "expect": 0,
+          "tol": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/list-07-hairline-spec-table.html"
+    },
+    {
       "id": "shape-notched-corner",
       "name": "Carte à coin chanfreiné",
       "family": "shape",
@@ -6429,6 +6622,7 @@
       "name": "Planche de campagne — condensée rouge",
       "patterns": [
         "layout-10-bleed-column-inset",
+        "list-07-hairline-spec-table",
         "title-02-condensed-overlay-stack"
       ],
       "deck": "decks/ref-10-campaign-board-red.html",

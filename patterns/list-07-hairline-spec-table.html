@@ -1,0 +1,74 @@
+<!-- list-07-hairline-spec-table — fragment autonome. Couleurs via --vl-* uniquement, aucune valeur en dur. -->
+<dl class="vl-hst">
+
+  <div class="vl-hst__row">
+    <dt class="vl-hst__lab">Content:</dt>
+    <dd class="vl-hst__val">Social media posts, video ads, creator collaborations, email
+      campaigns, print collateral</dd>
+  </div>
+
+  <div class="vl-hst__row">
+    <dt class="vl-hst__lab">Formats:</dt>
+    <dd class="vl-hst__val">Short-form videos, high-resolution photos, user-generated content,
+      carousel posts</dd>
+  </div>
+
+  <div class="vl-hst__row">
+    <dt class="vl-hst__lab">Cadence:</dt>
+    <dd class="vl-hst__val">Four drops a month, one hero film each quarter</dd>
+  </div>
+
+</dl>
+
+<style>
+/* Le tableau de livrables d'une slide de campagne : des couples libellé / valeur séparés par
+   des filets qui DÉBORDENT la marge de texte, des deux côtés. C'est le seul geste du module.
+   Il tient à une seule mécanique : le retrait est porté par le PADDING de la ligne, jamais par
+   ses cellules — le filet est une bordure, donc il court sur toute la boîte pendant que le
+   texte, lui, rentre. Posez le retrait sur les cellules et les filets se rétractent avec elles :
+   l'ensemble redevient un bloc encadré posé sur la page, au lieu d'une règle de mise en page
+   que la page traverse. Aucune surface, aucune bordure verticale, aucun fond. */
+.vl-hst {
+  position: relative;
+  width: 1120px;
+  margin: 0;
+  color: var(--vl-red);
+  font-family: Archivo, Inter, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Le filet appartient à la ligne qu'il OUVRE (border-top), et la dernière n'en reçoit aucun
+   en bas : un filet de fermeture referait un cadre, ce que ce module refuse.
+   Respiration ASYMÉTRIQUE — moins au-dessus qu'en dessous — pour que chaque couple se lise
+   accroché à SON filet et non flottant entre deux. Égalisez-les, l'appartenance se perd. */
+.vl-hst__row {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  /* Les deux cellules PENDENT du filet, elles ne se centrent pas dans la ligne : centré, un
+     libellé d'une ligne flotte au milieu d'une valeur qui en fait trois, et le couple cesse
+     de se lire comme appartenant au trait qui l'ouvre. Rien ne casse quand on se trompe. */
+  align-items: start;
+  border-top: var(--vl-hst-rule, 2.5px) solid var(--vl-red);
+  padding: 14px var(--vl-hst-tail, 4.29%) 20px var(--vl-hst-inset, 12.23%);
+}
+
+.vl-hst__lab { margin: 0; }
+
+/* La valeur se cale à DROITE de sa colonne large et y reste étroite : une colonne de mesure,
+   pas un paragraphe qui remplirait la largeur disponible. */
+.vl-hst__val {
+  margin: 0 0 0 auto;
+  max-width: var(--vl-hst-val-w, 270px);
+  text-align: right;
+}
+
+.vl-hst__lab,
+.vl-hst__val {
+  font-size: var(--vl-hst-size, 13px);
+  line-height: 1.45;
+  font-weight: 700;
+  font-variation-settings: 'wght' 700, 'wdth' 100;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+</style>

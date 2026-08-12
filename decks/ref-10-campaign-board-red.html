@@ -160,7 +160,9 @@ body {
    les fait lire comme une règle de mise en page et non comme une bordure de bloc. */
 .table { position: absolute; left: 0; top: 45%; width: 70%; }
 .row {
-  display: grid; grid-template-columns: 40% 60%; align-items: center;
+  /* Les cellules PENDENT du filet : centré, le libellé d'une ligne flotte au milieu d'une
+     valeur qui en fait trois et ne se lit plus comme accroché au trait qui l'ouvre. */
+  display: grid; grid-template-columns: 40% 60%; align-items: start;
   border-top: var(--vl-rule) solid var(--vl-red);
   padding: 14px 0 20px;
 }

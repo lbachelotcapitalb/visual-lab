@@ -116,7 +116,7 @@ CHECKPOINT_STEP: S3
       section entre parenthèses au même fer, micro-caps au coin opposé). Absorbe les
       `type-condensed-stack`, `mark-paren-number` et `type-micro-caps-block` de la spec, qui
       seuls ne portent pas de composition.
-- [ ] S3.4 — `list-07-…` : le tableau label/valeur à filets qui DÉBORDENT la marge de texte.
+- [x] S3.4 — `list-07-…` : le tableau label/valeur à filets qui DÉBORDENT la marge de texte.
 - [ ] S3.5 — Spec + ROADMAP + README à jour, gate, rendu regardé, commit final.
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à

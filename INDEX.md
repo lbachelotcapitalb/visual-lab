@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-43 patterns · 15 références · 36 vérifiés par benchmarks mesurés.
+44 patterns · 15 références · 37 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -63,6 +63,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `list-04-due-rows` | Rendre une liste d'échéances balayable sans un seul filet : quatre zones tenues par une grille commune, une seule ligne surlignée, une seule pilule d'imminence, et le montant en unique colonne alignée à droite. | slide web | 12 | ref-13-glass-fintech-dashboard |
 | `list-05-vitals-strip` | Aligner cinq mesures hétérogènes sur une seule ligne SANS aucun séparateur : chacune est un couple micro-libellé / valeur, l'unité étant un cran plus petite ET plus claire que le nombre qu'elle suit. C'est ce double affaiblissement de l'unité — taille et encre — qui permet de lire cinq valeurs d'affilée sans filet, sans carte et sans que l'œil confonde un nombre avec l'unité de son voisin. | web slide | 14 | ref-19-acid-clinical-timeline |
 | `list-06-email-digest` | Aligner les trois à six entrées d'une lettre d'information dans un mail, chacune tenant en rubrique, titre, chapô et lien, sans qu'aucune ne se lise comme un encadré : la colonne du numéro est une CELLULE de largeur fixe et la séparation un filet posé en haut de chaque entrée — retiré sur la première, pour que le filet sépare au lieu d'encadrer. | email | 16 | ref-04-swiss-investor-blue |
+| `list-07-hairline-spec-table` | Poser les caractéristiques d'un lot — livrables, formats, cadence — en couples libellé / valeur séparés par des filets d'un pixel et demi qui DÉBORDENT la marge de texte des deux côtés. Le filet n'est pas la bordure d'un bloc, c'est une règle de la page que le module traverse : il part avant le libellé et finit après la valeur, et c'est ce seul décalage qui distingue une table de spécifications d'un encadré. | slide web print | 18 | ref-10-campaign-board-red |
 | `shape-notched-corner` | Donner à un aplat coloré une signature de forme reconnaissable — UN coin coupé à 45° — sans rien ajouter au contenu ni recourir à un rayon, une ombre ou un liseré. | slide web | 3 | ref-06-orange-notched |
 | `tag-01-gooey-capsule` | Faire d'un mot-clé un OBJET : un contour continu qui soude un cercle de glyphe à une pilule de texte par deux congés concaves, pour qu'un terme isolé pèse autant qu'un titre sans être plus gros. | slide social web | 13 | ref-12-neon-capsule-tags |
 | `tag-02-centered-cloud` | Poser une dizaine de mots-clés de même rang au bas d'un module sans en faire une liste : chaque RANGÉE est centrée sur elle-même, si bien que les lignes de largeur inégale dessinent une silhouette de nuage — c'est le centrage par rangée, et pas le centrage du bloc, qui produit l'effet. | web slide | 13 | ref-17-mono-bento-legal |
@@ -381,6 +382,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-white, --vl-black, --vl-blue, --vl-ink-muted
 - tags : email, mailing, newsletter, digest, sommaire, entrees, articles, numerote, filet, separateur, chapo, lien, outlook, table
 
+**list-07-hairline-spec-table** — Tableau libellé/valeur à filets débordants
+
+- employer : Slide ou page de livrables, de portée, de mentions techniques : deux à cinq couples dont le libellé est un mot et la valeur une énumération. Il complète title-02-condensed-overlay-stack sur la même scène, sous le titre, et n'a besoin d'aucune surface pour tenir.
+- éviter : Les valeurs sont des NOMBRES à comparer entre eux, ou il y a plus de deux colonnes : ce module cale sa valeur à droite d'une colonne étroite, ce qui aligne les fins de ligne et non les ordres de grandeur — pour des chiffres, prendre list-04-due-rows. Écarter aussi quand le module ne peut pas déborder la marge de texte de la page (carte, encadré, cellule) : rentré dans un conteneur, le débord disparaît et il ne reste qu'un tableau à filets ordinaire.
+- à remplir : rows
+- variables : --vl-red, --vl-hst-rule, --vl-hst-inset, --vl-hst-tail, --vl-hst-val-w, --vl-hst-size
+- tags : tableau, filets, hairline, libellé, valeur, spécifications, livrables, débord, capitales, micro-caps, campagne
+
 ### shape
 
 **shape-notched-corner** — Carte à coin chanfreiné
@@ -445,7 +454,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |
 | `ref-06-orange-notched` | Corporate orange chanfreiné | `card-02-notched-brief`, `card-03-stat-accent`, `list-02-ruled-index`, `shape-notched-corner`, `title-01-leading-rule` | `decks/ref-06-orange-notched.html` |
 | `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | — | `decks/ref-08-swiss-studio-hero.html` |
-| `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | `layout-10-bleed-column-inset`, `title-02-condensed-overlay-stack` | `decks/ref-10-campaign-board-red.html` |
+| `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | `layout-10-bleed-column-inset`, `list-07-hairline-spec-table`, `title-02-condensed-overlay-stack` | `decks/ref-10-campaign-board-red.html` |
 | `ref-11-finance-dashboard-mint` | Dashboard bento clair — menthe & lilas | `card-04-stat-barchart`, `card-05-balance-gauge`, `card-06-forecast-timeline`, `card-07-transactions` | `decks/ref-11-finance-dashboard-mint.html` |
 | `ref-12-neon-capsule-tags` | Néon vert — étiquettes capsules sur fond sombre | `tag-01-gooey-capsule` | `decks/ref-12-neon-capsule-tags.html` |
 | `ref-13-glass-fintech-dashboard` | Dashboard en verre dépoli — lavande & bleu | `card-08-orb-chain-total`, `card-09-gradient-metric-curve`, `chart-03-accent-column-callout`, `layout-03-glass-board`, `list-04-due-rows` | `decks/ref-13-glass-fintech-dashboard.html` |
