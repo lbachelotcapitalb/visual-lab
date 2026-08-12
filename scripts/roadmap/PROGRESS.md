@@ -172,8 +172,29 @@ CHECKPOINT_STEP: S7
       cartes de la slide 4. Corrigé au passage dans la spec : sa ligne du plan annonçait une
       carte de total NOIRE dans une slide dont l'accent était « le total » — contradiction dans
       la même ligne du tableau.
-- [ ] **S7.4 — `title-…-hyphen-break` + le marqueur astérisque** : la césure volontaire dans un
-      titre display, et le glyphe de marque avec sa règle d'emploi. Benchmarks en ratios.
+- [x] **S7.4a — les DEUX patterns, verts et contre-éprouvés.** `title-05-hyphen-break` (13
+      benchmarks) et `shape-04-asterisk-mark` (15). **Fait** : le titre n'est pas une césure mais
+      une SOUDURE de locution — le trait remplace l'espace de deux mots entiers, et la loi de
+      forme n'est pas l'égalité des lignes (`Thank-` / `you` la dément) mais que le trait d'union
+      soit l'ENCRE LA PLUS À DROITE du bloc. L'astérisque se mesure sur la forme PEINTE : 720
+      sondages comptent six arcs, puis l'axe de chaque branche est relevé au barycentre des
+      points peints en travers d'elle. Le premier jet — six sondages à 0,7 R — restait vert sur
+      une branche décalée de 10° ; contre-épreuves rejouées après correction (branche à 40°,
+      branche retirée) : rouges. `--vl-ink` n'existe pas dans ce système, c'est `--vl-black`.
+- [ ] **S7.4b — LA CORRECTION QUI EN SORT, à porter dans le deck, le système et la spec.**
+      Mesuré pendant S7.4a : `#EAFF00` sur `#EFEFED` vaut **1,03:1**. Or la slide 6 pose
+      l'astérisque en JAUNE en fin de titre, sur le fond clair — invisible en gris, à l'export
+      PDF, et vibrant à l'écran. Le système l'écrivait déjà à sa manière (« le jaune ne colore
+      jamais du texte ») et rien ne le vérifiait. Règle exacte : **le jaune ne descend jamais
+      sur le fond clair — il y est en aplat, ou en encre SUR NOIR.** Trois gestes :
+      (1) `decks/…` slide 6 : l'astérisque en ligne passe à `var(--vl-black)` ; et les deux
+      `.ast` des carrés se dimensionnent par CSS à `54%` du carré (loi du pattern) au lieu de
+      `width=72` / `width=160` en attribut ;
+      (2) `systems/ref-05….json` : reformuler la phrase sur le jaune (aplat OU encre sur noir),
+      elle est fausse telle quelle puisque l'astérisque du carré EST une encre ;
+      (3) `SPEC-SOURCES.md` : même reformulation dans « Éléments signature », et la ligne 6 du
+      plan des 8 slides annonce un accent qui n'existe plus — cette slide n'en porte pas, ce que
+      la charte autorise. Corriger comme S7.3 a corrigé la ligne 7.
 - [ ] **S7.5 — `card-…-numbered-steps` + `layout-…-header-tripartite`** : la rangée 01→04 dont
       une seule carte est accentuée, et le header 3 zones réutilisable hors charte.
 - [ ] **S7.6 — les rendus REGARDÉS** (deck + patterns), corrections, `proofs/` supprimé.

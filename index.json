@@ -20,9 +20,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 53,
-    "refs": 17,
-    "checkable": 46
+    "patterns": 55,
+    "refs": 18,
+    "checkable": 48
   },
   "patterns": [
     {
@@ -6775,6 +6775,177 @@
       "html": "patterns/shape-03-stadium-track.html"
     },
     {
+      "id": "shape-04-asterisk-mark",
+      "name": "Astérisque de marque, six branches",
+      "family": "shape",
+      "ref": "ref-05-proposal-acid-yellow",
+      "media": [
+        "slide",
+        "web"
+      ],
+      "intent": "Poser l'accent d'une charte « neutre + une couleur » au point de fixation, pour presque rien : un astérisque à six branches — trois traits croisés à 60° — dont l'encre couvre un demi pour cent de la slide là où le plafond d'accent est de 12 %. Un seul dessin, trois emplois (seul dans un carré noir, en fin de titre, en fin de phrase), et une encre qui change avec le sol : jaune sur le noir, encre sur le fond clair.",
+      "when_to_use": "Une charte qui n'a qu'un accent et refuse qu'il tapisse : le marqueur lui donne un point d'entrée sans dépenser de surface, donc il peut réapparaître de slide en slide sans que la règle tombe. Sert aussi de signature de marque partout où un logotype serait de trop — couverture, clôture, fin de titre, fin de phrase — et de glyphe de puce dans une liste courte.",
+      "avoid_when": "Le marqueur doit porter une INFORMATION (renvoi de note, obligation d'un champ) : il n'a pas de cible, il est déclaré décoratif, et deux astérisques dans une même page cesseraient de se distinguer. Écarter aussi quand la charte a déjà un accent qui occupe de la surface sur la même slide — le marqueur serait le deuxième objet accentué, ce que la règle interdit — et sur un sol dont la luminance approche celle de l'accent : la contre-épreuve du fragment mesure ce cas à 1,03:1.",
+      "tags": [
+        "asterisque",
+        "marqueur",
+        "marque",
+        "accent",
+        "glyphe",
+        "svg",
+        "symbol",
+        "signature",
+        "fluo",
+        "contraste"
+      ],
+      "vars": [
+        {
+          "name": "--vl-acid",
+          "role": "la couleur d'accent — elle ne se pose que sur le carré noir, jamais sur le fond clair de la charte",
+          "default": "#EAFF00"
+        },
+        {
+          "name": "--vl-black",
+          "role": "le carré qui porte le marqueur, et l'encre du marqueur quand il est posé sur le fond clair",
+          "default": "#111111"
+        },
+        {
+          "name": "--vl-ink-muted",
+          "role": "encre du corps de texte qui reçoit l'emploi en fin de phrase",
+          "default": "#6C6C6C"
+        },
+        {
+          "name": "--vl-am-radius",
+          "role": "rayon du carré, en LONGUEUR : c'est une constante de charte, pas une fraction de la boîte — deux carrés de tailles différentes portent le même",
+          "default": "19px"
+        },
+        {
+          "name": "--vl-am-fill",
+          "role": "part du côté du carré occupée par le marqueur, la même à toute taille",
+          "default": "0.54"
+        },
+        {
+          "name": "--vl-am-stroke",
+          "role": "épaisseur du trait dans le repère du symbole (72) — 1/8 de la boîte du marqueur",
+          "default": "9"
+        }
+      ],
+      "slots": [
+        "title",
+        "body"
+      ],
+      "geometry": {
+        "root": ".vl-am",
+        "frame": [
+          620,
+          491
+        ],
+        "ratios": {
+          "mark_over_box": 0.54,
+          "stroke_over_mark": 0.125,
+          "branch_span": 6,
+          "inline_over_font": 0.6
+        },
+        "type_px": {
+          "title": 67,
+          "body": 19
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "SIX BRANCHES, COMPTÉES SUR UN TOUR COMPLET de la forme PEINTE — 720 sondages à 0,85 du rayon, six arcs peints et pas un de plus",
+          "measure": "(() => { const H = (m, x, y) => { const t = document.elementFromPoint(x, y); return !!t && t !== m && m.contains(t); }; const ring = (m, k) => { const b = m.getBoundingClientRect(); const R = b.width * 32 / 72; const cx = b.left + b.width / 2, cy = b.top + b.height / 2; const out = []; for (let d = 0; d < 360; d += 0.5) { const a = d * Math.PI / 180; out.push(H(m, cx + Math.cos(a) * R * k, cy + Math.sin(a) * R * k)); } return out; }; const r = ring(document.querySelector('.vl-am__box--lg .vl-am__mark'), 0.85); let n = 0; for (let i = 0; i < r.length; i++) if (r[i] && !r[(i + r.length - 1) % r.length]) n++; return n; })()",
+          "expect": 6,
+          "tol": 0
+        },
+        {
+          "name": "et elles tombent À 60° L'UNE DE L'AUTRE : l'axe de chaque branche est relevé au barycentre des points peints en travers d'elle, l'écart à sa direction nominale reste sous 1,5°",
+          "measure": "(() => { const H = (m, x, y) => { const t = document.elementFromPoint(x, y); return !!t && t !== m && m.contains(t); }; const dev = (m, deg) => { const b = m.getBoundingClientRect(); const R = b.width * 32 / 72; const cx = b.left + b.width / 2, cy = b.top + b.height / 2; const a = deg * Math.PI / 180; const ux = Math.cos(a), uy = Math.sin(a), px = -uy, py = ux, r = 0.85 * R; const bx = cx + ux * r, by = cy + uy * r; let s = 0, n = 0; for (let t = -0.3 * R; t <= 0.3 * R; t += 0.5) { if (H(m, bx + px * t, by + py * t)) { s += t; n++; } } return n ? Math.abs(Math.atan((s / n) / r) * 180 / Math.PI) : 90; }; const m = document.querySelector('.vl-am__box--lg .vl-am__mark'); return Math.max(...[30, 90, 150, 210, 270, 330].map((a) => dev(m, a))); })()",
+          "max": 1.5
+        },
+        {
+          "name": "et les SIX BRANCHES ONT LA MÊME LONGUEUR : le tracé est encore là à 0,90 du rayon, il n'y est plus à 1,10 — sur les six",
+          "measure": "(() => { const P = (el, deg, k) => { const b = el.getBoundingClientRect(); const R = b.width * 32 / 72; const a = deg * Math.PI / 180; const t = document.elementFromPoint(b.left + b.width / 2 + Math.cos(a) * R * k, b.top + b.height / 2 + Math.sin(a) * R * k); return !!t && t !== el && el.contains(t); }; const m = document.querySelector('.vl-am__box--lg .vl-am__mark'); return [30, 90, 150, 210, 270, 330].every((a) => P(m, a, 0.9) && !P(m, a, 1.1)) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "UN SEUL DESSIN POUR TOUS LES EMPLOIS — un `symbol`, et tous les `use` le visent : deux emplois ne peuvent pas diverger d'un degré",
+          "measure": "(() => { const r = document.querySelector('.vl-am'); const sy = r.querySelectorAll('symbol'); const us = [...r.querySelectorAll('use')]; const h = new Set(us.map((u) => u.getAttribute('href') || u.getAttribute('xlink:href'))); return (sy.length === 1 && us.length >= 3 && h.size === 1 && h.has('#' + sy[0].id)) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "LE MARQUEUR PREND L'ENCRE DE SON SOL : chacun des trois emplois tient 3:1 contre son fond effectif — la forme est son identité, pas la couleur",
+          "measure": "(() => { const ms = [...document.querySelectorAll('.vl-am__mark')]; return Math.min(...ms.map((m) => { const a = lum(parseRgb(getComputedStyle(m).stroke)), b = lum(bgOf(m)); const [hi, lo] = a > b ? [a, b] : [b, a]; return (hi + 0.05) / (lo + 0.05); })); })()",
+          "min": 3
+        },
+        {
+          "name": "CONTRE-ÉPREUVE — le même jaune posé sur le fond clair de la charte : 1,03:1. La règle « le jaune ne descend jamais sur le fond clair » n'est pas une préférence de goût",
+          "measure": "(() => { const acid = getComputedStyle(document.querySelector('.vl-am__mark--on-dark')).stroke; const sol = bgOf(document.querySelector('.vl-am__mark--inline')); const a = lum(parseRgb(acid)), b = lum(sol); const [hi, lo] = a > b ? [a, b] : [b, a]; return (hi + 0.05) / (lo + 0.05); })()",
+          "max": 1.1
+        },
+        {
+          "name": "le marqueur est CENTRÉ dans son carré — décalé, il cesse d'être une estampille et devient un objet posé",
+          "measure": "(() => { const bx = [...document.querySelectorAll('.vl-am__box')]; return Math.max(...bx.map((b) => { const B = b.getBoundingClientRect(), M = b.querySelector('.vl-am__mark').getBoundingClientRect(); return Math.max(Math.abs((B.left + B.right) / 2 - (M.left + M.right) / 2), Math.abs((B.top + B.bottom) / 2 - (M.top + M.bottom) / 2)) / B.width; })); })()",
+          "max": 0.005
+        },
+        {
+          "name": "et il occupe LA MÊME FRACTION du carré aux deux tailles : 0,54 — une estampille qui grandirait autrement que son support cesserait d'être la même",
+          "measure": "(() => { const bx = [...document.querySelectorAll('.vl-am__box')]; const f = bx.map((b) => b.querySelector('.vl-am__mark').getBoundingClientRect().width / b.getBoundingClientRect().width); return Math.max(...f) - Math.min(...f); })()",
+          "max": 0.005
+        },
+        {
+          "name": "…à 0,54 du côté, la valeur de la charte",
+          "measure": "(() => { const b = document.querySelector('.vl-am__box--lg'); return b.querySelector('.vl-am__mark').getBoundingClientRect().width / b.getBoundingClientRect().width; })()",
+          "expect": 0.54,
+          "tol": 0.01
+        },
+        {
+          "name": "LE RAYON DU CARRÉ EST UNE CONSTANTE DE CHARTE, PAS UNE FRACTION : deux carrés dont les côtés sont dans un rapport > 2 portent le MÊME rayon absolu",
+          "measure": "(() => { const l = document.querySelector('.vl-am__box--lg'), s = document.querySelector('.vl-am__box--sm'); const rl = parseFloat(getComputedStyle(l).borderTopLeftRadius), rs = parseFloat(getComputedStyle(s).borderTopLeftRadius); const cl = l.getBoundingClientRect().width, cs = s.getBoundingClientRect().width; return (Math.abs(rl - rs) <= 0.5 && cl / cs > 2) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "L'ASTÉRISQUE LAISSE PASSER LES DEUX TIERS DE SA BOÎTE — couverture peinte relevée au sondage : c'est un marqueur de traits ouverts, pas une pastille",
+          "measure": "(() => { const m = document.querySelector('.vl-am__box--lg .vl-am__mark'); const b = m.getBoundingClientRect(); const N = 81; let hit = 0; for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) { const x = b.left + (i + 0.5) * b.width / N, y = b.top + (j + 0.5) * b.height / N; const t = document.elementFromPoint(x, y); if (t && t !== m && m.contains(t)) hit++; } return hit / (N * N); })()",
+          "min": 0.25,
+          "max": 0.35
+        },
+        {
+          "name": "ET IL NE DÉPENSE PRESQUE RIEN DU BUDGET D'ACCENT : à son plus grand emploi, l'encre jaune couvre moins de 1 % d'une slide 1600×900, pour un plafond de charte de 12 %",
+          "measure": "(() => { const m = document.querySelector('.vl-am__box--lg .vl-am__mark'); const b = m.getBoundingClientRect(); const N = 81; let hit = 0; for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) { const x = b.left + (i + 0.5) * b.width / N, y = b.top + (j + 0.5) * b.height / N; const t = document.elementFromPoint(x, y); if (t && t !== m && m.contains(t)) hit++; } return (hit / (N * N)) * b.width * b.height / (1600 * 900); })()",
+          "max": 0.01
+        },
+        {
+          "name": "EN LIGNE, LE MARQUEUR RESTE SOUS LA HAUTEUR DE CAPITALE de ce qu'il signe — au-dessus il devient le dernier mot de la phrase",
+          "measure": "(() => { const ms = [...document.querySelectorAll('.vl-am__mark--inline')]; return Math.max(...ms.map((m) => { const p = m.parentElement, s = getComputedStyle(p); const c = document.createElement('canvas').getContext('2d'); c.font = s.fontWeight + ' ' + s.fontSize + ' ' + s.fontFamily; return m.getBoundingClientRect().height / c.measureText('H').actualBoundingBoxAscent; })); })()",
+          "min": 0.6,
+          "max": 1
+        },
+        {
+          "name": "le marqueur est DÉCORATIF et le déclare : il signe, il ne renvoie à rien — un astérisque annoncé aux lecteurs d'écran promettrait une note qui n'existe pas",
+          "measure": "(() => { const ms = [...document.querySelectorAll('.vl-am svg')]; return ms.every((m) => m.getAttribute('aria-hidden') === 'true') ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "racine TRANSPARENTE et sans marge : le marqueur se pose dans une composition qui porte déjà son fond",
+          "measure": "(() => { const s = getComputedStyle(document.querySelector('.vl-am')); const p = ['paddingTop','paddingRight','paddingBottom','paddingLeft'].map((k) => parseFloat(s[k])); return (s.backgroundColor === 'rgba(0, 0, 0, 0)' && Math.max(...p) === 0) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/shape-04-asterisk-mark.html"
+    },
+    {
       "id": "shape-notched-corner",
       "name": "Carte à coin chanfreiné",
       "family": "shape",
@@ -7924,6 +8095,159 @@
       ],
       "pptx": null,
       "html": "patterns/title-04-name-fills-measure.html"
+    },
+    {
+      "id": "title-05-hyphen-break",
+      "name": "Titre display soudé par un trait d'union",
+      "family": "title",
+      "ref": "ref-05-proposal-acid-yellow",
+      "media": [
+        "slide",
+        "web"
+      ],
+      "intent": "Souder une locution de deux mots en un composé unique de deux lignes, en remplaçant son ESPACE par un trait d'union frappé : « Business Proposal » devient `Business-` / `Proposal`. Le retour n'est pas calculé par la mesure, il est écrit — donc il ne bouge jamais — et le trait d'union, posé en encre la plus à droite du bloc, termine la silhouette au lieu de signaler une coupure oubliée.",
+      "when_to_use": "Une couverture, une slide de clôture, un hero : partout où un display de deux mots doit faire MASSE plutôt que ligne, sur une charte qui n'a pas d'accent coloré à dépenser sur son titre. Le trait d'union est alors le seul signe graphique du bloc, et il coûte zéro couleur. Sert aussi à ancrer un titre au fer à gauche d'une colonne dont le bas porte autre chose : les deux lignes serrées font un bloc franc, pas un texte qui coule.",
+      "avoid_when": "La locution ne tient pas en deux mots, ou le second mot est plus long que le premier plus son trait : le trait d'union retombe alors À L'INTÉRIEUR de la silhouette et se lit comme une césure ratée — c'est la seule contrainte dure du pattern. Écarter aussi en capitales (le trait se centre sur une hauteur d'x absente et devient un tiret de séparation), et pour un nom de marque d'un seul mot qu'on veut régler à la largeur — c'est title-04-name-fills-measure.",
+      "tags": [
+        "titre",
+        "display",
+        "trait-union",
+        "cesure",
+        "couverture",
+        "cloture",
+        "locution",
+        "interligne-ecrase",
+        "fer-a-gauche",
+        "grotesk"
+      ],
+      "vars": [
+        {
+          "name": "--vl-black",
+          "role": "encre du titre — une seule valeur pour tout le bloc, trait d'union compris : c'est ce qui le fait lire comme un signe typographique et non comme un ornement",
+          "default": "#111111"
+        },
+        {
+          "name": "--vl-hb-size",
+          "role": "corps du display, pris dans l'échelle de la charte (109 px sur une slide 1600×900)",
+          "default": "109px"
+        },
+        {
+          "name": "--vl-hb-leading",
+          "role": "interligne, écrasé sous 1 — un composé soudé par un trait ne peut pas être écarté par de l'air",
+          "default": "0.98"
+        },
+        {
+          "name": "--vl-hb-tracking",
+          "role": "approche négative du display",
+          "default": "-0.03em"
+        },
+        {
+          "name": "--vl-hb-gap",
+          "role": "écart entre les deux spécimens de la démonstration — sans effet sur la règle",
+          "default": "72px"
+        }
+      ],
+      "slots": [
+        "title"
+      ],
+      "geometry": {
+        "root": ".vl-hb",
+        "frame": [
+          905,
+          214
+        ],
+        "ratios": {
+          "leading": 0.98,
+          "tracking": -0.03,
+          "block_height_in_lines": 2
+        },
+        "type_px": {
+          "display": 109
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "DEUX lignes, exactement — le composé est un bloc, pas un paragraphe qui coule",
+          "measure": "(() => { const lines = (el) => { const r = document.createRange(); r.selectNodeContents(el); const rs = [...r.getClientRects()].filter((x) => x.width > 0.5 && x.height > 0.5); const m = new Map(); rs.forEach((x) => { const k = Math.round(x.top); const q = m.get(k); m.set(k, q ? { top: k, left: Math.min(q.left, x.left), right: Math.max(q.right, x.right) } : { top: k, left: x.left, right: x.right }); }); return [...m.values()].sort((a, b) => a.top - b.top); }; const t = [...document.querySelectorAll('.vl-hb__t')]; return t.every((e) => lines(e).length === 2) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "LE RETOUR EST FRAPPÉ, PAS CALCULÉ : le même titre sans son <br>, à mesure libre, tient sur UNE ligne — les deux lignes ne doivent donc rien à la largeur",
+          "measure": "(() => { const lines = (el) => { const r = document.createRange(); r.selectNodeContents(el); const rs = [...r.getClientRects()].filter((x) => x.width > 0.5 && x.height > 0.5); const m = new Map(); rs.forEach((x) => { const k = Math.round(x.top); const q = m.get(k); m.set(k, q ? { top: k, left: Math.min(q.left, x.left), right: Math.max(q.right, x.right) } : { top: k, left: x.left, right: x.right }); }); return [...m.values()].sort((a, b) => a.top - b.top); }; const t = [...document.querySelectorAll('.vl-hb__t')]; const ok = t.every((e) => { const c = e.cloneNode(true); c.querySelectorAll('br').forEach((x) => x.remove()); c.style.cssText += ';position:absolute;left:-9999px;width:max-content;'; document.body.appendChild(c); const n = lines(c).length; c.remove(); return n === 1; }); return ok ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "et ce n'est pas une CÉSURE : le trait d'union remplace l'ESPACE d'une locution de deux mots entiers, jamais une syllabe coupée",
+          "measure": "(() => { const t = [...document.querySelectorAll('.vl-hb__t')]; return t.every((e) => { const p = e.dataset.phrase || ''; const rendu = e.textContent.replace(/\\s+/g, ''); return /\\s/.test(p) && !p.includes('-') && rendu.replace(/-/g, '') === p.replace(/\\s+/g, '') && rendu.includes('-'); }) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "LE TRAIT D'UNION EST L'ENCRE LA PLUS À DROITE DU BLOC — c'est la loi qui ordonne les deux mots, et non une égalité de longueur entre les lignes",
+          "measure": "(() => { const lines = (el) => { const r = document.createRange(); r.selectNodeContents(el); const rs = [...r.getClientRects()].filter((x) => x.width > 0.5 && x.height > 0.5); const m = new Map(); rs.forEach((x) => { const k = Math.round(x.top); const q = m.get(k); m.set(k, q ? { top: k, left: Math.min(q.left, x.left), right: Math.max(q.right, x.right) } : { top: k, left: x.left, right: x.right }); }); return [...m.values()].sort((a, b) => a.top - b.top); }; const t = [...document.querySelectorAll('.vl-hb__t')]; return Math.min(...t.map((e) => { const tn = e.firstChild; const r = document.createRange(); r.setStart(tn, tn.length - 1); r.setEnd(tn, tn.length); const h = r.getBoundingClientRect().right; const l2 = lines(e)[1]; return (h - l2.right) / parseFloat(getComputedStyle(e).fontSize); })); })()",
+          "min": 0.02
+        },
+        {
+          "name": "les deux lignes partagent UN SEUL FER À GAUCHE — sans lui le trait d'union ne termine plus une silhouette, il flotte",
+          "measure": "(() => { const lines = (el) => { const r = document.createRange(); r.selectNodeContents(el); const rs = [...r.getClientRects()].filter((x) => x.width > 0.5 && x.height > 0.5); const m = new Map(); rs.forEach((x) => { const k = Math.round(x.top); const q = m.get(k); m.set(k, q ? { top: k, left: Math.min(q.left, x.left), right: Math.max(q.right, x.right) } : { top: k, left: x.left, right: x.right }); }); return [...m.values()].sort((a, b) => a.top - b.top); }; const t = [...document.querySelectorAll('.vl-hb__t')]; return Math.max(...t.map((e) => { const [a, c] = lines(e); return Math.abs(c.left - a.left) / W; })); })()",
+          "max": 0.002
+        },
+        {
+          "name": "interligne ÉCRASÉ sous 1 — les deux lignes se touchent presque, sinon la soudure ne se voit pas",
+          "measure": "num('.vl-hb__t','lineHeight') / num('.vl-hb__t','fontSize')",
+          "min": 0.9,
+          "max": 0.995
+        },
+        {
+          "name": "et la boîte du titre ne vaut QUE ses deux interlignes : aucun air ajouté au-dessus ni au-dessous",
+          "measure": "box('.vl-hb__t').h / (num('.vl-hb__t','fontSize') * (num('.vl-hb__t','lineHeight') / num('.vl-hb__t','fontSize')))",
+          "min": 1.95,
+          "max": 2.05
+        },
+        {
+          "name": "approche NÉGATIVE : elle resserre le composé, un display à approche nulle se disloque",
+          "measure": "num('.vl-hb__t','letterSpacing') / num('.vl-hb__t','fontSize')",
+          "max": -0.02
+        },
+        {
+          "name": "GRAISSE DISPLAY — sous 700 le trait d'union redevient un filet et cesse d'être un signe",
+          "measure": "(() => { const w = getComputedStyle(document.querySelector('.vl-hb__t')).fontWeight; return parseFloat(w) >= 700 ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "casse MIXTE, et par la frappe — en capitales le trait se centre sur une hauteur d'x absente",
+          "measure": "(() => { const e = document.querySelector('.vl-hb__t'); const s = getComputedStyle(e); return (s.textTransform === 'none' && /[a-z]/.test(e.textContent) && /[A-Z]/.test(e.textContent)) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "césure automatique VERROUILLÉE : le seul trait d'union du titre est celui qui est écrit",
+          "measure": "(() => { const s = getComputedStyle(document.querySelector('.vl-hb__t')); return (s.hyphens === 'manual' || s.webkitHyphens === 'manual') ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "le titre tient le plancher de contraste — c'est le plus gros objet de la slide, il n'en est pas dispensé",
+          "measure": "contrast('.vl-hb__t')",
+          "min": 4.5
+        },
+        {
+          "name": "racine TRANSPARENTE et sans marge : ce bloc se pose dans une colonne qui porte déjà son fond",
+          "measure": "(() => { const s = getComputedStyle(document.querySelector('.vl-hb')); const p = ['paddingTop','paddingRight','paddingBottom','paddingLeft'].map((k) => parseFloat(s[k])); return (s.backgroundColor === 'rgba(0, 0, 0, 0)' && Math.max(...p) === 0) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/title-05-hyphen-break.html"
     }
   ],
   "refs": [
@@ -8065,6 +8389,48 @@
           "number-giant": "88px / 1 / 900 / -0.03em",
           "body": "13px / 1.5 / 400",
           "micro": "8px / 1.4 / 500 / 0.12em / UPPERCASE"
+        }
+      }
+    },
+    {
+      "id": "ref-05-proposal-acid-yellow",
+      "name": "Proposal jaune acide",
+      "patterns": [
+        "shape-04-asterisk-mark",
+        "title-05-hyphen-break"
+      ],
+      "deck": "decks/ref-05-proposal-acid-yellow.html",
+      "tokens": {
+        "--vl-bg": "#EFEFED",
+        "--vl-board": "#DCDCD8",
+        "--vl-white": "#FFFFFF",
+        "--vl-black": "#111111",
+        "--vl-acid": "#EAFF00",
+        "--vl-ink-muted": "#6C6C6C",
+        "--vl-ink-muted-invert": "#9A9A9A",
+        "--vl-hairline": "#11111118",
+        "--vl-hairline-invert": "#FFFFFF24",
+        "--vl-blob-light": "#E8E8E6",
+        "--vl-blob-dark": "#171717",
+        "--vl-margin": "72px",
+        "--vl-gap": "24px",
+        "--vl-gap-block": "32px",
+        "--vl-r-media": "19px",
+        "--vl-r-list": "22px",
+        "--vl-r-band": "26px",
+        "--vl-r-step": "32px"
+      },
+      "type": {
+        "display": "\"Hanken Grotesk\", \"Helvetica Neue\", Arial, sans-serif",
+        "body": "\"Hanken Grotesk\", \"Helvetica Neue\", Arial, sans-serif",
+        "scale": {
+          "display": "109px / 0.98 / 800 / -0.03em (couverture et clôture, casse mixte, césure écrite)",
+          "title": "67px / 1.02 / 800 / -0.03em (titre de section)",
+          "stat": "90px / 1 / 800 / -0.03em (chiffre de carte numérotée)",
+          "body": "19px / 1.55 / 400",
+          "label": "19px / 1.3 / 700 (label sous un chiffre)",
+          "label-sm": "16px / 1.2 / 700 (le (01) d'une carte de liste)",
+          "micro": "13px / 1.4 / 700 / 0.12em / UPPERCASE"
         }
       }
     },

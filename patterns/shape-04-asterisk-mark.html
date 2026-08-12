@@ -1,0 +1,116 @@
+<!-- shape-04-asterisk-mark — le marqueur de marque d'une charte qui n'a qu'un accent : un
+     astérisque à SIX branches, trois traits qui se croisent à 60°, et rien d'autre. Un seul
+     dessin, trois emplois — seul dans un carré noir, en fin de titre, en fin de phrase.
+
+     CE QUI EN FAIT UN PATTERN plutôt qu'un glyphe : le marqueur est le placement d'accent le
+     MOINS CHER de la charte. La règle de « neutre + un accent fluo » se mesure en surface — le
+     jaune reste sous 12 % de la slide — et un astérisque de traits ouverts dépense un demi
+     pour cent de ce budget tout en posant la couleur exactement au point de fixation. C'est
+     pour ça qu'il peut tenir la couverture ET la clôture sans que la charte bascule.
+
+     LA CORRECTION QUE CE PATTERN PORTE, et elle vaut pour toute la référence : **le jaune ne
+     descend jamais sur le fond clair.** Mesuré, `#EAFF00` sur `#EFEFED` vaut **1,03:1** — les
+     deux valeurs ont presque la même luminance, et un tracé de 5 px n'y survit pas : il ne
+     reste qu'un écart de teinte, qui vibre à l'écran et disparaît en gris. Le marqueur prend
+     donc L'ENCRE DE SON SOL : jaune sur le carré noir (17:1), encre sur le fond clair (16:1).
+     Sa forme est son identité, pas sa couleur. Le benchmark l'impose aux trois emplois.
+
+     Le dessin est défini UNE fois en `<symbol>` et posé trois fois en `<use>` : deux emplois
+     qui divergeraient d'un degré cesseraient d'être le même marqueur, et aucune relecture ne
+     le verrait. Les six branches et leur égalité de longueur se vérifient sur la forme PEINTE,
+     par sondage au point — un `<line>` mal orienté garde des attributs parfaitement lisibles.
+
+     Le rayon du carré est une CONSTANTE de charte (19 px), pas une fraction de sa boîte : les
+     deux carrés ci-dessous n'ont pas la même taille et portent le même rayon. C'est ce qui les
+     fait appartenir au même système au lieu d'être deux versions à l'échelle. -->
+<div class="vl-am">
+
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <symbol id="vl-am-glyph" viewBox="0 0 72 72">
+      <!-- Trois traits, six branches, 60° d'écart. Les demi-longueurs sont ÉGALES : 32 sur la
+           verticale, et √(27,7² + 16²) = 31,98 sur les deux diagonales. Aucun `stroke` ici —
+           la couleur vient du CSS de l'emploi, c'est ce qui permet à un même dessin de prendre
+           l'encre de son sol. -->
+      <g fill="none" stroke-linecap="butt">
+        <line x1="36" y1="4" x2="36" y2="68"/>
+        <line x1="8.3" y1="20" x2="63.7" y2="52"/>
+        <line x1="8.3" y1="52" x2="63.7" y2="20"/>
+      </g>
+    </symbol>
+  </svg>
+
+  <div class="vl-am__row">
+    <div class="vl-am__box vl-am__box--lg">
+      <svg class="vl-am__mark vl-am__mark--on-dark" viewBox="0 0 72 72" aria-hidden="true"><use href="#vl-am-glyph"/></svg>
+    </div>
+    <div class="vl-am__box vl-am__box--sm">
+      <svg class="vl-am__mark vl-am__mark--on-dark" viewBox="0 0 72 72" aria-hidden="true"><use href="#vl-am-glyph"/></svg>
+    </div>
+  </div>
+
+  <h3 class="vl-am__title">What we deliver<svg class="vl-am__mark vl-am__mark--inline" viewBox="0 0 72 72" aria-hidden="true"><use href="#vl-am-glyph"/></svg></h3>
+
+  <p class="vl-am__body">Four weeks, three checkpoints, one handover — nothing invoiced before the second<svg class="vl-am__mark vl-am__mark--inline" viewBox="0 0 72 72" aria-hidden="true"><use href="#vl-am-glyph"/></svg></p>
+
+</div>
+
+<style>
+.vl-am {
+  --vl-am-radius: 19px;      /* CONSTANTE de charte, en longueur — jamais une fraction du côté */
+  --vl-am-fill: 0.54;        /* part du carré occupée par le marqueur, la même à toute taille */
+  --vl-am-stroke: 9;         /* épaisseur dans le repère du symbole (72) : 1/8 de la boîte */
+  --vl-am-lg: 300px;
+  --vl-am-sm: 132px;
+  --vl-am-gap: 24px;
+  --vl-am-gap-block: 32px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--vl-am-gap-block);
+  width: max-content;
+  font-family: "Hanken Grotesk", Inter, "Helvetica Neue", Arial, sans-serif;
+}
+
+.vl-am__row { display: flex; align-items: flex-end; gap: var(--vl-am-gap); }
+
+.vl-am__box {
+  background: var(--vl-black);
+  border-radius: var(--vl-am-radius);
+  display: flex; align-items: center; justify-content: center;
+}
+.vl-am__box--lg { width: var(--vl-am-lg); height: var(--vl-am-lg); }
+.vl-am__box--sm { width: var(--vl-am-sm); height: var(--vl-am-sm); }
+
+/* `stroke-width` est HÉRITÉ jusque dans l'arbre du `<use>` — c'est ce qui laisse le symbole
+   sans aucune propriété de peinture, donc réutilisable sous deux encres. */
+.vl-am__mark { display: block; stroke-width: var(--vl-am-stroke); }
+
+/* Le carré donne sa taille au marqueur en POURCENTAGE : une seule règle, deux tailles, et la
+   fraction reste vérifiable. */
+.vl-am__box .vl-am__mark { width: calc(var(--vl-am-fill) * 100%); height: calc(var(--vl-am-fill) * 100%); }
+
+/* Les deux encres. Le choix n'est pas décoratif : voir le contraste mesuré en tête de fichier. */
+.vl-am__mark--on-dark { stroke: var(--vl-acid); }
+.vl-am__mark--inline  { stroke: currentColor; }
+
+/* Emploi en ligne : 0,6 em, donc SOUS la hauteur de capitale de la grotesk (≈ 0,72 em). Le
+   marqueur signe la phrase, il ne devient pas son dernier mot. */
+.vl-am__mark--inline {
+  display: inline-block;
+  width: 0.6em; height: 0.6em;
+  vertical-align: baseline;
+  margin-left: 0.24em;
+}
+
+.vl-am__title {
+  margin: 0;
+  font-size: 67px; line-height: 1.02; font-weight: 800; letter-spacing: -0.03em;
+  color: var(--vl-black);
+}
+.vl-am__body {
+  margin: 0; max-width: 620px;
+  font-size: 19px; line-height: 1.55;
+  color: var(--vl-ink-muted);
+}
+</style>

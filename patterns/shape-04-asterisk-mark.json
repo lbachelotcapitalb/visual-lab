@@ -1,0 +1,169 @@
+{
+  "name": "Astérisque de marque, six branches",
+  "family": "shape",
+  "ref": "ref-05-proposal-acid-yellow",
+  "intent": "Poser l'accent d'une charte « neutre + une couleur » au point de fixation, pour presque rien : un astérisque à six branches — trois traits croisés à 60° — dont l'encre couvre un demi pour cent de la slide là où le plafond d'accent est de 12 %. Un seul dessin, trois emplois (seul dans un carré noir, en fin de titre, en fin de phrase), et une encre qui change avec le sol : jaune sur le noir, encre sur le fond clair.",
+  "when_to_use": "Une charte qui n'a qu'un accent et refuse qu'il tapisse : le marqueur lui donne un point d'entrée sans dépenser de surface, donc il peut réapparaître de slide en slide sans que la règle tombe. Sert aussi de signature de marque partout où un logotype serait de trop — couverture, clôture, fin de titre, fin de phrase — et de glyphe de puce dans une liste courte.",
+  "avoid_when": "Le marqueur doit porter une INFORMATION (renvoi de note, obligation d'un champ) : il n'a pas de cible, il est déclaré décoratif, et deux astérisques dans une même page cesseraient de se distinguer. Écarter aussi quand la charte a déjà un accent qui occupe de la surface sur la même slide — le marqueur serait le deuxième objet accentué, ce que la règle interdit — et sur un sol dont la luminance approche celle de l'accent : la contre-épreuve du fragment mesure ce cas à 1,03:1.",
+  "media": [
+    "slide",
+    "web"
+  ],
+  "tags": [
+    "asterisque",
+    "marqueur",
+    "marque",
+    "accent",
+    "glyphe",
+    "svg",
+    "symbol",
+    "signature",
+    "fluo",
+    "contraste"
+  ],
+  "vars": [
+    {
+      "name": "--vl-acid",
+      "role": "la couleur d'accent — elle ne se pose que sur le carré noir, jamais sur le fond clair de la charte",
+      "default": "#EAFF00"
+    },
+    {
+      "name": "--vl-black",
+      "role": "le carré qui porte le marqueur, et l'encre du marqueur quand il est posé sur le fond clair",
+      "default": "#111111"
+    },
+    {
+      "name": "--vl-ink-muted",
+      "role": "encre du corps de texte qui reçoit l'emploi en fin de phrase",
+      "default": "#6C6C6C"
+    },
+    {
+      "name": "--vl-am-radius",
+      "role": "rayon du carré, en LONGUEUR : c'est une constante de charte, pas une fraction de la boîte — deux carrés de tailles différentes portent le même",
+      "default": "19px"
+    },
+    {
+      "name": "--vl-am-fill",
+      "role": "part du côté du carré occupée par le marqueur, la même à toute taille",
+      "default": "0.54"
+    },
+    {
+      "name": "--vl-am-stroke",
+      "role": "épaisseur du trait dans le repère du symbole (72) — 1/8 de la boîte du marqueur",
+      "default": "9"
+    }
+  ],
+  "slots": [
+    "title",
+    "body"
+  ],
+  "geometry": {
+    "root": ".vl-am",
+    "frame": [
+      620,
+      491
+    ],
+    "ratios": {
+      "mark_over_box": 0.54,
+      "stroke_over_mark": 0.125,
+      "branch_span": 6,
+      "inline_over_font": 0.6
+    },
+    "type_px": {
+      "title": 67,
+      "body": 19
+    },
+    "pad_ratio": {
+      "top": 0,
+      "x": 0,
+      "bottom": 0
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "SIX BRANCHES, COMPTÉES SUR UN TOUR COMPLET de la forme PEINTE — 720 sondages à 0,85 du rayon, six arcs peints et pas un de plus",
+      "measure": "(() => { const H = (m, x, y) => { const t = document.elementFromPoint(x, y); return !!t && t !== m && m.contains(t); }; const ring = (m, k) => { const b = m.getBoundingClientRect(); const R = b.width * 32 / 72; const cx = b.left + b.width / 2, cy = b.top + b.height / 2; const out = []; for (let d = 0; d < 360; d += 0.5) { const a = d * Math.PI / 180; out.push(H(m, cx + Math.cos(a) * R * k, cy + Math.sin(a) * R * k)); } return out; }; const r = ring(document.querySelector('.vl-am__box--lg .vl-am__mark'), 0.85); let n = 0; for (let i = 0; i < r.length; i++) if (r[i] && !r[(i + r.length - 1) % r.length]) n++; return n; })()",
+      "expect": 6,
+      "tol": 0
+    },
+    {
+      "name": "et elles tombent À 60° L'UNE DE L'AUTRE : l'axe de chaque branche est relevé au barycentre des points peints en travers d'elle, l'écart à sa direction nominale reste sous 1,5°",
+      "measure": "(() => { const H = (m, x, y) => { const t = document.elementFromPoint(x, y); return !!t && t !== m && m.contains(t); }; const dev = (m, deg) => { const b = m.getBoundingClientRect(); const R = b.width * 32 / 72; const cx = b.left + b.width / 2, cy = b.top + b.height / 2; const a = deg * Math.PI / 180; const ux = Math.cos(a), uy = Math.sin(a), px = -uy, py = ux, r = 0.85 * R; const bx = cx + ux * r, by = cy + uy * r; let s = 0, n = 0; for (let t = -0.3 * R; t <= 0.3 * R; t += 0.5) { if (H(m, bx + px * t, by + py * t)) { s += t; n++; } } return n ? Math.abs(Math.atan((s / n) / r) * 180 / Math.PI) : 90; }; const m = document.querySelector('.vl-am__box--lg .vl-am__mark'); return Math.max(...[30, 90, 150, 210, 270, 330].map((a) => dev(m, a))); })()",
+      "max": 1.5
+    },
+    {
+      "name": "et les SIX BRANCHES ONT LA MÊME LONGUEUR : le tracé est encore là à 0,90 du rayon, il n'y est plus à 1,10 — sur les six",
+      "measure": "(() => { const P = (el, deg, k) => { const b = el.getBoundingClientRect(); const R = b.width * 32 / 72; const a = deg * Math.PI / 180; const t = document.elementFromPoint(b.left + b.width / 2 + Math.cos(a) * R * k, b.top + b.height / 2 + Math.sin(a) * R * k); return !!t && t !== el && el.contains(t); }; const m = document.querySelector('.vl-am__box--lg .vl-am__mark'); return [30, 90, 150, 210, 270, 330].every((a) => P(m, a, 0.9) && !P(m, a, 1.1)) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "UN SEUL DESSIN POUR TOUS LES EMPLOIS — un `symbol`, et tous les `use` le visent : deux emplois ne peuvent pas diverger d'un degré",
+      "measure": "(() => { const r = document.querySelector('.vl-am'); const sy = r.querySelectorAll('symbol'); const us = [...r.querySelectorAll('use')]; const h = new Set(us.map((u) => u.getAttribute('href') || u.getAttribute('xlink:href'))); return (sy.length === 1 && us.length >= 3 && h.size === 1 && h.has('#' + sy[0].id)) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "LE MARQUEUR PREND L'ENCRE DE SON SOL : chacun des trois emplois tient 3:1 contre son fond effectif — la forme est son identité, pas la couleur",
+      "measure": "(() => { const ms = [...document.querySelectorAll('.vl-am__mark')]; return Math.min(...ms.map((m) => { const a = lum(parseRgb(getComputedStyle(m).stroke)), b = lum(bgOf(m)); const [hi, lo] = a > b ? [a, b] : [b, a]; return (hi + 0.05) / (lo + 0.05); })); })()",
+      "min": 3
+    },
+    {
+      "name": "CONTRE-ÉPREUVE — le même jaune posé sur le fond clair de la charte : 1,03:1. La règle « le jaune ne descend jamais sur le fond clair » n'est pas une préférence de goût",
+      "measure": "(() => { const acid = getComputedStyle(document.querySelector('.vl-am__mark--on-dark')).stroke; const sol = bgOf(document.querySelector('.vl-am__mark--inline')); const a = lum(parseRgb(acid)), b = lum(sol); const [hi, lo] = a > b ? [a, b] : [b, a]; return (hi + 0.05) / (lo + 0.05); })()",
+      "max": 1.1
+    },
+    {
+      "name": "le marqueur est CENTRÉ dans son carré — décalé, il cesse d'être une estampille et devient un objet posé",
+      "measure": "(() => { const bx = [...document.querySelectorAll('.vl-am__box')]; return Math.max(...bx.map((b) => { const B = b.getBoundingClientRect(), M = b.querySelector('.vl-am__mark').getBoundingClientRect(); return Math.max(Math.abs((B.left + B.right) / 2 - (M.left + M.right) / 2), Math.abs((B.top + B.bottom) / 2 - (M.top + M.bottom) / 2)) / B.width; })); })()",
+      "max": 0.005
+    },
+    {
+      "name": "et il occupe LA MÊME FRACTION du carré aux deux tailles : 0,54 — une estampille qui grandirait autrement que son support cesserait d'être la même",
+      "measure": "(() => { const bx = [...document.querySelectorAll('.vl-am__box')]; const f = bx.map((b) => b.querySelector('.vl-am__mark').getBoundingClientRect().width / b.getBoundingClientRect().width); return Math.max(...f) - Math.min(...f); })()",
+      "max": 0.005
+    },
+    {
+      "name": "…à 0,54 du côté, la valeur de la charte",
+      "measure": "(() => { const b = document.querySelector('.vl-am__box--lg'); return b.querySelector('.vl-am__mark').getBoundingClientRect().width / b.getBoundingClientRect().width; })()",
+      "expect": 0.54,
+      "tol": 0.01
+    },
+    {
+      "name": "LE RAYON DU CARRÉ EST UNE CONSTANTE DE CHARTE, PAS UNE FRACTION : deux carrés dont les côtés sont dans un rapport > 2 portent le MÊME rayon absolu",
+      "measure": "(() => { const l = document.querySelector('.vl-am__box--lg'), s = document.querySelector('.vl-am__box--sm'); const rl = parseFloat(getComputedStyle(l).borderTopLeftRadius), rs = parseFloat(getComputedStyle(s).borderTopLeftRadius); const cl = l.getBoundingClientRect().width, cs = s.getBoundingClientRect().width; return (Math.abs(rl - rs) <= 0.5 && cl / cs > 2) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "L'ASTÉRISQUE LAISSE PASSER LES DEUX TIERS DE SA BOÎTE — couverture peinte relevée au sondage : c'est un marqueur de traits ouverts, pas une pastille",
+      "measure": "(() => { const m = document.querySelector('.vl-am__box--lg .vl-am__mark'); const b = m.getBoundingClientRect(); const N = 81; let hit = 0; for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) { const x = b.left + (i + 0.5) * b.width / N, y = b.top + (j + 0.5) * b.height / N; const t = document.elementFromPoint(x, y); if (t && t !== m && m.contains(t)) hit++; } return hit / (N * N); })()",
+      "min": 0.25,
+      "max": 0.35
+    },
+    {
+      "name": "ET IL NE DÉPENSE PRESQUE RIEN DU BUDGET D'ACCENT : à son plus grand emploi, l'encre jaune couvre moins de 1 % d'une slide 1600×900, pour un plafond de charte de 12 %",
+      "measure": "(() => { const m = document.querySelector('.vl-am__box--lg .vl-am__mark'); const b = m.getBoundingClientRect(); const N = 81; let hit = 0; for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) { const x = b.left + (i + 0.5) * b.width / N, y = b.top + (j + 0.5) * b.height / N; const t = document.elementFromPoint(x, y); if (t && t !== m && m.contains(t)) hit++; } return (hit / (N * N)) * b.width * b.height / (1600 * 900); })()",
+      "max": 0.01
+    },
+    {
+      "name": "EN LIGNE, LE MARQUEUR RESTE SOUS LA HAUTEUR DE CAPITALE de ce qu'il signe — au-dessus il devient le dernier mot de la phrase",
+      "measure": "(() => { const ms = [...document.querySelectorAll('.vl-am__mark--inline')]; return Math.max(...ms.map((m) => { const p = m.parentElement, s = getComputedStyle(p); const c = document.createElement('canvas').getContext('2d'); c.font = s.fontWeight + ' ' + s.fontSize + ' ' + s.fontFamily; return m.getBoundingClientRect().height / c.measureText('H').actualBoundingBoxAscent; })); })()",
+      "min": 0.6,
+      "max": 1.0
+    },
+    {
+      "name": "le marqueur est DÉCORATIF et le déclare : il signe, il ne renvoie à rien — un astérisque annoncé aux lecteurs d'écran promettrait une note qui n'existe pas",
+      "measure": "(() => { const ms = [...document.querySelectorAll('.vl-am svg')]; return ms.every((m) => m.getAttribute('aria-hidden') === 'true') ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "racine TRANSPARENTE et sans marge : le marqueur se pose dans une composition qui porte déjà son fond",
+      "measure": "(() => { const s = getComputedStyle(document.querySelector('.vl-am')); const p = ['paddingTop','paddingRight','paddingBottom','paddingLeft'].map((k) => parseFloat(s[k])); return (s.backgroundColor === 'rgba(0, 0, 0, 0)' && Math.max(...p) === 0) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    }
+  ],
+  "notes": "Le marqueur n'est pas un glyphe : c'est un ARBITRAGE DE SURFACE. La charte tient sur « neutre + un accent fluo », et cette règle se chiffre — le jaune reste sous 12 % de la slide, et il n'y a jamais deux objets jaunes. Un astérisque de traits ouverts pose la couleur au point de fixation en dépensant 0,5 % de ce budget : c'est le placement d'accent le moins cher qui existe dans ce système, et c'est pour ça qu'il peut tenir la couverture ET la clôture sans que la charte bascule. Le benchmark le mesure vraiment — la couverture peinte est relevée au sondage sur une grille de 81 × 81 points, puis rapportée à 1600 × 900. Les 1600 × 900 sont une constante de CANAL (le format PPT du dépôt), pas une cote du fragment.\n\nLA CORRECTION QUE CE LOT PORTE, et elle vaut au-delà du pattern : la reconstitution posait l'astérisque en jaune EN FIN DE TITRE, sur le fond clair de la charte. Mesuré, #EAFF00 sur #EFEFED vaut 1,03:1 — les deux valeurs ont presque la même luminance, il ne reste qu'un écart de teinte, qui vibre à l'écran et disparaît entièrement en gris ou à l'export PDF d'une proposition. Le système le disait déjà à sa manière (« le jaune ne colore jamais du texte »), mais rien ne le vérifiait, et la slide 6 le démentait. La règle exacte est : le jaune ne descend jamais sur le fond clair — il y est en aplat, ou en encre SUR NOIR. Le marqueur prend donc l'encre de son sol, jaune sur le carré (17:1), encre sur le fond clair (16:1) : sa forme est son identité, pas sa couleur. Deux benchmarks tiennent la correction, dont une CONTRE-ÉPREUVE qui remesure le jaune contre le sol clair et exige qu'il y soit sous 1,1:1 — l'assertion échouerait si quelqu'un changeait le fond de la charte sans revoir la règle.\n\nLa forme se vérifie sur ce qui est PEINT, jamais sur les attributs : un `<line>` mal orienté garde des coordonnées parfaitement lisibles. Un tour complet de 720 sondages à 0,85 du rayon compte les arcs peints — six, pas un de plus — et l'axe de chaque branche est ensuite relevé au BARYCENTRE des points peints en travers d'elle, ce qui donne un angle mesuré et non un test de tolérance. Le premier jet sondait six directions à 0,7 du rayon et restait vert sur une branche décalée de 10° : à cette distance le trait de 9 unités couvre encore le point nominal. Contre-épreuve rejouée après correction : la même mutation sort rouge, et le retrait d'une branche aussi. Même famille de piège que le rayon en pourcentage de `shape-03` — la valeur déclarée n'est pas la forme obtenue.\n\nUn seul dessin en `<symbol>`, trois emplois en `<use>` : deux copies qui divergeraient d'un degré cesseraient d'être le même marqueur sans qu'aucune relecture ne le voie. Le symbole ne porte AUCUNE propriété de peinture — ni `stroke`, ni `stroke-width` — parce que ces deux-là sont héritées jusque dans l'arbre du `use` : c'est exactement ce qui permet au même dessin de changer d'encre selon son sol.\n\nDernier acquis, mineur mais réutilisable : le rayon du carré est une CONSTANTE DE CHARTE en longueur (19 px), pas une fraction de la boîte. Les deux carrés du fragment sont dans un rapport de côté supérieur à 2 et portent le même rayon absolu — c'est ce qui les fait appartenir au même système au lieu d'être deux versions à l'échelle l'une de l'autre. Un benchmark en ratio du root ne pouvait pas dire ça ; celui-ci compare les deux tailles entre elles, ce qui reste indépendant de l'échelle."
+}

@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-53 patterns · 17 références · 46 vérifiés par benchmarks mesurés.
+55 patterns · 18 références · 48 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -71,6 +71,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `list-07-hairline-spec-table` | Poser les caractéristiques d'un lot — livrables, formats, cadence — en couples libellé / valeur séparés par des filets d'un pixel et demi qui DÉBORDENT la marge de texte des deux côtés. Le filet n'est pas la bordure d'un bloc, c'est une règle de la page que le module traverse : il part avant le libellé et finit après la valeur, et c'est ce seul décalage qui distingue une table de spécifications d'un encadré. | slide web print | 18 | ref-10-campaign-board-red |
 | `shape-02-teardrop-quadrant` | Donner à un aplat une ORIENTATION sans lui ajouter la moindre pointe, flèche ou étiquette : un carré dont trois coins sont arrondis du même rayon et dont le quatrième reste vif. La masse est neutre, le coin droit désigne un quadrant — et deux exemplaires posés sur des coins opposés se lisent comme miroir l'un de l'autre, ce qui pose une diagonale dans une composition qui n'a aucun texte pour la porter. | slide web social | 8 | ref-01-bento-pills-2030 |
 | `shape-03-stadium-track` | Poser une piste à bouts ronds qui porte un objet EMBOÎTÉ — barre de progression, interrupteur, jauge — sans que le liseré entre les deux s'épaississe dans les courbes. Une seule loi le tient : l'enfant est inset d'une constante sur ses quatre côtés et son rayon vaut celui du rail moins cet inset, ce qui fait tomber les deux centres de courbure au même point. Deux remplissages en découlent, une barre partielle et une pastille, et ce ne sont pas deux objets : c'est le même rail avec deux longueurs d'enfant. | slide web | 13 | ref-01-bento-pills-2030 |
+| `shape-04-asterisk-mark` | Poser l'accent d'une charte « neutre + une couleur » au point de fixation, pour presque rien : un astérisque à six branches — trois traits croisés à 60° — dont l'encre couvre un demi pour cent de la slide là où le plafond d'accent est de 12 %. Un seul dessin, trois emplois (seul dans un carré noir, en fin de titre, en fin de phrase), et une encre qui change avec le sol : jaune sur le noir, encre sur le fond clair. | slide web | 15 | ref-05-proposal-acid-yellow |
 | `shape-notched-corner` | Donner à un aplat coloré une signature de forme reconnaissable — UN coin coupé à 45° — sans rien ajouter au contenu ni recourir à un rayon, une ombre ou un liseré. | slide web | 3 | ref-06-orange-notched |
 | `tag-01-gooey-capsule` | Faire d'un mot-clé un OBJET : un contour continu qui soude un cercle de glyphe à une pilule de texte par deux congés concaves, pour qu'un terme isolé pèse autant qu'un titre sans être plus gros. | slide social web | 13 | ref-12-neon-capsule-tags |
 | `tag-02-centered-cloud` | Poser une dizaine de mots-clés de même rang au bas d'un module sans en faire une liste : chaque RANGÉE est centrée sur elle-même, si bien que les lignes de largeur inégale dessinent une silhouette de nuage — c'est le centrage par rangée, et pas le centrage du bloc, qui produit l'effet. | web slide | 13 | ref-17-mono-bento-legal |
@@ -79,6 +80,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `title-02-condensed-overlay-stack` | Tenir une slide entière avec du TEXTE SEUL — aucun aplat, aucun trait, aucune boîte — en posant trois blocs sur la scène : un titre condensé noir à l'interligne écrasé, le numéro de section entre parenthèses au MÊME fer que lui mais à l'autre bout de la colonne, et un contrepoids en micro-capitales au coin diagonalement opposé. Le cadre est transparent : il se pose par-dessus des images sans rien leur enlever. | slide web | 21 | ref-10-campaign-board-red |
 | `title-03-wordmark-bottom-left` | Fermer une page d'accueil par le nom de la marque plutôt que de l'ouvrir par lui : wordmark de deux lignes, fer à gauche, posé sur la marge BASSE, et une réserve visuelle au coin diagonalement opposé qui l'empêche de faire basculer la page. Les deux blocs ne se croisent jamais en hauteur — c'est la seule chose qui fait lire une diagonale plutôt que deux objets empilés. | web slide social | 18 | ref-07-retro-brand-hero |
 | `title-04-name-fills-measure` | Régler un nom de marque à la LARGEUR plutôt qu'à une taille : le corps n'est pas choisi dans l'échelle de la charte, il est déduit de la mesure disponible, et l'encre du mot affleure les deux marges à 99,6 %. Le ® qui le suit est calé sous la hauteur de capitale — un quart du corps, remonté de 55 % de la capitale — pour qu'il signe le nom sans devenir sa douzième lettre. | web slide | 14 | ref-08-swiss-studio-hero |
+| `title-05-hyphen-break` | Souder une locution de deux mots en un composé unique de deux lignes, en remplaçant son ESPACE par un trait d'union frappé : « Business Proposal » devient `Business-` / `Proposal`. Le retour n'est pas calculé par la mesure, il est écrit — donc il ne bouge jamais — et le trait d'union, posé en encre la plus à droite du bloc, termine la silhouette au lieu de signaler une coupure oubliée. | slide web | 13 | ref-05-proposal-acid-yellow |
 
 ## Détail
 
@@ -455,6 +457,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-track-h, --vl-track-w, --vl-track-inset, --vl-track-fill, --vl-track-gap, --vl-ink, --vl-white, --vl-accent
 - tags : forme, primitive, stadium, pilule, rail, toggle, progression, jauge, rayon, concentrique
 
+**shape-04-asterisk-mark** — Astérisque de marque, six branches
+
+- employer : Une charte qui n'a qu'un accent et refuse qu'il tapisse : le marqueur lui donne un point d'entrée sans dépenser de surface, donc il peut réapparaître de slide en slide sans que la règle tombe. Sert aussi de signature de marque partout où un logotype serait de trop — couverture, clôture, fin de titre, fin de phrase — et de glyphe de puce dans une liste courte.
+- éviter : Le marqueur doit porter une INFORMATION (renvoi de note, obligation d'un champ) : il n'a pas de cible, il est déclaré décoratif, et deux astérisques dans une même page cesseraient de se distinguer. Écarter aussi quand la charte a déjà un accent qui occupe de la surface sur la même slide — le marqueur serait le deuxième objet accentué, ce que la règle interdit — et sur un sol dont la luminance approche celle de l'accent : la contre-épreuve du fragment mesure ce cas à 1,03:1.
+- à remplir : title, body
+- variables : --vl-acid, --vl-black, --vl-ink-muted, --vl-am-radius, --vl-am-fill, --vl-am-stroke
+- tags : asterisque, marqueur, marque, accent, glyphe, svg, symbol, signature, fluo, contraste
+
 **shape-notched-corner** — Carte à coin chanfreiné
 
 - employer : Sur les aplats d'accent d'un deck ou d'une landing qui doivent se reconnaître d'une slide à l'autre : carte statistique, carte de second rang, pastille de glyphe. Une seule orientation par famille de contenu.
@@ -524,6 +534,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-ink, --vl-mark-chasse
 - tags : wordmark, nom-de-marque, logotype, hero, echelle, largeur-utile, registered, exposant, grotesk, container-query
 
+**title-05-hyphen-break** — Titre display soudé par un trait d'union
+
+- employer : Une couverture, une slide de clôture, un hero : partout où un display de deux mots doit faire MASSE plutôt que ligne, sur une charte qui n'a pas d'accent coloré à dépenser sur son titre. Le trait d'union est alors le seul signe graphique du bloc, et il coûte zéro couleur. Sert aussi à ancrer un titre au fer à gauche d'une colonne dont le bas porte autre chose : les deux lignes serrées font un bloc franc, pas un texte qui coule.
+- éviter : La locution ne tient pas en deux mots, ou le second mot est plus long que le premier plus son trait : le trait d'union retombe alors À L'INTÉRIEUR de la silhouette et se lit comme une césure ratée — c'est la seule contrainte dure du pattern. Écarter aussi en capitales (le trait se centre sur une hauteur d'x absente et devient un tiret de séparation), et pour un nom de marque d'un seul mot qu'on veut régler à la largeur — c'est title-04-name-fills-measure.
+- à remplir : title
+- variables : --vl-black, --vl-hb-size, --vl-hb-leading, --vl-hb-tracking, --vl-hb-gap
+- tags : titre, display, trait-union, cesure, couverture, cloture, locution, interligne-ecrase, fer-a-gauche, grotesk
+
 ## Références
 
 | référence | charte | patterns extraits | deck |
@@ -532,6 +550,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-02-ghost-icon-claim` | Gris fantôme — argument unique | `card-01-ghost-icon` | `decks/ref-02-ghost-icon-claim.html` |
 | `ref-03-bento-dark-pitch` | Bento sombre — pitch investisseur | `chart-01-stadium-bars`, `chart-02-isotype`, `layout-01-nested-bento` | `decks/ref-03-bento-dark-pitch.html` |
 | `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |
+| `ref-05-proposal-acid-yellow` | Proposal jaune acide | `shape-04-asterisk-mark`, `title-05-hyphen-break` | `decks/ref-05-proposal-acid-yellow.html` |
 | `ref-06-orange-notched` | Corporate orange chanfreiné | `card-02-notched-brief`, `card-03-stat-accent`, `list-02-ruled-index`, `shape-notched-corner`, `title-01-leading-rule` | `decks/ref-06-orange-notched.html` |
 | `ref-07-retro-brand-hero` | Retro brand hero (crème + rouge de marque, sol photographique) | `layout-11-hero-card-on-photo`, `layout-12-nav-three-zone`, `layout-13-image-triptych`, `title-03-wordmark-bottom-left` | `decks/ref-07-retro-brand-hero.html` |
 | `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | `layout-14-statement-first`, `title-04-name-fills-measure` | `decks/ref-08-swiss-studio-hero.html` |

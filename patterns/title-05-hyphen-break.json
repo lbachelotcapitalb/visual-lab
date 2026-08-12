@@ -1,0 +1,151 @@
+{
+  "name": "Titre display soudé par un trait d'union",
+  "family": "title",
+  "ref": "ref-05-proposal-acid-yellow",
+  "intent": "Souder une locution de deux mots en un composé unique de deux lignes, en remplaçant son ESPACE par un trait d'union frappé : « Business Proposal » devient `Business-` / `Proposal`. Le retour n'est pas calculé par la mesure, il est écrit — donc il ne bouge jamais — et le trait d'union, posé en encre la plus à droite du bloc, termine la silhouette au lieu de signaler une coupure oubliée.",
+  "when_to_use": "Une couverture, une slide de clôture, un hero : partout où un display de deux mots doit faire MASSE plutôt que ligne, sur une charte qui n'a pas d'accent coloré à dépenser sur son titre. Le trait d'union est alors le seul signe graphique du bloc, et il coûte zéro couleur. Sert aussi à ancrer un titre au fer à gauche d'une colonne dont le bas porte autre chose : les deux lignes serrées font un bloc franc, pas un texte qui coule.",
+  "avoid_when": "La locution ne tient pas en deux mots, ou le second mot est plus long que le premier plus son trait : le trait d'union retombe alors À L'INTÉRIEUR de la silhouette et se lit comme une césure ratée — c'est la seule contrainte dure du pattern. Écarter aussi en capitales (le trait se centre sur une hauteur d'x absente et devient un tiret de séparation), et pour un nom de marque d'un seul mot qu'on veut régler à la largeur — c'est title-04-name-fills-measure.",
+  "media": [
+    "slide",
+    "web"
+  ],
+  "tags": [
+    "titre",
+    "display",
+    "trait-union",
+    "cesure",
+    "couverture",
+    "cloture",
+    "locution",
+    "interligne-ecrase",
+    "fer-a-gauche",
+    "grotesk"
+  ],
+  "vars": [
+    {
+      "name": "--vl-black",
+      "role": "encre du titre — une seule valeur pour tout le bloc, trait d'union compris : c'est ce qui le fait lire comme un signe typographique et non comme un ornement",
+      "default": "#111111"
+    },
+    {
+      "name": "--vl-hb-size",
+      "role": "corps du display, pris dans l'échelle de la charte (109 px sur une slide 1600×900)",
+      "default": "109px"
+    },
+    {
+      "name": "--vl-hb-leading",
+      "role": "interligne, écrasé sous 1 — un composé soudé par un trait ne peut pas être écarté par de l'air",
+      "default": "0.98"
+    },
+    {
+      "name": "--vl-hb-tracking",
+      "role": "approche négative du display",
+      "default": "-0.03em"
+    },
+    {
+      "name": "--vl-hb-gap",
+      "role": "écart entre les deux spécimens de la démonstration — sans effet sur la règle",
+      "default": "72px"
+    }
+  ],
+  "slots": [
+    "title"
+  ],
+  "geometry": {
+    "root": ".vl-hb",
+    "frame": [
+      905,
+      214
+    ],
+    "ratios": {
+      "leading": 0.98,
+      "tracking": -0.03,
+      "block_height_in_lines": 2
+    },
+    "type_px": {
+      "display": 109
+    },
+    "pad_ratio": {
+      "top": 0,
+      "x": 0,
+      "bottom": 0
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "DEUX lignes, exactement — le composé est un bloc, pas un paragraphe qui coule",
+      "measure": "(() => { const lines = (el) => { const r = document.createRange(); r.selectNodeContents(el); const rs = [...r.getClientRects()].filter((x) => x.width > 0.5 && x.height > 0.5); const m = new Map(); rs.forEach((x) => { const k = Math.round(x.top); const q = m.get(k); m.set(k, q ? { top: k, left: Math.min(q.left, x.left), right: Math.max(q.right, x.right) } : { top: k, left: x.left, right: x.right }); }); return [...m.values()].sort((a, b) => a.top - b.top); }; const t = [...document.querySelectorAll('.vl-hb__t')]; return t.every((e) => lines(e).length === 2) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "LE RETOUR EST FRAPPÉ, PAS CALCULÉ : le même titre sans son <br>, à mesure libre, tient sur UNE ligne — les deux lignes ne doivent donc rien à la largeur",
+      "measure": "(() => { const lines = (el) => { const r = document.createRange(); r.selectNodeContents(el); const rs = [...r.getClientRects()].filter((x) => x.width > 0.5 && x.height > 0.5); const m = new Map(); rs.forEach((x) => { const k = Math.round(x.top); const q = m.get(k); m.set(k, q ? { top: k, left: Math.min(q.left, x.left), right: Math.max(q.right, x.right) } : { top: k, left: x.left, right: x.right }); }); return [...m.values()].sort((a, b) => a.top - b.top); }; const t = [...document.querySelectorAll('.vl-hb__t')]; const ok = t.every((e) => { const c = e.cloneNode(true); c.querySelectorAll('br').forEach((x) => x.remove()); c.style.cssText += ';position:absolute;left:-9999px;width:max-content;'; document.body.appendChild(c); const n = lines(c).length; c.remove(); return n === 1; }); return ok ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "et ce n'est pas une CÉSURE : le trait d'union remplace l'ESPACE d'une locution de deux mots entiers, jamais une syllabe coupée",
+      "measure": "(() => { const t = [...document.querySelectorAll('.vl-hb__t')]; return t.every((e) => { const p = e.dataset.phrase || ''; const rendu = e.textContent.replace(/\\s+/g, ''); return /\\s/.test(p) && !p.includes('-') && rendu.replace(/-/g, '') === p.replace(/\\s+/g, '') && rendu.includes('-'); }) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "LE TRAIT D'UNION EST L'ENCRE LA PLUS À DROITE DU BLOC — c'est la loi qui ordonne les deux mots, et non une égalité de longueur entre les lignes",
+      "measure": "(() => { const lines = (el) => { const r = document.createRange(); r.selectNodeContents(el); const rs = [...r.getClientRects()].filter((x) => x.width > 0.5 && x.height > 0.5); const m = new Map(); rs.forEach((x) => { const k = Math.round(x.top); const q = m.get(k); m.set(k, q ? { top: k, left: Math.min(q.left, x.left), right: Math.max(q.right, x.right) } : { top: k, left: x.left, right: x.right }); }); return [...m.values()].sort((a, b) => a.top - b.top); }; const t = [...document.querySelectorAll('.vl-hb__t')]; return Math.min(...t.map((e) => { const tn = e.firstChild; const r = document.createRange(); r.setStart(tn, tn.length - 1); r.setEnd(tn, tn.length); const h = r.getBoundingClientRect().right; const l2 = lines(e)[1]; return (h - l2.right) / parseFloat(getComputedStyle(e).fontSize); })); })()",
+      "min": 0.02
+    },
+    {
+      "name": "les deux lignes partagent UN SEUL FER À GAUCHE — sans lui le trait d'union ne termine plus une silhouette, il flotte",
+      "measure": "(() => { const lines = (el) => { const r = document.createRange(); r.selectNodeContents(el); const rs = [...r.getClientRects()].filter((x) => x.width > 0.5 && x.height > 0.5); const m = new Map(); rs.forEach((x) => { const k = Math.round(x.top); const q = m.get(k); m.set(k, q ? { top: k, left: Math.min(q.left, x.left), right: Math.max(q.right, x.right) } : { top: k, left: x.left, right: x.right }); }); return [...m.values()].sort((a, b) => a.top - b.top); }; const t = [...document.querySelectorAll('.vl-hb__t')]; return Math.max(...t.map((e) => { const [a, c] = lines(e); return Math.abs(c.left - a.left) / W; })); })()",
+      "max": 0.002
+    },
+    {
+      "name": "interligne ÉCRASÉ sous 1 — les deux lignes se touchent presque, sinon la soudure ne se voit pas",
+      "measure": "num('.vl-hb__t','lineHeight') / num('.vl-hb__t','fontSize')",
+      "min": 0.9,
+      "max": 0.995
+    },
+    {
+      "name": "et la boîte du titre ne vaut QUE ses deux interlignes : aucun air ajouté au-dessus ni au-dessous",
+      "measure": "box('.vl-hb__t').h / (num('.vl-hb__t','fontSize') * (num('.vl-hb__t','lineHeight') / num('.vl-hb__t','fontSize')))",
+      "min": 1.95,
+      "max": 2.05
+    },
+    {
+      "name": "approche NÉGATIVE : elle resserre le composé, un display à approche nulle se disloque",
+      "measure": "num('.vl-hb__t','letterSpacing') / num('.vl-hb__t','fontSize')",
+      "max": -0.02
+    },
+    {
+      "name": "GRAISSE DISPLAY — sous 700 le trait d'union redevient un filet et cesse d'être un signe",
+      "measure": "(() => { const w = getComputedStyle(document.querySelector('.vl-hb__t')).fontWeight; return parseFloat(w) >= 700 ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "casse MIXTE, et par la frappe — en capitales le trait se centre sur une hauteur d'x absente",
+      "measure": "(() => { const e = document.querySelector('.vl-hb__t'); const s = getComputedStyle(e); return (s.textTransform === 'none' && /[a-z]/.test(e.textContent) && /[A-Z]/.test(e.textContent)) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "césure automatique VERROUILLÉE : le seul trait d'union du titre est celui qui est écrit",
+      "measure": "(() => { const s = getComputedStyle(document.querySelector('.vl-hb__t')); return (s.hyphens === 'manual' || s.webkitHyphens === 'manual') ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "le titre tient le plancher de contraste — c'est le plus gros objet de la slide, il n'en est pas dispensé",
+      "measure": "contrast('.vl-hb__t')",
+      "min": 4.5
+    },
+    {
+      "name": "racine TRANSPARENTE et sans marge : ce bloc se pose dans une colonne qui porte déjà son fond",
+      "measure": "(() => { const s = getComputedStyle(document.querySelector('.vl-hb')); const p = ['paddingTop','paddingRight','paddingBottom','paddingLeft'].map((k) => parseFloat(s[k])); return (s.backgroundColor === 'rgba(0, 0, 0, 0)' && Math.max(...p) === 0) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    }
+  ],
+  "notes": "Le pattern ne porte pas un trait d'union, il porte une DISTINCTION. Une césure syllabique est un accident de composition : elle dépend de la mesure, elle se déplace quand la colonne bouge, et une charte la fuit dans un display. Un trait d'union de locution est un choix : il soude deux mots entiers, et le retour est frappé — donc il ne dépend de rien. Deux benchmarks séparent les deux cas, et aucun des deux n'est cosmétique. Le premier retire le `<br>` d'un clone à mesure libre et exige UNE ligne : si les deux lignes venaient de la largeur, le clone en garderait deux. Le second recompose le texte rendu et exige qu'il vaille la locution de `data-phrase` une fois l'espace et le trait retirés — un mot coupé échouerait, puisque `data-phrase` porte deux mots entiers séparés par une espace.\n\nLa loi de forme n'est PAS une égalité de longueur entre les lignes, et c'est ce qu'on croit d'abord en regardant `Business-` / `Proposal`. Le second spécimen la dément : `Thank-` / `you` est franchement descendant. Ce qui est commun aux deux, et ce qui décide de l'ordre des mots, c'est que le trait d'union soit l'ENCRE LA PLUS À DROITE du bloc entier. Tant qu'il l'est, il ferme la silhouette et se lit comme un signe ; dès que la seconde ligne le dépasse, il tombe à l'intérieur du bloc et redevient une coupure oubliée. Le benchmark le mesure au `Range` sur le dernier caractère de la première ligne, en fraction du corps, avec une marge minimale de 0,02 em — une égalité stricte serait un hasard, pas une composition.\n\nLes mesures passent toutes par un `Range`, jamais par la boîte du `h2` : un titre est un BLOC, sa boîte fait la largeur utile quoi qu'on écrive dedans, donc toute comparaison de largeur écrite sur `getBoundingClientRect()` de l'élément sortirait verte sur n'importe quoi. Piège payé sur `layout-14` puis sur `title-04`.\n\nLa police est épinglée dans le fragment, pour la raison établie par `shape-03` : la loi compare des largeurs d'encre, donc elle dépend de la chasse. Un fragment qui hériterait la police de la page hôte serait vert sous le harnais — qui sert la sienne — et faux chez celui qui le colle.\n\nSur la référence, ce titre ouvre la couverture et ferme la clôture, aux deux mêmes réglages. Il n'y porte aucun accent : le jaune de la charte est ailleurs sur la slide (le carré à astérisque de `shape-04-asterisk-mark`), ce qui est cohérent avec la règle de l'accent unique — un titre qui prendrait la couleur la dépenserait pour rien, alors que le trait d'union lui donne déjà son signe."
+}

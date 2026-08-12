@@ -1,0 +1,65 @@
+<!-- title-05-hyphen-break — un titre display de deux lignes dont la première se termine par un
+     TRAIT D'UNION FRAPPÉ. Ce n'est pas une césure : il n'y a aucun mot coupé. Le trait remplace
+     l'ESPACE d'une locution de deux mots — « Business Proposal » devient `Business-` / `Proposal`,
+     « Thank you » devient `Thank-` / `you` — et soude la locution en un composé unique.
+
+     La distinction n'est pas de vocabulaire, elle décide du rendu :
+
+       • une césure syllabique est un ACCIDENT de composition. Elle dépend de la mesure, elle se
+         déplace quand la colonne bouge, et une charte la fuit dans un display ;
+       • un trait d'union de locution est un CHOIX. Il ne bouge pas, parce qu'il ne dépend pas
+         de la mesure : le retour est frappé, pas calculé. Élargissez le bloc de 40 % et le
+         titre reste sur deux lignes, au même endroit — c'est le benchmark central.
+
+     CE QUI FAIT TENIR LA FORME, et qui explique pourquoi les deux spécimens ci-dessous ont des
+     longueurs de ligne très différentes sans que la règle change : le trait d'union doit être
+     l'ENCRE LA PLUS À DROITE du bloc entier. Tant qu'il l'est, il termine la silhouette et se
+     lit comme un signe. Dès que la seconde ligne le dépasse, il tombe à l'intérieur du bloc et
+     redevient ce qu'une charte évite — une coupure oubliée. C'est cette contrainte, et non une
+     égalité de longueur entre les lignes, qui ordonne les deux mots : le plus long d'abord.
+
+     Interligne écrasé à 0,98 et approche à -0,03em : les deux lignes se touchent presque, ce qui
+     est nécessaire ici — un composé soudé par un trait ne peut pas être écarté par de l'air.
+
+     Aucune couleur en dur : encre par `--vl-ink`, le fragment n'a ni fond ni marge. -->
+<div class="vl-hb">
+  <h2 class="vl-hb__t" data-phrase="Business Proposal">Business-<br>Proposal</h2>
+  <h2 class="vl-hb__t" data-phrase="Thank you">Thank-<br>you</h2>
+</div>
+
+<style>
+/* La police est ÉPINGLÉE, et ce n'est pas décoratif : la loi du fragment porte sur des largeurs
+   d'encre comparées (le trait d'union contre la seconde ligne). Une chasse héritée de la page
+   hôte les déplacerait toutes les deux sans qu'aucun benchmark ne bouge — le harnais sert sa
+   propre police, donc il ne peut pas voir ce défaut-là. Leçon payée sur `shape-03`. */
+.vl-hb {
+  --vl-hb-size: 109px;
+  --vl-hb-leading: 0.98;
+  --vl-hb-tracking: -0.03em;
+  --vl-hb-gap: 72px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: var(--vl-hb-gap);
+  width: max-content;
+  font-family: "Hanken Grotesk", Inter, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Casse MIXTE, et frappée telle quelle. En capitales le trait d'union se centrerait sur une
+   hauteur d'x qui n'existe plus : il remonterait au milieu des capitales et cesserait de se
+   lire comme une soudure entre deux mots pour devenir un tiret de séparation. */
+.vl-hb__t {
+  margin: 0;
+  font-size: var(--vl-hb-size);
+  line-height: var(--vl-hb-leading);
+  letter-spacing: var(--vl-hb-tracking);
+  font-weight: 800;
+  text-transform: none;
+  color: var(--vl-black);
+
+  /* `manual` verrouille l'intention : même sous un moteur qui coupe automatiquement, le seul
+     trait d'union du titre reste celui qui est frappé. */
+  hyphens: manual;
+  -webkit-hyphens: manual;
+}
+</style>
