@@ -20,9 +20,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 41,
+    "patterns": 42,
     "refs": 15,
-    "checkable": 34
+    "checkable": 35
   },
   "patterns": [
     {
@@ -4558,6 +4558,162 @@
       "html": "patterns/layout-09-email-envelope.html"
     },
     {
+      "id": "layout-10-bleed-column-inset",
+      "name": "Lit d'images à fond perdu et incrustation",
+      "family": "layout",
+      "ref": "ref-10-campaign-board-red",
+      "media": [
+        "slide",
+        "web"
+      ],
+      "intent": "Faire porter une slide entière par les IMAGES, sans marge ni carte : deux photos à fond perdu qui touchent les quatre bords de la scène, séparées par une COUTURE unique de la couleur de page — jamais une gouttière symétrique —, et une troisième image beaucoup plus petite posée par-dessus l'une d'elles, sans partager une seule arête avec le lit. C'est cette incrustation flottante, et elle seule, qui donne de la profondeur à une composition entièrement plate.",
+      "when_to_use": "Slide de campagne, d'ouverture de chapitre ou de moodboard, où l'image EST le propos et le texte se pose dessus. Vaut aussi pour un hero web plein écran. La typographie ne fait pas partie de ce pattern : elle se pose par-dessus, avec title-02-condensed-overlay-stack.",
+      "avoid_when": "Les images n'ont pas de casting couleur commun — deux photos qui ne partagent aucune dominante à fond perdu se lisent comme deux slides collées, et la couture ne les rattrape pas. Écarter aussi quand il faut légender chaque image : ce lit n'a de place pour aucun texte sous les images, seulement dessus.",
+      "tags": [
+        "image",
+        "photo",
+        "collage",
+        "fond-perdu",
+        "bleed",
+        "incrustation",
+        "overlay",
+        "colonnes",
+        "hero",
+        "campagne",
+        "moodboard"
+      ],
+      "vars": [
+        {
+          "name": "--vl-slide",
+          "role": "couleur de page — c'est elle qui apparaît dans la couture entre les deux colonnes",
+          "default": "#EDEAE3"
+        },
+        {
+          "name": "--vl-gutter",
+          "role": "largeur de la couture entre les deux colonnes (un filet, pas une gouttière)",
+          "default": "8px"
+        }
+      ],
+      "slots": [
+        "image-a",
+        "image-b",
+        "inset"
+      ],
+      "geometry": {
+        "root": ".vl-bci",
+        "frame": [
+          1600,
+          900
+        ],
+        "ratios": {
+          "col_a_over_frame": 0.47,
+          "seam_over_frame": 0.005,
+          "inset_left_over_frame": 0.65,
+          "inset_w_over_frame": 0.28,
+          "inset_h_over_frame": 0.31,
+          "inset_area_over_frame": 0.0868
+        },
+        "type_px": {},
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "colonne A à fond perdu : elle touche le bord haut de la scène",
+          "measure": "box('.vl-bci__col--a').top / H",
+          "expect": 0,
+          "tol": 0.001
+        },
+        {
+          "name": "colonne A à fond perdu : elle touche le bord bas de la scène",
+          "measure": "(H - box('.vl-bci__col--a').bottom) / H",
+          "expect": 0,
+          "tol": 0.001
+        },
+        {
+          "name": "colonne A à fond perdu : elle touche le bord gauche de la scène",
+          "measure": "box('.vl-bci__col--a').left / W",
+          "expect": 0,
+          "tol": 0.001
+        },
+        {
+          "name": "colonne B à fond perdu : elle touche le bord droit de la scène",
+          "measure": "(W - box('.vl-bci__col--b').right) / W",
+          "expect": 0,
+          "tol": 0.001
+        },
+        {
+          "name": "les deux colonnes couvrent toute la hauteur de la scène",
+          "measure": "(box('.vl-bci__col--a').h + box('.vl-bci__col--b').h) / (2 * H)",
+          "expect": 1,
+          "tol": 0.002
+        },
+        {
+          "name": "la couture est un FILET : ≤ 1 % de la largeur de scène",
+          "measure": "(box('.vl-bci__col--b').left - box('.vl-bci__col--a').right) / W",
+          "max": 0.01
+        },
+        {
+          "name": "la couture existe : les colonnes ne se touchent pas et ne se chevauchent pas",
+          "measure": "(box('.vl-bci__col--b').left - box('.vl-bci__col--a').right) / W",
+          "min": 0.002
+        },
+        {
+          "name": "colonnes de largeurs INÉGALES : un lit coupé, pas un diptyque",
+          "measure": "box('.vl-bci__col--a').w / box('.vl-bci__col--b').w",
+          "min": 0.8,
+          "max": 0.96
+        },
+        {
+          "name": "l'incrustation reste une incrustation : ≤ 12 % de l'aire de la scène",
+          "measure": "(box('.vl-bci__inset').w * box('.vl-bci__inset').h) / (W * H)",
+          "max": 0.12
+        },
+        {
+          "name": "l'incrustation est visible : ≥ 5 % de l'aire de la scène",
+          "measure": "(box('.vl-bci__inset').w * box('.vl-bci__inset').h) / (W * H)",
+          "min": 0.05
+        },
+        {
+          "name": "l'incrustation FLOTTE : elle ne touche aucun bord de la scène",
+          "measure": "Math.min(box('.vl-bci__inset').left, box('.vl-bci__inset').top, W - box('.vl-bci__inset').right, H - box('.vl-bci__inset').bottom) / W",
+          "min": 0.02
+        },
+        {
+          "name": "l'incrustation ne partage aucune arête verticale avec la couture",
+          "measure": "Math.min(Math.abs(box('.vl-bci__inset').left - box('.vl-bci__col--b').left), Math.abs(box('.vl-bci__inset').right - box('.vl-bci__col--b').left)) / W",
+          "min": 0.05
+        },
+        {
+          "name": "l'incrustation est posée SUR une colonne : entièrement dans la colonne B",
+          "measure": "(box('.vl-bci__inset').left - box('.vl-bci__col--b').left) / W",
+          "min": 0
+        },
+        {
+          "name": "l'incrustation est en format paysage, comme le lit qui la porte",
+          "measure": "box('.vl-bci__inset').w / box('.vl-bci__inset').h",
+          "min": 1.2,
+          "max": 2.2
+        },
+        {
+          "name": "scène au format 16:9 — c'est une slide, pas une vignette",
+          "measure": "W / H",
+          "expect": 1.7778,
+          "tol": 0.01
+        },
+        {
+          "name": "aucune marge de scène : les images occupent toute la largeur, couture comprise",
+          "measure": "(box('.vl-bci__col--a').w + box('.vl-bci__col--b').w) / W",
+          "min": 0.985
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/layout-10-bleed-column-inset.html"
+    },
+    {
       "id": "list-01-giant-numbers",
       "name": "Colonnes à numéro géant",
       "family": "list",
@@ -6083,17 +6239,55 @@
     {
       "id": "ref-10-campaign-board-red",
       "name": "Planche de campagne — condensée rouge",
-      "patterns": [],
+      "patterns": [
+        "layout-10-bleed-column-inset"
+      ],
       "deck": "decks/ref-10-campaign-board-red.html",
       "tokens": {
         "--vl-bg": "#EDEAE3",
         "--vl-board": "#EDEAE3",
         "--vl-slide": "#EDEAE3",
-        "--vl-red": "#E33A22",
+        "--vl-red": "#C82C15",
         "--vl-white": "#FFFFFF",
         "--vl-inset": "137px",
         "--vl-gutter": "8px",
-        "--vl-rule": "2.5px"
+        "--vl-rule": "2.5px",
+        "--vl-cow-white": "#F2EFE7",
+        "--vl-cow-shade": "#D8D1C1",
+        "--vl-cow-brown": "#5A3520",
+        "--vl-cow-brown-hi": "#8A5732",
+        "--vl-jkt-red": "#C6281B",
+        "--vl-jkt-red-hi": "#EC5233",
+        "--vl-jkt-red-lo": "#8A150F",
+        "--vl-jkt-sky": "#74A9D6",
+        "--vl-jkt-sky-lo": "#A8C6DE",
+        "--vl-jkt-btn": "#26100D",
+        "--vl-road-sky": "#D2DEE6",
+        "--vl-road-tree": "#2A4622",
+        "--vl-road-green": "#5F8C46",
+        "--vl-road-green-lo": "#3B5C2C",
+        "--vl-road-dirt": "#C3A57E",
+        "--vl-road-dirt-hi": "#DDC59F",
+        "--vl-road-rut": "#A88964",
+        "--vl-road-figure": "#201E1A",
+        "--vl-hand-bg": "#D9DBD3",
+        "--vl-hand-bg-lo": "#B4B8AE",
+        "--vl-glove": "#F3F0E8",
+        "--vl-glove-hi": "#FFFFFF",
+        "--vl-glove-sh": "#CBC5B7",
+        "--vl-vial-glass": "#DEE3E1",
+        "--vl-vial-cap": "#131110",
+        "--vl-vial-drop": "#6A6660",
+        "--vl-room-red": "#CE2A1C",
+        "--vl-room-red-lo": "#8E120C",
+        "--vl-room-fig": "#6B0F0A",
+        "--vl-cact-bg": "#B5AFA0",
+        "--vl-cact-bg-lo": "#8E8A7C",
+        "--vl-cact-green": "#6C8860",
+        "--vl-cact-green-hi": "#95AC86",
+        "--vl-cact-green-lo": "#3D5436",
+        "--vl-cact-spine": "#D6402A",
+        "--vl-cact-spine-hi": "#F2A794"
       },
       "type": {
         "display": "Archivo, \"Archivo Black\", Anton, Impact, sans-serif",

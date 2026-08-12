@@ -1,0 +1,157 @@
+<!-- layout-10-bleed-column-inset — fragment autonome. Couleurs via --vl-* uniquement, aucune valeur en dur. -->
+<div class="vl-bci">
+
+  <!-- Colonne gauche : à FOND PERDU sur trois bords. Aucune marge de slide — c'est ce qui
+       distingue un lit d'images d'une grille de vignettes. -->
+  <figure class="vl-bci__col vl-bci__col--a">
+    <svg viewBox="0 0 700 850" preserveAspectRatio="xMidYMid slice" role="img"
+         aria-label="Close-up of a brown and white cow hide">
+      <defs>
+        <linearGradient id="vlbci-cow-bg" x1="0.1" y1="0" x2="0.9" y2="1">
+          <stop offset="0" stop-color="var(--vl-cow-white)"/>
+          <stop offset="0.62" stop-color="var(--vl-cow-white)"/>
+          <stop offset="1" stop-color="var(--vl-cow-shade)"/>
+        </linearGradient>
+        <linearGradient id="vlbci-cow-patch" x1="0" y1="0" x2="0.7" y2="1">
+          <stop offset="0" stop-color="var(--vl-cow-brown-hi)"/>
+          <stop offset="1" stop-color="var(--vl-cow-brown)"/>
+        </linearGradient>
+        <!-- Arrondir des polygones sans les redessiner : flou franc, puis rampe alpha raide.
+             Les angles fondent, le bord reste net — une tache de robe, pas un camouflage. -->
+        <filter id="vlbci-cow-soft" x="-15%" y="-15%" width="130%" height="130%">
+          <feGaussianBlur stdDeviation="9"/>
+          <feComponentTransfer><feFuncA type="linear" slope="7" intercept="-2.1"/></feComponentTransfer>
+          <feGaussianBlur stdDeviation="0.7"/>
+        </filter>
+      </defs>
+      <rect width="700" height="850" fill="url(#vlbci-cow-bg)"/>
+      <g fill="url(#vlbci-cow-patch)" filter="url(#vlbci-cow-soft)">
+        <g id="vlbci-cow-spots">
+          <path d="M-30 40 L 60 24 L 96 68 L 148 74 L 130 128 L 168 158 L 126 190 L 156 232
+                   L 120 262 L 148 302 L 86 322 L 30 300 L 46 250 L -10 214 L 8 160 L -34 130 Z"/>
+          <path d="M186 -20 L 230 -6 L 224 44 L 268 68 L 262 112 L 316 122 L 348 96 L 372 118
+                   L 386 78 L 340 -20 Z"/>
+          <path d="M256 296 L 306 274 L 344 302 L 392 292 L 414 330 L 400 396 L 372 434
+                   L 330 424 L 286 442 L 254 404 L 274 364 L 240 330 Z"/>
+          <path d="M34 512 L 88 494 L 122 524 L 152 564 L 128 600 L 148 642 L 96 676 L 40 662
+                   L 8 622 L 34 584 L -4 550 Z"/>
+          <path d="M198 636 L 252 616 L 296 640 L 342 626 L 390 652 L 408 706 L 386 780
+                   L 330 806 L 268 790 L 226 812 L 186 748 L 156 706 L 190 676 Z"/>
+          <path d="M182 452 L 214 444 L 226 470 L 208 492 L 178 484 L 172 466 Z"/>
+          <path d="M74 388 L 100 382 L 108 402 L 90 414 L 68 404 Z"/>
+        </g>
+        <use href="#vlbci-cow-spots" transform="translate(400 -132)"/>
+        <use href="#vlbci-cow-spots" transform="translate(292 452) scale(0.8)"/>
+      </g>
+    </svg>
+  </figure>
+
+  <!-- Colonne droite : le reste de la largeur, moins la seule COUTURE du lit. -->
+  <figure class="vl-bci__col vl-bci__col--b">
+    <svg viewBox="0 0 700 850" preserveAspectRatio="xMidYMid slice" role="img"
+         aria-label="Red satin jacket shoulder against the sky">
+      <defs>
+        <linearGradient id="vlbci-jkt-sky" x1="0" y1="0" x2="0.4" y2="1">
+          <stop offset="0" stop-color="var(--vl-jkt-sky)"/>
+          <stop offset="1" stop-color="var(--vl-jkt-sky-lo)"/>
+        </linearGradient>
+        <linearGradient id="vlbci-jkt-body" x1="0.1" y1="0" x2="0.9" y2="1">
+          <stop offset="0" stop-color="var(--vl-jkt-red-hi)"/>
+          <stop offset="0.45" stop-color="var(--vl-jkt-red)"/>
+          <stop offset="1" stop-color="var(--vl-jkt-red-lo)"/>
+        </linearGradient>
+        <filter id="vlbci-jkt-soft" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="12"/>
+        </filter>
+        <filter id="vlbci-jkt-edge"><feGaussianBlur stdDeviation="1.6"/></filter>
+      </defs>
+      <rect width="700" height="850" fill="url(#vlbci-jkt-sky)"/>
+      <!-- L'épaule est coupée par une DIAGONALE qui traverse tout le cadre : c'est elle qui
+           dit « vêtement porté » plutôt que « rideau rouge ». Le ciel ne reste qu'en coin. -->
+      <path d="M300 0 L 700 0 L 700 850 L 0 850 L 0 600 C 80 410 210 190 300 0 Z"
+            fill="url(#vlbci-jkt-body)" filter="url(#vlbci-jkt-edge)"/>
+      <g filter="url(#vlbci-jkt-soft)" opacity="0.5">
+        <path d="M406 0 C 462 210 428 450 482 850 L 566 850 C 506 450 540 210 486 0 Z"
+              fill="var(--vl-jkt-red-hi)"/>
+        <path d="M612 96 C 644 330 626 590 668 850 L 700 850 L 700 96 Z"
+              fill="var(--vl-jkt-red-hi)" opacity="0.5"/>
+        <path d="M170 356 C 230 500 226 660 278 850 L 204 850 C 156 670 132 500 170 356 Z"
+              fill="var(--vl-jkt-red-lo)"/>
+      </g>
+      <path d="M300 0 C 210 194 80 414 0 604 L 0 664 C 108 462 254 226 366 0 Z"
+            fill="var(--vl-jkt-red-lo)" opacity="0.42" filter="url(#vlbci-jkt-edge)"/>
+      <g filter="url(#vlbci-jkt-edge)">
+        <circle cx="286" cy="430" r="16" fill="var(--vl-jkt-btn)"/>
+        <circle cx="322" cy="704" r="16" fill="var(--vl-jkt-btn)"/>
+      </g>
+    </svg>
+  </figure>
+
+  <!-- L'INCRUSTATION : une quatrième image, petite, posée PAR-DESSUS le lit. Elle ne touche
+       aucun bord et ne partage aucune arête avec les colonnes — sans quoi elle se relit comme
+       une troisième colonne et le seul geste de profondeur du système disparaît. -->
+  <figure class="vl-bci__inset">
+    <svg viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" role="img"
+         aria-label="A dirt road running between green fields, one figure walking">
+      <defs>
+        <linearGradient id="vlbci-road-field" x1="0" y1="0" x2="0.2" y2="1">
+          <stop offset="0" stop-color="var(--vl-road-green)"/>
+          <stop offset="1" stop-color="var(--vl-road-green-lo)"/>
+        </linearGradient>
+        <linearGradient id="vlbci-road-dirt" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="var(--vl-road-dirt)"/>
+          <stop offset="1" stop-color="var(--vl-road-dirt-hi)"/>
+        </linearGradient>
+        <filter id="vlbci-road-soft"><feGaussianBlur stdDeviation="1.6"/></filter>
+        <filter id="vlbci-road-tree" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="4"/>
+        </filter>
+      </defs>
+      <rect width="400" height="250" fill="var(--vl-road-sky)"/>
+      <rect y="58" width="400" height="192" fill="url(#vlbci-road-field)"/>
+      <g fill="var(--vl-road-tree)" filter="url(#vlbci-road-tree)">
+        <ellipse cx="40" cy="56" rx="60" ry="14"/><ellipse cx="150" cy="52" rx="70" ry="16"/>
+        <ellipse cx="262" cy="55" rx="66" ry="13"/><ellipse cx="370" cy="52" rx="58" ry="16"/>
+      </g>
+      <path d="M186 60 L 214 60 L 330 250 L 66 250 Z" fill="url(#vlbci-road-dirt)"/>
+      <path d="M194 62 L 206 62 L 250 250 L 150 250 Z" fill="var(--vl-road-dirt-hi)" opacity="0.5"/>
+      <g stroke="var(--vl-road-rut)" stroke-width="2" fill="none" opacity="0.6"
+         filter="url(#vlbci-road-soft)">
+        <path d="M192 66 L 120 250"/><path d="M208 66 L 280 250"/>
+      </g>
+      <g filter="url(#vlbci-road-soft)" fill="var(--vl-road-figure)">
+        <path d="M196 96 C 196 88 204 88 204 96 L 206 120 L 194 120 Z"/>
+        <ellipse cx="200" cy="122" rx="7" ry="3" opacity="0.4"/>
+      </g>
+    </svg>
+  </figure>
+
+</div>
+
+<style>
+/* Le lit d'images d'une slide de campagne : DEUX colonnes à fond perdu séparées par une
+   couture de la couleur de page, et UNE incrustation posée par-dessus l'une d'elles.
+   La typographie ne fait pas partie de ce pattern : elle se pose au-dessus (title-02-…),
+   sans quoi les deux couches se dupliqueraient l'une l'autre. */
+.vl-bci {
+  position: relative;
+  width: 1600px; height: 900px;
+  overflow: hidden;
+  background: var(--vl-slide);
+}
+.vl-bci figure { margin: 0; }
+
+/* Les colonnes touchent le haut, le bas et leur bord extérieur. Elles ne sont PAS une grille :
+   une gouttière symétrique ferait deux vignettes, une couture unique fait un seul lit coupé. */
+.vl-bci__col { position: absolute; top: 0; bottom: 0; overflow: hidden; }
+.vl-bci__col--a { left: 0; width: 47%; }
+.vl-bci__col--b { left: calc(47% + var(--vl-gutter)); right: 0; }
+
+.vl-bci__inset {
+  position: absolute;
+  left: 65%; top: 27%; width: 28%; height: 31%;
+  overflow: hidden;
+}
+
+.vl-bci svg { display: block; width: 100%; height: 100%; }
+</style>

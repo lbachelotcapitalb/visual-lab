@@ -110,7 +110,7 @@ CHECKPOINT_STEP: S3
 
 - [x] S3.1 — Relever le contraste de `--vl-red` sur la slide crème AVANT de le recopier dans
       trois patterns. Corriger dans `systems/` + `decks/` si la source est sous 4,5:1.
-- [ ] S3.2 — `layout-10-…` : le collage à fond perdu (colonnes d'images + couture + incrustation
+- [x] S3.2 — `layout-10-…` : le collage à fond perdu (colonnes d'images + couture + incrustation
       en overlay). C'est la composition de la slide 1.
 - [ ] S3.3 — `title-02-…` : le cadre typographique (titre condensé écrasé en overlay, numéro de
       section entre parenthèses au même fer, micro-caps au coin opposé). Absorbe les

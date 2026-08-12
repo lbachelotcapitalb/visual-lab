@@ -83,6 +83,34 @@ for (const p of patterns) {
   if (p.html && /#[0-9a-fA-F]{3,8}\b/.test(htmlSansEntites)) {
     errors.push(`${p.id} : couleur en dur dans le HTML — passer par une variable --vl-*`);
   }
+  // Et le pendant du même contrat, dans l'autre sens : une variable APPELÉE doit exister
+  // quelque part. Interdire le hex sans vérifier la résolution ne protège de rien — le
+  // 12/08, un pattern extrait de ref-10 est sorti ENTIÈREMENT NOIR au rendu parce que les
+  // 36 tokens de ses images ne vivaient que dans le :root du deck, jamais dans systems/. Le
+  // contrôle géométrique était vert : un var() non résolu ne casse aucun alignement, il rend
+  // du noir en silence. C'est exactement la panne que `emit.mjs` refuse d'avoir, et rien ne
+  // l'attrapait ici. Trois sources légitimes : le système de la référence, les `vars`
+  // déclarées du pattern, et les propriétés que le fragment définit lui-même.
+  const sysTokens = new Set(Object.keys(systems.find((s) => s.id === p.ref)?.tokens || {}));
+  const declared = new Set([
+    ...sysTokens,
+    ...(p.vars || []).map((v) => v.name),
+    ...[...(p.html || '').matchAll(/(--vl-[a-z0-9-]+)\s*:/g)].map((m) => m[1]),
+  ]);
+  const orphelines = [
+    ...new Set(
+      [...(p.html || '').matchAll(/var\(\s*(--vl-[a-z0-9-]+)\s*(\)|,)/g)]
+        .filter((m) => m[2] === ')') // un var() À REPLI se résout toujours : il ne ment pas
+        .map((m) => m[1])
+        .filter((v) => !declared.has(v))
+    ),
+  ];
+  if (orphelines.length) {
+    errors.push(
+      `${p.id} : ${orphelines.length} variable(s) sans valeur dans systems/${p.ref}.json ` +
+        `ni dans "vars" — le fragment rendra du noir en silence : ${orphelines.join(', ')}`
+    );
+  }
 }
 
 if (errors.length) {

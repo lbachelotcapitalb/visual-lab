@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-41 patterns · 15 références · 34 vérifiés par benchmarks mesurés.
+42 patterns · 15 références · 35 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -56,6 +56,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `layout-07-icon-rail-shell` | Poser le cadre d'un tableau de bord en ne dépensant AUCUNE couleur pour la navigation : un rail d'icônes étroit du même blanc que l'application — séparé par un filet d'un pixel et jamais par un aplat —, un en-tête à recherche en pilule, et un titre de page qui est le seul très grand corps de l'écran. Tout le budget de couleur reste disponible pour les données. | web | 16 | ref-18-lime-sales-dashboard |
 | `layout-08-sheet-handle-tab` | Ouvrir un dossier par-dessus une application sans que la modale se lise comme « une carte de plus » : un voile sombre qui PORTE de l'interface (onglets, fermeture), une feuille claire qui saigne à quelques pixels des bords, et un onglet-poignée titré soudé à cette feuille par DEUX congés concaves — la seule courbe inversée du corpus, et ce qui fait que la poignée appartient à la feuille au lieu de flotter au-dessus d'elle. | web | 17 | ref-19-acid-clinical-timeline |
 | `layout-09-email-envelope` | Poser la coquille d'un mailing avec ce que le moteur Word d'Outlook sait réellement rendre : une table de garde pleine largeur qui porte le fond, une colonne de 600 px centrée qui porte tout le contenu, et l'espacement entièrement délégué au padding des cellules — jamais à une gouttière, une position ou un calcul. Les trois zones (bandeau, corps, pied) sont trois aplats PLEINS et différents, ce qui est à la fois la signature de la charte et le seul modèle de hiérarchie qu'un client mail rende à l'identique partout. | email | 18 | ref-04-swiss-investor-blue |
+| `layout-10-bleed-column-inset` | Faire porter une slide entière par les IMAGES, sans marge ni carte : deux photos à fond perdu qui touchent les quatre bords de la scène, séparées par une COUTURE unique de la couleur de page — jamais une gouttière symétrique —, et une troisième image beaucoup plus petite posée par-dessus l'une d'elles, sans partager une seule arête avec le lit. C'est cette incrustation flottante, et elle seule, qui donne de la profondeur à une composition entièrement plate. | slide web | 16 | ref-10-campaign-board-red |
 | `list-01-giant-numbers` | Aligner trois à quatre arguments de même rang en colonnes, chacun ouvert par un numéro ou un chiffre démesuré qui sert à la fois de repère de lecture et de seule tache de couleur du bloc. | slide web | — | ref-04-swiss-investor-blue |
 | `list-02-ruled-index` | Lister les sections d'un document en donnant à chacune son libellé, une ligne d'explication et son numéro à droite, séparées par un filet fin qui appartient à l'entrée qu'il suit. | slide web | 9 | ref-06-orange-notched |
 | `list-03-two-column-toc` | Faire tenir un sommaire de dix à quatorze sections sur une seule slide, en deux colonnes numérotées, lisible d'un coup d'œil et refermable aussitôt. | slide web | — | ref-04-swiss-investor-blue |
@@ -321,6 +322,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-bg, --vl-white, --vl-blue, --vl-black, --vl-ink-muted, --vl-ink-muted-invert
 - tags : email, mailing, newsletter, lettre, coquille, gabarit, outlook, table, 600, bandeau, pied, desabonnement, bouton, cta, enveloppe
 
+**layout-10-bleed-column-inset** — Lit d'images à fond perdu et incrustation
+
+- employer : Slide de campagne, d'ouverture de chapitre ou de moodboard, où l'image EST le propos et le texte se pose dessus. Vaut aussi pour un hero web plein écran. La typographie ne fait pas partie de ce pattern : elle se pose par-dessus, avec title-02-condensed-overlay-stack.
+- éviter : Les images n'ont pas de casting couleur commun — deux photos qui ne partagent aucune dominante à fond perdu se lisent comme deux slides collées, et la couture ne les rattrape pas. Écarter aussi quand il faut légender chaque image : ce lit n'a de place pour aucun texte sous les images, seulement dessus.
+- à remplir : image-a, image-b, inset
+- variables : --vl-slide, --vl-gutter
+- tags : image, photo, collage, fond-perdu, bleed, incrustation, overlay, colonnes, hero, campagne, moodboard
+
 ### list
 
 **list-01-giant-numbers** — Colonnes à numéro géant
@@ -427,7 +436,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |
 | `ref-06-orange-notched` | Corporate orange chanfreiné | `card-02-notched-brief`, `card-03-stat-accent`, `list-02-ruled-index`, `shape-notched-corner`, `title-leading-rule` | `decks/ref-06-orange-notched.html` |
 | `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | — | `decks/ref-08-swiss-studio-hero.html` |
-| `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | — | `decks/ref-10-campaign-board-red.html` |
+| `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | `layout-10-bleed-column-inset` | `decks/ref-10-campaign-board-red.html` |
 | `ref-11-finance-dashboard-mint` | Dashboard bento clair — menthe & lilas | `card-04-stat-barchart`, `card-05-balance-gauge`, `card-06-forecast-timeline`, `card-07-transactions` | `decks/ref-11-finance-dashboard-mint.html` |
 | `ref-12-neon-capsule-tags` | Néon vert — étiquettes capsules sur fond sombre | `tag-01-gooey-capsule` | `decks/ref-12-neon-capsule-tags.html` |
 | `ref-13-glass-fintech-dashboard` | Dashboard en verre dépoli — lavande & bleu | `card-08-orb-chain-total`, `card-09-gradient-metric-curve`, `chart-03-accent-column-callout`, `layout-03-glass-board`, `list-04-due-rows` | `decks/ref-13-glass-fintech-dashboard.html` |
