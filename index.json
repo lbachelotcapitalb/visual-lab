@@ -2653,6 +2653,7 @@
           "pitch_over_plane_h": 0.571,
           "plane_w_over_width": 0.317,
           "rule_start_over_plane_w": 0.655,
+          "rule_gap_over_width": 0.027,
           "label_x_over_width": 0.413
         },
         "type_px": {
@@ -2723,8 +2724,9 @@
         },
         {
           "name": "le filet s'arrête avant le texte : il désigne, il ne souligne pas",
-          "measure": "box('.vl-layers__row--1 .vl-layers__name').left - box('.vl-layers__row--1 .vl-layers__rule').right",
-          "min": 16
+          "measure": "(box('.vl-layers__row--1 .vl-layers__name').left - box('.vl-layers__row--1 .vl-layers__rule').right) / W",
+          "expect": 0.027,
+          "tol": 0.008
         },
         {
           "name": "la colonne de libellés et la pile occupent la même bande verticale",
@@ -2747,7 +2749,12 @@
           "max": 0
         }
       ],
-      "pptx": null,
+      "pptx": {
+        "primitive": "diamond_stack",
+        "emitter": "kit/vl_pptx.py:layer_stack",
+        "pattern": "diagram-01-layer-stack",
+        "note": "Le losange est un `MSO_SHAPE.DIAMOND` — pour une fois la forme native de PowerPoint EST exactement le `clip-path` du fragment, elle n'a aucun ajustement qui dérive avec la proportion (contrairement au snip du chanfrein, cf. `notched_rect`). Le point dur est ailleurs : python-pptx n'expose AUCUNE transparence, or ici l'opacité N'EST PAS un effet mais l'information elle-même — sans elle les trois plans sortent identiques et le rang disparaît. Elle s'écrit donc dans le XML du remplissage (`<a:alpha>`), et le moteur de rendu composite les recouvrements comme le navigateur. La hauteur n'est pas un argument de l'émetteur : elle se déduit du nombre de couches et du pas, sinon on pourrait écraser la pile depuis l'appel."
+      },
       "html": "patterns/diagram-01-layer-stack.html"
     },
     {

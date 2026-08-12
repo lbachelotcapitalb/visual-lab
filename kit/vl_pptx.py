@@ -28,10 +28,11 @@ Contrôle VISUEL ensuite, jamais à la place : `deck-builder/render_check.py`.
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 from pptx.dml.color import RGBColor
-from pptx.enum.shapes import MSO_SHAPE
+from pptx.enum.shapes import MSO_CONNECTOR, MSO_SHAPE
 from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
 from pptx.util import Emu, Inches, Pt
 
@@ -102,10 +103,14 @@ def scale(pid: str, body_pt: float = FLOOR_BODY_PT) -> dict[str, float]:
     corps. Le plancher s'applique au corps ET aux libellés : un micro-libellé qui tombe à 8 pt
     n'est plus une micro-capitale, c'est une note de bas de page illisible."""
     px = geom(pid, "type_px")
-    if "body" in px:
-        anchor_px, anchor_name = px["body"], "body"
-    elif "desc" in px:
-        anchor_px, anchor_name = px["desc"], "desc"
+    # L'ancre est le CORPS, sous le nom qu'il porte dans ce pattern-là. `note` en fait partie :
+    # sans elle, un pattern dont le corps s'appelle ainsi s'ancrait sur son plus GROS slot, et
+    # tout le reste tombait sous le plancher pour y être remonté — deux niveaux de typo écrasés
+    # en un seul, la hiérarchie perdue à la conversion.
+    for name in ("body", "desc", "note"):
+        if name in px:
+            anchor_px, anchor_name = px[name], name
+            break
     else:  # un pattern de titre : le titre EST l'ancre
         anchor_name = next(iter(px))
         anchor_px = px[anchor_name]
@@ -132,8 +137,8 @@ def contrast(fg: str, bg: str) -> float:
 
 # ————————————————————————— la primitive : le coin chanfreiné —————————————————————————
 
-def flatten(shape, fill: RGBColor):
-    """Aplat NET : couleur pleine, aucun contour, aucune ombre.
+def destyle(shape):
+    """Coupe le lien au thème : aucune ombre, aucun effet hérité.
 
     ⚠️ Piège vérifié au rendu LibreOffice : `shape.shadow.inherit = False` écrit bien un
     `<a:effectLst/>` vide, et ça ne suffit PAS. python-pptx ajoute aussi un `<p:style>` qui
@@ -141,16 +146,25 @@ def flatten(shape, fill: RGBColor):
     sort avec une ombre portée grise en bas à droite. Sur une charte à angles vifs, cette
     ombre est un défaut visible (constaté sur le premier .pptx de démonstration). Il faut
     RETIRER l'élément `<p:style>`, pas seulement neutraliser l'effet.
+
+    ⚠️ Et ça vaut pour les TRAITS autant que pour les aplats : un connecteur naît lui aussi
+    avec son `<p:style>`, et un filet de rappel de 0,75 pt doublé d'une ombre grise se lit
+    comme un trait sale (constaté sur le premier rendu de `layer_stack`).
     """
-    shape.fill.solid()
-    shape.fill.fore_color.rgb = fill
-    shape.line.fill.background()
     shape.shadow.inherit = False
     for style in shape._element.findall(
         "{http://schemas.openxmlformats.org/presentationml/2006/main}style"
     ):
         shape._element.remove(style)
     return shape
+
+
+def flatten(shape, fill: RGBColor):
+    """Aplat NET : couleur pleine, aucun contour, aucune ombre."""
+    shape.fill.solid()
+    shape.fill.fore_color.rgb = fill
+    shape.line.fill.background()
+    return destyle(shape)
 
 
 def notched_rect(slide, x, y, w, h, fill: RGBColor, corner: str = "br",
@@ -312,6 +326,139 @@ def title_leading_rule(slide, x_in, y_in, w_in, lines: list[str],
         "type_pt": {"title": title_pt},
         "contrasts": {"title": contrast(tokens(pid)["--vl-black"], tokens(pid)["--vl-bg"])},
         "min_contrast": {"title": 7.0},
+    }
+
+
+def _alpha(shape, value: float):
+    """Opacité d'un aplat déjà rempli.
+
+    ⚠️ python-pptx n'expose AUCUNE transparence : ni `fill.transparency`, ni un argument de
+    `fore_color`. Elle s'écrit dans le XML du remplissage — `<a:alpha val="44000"/>` pour 44 %.
+    Sans elle, une pile de couches sort en trois aplats identiques et le rang, qui EST
+    l'information du schéma, disparaît.
+    """
+    if value >= 1:
+        return shape
+    fill = shape._element.spPr.find(
+        "{http://schemas.openxmlformats.org/drawingml/2006/main}solidFill"
+    )
+    srgb = fill.find("{http://schemas.openxmlformats.org/drawingml/2006/main}srgbClr")
+    srgb.append(srgb.makeelement(
+        "{http://schemas.openxmlformats.org/drawingml/2006/main}alpha",
+        {"val": str(int(round(value * 100000)))},
+    ))
+    return shape
+
+
+def layer_stack(slide, x_in, y_in, w_in, layers: list[tuple[str, str]],
+                pid: str = "diagram-01-layer-stack", body_pt: float = FLOOR_BODY_PT) -> dict:
+    """Pile de couches isométriques légendées (cf. `diagram-01-layer-stack`).
+
+    `layers` va du HAUT vers le BAS — l'ordre est l'information. La HAUTEUR n'est pas un
+    argument : elle est dictée par la géométrie (padding + hauteur de plan + (n−1) × pas), donc
+    la donner reviendrait à pouvoir écraser la pile. Elle est retournée dans la mesure.
+
+    Le losange est un `MSO_SHAPE.DIAMOND` et non un freeform : contrairement au chanfrein de
+    `notched_rect`, le diamant de PowerPoint EST exactement le `clip-path` du fragment
+    (polygon 50/0 100/50 50/100 0/50), il n'a pas d'ajustement qui dérive avec la proportion.
+    """
+    if not 3 <= len(layers) <= 5:
+        raise ValueError(
+            f"{pid} attend 3 à 5 couches, reçu {len(layers)} — en dessous la pile ne dit pas "
+            "un ordre, au-dessus les plans du bas s'effacent avant d'être comptés "
+            "(cf. `avoid_when` du pattern)."
+        )
+    n = len(layers)
+    x, y, w = Inches(x_in), Inches(y_in), Inches(w_in)
+    r, pads = geom(pid, "ratios"), geom(pid, "pad_ratio")
+    sizes = scale(pid, body_pt)
+
+    plane_w = int(w * r["plane_w_over_width"])
+    plane_h = int(plane_w * r["plane_h_over_w"])
+    pitch = int(plane_h * r["pitch_over_plane_h"])
+    pad_t, pad_b = int(w * pads["top"]), int(w * pads["bottom"])
+    height = pad_t + plane_h + (n - 1) * pitch + pad_b
+
+    # Le PAS est géométrique (il vient des ratios) ; le CORPS, lui, est ancré sur le plancher de
+    # lisibilité en points. Les deux ne tiennent ensemble qu'au-delà d'une certaine largeur : en
+    # dessous, l'explication d'une couche mord sur le nom de la suivante — et rien ne le
+    # signalerait, un texte qui déborde n'étant pas une erreur en .pptx. Le budget de texte est
+    # celui du fragment : la ligne de titre, son interligne, puis DEUX lignes d'explication.
+    name_h = Pt(sizes["name"] * 1.2)
+    note_gap = Pt(sizes["note"] * 0.6)
+    text_h = name_h + note_gap + 2 * Pt(sizes["note"] * 1.7)
+    if pitch < text_h:
+        need = text_h / (r["pitch_over_plane_h"] * r["plane_h_over_w"] * r["plane_w_over_width"])
+        # arrondi au DIXIÈME SUPÉRIEUR : une largeur conseillée qu'on ne peut pas recopier telle
+        # quelle sans relever la même erreur ne conseille rien.
+        need_in = math.ceil(need / 914400 * 10) / 10
+        raise ValueError(
+            f"{pid} : à {w_in:.2f}\" de large, le pas ({pitch / 12700:.1f} pt) est plus court "
+            f"que le texte d'une couche ({text_h / 12700:.1f} pt à {body_pt} pt de corps) — les "
+            f"rangées se chevaucheraient. Élargir à {need_in}\" au moins, ou baisser "
+            "`body_pt` (au risque du plancher de lisibilité)."
+        )
+
+    rule_x = x + int(plane_w * r["rule_start_over_plane_w"])
+    label_x = x + int(w * r["label_x_over_width"])
+    rule_end = label_x - int(w * r["rule_gap_over_width"])
+
+    # L'opacité suit une progression GÉOMÉTRIQUE. Les trois premiers alphas sont des tokens du
+    # système ; au-delà on POURSUIT la raison relevée entre les deux premiers, on ne l'invente
+    # pas — un pas soustractif rendrait la pile plate (cf. les notes du pattern).
+    tok = tokens(pid)
+    alphas = [float(tok.get(f"--vl-layer-alpha-{i + 1}", 0)) for i in range(3)]
+    ratio = alphas[1] / alphas[0]
+    while len(alphas) < n:
+        alphas.append(alphas[-1] * ratio)
+    alphas = alphas[:n]
+
+    coral, ink = rgb(pid, "--vl-coral"), rgb(pid, "--vl-ink")
+    ink_muted, hairline = rgb(pid, "--vl-ink-muted"), rgb(pid, "--vl-hairline")
+
+    # L'ordre d'insertion EST l'ordre d'empilement. Il porte deux choses du fragment, et pas
+    # seulement l'esthétique : les filets d'ABORD, parce qu'ils naissent SOUS les losanges et
+    # que leur longueur visible est dictée par la forme (posés au-dessus, ils barreraient le
+    # plan de tête) ; puis les plans du BAS vers le haut, la couche de tête devant.
+    centers = [y + pad_t + i * pitch + plane_h / 2 for i in range(n)]
+    for center in centers:
+        rule = slide.shapes.add_connector(
+            MSO_CONNECTOR.STRAIGHT, Emu(int(rule_x)), Emu(int(center)),
+            Emu(int(rule_end)), Emu(int(center)))
+        rule.line.color.rgb = hairline
+        rule.line.width = Pt(0.75)
+        destyle(rule)
+
+    for i in range(n - 1, -1, -1):
+        plane = slide.shapes.add_shape(
+            MSO_SHAPE.DIAMOND, Emu(int(x)), Emu(int(y + pad_t + i * pitch)),
+            Emu(plane_w), Emu(plane_h))
+        _alpha(flatten(plane, coral), alphas[i])
+
+    for i, (name, note) in enumerate(layers):
+        center = centers[i]
+        _text(slide, label_x, center - name_h / 2, w - (label_x - x), name_h,
+              [(name.upper(), sizes["name"], ink, False, 0.13)], anchor=MSO_ANCHOR.MIDDLE)
+        _text(slide, label_x, center + name_h / 2 + note_gap,
+              w - (label_x - x), text_h - name_h - note_gap,
+              [(note.upper(), sizes["note"], ink_muted, False, 0.05)])
+
+    return {
+        "pid": pid, "w": w, "h": height,
+        "measured": {
+            "plane_w_over_width": plane_w / w,
+            "plane_h_over_w": plane_h / plane_w,
+            "pitch_over_plane_h": pitch / plane_h,
+            "rule_start_over_plane_w": (rule_x - x) / plane_w,
+            "label_x_over_width": (label_x - x) / w,
+            "rule_gap_over_width": (label_x - rule_end) / w,
+        },
+        "type_pt": sizes,
+        "contrasts": {
+            "name": contrast(tok["--vl-ink"], tok["--vl-bg"]),
+            "note": contrast(tok["--vl-ink-muted"], tok["--vl-bg"]),
+        },
+        "min_contrast": {"name": 7.0, "note": 4.5},
     }
 
 

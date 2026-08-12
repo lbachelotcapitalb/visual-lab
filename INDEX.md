@@ -228,6 +228,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - éviter : Les éléments sont de même rang (une pile dit une hiérarchie, même quand on ne la pense pas), leur nombre dépasse cinq (les losanges du bas s'effacent avant d'être comptés), ou une grandeur doit se lire : ici rien n'est proportionnel à rien — c'est un schéma, pas un graphique.
 - à remplir : name, note
 - variables : --vl-coral, --vl-layer-alpha-1, --vl-layer-alpha-2, --vl-layer-alpha-3, --vl-ink, --vl-ink-muted, --vl-hairline, --vl-track-title, --vl-track-body
+- .pptx : `kit/vl_pptx.py:layer_stack`
 - tags : schema, diagramme, couches, layers, pile, empilement, isometrique, losange, architecture, stack, frontend, backend, hierarchie, filet, legende, opacite, profondeur
 
 **diagram-02-branch-timeline** — Timeline à branches en équerre

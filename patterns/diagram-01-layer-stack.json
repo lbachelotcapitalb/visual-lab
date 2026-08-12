@@ -90,6 +90,7 @@
       "pitch_over_plane_h": 0.571,
       "plane_w_over_width": 0.317,
       "rule_start_over_plane_w": 0.655,
+      "rule_gap_over_width": 0.027,
       "label_x_over_width": 0.413
     },
     "type_px": {
@@ -160,8 +161,9 @@
     },
     {
       "name": "le filet s'arrête avant le texte : il désigne, il ne souligne pas",
-      "measure": "box('.vl-layers__row--1 .vl-layers__name').left - box('.vl-layers__row--1 .vl-layers__rule').right",
-      "min": 16
+      "measure": "(box('.vl-layers__row--1 .vl-layers__name').left - box('.vl-layers__row--1 .vl-layers__rule').right) / W",
+      "expect": 0.027,
+      "tol": 0.008
     },
     {
       "name": "la colonne de libellés et la pile occupent la même bande verticale",
@@ -184,5 +186,11 @@
       "max": 0
     }
   ],
+  "pptx": {
+    "primitive": "diamond_stack",
+    "emitter": "kit/vl_pptx.py:layer_stack",
+    "pattern": "diagram-01-layer-stack",
+    "note": "Le losange est un `MSO_SHAPE.DIAMOND` — pour une fois la forme native de PowerPoint EST exactement le `clip-path` du fragment, elle n'a aucun ajustement qui dérive avec la proportion (contrairement au snip du chanfrein, cf. `notched_rect`). Le point dur est ailleurs : python-pptx n'expose AUCUNE transparence, or ici l'opacité N'EST PAS un effet mais l'information elle-même — sans elle les trois plans sortent identiques et le rang disparaît. Elle s'écrit donc dans le XML du remplissage (`<a:alpha>`), et le moteur de rendu composite les recouvrements comme le navigateur. La hauteur n'est pas un argument de l'émetteur : elle se déduit du nombre de couches et du pas, sinon on pourrait écraser la pile depuis l'appel."
+  },
   "notes": "Le pas à 0,57 hauteur de plan n'est pas un goût : sous 0,5, le centre d'une couche passe sous le plan qui la surplombe et son filet ne peut plus en sortir — le schéma perd sa correspondance avant de perdre sa lisibilité, et rien ne le signale. C'est le benchmark « le centre échappe au plan du dessus » qui tient ce seuil. L'opacité suit une progression GÉOMÉTRIQUE (× 0,42) et non une soustraction régulière : à pas soustractif constant, la troisième couche reste trop dense et la pile paraît plate. Les recouvrements ne sont jamais dessinés — ils sont composités par le navigateur, et c'est ce qui rend le schéma thémable en ne changeant qu'UNE couleur. Écart assumé avec la référence : elle laisse les filets DÉRIVER (les blocs de texte coulent avec un écart constant, la correspondance repose sur l'ordre de lecture) ; ici chaque filet est verrouillé sur le centre de sa couche, parce que « c'est le troisième donc c'est celui du bas » n'est pas une correspondance dès que le schéma est technique. Pour passer à 4 ou 5 couches : un plan et une rangée de plus avec le `--i` suivant, un alpha qui poursuit la même raison géométrique, et une hauteur de cadre = hauteur de plan + (n − 1) × pas + 2 × padding."
 }
