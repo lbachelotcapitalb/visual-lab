@@ -2,8 +2,8 @@
   "name": "Triptyque d'images en bande",
   "family": "layout",
   "ref": "ref-07-retro-brand-hero",
-  "intent": "Poser trois images de façon qu'elles se lisent comme UN bloc et non comme trois objets : même ratio pour les trois, gouttière constante et petite devant une cellule, bande remplie exactement d'un bord à l'autre. Le ratio des cellules et leurs poids de largeur sont les deux seuls paramètres — c'est par eux que la même bande donne un triptyque portrait dans un coin ou une frise paysage sur toute une largeur.",
-  "when_to_use": "Un bloc de trois visuels qui doit peser comme une masse unique — contrepoids d'un titre, frise de pied de carte, bandeau de trois vues d'un même sujet. Se pose dans n'importe quelle largeur : la bande la remplit et sa hauteur en découle par le ratio.",
+  "intent": "Poser trois images de façon qu'elles se lisent comme UN bloc et non comme trois objets : une hauteur COMMUNE, une gouttière constante et petite devant une cellule, une bande remplie exactement d'un bord à l'autre. La hauteur, les trois poids de largeur et — quand la hauteur est laissée libre — le ratio qui la déduit sont les seuls paramètres : c'est par eux que la même bande donne un triptyque portrait à poids égaux dans un coin, ou une frise à cellules inégales sur toute une largeur.",
+  "when_to_use": "Un bloc de trois visuels qui doit peser comme une masse unique — contrepoids d'un titre, frise de pied de page, bandeau de trois vues d'un même sujet. Se pose dans n'importe quelle largeur : la bande la remplit, et sa hauteur est soit imposée, soit déduite du ratio de la première cellule. Des poids inégaux sont un usage NORMAL du pattern, pas une entorse — c'est même eux qui font qu'une bande se lit comme une suite de photographies plutôt que comme une grille.",
   "avoid_when": "Une des trois images doit être regardée pour elle-même : la bande écrase les hiérarchies, et une image à mettre en avant demande une composition à mise en avant. Écarter aussi au-delà de trois cellules — à quatre, chaque vignette passe sous le quart de la largeur et la bande devient une planche de contact.",
   "media": [
     "web",
@@ -105,14 +105,14 @@
   },
   "benchmarks": [
     {
-      "name": "MÊME RATIO pour les trois cellules — c'est lui qui fait la bande, pas la gouttière",
-      "measure": "(() => { const r = [...document.querySelectorAll('.vl-tri__cell')].map((e) => { const b = e.getBoundingClientRect(); return b.width / b.height; }); return Math.max(...r) - Math.min(...r); })()",
-      "max": 0.01
-    },
-    {
-      "name": "et donc la MÊME hauteur : la bande a un pied et un sommet uniques",
+      "name": "LA LOI DE LA BANDE — hauteur COMMUNE aux trois cellules : un pied et un sommet uniques",
       "measure": "(() => { const h = [...document.querySelectorAll('.vl-tri__cell')].map((e) => e.getBoundingClientRect().height); return (Math.max(...h) - Math.min(...h)) / H; })()",
       "max": 0.005
+    },
+    {
+      "name": "à poids égaux le même ratio en DÉCOULE — corollaire du cas ref-07, pas la loi (cf. le reparamétrage ref-08 plus bas)",
+      "measure": "(() => { const r = [...document.querySelectorAll('.vl-tri__cell')].map((e) => { const b = e.getBoundingClientRect(); return b.width / b.height; }); return Math.max(...r) - Math.min(...r); })()",
+      "max": 0.01
     },
     {
       "name": "GOUTTIÈRE CONSTANTE : les deux intervalles sont le même à moins de 0,2 % près",
@@ -153,6 +153,17 @@
       "tol": 0.01
     },
     {
+      "name": "UNE SEULE BANDE, DEUX RÉFÉRENCES — reparamétrée en ref-08 (1060 large, gouttière 16, hauteur 380, poids 1 / 1,31 / 1,14), elle rend les cellules relevées sur le deck : 298 / 390,3 / 339,7",
+      "measure": "(() => { const c = document.querySelector('.vl-tri').cloneNode(true); c.style.cssText = 'width:1060px;--vl-gap:16px;--vl-tri-h:380px;--vl-tri-ratio:auto;--vl-tri-w1:1;--vl-tri-w2:1.31;--vl-tri-w3:1.14'; document.body.appendChild(c); const b = [...c.querySelectorAll('.vl-tri__cell')].map((e) => e.getBoundingClientRect()); const want = [298, 390.3, 339.7]; const err = Math.max(...b.map((r, i) => Math.abs(r.width - want[i]))) / 1060; c.remove(); return err; })()",
+      "max": 0.002
+    },
+    {
+      "name": "et c'est bien la HAUTEUR qui les tient, pas le ratio : reparamétrée, la bande garde une hauteur unique alors que les trois ratios s'écartent de plus de 0,2",
+      "measure": "(() => { const c = document.querySelector('.vl-tri').cloneNode(true); c.style.cssText = 'width:1060px;--vl-gap:16px;--vl-tri-h:380px;--vl-tri-ratio:auto;--vl-tri-w1:1;--vl-tri-w2:1.31;--vl-tri-w3:1.14'; document.body.appendChild(c); const b = [...c.querySelectorAll('.vl-tri__cell')].map((e) => e.getBoundingClientRect()); const hs = b.map((r) => r.height), rs = b.map((r) => r.width / r.height); const flat = (Math.max(...hs) - Math.min(...hs)) / 380; const spread = Math.max(...rs) - Math.min(...rs); const full = Math.abs((b[2].right - b[0].left) - 1060) / 1060; c.remove(); return (flat <= 0.005 && spread >= 0.2 && full <= 0.002) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
       "name": "chaque cellule CLIPPE son image : une bande pleine n'a pas de bord de fond visible",
       "measure": "[...document.querySelectorAll('.vl-tri__cell')].filter((e) => getComputedStyle(e).overflow === 'hidden').length",
       "expect": 3,
@@ -175,5 +186,5 @@
       "max": 0.005
     }
   ],
-  "notes": "Trois règles font qu'on lit une bande et non trois images, et les benchmarks les tiennent une par une : même ratio, gouttière constante et petite, remplissage exact de la largeur. La première est la plus coûteuse à respecter et la plus payante — trois ratios différents et l'œil recompte les objets, quelle que soit la gouttière.\n\n`flex: 1 0 0` et pas `1 0 auto`, et c'est un piège de construction, pas un détail. Avec une base `auto`, ce sont les dimensions intrinsèques des images qui fixent la largeur et les poids ne se partagent que le RESTE : les cellules dérivent dès qu'on remplace une image de démonstration par une autre, et rien ne le signale puisque la bande reste pleine. Un benchmark relit `flexBasis` pour cette raison — c'est la seule assertion du pattern qui porte sur une déclaration plutôt que sur une mesure, et c'est justifié : la faute qu'elle attrape ne se voit que sur des images qu'on n'a pas encore.\n\nLe ratio et les trois poids sont les seuls paramètres. `ref-07` prend `3 / 4` et `1 1 1` sur 42 % de la largeur de sa carte, calé haut-droite ; `ref-08` prendra `4 / 3` sur 100 % de la sienne, calé en pied. C'est la même bande, deux tempéraments — et c'est précisément ce qu'il ne faut pas dupliquer en deux patterns.\n\nLes images de démonstration sont des compositions SVG génératives, jamais des URL distantes : rien à télécharger, rien qui périme, et chaque couleur passe par un token. Leurs arrêts de dégradé passent par des CLASSES et non par des attributs de présentation — une variable CSS dans un attribut SVG n'est pas garantie partout, une propriété CSS l'est. En usage réel, ces trois `<svg>` sont remplacés par des `<img>` : le pattern possède la bande, pas ses images."
+  "notes": "Trois règles font qu'on lit une bande et non trois images, et les benchmarks les tiennent une par une : hauteur COMMUNE, gouttière constante et petite, remplissage exact de la largeur.\n\nLa première a été mal nommée jusqu'au 12/08/2026, et c'est la correction qui a généralisé le pattern. On avait écrit « même RATIO pour les trois », parce que la seule référence qu'on avait sous la main — ref-07 — a des poids égaux, cas où le même ratio et la même hauteur sont la même phrase. Le relevé de ref-08 sur son deck a séparé les deux : ses cellules pèsent 1 / 1,31 / 1,14, leurs ratios vont de 0,78 à 1,03, et la bande se lit pourtant d'un bloc. Ce qui tient la bande est donc le pied et le sommet uniques ; le ratio identique n'en est que le corollaire à poids égaux. Concrètement, `aspect-ratio` a quitté les trois cellules pour ne vivre que sur la PREMIÈRE, qui donne sa taille à la ligne flex — `align-items: stretch` la recopie sur les deux autres. Posé sur les trois, il leur imposait trois hauteurs différentes dès que les poids cessaient d'être égaux : la bande se disloquait, et aucun reparamétrage n'était possible sans la casser. Deux benchmarks montent la garde là-dessus : ils CLONENT la bande, la reparamètrent en ref-08 et vérifient qu'elle rend bien les largeurs relevées sur le deck (298 / 390,3 / 339,7) à hauteur unique. C'est la preuve que les deux références sortent d'un seul pattern, et pas de deux copies qui divergeront.\n\n`flex: 1 0 0` et pas `1 0 auto`, et c'est un piège de construction, pas un détail. Avec une base `auto`, ce sont les dimensions intrinsèques des images qui fixent la largeur et les poids ne se partagent que le RESTE : les cellules dérivent dès qu'on remplace une image de démonstration par une autre, et rien ne le signale puisque la bande reste pleine. Un benchmark relit `flexBasis` pour cette raison — c'est la seule assertion du pattern qui porte sur une déclaration plutôt que sur une mesure, et c'est justifié : la faute qu'elle attrape ne se voit que sur des images qu'on n'a pas encore.\n\nLa hauteur, les trois poids et le ratio de repli sont les seuls paramètres. `ref-07` laisse la hauteur libre et prend `3 / 4` avec `1 1 1`, sur 42 % de la largeur de sa carte, calée haut-droite ; `ref-08` impose 380 px de haut avec `1 / 1,31 / 1,14`, sur 100 % de la largeur utile de sa page, calée en pied. C'est la même bande, deux tempéraments — et c'est précisément ce qu'il ne faut pas dupliquer en deux patterns.\n\nLes images de démonstration sont des compositions SVG génératives, jamais des URL distantes : rien à télécharger, rien qui périme, et chaque couleur passe par un token. Leurs arrêts de dégradé passent par des CLASSES et non par des attributs de présentation — une variable CSS dans un attribut SVG n'est pas garantie partout, une propriété CSS l'est. En usage réel, ces trois `<svg>` sont remplacés par des `<img>` : le pattern possède la bande, pas ses images."
 }
