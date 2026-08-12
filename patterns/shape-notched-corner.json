@@ -66,7 +66,7 @@
   ],
   "pptx": {
     "primitive": "notched_rect",
-    "emitter": "kit/vl_pptx.py:notched_card",
+    "emitter": "kit/vl_pptx.py:notched_rect",
     "pattern": "shape-notched-corner"
   },
   "notes": "La coupe se fait en LONGUEUR, pas en pourcentage : `clip-path: polygon(... calc(100% - var(--vl-notch)) ...)`. Un pourcentage résout indépendamment sur X et Y, donc la coupe n'est plus à 45° dès que la carte n'est pas carrée — c'est la faute qui rend la charte méconnaissable. Le token vaut ~7,5 % de la largeur de la carte : à l'échelle d'une slide 1600×900, 32 à 36 px. En .pptx la même forme se fabrique en freeform 5 points (voir `pptx.emitter`), pas en rectangle à coin arrondi."

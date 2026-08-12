@@ -2,7 +2,7 @@
 // Reconstruit patterns.db + INDEX.md + index.json depuis les fichiers du dépôt. Idempotent :
 // tout est entièrement recréé à chaque passage. Sort en code 1 si un pattern est invalide —
 // une bibliothèque à moitié indexée qui se tait est pire qu'une erreur.
-import { unlinkSync, existsSync, writeFileSync } from 'node:fs';
+import { unlinkSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { ROOT, DB, FAMILIES, MEDIA, loadPatterns, loadSystems, mediaOf, sql, q } from './lib.mjs';
@@ -59,6 +59,18 @@ for (const p of patterns) {
     if (!b.name || !b.measure) errors.push(`${p.id} : un benchmark sans "name" ou sans "measure"`);
     if (b.expect === undefined && b.min === undefined && b.max === undefined) {
       errors.push(`${p.id} : benchmark "${b.name}" sans seuil (expect / min / max)`);
+    }
+  }
+  // Un `pptx.emitter` est une PROMESSE faite à deck-builder : « ce pattern sort en .pptx par
+  // cette fonction-là ». Personne ne la vérifie au moment où on l'écrit, et une promesse fausse
+  // ne se découvre qu'à l'ImportError, chez le producteur, au milieu d'un deck — `shape-notched-
+  // corner` a annoncé pendant des mois un `notched_card` qui n'a jamais existé.
+  if (p.pptx?.emitter) {
+    const [file, fn] = p.pptx.emitter.split(':');
+    const src = existsSync(join(ROOT, file)) ? readFileSync(join(ROOT, file), 'utf8') : null;
+    if (src === null) errors.push(`${p.id} : pptx.emitter pointe sur ${file}, qui n'existe pas`);
+    else if (!fn || !new RegExp(`^def ${fn}\\s*\\(`, 'm').test(src)) {
+      errors.push(`${p.id} : pptx.emitter "${p.pptx.emitter}" — ${file} ne définit pas ${fn}()`);
     }
   }
   // Un pattern doit être thémable : pas de couleur hexadécimale en dur dans le HTML.

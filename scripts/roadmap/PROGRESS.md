@@ -110,8 +110,8 @@ CHECKPOINT_STEP: S1
 
 - [x] 1. `scale()` sait s'ancrer sur `note`, et `layer_stack()` est écrit dans `kit/vl_pptx.py`
 - [x] 2. le bloc `pptx` est déclaré dans `patterns/diagram-01-layer-stack.json`
-- [ ] 3. lint : `bin/index.mjs` refuse un `pptx.emitter` dont la fonction n'existe pas dans le kit
-- [ ] 4. contrôle : un .pptx de démonstration est produit, `audit()` est vert, le rendu est REGARDÉ
+- [x] 3. lint : `bin/index.mjs` refuse un `pptx.emitter` dont la fonction n'existe pas dans le kit
+- [x] 4. contrôle : un .pptx de démonstration est produit, `audit()` est vert, le rendu est REGARDÉ
 - [ ] 5. gate + doc à jour + commit final
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à

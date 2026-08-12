@@ -111,8 +111,8 @@
   ],
   "pptx": {
     "primitive": "rows_hairline",
-    "emitter": "kit/vl_pptx.py:index_rows",
-    "pattern": "list-02-ruled-index"
+    "pattern": "list-02-ruled-index",
+    "note": "Pas encore d'émetteur : le champ annonçait un `index_rows` qui n'a jamais été écrit, ce qui promettait à deck-builder une sortie .pptx inexistante. Ce qu'il faudra y traiter : le filet de séparation est une RANGÉE, pas une bordure — en .pptx il se pose en connecteur pleine largeur entre deux lignes, et l'interligne se règle sur lui, pas sur la boîte de texte."
   },
   "notes": "Deux pièges. (1) Ne JAMAIS répartir les entrées avec `space-between` pour remplir la hauteur : le filet s'éloigne de l'entrée qu'il ferme et l'écart se lit comme un bug. Si la colonne est trop courte pour la zone, on centre le bloc compact (`align-content: center`) et on assume le vide autour — c'est ce que fait ref-06 slide 02. (2) Le numéro s'aligne en HAUT (`align-items: flex-start`), pas au centre de l'entrée : une explication qui passe à trois lignes ferait dériver un numéro centré et la colonne de droite ne tiendrait plus. En .pptx, le filet est un rectangle de 1 px de haut — une bordure de forme y est rendue plus épaisse et plus sombre."
 }

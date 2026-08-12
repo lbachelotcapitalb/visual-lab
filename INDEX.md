@@ -337,7 +337,6 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - éviter : Plus de 6 entrées (les filets deviennent une trame et plus personne ne lit), ou les entrées n'ont pas d'explication — une liste de libellés nus n'a pas besoin de cette structure, un simple empilement suffit.
 - à remplir : label, desc, number
 - variables : --vl-hairline, --vl-black, --vl-ink-muted
-- .pptx : `kit/vl_pptx.py:index_rows`
 - tags : sommaire, index, toc, liste, filet, numero, hairline, deck, etapes
 
 **list-03-two-column-toc** — Sommaire numéroté 2 colonnes
@@ -379,7 +378,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - employer : Sur les aplats d'accent d'un deck ou d'une landing qui doivent se reconnaître d'une slide à l'autre : carte statistique, carte de second rang, pastille de glyphe. Une seule orientation par famille de contenu.
 - éviter : Sur une image (la coupe se lit comme un recadrage raté), sur une carte du même fond que la slide (la coupe devient invisible et le lecteur ne voit qu'un angle sale), ou sur plus d'un coin — deux coins coupés font un losange, pas une signature.
 - variables : --vl-notch, --vl-orange, --vl-steel
-- .pptx : `kit/vl_pptx.py:notched_card`
+- .pptx : `kit/vl_pptx.py:notched_rect`
 - tags : chanfrein, notch, coin, clip-path, carte, aplat, forme, signature, deck, corporate
 
 ### tag
