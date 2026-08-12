@@ -110,8 +110,8 @@ CHECKPOINT_STEP: S4
 
 - [x] spec `ref-07` complétée (palette relevée→corrigée, ratios ancrés sur la largeur de PAGE,
       ce qui est écarté) + `systems/ref-07-retro-brand-hero.json`
-- [ ] deck `ref-07` : sol photo génératif + carte flottante + nav trois zones
-- [ ] deck `ref-07` : wordmark géant bas-gauche + triptyque portrait haut-droite,
+- [x] deck `ref-07` : sol photo génératif + carte flottante + nav trois zones
+- [x] deck `ref-07` : wordmark géant bas-gauche + triptyque portrait haut-droite,
       `check-deck.mjs ref-07` vert
 - [ ] `layout-11-hero-card-on-photo` (le shell : sol, encart, rayon, ombre)
 - [ ] `layout-12-nav-three-zone` (liens / logo optiquement centré / bouton)

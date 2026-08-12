@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ref-07 — retro brand hero (northbeam)</title>
+<style>
+@import url("../fonts/fonts.css");
+
+/* ref-07-retro-brand-hero — reconstitution fidèle. Ce n'est PAS une slide : c'est UNE page web,
+   scène 1440×900, déclarée `vl:stage web` plus bas.
+
+   LE SOL FAIT PARTIE DE LA PAGE, et c'est la différence avec ref-08. Là-bas, la photo montrait
+   la carte POSÉE DANS UNE PIÈCE — une mise en scène du design, retirée le 30/07 parce qu'elle
+   obligeait à recadrer chaque export. Ici la photo est le fond de la page, à plat, sans
+   perspective et sans ombre d'objet physique : la carte y est INCRUSTÉE. La retirer ferait
+   disparaître le sujet même du hero (une carte crème sur un aplat crème n'a plus de bord).
+
+   Deux couches, pas trois : sol → carte. Le triptyque et le bouton sont des feuilles décorées.
+
+   La photo de plage est une composition SVG générative (aucune URL distante, rien qui périme),
+   qui porte les dominantes relevées dans la spec. Toutes les couleurs sont dans ce :root ;
+   aucun hex plus bas. */
+:root {
+  /* — la carte et l'encre — */
+  --vl-card: #FBF7EC;
+  --vl-bg: #FBF7EC;
+  --vl-ink: #1E1B18;
+  --vl-accent: #B2201C;
+  --vl-on-accent: #FBF7EC;
+
+  /* — le sol : dominantes de la photo de plage — */
+  --vl-ground-sky-hi: #D7E6EC;
+  --vl-ground-sky-lo: #BBD3DE;
+  --vl-ground-sun: #F4EFE2;
+  --vl-ground-sea-hi: #7FA8BC;
+  --vl-ground-sea-lo: #5E8AA0;
+  --vl-ground-foam: #EFEAE0;
+  --vl-ground-sand-wet: #C7B49A;
+  --vl-ground-sand-dry: #E4D5BC;
+
+  /* — les trois images du triptyque : vague / parasol / dune — */
+  --vl-ph-a-hi: #86B0C4;
+  --vl-ph-a-lo: #3F6B84;
+  --vl-ph-a-crest: #F1EDE3;
+  --vl-ph-b-sky: #C9DEE7;
+  --vl-ph-b-canvas: #D8442E;
+  --vl-ph-b-canvas-lo: #92251C;
+  --vl-ph-b-pole: #EDE4D2;
+  --vl-ph-c-hi: #EFE1C6;
+  --vl-ph-c-lo: #B9A181;
+
+  --vl-radius-card: 6px;
+  --vl-radius-photo: 8px;
+  --vl-radius-pill: 4px;
+  --vl-gap: 12px;
+  --vl-margin: 44px;
+  --vl-shadow-card: 0 24px 60px rgba(0, 0, 0, 0.18);
+
+  --vl-display: Archivo, "Archivo Black", Impact, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; display: flex; font-family: var(--vl-display);
+       -webkit-font-smoothing: antialiased; }
+
+/* ————— LA PAGE : le sol photographique —————
+   `background` porte la dominante du ciel : c'est elle que lit le lint de composition, qui
+   ne sait pas échantillonner un SVG. Sans elle, le sol se comparerait à du blanc et la carte
+   crème passerait pour une couche 1:1 redondante. */
+.slide {
+  position: relative; width: 1440px; height: 900px;
+  background: var(--vl-ground-sky-lo);
+  color: var(--vl-ink);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.ground { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* ————— LA CARTE : incrustée, jamais à fond perdu —————
+   78 % de la largeur de page. Les marges de sol gauche et droite sont ÉGALES — c'est ce qui
+   distingue une incrustation d'une carte poussée dans un coin. L'ombre est ce qui la fait
+   flotter : sans elle, la carte redevient une découpe collée sur le fond. */
+.card {
+  position: relative;
+  width: 1124px; height: 668px;
+  padding: var(--vl-margin);
+  background: var(--vl-card);
+  border-radius: var(--vl-radius-card);
+  box-shadow: var(--vl-shadow-card);
+  display: flex; flex-direction: column;
+}
+
+/* ————— NAV EN TROIS ZONES —————
+   Le logo est centré sur la CARTE, pas entre ses deux voisins : les liens de gauche et le
+   bouton de droite n'ont pas la même largeur, et un centrage entre eux ferait dériver le nom
+   de plusieurs dizaines de pixels — dérive invisible tant qu'on ne mesure pas. D'où le
+   positionnement absolu sur l'axe du conteneur. */
+/* La respiration sous la nav n'est pas cosmétique : la baseline italique du logo DÉBORDE la
+   rangée de nav, et sans elle le triptyque venait mordre à 5 px du bas de cette baseline. */
+.nav { position: relative; display: flex; align-items: center;
+       justify-content: space-between; height: 40px; margin-bottom: 34px; }
+.nav__links { display: flex; gap: 26px; }
+.nav__links a { color: var(--vl-ink); text-decoration: none;
+                font-size: 13px; font-weight: 500; line-height: 1; }
+.nav__logo { position: absolute; left: 50%; transform: translateX(-50%);
+             text-align: center; }
+.nav__name { font-size: 22px; font-weight: 900; line-height: 1;
+             letter-spacing: -0.01em; color: var(--vl-ink); }
+/* 11 px et pas 9 : la source la pose sous le plancher de lecture d'un navigateur à 1:1.
+   Cf. SPEC-SOURCES, « corrigé contre la source ». */
+.nav__baseline { margin-top: 5px; font-size: 11px; font-style: italic; font-weight: 400;
+                 line-height: 1; color: var(--vl-ink); opacity: 0.72; }
+.nav__cta { display: inline-flex; align-items: center; height: 34px; padding: 0 18px;
+            background: var(--vl-accent); color: var(--vl-on-accent);
+            border-radius: var(--vl-radius-pill); text-decoration: none;
+            font-size: 12px; font-weight: 700; letter-spacing: 0.06em;
+            text-transform: uppercase; }
+
+/* ————— LE CORPS : un contrepoids DIAGONAL —————
+   Le wordmark tient le coin bas-gauche, le triptyque le coin haut-droite. `space-between` les
+   pousse aux deux extrémités ; `align-self` les envoie chacun de son côté. Les deux blocs ne
+   se recouvrent jamais en hauteur — c'est la seule chose qui empêche la diagonale de se lire
+   comme deux objets empilés. */
+.body { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+
+.wordmark {
+  align-self: flex-start; margin: 0;
+  font-size: 148px; font-weight: 900; font-stretch: 125%;
+  line-height: 0.82; letter-spacing: -0.01em; text-transform: uppercase;
+  color: var(--vl-accent);
+}
+
+/* ————— LE TRIPTYQUE : trois portraits de MÊME ratio —————
+   Largeurs égales et gouttière constante : ici les trois images se lisent comme une seule
+   bande. (Sur ref-08 les poids sont inégaux — c'est un paramètre du pattern, pas une autre
+   composition.) 42 % de la largeur de carte : au-delà, le bloc concurrence le wordmark et la
+   diagonale se referme. */
+.strip { align-self: flex-end; display: flex; gap: var(--vl-gap); width: 472px; }
+.strip > * { flex: 1 0 0; aspect-ratio: 3 / 4; display: block;
+             border-radius: var(--vl-radius-photo); overflow: hidden; }
+
+/* Les arrêts de dégradé passent par des classes : une variable CSS dans un attribut de
+   présentation SVG n'est pas garantie partout, une propriété CSS l'est. */
+.s-sky-hi { stop-color: var(--vl-ground-sky-hi); }
+.s-sky-lo { stop-color: var(--vl-ground-sky-lo); }
+.s-sea-hi { stop-color: var(--vl-ground-sea-hi); }
+.s-sea-lo { stop-color: var(--vl-ground-sea-lo); }
+.s-sand-wet { stop-color: var(--vl-ground-sand-wet); }
+.s-sand-dry { stop-color: var(--vl-ground-sand-dry); }
+.g-sun { fill: var(--vl-ground-sun); }
+.g-foam { fill: var(--vl-ground-foam); }
+.g-swell { fill: var(--vl-ground-foam); }
+.g-wet { fill: var(--vl-ground-sand-wet); }
+
+.s-a-hi { stop-color: var(--vl-ph-a-hi); } .s-a-lo { stop-color: var(--vl-ph-a-lo); }
+.a-crest { fill: var(--vl-ph-a-crest); }
+.a-deep { fill: var(--vl-ph-a-lo); }
+.b-sky { fill: var(--vl-ph-b-sky); }
+.s-b-canvas { stop-color: var(--vl-ph-b-canvas); }
+.s-b-canvas-lo { stop-color: var(--vl-ph-b-canvas-lo); }
+.b-pole { fill: var(--vl-ph-b-pole); }
+.b-sand { fill: var(--vl-ph-c-lo); }
+.s-c-hi { stop-color: var(--vl-ph-c-hi); } .s-c-lo { stop-color: var(--vl-ph-c-lo); }
+.c-ridge { fill: var(--vl-ph-c-hi); }
+</style>
+</head>
+<!-- vl:stage web — hero de page (1440×900), pas une slide : le format PPT 16:9 n'a pas de sens ici -->
+<body>
+
+<section class="slide">
+
+  <!-- LE SOL — plage : ciel, mer, écume, sable mouillé, sable sec.
+       Les lignes de houle sont espacées irrégulièrement : un peigne régulier redevient une
+       trame géométrique et la mer meurt. -->
+  <svg class="ground" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="img"
+       aria-label="A wide beach: sky, sea, wet sand and dry sand">
+    <defs>
+      <linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" class="s-sky-hi"/><stop offset="1" class="s-sky-lo"/>
+      </linearGradient>
+      <linearGradient id="g-sea" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" class="s-sea-lo"/><stop offset="1" class="s-sea-hi"/>
+      </linearGradient>
+      <linearGradient id="g-sand" x1="0.2" y1="0" x2="0.8" y2="1">
+        <stop offset="0" class="s-sand-wet"/><stop offset="0.45" class="s-sand-dry"/>
+        <stop offset="1" class="s-sand-wet"/>
+      </linearGradient>
+      <filter id="g-haze"><feGaussianBlur stdDeviation="14"/></filter>
+      <filter id="g-soft"><feGaussianBlur stdDeviation="3.5"/></filter>
+      <filter id="g-grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3"/></filter>
+    </defs>
+
+    <rect width="1440" height="900" fill="url(#g-sky)"/>
+    <ellipse cx="1060" cy="196" rx="300" ry="150" class="g-sun" filter="url(#g-haze)"
+             opacity="0.5"/>
+    <rect y="330" width="1440" height="248" fill="url(#g-sea)"/>
+    <g class="g-swell" filter="url(#g-soft)" opacity="0.34">
+      <rect y="352" width="1440" height="3"/><rect y="391" width="1440" height="5"/>
+      <rect y="447" width="1440" height="3"/><rect y="512" width="1440" height="7"/>
+    </g>
+    <!-- l'écume : une bande irrégulière, pas un trait — c'est elle qui articule mer et sable -->
+    <path d="M0 560 C 190 548 300 578 480 570 C 640 563 720 586 900 576
+             C 1080 566 1210 590 1440 574 L 1440 604 C 1200 618 1060 596 900 604
+             C 720 613 620 592 470 600 C 300 609 180 584 0 596 Z"
+          class="g-foam" filter="url(#g-soft)" opacity="0.85"/>
+    <rect y="578" width="1440" height="322" fill="url(#g-sand)"/>
+    <!-- laisses de marée : des arcs mous, jamais des courbes parallèles -->
+    <g class="g-wet" filter="url(#g-soft)" opacity="0.35">
+      <path d="M0 632 C 260 618 420 646 700 634 C 940 624 1150 648 1440 630 L 1440 640
+               C 1150 660 940 636 700 646 C 420 658 260 630 0 644 Z"/>
+      <path d="M0 726 C 300 706 520 742 820 726 C 1080 712 1240 740 1440 722 L 1440 733
+               C 1240 752 1080 724 820 738 C 520 754 300 718 0 738 Z" opacity="0.7"/>
+    </g>
+    <rect width="1440" height="900" filter="url(#g-grain)" opacity="0.10"
+          style="mix-blend-mode: overlay"/>
+  </svg>
+
+  <!-- LA CARTE -->
+  <div class="card">
+
+    <nav class="nav">
+      <div class="nav__links">
+        <a href="#">Shop</a><a href="#">Journal</a><a href="#">About</a>
+      </div>
+      <div class="nav__logo">
+        <div class="nav__name">northbeam</div>
+        <div class="nav__baseline">the coast is the point</div>
+      </div>
+      <a class="nav__cta" href="#">Get the kit</a>
+    </nav>
+
+    <div class="body">
+
+      <!-- le contrepoids HAUT-DROITE -->
+      <div class="strip">
+
+        <!-- A — vague qui se lève, crête d'écume -->
+        <svg viewBox="0 0 150 200" preserveAspectRatio="xMidYMid slice" role="img"
+             aria-label="A wave lifting into a foam crest">
+          <defs>
+            <linearGradient id="a-w" x1="0.1" y1="0" x2="0.9" y2="1">
+              <stop offset="0" class="s-a-hi"/><stop offset="1" class="s-a-lo"/>
+            </linearGradient>
+            <filter id="a-s"><feGaussianBlur stdDeviation="2"/></filter>
+            <filter id="a-g"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3"/></filter>
+          </defs>
+          <rect width="150" height="200" fill="url(#a-w)"/>
+          <path d="M-10 128 C 30 96 62 82 96 92 C 128 101 142 124 160 140 L 160 210 L -10 210 Z"
+                class="a-deep" opacity="0.55" filter="url(#a-s)"/>
+          <path d="M-10 120 C 26 90 58 74 94 84 C 122 92 138 112 160 128
+                   C 132 122 112 118 92 122 C 60 128 26 132 -10 140 Z"
+                class="a-crest" opacity="0.9" filter="url(#a-s)"/>
+          <path d="M-10 156 C 40 146 84 152 160 168" class="a-crest" fill="none"
+                stroke="currentColor" opacity="0.3"/>
+          <rect width="150" height="200" filter="url(#a-g)" opacity="0.1"
+                style="mix-blend-mode: overlay"/>
+        </svg>
+
+        <!-- B — parasol rouge sur le sable : le seul rappel de l'accent hors typographie -->
+        <svg viewBox="0 0 150 200" preserveAspectRatio="xMidYMid slice" role="img"
+             aria-label="A red beach parasol planted in the sand">
+          <defs>
+            <linearGradient id="b-c" x1="0" y1="0" x2="1" y2="0.4">
+              <stop offset="0" class="s-b-canvas"/><stop offset="1" class="s-b-canvas-lo"/>
+            </linearGradient>
+            <filter id="b-s"><feGaussianBlur stdDeviation="1.6"/></filter>
+            <filter id="b-g"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3"/></filter>
+          </defs>
+          <rect width="150" height="200" class="b-sky"/>
+          <rect y="132" width="150" height="68" class="b-sand"/>
+          <ellipse cx="86" cy="150" rx="46" ry="9" class="b-sand" opacity="0.55"
+                   filter="url(#b-s)"/>
+          <path d="M18 84 C 34 40 96 26 128 58 C 138 68 140 78 138 86 Z" fill="url(#b-c)"/>
+          <path d="M18 84 C 44 76 78 74 106 80 C 122 83 132 85 138 86" fill="none"
+                stroke="currentColor" class="b-pole" opacity="0.35" stroke-width="2"/>
+          <rect x="84" y="82" width="4" height="66" class="b-pole"/>
+          <rect width="150" height="200" filter="url(#b-g)" opacity="0.1"
+                style="mix-blend-mode: overlay"/>
+        </svg>
+
+        <!-- C — dune, cadrage serré -->
+        <svg viewBox="0 0 150 200" preserveAspectRatio="xMidYMid slice" role="img"
+             aria-label="A dune ridge with marram grass">
+          <defs>
+            <linearGradient id="c-d" x1="0.1" y1="0" x2="0.9" y2="1">
+              <stop offset="0" class="s-c-hi"/><stop offset="1" class="s-c-lo"/>
+            </linearGradient>
+            <filter id="c-s"><feGaussianBlur stdDeviation="2.4"/></filter>
+            <filter id="c-g"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3"/></filter>
+          </defs>
+          <rect width="150" height="200" fill="url(#c-d)"/>
+          <path d="M-10 104 C 28 78 64 92 96 78 C 120 68 138 72 160 64 L 160 210 L -10 210 Z"
+                class="c-ridge" opacity="0.55" filter="url(#c-s)"/>
+          <path d="M-10 158 C 34 138 76 154 116 136 C 134 128 148 130 160 126 L 160 210 L -10 210 Z"
+                class="b-sand" opacity="0.45" filter="url(#c-s)"/>
+          <!-- une seconde crête, plus claire : c'est le seul relief de l'image. Pas d'oyats
+               dessinés — cinq brins vectoriels ne font pas une photo, ils font un pictogramme. -->
+          <path d="M-10 176 C 40 158 84 172 124 158 C 142 152 152 152 160 150 L 160 210 L -10 210 Z"
+                class="c-ridge" opacity="0.7" filter="url(#c-s)"/>
+          <rect width="150" height="200" filter="url(#c-g)" opacity="0.1"
+                style="mix-blend-mode: overlay"/>
+        </svg>
+
+      </div>
+
+      <!-- le contrepoids BAS-GAUCHE -->
+      <h1 class="wordmark">North<br>beam</h1>
+
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
