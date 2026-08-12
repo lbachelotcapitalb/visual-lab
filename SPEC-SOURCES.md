@@ -445,12 +445,29 @@ rouge.
   de chaque ligne ; label en colonne étroite gauche, valeur en colonne large droite),
   image à droite, `(4)` en bas-gauche.
 
-**Patterns à extraire**
-- `type-condensed-stack` — le titre condensé écrasé sur 2 lignes.
-- `mark-paren-number` — le `(3)` de section.
-- `table-hairline-rules` — le tableau label/valeur à filets fins.
-- `layout-image-collage-overlay` — images en colonnes + incrustation en overlay.
-- `type-micro-caps-block` — le bloc de texte en capitales 9 px, colonne étroite.
+**Patterns extraits — trois, et non les cinq annoncés** (12/08/2026)
+
+La liste d'origine nommait des ÉLÉMENTS, pas des compositions ; trois d'entre eux tenaient
+dans leur propre phrase de description, ce que l'élagage du 30/07 interdit. Ce qui a été versé :
+
+| pattern | ce qu'il porte | ce qu'il absorbe de la liste d'origine |
+|---|---|---|
+| `layout-10-bleed-column-inset` | le lit d'images de la slide 1 : deux colonnes à fond perdu séparées par une seule COUTURE, et une incrustation posée par-dessus sans partager d'arête | `layout-image-collage-overlay` |
+| `title-02-condensed-overlay-stack` | le cadre typographique : titre condensé à l'interligne écrasé, numéro de section au MÊME fer à l'autre bout de la colonne, contrepoids en micro-capitales au coin diagonalement opposé. Racine transparente : il se pose SUR le lit d'images | `type-condensed-stack`, `mark-paren-number`, `type-micro-caps-block` |
+| `list-07-hairline-spec-table` | le tableau libellé/valeur dont les filets DÉBORDENT la marge de texte des deux côtés — une règle de page que le module traverse, pas la bordure d'un bloc | `table-hairline-rules` |
+
+**Correction portée à la source** — le rouge relevé `#E33A22` tient 3,57:1 sur la crème. C'est
+suffisant pour le titre de 104 px (plancher 3:1) et insuffisant partout ailleurs, or c'est le
+MÊME rouge qui écrit les micro-capitales de 13 px et les libellés du tableau. La bibliothèque
+ne capitalise pas le défaut de la source : `--vl-red` vaut **`#C82C15`** (4,57:1) dans
+`systems/`, dans le deck et dans les trois patterns, et deux benchmarks de contraste par
+pattern empêchent la correction de se reperdre au premier remappage de charte.
+
+**Deuxième correction, sortie par le regard et non par la mesure** — les cellules du tableau
+étaient centrées verticalement dans leur ligne : un libellé d'une ligne flottait au milieu
+d'une valeur qui en fait trois, au lieu de pendre du filet qui l'ouvre. Aucun alignement ne
+cassait. Corrigé dans le deck ET dans le pattern (`align-items: start`), verrouillé par une
+assertion sur l'écart des premières lignes.
 
 ---
 

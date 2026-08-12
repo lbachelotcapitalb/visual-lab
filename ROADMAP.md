@@ -231,10 +231,18 @@ redevient une forme géométrique et l'effet tombe. C'est le plus fort différen
 anti-« AI slop » du corpus.
 Patterns : `annotation-marker`, `type-lowercase-editorial`, `type-vertical-rail`.
 
-### 🟡 Lot 9 — `ref-10` campaign-board-red — reconstitution faite, patterns à extraire
+### ✅ Lot 9 — `ref-10` campaign-board-red — SOLDÉ le 12/08/2026
 **3 slides.** Typo condensée écrasée, collage d'images en overlay, tableau à filets.
-Patterns : `type-condensed-stack`, `mark-paren-number`, `table-hairline-rules`,
-`layout-image-collage-overlay`, `type-micro-caps-block`.
+Patterns versés : `layout-10-bleed-column-inset`, `title-02-condensed-overlay-stack`,
+`list-07-hairline-spec-table` — **trois, pas les cinq annoncés** : `type-condensed-stack`,
+`mark-paren-number` et `type-micro-caps-block` nommaient des ÉLÉMENTS, pas des compositions,
+et sont absorbés par le cadre typographique qui porte leur DISPOSITION mutuelle (fer unique
+partagé titre/numéro, contrepoids au coin opposé). Le lot a corrigé sa source deux fois : le
+rouge relevé passait sous 4,5:1 pour les corps de 13 px écrits du même rouge (`#E33A22` →
+`#C82C15`), et les cellules du tableau étaient centrées dans leur ligne au lieu de pendre du
+filet qui les ouvre — ce dernier défaut n'a été vu que par le regard. Aucune image source sur
+disque : `bin/diff.mjs` impossible, la fidélité tient à la spec, au regard et à
+`check-deck.mjs`. Détail dans `SPEC-SOURCES.md`, section `ref-10-campaign-board-red`.
 
 **Fait le 30/07/2026, hors ordre** (demande directe de Léo sur le visuel source) :
 `systems/ref-10-campaign-board-red.json` et `decks/ref-10-campaign-board-red.html` — **3 slides 1600×900**, preuves
@@ -581,7 +589,7 @@ email et social.
 |---|---|---|---|
 | `ref-07` retro-brand-hero (lot 6) | matière — page web | 4 patterns, et il CONDITIONNE le lot 7 | 1 session |
 | `ref-08` swiss-studio-hero (lot 7) | matière — extraction | le deck existe ; la preuve du lot est que les patterns du lot 6 produisent ref-07 ET ref-08 par VARIABLES | ½ session, après le 6 |
-| `ref-10` campaign-board-red (lot 9) | matière — extraction | le deck existe, aucun pattern extrait | ½ session |
+| ~~`ref-10` campaign-board-red (lot 9)~~ | **soldée le 12/08/2026** | 3 patterns versés au lieu des 5 annoncés — les trois « patterns » qui nommaient un ÉLÉMENT sont absorbés par celui qui porte leur disposition ; la source a été corrigée deux fois (contraste du rouge, cellules centrées au lieu de pendre du filet) | — |
 | ~~`ref-12` neon-capsule-tags~~ | **soldée le 12/08/2026** | le deck existe ; il a démenti l'unité que le pattern portait sans écran (`--vl-cap-u` 56 → 91 px) et sorti deux défauts qu'aucune mesure ne voyait — l'arrondi de bordure Chrome à la soudure, et le trou de rastérisation bout à bout | — |
 | `ref-05` proposal-acid-yellow (lot 4) | matière — 8 slides | 5 patterns, dont une règle éditoriale à n'extraire que si elle a un rendu | 1 session |
 | `ref-09` zine-annotated-blue (lot 8) | matière — 12 slides | `annotation-marker` : le générateur de tracés manuscrits, **le plus fort différenciateur anti-« AI slop » du corpus** | 1 session entière |

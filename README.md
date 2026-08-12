@@ -426,7 +426,7 @@ au milieu d'un deck — deux patterns en portaient une. Un pattern non émis se 
 
 ## État
 
-**41 patterns**, dont 34 mesurés par des benchmarks. Le décompte vient de `bin/index.mjs`, pas
+**44 patterns**, dont 37 mesurés par des benchmarks. Le décompte vient de `bin/index.mjs`, pas
 d'ici : la ligne ci-dessus est un ordre de grandeur, [INDEX.md](INDEX.md) est la vérité.
 
 **11/08/2026 — le corpus sort du slide/web : trois patterns écrits NATIVEMENT pour l'email**
@@ -450,9 +450,25 @@ propre phrase de description.
 
 13 références sur 15 reconstituées. Le décompte par référence — patterns extraits, deck présent —
 est dans le tableau « Références » d'[INDEX.md](INDEX.md), qui est GÉNÉRÉ : c'est la seule
-version qui ne peut pas mentir. Il ne reste que deux références à deck sans patterns
-(`ref-08-swiss-studio-hero`, `ref-10-campaign-board-red`) ; plus aucune n'a de patterns sans
-deck.
+version qui ne peut pas mentir. Il ne reste **qu'une** référence à deck sans patterns
+(`ref-08-swiss-studio-hero`) ; plus aucune n'a de patterns sans deck.
+
+**12/08/2026 — `ref-10-campaign-board-red` est extraite**, en trois patterns et non les cinq
+que la spec annonçait. Les cinq de la spec étaient nommés par ÉLÉMENT (« le titre condensé »,
+« le numéro entre parenthèses », « le bloc de micro-capitales ») ; trois d'entre eux tiennent
+dans leur propre phrase de description et ne survivaient pas au test d'utilité du 30/07. Ils
+sont donc absorbés dans `title-02-condensed-overlay-stack`, qui porte ce qu'ils ont en commun
+et que chacun perd isolé : leur DISPOSITION mutuelle — un fer unique partagé par le titre et
+le numéro, un contrepoids au coin diagonalement opposé. Restent
+`layout-10-bleed-column-inset` (le lit d'images à fond perdu et son incrustation) et
+`list-07-hairline-spec-table` (le tableau libellé/valeur dont les filets débordent la marge de
+texte). Le lot a d'abord corrigé la source : son rouge relevé (`#E33A22`) tient 3,57:1 sur la
+crème, ce qui passe pour un titre de 104 px mais échoue pour les micro-capitales de 13 px
+écrites du MÊME rouge — descendu à `#C82C15`, 4,57:1. Et c'est le regard, pas la mesure, qui a
+sorti le dernier défaut : les cellules du tableau étaient centrées dans leur ligne, si bien
+qu'un libellé d'une ligne flottait au milieu d'une valeur qui en fait trois, au lieu de pendre
+du filet qui l'ouvre. Corrigé dans le pattern ET dans le deck, et verrouillé par une assertion
+d'alignement des premières lignes.
 
 **31/07/2026 — `ref-14-layer-stack-coral`** : le premier **schéma** du corpus, au sens propre —
 une figure qui explique une STRUCTURE et non une donnée. D'où la famille `diagram`, qui n'est pas
