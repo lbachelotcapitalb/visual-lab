@@ -30,8 +30,8 @@
     },
     {
       "name": "--vl-cap-u",
-      "role": "l'unité dont TOUTE la géométrie dérive (hauteur de rangée = 1,255 × u)",
-      "default": "56px"
+      "role": "l'unité dont TOUTE la géométrie dérive (hauteur de rangée = 1,255 × u) ; elle n'est pas libre — le trait vaut 0,055 u et Chrome ARRONDIT une bordure CSS au pixel entier là où il ne le fait pas d'un stroke SVG, donc une valeur qui ne tombe pas sur un trait quasi entier rouvre la soudure à l'œil",
+      "default": "91px"
     }
   ],
   "slots": [
@@ -41,8 +41,8 @@
   "geometry": {
     "root": ".vl-cap",
     "frame": [
-      241,
-      70
+      372,
+      114
     ],
     "ratios": {
       "head_over_height": 1.4562,
@@ -56,7 +56,7 @@
       "centres_gap_over_u": 1.2
     },
     "type_px": {
-      "label": 34.7
+      "label": 56.4
     },
     "pad_ratio": {
       "top": 0,
@@ -137,7 +137,7 @@
       "min": 4.5
     }
   ],
-  "notes": "La difficulté du pattern n'est pas le dessin, c'est la LARGEUR VARIABLE : le contour doit rester continu quel que soit le mot. D'où le découpage en trois pièces — tête fixe (cercle + les deux congés + calotte gauche, un seul <path>), corps élastique (les deux droites en bordures CSS), calotte droite fixe. Les droites du corps prolongent les extrémités du tracé au pixel près parce que le SVG est rendu à l'échelle exacte (viewBox 1.8275 × 1.255 pour une boîte de 1.8275u × 1.255u, donc 1 unité de viewBox = 1u) et que son stroke-width (0.055) est le même nombre que --sw (0.055u). Casser cette égalité — un SVG en preserveAspectRatio non uniforme, une hauteur de pilule qui ne suit plus — rouvre le contour et la signature tombe. La géométrie du cou est calculée, pas dessinée à l'œil : les congés de rayon 0,28u sont TANGENTS extérieurement au cercle (0,6u) et à la calotte (0,5u) distants de 1,2u d'entraxe, ce qui place leurs centres à (±0,6692u, ±0,5715u) et les points de tangence à x = 0,4563u sur le cercle et x = 0,8597u sur la calotte. Ces six nombres sont solidaires : changer le rayon du cercle sans recalculer les congés produit un raccord qui casse — visible à 3 px, invisible sur une maquette réduite, et c'est exactement ce que les benchmarks de continuité attrapent. Les quatre glyphes (éclair, croix directionnelle, rayons, cadre) sont REDESSINÉS : la référence n'existe pas sur disque, seule sa géométrie a survécu.",
+  "notes": "La difficulté du pattern n'est pas le dessin, c'est la LARGEUR VARIABLE : le contour doit rester continu quel que soit le mot. D'où le découpage en trois pièces — tête fixe (cercle + les deux congés + calotte gauche, un seul <path>), corps élastique (les deux droites en bordures CSS), calotte droite fixe. Les droites du corps prolongent les extrémités du tracé au pixel près parce que le SVG est rendu à l'échelle exacte (viewBox 1.8275 × 1.255 pour une boîte de 1.8275u × 1.255u, donc 1 unité de viewBox = 1u) et que son stroke-width (0.055) est le même nombre que --sw (0.055u). Casser cette égalité — un SVG en preserveAspectRatio non uniforme, une hauteur de pilule qui ne suit plus — rouvre le contour et la signature tombe. La géométrie du cou est calculée, pas dessinée à l'œil : les congés de rayon 0,28u sont TANGENTS extérieurement au cercle (0,6u) et à la calotte (0,5u) distants de 1,2u d'entraxe, ce qui place leurs centres à (±0,6692u, ±0,5715u) et les points de tangence à x = 0,4563u sur le cercle et x = 0,8597u sur la calotte. Ces six nombres sont solidaires : changer le rayon du cercle sans recalculer les congés produit un raccord qui casse — visible à 3 px, invisible sur une maquette réduite, et c'est exactement ce que les benchmarks de continuité attrapent. Deuxième défaut que rien ne mesurait et que seul le RENDU a sorti (12/08) : à la jonction, la bordure CSS de la pilule et le stroke SVG se touchent bout à bout, et la rastérisation laisse un trou d'environ 0,7 px — un contour continu en géométrie, interrompu à l'œil. D'où le débord de 0,05 u ajouté aux DEUX extrémités des tracés (les `M`/`L` qui sortent du viewBox, avec `overflow: visible`) : la couverture des douze lignes droites passe de 0,30 à ≥ 0,99. Les quatre glyphes (éclair, croix directionnelle, rayons, cadre) sont REDESSINÉS : la référence n'existe pas sur disque, seule sa géométrie a survécu.",
   "media": [
     "slide",
     "social",

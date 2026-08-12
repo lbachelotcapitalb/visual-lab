@@ -5368,8 +5368,8 @@
         },
         {
           "name": "--vl-cap-u",
-          "role": "l'unité dont TOUTE la géométrie dérive (hauteur de rangée = 1,255 × u)",
-          "default": "56px"
+          "role": "l'unité dont TOUTE la géométrie dérive (hauteur de rangée = 1,255 × u) ; elle n'est pas libre — le trait vaut 0,055 u et Chrome ARRONDIT une bordure CSS au pixel entier là où il ne le fait pas d'un stroke SVG, donc une valeur qui ne tombe pas sur un trait quasi entier rouvre la soudure à l'œil",
+          "default": "91px"
         }
       ],
       "slots": [
@@ -5379,8 +5379,8 @@
       "geometry": {
         "root": ".vl-cap",
         "frame": [
-          241,
-          70
+          372,
+          114
         ],
         "ratios": {
           "head_over_height": 1.4562,
@@ -5394,7 +5394,7 @@
           "centres_gap_over_u": 1.2
         },
         "type_px": {
-          "label": 34.7
+          "label": 56.4
         },
         "pad_ratio": {
           "top": 0,
@@ -6158,13 +6158,13 @@
       "patterns": [
         "tag-01-gooey-capsule"
       ],
-      "deck": null,
+      "deck": "decks/ref-12-neon-capsule-tags.html",
       "tokens": {
         "--vl-bg": "#26331F",
         "--vl-neon": "#4FE383",
         "--vl-neon-soft": "#4FE38344",
         "--vl-ink-invert": "#FFFFFF",
-        "--vl-cap-u": "56px",
+        "--vl-cap-u": "91px",
         "--vl-margin": "60px"
       },
       "type": {

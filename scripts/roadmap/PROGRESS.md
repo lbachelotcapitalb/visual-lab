@@ -122,11 +122,14 @@ CHECKPOINT_STEP: S2
       SVG (tête et calotte) pour fermer le trou de rastérisation de ~0,7 px. Corrigé dans le deck
       ET dans `patterns/tag-01-gooey-capsule.html` — mesuré : couverture ≥ 0,99 sur les douze
       lignes droites, contre 0,30 avant.
-- [ ] Confronter `tag-01-gooey-capsule` au deck — RESTE À FAIRE : passer
-      `systems/ref-12-neon-capsule-tags.json` de `--vl-cap-u: 56px` à **91px**, puis re-mesurer
-      `geometry.frame` (aujourd'hui [241, 70], relevé à u=56) et `geometry.type_px.label`
-      (34.7 → ~56.4). Les benchmarks sont tous en RATIOS : ils ne bougent pas. Vérifier ensuite
-      `node bin/check.mjs tag-01-gooey-capsule`.
+- [x] Confronter `tag-01-gooey-capsule` au deck — le pattern SORT du deck sans divergence, une
+      fois l'unité alignée. `systems/ref-12-…json` passe de `--vl-cap-u: 56px` à **91px** (et le
+      fallback du fragment avec, sinon un consommateur sans système récupère une unité que le
+      deck a démentie) ; `geometry.frame` re-mesuré [241, 70] → **[372, 114]**, `type_px.label`
+      34.7 → **56.4**. Les treize benchmarks sont en RATIOS : tous verts sans en toucher un seul
+      — c'est la preuve que l'unité était le SEUL écart. Les deux trouvailles du regard sont
+      versées en `notes` (pattern : le débord de 0,05 u ; système : pourquoi u ≤ 97 et pourquoi
+      91 plutôt que 97), sans quoi le prochain qui règle l'unité au goût repaie les deux.
 - [ ] Doc : `SPEC-SOURCES.md` § ref-12 (« Patterns extraits » annonce un
       `stack-keyword-flush-right` qui n'existe pas — la pile est DANS `tag-01`), README « État »,
       ROADMAP (ligne du tableau « Ce qui reste »).
