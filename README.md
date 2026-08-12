@@ -121,7 +121,7 @@ proofs/<ref>/          un PNG par slide du deck (export bin/slides.mjs)
 Deux séries de noms, et pas une de plus.
 
 - **Un pattern** : `<famille>[-NN]-<mots simples>` — `card-03-stat-accent`, `chart-02-isotype`,
-  `title-leading-rule`. Le numéro n'apparaît **que si la famille en compte plusieurs** ;
+  `shape-notched-corner`. Le numéro n'apparaît **que si la famille en compte plusieurs** ;
   `bin/new.mjs` renumérote l'existant tout seul quand un deuxième arrive. Les familles sont un
   vocabulaire fermé — `card`, `chart`, `diagram`, `layout`, `list`, `shape`, `tag`, `title` — et
   `diagram` n'est pas `chart` : un `chart` porte des DONNÉES (une valeur mesurée décide de la

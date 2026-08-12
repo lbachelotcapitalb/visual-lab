@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-42 patterns · 15 références · 35 vérifiés par benchmarks mesurés.
+43 patterns · 15 références · 36 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -67,7 +67,8 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `tag-01-gooey-capsule` | Faire d'un mot-clé un OBJET : un contour continu qui soude un cercle de glyphe à une pilule de texte par deux congés concaves, pour qu'un terme isolé pèse autant qu'un titre sans être plus gros. | slide social web | 13 | ref-12-neon-capsule-tags |
 | `tag-02-centered-cloud` | Poser une dizaine de mots-clés de même rang au bas d'un module sans en faire une liste : chaque RANGÉE est centrée sur elle-même, si bien que les lignes de largeur inégale dessinent une silhouette de nuage — c'est le centrage par rangée, et pas le centrage du bloc, qui produit l'effet. | web slide | 13 | ref-17-mono-bento-legal |
 | `tag-03-action-pill-bar` | Aligner filtres et action principale sur une même ligne sans hiérarchie typographique : toutes les commandes sont des pilules de MÊME hauteur, les filtres portent un puits d'icône plus clair que la pilule qui le contient, et UNE SEULE pilule — la dernière — est pleine. C'est la position et le remplissage qui disent le rang, jamais la taille. | web | 16 | ref-18-lime-sales-dashboard |
-| `title-leading-rule` | Marquer le titre d'une slide d'un filet vertical d'accent sans ajouter ni couleur au texte ni élément décoratif : le filet est le seul accent du titre, et il est collé au mot. | slide web | 7 | ref-06-orange-notched |
+| `title-01-leading-rule` | Marquer le titre d'une slide d'un filet vertical d'accent sans ajouter ni couleur au texte ni élément décoratif : le filet est le seul accent du titre, et il est collé au mot. | slide web | 7 | ref-06-orange-notched |
+| `title-02-condensed-overlay-stack` | Tenir une slide entière avec du TEXTE SEUL — aucun aplat, aucun trait, aucune boîte — en posant trois blocs sur la scène : un titre condensé noir à l'interligne écrasé, le numéro de section entre parenthèses au MÊME fer que lui mais à l'autre bout de la colonne, et un contrepoids en micro-capitales au coin diagonalement opposé. Le cadre est transparent : il se pose par-dessus des images sans rien leur enlever. | slide web | 21 | ref-10-campaign-board-red |
 
 ## Détail
 
@@ -418,7 +419,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 
 ### title
 
-**title-leading-rule** — Titre à filet d'accent collé
+**title-01-leading-rule** — Titre à filet d'accent collé
 
 - employer : Titre de slide en capitales grasses sur 1 à 3 lignes, dans un deck qui répète ce marqueur d'une slide à l'autre — c'est sa répétition qui en fait une charte.
 - éviter : Le titre est déjà coloré ou posé sur un aplat d'accent (deux accents se neutralisent), ou il est centré : un filet collé à un bloc centré désaxe la composition sans rien signifier.
@@ -427,6 +428,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - .pptx : `kit/vl_pptx.py:title_leading_rule`
 - tags : titre, filet, barre, accent, typo, capitales, deck, marqueur, leading-rule
 
+**title-02-condensed-overlay-stack** — Cadre typographique condensé en overlay
+
+- employer : Ouverture de chapitre, slide de campagne ou hero plein écran dont le fond est une image (ou un aplat) : ce cadre est la couche de texte, il se superpose à layout-10-bleed-column-inset. Il vaut aussi seul, sur une slide de couleur, quand un chapitre doit s'annoncer sans décor.
+- éviter : Le titre dépasse trois ou quatre mots, ou la slide porte déjà du corps de texte à lire : ce cadre suppose que le titre EST le contenu et que tout le reste est une marque de coin. Écarter aussi quand la charte n'a pas de grotesque condensée — à largeur normale, l'interligne écrasé fait se toucher les lettres au lieu des lignes, et le bloc devient illisible.
+- à remplir : title, num, note
+- variables : --vl-red, --vl-white, --vl-cos-fer
+- tags : titre, condensé, capitales, overlay, numéro, section, parenthèses, micro-caps, campagne, chapitre, typo
+
 ## Références
 
 | référence | charte | patterns extraits | deck |
@@ -434,9 +443,9 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-02-ghost-icon-claim` | Gris fantôme — argument unique | `card-01-ghost-icon` | `decks/ref-02-ghost-icon-claim.html` |
 | `ref-03-bento-dark-pitch` | Bento sombre — pitch investisseur | `chart-01-stadium-bars`, `chart-02-isotype`, `layout-01-nested-bento` | `decks/ref-03-bento-dark-pitch.html` |
 | `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |
-| `ref-06-orange-notched` | Corporate orange chanfreiné | `card-02-notched-brief`, `card-03-stat-accent`, `list-02-ruled-index`, `shape-notched-corner`, `title-leading-rule` | `decks/ref-06-orange-notched.html` |
+| `ref-06-orange-notched` | Corporate orange chanfreiné | `card-02-notched-brief`, `card-03-stat-accent`, `list-02-ruled-index`, `shape-notched-corner`, `title-01-leading-rule` | `decks/ref-06-orange-notched.html` |
 | `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | — | `decks/ref-08-swiss-studio-hero.html` |
-| `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | `layout-10-bleed-column-inset` | `decks/ref-10-campaign-board-red.html` |
+| `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | `layout-10-bleed-column-inset`, `title-02-condensed-overlay-stack` | `decks/ref-10-campaign-board-red.html` |
 | `ref-11-finance-dashboard-mint` | Dashboard bento clair — menthe & lilas | `card-04-stat-barchart`, `card-05-balance-gauge`, `card-06-forecast-timeline`, `card-07-transactions` | `decks/ref-11-finance-dashboard-mint.html` |
 | `ref-12-neon-capsule-tags` | Néon vert — étiquettes capsules sur fond sombre | `tag-01-gooey-capsule` | `decks/ref-12-neon-capsule-tags.html` |
 | `ref-13-glass-fintech-dashboard` | Dashboard en verre dépoli — lavande & bleu | `card-08-orb-chain-total`, `card-09-gradient-metric-curve`, `chart-03-accent-column-callout`, `layout-03-glass-board`, `list-04-due-rows` | `decks/ref-13-glass-fintech-dashboard.html` |

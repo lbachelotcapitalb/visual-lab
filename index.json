@@ -20,9 +20,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 42,
+    "patterns": 43,
     "refs": 15,
-    "checkable": 35
+    "checkable": 36
   },
   "patterns": [
     {
@@ -5954,7 +5954,7 @@
       "html": "patterns/tag-03-action-pill-bar.html"
     },
     {
-      "id": "title-leading-rule",
+      "id": "title-01-leading-rule",
       "name": "Titre à filet d'accent collé",
       "family": "title",
       "ref": "ref-06-orange-notched",
@@ -6056,7 +6056,195 @@
         "emitter": "kit/vl_pptx.py:title_leading_rule",
         "pattern": "title-leading-rule"
       },
-      "html": "patterns/title-leading-rule.html"
+      "html": "patterns/title-01-leading-rule.html"
+    },
+    {
+      "id": "title-02-condensed-overlay-stack",
+      "name": "Cadre typographique condensé en overlay",
+      "family": "title",
+      "ref": "ref-10-campaign-board-red",
+      "media": [
+        "slide",
+        "web"
+      ],
+      "intent": "Tenir une slide entière avec du TEXTE SEUL — aucun aplat, aucun trait, aucune boîte — en posant trois blocs sur la scène : un titre condensé noir à l'interligne écrasé, le numéro de section entre parenthèses au MÊME fer que lui mais à l'autre bout de la colonne, et un contrepoids en micro-capitales au coin diagonalement opposé. Le cadre est transparent : il se pose par-dessus des images sans rien leur enlever.",
+      "when_to_use": "Ouverture de chapitre, slide de campagne ou hero plein écran dont le fond est une image (ou un aplat) : ce cadre est la couche de texte, il se superpose à layout-10-bleed-column-inset. Il vaut aussi seul, sur une slide de couleur, quand un chapitre doit s'annoncer sans décor.",
+      "avoid_when": "Le titre dépasse trois ou quatre mots, ou la slide porte déjà du corps de texte à lire : ce cadre suppose que le titre EST le contenu et que tout le reste est une marque de coin. Écarter aussi quand la charte n'a pas de grotesque condensée — à largeur normale, l'interligne écrasé fait se toucher les lettres au lieu des lignes, et le bloc devient illisible.",
+      "tags": [
+        "titre",
+        "condensé",
+        "capitales",
+        "overlay",
+        "numéro",
+        "section",
+        "parenthèses",
+        "micro-caps",
+        "campagne",
+        "chapitre",
+        "typo"
+      ],
+      "vars": [
+        {
+          "name": "--vl-red",
+          "role": "couleur de l'ensemble du cadre — titre, numéro et contrepoids partagent la même",
+          "default": "#C82C15"
+        },
+        {
+          "name": "--vl-white",
+          "role": "couleur de repli du contrepoids quand son coin tombe sur une image sombre (modificateur --on-image)",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-cos-fer",
+          "role": "le fer unique de la colonne de gauche — titre ET numéro, jamais deux valeurs",
+          "default": "8.56%"
+        }
+      ],
+      "slots": [
+        "title",
+        "num",
+        "note"
+      ],
+      "geometry": {
+        "root": ".vl-cos",
+        "frame": [
+          1600,
+          900
+        ],
+        "ratios": {
+          "fer_over_frame": 0.0856,
+          "title_size_over_frame": 0.065,
+          "num_size_over_frame": 0.04875,
+          "note_size_over_frame": 0.008125,
+          "note_width_over_frame": 0.105,
+          "title_over_note_size": 8
+        },
+        "type_px": {
+          "title": 104,
+          "num": 78,
+          "note": 13
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "FER UNIQUE : le numéro tombe exactement sur le bord gauche du titre",
+          "measure": "Math.abs(box('.vl-cos__num').left - box('.vl-cos__title').left) / W",
+          "max": 0.002
+        },
+        {
+          "name": "le fer vaut ≈ 8,6 % de la largeur de scène",
+          "measure": "box('.vl-cos__title').left / W",
+          "expect": 0.0856,
+          "tol": 0.006
+        },
+        {
+          "name": "interligne ÉCRASÉ : le titre passe sous 0,9 fois son corps",
+          "measure": "num('.vl-cos__title','lineHeight') / num('.vl-cos__title','fontSize')",
+          "max": 0.9
+        },
+        {
+          "name": "le titre est bien MULTILIGNE : sa hauteur vaut au moins 1,6 corps",
+          "measure": "box('.vl-cos__title').h / num('.vl-cos__title','fontSize')",
+          "min": 1.6
+        },
+        {
+          "name": "le titre ouvre la scène : il commence dans le premier cinquième de la hauteur",
+          "measure": "box('.vl-cos__title').top / H",
+          "max": 0.2
+        },
+        {
+          "name": "la colonne est TENDUE : le numéro est à plus d'un tiers de hauteur du titre",
+          "measure": "(box('.vl-cos__num').top - box('.vl-cos__title').bottom) / H",
+          "min": 0.33
+        },
+        {
+          "name": "le numéro reste dans la scène, sans coller le bord bas",
+          "measure": "(H - box('.vl-cos__num').bottom) / H",
+          "min": 0.04
+        },
+        {
+          "name": "le numéro est PLUS PETIT que le titre — un repère, pas un second titre",
+          "measure": "num('.vl-cos__num','fontSize') / num('.vl-cos__title','fontSize')",
+          "min": 0.55,
+          "max": 0.85
+        },
+        {
+          "name": "le numéro n'est PAS condensé, contrairement au titre",
+          "measure": "cs('.vl-cos__num','fontVariationSettings').includes('\"wdth\" 100') ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "le titre EST condensé : largeur d'axe sous 90",
+          "measure": "parseFloat((cs('.vl-cos__title','fontVariationSettings').match(/\"wdth\" ([\\d.]+)/) || [0, 999])[1])",
+          "max": 90
+        },
+        {
+          "name": "le contrepoids est au coin OPPOSÉ en horizontale : au-delà des trois quarts",
+          "measure": "box('.vl-cos__note').left / W",
+          "min": 0.75
+        },
+        {
+          "name": "le contrepoids est au coin OPPOSÉ en verticale : sous le pied du titre",
+          "measure": "(box('.vl-cos__note').top - box('.vl-cos__title').bottom) / H",
+          "min": 0.25
+        },
+        {
+          "name": "colonne ÉTROITE : le contrepoids tient dans ~10 % de la largeur de scène",
+          "measure": "box('.vl-cos__note').w / W",
+          "min": 0.06,
+          "max": 0.14
+        },
+        {
+          "name": "le contrepoids court sur plusieurs lignes — c'est un bloc, pas une légende",
+          "measure": "box('.vl-cos__note').h / num('.vl-cos__note','fontSize')",
+          "min": 2.5
+        },
+        {
+          "name": "écart d'échelle d'au moins 7 entre le titre et le plus petit corps",
+          "measure": "num('.vl-cos__title','fontSize') / num('.vl-cos__note','fontSize')",
+          "min": 7
+        },
+        {
+          "name": "aucun croisement : le titre s'arrête avant la colonne du contrepoids",
+          "measure": "(box('.vl-cos__note').left - box('.vl-cos__title').right) / W",
+          "min": 0.02
+        },
+        {
+          "name": "le contrepoids ne déborde pas la scène par la droite",
+          "measure": "(W - box('.vl-cos__note').right) / W",
+          "min": 0.02
+        },
+        {
+          "name": "le plus petit corps tient le plancher de contraste du texte courant",
+          "measure": "contrast('.vl-cos__note')",
+          "min": 4.5
+        },
+        {
+          "name": "le titre aussi — il n'est pas dispensé parce qu'il est gros",
+          "measure": "contrast('.vl-cos__title')",
+          "min": 4.5
+        },
+        {
+          "name": "racine TRANSPARENTE : ce cadre se pose SUR une image, il n'en masque aucune",
+          "measure": "cs('.vl-cos','backgroundColor') === 'rgba(0, 0, 0, 0)' ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "scène au format 16:9 — c'est une slide, pas une vignette",
+          "measure": "W / H",
+          "expect": 1.7778,
+          "tol": 0.01
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/title-02-condensed-overlay-stack.html"
     }
   ],
   "refs": [
@@ -6175,7 +6363,7 @@
         "card-03-stat-accent",
         "list-02-ruled-index",
         "shape-notched-corner",
-        "title-leading-rule"
+        "title-01-leading-rule"
       ],
       "deck": "decks/ref-06-orange-notched.html",
       "tokens": {
@@ -6240,7 +6428,8 @@
       "id": "ref-10-campaign-board-red",
       "name": "Planche de campagne — condensée rouge",
       "patterns": [
-        "layout-10-bleed-column-inset"
+        "layout-10-bleed-column-inset",
+        "title-02-condensed-overlay-stack"
       ],
       "deck": "decks/ref-10-campaign-board-red.html",
       "tokens": {

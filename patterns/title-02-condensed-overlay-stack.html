@@ -1,0 +1,59 @@
+<!-- title-02-condensed-overlay-stack — le CADRE TYPOGRAPHIQUE d'une slide de campagne : trois
+     blocs de texte, aucun aplat, aucun trait. La racine est TRANSPARENTE : ce cadre est fait
+     pour se poser par-dessus un lit d'images (layout-10-bleed-column-inset) — lui donner un
+     fond masquerait exactement ce qu'il est censé légender. Couleurs via --vl-* uniquement. -->
+<div class="vl-cos">
+
+  <!-- Le titre : condensé, noir, capitales, interligne ÉCRASÉ sous 1. Les deux lignes se
+       touchent presque — c'est ce serrage, et non le corps, qui fait le bloc. -->
+  <h2 class="vl-cos__title">Social<br>media</h2>
+
+  <!-- Le numéro de section, au MÊME fer que le titre, à l'autre bout de la colonne. Largeur
+       normale et graisse moyenne : condensé et noir comme le titre, il ferait un second titre
+       au lieu d'un repère. Les parenthèses font partie du signe, elles ne l'entourent pas. -->
+  <p class="vl-cos__num">(3)</p>
+
+  <!-- Le contrepoids, au coin OPPOSÉ en diagonale : micro-capitales, colonne étroite, plusieurs
+       lignes. Il n'a pas à être lu de loin — il a à occuper le coin que le titre laisse vide. -->
+  <p class="vl-cos__note">Engaging content across platforms to drive sales</p>
+
+</div>
+
+<style>
+/* Le cadre occupe la SCÈNE entière : ses trois blocs ne se mesurent que les uns par rapport
+   aux autres et par rapport aux bords, jamais par rapport à une boîte intermédiaire. */
+.vl-cos {
+  position: relative;
+  width: 1600px; height: 900px;
+  color: var(--vl-red);
+  font-family: Archivo, Inter, "Helvetica Neue", Arial, sans-serif;
+  --vl-cos-fer: 8.56%;   /* le fer unique — titre ET numéro, jamais deux valeurs */
+}
+.vl-cos > * { position: absolute; margin: 0; }
+
+.vl-cos__title {
+  left: var(--vl-cos-fer); top: 11%;
+  font-size: 104px; line-height: 0.84;
+  font-weight: 900; font-variation-settings: 'wght' 900, 'wdth' 85;
+  letter-spacing: -0.01em; text-transform: uppercase;
+}
+
+.vl-cos__num {
+  left: var(--vl-cos-fer); top: 71%;
+  font-size: 78px; line-height: 1;
+  font-weight: 600; font-variation-settings: 'wght' 600, 'wdth' 100;
+  letter-spacing: -0.01em;
+}
+
+/* Colonne étroite — ≈ 10 % de la scène, soit une trentaine de caractères. Élargie, elle
+   redevient un paragraphe et cesse d'être une marque de coin. */
+.vl-cos__note {
+  left: 83%; top: 77%; width: 10.5%;
+  font-size: 13px; line-height: 1.45;
+  font-weight: 700; font-variation-settings: 'wght' 700, 'wdth' 100;
+  letter-spacing: 0.02em; text-transform: uppercase;
+}
+/* Quand le coin tombe sur une image sombre, le contrepoids passe en blanc — c'est le SEUL
+   écart de couleur du cadre, et il se décide sur l'image, pas sur la charte. */
+.vl-cos__note--on-image { color: var(--vl-white); }
+</style>

@@ -112,7 +112,7 @@ CHECKPOINT_STEP: S3
       trois patterns. Corriger dans `systems/` + `decks/` si la source est sous 4,5:1.
 - [x] S3.2 — `layout-10-…` : le collage à fond perdu (colonnes d'images + couture + incrustation
       en overlay). C'est la composition de la slide 1.
-- [ ] S3.3 — `title-02-…` : le cadre typographique (titre condensé écrasé en overlay, numéro de
+- [x] S3.3 — `title-02-…` : le cadre typographique (titre condensé écrasé en overlay, numéro de
       section entre parenthèses au même fer, micro-caps au coin opposé). Absorbe les
       `type-condensed-stack`, `mark-paren-number` et `type-micro-caps-block` de la spec, qui
       seuls ne portent pas de composition.

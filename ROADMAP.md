@@ -148,7 +148,7 @@ Patterns : `header-tripartite`, `mark-asterisk`, `cards-numbered-steps`,
 
 ### ✅ Lot 5 — `ref-06` orange-notched (30/07/2026)
 **8 slides.** La signature est le **coin chanfreiné** (`clip-path`).
-Patterns : `shape-notched-corner`, `title-leading-rule`, `list-02-ruled-index`,
+Patterns : `shape-notched-corner`, `title-01-leading-rule`, `list-02-ruled-index`,
 `card-03-stat-accent`, `card-02-notched-brief`.
 
 **Fait le 30/07/2026 : la reconstitution.** `systems/ref-06-orange-notched.json` et `decks/ref-06-orange-notched.html` —
@@ -171,7 +171,7 @@ qui se lit comme un oubli. Hauteur bornée (300–340 px) et c'est la rangée qu
 
 **Patterns extraits le 30/07** — 5 au lieu des 4 prévus (Léo a pointé la carte de second rang
 comme une vignette à part entière) : `shape-notched-corner`, `card-03-stat-accent`,
-`card-02-notched-brief`, `title-leading-rule`, `list-02-ruled-index`. **41 benchmarks, tous verts** (`node bin/check.mjs`), rendus PNG regardés
+`card-02-notched-brief`, `title-01-leading-rule`, `list-02-ruled-index`. **41 benchmarks, tous verts** (`node bin/check.mjs`), rendus PNG regardés
 un par un.
 
 Ce lot a fait naître l'outillage que les suivants doivent réutiliser :
