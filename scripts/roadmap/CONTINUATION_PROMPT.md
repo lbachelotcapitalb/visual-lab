@@ -1,6 +1,7 @@
 # PROMPT DE REPRISE AUTONOME — visual-lab, solder la roadmap du corpus
 
-Tu es Claude Code, **sur la machine du mainteneur** (macOS), dans `~/visual-lab`. Tu fais avancer
+Tu es Claude Code, **sur la machine du mainteneur** (macOS), dans le dépôt visual-lab —
+tu y es déjà : le lanceur t'a placé à sa racine. Tu fais avancer
 la roadmap du corpus jusqu'au bout, en autonomie, en te relançant en session fraîche à chaque step
 pour garder ta fenêtre de contexte propre.
 
@@ -16,7 +17,6 @@ en découlent, et qui diffèrent du gabarit habituel de ce kit :
 
 1. **Charge l'état.** Dans l'ordre, sans en sauter :
    ```bash
-   cd ~/visual-lab
    git pull --ff-only origin main    # si ÉCHEC : divergence → STATE: BLOCKED, halt
    ```
    Puis lis, dans cet ordre : `SKILL.md` (le manuel opérateur — il porte l'ordre des gestes et les
