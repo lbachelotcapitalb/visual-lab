@@ -232,7 +232,20 @@ CHECKPOINT_STEP: S7
       libellé INSÉCABLE plus large que son rail qui sépare les deux (54 px de dérive contre 0).
       Une contre-épreuve doit reparamétrer là où les constructions divergent, pas là où l'une
       est simplement plus confortable.
-- [ ] **S7.6 — les rendus REGARDÉS** (deck + patterns), corrections, `proofs/` supprimé.
+- [x] **S7.6 — les rendus REGARDÉS** (deck + patterns), corrections, `proofs/` supprimé.
+      **Fait** : 8 slides et 4 patterns rendus et ouverts. Les quatre patterns sont justes tels
+      quels — les deux rails de `card-14` tiennent (les libellés pendent à deux hauteurs, les
+      paragraphes partagent leur plancher), le centre de `layout-16` est sur l'axe, l'astérisque
+      prend bien l'encre de son sol dans ses trois emplois. Un seul défaut au deck, et il était
+      invisible de toute mesure : **la slide 7 portait 300 px de bande morte** sous son titre,
+      et ses deux blocs du bas ne partageaient aucune ligne de départ. Cause exacte : la borne
+      de 300 px posée en S7.3 sur la carte de total avait DÉPLACÉ le défaut — un objet dont la
+      dimension est contrainte ne peut pas tenir une colonne, il doit changer de PLACE. Le total
+      remonte dans la bande de titre (dont il partage la ligne de départ) et le tableau de prix
+      prend toute la hauteur restante ; plus une seule bande morte, `check-deck.mjs` reste vert
+      (32/32). Corrigé au passage : l'en-tête du deck affirmait encore « le jaune n'est jamais
+      une encre » — la formulation que S7.4b a précisément démentie, à trois lignes de la
+      version juste. Une doc en retard DANS le fichier qu'elle décrit décide à la place du code.
 - [ ] **S7.7 — gate complet, doc à jour dans le même commit** (ROADMAP lot 4, README « État »,
       SPEC-SOURCES), commit final + MAJ de PROGRESS.
 

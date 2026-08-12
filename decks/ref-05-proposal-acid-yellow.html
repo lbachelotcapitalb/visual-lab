@@ -19,7 +19,9 @@
    ses valeurs absolues non.
 
    LA RÈGLE QUI PORTE LA CHARTE : une slide ne pose du jaune qu'à UN endroit, et cette surface
-   reste sous 12 % de la slide. Le jaune n'est jamais une encre, toujours un aplat.
+   reste sous 12 % de la slide — un PLAFOND, pas un quota : une slide a le droit de n'en poser
+   aucun (c'est le cas de la 6). Le jaune ne descend jamais sur le fond clair : #EAFF00 sur
+   #EFEFED vaut 1,03:1, donc il y est en APLAT, ou en ENCRE SUR NOIR — jamais autrement.
 
    Les « blob 3D » de la source sont des photographies : elles ne sont pas dans le dépôt, et
    sont remplacées par des dégradés radiaux. Substitut assumé, écrit dans la spec. */
@@ -201,11 +203,16 @@ body {
 .d-media { flex: 0 0 460px; }
 
 /* ————— slide 7 : investissement —————
-   La carte de total est le seul aplat jaune de la slide, et elle est BORNÉE à 300 px de haut :
+   La carte de total est le seul aplat jaune de la slide, et elle est BORNÉE à 460 × 300 :
    à pleine hauteur de colonne (669) elle couvrirait 21 % de la slide, soit le double du plafond
-   de la charte. La règle de l'accent unique est aussi une contrainte de DIMENSION. */
-.inv { flex: 1; display: flex; gap: var(--vl-gap-block); }
-.inv-left { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+   de la charte. La règle de l'accent unique est aussi une contrainte de DIMENSION.
+   Conséquence de composition, et c'est ce qui a été corrigé au REGARD : un objet borné ne peut
+   pas tenir une colonne. Tant que le total pendait en pied de la colonne droite, le titre
+   flottait seul au-dessus de 300 px de rien. Le total monte donc dans la BANDE DE TITRE — dont
+   il partage la ligne de départ — et le tableau de prix prend toute la hauteur restante. */
+.inv-head { display: flex; gap: var(--vl-gap-block); align-items: flex-start; }
+.inv-head .title { flex: 1; }
+.inv-rows { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
 .price {
   display: flex; align-items: baseline; justify-content: space-between; gap: 32px;
   padding: 22px 0; border-top: 1px solid var(--vl-hairline);
@@ -214,7 +221,7 @@ body {
 .price .t { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; }
 .price .v { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; }
 .total {
-  flex: 0 0 460px; height: 300px; align-self: flex-end;
+  flex: 0 0 460px; height: 300px;
   background: var(--vl-acid); border-radius: var(--vl-r-step); padding: 36px;
   display: flex; flex-direction: column; justify-content: space-between;
 }
@@ -479,31 +486,29 @@ body {
       <div>2045</div>
     </div>
   </header>
-  <div class="canvas">
-    <div class="inv">
-      <div class="inv-left">
-        <h2 class="title">Investment</h2>
-        <div>
-          <div class="price">
-            <div class="t">Read the book &amp; set the line</div>
-            <div class="v">$18,000</div>
-          </div>
-          <div class="price">
-            <div class="t">Build the pricing surface</div>
-            <div class="v">$26,000</div>
-          </div>
-          <div class="price">
-            <div class="t">Handover &amp; two weeks of pairing</div>
-            <div class="v">$9,000</div>
-          </div>
-        </div>
-      </div>
+  <div class="canvas col">
+    <div class="inv-head">
+      <h2 class="title">Investment</h2>
       <div class="total">
         <div class="micro">Fixed fee, four weeks</div>
         <div class="txt">
           <div class="n">$53k</div>
           <div class="label">Invoiced in two instalments, no retainer after week four.</div>
         </div>
+      </div>
+    </div>
+    <div class="inv-rows">
+      <div class="price">
+        <div class="t">Read the book &amp; set the line</div>
+        <div class="v">$18,000</div>
+      </div>
+      <div class="price">
+        <div class="t">Build the pricing surface</div>
+        <div class="v">$26,000</div>
+      </div>
+      <div class="price">
+        <div class="t">Handover &amp; two weeks of pairing</div>
+        <div class="v">$9,000</div>
       </div>
     </div>
   </div>

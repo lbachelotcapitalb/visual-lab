@@ -434,6 +434,13 @@ Deux corollaires, tous deux payés pendant la reconstitution :
   jaune de sa slide et faire tomber la règle : la carte de total de la slide 7, laissée à pleine
   hauteur de colonne (460 × 669), couvrait 21,4 % de la slide. Bornée à 460 × 300 : 9,6 %. Même
   mécanique pour la rangée de cartes de la slide 4, bornée à 440 de haut plutôt que `flex: 1`.
+- **Un objet borné ne peut pas tenir une colonne** — sorti du seul REGARD sur le rendu, et c'est
+  le troisième corollaire. Bornée à 300 de haut puis laissée pendre en pied de la colonne droite,
+  la carte de total respectait le plafond mais laissait 300 px de rien sous le titre de la slide 7 :
+  la borne avait déplacé le défaut au lieu de le résoudre. Un objet dont la DIMENSION est
+  contrainte doit changer de PLACE — le total remonte dans la bande de titre, dont il partage la
+  ligne de départ, et le tableau de prix prend toute la hauteur restante. Aucune mesure ne voyait
+  ce vide : `check-deck.mjs` compte les couches, pas les bandes mortes.
 - **`≤ 12 %` est un PLAFOND, pas un quota.** Une slide a le droit de ne porter aucun jaune —
   c'est le cas de la slide 6 depuis que son astérisque a repris l'encre de son sol. Un deck où
   chaque slide place son accent parce que la charte « en a un » est exactement le deck que
@@ -449,7 +456,7 @@ Deux corollaires, tous deux payés pendant la reconstitution :
 | 4 | How we work | la rangée **01→04** de cartes numérotées | la carte 02 |
 | 5 | The challenge | quatre cartes de liste, une noire, une jaune, deux blanches | la carte jaune |
 | 6 | What we deliver | trois cartes blanches hautes + carré média, astérisque **noir** en fin de titre | **aucun** — voir ci-dessous |
-| 7 | Investment | titre + trois lignes de prix filetées, carte de total en aplat portant le chiffre 90 | la carte de total, **bornée à 460 × 300** |
+| 7 | Investment | bande de titre portant la carte de total en aplat (chiffre 90) à sa droite, puis trois lignes de prix filetées sur toute la hauteur restante | la carte de total, **bornée à 460 × 300** |
 | 8 | Clôture | display césuré `Thank-` / `you`, coordonnées, astérisque | l'astérisque |
 
 **Patterns à extraire** — la spec en annonçait cinq, il en sort **quatre** :
