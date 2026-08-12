@@ -98,13 +98,19 @@ body {
 .label { font-size: 19px; line-height: 1.3; font-weight: 700; }
 .label-sm { font-size: 16px; line-height: 1.2; font-weight: 700; }
 
-/* ————— le marqueur de marque : astérisque 6 branches, jaune, UN par slide ————— */
+/* ————— le marqueur de marque : astérisque 6 branches, UN par slide —————
+   Son encre suit son SOL : jaune sur le carré noir, noir sur le fond clair.
+   #EAFF00 sur #EFEFED vaut 1,03:1 — le jaune ne descend jamais sur le fond
+   clair, il y est en aplat ou en encre SUR NOIR. */
 .ast { display: block; }
 .ast-box {
   width: 132px; height: 132px; flex: 0 0 132px;
   background: var(--vl-black); border-radius: var(--vl-r-media);
   display: flex; align-items: center; justify-content: center;
 }
+/* le marqueur occupe la MÊME fraction du carré à toutes les tailles — la cote
+   est une loi du pattern (0,54), pas une taille écrite dans l'attribut. */
+.ast-box > .ast { width: 54%; height: 54%; }
 
 /* ————— le carré média : le « blob 3D » de la source, en dégradés ————— */
 .media {
@@ -238,7 +244,7 @@ body {
       <h1 class="display">Business-<br>Proposal</h1>
       <div class="cover-foot">
         <div class="ast-box">
-          <svg class="ast" width="72" height="72" viewBox="0 0 72 72" aria-hidden="true">
+          <svg class="ast" viewBox="0 0 72 72" aria-hidden="true">
             <g stroke="var(--vl-acid)" stroke-width="9" stroke-linecap="butt">
               <line x1="36" y1="4" x2="36" y2="68"/>
               <line x1="8.3" y1="20" x2="63.7" y2="52"/>
@@ -429,7 +435,7 @@ body {
   </header>
   <div class="canvas col">
     <div class="row-head">
-      <h2 class="title">What we deliver<svg class="ast ast-inline" width="40" height="40" viewBox="0 0 72 72" aria-hidden="true"><g stroke="var(--vl-acid)" stroke-width="9"><line x1="36" y1="4" x2="36" y2="68"/><line x1="8.3" y1="20" x2="63.7" y2="52"/><line x1="8.3" y1="52" x2="63.7" y2="20"/></g></svg></h2>
+      <h2 class="title">What we deliver<svg class="ast ast-inline" width="40" height="40" viewBox="0 0 72 72" aria-hidden="true"><g stroke="var(--vl-black)" stroke-width="9"><line x1="36" y1="4" x2="36" y2="68"/><line x1="8.3" y1="20" x2="63.7" y2="52"/><line x1="8.3" y1="52" x2="63.7" y2="20"/></g></svg></h2>
       <p class="body">Three artefacts, all of them yours. Nothing lives in a tool we own, and
         nothing needs us to be renewed.</p>
     </div>
@@ -532,7 +538,7 @@ body {
       </div>
     </div>
     <div class="ast-box lg">
-      <svg class="ast" width="160" height="160" viewBox="0 0 72 72" aria-hidden="true">
+      <svg class="ast" viewBox="0 0 72 72" aria-hidden="true">
         <g stroke="var(--vl-acid)" stroke-width="9" stroke-linecap="butt">
           <line x1="36" y1="4" x2="36" y2="68"/>
           <line x1="8.3" y1="20" x2="63.7" y2="52"/>

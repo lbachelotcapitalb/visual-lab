@@ -181,7 +181,7 @@ CHECKPOINT_STEP: S7
       points peints en travers d'elle. Le premier jet — six sondages à 0,7 R — restait vert sur
       une branche décalée de 10° ; contre-épreuves rejouées après correction (branche à 40°,
       branche retirée) : rouges. `--vl-ink` n'existe pas dans ce système, c'est `--vl-black`.
-- [ ] **S7.4b — LA CORRECTION QUI EN SORT, à porter dans le deck, le système et la spec.**
+- [x] **S7.4b — LA CORRECTION QUI EN SORT, à porter dans le deck, le système et la spec.**
       Mesuré pendant S7.4a : `#EAFF00` sur `#EFEFED` vaut **1,03:1**. Or la slide 6 pose
       l'astérisque en JAUNE en fin de titre, sur le fond clair — invisible en gris, à l'export
       PDF, et vibrant à l'écran. Le système l'écrivait déjà à sa manière (« le jaune ne colore
@@ -195,6 +195,12 @@ CHECKPOINT_STEP: S7
       (3) `SPEC-SOURCES.md` : même reformulation dans « Éléments signature », et la ligne 6 du
       plan des 8 slides annonce un accent qui n'existe plus — cette slide n'en porte pas, ce que
       la charte autorise. Corriger comme S7.3 a corrigé la ligne 7.
+      **Fait** : les trois gestes sont portés. L'astérisque en ligne de la slide 6 est en
+      `--vl-black` (regardé : il se lit, là où le jaune vibrait) et les deux `.ast` des carrés
+      se dimensionnent par `.ast-box > .ast { width: 54%; height: 54% }` — le 160 px du grand
+      carré valait 0,533, pas 0,54. La slide 6 ne porte donc plus AUCUN accent, et c'est le
+      second corollaire écrit dans la spec au passage : `≤ 12 %` est un PLAFOND, pas un quota,
+      une slide a le droit de n'avoir aucun jaune. `check-deck.mjs` reste vert (32/32).
 - [ ] **S7.5 — `card-…-numbered-steps` + `layout-…-header-tripartite`** : la rangée 01→04 dont
       une seule carte est accentuée, et le header 3 zones réutilisable hors charte.
 - [ ] **S7.6 — les rendus REGARDÉS** (deck + patterns), corrections, `proofs/` supprimé.

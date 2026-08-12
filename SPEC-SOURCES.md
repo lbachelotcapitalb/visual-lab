@@ -398,9 +398,17 @@ rend le header lisible comme un appareil et non comme du texte.
 Le centre et la droite sont des piles de deux lignes ; la droite pousse `2045` à l'extrême bord.
 
 **Éléments signature**
-- **Astérisque ✳ jaune** à 6 branches, marqueur de marque : posé seul dans un carré noir
+- **Astérisque ✳** à 6 branches, marqueur de marque : posé seul dans un carré noir
   radius 19, ou à côté d'un titre, ou en fin de phrase. **Jamais plus d'un par slide**, et
-  toutes les slides n'en portent pas.
+  toutes les slides n'en portent pas. Sa cote est une fraction de son support — **0,54 du côté
+  du carré**, à toutes les tailles. Son ENCRE suit son SOL, elle n'est pas une propriété du
+  marqueur : jaune dans le carré noir, **noir sur le fond clair**. Car —
+- **Le jaune ne descend jamais sur le fond clair.** `#EAFF00` sur `#EFEFED` vaut **1,03:1** :
+  luminances presque égales, il ne reste qu'un écart de teinte, qui vibre à l'écran et disparaît
+  en gris comme à l'export PDF. Le jaune n'a donc que deux emplois : en **aplat** (l'encre qui
+  s'y pose est le noir `#111111`, 16,91:1), ou en **encre SUR NOIR** (16,52:1). C'est la règle
+  exacte ; « le jaune ne colore jamais du texte » était l'approximation qui a laissé passer un
+  astérisque jaune en fin de titre sur le fond clair (slide 6, corrigé).
 - **Cartes numérotées 01→04** : 4 cartes verticales radius 32, hauteur égale, chiffre en
   haut 90, label dessous 19. Une seule est jaune, une seule est noire, les autres blanches —
   le jaune marque l'étape courante.
@@ -421,6 +429,16 @@ d'une slide reste **≤ 12 %** de la surface de slide, et il n'y a **jamais deux
 qui ne soient pas le même objet. C'est ce qui distingue cette charte d'un deck « à couleur
 d'accent » ordinaire, où l'accent finit par tapisser.
 
+Deux corollaires, tous deux payés pendant la reconstitution :
+- **C'est une contrainte de DIMENSION, pas seulement de compte.** Un objet peut être le SEUL
+  jaune de sa slide et faire tomber la règle : la carte de total de la slide 7, laissée à pleine
+  hauteur de colonne (460 × 669), couvrait 21,4 % de la slide. Bornée à 460 × 300 : 9,6 %. Même
+  mécanique pour la rangée de cartes de la slide 4, bornée à 440 de haut plutôt que `flex: 1`.
+- **`≤ 12 %` est un PLAFOND, pas un quota.** Une slide a le droit de ne porter aucun jaune —
+  c'est le cas de la slide 6 depuis que son astérisque a repris l'encre de son sol. Un deck où
+  chaque slide place son accent parce que la charte « en a un » est exactement le deck que
+  l'accent unique cherche à éviter.
+
 **Plan des 8 slides** (arbitré ici — la spec d'origine annonçait 8 slides sans les décrire) :
 
 | # | slide | ce qu'elle porte | l'accent jaune |
@@ -430,7 +448,7 @@ d'accent » ordinaire, où l'accent finit par tapisser.
 | 3 | About | titre + deux colonnes de corps, **bandeau noir pleine largeur** en bas avec badge jaune | le badge |
 | 4 | How we work | la rangée **01→04** de cartes numérotées | la carte 02 |
 | 5 | The challenge | quatre cartes de liste, une noire, une jaune, deux blanches | la carte jaune |
-| 6 | What we deliver | trois cartes blanches hautes + carré média, astérisque en fin de titre | l'astérisque |
+| 6 | What we deliver | trois cartes blanches hautes + carré média, astérisque **noir** en fin de titre | **aucun** — voir ci-dessous |
 | 7 | Investment | titre + trois lignes de prix filetées, carte de total en aplat portant le chiffre 90 | la carte de total, **bornée à 460 × 300** |
 | 8 | Clôture | display césuré `Thank-` / `you`, coordonnées, astérisque | l'astérisque |
 
