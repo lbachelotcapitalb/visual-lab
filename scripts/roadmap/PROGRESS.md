@@ -99,9 +99,10 @@ règles dures :
       la maison » — c'est une décision du mainteneur, pas une déduction. Présenter le tableau et
       s'arrêter.
 - [ ] **S11 — Émetteur PSD live-text.** Reprendre `build-livetext-psd.mjs` (aujourd'hui dans
-      `~/.claude/skills/gtm-content/psd/`) comme quatrième sortie du dépôt. Le code source vit
-      HORS du dépôt : commencer par le recopier dans `kit/`, sinon la chaîne travaille sur un
-      chemin que le dépôt ne porte pas.
+      `~/.claude/skills/gtm-content/psd/` <!-- cible --> ) comme quatrième sortie du dépôt.
+      Le code source vit HORS du dépôt : la chaîne tourne sur la machine qui le porte, donc elle
+      y a accès — mais la PREMIÈRE sous-tâche du step est de le recopier dans `kit/`, sinon le
+      dépôt publie un émetteur dont la source n'est nulle part.
 
 ## Checkpoint intra-step
 
