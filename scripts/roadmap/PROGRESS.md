@@ -172,7 +172,20 @@ CHECKPOINT_STEP: S6
       moins l'inset), et c'est le benchmark des deux CENTRES DE COURBURE qui le prouve.
       `media: social` de `shape-02` est mesuré, pas déclaré (`frame.mjs` : ×1,97, remplit 78 %).
       Effet de bord : `layout-15` citait un `shape-01-notched-corner` qui n'existe pas.
-- [ ] **S6.5 — les rendus REGARDÉS** (deck + les 3 patterns), corrections, `proofs/` supprimé.
+- [x] **S6.5 — les rendus REGARDÉS** (deck + les 3 patterns), corrections, `proofs/` supprimé.
+      **Fait** : le deck et les deux `shape` sont conformes à la spec — les quatre teardrops
+      pointent chacun le coin qu'ils occupent, la pastille du rail sort ronde, les contours
+      restent concentriques. UN défaut sorti par le seul regard, sur `layout-15` : le fragment
+      ne déclarait aucune `font-family` alors que le corps de l'année est `calc(100cqw / 1,216)`,
+      et 1,216 est la CHASSE d'un grotesk précis. `check.mjs` sert « Helvetica Neue » en tête,
+      `render.mjs` la police système : le benchmark des 88 % était vert pendant que le rendu
+      saturait ~97 % et que les chiffres léchaient le bord de la pilule. Un fragment dont la
+      géométrie dépend d'une police doit l'ÉPINGLER — sinon elle dépend du harnais qui l'ouvre.
+      Corrigé, et devenu une assertion (16ᵉ benchmark) : la saturation est remesurée après avoir
+      imposé un serif à la racine du fragment, et vérifiée identique. Contrôlée rouge sans le
+      correctif, verte avec. Constat non traité, à arbitrer : huit autres patterns portent du
+      texte sans déclarer de famille — aucun ne dérive sa géométrie d'une chasse, donc aucun
+      n'est faux, mais aucun ne rend pareil selon l'outil qui l'ouvre.
 - [ ] **S6.6 — gate complet, doc à jour dans le même commit** (ROADMAP lot 10, README « État »,
       SPEC-SOURCES), commit final + MAJ de PROGRESS.
 

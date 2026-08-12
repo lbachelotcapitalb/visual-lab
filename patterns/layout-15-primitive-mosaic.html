@@ -131,6 +131,12 @@
    l'encre à 88 % de la boîte. Posé à une taille fixe, le chiffre occupait 44 % de sa pilule —
    un petit bloc centré dans une grande boîte, ce que DOCTRINE §1 nomme un raté. */
 .vl-mos__year {
+  /* La police est DANS le fragment parce que 1,216 est la chasse d'un grotesk précis : servi
+     dans une autre famille, le même calcul sature 97 % de la pilule au lieu de 88 % et les
+     chiffres viennent lécher le bord. Un fragment qui hérite sa famille de son hôte fait
+     dépendre sa géométrie du harnais qui l'ouvre — `check.mjs` sert « Helvetica Neue » en
+     tête, `render.mjs` sert la police système : le benchmark restait vert sur un rendu faux. */
+  font-family: "Helvetica Neue", Helvetica, Inter, Arial, sans-serif;
   font-size: calc(100cqw / 1.216);
   line-height: 0.92;
   font-weight: 700;

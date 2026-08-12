@@ -25,3 +25,4 @@ assets/refs/
 .deckprobe-*.html
 .diff-*.html
 .palette-*.png
+.measure-tmp.html
