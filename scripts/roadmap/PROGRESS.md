@@ -108,11 +108,25 @@ règles dures :
 
 CHECKPOINT_STEP: S2
 
-- [ ] `decks/ref-12-neon-capsule-tags.html` — la slide 1600×900 : sol vert forêt, pile des six
+- [x] `decks/ref-12-neon-capsule-tags.html` — la slide 1600×900 : sol vert forêt, pile des six
       capsules alignées à droite, écart `0,1 u`, rien d'autre. Le bord droit coupé de la source
       est un accident de cadrage : on remet à plat, on ne reproduit pas l'amputation.
-- [ ] Confronter `tag-01-gooey-capsule` au deck : `geometry.frame` [241, 70] doit être la
-      dimension RÉELLE sur la slide (donc `--vl-cap-u: 56px`). Divergence ⇒ la spec tranche.
+      `check-deck.mjs` vert (0 couche au-dessus de la scène : une capsule est un TRAIT, pas une
+      surface). Deux choses que le REGARD a sorties et que rien ne mesurait :
+      **(a)** `--vl-cap-u: 56px` (la valeur héritée du système, posée sans deck) laissait la pile
+      à 26 % de la largeur et 50 % de la hauteur — DOCTRINE §1. L'unité n'est pas libre : six
+      rangées + cinq écarts = 8,03 u, et le plafond de hauteur donne u ≤ 97 px.
+      **(b)** à u = 97, Chrome arrondit la bordure CSS de la pilule à 5 px là où le stroke SVG
+      vaut 5,335 px : le contour changeait d'épaisseur à chaque soudure. **u = 91** (trait
+      5,005 px des deux côtés) + un **débord de 0,05 u** ajouté aux deux extrémités des tracés
+      SVG (tête et calotte) pour fermer le trou de rastérisation de ~0,7 px. Corrigé dans le deck
+      ET dans `patterns/tag-01-gooey-capsule.html` — mesuré : couverture ≥ 0,99 sur les douze
+      lignes droites, contre 0,30 avant.
+- [ ] Confronter `tag-01-gooey-capsule` au deck — RESTE À FAIRE : passer
+      `systems/ref-12-neon-capsule-tags.json` de `--vl-cap-u: 56px` à **91px**, puis re-mesurer
+      `geometry.frame` (aujourd'hui [241, 70], relevé à u=56) et `geometry.type_px.label`
+      (34.7 → ~56.4). Les benchmarks sont tous en RATIOS : ils ne bougent pas. Vérifier ensuite
+      `node bin/check.mjs tag-01-gooey-capsule`.
 - [ ] Doc : `SPEC-SOURCES.md` § ref-12 (« Patterns extraits » annonce un
       `stack-keyword-flush-right` qui n'existe pas — la pile est DANS `tag-01`), README « État »,
       ROADMAP (ligne du tableau « Ce qui reste »).

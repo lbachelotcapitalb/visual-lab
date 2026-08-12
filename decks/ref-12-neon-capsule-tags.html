@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ref-12 — étiquettes capsules néon sur vert forêt</title>
+<style>
+@import url("../fonts/fonts.css");
+
+/* ref-12-neon-capsule-tags — reconstitution fidèle. La source est un CROP serré (bord droit
+   coupé, les deux premières capsules amputées) : rien d'autre n'y est visible, ni titre, ni
+   image, ni aplat. Ce qui est reconstruit est donc la PILE seule, remise à plat et centrée sur
+   une slide au format PPT (1600 × 900) — le vide autour n'est pas une invention, c'est ce que
+   la source ne montre pas. L'amputation du bord droit ne se reproduit PAS : un élément coupé
+   par le cadre est un accident de cadrage, cf. SKILL.md § « Isoler la vraie slide » et le
+   précédent ref-15, autre crop remis à plat de la même façon.
+
+   Une seule couche au-dessus de la scène : le sol. Les capsules n'ont pas de fond — elles sont
+   un TRAIT. C'est la charte la plus courte du corpus, et sa signature ne tient pas à sa couleur
+   mais à la soudure du cercle et de la pilule (deux congés concaves, un contour jamais rompu).
+   Géométrie et palette relevées : SPEC-SOURCES.md § ref-12. */
+:root {
+  --vl-bg: #26331F;
+  --vl-neon: #4FE383;
+  --vl-neon-soft: #4FE38344;
+  --vl-ink-invert: #FFFFFF;
+  /* L'unité dont TOUT dérive. Elle n'est pas choisie au goût : six rangées de 1,255 u plus cinq
+     écarts de 0,1 u font 8,03 u, et la pile doit occuper la hauteur de la slide (DOCTRINE §1 —
+     un vide en pied de slide est le même défaut qu'un vide dans une carte). Le plafond est donc
+     u ≤ 97 px. Ce n'est pas 97 qui est retenu mais 91, parce que l'épaisseur du trait vaut
+     0,055 u et que Chrome ARRONDIT une bordure CSS au pixel entier alors qu'il ne le fait pas
+     d'un stroke SVG : à u = 97 le contour passe de 5,335 px (le SVG) à 5 px (la pilule) à chaque
+     soudure — 6,7 % d'écart, douze fois par slide, sur la seule chose qui fait la signature de
+     cette charte. À u = 91 le trait vaut 5,005 px des deux côtés et la soudure redevient
+     invisible. La pile mesure alors 731 px de haut, soit 81 % de la slide. */
+  --vl-cap-u: 91px;
+  --vl-margin: 60px;
+  --vl-font: Inter, "Helvetica Neue", Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--vl-bg); font-family: var(--vl-font); -webkit-font-smoothing: antialiased; }
+
+.slide {
+  position: relative;
+  width: 1600px; height: 900px; margin: 0 auto;
+  overflow: hidden;
+  background: var(--vl-bg);
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: var(--vl-margin);
+}
+
+/* ————— la capsule ————— */
+/* Toute la géométrie dérive d'UNE longueur, --vl-cap-u (l'unité) ; les nombres qui suivent
+   sont des RATIOS relevés sur la référence, pas des pixels choisis. Ils sont solidaires :
+   le cou n'est tangent que pour ce jeu-là (cercle 0.6u, calotte 0.5u, congé 0.28u,
+   entraxe 1.2u). Changer l'un sans recalculer les autres rouvre le contour. */
+.vl-cap {
+  --u: var(--vl-cap-u, 56px);
+  --sw: calc(var(--u) * 0.055);           /* trait unique : SVG et bordures partagent cette valeur */
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: calc(var(--u) * 1.255);          /* = diamètre extérieur du cercle */
+  color: var(--vl-neon);
+}
+
+/* La tête porte le cercle, les DEUX congés concaves et la calotte gauche de la pilule —
+   d'un seul trait. Largeur fixe (1.8275u) : le cou ne s'étire jamais. */
+.vl-cap__head {
+  flex: none;
+  width: calc(var(--u) * 1.8275);
+  height: 100%;
+}
+.vl-cap__head svg,
+.vl-cap__tail svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.vl-cap__head path,
+.vl-cap__tail path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.055;                     /* en unités de viewBox = 0.055u, comme --sw */
+}
+
+/* Le corps de la pilule : seules les deux droites, en bordures. Elles prolongent EXACTEMENT
+   les extrémités du tracé SVG — c'est ce qui autorise la largeur variable sans rouvrir le
+   contour. La largeur est pilotée par le MOT : c'est elle qui dessine l'escalier de la pile. */
+.vl-cap__label {
+  height: calc(var(--u) * 1.055);
+  border-top: var(--sw) solid currentColor;
+  border-bottom: var(--sw) solid currentColor;
+  display: flex;
+  align-items: center;
+  padding: 0 calc(var(--u) * 0.3) 0 calc(var(--u) * 0.18);
+  font-size: calc(var(--u) * 0.62);
+  line-height: 1;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+}
+
+/* La calotte droite : un demi-stade, de largeur fixe elle aussi. */
+.vl-cap__tail {
+  flex: none;
+  width: calc(var(--u) * 0.5275);
+  height: calc(var(--u) * 1.055);
+}
+
+/* Le glyphe est POSÉ dans le cercle, il n'entre pas dans le flux : le centre du cercle est
+   à (0.6275u, 0.6275u), soit exactement (H/2, H/2). Les quatre pictogrammes sont REDESSINÉS —
+   ils marquent une catégorie, ils n'expliquent rien. */
+.vl-cap__icon {
+  position: absolute;
+  left: calc(var(--u) * 0.3175);
+  top: 50%;
+  transform: translateY(-50%);
+  width: calc(var(--u) * 0.62);
+  height: calc(var(--u) * 0.62);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+
+/* ————— la pile ————— */
+/* Alignée à DROITE : c'est le bord droit qui tient la colonne, les têtes tombent en escalier
+   selon la longueur du mot. L'écart est serré (0,1 u) — la pile doit lire comme UN bloc, pas
+   comme six objets. */
+.vl-capstack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: calc(var(--vl-cap-u) * 0.1);
+}
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <div class="vl-capstack">
+
+    <span class="vl-cap">
+      <span class="vl-cap__head" aria-hidden="true">
+        <svg viewBox="0 0 1.8275 1.255"><path d="M1.8775 0.1275L1.8275 0.1275A.5 .5 0 0 0 1.487222 0.261152A.28 .28 0 0 1 1.08375 0.237838A.6 .6 0 1 0 1.08375 1.017162A.28 .28 0 0 1 1.487222 0.993848A.5 .5 0 0 0 1.8275 1.1275L1.8775 1.1275"/></svg>
+      </span>
+      <svg class="vl-cap__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.6 2.6 6.4 13.2h4.6L10.4 21.4l7.2-10.6h-4.6z"/></svg>
+      <span class="vl-cap__label">HRT</span>
+      <span class="vl-cap__tail" aria-hidden="true">
+        <svg viewBox="0 0 0.5275 1.055"><path d="M-0.05 0.0275L0 0.0275A.5 .5 0 0 1 0 1.0275L-0.05 1.0275"/></svg>
+      </span>
+    </span>
+
+    <span class="vl-cap">
+      <span class="vl-cap__head" aria-hidden="true">
+        <svg viewBox="0 0 1.8275 1.255"><path d="M1.8775 0.1275L1.8275 0.1275A.5 .5 0 0 0 1.487222 0.261152A.28 .28 0 0 1 1.08375 0.237838A.6 .6 0 1 0 1.08375 1.017162A.28 .28 0 0 1 1.487222 0.993848A.5 .5 0 0 0 1.8275 1.1275L1.8775 1.1275"/></svg>
+      </span>
+      <svg class="vl-cap__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6v18.8M2.6 12h18.8M12 2.6 9.2 5.6M12 2.6l2.8 3M12 21.4l-2.8-3M12 21.4l2.8-3M2.6 12l3 2.8M2.6 12l3-2.8M21.4 12l-3 2.8M21.4 12l-3-2.8"/></svg>
+      <span class="vl-cap__label">NDA+</span>
+      <span class="vl-cap__tail" aria-hidden="true">
+        <svg viewBox="0 0 0.5275 1.055"><path d="M-0.05 0.0275L0 0.0275A.5 .5 0 0 1 0 1.0275L-0.05 1.0275"/></svg>
+      </span>
+    </span>
+
+    <span class="vl-cap">
+      <span class="vl-cap__head" aria-hidden="true">
+        <svg viewBox="0 0 1.8275 1.255"><path d="M1.8775 0.1275L1.8275 0.1275A.5 .5 0 0 0 1.487222 0.261152A.28 .28 0 0 1 1.08375 0.237838A.6 .6 0 1 0 1.08375 1.017162A.28 .28 0 0 1 1.487222 0.993848A.5 .5 0 0 0 1.8275 1.1275L1.8775 1.1275"/></svg>
+      </span>
+      <svg class="vl-cap__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.6 12h3.6M16.85 9.2l3.12-1.8M14.8 7.15l1.8-3.12M12 6.4V2.8M9.2 7.15 7.4 4.03M7.15 9.2 4.03 7.4M6.4 12H2.8M7.15 14.8l-3.12 1.8M9.2 16.85 7.4 19.97M12 17.6v3.6M14.8 16.85l1.8 3.12M16.85 14.8l3.12 1.8"/></svg>
+      <span class="vl-cap__label">Sermorelin</span>
+      <span class="vl-cap__tail" aria-hidden="true">
+        <svg viewBox="0 0 0.5275 1.055"><path d="M-0.05 0.0275L0 0.0275A.5 .5 0 0 1 0 1.0275L-0.05 1.0275"/></svg>
+      </span>
+    </span>
+
+    <span class="vl-cap">
+      <span class="vl-cap__head" aria-hidden="true">
+        <svg viewBox="0 0 1.8275 1.255"><path d="M1.8775 0.1275L1.8275 0.1275A.5 .5 0 0 0 1.487222 0.261152A.28 .28 0 0 1 1.08375 0.237838A.6 .6 0 1 0 1.08375 1.017162A.28 .28 0 0 1 1.487222 0.993848A.5 .5 0 0 0 1.8275 1.1275L1.8775 1.1275"/></svg>
+      </span>
+      <svg class="vl-cap__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.6 2.6 6.4 13.2h4.6L10.4 21.4l7.2-10.6h-4.6z"/></svg>
+      <span class="vl-cap__label">Enclomiphene</span>
+      <span class="vl-cap__tail" aria-hidden="true">
+        <svg viewBox="0 0 0.5275 1.055"><path d="M-0.05 0.0275L0 0.0275A.5 .5 0 0 1 0 1.0275L-0.05 1.0275"/></svg>
+      </span>
+    </span>
+
+    <span class="vl-cap">
+      <span class="vl-cap__head" aria-hidden="true">
+        <svg viewBox="0 0 1.8275 1.255"><path d="M1.8775 0.1275L1.8275 0.1275A.5 .5 0 0 0 1.487222 0.261152A.28 .28 0 0 1 1.08375 0.237838A.6 .6 0 1 0 1.08375 1.017162A.28 .28 0 0 1 1.487222 0.993848A.5 .5 0 0 0 1.8275 1.1275L1.8775 1.1275"/></svg>
+      </span>
+      <svg class="vl-cap__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 10 14 14M14 10 10 14M8.4 3.6H3.6v4.8M15.6 3.6h4.8v4.8M15.6 20.4h4.8v-4.8M8.4 20.4H3.6v-4.8"/></svg>
+      <span class="vl-cap__label">Semaglutide</span>
+      <span class="vl-cap__tail" aria-hidden="true">
+        <svg viewBox="0 0 0.5275 1.055"><path d="M-0.05 0.0275L0 0.0275A.5 .5 0 0 1 0 1.0275L-0.05 1.0275"/></svg>
+      </span>
+    </span>
+
+    <span class="vl-cap">
+      <span class="vl-cap__head" aria-hidden="true">
+        <svg viewBox="0 0 1.8275 1.255"><path d="M1.8775 0.1275L1.8275 0.1275A.5 .5 0 0 0 1.487222 0.261152A.28 .28 0 0 1 1.08375 0.237838A.6 .6 0 1 0 1.08375 1.017162A.28 .28 0 0 1 1.487222 0.993848A.5 .5 0 0 0 1.8275 1.1275L1.8775 1.1275"/></svg>
+      </span>
+      <svg class="vl-cap__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.6 2.6 6.4 13.2h4.6L10.4 21.4l7.2-10.6h-4.6z"/></svg>
+      <span class="vl-cap__label">Testosterone</span>
+      <span class="vl-cap__tail" aria-hidden="true">
+        <svg viewBox="0 0 0.5275 1.055"><path d="M-0.05 0.0275L0 0.0275A.5 .5 0 0 1 0 1.0275L-0.05 1.0275"/></svg>
+      </span>
+    </span>
+
+  </div>
+</section>
+
+</body>
+</html>
