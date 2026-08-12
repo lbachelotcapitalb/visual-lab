@@ -156,9 +156,22 @@ CHECKPOINT_STEP: S6
       pattern sont `--vl-mos-cell` et `--vl-mos-gap` ; les trois rayons en sont des fractions
       (0,500 / 0,300 / 0,220) et un benchmark garde leur ÉCARTEMENT, faute de quoi squircle et
       teardrop se confondent et la planche ne porte plus qu'une primitive.
-- [ ] **S6.4 — `shape-02-teardrop-quadrant` + `shape-03-stadium-track`** : la forme à un seul
+- [x] **S6.4 — `shape-02-teardrop-quadrant` + `shape-03-stadium-track`** : la forme à un seul
       coin droit (4 orientations) et le stadium emboîté (rail + pastille / rail + dégradé, qui
-      absorbe le `fill-gradient-stadium` annoncé seul par la spec).
+      absorbe le `fill-gradient-stadium` annoncé seul par la spec). **Fait** : 8 + 13
+      benchmarks verts. Les deux patterns portent le MÊME piège, et c'est ce qui les relie à
+      `shape-notched-corner` : un rayon (ou un chanfrein) écrit en `%` se résout par AXE, donc
+      dès que la boîte n'est pas carrée l'arc devient elliptique. Lire la valeur calculée ne
+      le voit pas — Chrome rend le `%` tel quel. Les deux benchmarks qui portent le lot sondent
+      donc la forme PEINTE au point (`elementFromPoint`) sur cinq et six angles : `shape-02` en
+      aplatissant sa cellule à 232 × 160, `shape-03` en DÉRIVANT le rayon attendu de la hauteur
+      au lieu de le lire. Contrainte du harnais relevée en chemin : la fenêtre de `check.mjs`
+      fait 756 × 469, donc tout sondage sous y ≈ 469 rend `null` — le premier rail sondé était
+      le second de la planche et sortait rouge pour une raison fausse. Acquis de `shape-03` :
+      la pastille RONDE n'est pas déclarée, elle tombe de la loi d'emboîtement (rayon du parent
+      moins l'inset), et c'est le benchmark des deux CENTRES DE COURBURE qui le prouve.
+      `media: social` de `shape-02` est mesuré, pas déclaré (`frame.mjs` : ×1,97, remplit 78 %).
+      Effet de bord : `layout-15` citait un `shape-01-notched-corner` qui n'existe pas.
 - [ ] **S6.5 — les rendus REGARDÉS** (deck + les 3 patterns), corrections, `proofs/` supprimé.
 - [ ] **S6.6 — gate complet, doc à jour dans le même commit** (ROADMAP lot 10, README « État »,
       SPEC-SOURCES), commit final + MAJ de PROGRESS.

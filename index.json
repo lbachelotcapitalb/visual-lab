@@ -20,9 +20,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 51,
+    "patterns": 53,
     "refs": 17,
-    "checkable": 44
+    "checkable": 46
   },
   "patterns": [
     {
@@ -6494,6 +6494,280 @@
       "html": "patterns/list-07-hairline-spec-table.html"
     },
     {
+      "id": "shape-02-teardrop-quadrant",
+      "name": "Carré arrondi à un seul coin droit",
+      "family": "shape",
+      "ref": "ref-01-bento-pills-2030",
+      "media": [
+        "slide",
+        "web",
+        "social"
+      ],
+      "intent": "Donner à un aplat une ORIENTATION sans lui ajouter la moindre pointe, flèche ou étiquette : un carré dont trois coins sont arrondis du même rayon et dont le quatrième reste vif. La masse est neutre, le coin droit désigne un quadrant — et deux exemplaires posés sur des coins opposés se lisent comme miroir l'un de l'autre, ce qui pose une diagonale dans une composition qui n'a aucun texte pour la porter.",
+      "when_to_use": "Dans un vocabulaire de formes pleines — couverture, intercalaire, planche de primitives — où il faut une forme qui ne soit ni un cercle ni un carré ni une gélule, et qui POINTE. Aussi seule, en pastille de coin ou en fond de glyphe, quand la carte doit signaler à quel bord elle appartient : le coin droit se pose contre le bord, les trois arrondis regardent l'intérieur.",
+      "avoid_when": "Sur une image ou une vidéo : le coin vif se lit comme un recadrage raté, exactement comme le chanfrein de `shape-notched-corner`. Sur du contenu à lire, aussi — les trois arrondis mangent les quatre angles du bloc de texte de façon dissymétrique, et l'interligne ne rattrape pas. Et dès que la boîte cesse d'être proche du carré : à 2:1 le rayon en longueur reste circulaire mais les trois arrondis n'occupent plus la même part des côtés longs et courts, la forme se lit comme une gélule ébréchée.",
+      "tags": [
+        "forme",
+        "primitive",
+        "teardrop",
+        "coin",
+        "rayon",
+        "orientation",
+        "quadrant",
+        "aplat",
+        "couverture",
+        "geometrie"
+      ],
+      "vars": [
+        {
+          "name": "--vl-td-cell",
+          "role": "le côté de la tuile — la forme n'a pas de taille propre, elle remplit sa cellule",
+          "default": "232px"
+        },
+        {
+          "name": "--vl-td-radius",
+          "role": "le rayon des TROIS coins arrondis, en LONGUEUR (jamais un %) — 0,220 du côté ici, et la forme ne vit qu'entre 0,12 et 0,50",
+          "default": "51.04px"
+        },
+        {
+          "name": "--vl-td-gap",
+          "role": "l'écart entre les quatre orientations de la démonstration",
+          "default": "19px"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "l'aplat de la forme",
+          "default": "#0B0B0B"
+        }
+      ],
+      "slots": [],
+      "geometry": {
+        "root": ".vl-td",
+        "frame": [
+          483,
+          483
+        ],
+        "ratios": {
+          "cell_over_frame": 0.4803,
+          "gap_over_frame": 0.0393,
+          "radius_over_cell": 0.22,
+          "radius_floor": 0.12,
+          "radius_ceiling": 0.5,
+          "sharp_corners_per_tile": 1,
+          "orientations": 4
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "la tuile est CARRÉE : c'est ce qui fait que les trois arrondis occupent la même part de chaque côté, et donc que la masse reste neutre pendant que le coin droit, seul, oriente",
+          "measure": "box('.vl-td__q--tl').w / box('.vl-td__q--tl').h",
+          "expect": 1,
+          "tol": 0.005
+        },
+        {
+          "name": "UN SEUL coin droit, sur les quatre orientations — deux et la forme redevient une gélule, zéro et c'est un squircle, trois et c'est un onglet",
+          "measure": "(() => { const P = ['borderTopLeftRadius','borderTopRightRadius','borderBottomRightRadius','borderBottomLeftRadius']; return ['tl','tr','br','bl'].every((k) => P.map((p) => num('.vl-td__q--' + k, p)).filter((v) => v < 0.5).length === 1) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "les TROIS autres coins portent le MÊME rayon : trois rayons qui diffèrent, c'est une forme organique, plus une primitive",
+          "measure": "(() => { const P = ['borderTopLeftRadius','borderTopRightRadius','borderBottomRightRadius','borderBottomLeftRadius']; let worst = 0; for (const k of ['tl','tr','br','bl']) { const v = P.map((p) => num('.vl-td__q--' + k, p)).filter((x) => x >= 0.5); worst = Math.max(worst, (Math.max(...v) - Math.min(...v)) / Math.max(...v)); } return worst; })()",
+          "max": 0.003
+        },
+        {
+          "name": "et les quatre ORIENTATIONS partagent ce rayon : ce sont quatre poses d'une même forme, pas quatre formes",
+          "measure": "(() => { const P = ['borderTopLeftRadius','borderTopRightRadius','borderBottomRightRadius','borderBottomLeftRadius']; const all = ['tl','tr','br','bl'].flatMap((k) => P.map((p) => num('.vl-td__q--' + k, p)).filter((x) => x >= 0.5)); return (Math.max(...all) - Math.min(...all)) / Math.max(...all); })()",
+          "max": 0.003
+        },
+        {
+          "name": "QUADRANT — le coin droit de chaque tuile pointe le coin du bloc qu'elle occupe, et les quatre pointent quatre coins distincts : c'est cette règle qui interdit de permuter deux exemplaires diagonalement opposés",
+          "measure": "(() => { const P = ['borderTopLeftRadius','borderTopRightRadius','borderBottomRightRadius','borderBottomLeftRadius']; const want = { tl: 0, tr: 1, br: 2, bl: 3 }; const r = document.querySelector('.vl-td').getBoundingClientRect(); return ['tl','tr','br','bl'].every((k) => { const sharp = P.map((p) => num('.vl-td__q--' + k, p)).findIndex((v) => v < 0.5); const b = document.querySelector('.vl-td__q--' + k).getBoundingClientRect(); const left = b.left - r.left < r.width / 2, top = b.top - r.top < r.height / 2; const quad = top ? (left ? 0 : 1) : (left ? 3 : 2); return sharp === want[k] && quad === want[k]; }) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "le rayon vaut 0,220 du côté — le réglage de `ref-01`, choisi pour rester écarté du squircle (0,300) de la même planche : rapprochés, les deux primitives se confondent",
+          "measure": "num('.vl-td__q--tl', 'borderTopRightRadius') / box('.vl-td__q--tl').w",
+          "expect": 0.22,
+          "tol": 0.006
+        },
+        {
+          "name": "ARC DE CERCLE, jamais une ellipse — le fragment est REPARAMÉTRÉ sur une cellule aplatie (232 × 160) et la courbe est sondée au point : un rayon écrit en `%` y résoudrait 51 px sur un axe et 35 sur l'autre, et le sondage à 45° tomberait hors de la forme",
+          "measure": "(() => { const set = document.querySelector('.vl-td'); set.style.gridTemplateRows = '160px 160px'; const q = document.querySelector('.vl-td__q--tl'); const b = q.getBoundingClientRect(); const r = parseFloat(getComputedStyle(q).borderTopRightRadius); const cx = b.right - r, cy = b.top + r; const at = (k, t) => document.elementFromPoint(cx + Math.cos(t) * r * k, cy - Math.sin(t) * r * k) === q; let ok = 1; for (const a of [10, 30, 45, 60, 80]) { const t = a * Math.PI / 180; if (!at(0.90, t) || at(1.10, t)) ok = 0; } set.style.gridTemplateRows = ''; return ok; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "BANDE DE RAYON — de 0,12 à 0,50 du côté, la forme garde exactement un coin droit, trois rayons égaux, et un rayon EFFECTIF qui suit le paramètre ; au-delà de 0,50 deux arrondis adjacents sommeraient plus que le côté et le navigateur les remettrait tous à l'échelle",
+          "measure": "(() => { const set = document.querySelector('.vl-td'); const P = ['borderTopLeftRadius','borderTopRightRadius','borderBottomRightRadius','borderBottomLeftRadius']; const cell = document.querySelector('.vl-td__q--tl').getBoundingClientRect().width; let worst = 0; for (const f of [0.12, 0.22, 0.35, 0.50]) { set.style.setProperty('--vl-td-radius', (cell * f) + 'px'); for (const k of ['tl','tr','br','bl']) { const v = P.map((p) => parseFloat(getComputedStyle(document.querySelector('.vl-td__q--' + k))[p]) || 0); const round = v.filter((x) => x >= 0.5); if (v.filter((x) => x < 0.5).length !== 1 || round.length !== 3) { set.style.removeProperty('--vl-td-radius'); return 1; } worst = Math.max(worst, (Math.max(...round) - Math.min(...round)) / Math.max(...round), Math.abs(Math.max(...round) / (cell * f) - 1)); } } set.style.removeProperty('--vl-td-radius'); return worst; })()",
+          "max": 0.005
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/shape-02-teardrop-quadrant.html"
+    },
+    {
+      "id": "shape-03-stadium-track",
+      "name": "Rail stadium à enfant emboîté",
+      "family": "shape",
+      "ref": "ref-01-bento-pills-2030",
+      "media": [
+        "slide",
+        "web"
+      ],
+      "intent": "Poser une piste à bouts ronds qui porte un objet EMBOÎTÉ — barre de progression, interrupteur, jauge — sans que le liseré entre les deux s'épaississe dans les courbes. Une seule loi le tient : l'enfant est inset d'une constante sur ses quatre côtés et son rayon vaut celui du rail moins cet inset, ce qui fait tomber les deux centres de courbure au même point. Deux remplissages en découlent, une barre partielle et une pastille, et ce ne sont pas deux objets : c'est le même rail avec deux longueurs d'enfant.",
+      "when_to_use": "Partout où une piste doit porter une position ou un état : barre de progression, interrupteur, jauge de segment, pastille de statut dans un tableau de bord. Aussi comme primitive de composition dans un vocabulaire de formes pleines — c'est la forme la plus fréquente d'une planche géométrique, parce qu'elle est la seule à porter une orientation LONGUE sans texte.",
+      "avoid_when": "Sur une boîte proche du carré : à moins de 1,6 d'aspect les deux bouts ronds se rejoignent, le rail devient une gélule courte puis un disque, et l'enfant emboîté n'a plus de course à parcourir — c'est un anneau, pas une piste. Éviter aussi dès que l'enfant doit toucher un bord : l'inset est constant sur les quatre côtés par construction, et le rendre nul d'un côté détruit la concentricité, donc l'objet même du pattern. Et en mailing : Outlook rend `border-radius` et les dégradés de façon imprévisible — voir `node bin/emit.mjs --audit --target email`.",
+      "tags": [
+        "forme",
+        "primitive",
+        "stadium",
+        "pilule",
+        "rail",
+        "toggle",
+        "progression",
+        "jauge",
+        "rayon",
+        "concentrique"
+      ],
+      "vars": [
+        {
+          "name": "--vl-track-h",
+          "role": "la hauteur du rail — le seul paramètre d'échelle : elle fixe le rayon (h/2) et l'inset (0,068 h)",
+          "default": "232px"
+        },
+        {
+          "name": "--vl-track-w",
+          "role": "la longueur du rail — au moins 1,6 fois la hauteur, sans quoi la piste n'a plus de course",
+          "default": "483px"
+        },
+        {
+          "name": "--vl-track-inset",
+          "role": "l'écart de l'enfant, CONSTANT sur les quatre côtés — posé par le padding du rail, jamais côté par côté",
+          "default": "15.776px"
+        },
+        {
+          "name": "--vl-track-fill",
+          "role": "la longueur de la barre, en fraction du rail — le seul paramètre de contenu du pattern",
+          "default": "0.4477"
+        },
+        {
+          "name": "--vl-track-gap",
+          "role": "l'écart entre les deux remplissages de la démonstration",
+          "default": "19px"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "l'aplat du rail",
+          "default": "#0B0B0B"
+        },
+        {
+          "name": "--vl-white",
+          "role": "l'enfant emboîté — pastille, et extrémité claire du dégradé",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-accent",
+          "role": "l'extrémité chaude du dégradé de la barre",
+          "default": "#E8342A"
+        }
+      ],
+      "slots": [],
+      "geometry": {
+        "root": ".vl-track-set",
+        "frame": [
+          483,
+          483
+        ],
+        "ratios": {
+          "track_aspect": 2.082,
+          "radius_over_height": 0.5,
+          "inset_over_height": 0.068,
+          "inner_radius_over_height": 0.432,
+          "fill_over_track": 0.4477,
+          "knob_over_height": 0.864
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "STADIUM — le rayon vaut exactement la moitié du PETIT côté, et il est écrit en LONGUEUR : un `50%` rendrait 50 % de CHAQUE axe, soit 241,5 de rayon horizontal contre 116 de vertical sur une boîte 2:1, c'est-à-dire une ellipse",
+          "measure": "num('.vl-track--knob', 'borderTopLeftRadius') / box('.vl-track--knob').h",
+          "expect": 0.5,
+          "tol": 0.003
+        },
+        {
+          "name": "…et le bout rond est un ARC DE CERCLE de rayon h/2, sondé au point sur six angles — la mesure ne lit pas la valeur déclarée, elle interroge la forme PEINTE : un rayon en pourcentage y échoue dès 135°, là où lire la valeur calculée ne verrait qu'un « 50 % » d'apparence saine",
+          "measure": "(() => { const rail = document.querySelector('.vl-track--bar'); const b = rail.getBoundingClientRect(); const R = b.height / 2; const cx = b.left + R, cy = b.top + b.height / 2; const at = (k, t) => { const e = document.elementFromPoint(cx + Math.cos(t) * R * k, cy - Math.sin(t) * R * k); return !!e && (e === rail || rail.contains(e)); }; let ok = 1; for (const a of [110, 135, 160, 200, 225, 250]) { const t = a * Math.PI / 180; if (!at(0.90, t) || at(1.10, t)) ok = 0; } return ok; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "INSET CONSTANT sur les quatre côtés : c'est le padding du rail qui pose l'enfant, jamais une marge choisie côté par côté",
+          "measure": "(() => { const P = ['paddingTop','paddingRight','paddingBottom','paddingLeft'].map((p) => num('.vl-track--knob', p)); return (Math.max(...P) - Math.min(...P)) / Math.max(...P); })()",
+          "max": 0.003
+        },
+        {
+          "name": "…et il vaut 0,068 de la hauteur du rail — assez pour que le liseré se lise, assez peu pour que l'enfant reste l'objet et le rail le contenant",
+          "measure": "num('.vl-track--knob', 'paddingTop') / box('.vl-track--knob').h",
+          "expect": 0.068,
+          "tol": 0.004
+        },
+        {
+          "name": "CONTOURS CONCENTRIQUES — le rayon de l'enfant est celui du rail MOINS l'inset, sur les deux remplissages. Écrit à part, le liseré s'épaissirait dans les coins sans qu'aucun alignement ne bouge",
+          "measure": "(() => { let worst = 0; for (const [r, f] of [['.vl-track--bar','.vl-track__fill--gradient'], ['.vl-track--knob','.vl-track__fill--knob']]) { worst = Math.max(worst, Math.abs((num(r, 'borderTopLeftRadius') - num(f, 'borderTopLeftRadius')) / num(r, 'paddingTop') - 1)); } return worst; })()",
+          "max": 0.01
+        },
+        {
+          "name": "…ce qui se vérifie à l'endroit où ça compte : les deux CENTRES DE COURBURE tombent au même point, donc l'écart des deux bords est le même dans la courbe que sur la droite",
+          "measure": "(() => { let worst = 0; for (const [r, f] of [['.vl-track--bar','.vl-track__fill--gradient'], ['.vl-track--knob','.vl-track__fill--knob']]) { const cr = box(r).left + num(r, 'borderTopLeftRadius'), cf = box(f).left + num(f, 'borderTopLeftRadius'); const vr = box(r).top + box(r).h / 2, vf = box(f).top + box(f).h / 2; worst = Math.max(worst, Math.abs(cr - cf) / box(r).h, Math.abs(vr - vf) / box(r).h); } return worst; })()",
+          "max": 0.002
+        },
+        {
+          "name": "la pastille est CARRÉE de boîte — elle fait exactement la hauteur utile du rail, inset compris des deux côtés",
+          "measure": "box('.vl-track__fill--knob').w / box('.vl-track__fill--knob').h",
+          "expect": 1,
+          "tol": 0.005
+        },
+        {
+          "name": "…et elle sort RONDE sans qu'on l'écrive : son rayon vaut la moitié de son côté, ce qui n'est pas une déclaration mais la conséquence de la soustraction ci-dessus. Une primitive dont l'usage principal tombe d'une loi, c'est le signe que la loi est la bonne",
+          "measure": "num('.vl-track__fill--knob', 'borderTopLeftRadius') / box('.vl-track__fill--knob').w",
+          "expect": 0.5,
+          "tol": 0.005
+        },
+        {
+          "name": "la BARRE ne remplit pas son rail (44,8 %) : c'est ce qui fait lire une piste portant une position, et non un aplat à bouts ronds",
+          "measure": "box('.vl-track__fill--gradient').w / box('.vl-track--bar').w",
+          "expect": 0.4477,
+          "tol": 0.01
+        },
+        {
+          "name": "…et elle part du bord GAUCHE du rail, à l'inset près : une barre centrée dans sa piste ne dit plus d'où elle progresse",
+          "measure": "(box('.vl-track__fill--gradient').left - box('.vl-track--bar').left) / num('.vl-track--bar', 'paddingLeft')",
+          "expect": 1,
+          "tol": 0.02
+        },
+        {
+          "name": "le dégradé DÉCLARE sa couleur de repli, opaque : sans elle l'enfant a un fond transparent, toute mesure de couleur le compose avec le rail, et un contrôle de composition déclare la couche redondante — piège payé sur le deck de `ref-01`",
+          "measure": "(() => { const p = (cs('.vl-track__fill--gradient', 'backgroundColor').match(/[\\d.]+/g) || []).map(Number); return p.length >= 3 && (p.length === 4 ? p[3] : 1) >= 1 ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "la pastille se DÉTACHE de son rail : les deux fonds sont mesurés l'un contre l'autre, parce qu'un interrupteur dont l'état ne se voit pas n'est pas un interrupteur",
+          "measure": "(() => { const a = lum(bgOf($('.vl-track__fill--knob'))), b = lum(bgOf($('.vl-track--knob'))); const [hi, lo] = a > b ? [a, b] : [b, a]; return (hi + 0.05) / (lo + 0.05); })()",
+          "min": 3
+        },
+        {
+          "name": "REPARAMÉTRAGE — de 120 à 400 px de hauteur de rail, le rayon reste h/2 et l'écart des contours reste l'inset : la loi ne dépend d'aucune des valeurs d'ici",
+          "measure": "(() => { const set = document.querySelector('.vl-track-set'); let worst = 0; for (const h of ['120px', '232px', '300px', '400px']) { set.style.setProperty('--vl-track-h', h); for (const [r, f] of [['.vl-track--bar','.vl-track__fill--gradient'], ['.vl-track--knob','.vl-track__fill--knob']]) { const el = document.querySelector(r), fl = document.querySelector(f); const R = parseFloat(getComputedStyle(el).borderTopLeftRadius), rr = parseFloat(getComputedStyle(fl).borderTopLeftRadius), pad = parseFloat(getComputedStyle(el).paddingTop); worst = Math.max(worst, Math.abs(R / el.getBoundingClientRect().height - 0.5), Math.abs((R - rr) / pad - 1)); } } set.style.removeProperty('--vl-track-h'); return worst; })()",
+          "max": 0.01
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/shape-03-stadium-track.html"
+    },
+    {
       "id": "shape-notched-corner",
       "name": "Carte à coin chanfreiné",
       "family": "shape",
@@ -7650,7 +7924,9 @@
       "id": "ref-01-bento-pills-2030",
       "name": "Bento pills 2030 — couverture géométrique",
       "patterns": [
-        "layout-15-primitive-mosaic"
+        "layout-15-primitive-mosaic",
+        "shape-02-teardrop-quadrant",
+        "shape-03-stadium-track"
       ],
       "deck": "decks/ref-01-bento-pills-2030.html",
       "tokens": {

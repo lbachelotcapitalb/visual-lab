@@ -1,0 +1,98 @@
+<!-- shape-03-stadium-track — un rail en stadium portant un enfant EMBOÎTÉ, et les deux
+     remplissages qui en font deux objets là où il n'y en a qu'un : une barre de progression
+     et un interrupteur. La source de `ref-01` les listait comme deux primitives distinctes ;
+     ce sont le même rail, la même loi d'emboîtement, et deux enfants de longueur différente.
+
+     Trois règles portent tout, et elles se mesurent :
+
+       • le rayon du rail s'écrit en LONGUEUR — la moitié du PETIT côté. Jamais `50%`, et
+         encore moins `50%/50%` : les deux pourcentages se résolvent sur des axes différents,
+         donc sur une boîte de 483 × 232 ils donnent 241,5 de rayon horizontal contre 116 de
+         vertical, c'est-à-dire une ELLIPSE et pas un rectangle à bouts ronds ;
+       • l'enfant est INSET d'une constante sur ses QUATRE côtés — c'est le `padding` du rail
+         qui le pose, jamais une marge choisie côté par côté ;
+       • et son rayon vaut celui du rail MOINS cet inset. C'est cette soustraction, et elle
+         seule, qui rend les deux contours CONCENTRIQUES : l'écart entre le bord du rail et
+         le bord de l'enfant est le même partout, y compris dans les courbes. Écrire le rayon
+         de l'enfant à part, c'est un liseré qui s'épaissit dans les coins.
+
+     Ce qui en découle sans qu'on l'écrive : un enfant aussi large que la hauteur utile du
+     rail sort ROND. La pastille de l'interrupteur n'est pas déclarée circulaire — elle l'est
+     parce que 200,44 de côté pour un rayon de 100,22, c'est un cercle. Une primitive dont
+     l'usage principal tombe d'une loi et non d'une exception, c'est le signe qu'on tient la
+     bonne loi.
+
+     La longueur de la barre est le SEUL paramètre de contenu : elle ne remplit pas son rail,
+     donc le rail se lit comme une piste qui porte une position. Couleurs via --vl-* uniquement. -->
+<div class="vl-track-set">
+
+  <!-- Remplissage 1 — la barre en dégradé. `background-color` déclare l'extrémité CLAIRE du
+       dégradé : sans elle l'enfant a un fond transparent, toute mesure de couleur compose
+       avec celle du rail, et un contrôle de composition déclare la couche redondante. -->
+  <div class="vl-track vl-track--bar">
+    <div class="vl-track__fill vl-track__fill--gradient"></div>
+  </div>
+
+  <!-- Remplissage 2 — la pastille. Même rail, même inset, même rayon : seule la longueur
+       de l'enfant change. -->
+  <div class="vl-track vl-track--knob">
+    <div class="vl-track__fill vl-track__fill--knob"></div>
+  </div>
+
+</div>
+
+<style>
+/* Les paramètres du rail, et il n'y en a pas d'autres :
+     --vl-track-h      la hauteur — c'est elle qui fixe le rayon (h/2) et l'inset ;
+     --vl-track-w      la longueur du rail ;
+     --vl-track-inset  l'écart de l'enfant, CONSTANT sur les quatre côtés ;
+     --vl-track-fill   la longueur de la barre, en fraction du rail.
+   Le rayon de l'enfant n'est pas un paramètre : c'est une soustraction. */
+.vl-track-set {
+  --vl-track-h: 232px;
+  --vl-track-w: 483px;
+  --vl-track-inset: calc(var(--vl-track-h) * 0.068);
+  --vl-track-fill: 0.4477;
+  --vl-track-gap: 19px;
+
+  display: grid;
+  gap: var(--vl-track-gap);
+  width: max-content;
+}
+
+/* Le rail. Le rayon en LONGUEUR : la moitié du petit côté, jamais un pourcentage. Et c'est le
+   `padding` qui pose l'inset — un enfant positionné à la main dériverait au premier
+   changement de hauteur. */
+.vl-track {
+  width: var(--vl-track-w);
+  height: var(--vl-track-h);
+  background: var(--vl-ink);
+  border-radius: calc(var(--vl-track-h) / 2);
+  padding: var(--vl-track-inset);
+  display: flex;
+  align-items: center;
+}
+
+/* CONTOURS CONCENTRIQUES — rayon du parent moins l'inset. Les deux centres de courbure
+   tombent alors au même point, et l'écart des deux bords est constant tout autour. */
+.vl-track__fill {
+  height: calc(var(--vl-track-h) - 2 * var(--vl-track-inset));
+  border-radius: calc(var(--vl-track-h) / 2 - var(--vl-track-inset));
+}
+
+/* La barre ne remplit pas son rail : c'est ce qui fait lire une PISTE et une position, et non
+   un aplat à bouts ronds. 0,4477 est le réglage de `ref-01`, où le bord droit de la barre
+   tombe sur une ligne de colonne de la planche — quand le relevé est muet sur une longueur,
+   c'est le quadrillage qui tranche. */
+.vl-track__fill--gradient {
+  width: calc(var(--vl-track-w) * var(--vl-track-fill));
+  background-color: var(--vl-white);
+  background-image: linear-gradient(90deg, var(--vl-white), var(--vl-accent));
+}
+
+/* Aussi large que la hauteur utile du rail : la pastille sort RONDE sans qu'on l'écrive. */
+.vl-track__fill--knob {
+  width: calc(var(--vl-track-h) - 2 * var(--vl-track-inset));
+  background: var(--vl-white);
+}
+</style>

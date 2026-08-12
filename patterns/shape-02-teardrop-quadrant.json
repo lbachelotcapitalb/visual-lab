@@ -1,0 +1,112 @@
+{
+  "name": "Carré arrondi à un seul coin droit",
+  "family": "shape",
+  "ref": "ref-01-bento-pills-2030",
+  "intent": "Donner à un aplat une ORIENTATION sans lui ajouter la moindre pointe, flèche ou étiquette : un carré dont trois coins sont arrondis du même rayon et dont le quatrième reste vif. La masse est neutre, le coin droit désigne un quadrant — et deux exemplaires posés sur des coins opposés se lisent comme miroir l'un de l'autre, ce qui pose une diagonale dans une composition qui n'a aucun texte pour la porter.",
+  "when_to_use": "Dans un vocabulaire de formes pleines — couverture, intercalaire, planche de primitives — où il faut une forme qui ne soit ni un cercle ni un carré ni une gélule, et qui POINTE. Aussi seule, en pastille de coin ou en fond de glyphe, quand la carte doit signaler à quel bord elle appartient : le coin droit se pose contre le bord, les trois arrondis regardent l'intérieur.",
+  "avoid_when": "Sur une image ou une vidéo : le coin vif se lit comme un recadrage raté, exactement comme le chanfrein de `shape-notched-corner`. Sur du contenu à lire, aussi — les trois arrondis mangent les quatre angles du bloc de texte de façon dissymétrique, et l'interligne ne rattrape pas. Et dès que la boîte cesse d'être proche du carré : à 2:1 le rayon en longueur reste circulaire mais les trois arrondis n'occupent plus la même part des côtés longs et courts, la forme se lit comme une gélule ébréchée.",
+  "media": [
+    "slide",
+    "web",
+    "social"
+  ],
+  "tags": [
+    "forme",
+    "primitive",
+    "teardrop",
+    "coin",
+    "rayon",
+    "orientation",
+    "quadrant",
+    "aplat",
+    "couverture",
+    "geometrie"
+  ],
+  "vars": [
+    {
+      "name": "--vl-td-cell",
+      "role": "le côté de la tuile — la forme n'a pas de taille propre, elle remplit sa cellule",
+      "default": "232px"
+    },
+    {
+      "name": "--vl-td-radius",
+      "role": "le rayon des TROIS coins arrondis, en LONGUEUR (jamais un %) — 0,220 du côté ici, et la forme ne vit qu'entre 0,12 et 0,50",
+      "default": "51.04px"
+    },
+    {
+      "name": "--vl-td-gap",
+      "role": "l'écart entre les quatre orientations de la démonstration",
+      "default": "19px"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "l'aplat de la forme",
+      "default": "#0B0B0B"
+    }
+  ],
+  "slots": [],
+  "geometry": {
+    "root": ".vl-td",
+    "frame": [
+      483,
+      483
+    ],
+    "ratios": {
+      "cell_over_frame": 0.4803,
+      "gap_over_frame": 0.0393,
+      "radius_over_cell": 0.22,
+      "radius_floor": 0.12,
+      "radius_ceiling": 0.5,
+      "sharp_corners_per_tile": 1,
+      "orientations": 4
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "la tuile est CARRÉE : c'est ce qui fait que les trois arrondis occupent la même part de chaque côté, et donc que la masse reste neutre pendant que le coin droit, seul, oriente",
+      "measure": "box('.vl-td__q--tl').w / box('.vl-td__q--tl').h",
+      "expect": 1,
+      "tol": 0.005
+    },
+    {
+      "name": "UN SEUL coin droit, sur les quatre orientations — deux et la forme redevient une gélule, zéro et c'est un squircle, trois et c'est un onglet",
+      "measure": "(() => { const P = ['borderTopLeftRadius','borderTopRightRadius','borderBottomRightRadius','borderBottomLeftRadius']; return ['tl','tr','br','bl'].every((k) => P.map((p) => num('.vl-td__q--' + k, p)).filter((v) => v < 0.5).length === 1) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "les TROIS autres coins portent le MÊME rayon : trois rayons qui diffèrent, c'est une forme organique, plus une primitive",
+      "measure": "(() => { const P = ['borderTopLeftRadius','borderTopRightRadius','borderBottomRightRadius','borderBottomLeftRadius']; let worst = 0; for (const k of ['tl','tr','br','bl']) { const v = P.map((p) => num('.vl-td__q--' + k, p)).filter((x) => x >= 0.5); worst = Math.max(worst, (Math.max(...v) - Math.min(...v)) / Math.max(...v)); } return worst; })()",
+      "max": 0.003
+    },
+    {
+      "name": "et les quatre ORIENTATIONS partagent ce rayon : ce sont quatre poses d'une même forme, pas quatre formes",
+      "measure": "(() => { const P = ['borderTopLeftRadius','borderTopRightRadius','borderBottomRightRadius','borderBottomLeftRadius']; const all = ['tl','tr','br','bl'].flatMap((k) => P.map((p) => num('.vl-td__q--' + k, p)).filter((x) => x >= 0.5)); return (Math.max(...all) - Math.min(...all)) / Math.max(...all); })()",
+      "max": 0.003
+    },
+    {
+      "name": "QUADRANT — le coin droit de chaque tuile pointe le coin du bloc qu'elle occupe, et les quatre pointent quatre coins distincts : c'est cette règle qui interdit de permuter deux exemplaires diagonalement opposés",
+      "measure": "(() => { const P = ['borderTopLeftRadius','borderTopRightRadius','borderBottomRightRadius','borderBottomLeftRadius']; const want = { tl: 0, tr: 1, br: 2, bl: 3 }; const r = document.querySelector('.vl-td').getBoundingClientRect(); return ['tl','tr','br','bl'].every((k) => { const sharp = P.map((p) => num('.vl-td__q--' + k, p)).findIndex((v) => v < 0.5); const b = document.querySelector('.vl-td__q--' + k).getBoundingClientRect(); const left = b.left - r.left < r.width / 2, top = b.top - r.top < r.height / 2; const quad = top ? (left ? 0 : 1) : (left ? 3 : 2); return sharp === want[k] && quad === want[k]; }) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "le rayon vaut 0,220 du côté — le réglage de `ref-01`, choisi pour rester écarté du squircle (0,300) de la même planche : rapprochés, les deux primitives se confondent",
+      "measure": "num('.vl-td__q--tl', 'borderTopRightRadius') / box('.vl-td__q--tl').w",
+      "expect": 0.22,
+      "tol": 0.006
+    },
+    {
+      "name": "ARC DE CERCLE, jamais une ellipse — le fragment est REPARAMÉTRÉ sur une cellule aplatie (232 × 160) et la courbe est sondée au point : un rayon écrit en `%` y résoudrait 51 px sur un axe et 35 sur l'autre, et le sondage à 45° tomberait hors de la forme",
+      "measure": "(() => { const set = document.querySelector('.vl-td'); set.style.gridTemplateRows = '160px 160px'; const q = document.querySelector('.vl-td__q--tl'); const b = q.getBoundingClientRect(); const r = parseFloat(getComputedStyle(q).borderTopRightRadius); const cx = b.right - r, cy = b.top + r; const at = (k, t) => document.elementFromPoint(cx + Math.cos(t) * r * k, cy - Math.sin(t) * r * k) === q; let ok = 1; for (const a of [10, 30, 45, 60, 80]) { const t = a * Math.PI / 180; if (!at(0.90, t) || at(1.10, t)) ok = 0; } set.style.gridTemplateRows = ''; return ok; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "BANDE DE RAYON — de 0,12 à 0,50 du côté, la forme garde exactement un coin droit, trois rayons égaux, et un rayon EFFECTIF qui suit le paramètre ; au-delà de 0,50 deux arrondis adjacents sommeraient plus que le côté et le navigateur les remettrait tous à l'échelle",
+      "measure": "(() => { const set = document.querySelector('.vl-td'); const P = ['borderTopLeftRadius','borderTopRightRadius','borderBottomRightRadius','borderBottomLeftRadius']; const cell = document.querySelector('.vl-td__q--tl').getBoundingClientRect().width; let worst = 0; for (const f of [0.12, 0.22, 0.35, 0.50]) { set.style.setProperty('--vl-td-radius', (cell * f) + 'px'); for (const k of ['tl','tr','br','bl']) { const v = P.map((p) => parseFloat(getComputedStyle(document.querySelector('.vl-td__q--' + k))[p]) || 0); const round = v.filter((x) => x >= 0.5); if (v.filter((x) => x < 0.5).length !== 1 || round.length !== 3) { set.style.removeProperty('--vl-td-radius'); return 1; } worst = Math.max(worst, (Math.max(...round) - Math.min(...round)) / Math.max(...round), Math.abs(Math.max(...round) / (cell * f) - 1)); } } set.style.removeProperty('--vl-td-radius'); return worst; })()",
+      "max": 0.005
+    }
+  ],
+  "notes": "La primitive de `ref-01` que la source appelait `teardrop`, et qui n'est pas une goutte : c'est un carré arrondi AMPUTÉ d'un arrondi. La différence compte, parce qu'une goutte a une pointe et que celle-ci n'en a pas — elle a un coin droit, c'est-à-dire un angle à 90° qui ne pointe que par contraste avec les trois autres.\n\n**Le coin droit est l'ORIENTATION, et l'orientation est une règle de composition, pas un goût.** Dans la source, les deux exemplaires occupent des coins diagonalement opposés de la planche et leur coin vif pointe chacun le coin de feuille qu'il occupe ; permutés, ils cessent d'être miroir et la diagonale disparaît sans qu'aucun alignement ne bouge. Le benchmark ne se contente donc pas de compter les coins droits : il vérifie que le coin droit de chaque tuile TOMBE dans le quadrant du bloc où la tuile est posée. C'est la même exigence que `notchCorner()` porte pour `shape-notched-corner` — l'orientation se mesure, elle ne se relit pas à l'œil.\n\n**Le rayon s'écrit en LONGUEUR.** Un `border-radius` en pourcentage résout chaque axe séparément : sur une boîte 232 × 160, `22 %` donne 51 px de rayon horizontal contre 35 de vertical, les trois coins deviennent des arcs elliptiques et la forme cesse d'être un carré arrondi. C'est la même famille de piège que le `50%/50%` relevé sur le stadium de la même référence, et que le chanfrein de `shape-notched-corner`, qui s'écrit en longueur pour rester à 45°. La preuve n'est pas textuelle : le benchmark APLATIT la cellule à 232 × 160 et sonde la courbe au point (`elementFromPoint`) sur cinq angles — un rayon en pourcentage y échoue à 45°, là où une simple lecture de la valeur calculée ne verrait rien, Chrome rendant le `%` tel quel.\n\n**La bande de rayon a un plancher d'usage et un plafond arithmétique.** Sous 0,12 du côté les trois arrondis passent pour une bavure de rendu et le coin droit ne tranche plus sur rien. Au-dessus de 0,50 ce n'est plus une question de goût : deux coins arrondis adjacents ne peuvent pas sommer plus que le côté qui les sépare, sans quoi CSS remet TOUS les rayons à l'échelle — le rayon effectif décroche du paramètre et la forme cesse de répondre à sa variable. À 0,50 exactement les trois arcs se rejoignent : quart de carré, trois quarts de disque, la limite de la primitive. Le benchmark balaie la bande et vérifie les trois propriétés à chaque cran, plutôt que de s'en remettre au calcul.\n\nLa planche complète est `layout-15-primitive-mosaic`, qui porte la grille et pas les formes. Le rayon d'ici (0,220 du côté) n'a de sens que relativement au squircle de la même planche (0,300) : c'est leur ÉCARTEMENT qui fait qu'on lit deux primitives et non deux fois la même."
+}

@@ -1,0 +1,63 @@
+<!-- shape-02-teardrop-quadrant — un carré arrondi dont UN SEUL coin reste droit. La forme n'a
+     pas d'autre paramètre que son rayon : ce sont les trois coins arrondis qui font la masse,
+     et le quatrième, resté vif, qui l'oriente. D'où le nom : la forme désigne un QUADRANT.
+
+     Trois règles, et elles se mesurent toutes les trois :
+
+       • UN seul coin droit — deux, et la forme redevient une gélule ; zéro, et c'est un
+         squircle ; trois, et c'est un onglet. Un seul, et elle pointe ;
+       • le coin droit POINTE le coin du bloc que la forme occupe. C'est ce qui interdit de
+         permuter deux exemplaires posés sur des coins opposés : ils cessent d'être miroir
+         l'un de l'autre et la composition perd sa diagonale ;
+       • le rayon s'écrit en LONGUEUR, jamais en pourcentage. Un `border-radius: 22%` résout
+         chaque axe séparément : dès que la boîte n'est pas carrée les trois coins deviennent
+         des arcs ELLIPTIQUES, et la forme cesse d'être un carré arrondi pour devenir un
+         fragment d'ovale. Même famille de piège que le chanfrein de `shape-notched-corner`,
+         qui s'écrit en longueur pour la même raison — rester à 45°.
+
+     BANDE DE RAYON — 0,220 du côté ici, et la forme ne vit qu'entre 0,12 et 0,50. Sous 0,12
+     les trois arrondis passent pour une bavure de rendu et le coin droit ne tranche plus sur
+     rien. Au-dessus de 0,50 c'est CSS qui refuse : deux coins arrondis adjacents ne peuvent
+     pas sommer plus que le côté qui les sépare, donc le navigateur remet TOUS les rayons à
+     l'échelle et le rayon effectif décroche du paramètre. À 0,50 exactement les trois arcs
+     se rejoignent : la forme est un quart de carré collé à trois quarts de disque, et c'est
+     la limite de la primitive.
+
+     Les quatre tuiles ci-dessous sont la même forme à quatre orientations, de même rayon —
+     chacune posée dans le quadrant que son coin droit désigne. Couleurs via --vl-* uniquement. -->
+<div class="vl-td">
+  <div class="vl-td__q vl-td__q--tl"></div>
+  <div class="vl-td__q vl-td__q--tr"></div>
+  <div class="vl-td__q vl-td__q--bl"></div>
+  <div class="vl-td__q vl-td__q--br"></div>
+</div>
+
+<style>
+/* Les DEUX paramètres de la forme, et il n'y en a pas d'autres :
+     --vl-td-cell     le côté de la tuile ;
+     --vl-td-radius   le rayon des TROIS coins arrondis, en LONGUEUR.
+   Le rayon est posé comme une fraction du côté pour que la forme se reparamètre d'une seule
+   variable — mais il reste une longueur : c'est `calc()` qui la calcule, pas le navigateur
+   qui résout un pourcentage par axe. */
+.vl-td {
+  --vl-td-cell: 232px;
+  --vl-td-gap: 19px;
+  --vl-td-radius: calc(var(--vl-td-cell) * 0.220);
+
+  display: grid;
+  grid-template-columns: repeat(2, var(--vl-td-cell));
+  grid-template-rows: repeat(2, var(--vl-td-cell));
+  gap: var(--vl-td-gap);
+  width: max-content;
+}
+
+/* La tuile n'a pas de taille propre : elle remplit sa cellule. Seul son rayon la définit. */
+.vl-td__q { width: 100%; height: 100%; background: var(--vl-ink); }
+
+/* Ordre de `border-radius` : haut-gauche, haut-droit, bas-droit, bas-gauche. Le 0 est le coin
+   droit, et il porte le nom de la variante — donc le nom DIT l'orientation. */
+.vl-td__q--tl { border-radius: 0 var(--vl-td-radius) var(--vl-td-radius) var(--vl-td-radius); }
+.vl-td__q--tr { border-radius: var(--vl-td-radius) 0 var(--vl-td-radius) var(--vl-td-radius); }
+.vl-td__q--br { border-radius: var(--vl-td-radius) var(--vl-td-radius) 0 var(--vl-td-radius); }
+.vl-td__q--bl { border-radius: var(--vl-td-radius) var(--vl-td-radius) var(--vl-td-radius) 0; }
+</style>

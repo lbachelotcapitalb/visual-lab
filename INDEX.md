@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-51 patterns · 17 références · 44 vérifiés par benchmarks mesurés.
+53 patterns · 17 références · 46 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -69,6 +69,8 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `list-05-vitals-strip` | Aligner cinq mesures hétérogènes sur une seule ligne SANS aucun séparateur : chacune est un couple micro-libellé / valeur, l'unité étant un cran plus petite ET plus claire que le nombre qu'elle suit. C'est ce double affaiblissement de l'unité — taille et encre — qui permet de lire cinq valeurs d'affilée sans filet, sans carte et sans que l'œil confonde un nombre avec l'unité de son voisin. | web slide | 14 | ref-19-acid-clinical-timeline |
 | `list-06-email-digest` | Aligner les trois à six entrées d'une lettre d'information dans un mail, chacune tenant en rubrique, titre, chapô et lien, sans qu'aucune ne se lise comme un encadré : la colonne du numéro est une CELLULE de largeur fixe et la séparation un filet posé en haut de chaque entrée — retiré sur la première, pour que le filet sépare au lieu d'encadrer. | email | 16 | ref-04-swiss-investor-blue |
 | `list-07-hairline-spec-table` | Poser les caractéristiques d'un lot — livrables, formats, cadence — en couples libellé / valeur séparés par des filets d'un pixel et demi qui DÉBORDENT la marge de texte des deux côtés. Le filet n'est pas la bordure d'un bloc, c'est une règle de la page que le module traverse : il part avant le libellé et finit après la valeur, et c'est ce seul décalage qui distingue une table de spécifications d'un encadré. | slide web print | 18 | ref-10-campaign-board-red |
+| `shape-02-teardrop-quadrant` | Donner à un aplat une ORIENTATION sans lui ajouter la moindre pointe, flèche ou étiquette : un carré dont trois coins sont arrondis du même rayon et dont le quatrième reste vif. La masse est neutre, le coin droit désigne un quadrant — et deux exemplaires posés sur des coins opposés se lisent comme miroir l'un de l'autre, ce qui pose une diagonale dans une composition qui n'a aucun texte pour la porter. | slide web social | 8 | ref-01-bento-pills-2030 |
+| `shape-03-stadium-track` | Poser une piste à bouts ronds qui porte un objet EMBOÎTÉ — barre de progression, interrupteur, jauge — sans que le liseré entre les deux s'épaississe dans les courbes. Une seule loi le tient : l'enfant est inset d'une constante sur ses quatre côtés et son rayon vaut celui du rail moins cet inset, ce qui fait tomber les deux centres de courbure au même point. Deux remplissages en découlent, une barre partielle et une pastille, et ce ne sont pas deux objets : c'est le même rail avec deux longueurs d'enfant. | slide web | 13 | ref-01-bento-pills-2030 |
 | `shape-notched-corner` | Donner à un aplat coloré une signature de forme reconnaissable — UN coin coupé à 45° — sans rien ajouter au contenu ni recourir à un rayon, une ombre ou un liseré. | slide web | 3 | ref-06-orange-notched |
 | `tag-01-gooey-capsule` | Faire d'un mot-clé un OBJET : un contour continu qui soude un cercle de glyphe à une pilule de texte par deux congés concaves, pour qu'un terme isolé pèse autant qu'un titre sans être plus gros. | slide social web | 13 | ref-12-neon-capsule-tags |
 | `tag-02-centered-cloud` | Poser une dizaine de mots-clés de même rang au bas d'un module sans en faire une liste : chaque RANGÉE est centrée sur elle-même, si bien que les lignes de largeur inégale dessinent une silhouette de nuage — c'est le centrage par rangée, et pas le centrage du bloc, qui produit l'effet. | web slide | 13 | ref-17-mono-bento-legal |
@@ -439,6 +441,20 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 
 ### shape
 
+**shape-02-teardrop-quadrant** — Carré arrondi à un seul coin droit
+
+- employer : Dans un vocabulaire de formes pleines — couverture, intercalaire, planche de primitives — où il faut une forme qui ne soit ni un cercle ni un carré ni une gélule, et qui POINTE. Aussi seule, en pastille de coin ou en fond de glyphe, quand la carte doit signaler à quel bord elle appartient : le coin droit se pose contre le bord, les trois arrondis regardent l'intérieur.
+- éviter : Sur une image ou une vidéo : le coin vif se lit comme un recadrage raté, exactement comme le chanfrein de `shape-notched-corner`. Sur du contenu à lire, aussi — les trois arrondis mangent les quatre angles du bloc de texte de façon dissymétrique, et l'interligne ne rattrape pas. Et dès que la boîte cesse d'être proche du carré : à 2:1 le rayon en longueur reste circulaire mais les trois arrondis n'occupent plus la même part des côtés longs et courts, la forme se lit comme une gélule ébréchée.
+- variables : --vl-td-cell, --vl-td-radius, --vl-td-gap, --vl-ink
+- tags : forme, primitive, teardrop, coin, rayon, orientation, quadrant, aplat, couverture, geometrie
+
+**shape-03-stadium-track** — Rail stadium à enfant emboîté
+
+- employer : Partout où une piste doit porter une position ou un état : barre de progression, interrupteur, jauge de segment, pastille de statut dans un tableau de bord. Aussi comme primitive de composition dans un vocabulaire de formes pleines — c'est la forme la plus fréquente d'une planche géométrique, parce qu'elle est la seule à porter une orientation LONGUE sans texte.
+- éviter : Sur une boîte proche du carré : à moins de 1,6 d'aspect les deux bouts ronds se rejoignent, le rail devient une gélule courte puis un disque, et l'enfant emboîté n'a plus de course à parcourir — c'est un anneau, pas une piste. Éviter aussi dès que l'enfant doit toucher un bord : l'inset est constant sur les quatre côtés par construction, et le rendre nul d'un côté détruit la concentricité, donc l'objet même du pattern. Et en mailing : Outlook rend `border-radius` et les dégradés de façon imprévisible — voir `node bin/emit.mjs --audit --target email`.
+- variables : --vl-track-h, --vl-track-w, --vl-track-inset, --vl-track-fill, --vl-track-gap, --vl-ink, --vl-white, --vl-accent
+- tags : forme, primitive, stadium, pilule, rail, toggle, progression, jauge, rayon, concentrique
+
 **shape-notched-corner** — Carte à coin chanfreiné
 
 - employer : Sur les aplats d'accent d'un deck ou d'une landing qui doivent se reconnaître d'une slide à l'autre : carte statistique, carte de second rang, pastille de glyphe. Une seule orientation par famille de contenu.
@@ -512,7 +528,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 
 | référence | charte | patterns extraits | deck |
 |---|---|---|---|
-| `ref-01-bento-pills-2030` | Bento pills 2030 — couverture géométrique | `layout-15-primitive-mosaic` | `decks/ref-01-bento-pills-2030.html` |
+| `ref-01-bento-pills-2030` | Bento pills 2030 — couverture géométrique | `layout-15-primitive-mosaic`, `shape-02-teardrop-quadrant`, `shape-03-stadium-track` | `decks/ref-01-bento-pills-2030.html` |
 | `ref-02-ghost-icon-claim` | Gris fantôme — argument unique | `card-01-ghost-icon` | `decks/ref-02-ghost-icon-claim.html` |
 | `ref-03-bento-dark-pitch` | Bento sombre — pitch investisseur | `chart-01-stadium-bars`, `chart-02-isotype`, `layout-01-nested-bento` | `decks/ref-03-bento-dark-pitch.html` |
 | `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |
