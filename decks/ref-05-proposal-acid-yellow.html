@@ -169,6 +169,56 @@ body {
 .step.is-dark { background: var(--vl-black); color: var(--vl-white); }
 .step.is-dark .body { color: var(--vl-ink-muted-invert); }
 .step.is-on .body { color: var(--vl-black); }
+
+/* ————— slide 5 : les cartes de liste ————— */
+.cards { height: 380px; display: flex; gap: var(--vl-gap); }
+.lcard {
+  flex: 1; border-radius: var(--vl-r-list); padding: 32px;
+  background: var(--vl-white);
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.lcard .n { color: var(--vl-ink-muted); }
+.lcard.is-on { background: var(--vl-acid); }
+.lcard.is-on .body, .lcard.is-on .n { color: var(--vl-black); }
+.lcard.is-dark { background: var(--vl-black); color: var(--vl-white); }
+.lcard.is-dark .body, .lcard.is-dark .n { color: var(--vl-ink-muted-invert); }
+
+/* ————— slide 6 : ce qu'on livre ————— */
+.ast-inline { display: inline-block; vertical-align: baseline; margin-left: 16px; }
+.deliver { height: 460px; display: flex; gap: var(--vl-gap); }
+.dcard {
+  flex: 1; border-radius: var(--vl-r-step); padding: 32px;
+  background: var(--vl-white);
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.dcard .n { color: var(--vl-ink-muted); }
+.d-media { flex: 0 0 460px; }
+
+/* ————— slide 7 : investissement —————
+   La carte de total est le seul aplat jaune de la slide, et elle est BORNÉE à 300 px de haut :
+   à pleine hauteur de colonne (669) elle couvrirait 21 % de la slide, soit le double du plafond
+   de la charte. La règle de l'accent unique est aussi une contrainte de DIMENSION. */
+.inv { flex: 1; display: flex; gap: var(--vl-gap-block); }
+.inv-left { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.price {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 32px;
+  padding: 22px 0; border-top: 1px solid var(--vl-hairline);
+}
+.price:last-child { border-bottom: 1px solid var(--vl-hairline); }
+.price .t { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; }
+.price .v { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; }
+.total {
+  flex: 0 0 460px; height: 300px; align-self: flex-end;
+  background: var(--vl-acid); border-radius: var(--vl-r-step); padding: 36px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.total .n { font-size: 90px; line-height: 1; font-weight: 800; letter-spacing: -0.03em; }
+
+/* ————— slide 8 : clôture ————— */
+.end-left { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.contact { display: flex; gap: 72px; }
+.contact div { display: flex; flex-direction: column; gap: 8px; }
+.ast-box.lg { width: 300px; height: 300px; flex: 0 0 300px; align-self: flex-end; }
 </style>
 </head>
 <body>
@@ -322,6 +372,173 @@ body {
           <p class="body">Two weeks of pairing, then we are gone and it still runs.</p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 5 · the challenge ————————————————— -->
+<section class="slide">
+  <header class="hdr micro">
+    <div class="mark">©northbeam</div>
+    <div class="zone-c"><div>Our Company</div><div>March 28th, 2045</div></div>
+    <div class="zone-r">
+      <div><div>Business Proposal</div><div>Presentation</div></div>
+      <div>2045</div>
+    </div>
+  </header>
+  <div class="canvas col">
+    <div class="row-head">
+      <h2 class="title">The challenge</h2>
+      <p class="body">Four things are true at once in your pricing today. The third is the one
+        that costs money every month; the others are what make it hard to fix.</p>
+    </div>
+    <div class="cards">
+      <div class="lcard">
+        <div class="n label-sm">(01)</div>
+        <p class="body">Nine list prices are live. Three of them were never approved by anyone
+          still at the company.</p>
+      </div>
+      <div class="lcard is-dark">
+        <div class="n label-sm">(02)</div>
+        <p class="body">Every deal above forty thousand goes to a committee, and the committee
+          meets once a fortnight.</p>
+      </div>
+      <div class="lcard is-on">
+        <div class="n label-sm">(03)</div>
+        <p class="body">Discounts average 31 %, and no one can say what the median customer
+          actually pays.</p>
+      </div>
+      <div class="lcard">
+        <div class="n label-sm">(04)</div>
+        <p class="body">Two teams quote from two spreadsheets. Neither is the one finance
+          invoices from.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 6 · what we deliver ————————————————— -->
+<section class="slide">
+  <header class="hdr micro">
+    <div class="mark">©northbeam</div>
+    <div class="zone-c"><div>Our Company</div><div>March 28th, 2045</div></div>
+    <div class="zone-r">
+      <div><div>Business Proposal</div><div>Presentation</div></div>
+      <div>2045</div>
+    </div>
+  </header>
+  <div class="canvas col">
+    <div class="row-head">
+      <h2 class="title">What we deliver<svg class="ast ast-inline" width="40" height="40" viewBox="0 0 72 72" aria-hidden="true"><g stroke="var(--vl-acid)" stroke-width="9"><line x1="36" y1="4" x2="36" y2="68"/><line x1="8.3" y1="20" x2="63.7" y2="52"/><line x1="8.3" y1="52" x2="63.7" y2="20"/></g></svg></h2>
+      <p class="body">Three artefacts, all of them yours. Nothing lives in a tool we own, and
+        nothing needs us to be renewed.</p>
+    </div>
+    <div class="deliver">
+      <div class="dcard">
+        <div class="n label-sm">(01)</div>
+        <div class="txt">
+          <div class="label">The price book</div>
+          <p class="body">One page per tier, one number per line, and the rule that produced it
+            written next to it.</p>
+        </div>
+      </div>
+      <div class="dcard">
+        <div class="n label-sm">(02)</div>
+        <div class="txt">
+          <div class="label">The guardrails</div>
+          <p class="body">What a rep may sign alone, what needs a second name, and where the
+            floor is.</p>
+        </div>
+      </div>
+      <div class="dcard">
+        <div class="n label-sm">(03)</div>
+        <div class="txt">
+          <div class="label">The quote tool</div>
+          <p class="body">A spreadsheet your team already knows how to open, wired to the book
+            above.</p>
+        </div>
+      </div>
+      <div class="media d-media"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 7 · investment ————————————————— -->
+<section class="slide">
+  <header class="hdr micro">
+    <div class="mark">©northbeam</div>
+    <div class="zone-c"><div>Our Company</div><div>March 28th, 2045</div></div>
+    <div class="zone-r">
+      <div><div>Business Proposal</div><div>Presentation</div></div>
+      <div>2045</div>
+    </div>
+  </header>
+  <div class="canvas">
+    <div class="inv">
+      <div class="inv-left">
+        <h2 class="title">Investment</h2>
+        <div>
+          <div class="price">
+            <div class="t">Read the book &amp; set the line</div>
+            <div class="v">$18,000</div>
+          </div>
+          <div class="price">
+            <div class="t">Build the pricing surface</div>
+            <div class="v">$26,000</div>
+          </div>
+          <div class="price">
+            <div class="t">Handover &amp; two weeks of pairing</div>
+            <div class="v">$9,000</div>
+          </div>
+        </div>
+      </div>
+      <div class="total">
+        <div class="micro">Fixed fee, four weeks</div>
+        <div class="txt">
+          <div class="n">$53k</div>
+          <div class="label">Invoiced in two instalments, no retainer after week four.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ————————————————— 8 · clôture ————————————————— -->
+<section class="slide">
+  <header class="hdr micro">
+    <div class="mark">©northbeam</div>
+    <div class="zone-c"><div>Our Company</div><div>March 28th, 2045</div></div>
+    <div class="zone-r">
+      <div><div>Business Proposal</div><div>Presentation</div></div>
+      <div>2045</div>
+    </div>
+  </header>
+  <div class="canvas" style="gap: var(--vl-gap-block);">
+    <div class="end-left">
+      <h2 class="display">Thank-<br>you</h2>
+      <div class="contact">
+        <div>
+          <div class="micro">Written by</div>
+          <div class="label">Mara Okonjo, partner</div>
+        </div>
+        <div>
+          <div class="micro">Reply to</div>
+          <div class="label">mara@northbeam.example</div>
+        </div>
+        <div>
+          <div class="micro">Valid until</div>
+          <div class="label">April 30th, 2045</div>
+        </div>
+      </div>
+    </div>
+    <div class="ast-box lg">
+      <svg class="ast" width="160" height="160" viewBox="0 0 72 72" aria-hidden="true">
+        <g stroke="var(--vl-acid)" stroke-width="9" stroke-linecap="butt">
+          <line x1="36" y1="4" x2="36" y2="68"/>
+          <line x1="8.3" y1="20" x2="63.7" y2="52"/>
+          <line x1="8.3" y1="52" x2="63.7" y2="20"/>
+        </g>
+      </svg>
     </div>
   </div>
 </section>

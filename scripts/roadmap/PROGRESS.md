@@ -159,8 +159,19 @@ CHECKPOINT_STEP: S7
       tienne le `0.12em` des capitales du header. La rangée de cartes est BORNÉE à 440 px de
       haut, pas en `flex:1` — leçon de ref-06, et ici elle a un second effet : à hauteur libre
       la carte jaune passait à 11,9 % de la slide, contre 10,6 % bornée, pour un plafond de 12 %.
-- [ ] **S7.3 — le deck, slides 5 à 8, `check-deck.mjs` vert** (une seule couche au-dessus de la
-      scène, pas de marge de page, 1600×900).
+- [x] **S7.3 — le deck, slides 5 à 8, `check-deck.mjs` vert** (une seule couche au-dessus de la
+      scène, pas de marge de page, 1600×900). **Fait** : the challenge (4 cartes de liste, une
+      noire, une jaune, deux blanches), what we deliver (3 cartes + carré média, astérisque en
+      fin de titre), investment (prix filetés + carte de total en aplat jaune), clôture (display
+      césuré `Thank-` / `you` + carré noir à astérisque). Les 32 contrôles de composition sont
+      verts, zéro couche au-dessus de la scène sur 7 slides sur 8. Piège relevé en chemin, et
+      c'est la leçon du lot : **la règle de l'accent unique est une contrainte de DIMENSION,
+      pas seulement de compte.** La carte de total, laissée à pleine hauteur de colonne (460 ×
+      669), couvrait 21,4 % de la slide — le double du plafond de 12 % — alors qu'elle était
+      bien le SEUL objet jaune. Bornée à 460 × 300 : 9,6 %. Même mécanique que la rangée de
+      cartes de la slide 4. Corrigé au passage dans la spec : sa ligne du plan annonçait une
+      carte de total NOIRE dans une slide dont l'accent était « le total » — contradiction dans
+      la même ligne du tableau.
 - [ ] **S7.4 — `title-…-hyphen-break` + le marqueur astérisque** : la césure volontaire dans un
       titre display, et le glyphe de marque avec sa règle d'emploi. Benchmarks en ratios.
 - [ ] **S7.5 — `card-…-numbered-steps` + `layout-…-header-tripartite`** : la rangée 01→04 dont

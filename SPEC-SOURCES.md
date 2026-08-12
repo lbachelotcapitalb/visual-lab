@@ -431,7 +431,7 @@ d'accent » ordinaire, où l'accent finit par tapisser.
 | 4 | How we work | la rangée **01→04** de cartes numérotées | la carte 02 |
 | 5 | The challenge | quatre cartes de liste, une noire, une jaune, deux blanches | la carte jaune |
 | 6 | What we deliver | trois cartes blanches hautes + carré média, astérisque en fin de titre | l'astérisque |
-| 7 | Investment | grand chiffre 90 + trois lignes de prix filetées, carte noire de total | le total |
+| 7 | Investment | titre + trois lignes de prix filetées, carte de total en aplat portant le chiffre 90 | la carte de total, **bornée à 460 × 300** |
 | 8 | Clôture | display césuré `Thank-` / `you`, coordonnées, astérisque | l'astérisque |
 
 **Patterns à extraire** — la spec en annonçait cinq, il en sort **quatre** :
