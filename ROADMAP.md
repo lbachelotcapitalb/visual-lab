@@ -216,7 +216,7 @@ que produit tout interligne sous 1 (à 0,82 sur Archivo, 24 px sous la boîte). 
 parfaitement contenu sortait rouge. La containment se mesure sur les boîtes ; que le débord
 soit du vide se prouve au canvas (`actualBoundingBoxDescent`), pas par affirmation.
 
-### 🟡 Lot 7 — `ref-08` swiss-studio-hero — reconstitution faite, patterns à extraire
+### ✅ Lot 7 — `ref-08` swiss-studio-hero — SOLDÉ le 12/08/2026
 **Fait le 30/07/2026, HORS ordre** (demande directe de Léo sur le visuel source) :
 `systems/ref-08-swiss-studio-hero.json` et `decks/ref-08-swiss-studio-hero.html` — **la slide seule, 1140×848, bord à bord** :
 pas de décor de maquette (photo d'intérieur, ombre portée) autour. Une première version le
@@ -234,11 +234,49 @@ avait été écrite en supposant une carte plus petite :
 - statement **27px sur 3 lignes**, pas 15px sur 2.
 - carte **#F6F5F2**, pas #FFFFFF : elle est éclairée par la pièce.
 
-**Reste à faire** : les patterns. `hero-statement-first`,
-`type-registered-superscript`, et surtout la preuve du lot — que
-`layout-11-hero-card-on-photo` et `layout-13-image-triptych` (lot 6, versés le 12/08/2026) produisent
-ref-07 ET ref-08 **par variables**, sans duplication. Le tableau des différences est dans
-la spec. Faire le lot 6 d'abord, puis revenir extraire ici.
+**Extraction faite le 12/08/2026** — deux patterns versés et un généralisé. Aucune image source
+sur disque : `bin/diff.mjs` impossible, la fidélité tient à la spec (relevée SUR le deck, pas
+supposée), au regard et à `check-deck.mjs`.
+
+- `layout-14-statement-first` — l'ordre de lecture inversé : la phrase parle d'abord, la nav lui
+  fait face, le nom n'arrive qu'ensuite mais prend toute la mesure. Ce qui tient la composition
+  est le **saut d'échelle sans palier** (× 7,4 entre la phrase et le nom, et la nav est plus
+  PETITE que la phrase, jamais entre les deux) plus le blanc, plus large avant le nom qu'après.
+- `title-04-name-fills-measure` — le nom réglé pour affleurer les deux marges (99,6 % de l'encre
+  sur la mesure) et son `®` calé sous la ligne de capitale. Il **absorbe**
+  `type-registered-superscript`, que la spec annonçait seul : la calibration du signe est
+  solidaire du réglage du corps, isolée elle tient dans sa propre phrase de description et ne
+  survit pas au test d'utilité du 30/07.
+- `layout-13-image-triptych` **généralisé** — c'est la preuve du lot.
+
+**La preuve du lot, et ce qu'elle a corrigé.** L'attendu était que les patterns du lot 6
+produisent ref-07 ET ref-08 par variables. Un seul le pouvait : `layout-11-hero-card-on-photo`
+ne s'applique pas ici, et c'est son propre `avoid_when` qui le dit — `ref-08` n'a pas de sol
+photographique, donc ni incrustation, ni marge de sol, ni ombre à mesurer. L'absence est un
+arbitrage documenté, pas un manque.
+
+Reste la bande, et sa loi était **mal énoncée** : « même ratio pour les trois cellules » n'est
+pas ce qui fait une bande, c'est ce qu'on obtient à poids égaux — le cas particulier de `ref-07`.
+La loi est la **hauteur commune**. `aspect-ratio` posé sur les trois cellules leur imposait
+trois hauteurs différentes dès que les poids cessaient de l'être : la bande se disloquait, et
+aucune variable ne pouvait la sauver. Posé sur la PREMIÈRE seule, il donne sa taille
+transversale à la ligne flex et `align-items: stretch` la recopie. Un benchmark reparamètre
+alors le fragment aux valeurs de `ref-08` (1060 de large, gouttière 16, hauteur 380, poids
+1 / 1,31 / 1,14) et retrouve les cellules relevées sur le deck — 298 / 390,3 / 339,7 — à 0,2 %
+près. Une seule bande, deux références, mesuré.
+
+Deuxième acquis de forme, verrouillé lui aussi : **le corps d'un nom d'enseigne n'est pas une
+taille, c'est une fonction de la largeur** (`calc(100cqw / chasse)`, la chasse étant le rapport
+mesuré encre/corps de CE mot dans CETTE graisse). Reparamétrée à 700 px, la zone garde son taux
+de remplissage ; contre-épreuve faite, un corps en dur y sort à 1,51 fois la mesure. Et le
+contrôle qui le prouve mesure l'**encre au `Range`**, pas la boîte du `h1` : un `h1` est un bloc,
+sa boîte fait la largeur utile quoi qu'on écrive dedans — elle ne peut donc rien prouver, et un
+débord y passerait inaperçu.
+
+La spec a été relevée sur le deck avant d'écrire une ligne, et elle a démenti deux de ses
+propres affirmations : le triptyque de `ref-08` n'a pas de ratio commun (hauteur imposée à 380,
+poids inégaux), et la liste de patterns annonçait un `hero-statement-first` hors nomenclature.
+Corrigées toutes les deux.
 
 ### ⬜ Lot 8 — `ref-09` zine-annotated-blue
 **12 slides** — la plus grosse planche du corpus, prévoir la session entière. Le lot le plus technique : `annotation-marker` est un générateur SVG de
@@ -437,7 +475,7 @@ visual-lab et la scène 1920×1080 de `deck-builder` ne se contredisent pas.** 1
 que `kit/vl_pptx.py` suppose pour convertir un fragment en .pptx ; 1920 est celle sur laquelle
 deck-builder compose. Les deux sont en 16:9, et seuls les RATIOS voyagent de l'un à l'autre.
 
-**`node bin/check-deck.mjs` sans argument est vert : 10 decks conformes.**
+**`node bin/check-deck.mjs` sans argument est vert : 16 decks conformes** (au 12/08/2026).
 
 ---
 
@@ -605,7 +643,7 @@ email et social.
 | ce qui reste | nature | ce que ça débloque | poids |
 |---|---|---|---|
 | ~~`ref-07` retro-brand-hero (lot 6)~~ | **soldée le 12/08/2026** | 4 patterns versés ; deux chiffres de la spec corrigés par la mesure (largeur du wordmark, largeurs du triptyque), et `overflow()` disqualifié comme instrument de containment sur un interligne écrasé | — |
-| `ref-08` swiss-studio-hero (lot 7) | matière — extraction | le deck existe ; la preuve du lot est que les patterns du lot 6 produisent ref-07 ET ref-08 par VARIABLES | ½ session, après le 6 |
+| ~~`ref-08` swiss-studio-hero (lot 7)~~ | **soldée le 12/08/2026** | 2 patterns versés + `layout-13-image-triptych` généralisé : une seule bande rend ref-07 ET ref-08 par variables, prouvé par reparamétrage. La loi de la bande n'était pas le ratio commun mais la HAUTEUR commune. Avec elle, **les 16 références du corpus sont complètes** — plus une seule sans deck ni sans patterns | — |
 | ~~`ref-10` campaign-board-red (lot 9)~~ | **soldée le 12/08/2026** | 3 patterns versés au lieu des 5 annoncés — les trois « patterns » qui nommaient un ÉLÉMENT sont absorbés par celui qui porte leur disposition ; la source a été corrigée deux fois (contraste du rouge, cellules centrées au lieu de pendre du filet) | — |
 | ~~`ref-12` neon-capsule-tags~~ | **soldée le 12/08/2026** | le deck existe ; il a démenti l'unité que le pattern portait sans écran (`--vl-cap-u` 56 → 91 px) et sorti deux défauts qu'aucune mesure ne voyait — l'arrondi de bordure Chrome à la soudure, et le trou de rastérisation bout à bout | — |
 | `ref-05` proposal-acid-yellow (lot 4) | matière — 8 slides | 5 patterns, dont une règle éditoriale à n'extraire que si elle a un rendu | 1 session |

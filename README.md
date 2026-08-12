@@ -426,7 +426,7 @@ au milieu d'un deck — deux patterns en portaient une. Un pattern non émis se 
 
 ## État
 
-**48 patterns**, dont 41 mesurés par des benchmarks. Le décompte vient de `bin/index.mjs`, pas
+**50 patterns**, dont 43 mesurés par des benchmarks. Le décompte vient de `bin/index.mjs`, pas
 d'ici : la ligne ci-dessus est un ordre de grandeur, [INDEX.md](INDEX.md) est la vérité.
 
 **11/08/2026 — le corpus sort du slide/web : trois patterns écrits NATIVEMENT pour l'email**
@@ -448,10 +448,11 @@ grosses capitales, trois « règles » qui n'avaient aucun rendu. Un pattern se 
 une COMPOSITION qu'on ne réécrit pas de tête, ou une géométrie mesurée ; pas s'il tient dans sa
 propre phrase de description.
 
-13 références sur 15 reconstituées. Le décompte par référence — patterns extraits, deck présent —
-est dans le tableau « Références » d'[INDEX.md](INDEX.md), qui est GÉNÉRÉ : c'est la seule
-version qui ne peut pas mentir. Il ne reste **qu'une** référence à deck sans patterns
-(`ref-08-swiss-studio-hero`) ; plus aucune n'a de patterns sans deck.
+**16 références, et depuis le 12/08/2026 elles sont toutes COMPLÈTES** — chacune a son deck ET
+ses patterns. Aucune n'a plus de deck sans extraction, aucune n'a plus de patterns sans
+reconstitution : c'était le dernier trou du corpus, dans les deux sens. Le décompte par
+référence est dans le tableau « Références » d'[INDEX.md](INDEX.md), qui est GÉNÉRÉ : c'est la
+seule version qui ne peut pas mentir.
 
 **12/08/2026 — `ref-07-retro-brand-hero` est versée**, et c'est la première PAGE WEB du corpus :
 scène 1440 × 900 déclarée `vl:stage web`, parce qu'un hero de page n'a rien à faire dans un
@@ -467,6 +468,28 @@ contraire. Effet de bord mesuré : `overflow()` est le mauvais instrument pour u
 écrasé (à 0,82 la boîte de contenu de la ligne dépasse de 24 px sous sa propre boîte et
 `scrollHeight` le compte), ce qui rendait rouge un pattern parfaitement contenu ; la containment
 se mesure sur les BOÎTES, et le vide sous la ligne de base se prouve au canvas.
+
+**12/08/2026 — `ref-08-swiss-studio-hero` est extraite, et c'est la PARAMÉTRABILITÉ qui y est
+prouvée, pas le nombre de patterns.** Deux versés (`layout-14-statement-first`,
+`title-04-name-fills-measure`), un généralisé — et c'est ce dernier qui porte le lot :
+`layout-13-image-triptych`, écrit pour `ref-07`, rend maintenant les DEUX références **par
+variables**. Sa loi était mal énoncée : « même ratio pour les trois cellules » n'est pas ce qui
+fait une bande, c'est seulement ce qu'on obtient à poids égaux. La loi est la **hauteur
+commune** ; le ratio n'est qu'un moyen de la déduire quand on la laisse libre. Écrit à
+l'ancienne, `aspect-ratio` posé sur les trois cellules leur imposait trois hauteurs différentes
+dès que les poids cessaient d'être égaux — la bande se disloquait, et aucune variable ne pouvait
+la sauver. Posé sur la première seule, il donne sa taille transversale à la ligne flex, et
+`align-items: stretch` la recopie : un benchmark reparamètre alors le fragment aux valeurs de
+`ref-08` (1060 de large, gouttière 16, hauteur 380, poids 1 / 1,31 / 1,14) et retrouve les
+cellules relevées sur le deck à 0,2 % près. Deux autres leçons du lot, mesurées :
+`layout-11-hero-card-on-photo` ne s'applique PAS ici, et c'est son `avoid_when` qui le dit — sans
+sol photographique il n'y a ni incrustation ni marge de sol, donc l'absence n'est pas un manque.
+Et le corps d'un nom d'enseigne n'est pas une taille de charte mais une **fonction de la
+largeur** (`calc(100cqw / chasse)`) : reparamétrée à 700 px, la zone de `title-04` garde
+exactement son taux de remplissage, là où un corps en dur y sortirait à 1,51 fois la mesure. Le
+contrôle qui le prouve mesure l'ENCRE au `Range` et non la boîte du `h1` — un `h1` est un bloc,
+sa boîte fait la largeur utile quoi qu'on écrive dedans, donc elle ne peut rien prouver. Aucune
+image source sur disque : `bin/diff.mjs` impossible.
 
 **12/08/2026 — `ref-10-campaign-board-red` est extraite**, en trois patterns et non les cinq
 que la spec annonçait. Les cinq de la spec étaient nommés par ÉLÉMENT (« le titre condensé »,
