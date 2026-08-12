@@ -26,11 +26,14 @@
 @import url("../fonts/fonts.css");
 
 :root {
-  /* — la charte : deux couleurs, rien de plus — */
+  /* — la charte : deux couleurs, rien de plus —
+     Le rouge n'est PAS celui relevé sur la source (#E33A22) : à 3,57:1 sur la crème il passe
+     pour le titre de 104px (plancher 3:1) et échoue partout ailleurs, or c'est le MÊME rouge
+     qui écrit les micro-caps de 13px et les libellés du tableau. Descendu à 4,57:1. */
   --vl-bg: #EDEAE3;
   --vl-board: #EDEAE3;
   --vl-slide: #EDEAE3;
-  --vl-red: #E33A22;
+  --vl-red: #C82C15;
   --vl-white: #FFFFFF;
   --vl-inset: 137px;
   --vl-gutter: 8px;

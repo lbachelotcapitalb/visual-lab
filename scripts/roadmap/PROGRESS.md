@@ -108,7 +108,7 @@ règles dures :
 
 CHECKPOINT_STEP: S3
 
-- [ ] S3.1 — Relever le contraste de `--vl-red` sur la slide crème AVANT de le recopier dans
+- [x] S3.1 — Relever le contraste de `--vl-red` sur la slide crème AVANT de le recopier dans
       trois patterns. Corriger dans `systems/` + `decks/` si la source est sous 4,5:1.
 - [ ] S3.2 — `layout-10-…` : le collage à fond perdu (colonnes d'images + couture + incrustation
       en overlay). C'est la composition de la slide 1.
