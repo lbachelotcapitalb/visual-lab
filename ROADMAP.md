@@ -45,8 +45,8 @@ des fonds, alternance, équilibre du deck), jamais à valider une slide.
 
 **Ce qui est un deck, et ce qui n'en est pas un.** Le format slides vaut pour les 6 decks :
 `ref-03` (4 slides) · `ref-04` (10) · `ref-05` (8) · `ref-06` (8) · `ref-09` (12) ·
-`ref-10` (3). Les quatre autres références n'ont pas de slides : `ref-01` est une couverture
-seule, `ref-02` un visuel unique, `ref-07` et `ref-08` sont des pages web.
+`ref-10` (3). Les autres références n'ont pas de slides : `ref-01` est une couverture seule,
+`ref-02` un visuel unique, `ref-07` et `ref-08` sont des pages web.
 
 ---
 
@@ -313,11 +313,34 @@ C'est ref-10 qui l'imposait — sa grotesk condensée Black n'existe pas sur le 
 Valeurs typo relevées à la proportion (titre 104px, micro-caps 13px, numéro 78px), pas
 recopiées de la spec : cf. le piège documenté dans `fonts/FONTS.md`.
 
-### ⬜ Lot 10 — `ref-01` bento-pills-2030
-1 slide de couverture, purement géométrique. Reconstruire **à plat** : ne pas reproduire la
-perspective ni l'ombre de la photo d'origine.
-Patterns : `layout-bento-primitives`, `shape-teardrop`, `shape-toggle`,
-`fill-gradient-stadium`.
+### ✅ Lot 10 — `ref-01` bento-pills-2030 (12/08/2026, CLOS)
+1 slide de couverture, purement géométrique, reconstruite **à plat** — ni la perspective ni
+l'ombre de la photo d'origine. **Trois patterns là où la spec en annonçait quatre** :
+`layout-15-primitive-mosaic`, `shape-02-teardrop-quadrant`, `shape-03-stadium-track`.
+`fill-gradient-stadium` n'est pas versé seul — il n'a pas d'existence propre, le dégradé EST
+le remplissage de l'enfant emboîté ; et le « toggle » n'est pas une primitive de plus : c'est
+le MÊME rail que la barre en dégradé, avec l'autre remplissage. C'est cette identité que
+`shape-03` verse, et la spec la manquait en les listant à part.
+
+Le lot est le seul du corpus qui ne porte **aucun texte** hormis l'année, donc tout s'y joue
+sur des lois de forme, et trois d'entre elles ont dû être établies contre le relevé :
+
+- `border-radius: 50%/50%` n'est **pas** un stadium mais une ELLIPSE — les deux pourcentages se
+  résolvent sur des axes différents. Le rayon s'écrit en LONGUEUR, comme le chanfrein d'un
+  coin coupé s'écrit en longueur pour rester à 45°. Le piège était dans le relevé, sur la
+  primitive la plus fréquente de la planche (trois occurrences sur huit).
+- une grille de 4 × 3 cellules **carrées** a un aspect borné par 3/2 : elle ne remplira jamais
+  un 16:9. Ce n'est pas un arbitrage de cadrage, c'est une impossibilité arithmétique — le
+  benchmark ne la calcule pas, il reparamètre le fragment de 0 à 1000 px de gouttière et
+  constate. La mosaïque est donc calée sur la HAUTEUR et centrée.
+- le corps de l'année n'est pas une taille de charte mais une **fonction de la largeur** de sa
+  pilule. Corollaire sorti au contrôle visuel, et devenu la 16ᵉ assertion : un fragment dont la
+  géométrie dépend d'une chasse doit ÉPINGLER sa police, sinon elle dépend du harnais qui
+  l'ouvre — `check.mjs` sert « Helvetica Neue » en tête, `render.mjs` la police système, et le
+  benchmark des 88 % restait vert pendant que le rendu saturait 97 %.
+
+Aucune image source sur disque : `bin/diff.mjs` impossible, la fidélité tenue par la spec, le
+regard et `check-deck.mjs`. Détail dans `SPEC-SOURCES.md`, section `ref-01-bento-pills-2030`.
 
 ### 🟡 Lot 11 — Composition
 Ce qui transforme la collection en outil :
@@ -648,7 +671,7 @@ email et social.
 | ~~`ref-12` neon-capsule-tags~~ | **soldée le 12/08/2026** | le deck existe ; il a démenti l'unité que le pattern portait sans écran (`--vl-cap-u` 56 → 91 px) et sorti deux défauts qu'aucune mesure ne voyait — l'arrondi de bordure Chrome à la soudure, et le trou de rastérisation bout à bout | — |
 | `ref-05` proposal-acid-yellow (lot 4) | matière — 8 slides | 5 patterns, dont une règle éditoriale à n'extraire que si elle a un rendu | 1 session |
 | `ref-09` zine-annotated-blue (lot 8) | matière — 12 slides | `annotation-marker` : le générateur de tracés manuscrits, **le plus fort différenciateur anti-« AI slop » du corpus** | 1 session entière |
-| `ref-01` bento-pills-2030 (lot 10) | matière — couverture | primitives géométriques ; à reconstruire À PLAT | ½ session |
+| ~~`ref-01` bento-pills-2030 (lot 10)~~ | **soldée le 12/08/2026** | 3 patterns versés au lieu des 4 annoncés — le rail à dégradé et le « toggle » sont le même objet à deux remplissages. Trois lois établies contre le relevé : `50%` donne une ellipse et non un stadium, un 4 × 3 carré est borné à 3/2 d'aspect (donc jamais 16:9), et un fragment dont la géométrie dépend d'une chasse doit épingler sa police | — |
 | Formats éditoriaux social (lot 13) | matière — natif canal | les 7 patterns `social` sont TOUS des vignettes de donnée : rien pour une citation, un décryptage, un carousel | 1 session, à cadrer d'abord |
 | `bin/compose.mjs` (lot 11) | outillage | assembler une slide depuis des ids + un système + un contenu JSON, sans copier-coller | ½ session |
 | Émetteur PSD live-text (lot 13) | outillage | reprendre `build-livetext-psd.mjs`, aujourd'hui prisonnier de `gtm-content` | ½ session |

@@ -426,7 +426,7 @@ au milieu d'un deck — deux patterns en portaient une. Un pattern non émis se 
 
 ## État
 
-**50 patterns**, dont 43 mesurés par des benchmarks. Le décompte vient de `bin/index.mjs`, pas
+**53 patterns**, dont 46 mesurés par des benchmarks. Le décompte vient de `bin/index.mjs`, pas
 d'ici : la ligne ci-dessus est un ordre de grandeur, [INDEX.md](INDEX.md) est la vérité.
 
 **11/08/2026 — le corpus sort du slide/web : trois patterns écrits NATIVEMENT pour l'email**
@@ -448,11 +448,30 @@ grosses capitales, trois « règles » qui n'avaient aucun rendu. Un pattern se 
 une COMPOSITION qu'on ne réécrit pas de tête, ou une géométrie mesurée ; pas s'il tient dans sa
 propre phrase de description.
 
-**16 références, et depuis le 12/08/2026 elles sont toutes COMPLÈTES** — chacune a son deck ET
+**17 références, et depuis le 12/08/2026 elles sont toutes COMPLÈTES** — chacune a son deck ET
 ses patterns. Aucune n'a plus de deck sans extraction, aucune n'a plus de patterns sans
 reconstitution : c'était le dernier trou du corpus, dans les deux sens. Le décompte par
 référence est dans le tableau « Références » d'[INDEX.md](INDEX.md), qui est GÉNÉRÉ : c'est la
 seule version qui ne peut pas mentir.
+
+**12/08/2026 — `ref-01-bento-pills-2030` est versée**, et c'est la seule planche du corpus qui
+ne porte **aucun texte** hormis son année : tout y est dit par la forme, ce qui en fait le seul
+endroit où les lois de forme sont le sujet et non le décor. Trois patterns —
+`layout-15-primitive-mosaic` (4 × 3 cellules carrées, une seule gouttière, un seul creux placé),
+`shape-02-teardrop-quadrant` (le carré à un seul coin droit, qui pointe le coin qu'il occupe) et
+`shape-03-stadium-track` (le rail et son enfant emboîté, deux remplissages pour un seul objet).
+
+Le lot a établi trois choses qui resservent partout ailleurs. **Un rayon écrit en `%` se résout
+par AXE** : `border-radius: 50%/50%` sur une boîte 2:1 donne une ellipse, pas un stadium — et
+lire la valeur calculée ne le voit pas, Chrome rend le `%` tel quel. Les benchmarks sondent donc
+la forme PEINTE au point (`elementFromPoint`) sur cinq et six angles. **Une grille de cellules
+carrées a un aspect borné** : 4 × 3 plafonne à 3/2 et ne remplira jamais un 16:9 ; le benchmark
+ne le calcule pas, il reparamètre la gouttière de 0 à 1000 px et constate. Et **un fragment dont
+la géométrie dépend d'une chasse doit épingler sa police** : le corps de l'année vaut
+`calc(100cqw / 1,216)`, où 1,216 est la chasse d'un grotesk précis. Sans famille déclarée, le
+même calcul saturait 88 % sous `check.mjs` (qui sert « Helvetica Neue » en tête) et 97 % sous
+`render.mjs` (qui sert la police système) — vert au harnais, faux au rendu. C'est maintenant une
+assertion : la saturation est remesurée après qu'un serif a été imposé à la racine du fragment.
 
 **12/08/2026 — `ref-07-retro-brand-hero` est versée**, et c'est la première PAGE WEB du corpus :
 scène 1440 × 900 déclarée `vl:stage web`, parce qu'un hero de page n'a rien à faire dans un

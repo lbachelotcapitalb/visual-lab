@@ -136,7 +136,7 @@ body.filtered .map { display:none; }
          data-ref="ref-01-bento-pills-2030" data-hay="layout-15-primitive-mosaic layout planche de primitives, cellule carrée composer une couverture qui ne dit rien et se lit quand même : une planche de formes pleines posées sur une grille dont toutes les cellules sont le même carré, une gouttière unique et petite, et un seul creux placé exprès. aucune taille n'est choisie objet par objet — une primitive ne se distingue que par son rayon, ce qui fait que la planche entière se reparamètre d'une seule variable. et parce que 4 colonnes × 3 rangées de carrés plafonnent arithmétiquement à un aspect de 3/2, elle se cale sur la hauteur de sa scène et se centre : la loi d'aspect fait partie du pattern, elle n'est pas une contrainte qu'on subit. une couverture, un intercalaire ou une ouverture de chapitre qui doit porter une identité sans texte — rapport annuel, design system, dossier de marque. aussi comme fond de section quand le contenu arrive ailleurs : la planche donne un vocabulaire de formes (les trois rayons) que le reste du document réemploie, et c'est cet écartement de rayons, pas la couleur, qui fait la signature. il y a du contenu à ranger : ce n'est pas un bento. un bento range des blocs de contenu dans des cartes de tailles choisies ; ici la taille n'est pas choisie et une cellule ne porte rien. écarter aussi dès que la scène impose de remplir un 16:9 — le bloc plafonne à 1,5 d'aspect et vaut 1,342 en pratique ; l'étirer casserait les cellules carrées, donc les deux discs et les deux teardrops. et écarter en format social portrait, pour la raison inverse : une planche à 1,34 posée dans un 4:5 laisse un tiers de la hauteur vide. couverture geometrie grille primitives sans-texte bento carre rayon mosaique annee ref-01-bento-pills-2030" id="p-layout-15-primitive-mosaic">
   <header class="pat__head">
     <h3><a href="#p-layout-15-primitive-mosaic">layout-15-primitive-mosaic</a></h3>
-    <p class="meta">layout · slide web · 15 benchmarks · 985×734</p>
+    <p class="meta">layout · slide web · 16 benchmarks · 985×734</p>
     <p class="intent">Composer une couverture qui ne dit rien et se lit quand même : une planche de formes pleines posées sur une grille dont toutes les cellules sont le MÊME carré, une gouttière unique et petite, et un seul creux placé exprès. Aucune taille n'est choisie objet par objet — une primitive ne se distingue que par son RAYON, ce qui fait que la planche entière se reparamètre d'une seule variable. Et parce que 4 colonnes × 3 rangées de carrés plafonnent arithmétiquement à un aspect de 3/2, elle se cale sur la HAUTEUR de sa scène et se centre : la loi d'aspect fait partie du pattern, elle n'est pas une contrainte qu'on subit.</p>
     <div class="acts">
       <button class="copy" data-target="src-layout-15-primitive-mosaic">copier le fragment</button>
@@ -347,6 +347,12 @@ body.filtered .map { display:none; }
    l'encre à 88 % de la boîte. Posé à une taille fixe, le chiffre occupait 44 % de sa pilule —
    un petit bloc centré dans une grande boîte, ce que DOCTRINE §1 nomme un raté. */
 .vl-mos__year {
+  /* La police est DANS le fragment parce que 1,216 est la chasse d'un grotesk précis : servi
+     dans une autre famille, le même calcul sature 97 % de la pilule au lieu de 88 % et les
+     chiffres viennent lécher le bord. Un fragment qui hérite sa famille de son hôte fait
+     dépendre sa géométrie du harnais qui l'ouvre — `check.mjs` sert « Helvetica Neue » en
+     tête, `render.mjs` sert la police système : le benchmark restait vert sur un rendu faux. */
+  font-family: "Helvetica Neue", Helvetica, Inter, Arial, sans-serif;
   font-size: calc(100cqw / 1.216);
   line-height: 0.92;
   font-weight: 700;
@@ -456,6 +462,12 @@ body.filtered .map { display:none; }
    l'encre à 88 % de la boîte. Posé à une taille fixe, le chiffre occupait 44 % de sa pilule —
    un petit bloc centré dans une grande boîte, ce que DOCTRINE §1 nomme un raté. */
 .vl-mos__year {
+  /* La police est DANS le fragment parce que 1,216 est la chasse d'un grotesk précis : servi
+     dans une autre famille, le même calcul sature 97 % de la pilule au lieu de 88 % et les
+     chiffres viennent lécher le bord. Un fragment qui hérite sa famille de son hôte fait
+     dépendre sa géométrie du harnais qui l'ouvre — `check.mjs` sert « Helvetica Neue » en
+     tête, `render.mjs` sert la police système : le benchmark restait vert sur un rendu faux. */
+  font-family: "Helvetica Neue", Helvetica, Inter, Arial, sans-serif;
   font-size: calc(100cqw / 1.216);
   line-height: 0.92;
   font-weight: 700;

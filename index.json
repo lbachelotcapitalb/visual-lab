@@ -5597,6 +5597,13 @@
           "tol": 0.04
         },
         {
+          "name": "…et cette saturation NE DÉPEND PAS de la police de l'hôte : le fragment épingle sa famille, parce que 1,216 est la chasse d'un grotesk précis. Servi dans une autre famille, le même calcul saturait 97 % et les chiffres léchaient le bord — vert au harnais, faux au rendu",
+          "measure": "(() => { const root = document.querySelector('.vl-mos'); const prev = root.style.fontFamily; root.style.fontFamily = 'Georgia, \"Times New Roman\", serif'; const el = document.querySelector('.vl-mos__year'); const r = document.createRange(); r.selectNodeContents(el); const sat = r.getBoundingClientRect().width / box('.vl-mos__p--pill').w; root.style.fontFamily = prev; return sat; })()",
+          "expect": 0.88,
+          "tol": 0.04,
+          "notes": "La même valeur que le benchmark précédent, et c'est TOUT l'objet : la mesure est refaite après avoir imposé un serif à la racine du fragment. Un fragment qui hérite sa famille de son hôte fait dépendre sa géométrie du harnais qui l'ouvre — `check.mjs` sert « Helvetica Neue » en tête, `render.mjs` la police système : les deux ne donnent pas le même rendu, et seul le premier était mesuré."
+        },
+        {
           "name": "et elle reste lisible : le blanc est mesuré sur l'extrémité CLAIRE du dégradé, celle qui décide du contraste",
           "measure": "contrast('.vl-mos__year')",
           "min": 3

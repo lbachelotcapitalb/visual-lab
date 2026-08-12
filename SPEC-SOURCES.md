@@ -186,6 +186,17 @@ pastille. C'est cette identité que le pattern verse ; la spec la manquait en le
 | `shape-02-teardrop-quadrant` | le carré arrondi à **un seul coin droit**, 4 orientations de même rayon, le coin droit comme pointeur d'orientation |
 | `shape-03-stadium-track` | le rail stadium et son enfant emboîté : rayon en LONGUEUR (jamais `50%`), inset constant sur les quatre côtés, contours **concentriques** — et les deux remplissages (dégradé, pastille) comme deux rôles d'un seul objet |
 
+**Corrigé au contrôle visuel (12/08/2026)** — `layout-15` ne déclarait aucune `font-family`, et
+c'est le seul pattern du corpus dont une COTE dépend d'une police : le corps de l'année vaut
+`calc(100cqw / 1,216)`, où 1,216 est la chasse d'encre de « 20 » dans le grotesk de la charte.
+Servi dans une autre famille, le même calcul saturait 97 % de la pilule au lieu de 88 % et les
+chiffres venaient lécher le bord. Le défaut était invisible au harnais parce que les deux outils
+ne servent pas la même police par défaut — `check.mjs` met « Helvetica Neue » en tête,
+`render.mjs` la police système — donc le benchmark des 88 % était vert sur un rendu faux. Le
+fragment épingle désormais sa famille, et l'assertion a été doublée : la saturation est remesurée
+après avoir imposé un serif à la racine du fragment, et doit être inchangée. Contre-épreuve
+faite : rouge sans le correctif, verte avec.
+
 ---
 
 ## ref-02-ghost-icon-claim
