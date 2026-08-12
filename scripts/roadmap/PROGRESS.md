@@ -125,12 +125,17 @@ règles dures :
 
 CHECKPOINT_STEP: S6
 
-- [ ] **S6.1 — la spec `ref-01` corrigée avant tout code.** Quatre points à trancher dans
+- [x] **S6.1 — la spec `ref-01` corrigée avant tout code.** Quatre points à trancher dans
       `SPEC-SOURCES.md` : l'échelle (la spec donne des px sans dire la taille de la cellule),
       `border-radius: 50%/50%` qui donne une ELLIPSE et non un stadium, le micro-pied
       (`#C9C7C4` sur `#F5F4F2` = 1,3:1 et ≈ 10 px, deux fois sous le plancher), et la loi
       d'aspect du bloc (4 colonnes × 3 rangées de cellules CARRÉES plafonne à 4:3 — il ne
-      remplira jamais un 16:9, et c'est démontrable).
+      remplira jamais un 16:9, et c'est démontrable). **Fait (0a9729b)** : la géométrie retenue,
+      la disposition et l'arbitrage des patterns sont tous écrits dans la section `ref-01` de
+      `SPEC-SOURCES.md` — S6.2 à S6.4 n'ont plus rien à décider, seulement à coder ce qui y est.
+      Repères pour la suite : cellule 232, gouttière 19, mosaïque 985 × 734 centrée, rangée
+      d'index 24 px `#6E6C68`, et le rail de la primitive 2 = celui de la primitive 7 (même
+      objet, deux remplissages).
 - [ ] **S6.2 — `systems/` + `decks/ref-01-bento-pills-2030.html`** : une slide 1600×900, à plat
       (ni perspective ni ombre), `check-deck.mjs` vert.
 - [ ] **S6.3 — `layout-15-primitive-mosaic`** : la grille + les huit primitives, benchmarks en
