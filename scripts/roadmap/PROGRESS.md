@@ -123,7 +123,24 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: (aucun)
+CHECKPOINT_STEP: S6
+
+- [ ] **S6.1 — la spec `ref-01` corrigée avant tout code.** Quatre points à trancher dans
+      `SPEC-SOURCES.md` : l'échelle (la spec donne des px sans dire la taille de la cellule),
+      `border-radius: 50%/50%` qui donne une ELLIPSE et non un stadium, le micro-pied
+      (`#C9C7C4` sur `#F5F4F2` = 1,3:1 et ≈ 10 px, deux fois sous le plancher), et la loi
+      d'aspect du bloc (4 colonnes × 3 rangées de cellules CARRÉES plafonne à 4:3 — il ne
+      remplira jamais un 16:9, et c'est démontrable).
+- [ ] **S6.2 — `systems/` + `decks/ref-01-bento-pills-2030.html`** : une slide 1600×900, à plat
+      (ni perspective ni ombre), `check-deck.mjs` vert.
+- [ ] **S6.3 — `layout-15-primitive-mosaic`** : la grille + les huit primitives, benchmarks en
+      ratios, `check.mjs` vert.
+- [ ] **S6.4 — `shape-02-teardrop-quadrant` + `shape-03-stadium-track`** : la forme à un seul
+      coin droit (4 orientations) et le stadium emboîté (rail + pastille / rail + dégradé, qui
+      absorbe le `fill-gradient-stadium` annoncé seul par la spec).
+- [ ] **S6.5 — les rendus REGARDÉS** (deck + les 3 patterns), corrections, `proofs/` supprimé.
+- [ ] **S6.6 — gate complet, doc à jour dans le même commit** (ROADMAP lot 10, README « État »,
+      SPEC-SOURCES), commit final + MAJ de PROGRESS.
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à
      mesure et poussée en commit `wip(<step>): …`. C'est ce qui permet de reprendre au milieu
