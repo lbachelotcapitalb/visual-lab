@@ -130,9 +130,14 @@ CHECKPOINT_STEP: S2
       — c'est la preuve que l'unité était le SEUL écart. Les deux trouvailles du regard sont
       versées en `notes` (pattern : le débord de 0,05 u ; système : pourquoi u ≤ 97 et pourquoi
       91 plutôt que 97), sans quoi le prochain qui règle l'unité au goût repaie les deux.
-- [ ] Doc : `SPEC-SOURCES.md` § ref-12 (« Patterns extraits » annonce un
-      `stack-keyword-flush-right` qui n'existe pas — la pile est DANS `tag-01`), README « État »,
-      ROADMAP (ligne du tableau « Ce qui reste »).
+- [x] Doc : `SPEC-SOURCES.md` § ref-12 — deux mensonges corrigés, pas un seul : « Patterns
+      extraits » annonçait un `stack-keyword-flush-right` inexistant (la pile est DANS `tag-01`,
+      et une règle d'empilement qui tient dans sa phrase ne se garde pas) ET un id `tag-capsule-
+      gooey` qui n'est pas la nomenclature. Ajout de la rubrique « Reconstitution » (u ≤ 97, 91
+      retenu, le débord de 0,05 u) ; l'échelle absolue y est désormais annoncée comme DÉDUITE du
+      deck et non relevée sur la source — le fragment est recadré, la scène d'origine est
+      inconnue. README « État » (entrée 12/08 + décompte 12 → 13 références reconstituées, et
+      plus aucune n'a de patterns sans deck) et ROADMAP (ligne barrée « soldée le 12/08/2026 »).
 - [ ] Gate + regard du rendu + commit final nommé.
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à

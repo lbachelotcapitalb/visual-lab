@@ -492,8 +492,11 @@ déborde du cadre pour les deux premières.
 - contraste mesuré 8,9:1
 
 **Typo** — Grotesk neutre, **capitales**, graisse moyenne (≈ 500), `letter-spacing` ≈ 0.
-Corps ≈ 0,62 × l'unité de capsule, soit ~35 px pour une capsule de 70 px de haut. Le mot
-remplit la pilule : il n'y a pas de « petit texte dans une grande forme ».
+Corps ≈ 0,62 × l'unité de capsule. Le mot remplit la pilule : il n'y a pas de « petit texte
+dans une grande forme ». L'échelle absolue ne se relève PAS sur la source (c'est un fragment
+recadré, on ignore la largeur de la scène d'origine) : elle est **déduite** de la
+reconstitution, ci-dessous — `u = 91 px`, donc capsule de 114 px et corps de 56 px sur une
+slide 1600 × 900.
 
 **Élément signature — la capsule soudée**
 Un cercle porte-glyphe et une pilule de texte forment **un seul contour continu**, raccordés
@@ -520,11 +523,32 @@ directionnelle à quatre flèches, rayons en couronne (12 traits), cadre à quat
 une croix. Ils marquent une catégorie ; ils n'expliquent rien et sont **redessinés**.
 
 **Composition** — pile alignée à droite, écart vertical serré (≈ `0,1 u`), largeur de chaque
-capsule pilotée par son mot. Le bord droit sort du cadre : la liste montrée est un extrait.
+capsule pilotée par son mot. Le bord droit sort du cadre : c'est un accident de cadrage, pas une
+intention. **On remet à plat** (cf. la règle « on reproduit la slide, pas l'image ») : la
+reconstitution pose les six capsules entières, calées sur la marge droite.
+
+**Reconstitution** — `decks/ref-12-neon-capsule-tags.html`, une slide, format PPT 1600 × 900 :
+sol vert forêt, pile des six capsules alignée à droite, **rien d'autre**. Zéro couche au-dessus
+de la scène — une capsule est un TRAIT, pas une surface, et lui poser un panneau sous elle
+serait la couche de trop que `check-deck.mjs` refuse.
+
+L'unité n'est pas un réglage libre, et c'est le deck qui l'a établie : six rangées de `1,255 u`
+plus cinq écarts de `0,1 u` font `8,03 u`, donc la hauteur de slide plafonne `u ≤ 97 px`. Ce
+n'est pourtant pas 97 qui est retenu mais **91** : le trait vaut `0,055 u` et Chrome ARRONDIT
+une bordure CSS au pixel entier là où il ne le fait pas d'un stroke SVG — à 97 le contour passe
+de 5,335 px (le SVG) à 5 px (la pilule) **à chaque soudure**, douze fois par slide, sur la seule
+chose qui fasse la signature de cette charte. À 91 il vaut 5,005 px des deux côtés.
+
+Second défaut, invisible à toute mesure de géométrie et sorti par le seul regard : bout à bout,
+la bordure CSS et le stroke SVG laissent un trou de rastérisation d'environ 0,7 px — contour
+continu en calcul, interrompu à l'œil. Les tracés débordent donc de `0,05 u` aux deux extrémités
+(tête et calotte). Couverture des douze lignes droites : 0,30 avant, ≥ 0,99 après.
 
 **Patterns extraits**
-- `tag-capsule-gooey` — la capsule soudée (tête fixe + corps élastique + calotte).
-- `stack-keyword-flush-right` — la règle de composition de la pile.
+- `tag-01-gooey-capsule` — la capsule soudée (tête fixe + corps élastique + calotte) **et** la
+  règle de pile : l'alignement à droite avec écart de `0,1 u` est porté par `.vl-capstack`, dans
+  le même fragment. Il n'y a pas de second pattern de composition — une règle d'empilement qui
+  tient dans sa propre phrase de description ne se garde pas.
 
 **Ce que cette référence apporte au corpus** — le premier **fond sombre** de la bibliothèque,
 et la première forme dont la signature est une **soudure** et non une coupe (`ref-06`) ou un

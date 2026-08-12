@@ -448,11 +448,11 @@ grosses capitales, trois « règles » qui n'avaient aucun rendu. Un pattern se 
 une COMPOSITION qu'on ne réécrit pas de tête, ou une géométrie mesurée ; pas s'il tient dans sa
 propre phrase de description.
 
-12 références sur 15 reconstituées. Le décompte par référence — patterns extraits, deck présent —
+13 références sur 15 reconstituées. Le décompte par référence — patterns extraits, deck présent —
 est dans le tableau « Références » d'[INDEX.md](INDEX.md), qui est GÉNÉRÉ : c'est la seule
-version qui ne peut pas mentir. Deux références ont leur deck mais pas encore leurs patterns
-(`ref-08-swiss-studio-hero`, `ref-10-campaign-board-red`), et `ref-12-neon-capsule-tags` a ses
-patterns sans deck.
+version qui ne peut pas mentir. Il ne reste que deux références à deck sans patterns
+(`ref-08-swiss-studio-hero`, `ref-10-campaign-board-red`) ; plus aucune n'a de patterns sans
+deck.
 
 **31/07/2026 — `ref-14-layer-stack-coral`** : le premier **schéma** du corpus, au sens propre —
 une figure qui explique une STRUCTURE et non une donnée. D'où la famille `diagram`, qui n'est pas
@@ -460,6 +460,23 @@ une figure qui explique une STRUCTURE et non une donnée. D'où la famille `diag
 perspective et sans seconde teinte** : par l'ordre d'empilement et par une opacité qui décroît
 d'un rapport constant (× 0,42). Les recouvrements ne sont jamais dessinés, ils sont composités —
 c'est ce qui rend le schéma rejouable sur une autre charte en ne changeant qu'UNE couleur.
+
+**12/08/2026 — `ref-12-neon-capsule-tags` a enfin son deck**, et c'est lui qui a corrigé le
+pattern, pas l'inverse. `tag-01-gooey-capsule` existait depuis des semaines sans reconstitution :
+son unité (`--vl-cap-u: 56px`) n'avait jamais été confrontée à une slide, et laissait la pile à
+26 % de la largeur — le vide en pied de slide que DOCTRINE §1 interdit. Posée sur 1600 × 900,
+l'unité n'est plus libre : six rangées de `1,255 u` et cinq écarts de `0,1 u` la plafonnent à
+97 px. Les deux défauts qui ont suivi sont du même genre — invisibles à toute assertion de
+géométrie, et sortis par le seul regard sur le rendu. **(a)** Chrome arrondit une bordure CSS au
+pixel entier là où il ne le fait pas d'un stroke SVG : à `u = 97` le contour changeait
+d'épaisseur (5,335 → 5 px) à chaque soudure, douze fois par slide, sur la seule chose qui fasse
+la signature de cette charte ; `u = 91` égalise les deux à 5,005 px. **(b)** Bout à bout, les
+deux traits laissent un trou de rastérisation d'environ 0,7 px — un contour continu en calcul,
+interrompu à l'œil ; un débord de `0,05 u` aux extrémités des tracés porte la couverture des
+douze lignes droites de 0,30 à ≥ 0,99. Les treize benchmarks du pattern sont restés verts d'un
+bout à l'autre, sans qu'on en touche un seul : ils sont en RATIOS, donc structurellement aveugles
+à l'échelle et à la rastérisation. C'est exactement le partage de travail que le dépôt assume —
+la mesure tient la géométrie, le regard tient le reste.
 
 **12/08/2026 — la pile de couches sort en .pptx** (`vl_pptx.layer_stack`) : `diagram-01` était
 le seul pattern à géométrie complète sans émetteur, donc invisible dans `deck-builder`. Deux

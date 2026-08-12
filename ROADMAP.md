@@ -582,7 +582,7 @@ email et social.
 | `ref-07` retro-brand-hero (lot 6) | matière — page web | 4 patterns, et il CONDITIONNE le lot 7 | 1 session |
 | `ref-08` swiss-studio-hero (lot 7) | matière — extraction | le deck existe ; la preuve du lot est que les patterns du lot 6 produisent ref-07 ET ref-08 par VARIABLES | ½ session, après le 6 |
 | `ref-10` campaign-board-red (lot 9) | matière — extraction | le deck existe, aucun pattern extrait | ½ session |
-| `ref-12` neon-capsule-tags | matière — deck manquant | les patterns existent sans reconstitution : le seul trou en sens inverse du corpus | ½ session |
+| ~~`ref-12` neon-capsule-tags~~ | **soldée le 12/08/2026** | le deck existe ; il a démenti l'unité que le pattern portait sans écran (`--vl-cap-u` 56 → 91 px) et sorti deux défauts qu'aucune mesure ne voyait — l'arrondi de bordure Chrome à la soudure, et le trou de rastérisation bout à bout | — |
 | `ref-05` proposal-acid-yellow (lot 4) | matière — 8 slides | 5 patterns, dont une règle éditoriale à n'extraire que si elle a un rendu | 1 session |
 | `ref-09` zine-annotated-blue (lot 8) | matière — 12 slides | `annotation-marker` : le générateur de tracés manuscrits, **le plus fort différenciateur anti-« AI slop » du corpus** | 1 session entière |
 | `ref-01` bento-pills-2030 (lot 10) | matière — couverture | primitives géométriques ; à reconstruire À PLAT | ½ session |
