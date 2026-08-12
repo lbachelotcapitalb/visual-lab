@@ -151,7 +151,14 @@ CHECKPOINT_STEP: S7
       un benchmark de surface (≤ 12 % de la slide) porté par les patterns qui posent du jaune.
       Repères pour la suite : marge 72, filet du header à ~126, zone de contenu 1456 × ~700,
       gouttières 24 (intra-rangée) et 32 (inter-blocs), rayons 19 / 22 / 26 / 32.
-- [ ] **S7.2 — `systems/ref-05-proposal-acid-yellow.json` + le deck, slides 1 à 4.**
+- [x] **S7.2 — `systems/ref-05-proposal-acid-yellow.json` + le deck, slides 1 à 4.** **Fait** :
+      couverture (display césuré + carré noir à astérisque + carré média), contents (index fileté
+      dont la ligne courante porte le seul filet jaune), about (deux colonnes + bandeau noir à
+      badge jaune), how we work (rangée 01→04, la 02 jaune, la 04 noire). `check-deck.mjs` vert
+      sur les 4. Police : « Hanken Grotesk » (variable 100–900), la seule grotesk du dépôt qui
+      tienne le `0.12em` des capitales du header. La rangée de cartes est BORNÉE à 440 px de
+      haut, pas en `flex:1` — leçon de ref-06, et ici elle a un second effet : à hauteur libre
+      la carte jaune passait à 11,9 % de la slide, contre 10,6 % bornée, pour un plafond de 12 %.
 - [ ] **S7.3 — le deck, slides 5 à 8, `check-deck.mjs` vert** (une seule couche au-dessus de la
       scène, pas de marge de page, 1600×900).
 - [ ] **S7.4 — `title-…-hyphen-break` + le marqueur astérisque** : la césure volontaire dans un

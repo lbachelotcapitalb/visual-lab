@@ -1,0 +1,37 @@
+{
+  "name": "Proposal jaune acide",
+  "notes": "Un seul geste porte toute la charte : L'ACCENT UNIQUE. Une slide ne pose du jaune #EAFF00 qu'à UN endroit, et cette surface reste sous 12 % de la slide — c'est ce qui le fait lire comme un marqueur et non comme une couleur de charte. Deux objets jaunes sur une même slide, et la règle tombe : le regard n'a plus de point d'entrée. Deuxième geste : la casse MIXTE partout, sauf le micro du header — la seule capitale de la charte est celle de l'appareil (header, pied, labels), et c'est ce qui fait lire le header comme une réglure et non comme du texte. Troisième geste : la CÉSURE volontaire dans le titre display (Business- / Proposal), qui n'est pas une contrainte de largeur mais un choix — le trait d'union est écrit, pas calculé. ÉCHELLE : les corps relevés dans SPEC-SOURCES.md (titre 68 / chiffre 56 / corps 12 / micro 8) l'ont été sur une planche à ~1000 px de large ; ce système est à l'échelle d'une slide 1600×900, donc ×1,6. Les patterns héritent de CES valeurs — c'est le système qui porte l'échelle, jamais le fragment. L'encre grise est à #6C6C6C et non #7A7A7A : le relevé tombait à 3,73:1 sur le fond #EFEFED et 4,29:1 sur le blanc, sous le seuil de 4,5 des petits corps qu'il porte — sous le seuil des DEUX côtés, donc aucun fond ne le rattrapait. #9A9A9A (atténué sur la carte noire) n'existe pas dans le relevé : un bandeau noir portant deux niveaux de texte en a besoin, c'est le seul token ajouté. Le jaune ne colore JAMAIS du texte : il est toujours un APLAT, et l'encre qui s'y pose est le noir #111111 (16,91:1).",
+  "tokens": {
+    "--vl-bg": "#EFEFED",
+    "--vl-board": "#DCDCD8",
+    "--vl-white": "#FFFFFF",
+    "--vl-black": "#111111",
+    "--vl-acid": "#EAFF00",
+    "--vl-ink-muted": "#6C6C6C",
+    "--vl-ink-muted-invert": "#9A9A9A",
+    "--vl-hairline": "#11111118",
+    "--vl-hairline-invert": "#FFFFFF24",
+    "--vl-blob-light": "#E8E8E6",
+    "--vl-blob-dark": "#171717",
+    "--vl-margin": "72px",
+    "--vl-gap": "24px",
+    "--vl-gap-block": "32px",
+    "--vl-r-media": "19px",
+    "--vl-r-list": "22px",
+    "--vl-r-band": "26px",
+    "--vl-r-step": "32px"
+  },
+  "type": {
+    "display": "\"Hanken Grotesk\", \"Helvetica Neue\", Arial, sans-serif",
+    "body": "\"Hanken Grotesk\", \"Helvetica Neue\", Arial, sans-serif",
+    "scale": {
+      "display": "109px / 0.98 / 800 / -0.03em (couverture et clôture, casse mixte, césure écrite)",
+      "title": "67px / 1.02 / 800 / -0.03em (titre de section)",
+      "stat": "90px / 1 / 800 / -0.03em (chiffre de carte numérotée)",
+      "body": "19px / 1.55 / 400",
+      "label": "19px / 1.3 / 700 (label sous un chiffre)",
+      "label-sm": "16px / 1.2 / 700 (le (01) d'une carte de liste)",
+      "micro": "13px / 1.4 / 700 / 0.12em / UPPERCASE"
+    }
+  }
+}
