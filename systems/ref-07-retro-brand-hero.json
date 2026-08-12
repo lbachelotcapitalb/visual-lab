@@ -1,0 +1,35 @@
+{
+  "name": "Retro brand hero (crème + rouge de marque, sol photographique)",
+  "notes": "Une seule couleur porte la marque, et elle ne sert qu'à DEUX choses : le wordmark et le bouton. Étalée sur un troisième objet, elle cesse d'être un accent et le hero devient un aplat rouge. Ce qui la casse : remplacer le sol photo par un aplat — la carte crème perd son bord et le hero n'a plus de sol.",
+  "tokens": {
+    "--vl-card": "#FBF7EC",
+    "--vl-bg": "#FBF7EC",
+    "--vl-ink": "#1E1B18",
+    "--vl-accent": "#B2201C",
+    "--vl-on-accent": "#FBF7EC",
+    "--vl-ground-sky-hi": "#D7E6EC",
+    "--vl-ground-sky-lo": "#BBD3DE",
+    "--vl-ground-sea-hi": "#7FA8BC",
+    "--vl-ground-sea-lo": "#5E8AA0",
+    "--vl-ground-foam": "#EFEAE0",
+    "--vl-ground-sand-wet": "#C7B49A",
+    "--vl-ground-sand-dry": "#E4D5BC",
+    "--vl-radius-card": "6px",
+    "--vl-radius-photo": "8px",
+    "--vl-radius-pill": "4px",
+    "--vl-gap": "12px",
+    "--vl-margin": "44px",
+    "--vl-shadow-card": "0 24px 60px rgba(0, 0, 0, 0.18)"
+  },
+  "type": {
+    "display": "Archivo, \"Archivo Black\", Impact, sans-serif",
+    "body": "Archivo, Inter, -apple-system, \"Helvetica Neue\", Arial, sans-serif",
+    "scale": {
+      "wordmark": "148px / 0.82 / 900 / -0.01em",
+      "logo": "22px / 1 / 900",
+      "nav": "13px / 1 / 500",
+      "button": "12px / 1 / 700 / 0.06em",
+      "baseline": "11px / 1 / 400 italic"
+    }
+  }
+}

@@ -321,32 +321,82 @@ corps 11 px / 1.5, gris. Chiffres statistiques ≈ 40 px blanc sur orange.
 
 ## ref-07-retro-brand-hero
 
-**Nature** — Maquette de page d'accueil « RAD HABITS », carte flottant sur une photo de
-plage (ciel + sable). Page ≈ 1440 de large, carte ≈ 78 % de la largeur.
+**Nature** — Maquette de page d'accueil « RAD HABITS », carte crème flottant sur une photo de
+plage (ciel + mer + sable). Page ≈ 1440 de large, carte ≈ 78 % de la largeur.
+
+**Ce qu'il faut isoler** — la PAGE, sol compris. Ici la photo n'est **pas** un décor de
+maquette : c'est le fond de la page elle-même, à plat, sans perspective et sans ombre d'objet
+physique. C'est exactement l'inverse de `ref-08`, dont la photo d'intérieur mettait la carte
+en scène dans une pièce et a été retirée le 30/07 — voir la note « pourquoi les deux
+références ne traitent pas leur photo pareil » plus bas. **Deux couches, pas trois** :
+sol → carte. Les images du triptyque et le bouton sont des feuilles décorées, pas des couches.
+Scène **1440 × 900**, déclarée `<!-- vl:stage web -->` : ce n'est pas une slide, le 16:9 PPT
+n'a aucun sens pour un hero de page.
 
 **Palette**
-- carte `#FBF7EC` (crème), rouge de marque `#B2201C`
-- texte de nav `#1E1B18`
-- l'arrière-plan est une **photo**, jamais un aplat
 
-**Typo**
-- Wordmark hero : display **rounded ultra-bold** (Obviously Wide, Cooper Black sans-serif,
-  Recoleta Black — à défaut : `Archivo Black` + `font-stretch: expanded`), ≈ 148 px,
-  `line-height: 0.82`, capitales, rouge, aligné **bas-gauche**, sur 2 lignes.
-- Logo de nav : même famille, ≈ 22 px, centré, avec une baseline italique minuscule dessous
-  (`life's a habit, baby!`, 9 px, italique).
-- Nav : 13 px, poids 500, casse mixte.
+| rôle | valeur | note |
+|---|---|---|
+| carte | `#FBF7EC` | crème |
+| rouge de marque | `#B2201C` | wordmark, bouton — **6,30:1 sur la carte**, il tient le corps |
+| encre de nav | `#1E1B18` | 16:1 sur la carte |
+| sol | photo | ciel `#BBD3DE` → mer `#5E8AA0` → sable mouillé `#C7B49A` → sable sec `#E4D5BC` |
 
-**Layout** — Carte `border-radius: 6px`, ombre `0 24px 60px rgba(0,0,0,.18)`.
-Nav en 3 zones (liens gauche / logo centre / bouton droite), bouton rouge plein radius 4,
-texte crème 12 px. Corps : wordmark en bas-gauche ; **triptyque d'images portrait** (ratio
-3:4, radius 8, gap 12) aligné **en haut à droite**, largeur totale ≈ 42 % de la carte.
+Le sol est une **photo, jamais un aplat** : la carte crème posée sur un aplat crème perd son
+bord, et le hero n'a plus de sol. Les quatre valeurs ci-dessus sont les dominantes de la
+photo, reconstruites en dégradés SVG génératifs (aucune URL distante — même parti que `ref-08`).
 
-**Patterns à extraire**
-- `hero-card-on-photo` — la carte flottante sur photo (avec l'ombre et les proportions).
-- `nav-three-zone` — nav liens / logo centré / bouton.
-- `hero-wordmark-bottom-left` — wordmark géant bas-gauche + triptyque haut-droite.
-- `image-triptych` — 3 images de ratio identique, gap constant, radius léger.
+**Typo** — display **rounded ultra-bold** (Obviously Wide / Cooper Black sans-serif / Recoleta
+Black à la source ; ici `Archivo` `wght 900` + `wdth 125`, la seule variable du dépôt qui porte
+un axe de largeur). Échelle en fraction de la largeur de **page** (`Wp` = 1440) :
+
+| rang | px | ratio | ce que ça porte |
+|---|---|---|---|
+| wordmark | 148 | `0.103 Wp` | les deux lignes du nom, `line-height: 0.82`, capitales, rouge |
+| logo de nav | 22 | `0.0153 Wp` | le nom au centre de la nav |
+| liens de nav | 13 | `0.0090 Wp` | poids 500, casse mixte |
+| bouton | 12 | `0.0083 Wp` | capitales, crème sur rouge |
+| baseline du logo | **11** | `0.0076 Wp` | italique — **corrigé contre la source** (9 px) |
+
+> **Corrigé contre la source.** La baseline italique sous le logo est relevée à 9 px. Une page
+> web se lit à bout de bras dans un navigateur à l'échelle 1:1, pas projetée : à 9 px l'italique
+> d'Archivo n'a plus d'œil. Portée à 11 px, elle reste secondaire (la moitié du logo) et
+> redevient lisible. La bibliothèque ne capitalise pas le défaut de la source (§7 DOCTRINE).
+
+**Géométrie** (page 1440 × 900)
+
+| objet | valeur | ratio |
+|---|---|---|
+| carte | 1124 × 668, `radius 6`, ombre `0 24px 60px rgba(0,0,0,.18)` | `0.781 Wp` |
+| marge de sol gauche/droite | 158 | `0.110 Wp` |
+| marge de sol haut/bas | 116 | `0.129 Hp` |
+| marge intérieure de carte | 44 | `0.039 Wc` |
+| nav | 3 zones : liens à gauche, logo **optiquement centré sur la carte**, bouton à droite | — |
+| triptyque | 3 images 3:4, `radius 8`, gouttière 12, calé **haut-droite** | `0.42 Wc` |
+| wordmark | 2 lignes, fer à gauche, calé sur la marge **basse** | `0.51 Wc` |
+
+Le geste de la composition est un **contrepoids diagonal** : le wordmark occupe le coin
+bas-gauche, le triptyque le coin haut-droite, et les deux ne se croisent jamais en hauteur.
+Le logo de nav est centré sur la CARTE, pas entre ses deux voisins : les liens (gauche) et le
+bouton (droite) n'ont pas la même largeur, et centrer entre eux ferait dériver le nom.
+
+**Ce qui est écarté** — rien : l'image source est une page complète, à plat. Aucune ombre de
+maquette, aucun élément coupé par le cadre, aucune perspective.
+
+**Pourquoi `ref-07` garde sa photo et `ref-08` non** — `ref-08` montrait la carte **posée dans
+une pièce photographiée**, avec ombre portée d'objet physique : la photo mettait le design en
+scène, elle n'en faisait pas partie, et l'inclure obligeait à recadrer chaque export. Ici la
+photo est un fond de page plein cadre, à plat, sur lequel la carte est *incrustée* — la
+retirer supprimerait le sujet du pattern `layout-11-hero-card-on-photo`. La frontière n'est pas
+« photo ou pas », c'est **mise en scène du design** contre **fond de la page**.
+
+**Patterns extraits**
+- `layout-11-hero-card-on-photo` — la carte incrustée sur un sol photographique : marges de
+  sol égales à gauche et à droite, rayon, ombre portée qui la fait flotter.
+- `layout-12-nav-three-zone` — nav liens / logo centré sur le CONTENEUR / bouton.
+- `title-03-wordmark-bottom-left` — wordmark de deux lignes calé bas-gauche, et son
+  contrepoids diagonal en haut à droite.
+- `layout-13-image-triptych` — 3 images de même ratio, largeurs inégales, gouttière constante.
 
 ---
 

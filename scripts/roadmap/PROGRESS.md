@@ -108,7 +108,7 @@ règles dures :
 
 CHECKPOINT_STEP: S4
 
-- [ ] spec `ref-07` complétée (palette relevée→corrigée, ratios ancrés sur la largeur de PAGE,
+- [x] spec `ref-07` complétée (palette relevée→corrigée, ratios ancrés sur la largeur de PAGE,
       ce qui est écarté) + `systems/ref-07-retro-brand-hero.json`
 - [ ] deck `ref-07` : sol photo génératif + carte flottante + nav trois zones
 - [ ] deck `ref-07` : wordmark géant bas-gauche + triptyque portrait haut-droite,
