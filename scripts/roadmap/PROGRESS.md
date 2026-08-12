@@ -2,9 +2,9 @@
 
 STATE: RUNNING
 <!-- RUNNING (continue) | AWAITING_DECISION (halt, présenter le tableau au mainteneur) | BLOCKED (gate rouge, halt) | DONE (fini) | STOPPED (coupé par le mainteneur via `roadmap stop` — ne jamais relancer soi-même) -->
-CURRENT_STEP: S3
+CURRENT_STEP: S4
 UPDATED: 2026-08-12
-LAST_COMMIT: d598955
+LAST_COMMIT: a369f47
 
 ## Objectif
 
@@ -73,7 +73,7 @@ règles dures :
       reconstitution — le seul trou du corpus en sens inverse. Écrire `decks/ref-12-….html` selon
       la spec, et vérifier que les patterns déjà extraits en sortent bien (s'ils divergent, c'est
       la spec qui tranche, et on corrige les patterns).
-- [ ] **S3 — `ref-10-campaign-board-red` : extraire les patterns.** Le deck existe, aucun pattern
+- [x] **S3 — `ref-10-campaign-board-red` : extraire les patterns.** Le deck existe, aucun pattern
       n'en est sorti. Viser 2 à 4 patterns qui portent une composition.
 - [ ] **S4 — `ref-07-retro-brand-hero`.** Page web, pas une slide : le deck déclare sa scène en
       clair (`<!-- vl:stage web — … -->`) sinon le lint la refuse. Patterns visés :
@@ -106,24 +106,30 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: S3
-
-- [x] S3.1 — Relever le contraste de `--vl-red` sur la slide crème AVANT de le recopier dans
-      trois patterns. Corriger dans `systems/` + `decks/` si la source est sous 4,5:1.
-- [x] S3.2 — `layout-10-…` : le collage à fond perdu (colonnes d'images + couture + incrustation
-      en overlay). C'est la composition de la slide 1.
-- [x] S3.3 — `title-02-…` : le cadre typographique (titre condensé écrasé en overlay, numéro de
-      section entre parenthèses au même fer, micro-caps au coin opposé). Absorbe les
-      `type-condensed-stack`, `mark-paren-number` et `type-micro-caps-block` de la spec, qui
-      seuls ne portent pas de composition.
-- [x] S3.4 — `list-07-…` : le tableau label/valeur à filets qui DÉBORDENT la marge de texte.
-- [ ] S3.5 — Spec + ROADMAP + README à jour, gate, rendu regardé, commit final.
+CHECKPOINT_STEP: (aucun)
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à
      mesure et poussée en commit `wip(<step>): …`. C'est ce qui permet de reprendre au milieu
      d'un step après un relais sur seuil de contexte ou un crash. -->
 
 ## Journal (append-only, le plus récent en haut)
+
+- 2026-08-12 — S3 fait. `ref-10` est extraite, et elle rend **trois** patterns quand la spec en
+  annonçait cinq : `type-condensed-stack`, `mark-paren-number` et `type-micro-caps-block`
+  nommaient un ÉLÉMENT, pas une composition — chacun tient dans sa propre phrase de
+  description. `title-02-condensed-overlay-stack` les absorbe et porte ce qu'ils perdent
+  isolés : leur DISPOSITION mutuelle (fer unique partagé par le titre et le numéro, contrepoids
+  au coin diagonalement opposé). Restent `layout-10-bleed-column-inset` et
+  `list-07-hairline-spec-table`. Le lot a corrigé sa source deux fois, et les deux corrections
+  ont échappé à des harnais différents. Le rouge relevé (#E33A22, 3,57:1) passait le plancher
+  du gros titre et échouait pour les micro-caps de 13 px écrites du MÊME rouge — c'est le
+  troisième lot de suite où la source place son secondaire juste sous 4,5:1. Le second défaut
+  n'était visible d'aucune mesure : les cellules du tableau centrées dans leur ligne faisaient
+  flotter un libellé d'une ligne au milieu d'une valeur de trois, au lieu de le faire pendre du
+  filet qui l'ouvre. Sorti par le seul regard sur le rendu, corrigé dans le deck ET dans le
+  pattern, verrouillé par une assertion sur l'écart des premières lignes. Effet de bord du
+  step : `bin/emit.mjs` ne rend plus du noir en silence quand un `var()` reste non résolu.
+  Aucune image source sur disque : `bin/diff.mjs` impossible.
 
 - 2026-08-12 — S2 fait. `ref-12` a son deck : le corpus n'a plus une seule référence à patterns
   sans reconstitution. Le deck a DÉMENTI le pattern, ce qui est l'intérêt du sens inverse —
