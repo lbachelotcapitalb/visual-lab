@@ -359,37 +359,95 @@ contenu en 2 colonnes 50/50 ou 60/40.
 ## ref-05-proposal-acid-yellow
 
 **Nature** — Planche de 8 slides d'une « Business Proposal 2045 » sur fond `#EFEFED`.
+L'image source n'existe pas sur disque : **cette section fait foi**, `bin/diff.mjs` est donc
+impossible sur ce lot et le contrôle de fidélité se limite au regard et à `check-deck.mjs`.
 
 **Palette**
 - fond `#EFEFED`, carte blanche `#FFFFFF`, carte noire `#111111`
 - jaune acide `#EAFF00` (aplat) — un seul accent, jamais deux
-- gris de corps `#7A7A7A`
+- gris de corps `#6C6C6C` — **corrigé** : le relevé donnait `#7A7A7A`, qui vaut **3,73:1** sur
+  `#EFEFED` et 4,29:1 sur le blanc, sous le seuil de 4,5 des petits corps qu'il porte. Un
+  demi-ton plus sombre remet le corps à 4,56:1 sur le fond et 5,25:1 sur le blanc. La
+  bibliothèque ne capitalise pas le défaut de la source.
+- gris atténué sur la carte noire `#9A9A9A` (6,71:1) — il n'existe pas dans le relevé, mais un
+  bandeau noir portant deux niveaux de texte en a besoin ; c'est le seul token ajouté.
+- filet `#11111118`
 
-**Typo** — Grotesk bold, casse mixte (pas de capitales), ≈ 68 px, `letter-spacing: -0.03em`,
-`line-height: 0.98`. Césure typographique volontaire dans le titre
-(`Business-` / `Proposal`). Corps 12 px / 1.55. Micro-header 8 px capitales.
+**Échelle — ×1,6, comme `ref-06`.** Les corps de la spec (titre ≈68 / chiffre ≈56 / corps 12 /
+micro 8) ont été relevés sur une planche dont chaque slide fait ~1000 px de large. Reportés tels
+quels sur une slide 1600×900, ils laissent des bandes mortes que la charte d'origine n'a pas, et
+on est alors tenté d'étirer les cartes pour les combler. Les PROPORTIONS de la spec valent, ses
+valeurs absolues non.
+
+| rôle | relevé | slide 1600×900 |
+|---|---|---|
+| display (couverture, clôture) | 68 | **109** / 0.98 / 800 / `-0.03em`, casse mixte |
+| titre de section | 42 | **67** / 1.02 / 800 / `-0.03em` |
+| chiffre de carte | 56 | **90** / 1 / 800 / `-0.03em` |
+| corps | 12 | **19** / 1.55 / 400 |
+| label de carte | 12 | **19** / 1.3 / 700 |
+| label `(01)` de carte de liste | 10 | **16** / 1.2 / 700 |
+| micro (header, pied) | 8 | **13** / 1.4 / 700 / `0.12em` / CAPITALES |
+
+Casse mixte partout **sauf** le micro : c'est la seule capitale de la charte, et c'est ce qui
+rend le header lisible comme un appareil et non comme du texte.
 
 **Header tri-parti** (présent sur les 8 slides, c'est la colonne vertébrale) :
-`©COMPANY` à gauche | `Our Company / March 28th, 2045` au centre |
-`Business Proposal / Presentation` puis `2045` à droite. 8 px, gris, filet fin dessous.
+`©NORTHBEAM` à gauche | `Our Company` / `March 28th, 2045` au centre |
+`Business Proposal` / `Presentation` puis `2045` à droite. Micro 13, gris, filet fin dessous.
+Le centre et la droite sont des piles de deux lignes ; la droite pousse `2045` à l'extrême bord.
 
 **Éléments signature**
 - **Astérisque ✳ jaune** à 6 branches, marqueur de marque : posé seul dans un carré noir
-  radius 12, ou à côté d'un titre, ou en fin de phrase. Jamais plus d'un par slide.
-- **Cartes numérotées 01→04** : 4 cartes verticales radius 20, hauteur égale, chiffre en
-  haut ≈ 56 px, label dessous 12 px. Une seule est jaune, une seule est noire, les autres
-  blanches — le jaune marque l'étape courante.
-- **Images « blob 3D »** noir et blanc (sphères, rubans, formes liquides) en carré radius 12.
-- **Cartes de liste** : petites cartes jaunes ou noires radius 14, `(01)` label 10 px en
-  haut, paragraphe 12 px.
-- Bandeau noir pleine largeur radius 16 contenant image de texture + texte blanc + badge jaune.
+  radius 19, ou à côté d'un titre, ou en fin de phrase. **Jamais plus d'un par slide**, et
+  toutes les slides n'en portent pas.
+- **Cartes numérotées 01→04** : 4 cartes verticales radius 32, hauteur égale, chiffre en
+  haut 90, label dessous 19. Une seule est jaune, une seule est noire, les autres blanches —
+  le jaune marque l'étape courante.
+- **Images « blob 3D »** noir et blanc (sphères, rubans, formes liquides) en carré radius 19.
+  Aucune image n'existant sur disque, elles se reconstruisent en **dégradés radiaux** dans le
+  carré — c'est un substitut assumé, noté ici pour qu'on ne le prenne pas pour un relevé.
+- **Cartes de liste** : petites cartes jaunes ou noires radius 22, `(01)` label 16 en haut,
+  paragraphe 19.
+- Bandeau noir pleine largeur radius 26 contenant une texture + texte blanc + badge jaune.
 
-**Patterns à extraire**
-- `header-tripartite` — le header 3 zones (réutilisable hors de cette charte).
-- `mark-asterisk` — le marqueur de marque et sa règle d'emploi (1 par slide).
-- `cards-numbered-steps` — la rangée 01→04 avec une carte accentuée.
-- `title-hyphen-break` — la césure volontaire dans un titre display.
-- `accent-single-fluo` — règle : neutre + **un** accent fluo, ratio surface ≤ 12 %.
+**Géométrie** — slide 1600×900, marge 72 de tous côtés. Le header occupe le haut, filet à
+`72 + 13·1,4·2 + 18` ≈ 126. La zone de contenu est donc 1456 × ~700. Gouttière commune **24**
+entre cartes d'une même rangée, **32** entre blocs. Rayons : 19 (carré média / astérisque),
+22 (carte de liste), 26 (bandeau), 32 (carte numérotée).
+
+**La règle de l'accent, chiffrée.** « Neutre + UN accent fluo » se mesure : la surface jaune
+d'une slide reste **≤ 12 %** de la surface de slide, et il n'y a **jamais deux objets jaunes**
+qui ne soient pas le même objet. C'est ce qui distingue cette charte d'un deck « à couleur
+d'accent » ordinaire, où l'accent finit par tapisser.
+
+**Plan des 8 slides** (arbitré ici — la spec d'origine annonçait 8 slides sans les décrire) :
+
+| # | slide | ce qu'elle porte | l'accent jaune |
+|---|---|---|---|
+| 1 | Couverture | display césuré `Business-` / `Proposal`, `2045` en pied de titre, carré noir + astérisque jaune, carré média à droite | l'astérisque seul |
+| 2 | Contents | titre de section + index numéroté `(01)`→`(05)` en lignes filetées, carré média | le filet de la ligne courante |
+| 3 | About | titre + deux colonnes de corps, **bandeau noir pleine largeur** en bas avec badge jaune | le badge |
+| 4 | How we work | la rangée **01→04** de cartes numérotées | la carte 02 |
+| 5 | The challenge | quatre cartes de liste, une noire, une jaune, deux blanches | la carte jaune |
+| 6 | What we deliver | trois cartes blanches hautes + carré média, astérisque en fin de titre | l'astérisque |
+| 7 | Investment | grand chiffre 90 + trois lignes de prix filetées, carte noire de total | le total |
+| 8 | Clôture | display césuré `Thank-` / `you`, coordonnées, astérisque | l'astérisque |
+
+**Patterns à extraire** — la spec en annonçait cinq, il en sort **quatre** :
+- `title-…-hyphen-break` — la césure volontaire dans un titre display (slides 1 et 8).
+- `shape-…-asterisk-mark` — le marqueur de marque, ses trois emplois et sa règle du « un seul ».
+- `card-…-numbered-steps` — la rangée 01→04 avec une seule carte accentuée.
+- `layout-…-header-tripartite` — le header 3 zones, réutilisable hors de cette charte.
+
+`accent-single-fluo` **n'est pas extrait** : c'est une règle éditoriale, pas une composition. Un
+fragment qui ne serait qu'un aplat jaune tient dans sa propre phrase de description — le critère
+de rétention du dépôt l'exclut. La règle est mesurée là où elle a un sens, c'est-à-dire sur la
+SLIDE, par un benchmark de surface (≤ 12 %) porté par les patterns qui posent du jaune.
+
+**Écarté de la reconstruction** : les photographies « blob 3D » (remplacées par des dégradés,
+voir plus haut), et tout fond de planche — la source est une planche de 8 slides, on reproduit
+les slides, pas la planche.
 
 ---
 

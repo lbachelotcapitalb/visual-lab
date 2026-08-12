@@ -136,13 +136,21 @@ règles dures :
 
 CHECKPOINT_STEP: S7
 
-- [ ] **S7.1 — la spec `ref-05` complétée avant tout code.** La section actuelle de
+- [x] **S7.1 — la spec `ref-05` complétée avant tout code.** La section actuelle de
       `SPEC-SOURCES.md` tient en 35 lignes : elle donne la palette, la typo, le header et les
       éléments de signature, mais **pas le plan des 8 slides**, pas la géométrie, pas l'échelle
       — et son gris de corps est sous le seuil de contraste. Quatre points à trancher et à
       ÉCRIRE dans la spec : l'échelle (relevé sur une planche à ~1000 px/slide, comme ref-06),
       le contraste de `#7A7A7A` sur `#EFEFED`, le plan slide par slide, et le sort d'
       `accent-single-fluo` (règle éditoriale : n'a de rendu que si un objet la porte).
+      **Fait** : les quatre sont tranchés et écrits dans `SPEC-SOURCES.md`, S7.2→S7.5 n'ont plus
+      rien à décider. Échelle ×1,6 (display 109 / chiffre 90 / corps 19 / micro 13), gris de
+      corps `#7A7A7A` → `#6C6C6C` (3,73:1 → 4,56:1 sur le fond ; il était sous le seuil des DEUX
+      côtés, blanc compris à 4,29:1), plan des 8 slides en tableau avec l'objet jaune de chacune,
+      et `accent-single-fluo` NON extrait — c'est une règle, pas une composition : elle devient
+      un benchmark de surface (≤ 12 % de la slide) porté par les patterns qui posent du jaune.
+      Repères pour la suite : marge 72, filet du header à ~126, zone de contenu 1456 × ~700,
+      gouttières 24 (intra-rangée) et 32 (inter-blocs), rayons 19 / 22 / 26 / 32.
 - [ ] **S7.2 — `systems/ref-05-proposal-acid-yellow.json` + le deck, slides 1 à 4.**
 - [ ] **S7.3 — le deck, slides 5 à 8, `check-deck.mjs` vert** (une seule couche au-dessus de la
       scène, pas de marge de page, 1600×900).
