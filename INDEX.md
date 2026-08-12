@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-47 patterns · 16 références · 40 vérifiés par benchmarks mesurés.
+48 patterns · 16 références · 41 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -59,6 +59,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `layout-10-bleed-column-inset` | Faire porter une slide entière par les IMAGES, sans marge ni carte : deux photos à fond perdu qui touchent les quatre bords de la scène, séparées par une COUTURE unique de la couleur de page — jamais une gouttière symétrique —, et une troisième image beaucoup plus petite posée par-dessus l'une d'elles, sans partager une seule arête avec le lit. C'est cette incrustation flottante, et elle seule, qui donne de la profondeur à une composition entièrement plate. | slide web | 16 | ref-10-campaign-board-red |
 | `layout-11-hero-card-on-photo` | Poser la coque d'un hero de page en DEUX couches seulement : une photo pleine page qui est le sol de la page — pas un décor de maquette, pas une mise en scène —, et une carte unie qui y est INCRUSTÉE, marges de sol strictement égales à gauche et à droite, rayon discret et ombre descendante qui la fait flotter. Le sol reste une photo : posée sur un aplat de sa propre couleur, la carte perd son bord et le hero n'a plus de sol du tout. | web | 14 | ref-07-retro-brand-hero |
 | `layout-12-nav-three-zone` | Poser une navigation en trois zones — liens à gauche, nom de marque au centre, bouton d'action à droite — dont le nom est calé sur l'axe du CONTENEUR et non entre ses deux voisins. Les zones latérales n'ont jamais la même largeur : un centrage entre elles fait dériver le nom de plusieurs dizaines de pixels, et rien ne le signale tant qu'on ne le mesure pas. La zone centrale sort donc du flux, ce qui est la seule construction où l'axe du nom ne dépend pas de ce qu'on écrit à ses côtés. | web slide | 12 | ref-07-retro-brand-hero |
+| `layout-13-image-triptych` | Poser trois images de façon qu'elles se lisent comme UN bloc et non comme trois objets : même ratio pour les trois, gouttière constante et petite devant une cellule, bande remplie exactement d'un bord à l'autre. Le ratio des cellules et leurs poids de largeur sont les deux seuls paramètres — c'est par eux que la même bande donne un triptyque portrait dans un coin ou une frise paysage sur toute une largeur. | web slide print | 13 | ref-07-retro-brand-hero |
 | `list-01-giant-numbers` | Aligner trois à quatre arguments de même rang en colonnes, chacun ouvert par un numéro ou un chiffre démesuré qui sert à la fois de repère de lecture et de seule tache de couleur du bloc. | slide web | — | ref-04-swiss-investor-blue |
 | `list-02-ruled-index` | Lister les sections d'un document en donnant à chacune son libellé, une ligne d'explication et son numéro à droite, séparées par un filet fin qui appartient à l'entrée qu'il suit. | slide web | 9 | ref-06-orange-notched |
 | `list-03-two-column-toc` | Faire tenir un sommaire de dix à quatorze sections sur une seule slide, en deux colonnes numérotées, lisible d'un coup d'œil et refermable aussitôt. | slide web | — | ref-04-swiss-investor-blue |
@@ -351,6 +352,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-card, --vl-ink, --vl-accent, --vl-on-accent, --vl-radius-pill
 - tags : nav, navigation, header, menu, logo, marque, bouton, cta, trois-zones, centrage-optique, baseline
 
+**layout-13-image-triptych** — Triptyque d'images en bande
+
+- employer : Un bloc de trois visuels qui doit peser comme une masse unique — contrepoids d'un titre, frise de pied de carte, bandeau de trois vues d'un même sujet. Se pose dans n'importe quelle largeur : la bande la remplit et sa hauteur en découle par le ratio.
+- éviter : Une des trois images doit être regardée pour elle-même : la bande écrase les hiérarchies, et une image à mettre en avant demande une composition à mise en avant. Écarter aussi au-delà de trois cellules — à quatre, chaque vignette passe sous le quart de la largeur et la bande devient une planche de contact.
+- à remplir : cell-a, cell-b, cell-c
+- variables : --vl-gap, --vl-radius-photo, --vl-ph-a-hi, --vl-ph-a-lo, --vl-ph-a-crest, --vl-ph-b-sky, --vl-ph-b-canvas, --vl-ph-b-canvas-lo, --vl-ph-b-pole, --vl-ph-c-hi, --vl-ph-c-lo
+- tags : images, triptyque, bande, frise, photos, grille, gouttiere, ratio, flex, media
+
 ### list
 
 **list-01-giant-numbers** — Colonnes à numéro géant
@@ -480,7 +489,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-03-bento-dark-pitch` | Bento sombre — pitch investisseur | `chart-01-stadium-bars`, `chart-02-isotype`, `layout-01-nested-bento` | `decks/ref-03-bento-dark-pitch.html` |
 | `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |
 | `ref-06-orange-notched` | Corporate orange chanfreiné | `card-02-notched-brief`, `card-03-stat-accent`, `list-02-ruled-index`, `shape-notched-corner`, `title-01-leading-rule` | `decks/ref-06-orange-notched.html` |
-| `ref-07-retro-brand-hero` | Retro brand hero (crème + rouge de marque, sol photographique) | `layout-11-hero-card-on-photo`, `layout-12-nav-three-zone`, `title-03-wordmark-bottom-left` | `decks/ref-07-retro-brand-hero.html` |
+| `ref-07-retro-brand-hero` | Retro brand hero (crème + rouge de marque, sol photographique) | `layout-11-hero-card-on-photo`, `layout-12-nav-three-zone`, `layout-13-image-triptych`, `title-03-wordmark-bottom-left` | `decks/ref-07-retro-brand-hero.html` |
 | `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | — | `decks/ref-08-swiss-studio-hero.html` |
 | `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | `layout-10-bleed-column-inset`, `list-07-hairline-spec-table`, `title-02-condensed-overlay-stack` | `decks/ref-10-campaign-board-red.html` |
 | `ref-11-finance-dashboard-mint` | Dashboard bento clair — menthe & lilas | `card-04-stat-barchart`, `card-05-balance-gauge`, `card-06-forecast-timeline`, `card-07-transactions` | `decks/ref-11-finance-dashboard-mint.html` |

@@ -116,7 +116,7 @@ CHECKPOINT_STEP: S4
 - [x] `layout-11-hero-card-on-photo` (le shell : sol, encart, rayon, ombre)
 - [x] `layout-12-nav-three-zone` (liens / logo optiquement centré / bouton)
 - [x] `title-03-wordmark-bottom-left` (wordmark calé sur la largeur + contrepoids diagonal)
-- [ ] `layout-13-image-triptych` (3 images de même ratio, largeurs inégales, gouttière constante)
+- [x] `layout-13-image-triptych` (3 images de même ratio, largeurs égales, gouttière constante)
 - [ ] gate + regard sur le rendu + doc (README/ROADMAP) + commit final
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à

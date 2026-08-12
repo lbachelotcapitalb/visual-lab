@@ -20,9 +20,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 47,
+    "patterns": 48,
     "refs": 16,
-    "checkable": 40
+    "checkable": 41
   },
   "patterns": [
     {
@@ -5058,6 +5058,187 @@
       "html": "patterns/layout-12-nav-three-zone.html"
     },
     {
+      "id": "layout-13-image-triptych",
+      "name": "Triptyque d'images en bande",
+      "family": "layout",
+      "ref": "ref-07-retro-brand-hero",
+      "media": [
+        "web",
+        "slide",
+        "print"
+      ],
+      "intent": "Poser trois images de façon qu'elles se lisent comme UN bloc et non comme trois objets : même ratio pour les trois, gouttière constante et petite devant une cellule, bande remplie exactement d'un bord à l'autre. Le ratio des cellules et leurs poids de largeur sont les deux seuls paramètres — c'est par eux que la même bande donne un triptyque portrait dans un coin ou une frise paysage sur toute une largeur.",
+      "when_to_use": "Un bloc de trois visuels qui doit peser comme une masse unique — contrepoids d'un titre, frise de pied de carte, bandeau de trois vues d'un même sujet. Se pose dans n'importe quelle largeur : la bande la remplit et sa hauteur en découle par le ratio.",
+      "avoid_when": "Une des trois images doit être regardée pour elle-même : la bande écrase les hiérarchies, et une image à mettre en avant demande une composition à mise en avant. Écarter aussi au-delà de trois cellules — à quatre, chaque vignette passe sous le quart de la largeur et la bande devient une planche de contact.",
+      "tags": [
+        "images",
+        "triptyque",
+        "bande",
+        "frise",
+        "photos",
+        "grille",
+        "gouttiere",
+        "ratio",
+        "flex",
+        "media"
+      ],
+      "vars": [
+        {
+          "name": "--vl-gap",
+          "role": "gouttière — la MÊME entre les deux paires, c'est elle qui fait la bande",
+          "default": "12px"
+        },
+        {
+          "name": "--vl-radius-photo",
+          "role": "rayon des trois cellules, identique par construction",
+          "default": "8px"
+        },
+        {
+          "name": "--vl-ph-a-hi",
+          "role": "image A (vague) — haut du dégradé d'eau",
+          "default": "#86B0C4"
+        },
+        {
+          "name": "--vl-ph-a-lo",
+          "role": "image A — eau profonde, sert aussi à la masse de la vague",
+          "default": "#3F6B84"
+        },
+        {
+          "name": "--vl-ph-a-crest",
+          "role": "image A — crête d'écume",
+          "default": "#F1EDE3"
+        },
+        {
+          "name": "--vl-ph-b-sky",
+          "role": "image B (parasol) — ciel",
+          "default": "#C9DEE7"
+        },
+        {
+          "name": "--vl-ph-b-canvas",
+          "role": "image B — toile du parasol, le seul rappel de l'accent hors typographie",
+          "default": "#D8442E"
+        },
+        {
+          "name": "--vl-ph-b-canvas-lo",
+          "role": "image B — face à l'ombre de la toile",
+          "default": "#92251C"
+        },
+        {
+          "name": "--vl-ph-b-pole",
+          "role": "image B — mât",
+          "default": "#EDE4D2"
+        },
+        {
+          "name": "--vl-ph-c-hi",
+          "role": "image C (dune) — crête éclairée",
+          "default": "#EFE1C6"
+        },
+        {
+          "name": "--vl-ph-c-lo",
+          "role": "image C — sable à l'ombre, sert aussi au sable de l'image B",
+          "default": "#B9A181"
+        }
+      ],
+      "slots": [
+        "cell-a",
+        "cell-b",
+        "cell-c"
+      ],
+      "geometry": {
+        "root": ".vl-tri",
+        "frame": [
+          472,
+          199
+        ],
+        "ratios": {
+          "cell_ratio": 0.75,
+          "gap_over_frame": 0.0254,
+          "gap_over_cell": 0.0804,
+          "cell_w_over_frame": 0.3164
+        },
+        "type_px": {},
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "MÊME RATIO pour les trois cellules — c'est lui qui fait la bande, pas la gouttière",
+          "measure": "(() => { const r = [...document.querySelectorAll('.vl-tri__cell')].map((e) => { const b = e.getBoundingClientRect(); return b.width / b.height; }); return Math.max(...r) - Math.min(...r); })()",
+          "max": 0.01
+        },
+        {
+          "name": "et donc la MÊME hauteur : la bande a un pied et un sommet uniques",
+          "measure": "(() => { const h = [...document.querySelectorAll('.vl-tri__cell')].map((e) => e.getBoundingClientRect().height); return (Math.max(...h) - Math.min(...h)) / H; })()",
+          "max": 0.005
+        },
+        {
+          "name": "GOUTTIÈRE CONSTANTE : les deux intervalles sont le même à moins de 0,2 % près",
+          "measure": "(() => { const c = [...document.querySelectorAll('.vl-tri__cell')].map((e) => e.getBoundingClientRect()); return Math.abs((c[1].left - c[0].right) - (c[2].left - c[1].right)) / W; })()",
+          "max": 0.002
+        },
+        {
+          "name": "gouttière PETITE devant une cellule : au-delà, elle sépare au lieu de relier",
+          "measure": "(() => { const c = [...document.querySelectorAll('.vl-tri__cell')].map((e) => e.getBoundingClientRect()); return (c[1].left - c[0].right) / c[0].width; })()",
+          "min": 0.03,
+          "max": 0.14
+        },
+        {
+          "name": "la bande remplit sa largeur EXACTEMENT : rien ne reste à droite",
+          "measure": "(W - box('.vl-tri__cell:nth-child(3)').right) / W",
+          "max": 0.002
+        },
+        {
+          "name": "ni à gauche",
+          "measure": "box('.vl-tri__cell:nth-child(1)').left / W",
+          "max": 0.002
+        },
+        {
+          "name": "les poids par défaut sont ÉGAUX : trois largeurs identiques",
+          "measure": "(() => { const w = [...document.querySelectorAll('.vl-tri__cell')].map((e) => e.getBoundingClientRect().width); return (Math.max(...w) - Math.min(...w)) / W; })()",
+          "max": 0.003
+        },
+        {
+          "name": "les poids commandent bien la largeur : la base flex est à 0, pas au contenu",
+          "measure": "cs('.vl-tri__cell','flexBasis') === '0px' ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "ratio PORTRAIT par défaut (3:4) — c'est un paramètre, l'assertion verrouille sa valeur, pas le pattern",
+          "measure": "box('.vl-tri__cell:nth-child(1)').w / box('.vl-tri__cell:nth-child(1)').h",
+          "expect": 0.75,
+          "tol": 0.01
+        },
+        {
+          "name": "chaque cellule CLIPPE son image : une bande pleine n'a pas de bord de fond visible",
+          "measure": "[...document.querySelectorAll('.vl-tri__cell')].filter((e) => getComputedStyle(e).overflow === 'hidden').length",
+          "expect": 3,
+          "tol": 0.001
+        },
+        {
+          "name": "l'image REMPLIT sa cellule : aucune bande de fond entre l'image et son cadre",
+          "measure": "(() => { const c = document.querySelector('.vl-tri__cell').getBoundingClientRect(); const s = document.querySelector('.vl-tri__cell > svg').getBoundingClientRect(); return Math.max(Math.abs(c.width - s.width), Math.abs(c.height - s.height)) / c.width; })()",
+          "max": 0.002
+        },
+        {
+          "name": "même rayon sur les trois — un rayon qui varie recompte les objets",
+          "measure": "new Set([...document.querySelectorAll('.vl-tri__cell')].map((e) => getComputedStyle(e).borderRadius)).size",
+          "expect": 1,
+          "tol": 0.001
+        },
+        {
+          "name": "la hauteur de la bande est celle des cellules : rien ne déborde en dessous",
+          "measure": "Math.abs(box('.vl-tri__cell:nth-child(1)').h - H) / H",
+          "max": 0.005
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/layout-13-image-triptych.html"
+    },
+    {
       "id": "list-01-giant-numbers",
       "name": "Colonnes à numéro géant",
       "family": "list",
@@ -7107,6 +7288,7 @@
       "patterns": [
         "layout-11-hero-card-on-photo",
         "layout-12-nav-three-zone",
+        "layout-13-image-triptych",
         "title-03-wordmark-bottom-left"
       ],
       "deck": "decks/ref-07-retro-brand-hero.html",

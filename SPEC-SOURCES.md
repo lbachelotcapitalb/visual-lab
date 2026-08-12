@@ -396,7 +396,11 @@ retirer supprimerait le sujet du pattern `layout-11-hero-card-on-photo`. La fron
 - `layout-12-nav-three-zone` — nav liens / logo centré sur le CONTENEUR / bouton.
 - `title-03-wordmark-bottom-left` — wordmark de deux lignes calé bas-gauche, et son
   contrepoids diagonal en haut à droite.
-- `layout-13-image-triptych` — 3 images de même ratio, largeurs inégales, gouttière constante.
+- `layout-13-image-triptych` — 3 images de même ratio, gouttière constante, bande pleine d'un
+  bord à l'autre. **Largeurs ÉGALES**, contrairement à ce que disait cette ligne : la table de
+  géométrie ci-dessus (0.42 Wc, gouttière 12) et la reconstitution donnent trois tiers exacts,
+  et `ref-08` en fait autant sur toute la largeur de sa carte. Les poids restent un paramètre
+  du pattern — aucune des deux références ne s'en sert.
 
 ---
 
