@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-56 patterns · 18 références · 49 vérifiés par benchmarks mesurés.
+57 patterns · 18 références · 50 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -63,6 +63,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `layout-13-image-triptych` | Poser trois images de façon qu'elles se lisent comme UN bloc et non comme trois objets : une hauteur COMMUNE, une gouttière constante et petite devant une cellule, une bande remplie exactement d'un bord à l'autre. La hauteur, les trois poids de largeur et — quand la hauteur est laissée libre — le ratio qui la déduit sont les seuls paramètres : c'est par eux que la même bande donne un triptyque portrait à poids égaux dans un coin, ou une frise à cellules inégales sur toute une largeur. | web slide print | 15 | ref-07-retro-brand-hero |
 | `layout-14-statement-first` | Inverser l'ordre de lecture d'un hero : la phrase parle en premier dans un petit corps, la navigation lui fait face à la même hauteur, et le nom de marque n'arrive qu'ensuite — mais il prend alors toute la largeur utile, sans qu'AUCUNE taille intermédiaire n'existe entre les deux. C'est ce saut sans palier, et le blanc plus large qui le précède, qui font qu'un nom devient un événement au lieu d'être le plus gros d'une série. | web slide | 14 | ref-08-swiss-studio-hero |
 | `layout-15-primitive-mosaic` | Composer une couverture qui ne dit rien et se lit quand même : une planche de formes pleines posées sur une grille dont toutes les cellules sont le MÊME carré, une gouttière unique et petite, et un seul creux placé exprès. Aucune taille n'est choisie objet par objet — une primitive ne se distingue que par son RAYON, ce qui fait que la planche entière se reparamètre d'une seule variable. Et parce que 4 colonnes × 3 rangées de carrés plafonnent arithmétiquement à un aspect de 3/2, elle se cale sur la HAUTEUR de sa scène et se centre : la loi d'aspect fait partie du pattern, elle n'est pas une contrainte qu'on subit. | slide web | 16 | ref-01-bento-pills-2030 |
+| `layout-16-header-tripartite` | Poser le bandeau d'appareil qui court en tête de chaque page d'un document — émetteur à gauche, mention centrale, pile et jeton de bord à droite, un filet sous les trois — de façon que la zone centrale soit sur l'AXE du conteneur et n'en bouge plus, quels que soient les libellés de ses voisines. Deux rails `minmax(0, 1fr)` qui se font face l'y tiennent par construction. Et parce qu'un appareil n'est pas un titre, il n'a qu'UN corps et DEUX niveaux d'encre : la hiérarchie s'y lit à l'encre et à la position, jamais à la taille. | slide web print | 20 | ref-05-proposal-acid-yellow |
 | `list-01-giant-numbers` | Aligner trois à quatre arguments de même rang en colonnes, chacun ouvert par un numéro ou un chiffre démesuré qui sert à la fois de repère de lecture et de seule tache de couleur du bloc. | slide web | — | ref-04-swiss-investor-blue |
 | `list-02-ruled-index` | Lister les sections d'un document en donnant à chacune son libellé, une ligne d'explication et son numéro à droite, séparées par un filet fin qui appartient à l'entrée qu'il suit. | slide web | 9 | ref-06-orange-notched |
 | `list-03-two-column-toc` | Faire tenir un sommaire de dix à quatorze sections sur une seule slide, en deux colonnes numérotées, lisible d'un coup d'œil et refermable aussitôt. | slide web | — | ref-04-swiss-investor-blue |
@@ -392,6 +393,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-mos-cell, --vl-mos-gap, --vl-ink, --vl-accent, --vl-accent-deep, --vl-white, --vl-on-accent
 - tags : couverture, geometrie, grille, primitives, sans-texte, bento, carre, rayon, mosaique, annee
 
+**layout-16-header-tripartite** — Header tri-parti à filet, centre sur l'axe
+
+- employer : Le bandeau répété d'un deck, d'un rapport, d'une proposition ou d'une page de documentation : trois informations de nature différente (qui parle, à qui / quand, de quoi) qui doivent se lire comme une réglure et non comme du texte, et rester STRICTEMENT identiques d'une page à l'autre. C'est aussi la bonne construction dès qu'un centre doit tenir son axe entre deux voisins de longueurs libres.
+- éviter : Une des trois zones porte un objet et non du texte (logotype large, bouton, avatar) : au-delà d'un tiers de la bande, la zone latérale mord sur le centre et le pattern n'a plus de centre à défendre — `layout-12-nav-three-zone` traite ce cas. Écarter aussi quand la bande doit hiérarchiser par la TAILLE (un titre de page dans le header) : cela dément la loi du corps unique, et il faut alors un titre sous le bandeau, pas dedans.
+- à remplir : left, center, right, edge
+- variables : --vl-htri-w, --vl-htri-size, --vl-htri-lh, --vl-htri-track, --vl-htri-gap, --vl-htri-split, --vl-htri-pad, --vl-htri-ink, --vl-htri-muted, --vl-htri-rule
+- tags : header, bandeau, en-tete, trois-zones, tripartite, filet, hairline, centrage, axe, micro-caps, capitales, appareil, pied-de-page, grid
+
 ### list
 
 **list-01-giant-numbers** — Colonnes à numéro géant
@@ -559,7 +568,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-02-ghost-icon-claim` | Gris fantôme — argument unique | `card-01-ghost-icon` | `decks/ref-02-ghost-icon-claim.html` |
 | `ref-03-bento-dark-pitch` | Bento sombre — pitch investisseur | `chart-01-stadium-bars`, `chart-02-isotype`, `layout-01-nested-bento` | `decks/ref-03-bento-dark-pitch.html` |
 | `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |
-| `ref-05-proposal-acid-yellow` | Proposal jaune acide | `card-14-numbered-steps`, `shape-04-asterisk-mark`, `title-05-hyphen-break` | `decks/ref-05-proposal-acid-yellow.html` |
+| `ref-05-proposal-acid-yellow` | Proposal jaune acide | `card-14-numbered-steps`, `layout-16-header-tripartite`, `shape-04-asterisk-mark`, `title-05-hyphen-break` | `decks/ref-05-proposal-acid-yellow.html` |
 | `ref-06-orange-notched` | Corporate orange chanfreiné | `card-02-notched-brief`, `card-03-stat-accent`, `list-02-ruled-index`, `shape-notched-corner`, `title-01-leading-rule` | `decks/ref-06-orange-notched.html` |
 | `ref-07-retro-brand-hero` | Retro brand hero (crème + rouge de marque, sol photographique) | `layout-11-hero-card-on-photo`, `layout-12-nav-three-zone`, `layout-13-image-triptych`, `title-03-wordmark-bottom-left` | `decks/ref-07-retro-brand-hero.html` |
 | `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | `layout-14-statement-first`, `title-04-name-fills-measure` | `decks/ref-08-swiss-studio-hero.html` |

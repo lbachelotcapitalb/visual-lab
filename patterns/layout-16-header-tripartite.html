@@ -1,0 +1,96 @@
+<!-- layout-16-header-tripartite — le bandeau d'appareil qui court en tête de chaque page d'un
+     document : trois zones, un filet qui les souligne toutes, et rien d'autre.
+
+     CE QUI EN FAIT UN PATTERN, ce n'est pas « trois zones » — c'est que la zone du milieu est
+     sur l'AXE DU CONTENEUR et n'en bouge plus, quoi qu'on écrive à ses côtés. Les deux rails
+     latéraux sont deux `minmax(0, 1fr)` qui se font face : ils ont la même largeur PAR
+     CONSTRUCTION, donc la colonne `auto` du centre est exactement au milieu. Écrit en
+     `space-between`, le même balisage paraît identique et dérive : ici l'encre de gauche fait
+     0,4 fois celle de droite, et le milieu de leurs deux bords tombe à 5,5 % de la largeur à
+     gauche de l'axe. Rien ne le signale, et sur une suite de pages le centre se met à flotter
+     d'une page à l'autre au gré des libellés.
+
+     LA SECONDE LOI, et c'est elle qui fait lire le bandeau comme une RÉGLURE et non comme du
+     texte : UN SEUL CORPS dans tout le header, et DEUX niveaux d'encre. La hiérarchie ne passe
+     jamais par la taille — le jeton de droite, qui est ce qu'on retient de la page, a
+     exactement le corps de la mention atténuée qui le précède. Il n'en diffère que par l'encre
+     et par sa position, poussé au bord extrême. C'est la construction inverse d'un titre.
+
+     Le `minmax(0, …)` n'est pas une précaution de style. Un `1fr` nu a une taille minimale
+     automatique — le min-content de ce qu'il porte : un rail qui ne peut pas se replier sous
+     sa largeur de piste S'ÉLARGIT et POUSSE le centre. Un libellé long mais SÉCABLE se replie
+     tout seul et ne prouve donc rien ; c'est un libellé INSÉCABLE plus large que son rail (une
+     adresse électronique, un nom d'un seul tenant) qui sépare les deux constructions —
+     mesuré, `1fr` déplace alors l'axe de 54 px, `minmax(0, 1fr)` de zéro. -->
+<header class="vl-htri">
+
+  <div class="vl-htri__zone vl-htri__zone--l">
+    <span class="vl-htri__key vl-htri__mark">©northbeam</span>
+  </div>
+
+  <div class="vl-htri__zone vl-htri__zone--c">
+    <div>Our Company</div>
+    <div>March 28th, 2045</div>
+  </div>
+
+  <div class="vl-htri__zone vl-htri__zone--r">
+    <div class="vl-htri__pair">
+      <div>Business Proposal</div>
+      <div>Presentation</div>
+    </div>
+    <span class="vl-htri__key vl-htri__edge">2045</span>
+  </div>
+
+</header>
+
+<style>
+.vl-htri {
+  --vl-htri-w: 1456px;
+  --vl-htri-size: 13px;
+  --vl-htri-lh: 1.4;
+  --vl-htri-track: 0.12em;
+  --vl-htri-gap: 56px;      /* le blanc minimal de part et d'autre du centre */
+  --vl-htri-split: 64px;    /* ce qui sépare la pile de droite de son jeton de bord */
+  --vl-htri-pad: 18px;      /* du bas de la dernière ligne au filet */
+
+  --vl-htri-ink: var(--vl-black);
+  --vl-htri-muted: var(--vl-ink-muted);
+  --vl-htri-rule: var(--vl-hairline);
+
+  /* La police est ÉPINGLÉE : le bandeau se cale sur des bords d'encre (marque à gauche,
+     jeton à droite), donc ses cotes dépendent d'une chasse — un fragment dans ce cas ne
+     peut pas hériter la police de la page qui le colle. */
+  font-family: var(--vl-font-body, "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif);
+  width: var(--vl-htri-w);
+  box-sizing: border-box;
+
+  /* LE MÉCANISME : deux rails égaux qui se font face, le centre en `auto` entre eux.
+     `minmax(0, 1fr)` et non `1fr` — voir l'en-tête du fragment. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: start;
+  column-gap: var(--vl-htri-gap);
+
+  padding-bottom: var(--vl-htri-pad);
+  border-bottom: 1px solid var(--vl-htri-rule);
+
+  font-size: var(--vl-htri-size);
+  line-height: var(--vl-htri-lh);
+  font-weight: 700;
+  letter-spacing: var(--vl-htri-track);
+  text-transform: uppercase;
+  color: var(--vl-htri-muted);
+}
+
+/* Le rang PRIMAIRE ne change que l'encre. Ni corps, ni graisse, ni casse. */
+.vl-htri__key { color: var(--vl-htri-ink); }
+
+.vl-htri__zone--c { text-align: center; }
+
+/* La zone de droite pousse son dernier enfant au bord extrême de la bande. */
+.vl-htri__zone--r {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--vl-htri-split);
+}
+</style>

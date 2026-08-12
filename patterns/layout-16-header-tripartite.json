@@ -1,0 +1,219 @@
+{
+  "name": "Header tri-parti à filet, centre sur l'axe",
+  "family": "layout",
+  "ref": "ref-05-proposal-acid-yellow",
+  "intent": "Poser le bandeau d'appareil qui court en tête de chaque page d'un document — émetteur à gauche, mention centrale, pile et jeton de bord à droite, un filet sous les trois — de façon que la zone centrale soit sur l'AXE du conteneur et n'en bouge plus, quels que soient les libellés de ses voisines. Deux rails `minmax(0, 1fr)` qui se font face l'y tiennent par construction. Et parce qu'un appareil n'est pas un titre, il n'a qu'UN corps et DEUX niveaux d'encre : la hiérarchie s'y lit à l'encre et à la position, jamais à la taille.",
+  "when_to_use": "Le bandeau répété d'un deck, d'un rapport, d'une proposition ou d'une page de documentation : trois informations de nature différente (qui parle, à qui / quand, de quoi) qui doivent se lire comme une réglure et non comme du texte, et rester STRICTEMENT identiques d'une page à l'autre. C'est aussi la bonne construction dès qu'un centre doit tenir son axe entre deux voisins de longueurs libres.",
+  "avoid_when": "Une des trois zones porte un objet et non du texte (logotype large, bouton, avatar) : au-delà d'un tiers de la bande, la zone latérale mord sur le centre et le pattern n'a plus de centre à défendre — `layout-12-nav-three-zone` traite ce cas. Écarter aussi quand la bande doit hiérarchiser par la TAILLE (un titre de page dans le header) : cela dément la loi du corps unique, et il faut alors un titre sous le bandeau, pas dedans.",
+  "media": [
+    "slide",
+    "web",
+    "print"
+  ],
+  "tags": [
+    "header",
+    "bandeau",
+    "en-tete",
+    "trois-zones",
+    "tripartite",
+    "filet",
+    "hairline",
+    "centrage",
+    "axe",
+    "micro-caps",
+    "capitales",
+    "appareil",
+    "pied-de-page",
+    "grid"
+  ],
+  "vars": [
+    {
+      "name": "--vl-htri-w",
+      "role": "la largeur de la bande — celle de la zone de contenu de la page, marges comprises",
+      "default": "1456px"
+    },
+    {
+      "name": "--vl-htri-size",
+      "role": "le corps UNIQUE du bandeau : toutes les zones l'ont, primaires comprises",
+      "default": "13px"
+    },
+    {
+      "name": "--vl-htri-lh",
+      "role": "l'interligne des piles de deux lignes",
+      "default": "1.4"
+    },
+    {
+      "name": "--vl-htri-track",
+      "role": "l'interlettrage des capitales — sans lui, un micro-corps en capitales se referme",
+      "default": "0.12em"
+    },
+    {
+      "name": "--vl-htri-gap",
+      "role": "le blanc minimal de part et d'autre de la zone centrale",
+      "default": "56px"
+    },
+    {
+      "name": "--vl-htri-split",
+      "role": "ce qui sépare la pile de droite de son jeton de bord",
+      "default": "64px"
+    },
+    {
+      "name": "--vl-htri-pad",
+      "role": "du bas de la dernière ligne au filet",
+      "default": "18px"
+    },
+    {
+      "name": "--vl-htri-ink",
+      "role": "l'encre du rang PRIMAIRE — l'un des deux seuls niveaux du bandeau",
+      "default": "var(--vl-black)"
+    },
+    {
+      "name": "--vl-htri-muted",
+      "role": "l'encre du rang atténué, qui est celle de la bande par défaut",
+      "default": "var(--vl-ink-muted)"
+    },
+    {
+      "name": "--vl-htri-rule",
+      "role": "le filet qui souligne les trois zones d'un bord à l'autre",
+      "default": "var(--vl-hairline)"
+    }
+  ],
+  "slots": [
+    "left",
+    "center",
+    "right",
+    "edge"
+  ],
+  "geometry": {
+    "root": ".vl-htri",
+    "frame": [
+      1456,
+      55
+    ],
+    "ratios": {
+      "height_over_width": 0.038,
+      "center_axis_over_width": 0.5,
+      "rule_gap_over_width": 0.013,
+      "left_ink_over_right_ink": 0.4
+    },
+    "type_px": {
+      "micro": 13
+    },
+    "pad_ratio": {
+      "top": 0,
+      "x": 0,
+      "bottom": 0.012
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "LA ZONE CENTRALE EST SUR L'AXE DU CONTENEUR",
+      "measure": "Math.abs((box('.vl-htri__zone--c').left + box('.vl-htri__zone--c').right) / 2 - W / 2) / W",
+      "max": 0.003
+    },
+    {
+      "name": "…et c'est un MÉCANISME : les deux rails latéraux ont exactement la même largeur",
+      "measure": "box('.vl-htri__zone--l').w / box('.vl-htri__zone--r').w",
+      "expect": 1,
+      "tol": 0.005
+    },
+    {
+      "name": "…alors que ce qu'ils PORTENT n'a pas du tout la même largeur d'encre",
+      "measure": "(() => { const ink = (s) => { const r = document.createRange(); r.selectNodeContents(document.querySelector(s)); return r.getBoundingClientRect().width; }; return ink('.vl-htri__zone--l') / ink('.vl-htri__zone--r'); })()",
+      "max": 0.75
+    },
+    {
+      "name": "CONTRE-ÉPREUVE DU PIÈGE — un centrage entre les deux VOISINS, lui, dériverait de plus de 2 % de la largeur",
+      "measure": "(() => { const O = document.querySelector('.vl-htri').getBoundingClientRect(); const ink = (s) => { const r = document.createRange(); r.selectNodeContents(document.querySelector(s)); const b = r.getBoundingClientRect(); return { left: b.left - O.left, right: b.right - O.left }; }; return Math.abs((ink('.vl-htri__zone--l').right + ink('.vl-htri__zone--r').left) / 2 - W / 2) / W; })()",
+      "min": 0.02
+    },
+    {
+      "name": "CONTRE-ÉPREUVE DE LA CONSTRUCTION — un libellé de gauche PLUS LARGE QUE SON RAIL, et insécable, ne déplace toujours pas l'axe du centre",
+      "measure": "(() => { const el = document.querySelector('.vl-htri__mark'); const old = el.textContent; el.textContent = '©northbeamconsultingpartnersinternationalgroupholdingsworldwide'; const O = document.querySelector('.vl-htri').getBoundingClientRect(); const c = document.querySelector('.vl-htri__zone--c').getBoundingClientRect(); const out = Math.abs((c.left + c.right) / 2 - O.left - W / 2) / W; el.textContent = old; return out; })()",
+      "max": 0.004
+    },
+    {
+      "name": "le jeton de droite est poussé au bord EXTRÊME de la bande",
+      "measure": "(() => { const O = document.querySelector('.vl-htri').getBoundingClientRect(); const r = document.createRange(); r.selectNodeContents(document.querySelector('.vl-htri__edge')); return (O.right - r.getBoundingClientRect().right) / W; })()",
+      "max": 0.003
+    },
+    {
+      "name": "…et la marque touche le bord gauche, symétriquement",
+      "measure": "(() => { const O = document.querySelector('.vl-htri').getBoundingClientRect(); const r = document.createRange(); r.selectNodeContents(document.querySelector('.vl-htri__mark')); return (r.getBoundingClientRect().left - O.left) / W; })()",
+      "max": 0.003
+    },
+    {
+      "name": "UN SEUL CORPS dans tout le bandeau — c'est ce qui le fait lire comme une réglure",
+      "measure": "new Set([...document.querySelectorAll('.vl-htri, .vl-htri *')].map((e) => getComputedStyle(e).fontSize)).size",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "DEUX niveaux d'encre, et pas trois",
+      "measure": "new Set([...document.querySelectorAll('.vl-htri, .vl-htri *')].map((e) => getComputedStyle(e).color)).size",
+      "expect": 2,
+      "tol": 0
+    },
+    {
+      "name": "LA HIÉRARCHIE NE PASSE PAS PAR LA TAILLE : le jeton primaire a le corps ET la graisse de la mention atténuée qui le précède",
+      "measure": "num('.vl-htri__edge','fontSize') / num('.vl-htri__pair','fontSize') + (cs('.vl-htri__edge','fontWeight') === cs('.vl-htri__pair','fontWeight') ? 0 : 1)",
+      "expect": 1,
+      "tol": 0.01
+    },
+    {
+      "name": "CAPITALES PISTÉES — la seule casse d'appareil de la charte : au moins 0,1 em d'interlettrage",
+      "measure": "cs('.vl-htri','textTransform') === 'uppercase' ? num('.vl-htri','letterSpacing') / num('.vl-htri','fontSize') : 0",
+      "min": 0.1
+    },
+    {
+      "name": "RAIL DU HAUT — les trois zones pendent du même plafond",
+      "measure": "(Math.max(...['--l','--c','--r'].map((z) => box('.vl-htri__zone' + z).top)) - Math.min(...['--l','--c','--r'].map((z) => box('.vl-htri__zone' + z).top))) / H",
+      "expect": 0,
+      "tol": 0.01
+    },
+    {
+      "name": "le filet court sous les TROIS zones, d'un bord à l'autre",
+      "measure": "num('.vl-htri','borderBottomWidth')",
+      "min": 1
+    },
+    {
+      "name": "…et il respire : le blanc entre la dernière ligne et le filet vaut 1,3 % de la largeur",
+      "measure": "(box('.vl-htri').bottom - num('.vl-htri','borderBottomWidth') - Math.max(...['--l','--c','--r'].map((z) => box('.vl-htri__zone' + z).bottom))) / W",
+      "expect": 0.0124,
+      "tol": 0.003
+    },
+    {
+      "name": "les zones ne se chevauchent jamais : du blanc de part et d'autre du centre",
+      "measure": "(() => { const ink = (s) => { const r = document.createRange(); r.selectNodeContents(document.querySelector(s)); return r.getBoundingClientRect(); }; return Math.min(ink('.vl-htri__zone--c').left - ink('.vl-htri__zone--l').right, ink('.vl-htri__zone--r').left - ink('.vl-htri__zone--c').right) / W; })()",
+      "min": 0.03
+    },
+    {
+      "name": "APPAREIL, PAS TITRE : la bande reste sous 4 % de sa largeur en hauteur",
+      "measure": "H / W",
+      "max": 0.04
+    },
+    {
+      "name": "contraste du rang atténué — c'est lui qui porte le plus de texte, et c'est lui qui échoue d'habitude",
+      "measure": "contrast('.vl-htri__zone--c div')",
+      "min": 4.5
+    },
+    {
+      "name": "contraste du rang primaire",
+      "measure": "contrast('.vl-htri__edge')",
+      "min": 7
+    },
+    {
+      "name": "rien ne déborde de la bande",
+      "measure": "overflow('.vl-htri')",
+      "expect": 0,
+      "tol": 0
+    },
+    {
+      "name": "AUTONOMIE TYPOGRAPHIQUE — un serif imposé à la page hôte ne déplace pas d'un pixel le bord d'encre du jeton : le fragment épingle sa famille",
+      "measure": "(() => { const ink = () => { const r = document.createRange(); r.selectNodeContents(document.querySelector('.vl-htri__edge')); return r.getBoundingClientRect().width; }; const a = ink(); const h = document.documentElement, old = h.style.fontFamily; h.style.fontFamily = 'Georgia, \"Times New Roman\", serif'; const b = ink(); h.style.fontFamily = old; return b / a; })()",
+      "expect": 1,
+      "tol": 0.01
+    }
+  ],
+  "notes": "Le pattern tient dans une construction qu'on ne voit pas et dans une loi qu'on voit sans la nommer.\n\nLA CONSTRUCTION : `minmax(0, 1fr) auto minmax(0, 1fr)`. Les deux rails latéraux ont la même largeur par définition de `1fr`, donc la colonne `auto` du milieu est exactement sur l'axe du conteneur — et elle y reste quels que soient les libellés. Un `space-between` à trois enfants produit un balisage d'apparence identique qui dérive : ici l'encre de gauche fait 0,4 fois celle de droite, et le milieu de leurs deux bords tombe à 5,5 % de la largeur à gauche de l'axe. Deux benchmarks tiennent la règle des deux côtés — le centre est sur l'axe, ET le milieu de ses voisins ne l'est pas. Le second est le seul qui empêche quelqu'un de « simplifier » le pattern : sans lui, une réécriture fautive resterait verte tant que les libellés de démonstration sont équilibrés.\n\nLe `minmax(0, …)` fait le reste du travail, et c'est la part la moins évidente — au point que la contre-épreuve a d'abord été écrite trop faible. Avec un `1fr` nu, la piste a une taille MINIMALE automatique, qui est le min-content de ce qu'elle porte : un rail dont le contenu ne peut pas se replier sous la largeur de piste S'ÉLARGIT, et pousse le centre. Or un libellé long mais SÉCABLE (« ©northbeam consulting partners international ») se replie tout seul : son min-content est celui de son mot le plus long, et l'axe ne bouge pas — mesuré, `1fr` et `minmax(0, 1fr)` sont alors indiscernables, et la contre-épreuve sortait verte sur la construction fautive. Ce qui les sépare est un libellé INSÉCABLE plus large que son rail : une adresse électronique, un nom d'enseigne d'un seul tenant. La contre-épreuve en pose un et remesure l'axe — `minmax(0, 1fr)` le tient à 0, `1fr` le déplace de 3,7 % de la largeur, soit 54 px. C'est la forme générale du piège : une contre-épreuve doit reparamétrer là où les deux constructions DIVERGENT, pas là où l'une des deux est simplement plus confortable.\n\nLA LOI : un appareil n'est pas un titre. UN SEUL corps dans tout le bandeau, DEUX niveaux d'encre, et rien d'autre — le jeton de droite, qui est ce qu'on retient de la page, a exactement le corps et la graisse de la mention atténuée qui le précède. Il n'en diffère que par l'encre et par sa position, poussé au bord extrême. C'est la construction inverse d'un titre, et c'est ce qui fait qu'un bandeau répété huit fois se lit comme une réglure au lieu de redemander l'attention à chaque page. Les deux `Set` qui comptent les corps et les encres sont la façon la plus courte de l'asserter : dès qu'un troisième niveau d'encre apparaît — l'envie de « souligner » une zone —, le bandeau redevient du texte.\n\nLes capitales sont pistées à 0,12 em. Ce n'est pas un effet : à 13 px, des capitales sans interlettrage se referment et la bande devient un bloc gris. C'est la seule casse capitale de la charte d'origine, et elle est réservée à l'appareil.\n\nCe pattern n'a AUCUN accent, volontairement. La charte dont il vient tient sur « neutre + un accent fluo » : un bandeau qui court sur les huit pages et qui poserait l'accent le dépenserait huit fois, c'est-à-dire jamais. Le budget de couleur reste entier pour le contenu.\n\nDifférence avec `layout-12-nav-three-zone`, qui résout le même problème d'axe pour un autre objet : là-bas la zone centrale sort du flux, parce qu'elle porte un logotype qui a le droit de passer sous ses voisins et parce que la rangée porte un bouton d'action — un objet, pas du texte. Ici les trois zones sont du texte de même corps et le centre reste DANS le flux : la grille suffit, et elle a l'avantage de garantir en plus que rien ne se chevauche jamais."
+}

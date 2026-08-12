@@ -216,7 +216,22 @@ CHECKPOINT_STEP: S7
       est ce qui rend en silence quand le token manque), et un fragment sans largeur déclarée
       se mesure à la largeur du harnais (676 px au lieu de 1456) : 7 benchmarks rouges pour une
       raison qui n'était pas la leur.
-- [ ] **S7.5b — `layout-…-header-tripartite`** : le header 3 zones réutilisable hors charte.
+- [x] **S7.5b — `layout-16-header-tripartite`** : le header 3 zones réutilisable hors charte.
+      **Fait**, 20 benchmarks verts. Deux lois portées. (1) Le centre est sur l'AXE DU
+      CONTENEUR par construction — deux rails `minmax(0, 1fr)` qui se font face — et non entre
+      ses deux voisins : ici l'encre de gauche fait 0,4 fois celle de droite, un `space-between`
+      décale donc le centre de 5,4 % de la largeur. (2) Un appareil n'est pas un titre : UN
+      SEUL corps et DEUX niveaux d'encre dans toute la bande, le jeton de droite n'ayant que
+      l'encre et la position pour se distinguer de la mention atténuée qui le précède. Deux
+      pièges payés, tous deux d'écriture de benchmark. `box()` du harnais est en coordonnées
+      RELATIVES À LA RACINE, un `getBoundingClientRect()` brut (le seul moyen de mesurer une
+      encre, au `Range`) est en coordonnées de VUE : les mélanger a donné un rouge de 40 px sur
+      une géométrie juste, et surtout un VERT sur un bord d'encre faux de 40 px dans l'autre
+      sens. Et la contre-épreuve du `minmax(0, …)` a d'abord été écrite trop faible : un libellé
+      long mais SÉCABLE se replie tout seul, si bien que `1fr` nu passait aussi — c'est un
+      libellé INSÉCABLE plus large que son rail qui sépare les deux (54 px de dérive contre 0).
+      Une contre-épreuve doit reparamétrer là où les constructions divergent, pas là où l'une
+      est simplement plus confortable.
 - [ ] **S7.6 — les rendus REGARDÉS** (deck + patterns), corrections, `proofs/` supprimé.
 - [ ] **S7.7 — gate complet, doc à jour dans le même commit** (ROADMAP lot 4, README « État »,
       SPEC-SOURCES), commit final + MAJ de PROGRESS.
