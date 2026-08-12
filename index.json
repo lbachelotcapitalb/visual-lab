@@ -21,7 +21,7 @@
   ],
   "counts": {
     "patterns": 50,
-    "refs": 16,
+    "refs": 17,
     "checkable": 43
   },
   "patterns": [
@@ -7467,6 +7467,36 @@
     }
   ],
   "refs": [
+    {
+      "id": "ref-01-bento-pills-2030",
+      "name": "Bento pills 2030 — couverture géométrique",
+      "patterns": [],
+      "deck": "decks/ref-01-bento-pills-2030.html",
+      "tokens": {
+        "--vl-bg": "#F5F4F2",
+        "--vl-ink": "#0B0B0B",
+        "--vl-accent": "#E8342A",
+        "--vl-accent-deep": "#8E1114",
+        "--vl-white": "#FFFFFF",
+        "--vl-on-accent": "#FFFFFF",
+        "--vl-index": "#6E6C68",
+        "--vl-cell": "232px",
+        "--vl-gutter": "19px",
+        "--vl-margin": "58.5px",
+        "--vl-inset": "15.78px",
+        "--vl-radius-stadium": "116px",
+        "--vl-radius-squircle": "69.6px",
+        "--vl-radius-teardrop": "51.04px"
+      },
+      "type": {
+        "display": "\"Helvetica Neue\", Helvetica, Inter, Arial, sans-serif",
+        "body": "\"Helvetica Neue\", Helvetica, Inter, Arial, sans-serif",
+        "scale": {
+          "year": "calc(100cqw / 1.216) / 0.92 / 700 — 190,8px sur une pilule de 232, soit 0.1193 Ws. Ce n'est PAS une taille de charte : c'est la largeur de la pilule divisée par la chasse d'encre de « 20 » (1,070 em en Helvetica Neue Bold), réglée pour saturer 88 % de la boîte.",
+          "index": "24px / 1 / 400 / 0.18em — 0.0150 Ws, le plancher de la scène 1600 (23 px) tenu de justesse et assumé : c'est le seul texte non typographique de la planche."
+        }
+      }
+    },
     {
       "id": "ref-02-ghost-icon-claim",
       "name": "Gris fantôme — argument unique",

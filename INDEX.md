@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-50 patterns · 16 références · 43 vérifiés par benchmarks mesurés.
+50 patterns · 17 références · 43 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -503,6 +503,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 
 | référence | charte | patterns extraits | deck |
 |---|---|---|---|
+| `ref-01-bento-pills-2030` | Bento pills 2030 — couverture géométrique | — | `decks/ref-01-bento-pills-2030.html` |
 | `ref-02-ghost-icon-claim` | Gris fantôme — argument unique | `card-01-ghost-icon` | `decks/ref-02-ghost-icon-claim.html` |
 | `ref-03-bento-dark-pitch` | Bento sombre — pitch investisseur | `chart-01-stadium-bars`, `chart-02-isotype`, `layout-01-nested-bento` | `decks/ref-03-bento-dark-pitch.html` |
 | `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |

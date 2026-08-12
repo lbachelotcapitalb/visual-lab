@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>ref-01 — couverture bento, primitives et pilules (2030)</title>
+<style>
+@import url("../fonts/fonts.css");
+
+/* ref-01-bento-pills-2030 — reconstitution fidèle, À PLAT. La source est la photo de deux
+   feuilles A4 imprimées, posées en léger tilt, avec l'ombre de la maquette et la webcam d'un
+   présentateur : rien de tout cela n'est reconstruit. Ce qui l'est, c'est la FEUILLE DE DROITE
+   remise d'aplomb (cf. SPEC-SOURCES.md § ref-01).
+
+   La planche n'a aucun texte hormis l'année : elle tient entièrement sur trois rayons qui
+   séparent quatre primitives, et sur une seule gouttière. Deux gestes portent tout :
+   le rayon du stadium s'écrit en LONGUEUR (jamais `50%`, qui donne une ELLIPSE dès que la
+   boîte n'est pas carrée — le piège était dans le relevé, sur la primitive la plus fréquente),
+   et l'enfant emboîté d'un rail est INSET d'une constante sur ses quatre côtés, son rayon
+   valant celui du parent MOINS cet inset : contours concentriques. C'est cette seule loi qui
+   fait que le rail à dégradé et le toggle sont le même objet à deux remplissages près — et
+   que la pastille du toggle sort ronde sans qu'on ait à l'écrire (200,44 de côté pour un
+   rayon de 100,22).
+
+   Vertical : 58,5 + 734 (mosaïque) + 25 + 24 (rangée d'index) + 58,5 = 900, exactement.
+   Horizontal : la mosaïque fait 985 et ne peut pas faire mieux — 4 colonnes × 3 rangées de
+   cellules CARRÉES plafonnent à un aspect de 3/2 qu'elles n'atteignent jamais, et valent 1,342
+   ici. Les 307,5 px de chaque côté sont le pourtour de la feuille, pas un vide de composition. */
+:root {
+  --vl-bg: #F5F4F2;
+  --vl-ink: #0B0B0B;
+  --vl-accent: #E8342A;
+  --vl-accent-deep: #8E1114;
+  --vl-white: #FFFFFF;
+  --vl-on-accent: #FFFFFF;
+  /* Le gris du relevé (#C9C7C4) mesure 1,28:1 sur ce fond : illisible. Corrigé à 4,77:1. */
+  --vl-index: #6E6C68;
+
+  --vl-cell: 232px;
+  --vl-gutter: 19px;
+  --vl-margin: 58.5px;
+  --vl-inset: 15.78px;
+
+  /* Les trois rayons, et rien d'autre. Tous en LONGUEUR. */
+  --vl-radius-stadium: calc(var(--vl-cell) / 2);      /* 116   — le petit côté / 2 */
+  --vl-radius-squircle: 69.6px;                        /* 0.300 c */
+  --vl-radius-teardrop: 51.04px;                       /* 0.220 c, sur 3 coins */
+
+  /* Contours concentriques : l'enfant emboîté d'un rail. */
+  --vl-radius-inner: calc(var(--vl-radius-stadium) - var(--vl-inset));  /* 100.22 */
+  --vl-inner: calc(var(--vl-cell) - 2 * var(--vl-inset));               /* 200.44 */
+  --vl-bar: calc(var(--vl-cell) - var(--vl-inset));                     /* 216.22 */
+
+  --vl-index-size: 24px;
+  --vl-index-track: 0.18em;
+  --vl-font: "Helvetica Neue", Helvetica, Inter, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+/* Pas de « table » sous la slide : une marge de page contrastée AJOUTE une couche. */
+body { margin: 0; padding: 0; display: flex; background: var(--vl-bg);
+       font-family: var(--vl-font); color: var(--vl-ink); -webkit-font-smoothing: antialiased; }
+.slide {
+  position: relative;
+  width: 1600px; height: 900px;
+  padding: var(--vl-margin) 307.5px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  overflow: hidden;
+  background: var(--vl-bg);
+}
+
+/* — la mosaïque : 4 × 3 cellules carrées, UNE gouttière — */
+.vl-mosaic {
+  display: grid;
+  grid-template-columns: repeat(4, var(--vl-cell));
+  grid-template-rows: repeat(3, var(--vl-cell));
+  gap: var(--vl-gutter);
+}
+
+/* Les primitives. Aucune n'a de taille propre : chacune remplit la ou les cellules
+   qu'elle occupe, et seul son RAYON la distingue. */
+.p { width: 100%; height: 100%; background: var(--vl-ink); }
+
+.p--disc     { background: var(--vl-accent); border-radius: var(--vl-radius-stadium); }
+.p--squircle { border-radius: var(--vl-radius-squircle); }
+/* Un seul coin DROIT, et il pointe le coin de feuille qu'occupe la forme. C'est ce qui
+   interdit de permuter les deux teardrops : ils sont sur des coins diagonalement opposés. */
+.p--tear-tr  { border-radius: var(--vl-radius-teardrop) 0 var(--vl-radius-teardrop) var(--vl-radius-teardrop); }
+.p--tear-bl  { border-radius: var(--vl-radius-teardrop) var(--vl-radius-teardrop) var(--vl-radius-teardrop) 0; }
+
+/* Le rail : un stadium noir portant un enfant en inset constant. Deux remplissages, un seul
+   objet — c'est la même règle qui produit la barre en dégradé et la pastille du toggle. */
+.p--rail {
+  border-radius: var(--vl-radius-stadium);
+  padding: var(--vl-inset);
+  display: flex; align-items: center;
+}
+.p__fill {
+  height: var(--vl-inner);
+  border-radius: var(--vl-radius-inner);
+}
+/* La longueur de la barre n'est pas au relevé : elle est posée sur la ligne de colonne
+   invisible — son bord droit tombe sur la frontière c2/c3, soit `c − inset` (44,8 % du rail).
+   `background-color` déclare l'extrémité CLAIRE du dégradé : c'est le point que la mesure lit. */
+.p__fill--gradient {
+  width: var(--vl-bar);
+  background-color: var(--vl-white);
+  background-image: linear-gradient(90deg, var(--vl-white), var(--vl-accent));
+}
+/* Même inset, même rayon : la pastille sort RONDE sans qu'on l'écrive (200,44 pour 100,22). */
+.p__fill--knob { width: var(--vl-inner); background: var(--vl-white); }
+
+/* La pilule verticale : le seul objet qui porte du texte. Le corps de l'année est une
+   FONCTION de la largeur de la pilule (100cqw = 232), pas une taille de charte : la chasse
+   d'encre de « 20 » vaut 1,070 em en Helvetica Neue Bold, et 1,216 = 1,070 / 0,88 règle
+   l'encre à 88 % de la boîte. */
+.p--pill {
+  border-radius: var(--vl-radius-stadium);
+  background-color: var(--vl-accent);
+  background-image: linear-gradient(180deg, var(--vl-accent), var(--vl-accent-deep));
+  container-type: inline-size;
+  display: flex; align-items: center; justify-content: center;
+}
+.p__year {
+  font-size: calc(100cqw / 1.216);
+  line-height: 0.92;
+  font-weight: 700;
+  text-align: center;
+  color: var(--vl-on-accent);
+}
+
+/* Portées : le placement est ce que l'inventaire ORDONNÉ (1 → 8) produit ligne par ligne.
+   Onze cellules sur douze occupées, un seul creux en r2c4. */
+.at-2 { grid-column: 2 / span 2; }                       /* rail        r1 c2-c3 */
+.at-5 { grid-column: 2; grid-row: 2 / span 2; }          /* pilule      r2-r3 c2 */
+/* r2c4 doit rester CREUX : sans placement explicite, le flux automatique y ferait tomber le
+   teardrop 8, et la planche perdrait son seul vide. */
+.at-8 { grid-column: 1; grid-row: 3; }                   /* teardrop    r3c1 */
+.at-7 { grid-column: 3 / span 2; grid-row: 3; }          /* toggle      r3 c3-c4 */
+
+/* Le micro-pied. Il ne s'aligne pas sur le bord de feuille — les 307,5 px latéraux ne sont
+   pas une marge — mais sur le rail gauche de la mosaïque : DOCTRINE §3, quand le relevé est
+   muet c'est le quadrillage qui tranche. */
+.vl-index {
+  margin: 0;
+  font-size: var(--vl-index-size);
+  line-height: 1;
+  letter-spacing: var(--vl-index-track);
+  color: var(--vl-index);
+}
+</style>
+</head>
+<body>
+
+<section class="slide">
+
+  <div class="vl-mosaic">
+    <div class="p p--disc"></div>                                    <!-- 1  r1c1 -->
+    <div class="p p--rail at-2"><div class="p__fill p__fill--gradient"></div></div>  <!-- 2 -->
+    <div class="p p--tear-tr"></div>                                 <!-- 3  r1c4 -->
+
+    <div class="p p--squircle"></div>                                <!-- 4  r2c1 -->
+    <div class="p p--pill at-5"><span class="p__year">20<br>30</span></div>          <!-- 5 -->
+    <div class="p p--disc"></div>                                    <!-- 6  r2c3 -->
+    <!-- r2c4 : le seul creux de la planche -->
+
+    <div class="p p--tear-bl at-8"></div>                            <!-- 8  r3c1 -->
+    <div class="p p--rail at-7"><div class="p__fill p__fill--knob"></div></div>      <!-- 7 -->
+  </div>
+
+  <p class="vl-index">01 02 03 04 05</p>
+
+</section>
+
+</body>
+</html>

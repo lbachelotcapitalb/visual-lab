@@ -136,8 +136,17 @@ CHECKPOINT_STEP: S6
       Repères pour la suite : cellule 232, gouttière 19, mosaïque 985 × 734 centrée, rangée
       d'index 24 px `#6E6C68`, et le rail de la primitive 2 = celui de la primitive 7 (même
       objet, deux remplissages).
-- [ ] **S6.2 — `systems/` + `decks/ref-01-bento-pills-2030.html`** : une slide 1600×900, à plat
-      (ni perspective ni ombre), `check-deck.mjs` vert.
+- [x] **S6.2 — `systems/` + `decks/ref-01-bento-pills-2030.html`** : une slide 1600×900, à plat
+      (ni perspective ni ombre), `check-deck.mjs` vert. **Fait** : les cinq contrôles de
+      composition passent, une seule couche au-dessus de la scène, et la géométrie tombe au
+      centième — mosaïque 985 × 734 à (307,5 ; 58,5), vertical 58,5 + 734 + 25 + 24 + 58,5 = 900
+      exactement, bord droit de la barre à 790,49 pour une frontière c2/c3 à 790,50, encre de
+      « 20 » à 87,99 % de la pilule. Deux pièges relevés en chemin : le flux automatique de la
+      grille comble le creux de r2c4 si le teardrop 8 n'est pas placé explicitement en r3c1 (la
+      planche perdait son seul vide) ; et un enfant dont le fond n'est qu'un `linear-gradient`
+      a une `background-color` transparente, donc `check-deck.mjs` compose sa couleur avec
+      celle du rail et le déclare couche 1:1 redondante — la `background-color` doit déclarer
+      l'extrémité claire du dégradé, comme sur `ref-15`.
 - [ ] **S6.3 — `layout-15-primitive-mosaic`** : la grille + les huit primitives, benchmarks en
       ratios, `check.mjs` vert.
 - [ ] **S6.4 — `shape-02-teardrop-quadrant` + `shape-03-stadium-track`** : la forme à un seul
