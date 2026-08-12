@@ -20,9 +20,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 55,
+    "patterns": 56,
     "refs": 18,
-    "checkable": 48
+    "checkable": 49
   },
   "patterns": [
     {
@@ -1954,6 +1954,248 @@
       ],
       "pptx": null,
       "html": "patterns/card-13-email-figure-band.html"
+    },
+    {
+      "id": "card-14-numbered-steps",
+      "name": "Rangée d'étapes numérotées, un seul accent",
+      "family": "card",
+      "ref": "ref-05-proposal-acid-yellow",
+      "media": [
+        "slide",
+        "web"
+      ],
+      "intent": "Poser une méthode en quatre temps sur une seule rangée, en tenant DEUX rails : le chiffre de chaque étape pend du même plafond, son texte pousse depuis le même plancher — donc une phrase de deux lignes et une de quatre ne décalent rien. Une seule carte est accentuée, et elle l'est par le FOND et rien d'autre ; la dernière est noire parce qu'elle est une fin, pas un second accent.",
+      "when_to_use": "Une démarche, un process ou un plan en 3 à 5 étapes de même nature, dont une seule est « celle qui compte » (l'étape courante, le livrable qui décide). Sur une slide de méthode, une page « comment on travaille », un bloc de parcours.",
+      "avoid_when": "Les étapes ne sont pas de même nature ou n'ont pas de rang (là il faut une liste, pas une rangée) ; il en faut plus de cinq (les colonnes tombent sous la largeur d'un mot) ; ou deux étapes doivent être accentuées — le pattern porte l'accent UNIQUE, et le dupliquer supprime le point d'entrée du regard.",
+      "tags": [
+        "etapes",
+        "process",
+        "methode",
+        "numerotee",
+        "rangee",
+        "chiffre",
+        "accent",
+        "accent-unique",
+        "timeline",
+        "parcours",
+        "carte",
+        "plan"
+      ],
+      "vars": [
+        {
+          "name": "--vl-nsteps-w",
+          "role": "la largeur de la rangée — la bande de contenu qui la reçoit",
+          "default": "1456px"
+        },
+        {
+          "name": "--vl-nsteps-h",
+          "role": "la hauteur de la rangée — une COTE, jamais un reste de colonne : c'est elle qui tient la surface accentuée sous le plafond de la charte",
+          "default": "440px"
+        },
+        {
+          "name": "--vl-nsteps-gap",
+          "role": "la gouttière entre deux étapes",
+          "default": "var(--vl-gap)"
+        },
+        {
+          "name": "--vl-nsteps-radius",
+          "role": "le rayon des cartes — constante de charte en longueur, pas une fraction du côté",
+          "default": "var(--vl-r-step)"
+        },
+        {
+          "name": "--vl-nsteps-pad",
+          "role": "la marge intérieure d'une carte, la même sur les quatre côtés",
+          "default": "32px"
+        },
+        {
+          "name": "--vl-nsteps-plain",
+          "role": "le fond des étapes ordinaires",
+          "default": "var(--vl-white)"
+        },
+        {
+          "name": "--vl-nsteps-accent",
+          "role": "le fond de l'ÉTAPE ACCENTUÉE — le seul emploi de la couleur d'accent dans le fragment",
+          "default": "var(--vl-acid)"
+        },
+        {
+          "name": "--vl-nsteps-end",
+          "role": "le fond de l'étape terminale : un aplat sombre, qui marque une FIN et non un second accent",
+          "default": "var(--vl-black)"
+        },
+        {
+          "name": "--vl-nsteps-ink",
+          "role": "l'encre sur fond clair et sur l'accent",
+          "default": "var(--vl-black)"
+        },
+        {
+          "name": "--vl-nsteps-ink-invert",
+          "role": "l'encre sur l'aplat sombre",
+          "default": "var(--vl-white)"
+        },
+        {
+          "name": "--vl-nsteps-muted",
+          "role": "l'encre du corps sur fond clair",
+          "default": "var(--vl-ink-muted)"
+        },
+        {
+          "name": "--vl-nsteps-muted-invert",
+          "role": "l'encre du corps sur l'aplat sombre",
+          "default": "var(--vl-ink-muted-invert)"
+        },
+        {
+          "name": "--vl-font-body",
+          "role": "la famille du fragment — ÉPINGLÉE : le chiffre de 90 est cadré par sa chasse, donc le fragment ne peut pas hériter la police de la page qui le colle",
+          "default": "\"Hanken Grotesk\", \"Helvetica Neue\", Arial, sans-serif"
+        }
+      ],
+      "slots": [
+        "n",
+        "label",
+        "body"
+      ],
+      "geometry": {
+        "root": ".vl-nsteps",
+        "frame": [
+          1456,
+          440
+        ],
+        "ratios": {
+          "height_over_width": 0.302,
+          "step_over_width": 0.2376,
+          "gutter_over_width": 0.0165,
+          "pad_over_step_width": 0.0925,
+          "n_over_label": 4.74,
+          "accent_over_slide": 0.106
+        },
+        "type_px": {
+          "n": 90,
+          "label": 19,
+          "body": 19
+        },
+        "pad_ratio": {
+          "top": 0.0727,
+          "x": 0.022,
+          "bottom": 0.0727
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "la rangée est BORNÉE en hauteur : 0,30 de sa largeur — ce n'est pas un reste de colonne",
+          "measure": "H / W",
+          "expect": 0.302,
+          "tol": 0.02
+        },
+        {
+          "name": "quatre colonnes ÉGALES — aucune étape ne prime par la taille",
+          "measure": "Math.max(...[1,2,3,4].map(i => box('.vl-nsteps__step:nth-child(' + i + ')').w)) / Math.min(...[1,2,3,4].map(i => box('.vl-nsteps__step:nth-child(' + i + ')').w))",
+          "expect": 1,
+          "tol": 0.005
+        },
+        {
+          "name": "…et l'ÉTAPE ACCENTUÉE n'est pas plus large que les autres : l'accent ne se pose que par le fond",
+          "measure": "box('.vl-nsteps__step--on').w / box('.vl-nsteps__step:nth-child(1)').w",
+          "expect": 1,
+          "tol": 0.005
+        },
+        {
+          "name": "gouttière constante entre les quatre, à 1,65 % de la largeur",
+          "measure": "(box('.vl-nsteps__step:nth-child(2)').left - box('.vl-nsteps__step:nth-child(1)').right) / W",
+          "expect": 0.0165,
+          "tol": 0.004
+        },
+        {
+          "name": "RAIL DU HAUT — les quatre chiffres pendent du même plafond (écart nul, en fraction de la hauteur)",
+          "measure": "(Math.max(...[1,2,3,4].map(i => box('.vl-nsteps__step:nth-child(' + i + ') .vl-nsteps__n').top)) - Math.min(...[1,2,3,4].map(i => box('.vl-nsteps__step:nth-child(' + i + ') .vl-nsteps__n').top))) / H",
+          "expect": 0,
+          "tol": 0.004
+        },
+        {
+          "name": "RAIL DU BAS — les quatre textes poussent du même plancher (écart nul, en fraction de la hauteur)",
+          "measure": "(Math.max(...[1,2,3,4].map(i => box('.vl-nsteps__step:nth-child(' + i + ') .vl-nsteps__txt').bottom)) - Math.min(...[1,2,3,4].map(i => box('.vl-nsteps__step:nth-child(' + i + ') .vl-nsteps__txt').bottom))) / H",
+          "expect": 0,
+          "tol": 0.004
+        },
+        {
+          "name": "…et les deux rails tiennent alors même que les blocs de texte n'ont PAS la même hauteur — c'est là qu'une pile centrée ondulerait",
+          "measure": "Math.max(...[1,2,3,4].map(i => box('.vl-nsteps__step:nth-child(' + i + ') .vl-nsteps__txt').h)) / Math.min(...[1,2,3,4].map(i => box('.vl-nsteps__step:nth-child(' + i + ') .vl-nsteps__txt').h))",
+          "expect": 1.4,
+          "tol": 0.35
+        },
+        {
+          "name": "UN SEUL ACCENT dans toute la rangée — la règle de la charte, comptée",
+          "measure": "document.querySelectorAll('.vl-nsteps__step--on').length",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "…et l'aplat sombre n'en est pas un second : son fond n'est pas la couleur d'accent",
+          "measure": "getComputedStyle(document.querySelector('.vl-nsteps__step--end')).backgroundColor === getComputedStyle(document.querySelector('.vl-nsteps__step--on')).backgroundColor ? 1 : 0",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "L'ACCENT NE SE POSE QUE PAR LE FOND : ni bordure, ni ombre sur la carte accentuée",
+          "measure": "num('.vl-nsteps__step--on','borderTopWidth') + (cs('.vl-nsteps__step--on','boxShadow') === 'none' ? 0 : 1)",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "…ni chiffre grossi : le corps du 02 est celui du 01",
+          "measure": "num('.vl-nsteps__step--on .vl-nsteps__n','fontSize') / num('.vl-nsteps__step:nth-child(1) .vl-nsteps__n','fontSize')",
+          "expect": 1,
+          "tol": 0.01
+        },
+        {
+          "name": "LA SURFACE ACCENTUÉE TIENT SOUS LE PLAFOND DE CHARTE : la carte jaune couvre 10,6 % d'une slide 1600×900, pour un plafond de 12 %",
+          "measure": "(box('.vl-nsteps__step--on').w * box('.vl-nsteps__step--on').h) / (1600 * 900)",
+          "expect": 0.106,
+          "tol": 0.014
+        },
+        {
+          "name": "CONTRE-ÉPREUVE — c'est bien la BORNE qui tient la règle : à hauteur libre de colonne (700), la même carte, toujours seule accentuée, dépasse le plafond de 40 %",
+          "measure": "(() => { const r = document.querySelector('.vl-nsteps'); const old = r.style.getPropertyValue('--vl-nsteps-h'); r.style.setProperty('--vl-nsteps-h','700px'); r.getBoundingClientRect(); const b = document.querySelector('.vl-nsteps__step--on').getBoundingClientRect(); const out = (b.width * b.height) / (1600 * 900) / 0.12; if (old) r.style.setProperty('--vl-nsteps-h', old); else r.style.removeProperty('--vl-nsteps-h'); return out; })()",
+          "expect": 1.4,
+          "tol": 0.08
+        },
+        {
+          "name": "le chiffre domine son libellé d'un facteur 4,7 — c'est le rang qui se lit en premier, pas l'intitulé",
+          "measure": "num('.vl-nsteps__n','fontSize') / num('.vl-nsteps__label','fontSize')",
+          "expect": 4.74,
+          "tol": 0.3
+        },
+        {
+          "name": "rayon en LONGUEUR, constante de charte : 32 px, soit 9 % de la largeur d'une carte",
+          "measure": "num('.vl-nsteps__step','borderTopLeftRadius') / box('.vl-nsteps__step:nth-child(1)').w",
+          "expect": 0.0925,
+          "tol": 0.015
+        },
+        {
+          "name": "L'ENCRE SUIT SON SOL, sur les trois fonds — le corps de chaque carte tient 4,5:1 (pire cas mesuré)",
+          "measure": "Math.min(contrast('.vl-nsteps__step:nth-child(1) .vl-nsteps__body'), contrast('.vl-nsteps__step--on .vl-nsteps__body'), contrast('.vl-nsteps__step--end .vl-nsteps__body'))",
+          "expect": 5.4,
+          "tol": 0.9
+        },
+        {
+          "name": "…et les libellés aussi, sur les trois fonds",
+          "measure": "Math.min(contrast('.vl-nsteps__step:nth-child(1) .vl-nsteps__label'), contrast('.vl-nsteps__step--on .vl-nsteps__label'), contrast('.vl-nsteps__step--end .vl-nsteps__label'))",
+          "expect": 14,
+          "tol": 4
+        },
+        {
+          "name": "rien ne déborde d'une carte",
+          "measure": "[1,2,3,4].reduce((s,i) => s + overflow('.vl-nsteps__step:nth-child(' + i + ')'), 0)",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "AUTONOMIE TYPOGRAPHIQUE — un serif imposé à la page hôte ne change pas d'un pixel l'encre du chiffre : le fragment épingle sa famille",
+          "measure": "(() => { const ink = () => { const r = document.createRange(); r.selectNodeContents(document.querySelector('.vl-nsteps__n')); return r.getBoundingClientRect().width; }; const a = ink(); const h = document.documentElement, old = h.style.fontFamily; h.style.fontFamily = 'Georgia, \"Times New Roman\", serif'; const b = ink(); h.style.fontFamily = old; return b / a; })()",
+          "expect": 1,
+          "tol": 0.01
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/card-14-numbered-steps.html"
     },
     {
       "id": "chart-01-stadium-bars",
@@ -8396,6 +8638,7 @@
       "id": "ref-05-proposal-acid-yellow",
       "name": "Proposal jaune acide",
       "patterns": [
+        "card-14-numbered-steps",
         "shape-04-asterisk-mark",
         "title-05-hyphen-break"
       ],

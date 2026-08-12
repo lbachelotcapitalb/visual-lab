@@ -1,0 +1,128 @@
+<!-- card-14-numbered-steps — une méthode en quatre temps, posée en rangée : un chiffre en tête,
+     un intitulé et sa phrase collés en bas, et UNE SEULE carte accentuée dans toute la rangée.
+
+     CE QUI EN FAIT UN PATTERN plutôt que quatre cartes côte à côte, ce sont deux rails :
+     le chiffre de chaque carte pend du même plafond, le texte de chaque carte pousse depuis le
+     même plancher (`justify-content: space-between`). Une phrase de deux lignes et une phrase
+     de quatre ne décalent donc RIEN — c'est ce que ne fait pas une pile centrée, où chaque
+     carte flotte à sa propre hauteur et où la rangée se met à onduler dès qu'un texte grandit.
+
+     LA COTE QUI COMPTE, et c'est la leçon du lot : LA HAUTEUR EST BORNÉE, jamais `flex: 1`.
+     La charte d'origine tient sur « neutre + UN accent », règle qui se chiffre — la surface
+     accentuée reste sous 12 % de la slide. Laissée libre, la rangée mange la colonne : la
+     carte jaune passe de 10,6 % à 11,9 % pour un plafond de 12 %, sans qu'un seul alignement
+     ne casse. La règle de l'accent unique est donc une contrainte de DIMENSION autant que de
+     compte : être le seul objet coloré ne suffit pas, encore faut-il ne pas s'étaler.
+
+     L'ACCENT NE SE POSE QUE PAR LE FOND. Aucune bordure, aucune ombre, aucun décalage de
+     taille : la carte courante est jaune, la dernière est noire (c'est une FIN, pas un accent),
+     les autres sont blanches. Trois fonds, une seule couleur — et l'encre suit son sol, sinon
+     le jaune, à 1,03:1 contre le fond clair de la charte, ne se lit plus du tout. -->
+<div class="vl-nsteps">
+
+  <article class="vl-nsteps__step">
+    <div class="vl-nsteps__n">01</div>
+    <div class="vl-nsteps__txt">
+      <h4 class="vl-nsteps__label">Read the book</h4>
+      <p class="vl-nsteps__body">Two years of invoices, every discount, every exception granted.</p>
+    </div>
+  </article>
+
+  <article class="vl-nsteps__step vl-nsteps__step--on">
+    <div class="vl-nsteps__n">02</div>
+    <div class="vl-nsteps__txt">
+      <h4 class="vl-nsteps__label">Set the line</h4>
+      <p class="vl-nsteps__body">One workshop, one page out: what is charged, and what stops being free.</p>
+    </div>
+  </article>
+
+  <article class="vl-nsteps__step">
+    <div class="vl-nsteps__n">03</div>
+    <div class="vl-nsteps__txt">
+      <h4 class="vl-nsteps__label">Build the surface</h4>
+      <p class="vl-nsteps__body">Tiers, guardrails, the quote tool your team actually opens.</p>
+    </div>
+  </article>
+
+  <article class="vl-nsteps__step vl-nsteps__step--end">
+    <div class="vl-nsteps__n">04</div>
+    <div class="vl-nsteps__txt">
+      <h4 class="vl-nsteps__label">Hand it over</h4>
+      <p class="vl-nsteps__body">Two weeks of pairing, then we are gone and it still runs.</p>
+    </div>
+  </article>
+
+</div>
+
+<style>
+.vl-nsteps {
+  /* La hauteur est une COTE, pas un reste de colonne. Voir l'en-tête du fragment. */
+  --vl-nsteps-w: 1456px;
+  --vl-nsteps-h: 440px;
+  --vl-nsteps-gap: var(--vl-gap);
+  --vl-nsteps-radius: var(--vl-r-step);
+  --vl-nsteps-pad: 32px;
+
+  --vl-nsteps-plain: var(--vl-white);
+  --vl-nsteps-accent: var(--vl-acid);
+  --vl-nsteps-end: var(--vl-black);
+  --vl-nsteps-ink: var(--vl-black);
+  --vl-nsteps-ink-invert: var(--vl-white);
+  --vl-nsteps-muted: var(--vl-ink-muted);
+  --vl-nsteps-muted-invert: var(--vl-ink-muted-invert);
+
+  /* La police est ÉPINGLÉE : le chiffre de 90 est cadré par sa chasse, et un fragment dont
+     une cote dépend d'une chasse ne peut pas hériter la police de la page qui le colle. */
+  font-family: var(--vl-font-body, "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif);
+  width: var(--vl-nsteps-w);
+  height: var(--vl-nsteps-h);
+  box-sizing: border-box;
+  display: flex;
+  gap: var(--vl-nsteps-gap);
+}
+
+.vl-nsteps__step {
+  flex: 1;                       /* les quatre colonnes sont ÉGALES : aucune étape ne prime */
+  min-width: 0;
+  border-radius: var(--vl-nsteps-radius);
+  padding: var(--vl-nsteps-pad);
+  background: var(--vl-nsteps-plain);
+  color: var(--vl-nsteps-ink);
+  /* LES DEUX RAILS : chiffre au plafond, texte au plancher. */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.vl-nsteps__n {
+  font-size: 90px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.vl-nsteps__txt { display: flex; flex-direction: column; gap: 10px; }
+
+.vl-nsteps__label {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.vl-nsteps__body {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.55;
+  font-weight: 400;
+  color: var(--vl-nsteps-muted);
+}
+
+/* L'accent ne fait qu'UNE chose : il change le FOND. Pas de bordure, pas d'ombre, pas de
+   changement de taille — et l'encre suit son sol. */
+.vl-nsteps__step--on  { background: var(--vl-nsteps-accent); }
+.vl-nsteps__step--on  .vl-nsteps__body { color: var(--vl-nsteps-ink); }
+
+.vl-nsteps__step--end { background: var(--vl-nsteps-end); color: var(--vl-nsteps-ink-invert); }
+.vl-nsteps__step--end .vl-nsteps__body { color: var(--vl-nsteps-muted-invert); }
+</style>

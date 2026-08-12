@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-55 patterns · 18 références · 48 vérifiés par benchmarks mesurés.
+56 patterns · 18 références · 49 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -39,6 +39,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `card-11-corner-arrow-tile` | Faire d'un module une ENTRÉE cliquable sans bouton ni liseré : le titre en haut à gauche, une flèche oblique ancrée au coin opposé — jamais alignée sur le titre — et l'illustration qui occupe tout le bas de la vignette au lieu d'être centrée dedans. | web slide | 17 | ref-17-mono-bento-legal |
 | `card-12-inverted-kpi-row` | Ouvrir un tableau de bord par trois indicateurs de même nature dont UN SEUL est de premier rang, en lui appliquant deux fois le même geste de hiérarchie : l'aplat inversé ET une colonne 5 % plus large. Chaque carte range ses quatre informations dans le même ordre — libellé en haut, pastille de renvoi ancrée au coin opposé, chiffre poussé en bas, note collée dessous. | web slide | 16 | ref-18-lime-sales-dashboard |
 | `card-13-email-figure-band` | Poser trois indicateurs de même nature en une bande dans un mail, sans aplat de carte ni encadrement : les colonnes sont des cellules à largeur en pourcentage sur une table à disposition fixe — la seule répartition en parts égales qu'Outlook respecte — et les séparateurs sont des filets de cellule, pas des colonnes intercalaires. La couleur ne fait qu'une chose : elle porte les chiffres. | email | 17 | ref-04-swiss-investor-blue |
+| `card-14-numbered-steps` | Poser une méthode en quatre temps sur une seule rangée, en tenant DEUX rails : le chiffre de chaque étape pend du même plafond, son texte pousse depuis le même plancher — donc une phrase de deux lignes et une de quatre ne décalent rien. Une seule carte est accentuée, et elle l'est par le FOND et rien d'autre ; la dernière est noire parce qu'elle est une fin, pas un second accent. | slide web | 19 | ref-05-proposal-acid-yellow |
 | `chart-01-stadium-bars` | Un histogramme réduit à l'essentiel : des barres à sommet en demi-cercle, aucune ligne d'axe, des légendes en pilules. | slide social web | — | ref-03-bento-dark-pitch |
 | `chart-02-isotype` | Raconter une proportion en unités comptables (24 pictogrammes sur 40) au lieu d'un pourcentage abstrait. | slide web | — | ref-03-bento-dark-pitch |
 | `chart-03-accent-column-callout` | Donner la forme d'une série en quelques colonnes flottantes sans axe ni graduation, et n'en chiffrer qu'une seule — la courante — par une info-bulle sombre ancrée à sa colonne. | slide web | 11 | ref-13-glass-fintech-dashboard |
@@ -191,6 +192,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - à remplir : label, fig, note
 - variables : --vl-white, --vl-black, --vl-blue, --vl-ink-muted
 - tags : email, mailing, newsletter, chiffre, kpi, indicateur, bande, colonnes, filet, outlook, table, stat, resume
+
+**card-14-numbered-steps** — Rangée d'étapes numérotées, un seul accent
+
+- employer : Une démarche, un process ou un plan en 3 à 5 étapes de même nature, dont une seule est « celle qui compte » (l'étape courante, le livrable qui décide). Sur une slide de méthode, une page « comment on travaille », un bloc de parcours.
+- éviter : Les étapes ne sont pas de même nature ou n'ont pas de rang (là il faut une liste, pas une rangée) ; il en faut plus de cinq (les colonnes tombent sous la largeur d'un mot) ; ou deux étapes doivent être accentuées — le pattern porte l'accent UNIQUE, et le dupliquer supprime le point d'entrée du regard.
+- à remplir : n, label, body
+- variables : --vl-nsteps-w, --vl-nsteps-h, --vl-nsteps-gap, --vl-nsteps-radius, --vl-nsteps-pad, --vl-nsteps-plain, --vl-nsteps-accent, --vl-nsteps-end, --vl-nsteps-ink, --vl-nsteps-ink-invert, --vl-nsteps-muted, --vl-nsteps-muted-invert, --vl-font-body
+- tags : etapes, process, methode, numerotee, rangee, chiffre, accent, accent-unique, timeline, parcours, carte, plan
 
 ### chart
 
@@ -550,7 +559,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-02-ghost-icon-claim` | Gris fantôme — argument unique | `card-01-ghost-icon` | `decks/ref-02-ghost-icon-claim.html` |
 | `ref-03-bento-dark-pitch` | Bento sombre — pitch investisseur | `chart-01-stadium-bars`, `chart-02-isotype`, `layout-01-nested-bento` | `decks/ref-03-bento-dark-pitch.html` |
 | `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |
-| `ref-05-proposal-acid-yellow` | Proposal jaune acide | `shape-04-asterisk-mark`, `title-05-hyphen-break` | `decks/ref-05-proposal-acid-yellow.html` |
+| `ref-05-proposal-acid-yellow` | Proposal jaune acide | `card-14-numbered-steps`, `shape-04-asterisk-mark`, `title-05-hyphen-break` | `decks/ref-05-proposal-acid-yellow.html` |
 | `ref-06-orange-notched` | Corporate orange chanfreiné | `card-02-notched-brief`, `card-03-stat-accent`, `list-02-ruled-index`, `shape-notched-corner`, `title-01-leading-rule` | `decks/ref-06-orange-notched.html` |
 | `ref-07-retro-brand-hero` | Retro brand hero (crème + rouge de marque, sol photographique) | `layout-11-hero-card-on-photo`, `layout-12-nav-three-zone`, `layout-13-image-triptych`, `title-03-wordmark-bottom-left` | `decks/ref-07-retro-brand-hero.html` |
 | `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | `layout-14-statement-first`, `title-04-name-fills-measure` | `decks/ref-08-swiss-studio-hero.html` |

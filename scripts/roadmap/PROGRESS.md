@@ -201,8 +201,22 @@ CHECKPOINT_STEP: S7
       carré valait 0,533, pas 0,54. La slide 6 ne porte donc plus AUCUN accent, et c'est le
       second corollaire écrit dans la spec au passage : `≤ 12 %` est un PLAFOND, pas un quota,
       une slide a le droit de n'avoir aucun jaune. `check-deck.mjs` reste vert (32/32).
-- [ ] **S7.5 — `card-…-numbered-steps` + `layout-…-header-tripartite`** : la rangée 01→04 dont
-      une seule carte est accentuée, et le header 3 zones réutilisable hors charte.
+- [x] **S7.5a — `card-14-numbered-steps`** : la rangée 01→04 dont une seule carte est accentuée.
+      _Scindé de S7.5 le 12/08 : deux patterns à benchmarks ne tiennent pas dans une fenêtre,
+      et une case non cochée fait refaire le travail entier à la session suivante._
+      **Fait**, 19 benchmarks verts. Ce que le pattern porte : DEUX RAILS obtenus d'un seul
+      `justify-content: space-between` — les quatre chiffres pendent du même plafond, les
+      quatre textes poussent du même plancher, ALORS QUE leurs blocs n'ont pas la même hauteur
+      (rapport 1,4). C'est cette dissociation qui est assertée, pas l'alignement seul : une
+      pile centrée aligne aussi tant que les textes font la même longueur. La contre-épreuve
+      de la borne est le benchmark qui compte : `--vl-nsteps-h` reparamétré à 700 fait passer
+      la carte accentuée à 1,40 × le plafond de 12 % — elle prouve que la borne SERT, au lieu
+      de constater que la valeur par défaut passe. Deux pièges repayés du gabarit : un `var()`
+      à FALLBACK hexadécimal est une couleur en dur pour `index.mjs` (à raison — le fallback
+      est ce qui rend en silence quand le token manque), et un fragment sans largeur déclarée
+      se mesure à la largeur du harnais (676 px au lieu de 1456) : 7 benchmarks rouges pour une
+      raison qui n'était pas la leur.
+- [ ] **S7.5b — `layout-…-header-tripartite`** : le header 3 zones réutilisable hors charte.
 - [ ] **S7.6 — les rendus REGARDÉS** (deck + patterns), corrections, `proofs/` supprimé.
 - [ ] **S7.7 — gate complet, doc à jour dans le même commit** (ROADMAP lot 4, README « État »,
       SPEC-SOURCES), commit final + MAJ de PROGRESS.
