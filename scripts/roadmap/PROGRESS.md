@@ -106,7 +106,18 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: (aucun)
+CHECKPOINT_STEP: S3
+
+- [ ] S3.1 — Relever le contraste de `--vl-red` sur la slide crème AVANT de le recopier dans
+      trois patterns. Corriger dans `systems/` + `decks/` si la source est sous 4,5:1.
+- [ ] S3.2 — `layout-10-…` : le collage à fond perdu (colonnes d'images + couture + incrustation
+      en overlay). C'est la composition de la slide 1.
+- [ ] S3.3 — `title-02-…` : le cadre typographique (titre condensé écrasé en overlay, numéro de
+      section entre parenthèses au même fer, micro-caps au coin opposé). Absorbe les
+      `type-condensed-stack`, `mark-paren-number` et `type-micro-caps-block` de la spec, qui
+      seuls ne portent pas de composition.
+- [ ] S3.4 — `list-07-…` : le tableau label/valeur à filets qui DÉBORDENT la marge de texte.
+- [ ] S3.5 — Spec + ROADMAP + README à jour, gate, rendu regardé, commit final.
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à
      mesure et poussée en commit `wip(<step>): …`. C'est ce qui permet de reprendre au milieu
