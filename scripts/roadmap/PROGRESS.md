@@ -2,9 +2,9 @@
 
 STATE: RUNNING
 <!-- RUNNING (continue) | AWAITING_DECISION (halt, présenter le tableau au mainteneur) | BLOCKED (gate rouge, halt) | DONE (fini) | STOPPED (coupé par le mainteneur via `roadmap stop` — ne jamais relancer soi-même) -->
-CURRENT_STEP: S7
+CURRENT_STEP: S8
 UPDATED: 2026-08-12
-LAST_COMMIT: d3d8ba0
+LAST_COMMIT: 35f378b
 
 ## Objectif
 
@@ -83,7 +83,7 @@ règles dures :
       variables**, sans duplication — le tableau des différences est dans la spec.
 - [x] **S6 — `ref-01-bento-pills-2030`.** Couverture seule, purement géométrique. Reconstruire
       **à plat** : ne reproduire ni la perspective ni l'ombre de la photo d'origine.
-- [ ] **S7 — `ref-05-proposal-acid-yellow`.** 8 slides. Neutre + UN accent fluo, header tri-parti,
+- [x] **S7 — `ref-05-proposal-acid-yellow`.** 8 slides. Neutre + UN accent fluo, header tri-parti,
       astérisque de marque. `accent-single-fluo` est une règle éditoriale : ne l'extraire que si
       elle a un rendu.
 - [ ] **S8 — `ref-09-zine-annotated-blue`.** 12 slides, le lot le plus lourd du corpus : prévoir
@@ -134,7 +134,10 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: S7
+CHECKPOINT_STEP: (aucun)
+
+<!-- Checkpoint du step S7, CLOS le 12/08 — conservé le temps du step suivant, il sera écrasé
+     par la première sous-checklist de S8. -->
 
 - [x] **S7.1 — la spec `ref-05` complétée avant tout code.** La section actuelle de
       `SPEC-SOURCES.md` tient en 35 lignes : elle donne la palette, la typo, le header et les
@@ -246,14 +249,53 @@ CHECKPOINT_STEP: S7
       (32/32). Corrigé au passage : l'en-tête du deck affirmait encore « le jaune n'est jamais
       une encre » — la formulation que S7.4b a précisément démentie, à trois lignes de la
       version juste. Une doc en retard DANS le fichier qu'elle décrit décide à la place du code.
-- [ ] **S7.7 — gate complet, doc à jour dans le même commit** (ROADMAP lot 4, README « État »,
-      SPEC-SOURCES), commit final + MAJ de PROGRESS.
+- [x] **S7.7 — gate complet, doc à jour dans le même commit** (ROADMAP lot 4, README « État »,
+      SPEC-SOURCES), commit final + MAJ de PROGRESS. **Fait** (35f378b). Gate vert : 57
+      patterns / 18 références indexés, 872 assertions, 18 decks. La spec était déjà à jour
+      (S7.1 et S7.4b l'avaient portée au fil du lot) ; le commit porte ROADMAP (lot 4 soldé),
+      README (53 → 57 patterns, 17 → 18 références, le paragraphe ref-05) et **DOCTRINE §1**,
+      qui gagne une loi : un objet dont la DIMENSION est bornée ne peut pas tenir une colonne.
+      Elle méritait de sortir de ce lot parce qu'elle contredit le réflexe qu'on tire de la
+      règle précédente — borner est le bon geste quand un objet est trop grand, et c'est
+      précisément ce qui déplace le vide ailleurs sans que rien ne le signale.
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à
      mesure et poussée en commit `wip(<step>): …`. C'est ce qui permet de reprendre au milieu
      d'un step après un relais sur seuil de contexte ou un crash. -->
 
 ## Journal (append-only, le plus récent en haut)
+
+- 2026-08-12 — S7 fait (35f378b). `ref-05` est versée : 8 slides, 4 patterns, 67 benchmarks —
+  et le corpus passe à **18 références, toutes complètes**. La spec annonçait cinq patterns ;
+  `accent-single-fluo` n'en est pas un — c'est une règle éditoriale, et un fragment qui ne
+  serait qu'un aplat jaune tient dans sa propre phrase de description. Elle est mesurée là où
+  elle a un sens, sur la SLIDE, par un benchmark de surface. **Le lot est celui où une règle de
+  charte a dû devenir un chiffre, et où le chiffre a démenti deux fois la façon dont la charte
+  s'énonçait.** (1) « Neutre + UN accent » se lit comme une contrainte de COMPTE : elle est
+  d'abord une contrainte de DIMENSION. La carte de total de la slide 7 était bien le seul objet
+  jaune de sa slide et couvrait 21,4 % de sa surface, pour un plafond de 12 %. (2) « Le jaune ne
+  colore jamais du texte » est faux — l'astérisque du carré noir EST une encre — et cette
+  approximation avait laissé passer un astérisque jaune sur le fond clair, à 1,03:1. La règle
+  exacte : le jaune ne descend jamais sur le fond clair, il y est en aplat ou en encre SUR NOIR.
+  Corollaire écrit dans la spec : `≤ 12 %` est un plafond, pas un quota — une slide a le droit
+  de n'avoir aucun jaune, et la slide 6 n'en a plus.
+  **Ce qui monte en DOCTRINE (§1), et qui vaut hors de cette charte : un objet dont la dimension
+  est bornée ne peut pas tenir une colonne.** Borner la carte de total réglait la surface et
+  laissait 300 px de bande morte sous le titre — la borne avait DÉPLACÉ le défaut. Un objet
+  contraint en dimension doit changer de PLACE. Rien ne le mesure : `check-deck.mjs` compte les
+  couches, les benchmarks ne voient que l'intérieur d'un pattern. C'est le regard qui l'a sorti,
+  au dernier contrôle du lot.
+  Acquis d'outillage, tous payés ici : un `var()` à fallback hexadécimal est une couleur en dur
+  pour `index.mjs` (à raison — le fallback rend en silence quand le token manque) ; un fragment
+  sans largeur déclarée se mesure à la largeur du HARNAIS (676 px au lieu de 1456), soit
+  7 benchmarks rouges pour une raison qui n'est pas la leur ; `box()` est en coordonnées
+  relatives à la racine là où `getBoundingClientRect()` — le seul moyen de mesurer une encre, au
+  `Range` — est en coordonnées de vue, et les mélanger donne un VERT sur un bord faux de 40 px ;
+  une forme dont la forme EST le sujet se sonde peinte (720 sondages pour l'astérisque, six
+  suffisaient à rester vert sur une branche décalée de 10°) ; et une contre-épreuve doit
+  reparamétrer là où les constructions DIVERGENT, pas là où l'une est plus confortable — un
+  libellé sécable ne sépare pas `minmax(0, 1fr)` de `1fr` nu, un libellé insécable oui.
+  Aucune image source sur disque : `bin/diff.mjs` impossible.
 
 - 2026-08-12 — S6 fait (d3d8ba0). `ref-01` est versée et le corpus compte **17 références
   complètes**. La spec annonçait quatre patterns, il en sort trois : le « toggle » et le rail à
