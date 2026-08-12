@@ -106,7 +106,17 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: (aucun)
+CHECKPOINT_STEP: S2
+
+- [ ] `decks/ref-12-neon-capsule-tags.html` — la slide 1600×900 : sol vert forêt, pile des six
+      capsules alignées à droite, écart `0,1 u`, rien d'autre. Le bord droit coupé de la source
+      est un accident de cadrage : on remet à plat, on ne reproduit pas l'amputation.
+- [ ] Confronter `tag-01-gooey-capsule` au deck : `geometry.frame` [241, 70] doit être la
+      dimension RÉELLE sur la slide (donc `--vl-cap-u: 56px`). Divergence ⇒ la spec tranche.
+- [ ] Doc : `SPEC-SOURCES.md` § ref-12 (« Patterns extraits » annonce un
+      `stack-keyword-flush-right` qui n'existe pas — la pile est DANS `tag-01`), README « État »,
+      ROADMAP (ligne du tableau « Ce qui reste »).
+- [ ] Gate + regard du rendu + commit final nommé.
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à
      mesure et poussée en commit `wip(<step>): …`. C'est ce qui permet de reprendre au milieu
