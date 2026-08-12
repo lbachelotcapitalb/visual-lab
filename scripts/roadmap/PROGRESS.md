@@ -142,10 +142,30 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: (aucun)
+CHECKPOINT_STEP: S8
 
-<!-- Checkpoint du step S7, CLOS le 12/08 — conservé le temps du step suivant, il sera écrasé
-     par la première sous-checklist de S8. -->
+- [ ] **S8.1 — la spec `ref-09` complétée AVANT tout code.** La section actuelle de
+      `SPEC-SOURCES.md` tient en 33 lignes : nature, palette, typo, l'élément signature et un
+      « layout très libre ». Il manque exactement ce qui a bloqué S7 tant qu'il n'était pas
+      écrit — l'ÉCHELLE (la spec donne des corps relevés sur une planche : titre ≈ 40 px, corps
+      ≈ 10 px, ce dernier est illisible tel quel sur 1600×900), le PLAN des 12 slides, la
+      géométrie (marges, colonnes, gouttières), le contraste du gris `#8A8A8A` sur blanc
+      (à vérifier avant recopie — trois lots de suite la source a placé son secondaire sous
+      4,5:1), et le NOM des patterns dans la nomenclature fermée : `annotation-marker`,
+      `type-lowercase-editorial` et `type-vertical-rail` ne portent aucune des huit familles.
+      Trancher aussi lesquels sont des compositions et lesquels tiennent dans leur phrase.
+- [ ] **S8.2 — `systems/ref-09-zine-annotated-blue.json` + le deck, slides 1 à 4.**
+- [ ] **S8.3 — le deck, slides 5 à 8.**
+- [ ] **S8.4 — le deck, slides 9 à 12, `check-deck.mjs` vert sur les 12.**
+- [ ] **S8.5 — le pattern d'annotation manuscrite**, le cœur du lot. L'irrégularité des points
+      de contrôle EST la fonctionnalité : elle doit donc être ASSERTÉE, pas seulement écrite —
+      un tracé régulier redevient une forme géométrique et l'effet tombe. Le benchmark qui
+      compte est la contre-épreuve : irrégularité reparamétrée à 0 ⇒ rouge.
+- [ ] **S8.6 — le pattern de colonne éditoriale** (titres bas-de-casse + corps justifié étroit).
+- [ ] **S8.7 — le rail vertical**, s'il porte une composition ; sinon absorbé, et écrit comme tel.
+- [ ] **S8.8 — les rendus REGARDÉS** (deck + patterns), corrections, `proofs/` supprimé.
+- [ ] **S8.9 — gate complet, doc à jour dans le même commit** (ROADMAP lot 8, README « État »,
+      SPEC-SOURCES), commit final + MAJ de PROGRESS.
 
 - [x] **S7.1 — la spec `ref-05` complétée avant tout code.** La section actuelle de
       `SPEC-SOURCES.md` tient en 35 lignes : elle donne la palette, la typo, le header et les
