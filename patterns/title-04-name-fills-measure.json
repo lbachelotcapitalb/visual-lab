@@ -1,0 +1,144 @@
+{
+  "name": "Nom réglé à la mesure, ® sous la capitale",
+  "family": "title",
+  "ref": "ref-08-swiss-studio-hero",
+  "intent": "Régler un nom de marque à la LARGEUR plutôt qu'à une taille : le corps n'est pas choisi dans l'échelle de la charte, il est déduit de la mesure disponible, et l'encre du mot affleure les deux marges à 99,6 %. Le ® qui le suit est calé sous la hauteur de capitale — un quart du corps, remonté de 55 % de la capitale — pour qu'il signe le nom sans devenir sa douzième lettre.",
+  "when_to_use": "Un hero, une couverture ou un pied de page dont le nom de marque doit faire ENSEIGNE : un mot unique, court, qui prend toute la mesure et devient une forme avant d'être un texte. Aussi partout où une charte sans accent coloré doit produire un point fort — ici c'est l'échelle qui fait l'accent, donc trois valeurs d'encre suffisent.",
+  "avoid_when": "Le nom tient sur deux mots ou deux lignes : le réglage suppose une ligne unique que l'on peut étirer d'une marge à l'autre, et deux lignes redonnent au nom un statut de bloc de texte, ce qui est un autre pattern (title-03-wordmark-bottom-left). Écarter aussi quand le mot doit rester à taille FIXE d'un support à l'autre — un logotype normé, une signature de charte : ici le corps change avec la largeur du conteneur, c'est le principe.",
+  "media": [
+    "web",
+    "slide"
+  ],
+  "tags": [
+    "wordmark",
+    "nom-de-marque",
+    "logotype",
+    "hero",
+    "echelle",
+    "largeur-utile",
+    "registered",
+    "exposant",
+    "grotesk",
+    "container-query"
+  ],
+  "vars": [
+    {
+      "name": "--vl-ink",
+      "role": "encre du nom — la valeur la plus contrastée de la charte, c'est le plus gros objet de la page",
+      "default": "#111111"
+    },
+    {
+      "name": "--vl-mark-chasse",
+      "role": "la CHASSE du mot : rapport mesuré largeur-d'encre / corps, pour CE mot dans CETTE graisse à CETTE approche. C'est lui qui convertit la largeur disponible en corps — il se remesure dès qu'on change le mot, la police ou l'approche, jamais il ne s'estime",
+      "default": "5.270"
+    }
+  ],
+  "slots": [
+    "mark"
+  ],
+  "geometry": {
+    "root": ".vl-nfm",
+    "frame": [
+      1060,
+      185
+    ],
+    "ratios": {
+      "ink_fill_of_measure": 0.996,
+      "mark_leading": 0.92,
+      "mark_tracking": -0.035,
+      "r_size_over_mark": 0.26,
+      "r_top_over_cap": 0.82,
+      "r_baseline_rise_over_cap": 0.548
+    },
+    "type_px": {
+      "mark": 201
+    },
+    "pad_ratio": {
+      "top": 0,
+      "x": 0,
+      "bottom": 0
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "L'ENCRE SATURE LA MESURE — c'est tout le pattern : 99,6 % de la largeur, et jamais plus de 100 %",
+      "measure": "(() => { const r = document.createRange(); r.selectNodeContents(document.querySelector('.vl-nfm__mark')); return r.getBoundingClientRect().width / W; })()",
+      "min": 0.99,
+      "max": 1.0
+    },
+    {
+      "name": "et elle affleure les DEUX marges — pas un mot large centré dans sa ligne",
+      "measure": "(() => { const b = document.querySelector('.vl-nfm').getBoundingClientRect(); const r = document.createRange(); r.selectNodeContents(document.querySelector('.vl-nfm__mark')); const i = r.getBoundingClientRect(); return Math.max(Math.abs(i.left - b.left), Math.abs(b.right - i.right)) / W; })()",
+      "max": 0.006
+    },
+    {
+      "name": "LE CORPS EST UNE FONCTION DE LA LARGEUR, pas un nombre : reparamétrée à 700 px, la zone garde exactement le même taux de remplissage",
+      "measure": "(() => { const root = document.querySelector('.vl-nfm'); const ref = (() => { const r = document.createRange(); r.selectNodeContents(root.querySelector('.vl-nfm__mark')); return r.getBoundingClientRect().width / root.getBoundingClientRect().width; })(); const c = root.cloneNode(true); c.style.width = '700px'; document.body.appendChild(c); const r2 = document.createRange(); r2.selectNodeContents(c.querySelector('.vl-nfm__mark')); const fill = r2.getBoundingClientRect().width / c.getBoundingClientRect().width; const ratio = parseFloat(getComputedStyle(c.querySelector('.vl-nfm__mark')).fontSize) / parseFloat(getComputedStyle(root.querySelector('.vl-nfm__mark')).fontSize); c.remove(); return (Math.abs(fill - ref) <= 0.003 && Math.abs(ratio - 700 / W) <= 0.003) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "et le mécanisme qui le permet est BIEN ARMÉ : sans contexte de conteneur, `cqw` retomberait sur la fenêtre et le réglage serait faux SANS erreur",
+      "measure": "cs('.vl-nfm','containerType') === 'inline-size' ? 1 : 0",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "UNE SEULE LIGNE : la hauteur de la boîte vaut l'interligne, jamais deux fois",
+      "measure": "box('.vl-nfm__mark').h / num('.vl-nfm__mark','fontSize')",
+      "min": 0.85,
+      "max": 1.0
+    },
+    {
+      "name": "interligne écrasé sous 1 — la boîte du nom ne porte pas d'air qu'il n'occupe pas",
+      "measure": "num('.vl-nfm__mark','lineHeight') / num('.vl-nfm__mark','fontSize')",
+      "min": 0.85,
+      "max": 0.99
+    },
+    {
+      "name": "approche NÉGATIVE : elle fait partie du réglage, c'est elle qui achète la hauteur du corps",
+      "measure": "num('.vl-nfm__mark','letterSpacing') / num('.vl-nfm__mark','fontSize')",
+      "max": -0.02
+    },
+    {
+      "name": "casse MIXTE, et par la frappe : capitaliser ce nom en ferait un titre, or c'est une signature",
+      "measure": "(cs('.vl-nfm__mark','textTransform') === 'none' && /[a-z]/.test(text('.vl-nfm__mark'))) ? 1 : 0",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "LE ® EST UN QUART DU CORPS — à sa taille naturelle il ferait une douzième lettre",
+      "measure": "num('.vl-nfm__r','fontSize') / num('.vl-nfm__mark','fontSize')",
+      "min": 0.22,
+      "max": 0.32
+    },
+    {
+      "name": "et il ne PÈSE pas dans la mesure : moins de 5 % de l'encre totale",
+      "measure": "(() => { const r = document.createRange(); r.selectNodeContents(document.querySelector('.vl-nfm__mark')); return box('.vl-nfm__r').w / r.getBoundingClientRect().width; })()",
+      "max": 0.05
+    },
+    {
+      "name": "SON SOMMET TOMBE SOUS LA LIGNE DE CAPITALE (82 % de la capitale) — au-dessus, il flotte et le bloc perd son bord haut franc",
+      "measure": "(() => { const mk = document.querySelector('.vl-nfm__mark'), rg = document.querySelector('.vl-nfm__r'); const sm = getComputedStyle(mk), sr = getComputedStyle(rg); const c = document.createElement('canvas').getContext('2d'); c.font = sm.fontWeight + ' ' + sm.fontSize + ' ' + sm.fontFamily; const hm = c.measureText('H'); const rr = document.createRange(); rr.selectNodeContents(mk.firstChild); const baseline = rr.getBoundingClientRect().top + hm.fontBoundingBoxAscent; c.font = sr.fontWeight + ' ' + sr.fontSize + ' ' + sr.fontFamily; const rm = c.measureText(rg.textContent); const rBase = rg.getBoundingClientRect().top + rm.fontBoundingBoxAscent; return (baseline - (rBase - rm.actualBoundingBoxAscent)) / hm.actualBoundingBoxAscent; })()",
+      "min": 0.6,
+      "max": 0.99
+    },
+    {
+      "name": "et son PIED reste dans la moitié haute des capitales : c'est un exposant, pas un signe posé sur la ligne de base",
+      "measure": "(() => { const mk = document.querySelector('.vl-nfm__mark'), rg = document.querySelector('.vl-nfm__r'); const sm = getComputedStyle(mk), sr = getComputedStyle(rg); const c = document.createElement('canvas').getContext('2d'); c.font = sm.fontWeight + ' ' + sm.fontSize + ' ' + sm.fontFamily; const hm = c.measureText('H'); const rr = document.createRange(); rr.selectNodeContents(mk.firstChild); const baseline = rr.getBoundingClientRect().top + hm.fontBoundingBoxAscent; c.font = sr.fontWeight + ' ' + sr.fontSize + ' ' + sr.fontFamily; const rm = c.measureText(rg.textContent); const rBase = rg.getBoundingClientRect().top + rm.fontBoundingBoxAscent; return (baseline - (rBase + rm.actualBoundingBoxDescent)) / hm.actualBoundingBoxAscent; })()",
+      "min": 0.45
+    },
+    {
+      "name": "le nom tient le plancher de contraste — un gros corps n'en dispense pas, c'est le seul objet de la page",
+      "measure": "contrast('.vl-nfm__mark')",
+      "min": 4.5
+    },
+    {
+      "name": "racine TRANSPARENTE et sans marge : cette zone est la largeur UTILE d'un conteneur qui porte déjà son fond",
+      "measure": "(() => { const s = getComputedStyle(document.querySelector('.vl-nfm')); const p = ['paddingTop','paddingRight','paddingBottom','paddingLeft'].map((k) => parseFloat(s[k])); return (s.backgroundColor === 'rgba(0, 0, 0, 0)' && Math.max(...p) === 0) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    }
+  ],
+  "notes": "Le pattern ne porte pas une taille, il porte une RÈGLE : `font-size: calc(100cqw / chasse)`. La chasse est le rapport mesuré largeur-d'encre / corps du mot — 5,270 pour « Northbeam® » en Helvetica Bold à -0,035em, 5,196 pour le mot de la référence, qui a la même longueur et pas la même chasse. Écrire 201 px à la place marcherait aujourd'hui et mentirait demain : c'est exactement la faute que la spec de `ref-08` a corrigée deux fois (204 relevé contre 112 annoncé), parce que 204 n'est pas un rang de charte, c'est une largeur déguisée en taille.\n\nD'où le benchmark central, qui ne mesure pas un état mais une DÉRIVATION : la zone est clonée à 700 px de large, et on vérifie que le taux de remplissage y est le même à 0,3 % près et que le corps a suivi le rapport 700/1060. Une constante recopiée passerait la saturation à 1060 et tomberait au clone. Son corollaire est l'assertion sur `container-type` : sans contexte de conteneur, `cqw` se résout sur la FENÊTRE — le réglage devient faux sans qu'aucune erreur ne soit levée, ce qui est la pire des pannes.\n\nUn `h1` est un BLOC : sa boîte fait la largeur utile quoi qu'on écrive dedans. Toute assertion de saturation ou de débord écrite sur `getBoundingClientRect()` de l'élément est donc VIDE — elle sort verte sur un nom qui déborde. Les trois assertions de mesure passent par un `Range` sur le contenu, qui donne l'ENCRE. Le piège a été payé sur `layout-14` et il est le même ici.\n\nLe calage du ® ne fait pas un pattern à lui seul — il tiendrait dans sa propre phrase, ce que l'élagage du 30/07 interdit — mais il n'est pas non plus un détail : ses deux réglages sont solidaires du corps. 0,26 em, et remonté de 1,52 em de son PROPRE corps, soit 0,395 em de celui du nom. Résultat mesuré : sommet à 82 % de la hauteur de capitale, pied à 55 %. Les deux bornes comptent dans des sens opposés — au-dessus de la ligne de capitale il flotte et le bloc perd son bord haut franc ; posé sur la ligne de base il redevient une lettre. Les deux assertions les mesurent au canvas (`actualBoundingBox*`) et non sur les boîtes CSS, parce que la boîte d'un inline est sa boîte de FONTE, pas son encre — et la boîte de fonte d'Helvetica déborde de 19 % son propre corps.\n\nLa casse est mixte et frappée telle quelle, à l'inverse de `title-03-wordmark-bottom-left` qui capitalise par le CSS. Ce n'est pas une préférence : un nom en capitales se lit comme un titre, donc comme une ouverture ; en casse mixte il se lit comme une signature. Les deux patterns se distinguent aussi par la ligne — une ici, deux là-bas — et c'est pour ça qu'aucun ne peut absorber l'autre.\n\nCe fragment n'a pas de fond et pas de marge : sur la référence il occupe le slot `mark` de `layout-14-statement-first`, qui lui donne sa largeur utile et porte la page. Les deux ne se recouvrent sur rien — `layout-14` mesure l'ordre de lecture et les blancs, celui-ci mesure le réglage du nom."
+}

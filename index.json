@@ -20,9 +20,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 48,
+    "patterns": 50,
     "refs": 16,
-    "checkable": 41
+    "checkable": 43
   },
   "patterns": [
     {
@@ -5067,8 +5067,8 @@
         "slide",
         "print"
       ],
-      "intent": "Poser trois images de façon qu'elles se lisent comme UN bloc et non comme trois objets : même ratio pour les trois, gouttière constante et petite devant une cellule, bande remplie exactement d'un bord à l'autre. Le ratio des cellules et leurs poids de largeur sont les deux seuls paramètres — c'est par eux que la même bande donne un triptyque portrait dans un coin ou une frise paysage sur toute une largeur.",
-      "when_to_use": "Un bloc de trois visuels qui doit peser comme une masse unique — contrepoids d'un titre, frise de pied de carte, bandeau de trois vues d'un même sujet. Se pose dans n'importe quelle largeur : la bande la remplit et sa hauteur en découle par le ratio.",
+      "intent": "Poser trois images de façon qu'elles se lisent comme UN bloc et non comme trois objets : une hauteur COMMUNE, une gouttière constante et petite devant une cellule, une bande remplie exactement d'un bord à l'autre. La hauteur, les trois poids de largeur et — quand la hauteur est laissée libre — le ratio qui la déduit sont les seuls paramètres : c'est par eux que la même bande donne un triptyque portrait à poids égaux dans un coin, ou une frise à cellules inégales sur toute une largeur.",
+      "when_to_use": "Un bloc de trois visuels qui doit peser comme une masse unique — contrepoids d'un titre, frise de pied de page, bandeau de trois vues d'un même sujet. Se pose dans n'importe quelle largeur : la bande la remplit, et sa hauteur est soit imposée, soit déduite du ratio de la première cellule. Des poids inégaux sont un usage NORMAL du pattern, pas une entorse — c'est même eux qui font qu'une bande se lit comme une suite de photographies plutôt que comme une grille.",
       "avoid_when": "Une des trois images doit être regardée pour elle-même : la bande écrase les hiérarchies, et une image à mettre en avant demande une composition à mise en avant. Écarter aussi au-delà de trois cellules — à quatre, chaque vignette passe sous le quart de la largeur et la bande devient une planche de contact.",
       "tags": [
         "images",
@@ -5165,14 +5165,14 @@
       },
       "benchmarks": [
         {
-          "name": "MÊME RATIO pour les trois cellules — c'est lui qui fait la bande, pas la gouttière",
-          "measure": "(() => { const r = [...document.querySelectorAll('.vl-tri__cell')].map((e) => { const b = e.getBoundingClientRect(); return b.width / b.height; }); return Math.max(...r) - Math.min(...r); })()",
-          "max": 0.01
-        },
-        {
-          "name": "et donc la MÊME hauteur : la bande a un pied et un sommet uniques",
+          "name": "LA LOI DE LA BANDE — hauteur COMMUNE aux trois cellules : un pied et un sommet uniques",
           "measure": "(() => { const h = [...document.querySelectorAll('.vl-tri__cell')].map((e) => e.getBoundingClientRect().height); return (Math.max(...h) - Math.min(...h)) / H; })()",
           "max": 0.005
+        },
+        {
+          "name": "à poids égaux le même ratio en DÉCOULE — corollaire du cas ref-07, pas la loi (cf. le reparamétrage ref-08 plus bas)",
+          "measure": "(() => { const r = [...document.querySelectorAll('.vl-tri__cell')].map((e) => { const b = e.getBoundingClientRect(); return b.width / b.height; }); return Math.max(...r) - Math.min(...r); })()",
+          "max": 0.01
         },
         {
           "name": "GOUTTIÈRE CONSTANTE : les deux intervalles sont le même à moins de 0,2 % près",
@@ -5213,6 +5213,17 @@
           "tol": 0.01
         },
         {
+          "name": "UNE SEULE BANDE, DEUX RÉFÉRENCES — reparamétrée en ref-08 (1060 large, gouttière 16, hauteur 380, poids 1 / 1,31 / 1,14), elle rend les cellules relevées sur le deck : 298 / 390,3 / 339,7",
+          "measure": "(() => { const c = document.querySelector('.vl-tri').cloneNode(true); c.style.cssText = 'width:1060px;--vl-gap:16px;--vl-tri-h:380px;--vl-tri-ratio:auto;--vl-tri-w1:1;--vl-tri-w2:1.31;--vl-tri-w3:1.14'; document.body.appendChild(c); const b = [...c.querySelectorAll('.vl-tri__cell')].map((e) => e.getBoundingClientRect()); const want = [298, 390.3, 339.7]; const err = Math.max(...b.map((r, i) => Math.abs(r.width - want[i]))) / 1060; c.remove(); return err; })()",
+          "max": 0.002
+        },
+        {
+          "name": "et c'est bien la HAUTEUR qui les tient, pas le ratio : reparamétrée, la bande garde une hauteur unique alors que les trois ratios s'écartent de plus de 0,2",
+          "measure": "(() => { const c = document.querySelector('.vl-tri').cloneNode(true); c.style.cssText = 'width:1060px;--vl-gap:16px;--vl-tri-h:380px;--vl-tri-ratio:auto;--vl-tri-w1:1;--vl-tri-w2:1.31;--vl-tri-w3:1.14'; document.body.appendChild(c); const b = [...c.querySelectorAll('.vl-tri__cell')].map((e) => e.getBoundingClientRect()); const hs = b.map((r) => r.height), rs = b.map((r) => r.width / r.height); const flat = (Math.max(...hs) - Math.min(...hs)) / 380; const spread = Math.max(...rs) - Math.min(...rs); const full = Math.abs((b[2].right - b[0].left) - 1060) / 1060; c.remove(); return (flat <= 0.005 && spread >= 0.2 && full <= 0.002) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
           "name": "chaque cellule CLIPPE son image : une bande pleine n'a pas de bord de fond visible",
           "measure": "[...document.querySelectorAll('.vl-tri__cell')].filter((e) => getComputedStyle(e).overflow === 'hidden').length",
           "expect": 3,
@@ -5237,6 +5248,183 @@
       ],
       "pptx": null,
       "html": "patterns/layout-13-image-triptych.html"
+    },
+    {
+      "id": "layout-14-statement-first",
+      "name": "Page qui parle avant de se nommer",
+      "family": "layout",
+      "ref": "ref-08-swiss-studio-hero",
+      "media": [
+        "web",
+        "slide"
+      ],
+      "intent": "Inverser l'ordre de lecture d'un hero : la phrase parle en premier dans un petit corps, la navigation lui fait face à la même hauteur, et le nom de marque n'arrive qu'ensuite — mais il prend alors toute la largeur utile, sans qu'AUCUNE taille intermédiaire n'existe entre les deux. C'est ce saut sans palier, et le blanc plus large qui le précède, qui font qu'un nom devient un événement au lieu d'être le plus gros d'une série.",
+      "when_to_use": "Une page d'accueil ou une couverture dont le message vaut mieux que le nom : studio, agence, maison déjà connue de ceux à qui elle parle. Aussi quand la charte n'a aucun accent coloré — la composition tient entièrement par l'échelle et le blanc, donc elle survit à une palette de trois valeurs.",
+      "avoid_when": "Le nom doit être reconnu AVANT le message — page institutionnelle, premier contact avec un public qui ne connaît pas la maison : ici le nom arrive en second, et cet ordre suppose que la phrase se suffit. Écarter aussi quand le nom tient sur deux lignes : le saut d'échelle repose sur un mot unique qui sature la largeur utile, et sur deux lignes le nom cesse d'être un signe pour redevenir un bloc de texte.",
+      "tags": [
+        "hero",
+        "accueil",
+        "ordre-de-lecture",
+        "echelle",
+        "wordmark",
+        "nav",
+        "bande",
+        "grotesk",
+        "neutre",
+        "blanc"
+      ],
+      "vars": [
+        {
+          "name": "--vl-card",
+          "role": "fond de la page — c'est la page elle-même, il n'y a pas de sol derrière",
+          "default": "#F6F5F2"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "encre du nom et de la nav",
+          "default": "#111111"
+        },
+        {
+          "name": "--vl-ink-soft",
+          "role": "encre de la phrase — le seul texte à LIRE, donc le seul à ne pas être au maximum du contraste",
+          "default": "#2A2A28"
+        },
+        {
+          "name": "--vl-margin",
+          "role": "marge de page, égale sur les quatre côtés",
+          "default": "40px"
+        },
+        {
+          "name": "--vl-radius-card",
+          "role": "rayon de la page",
+          "default": "4px"
+        },
+        {
+          "name": "--vl-radius-photo",
+          "role": "rayon des cellules de la bande de pied",
+          "default": "8px"
+        },
+        {
+          "name": "--vl-gap-photo",
+          "role": "gouttière de la bande de pied",
+          "default": "16px"
+        }
+      ],
+      "slots": [
+        "statement",
+        "nav",
+        "mark",
+        "strip"
+      ],
+      "geometry": {
+        "root": ".vl-sf",
+        "frame": [
+          1140,
+          848
+        ],
+        "ratios": {
+          "margin_over_frame": 0.0351,
+          "margin_over_frame_h": 0.0472,
+          "statement_measure_over_frame": 0.614,
+          "strip_h_over_frame_h": 0.448,
+          "strip_w_over_frame": 0.9298,
+          "mark_over_statement_size": 7.44
+        },
+        "type_px": {
+          "statement": 27,
+          "nav": 18,
+          "mark": 201
+        },
+        "pad_ratio": {
+          "top": 0.0351,
+          "x": 0.0351,
+          "bottom": 0.0351
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "L'ORDRE DE LECTURE — phrase, puis nom, puis bande : trois zones qui ne se chevauchent jamais",
+          "measure": "(() => { const s = box('.vl-sf__statement'), m = box('.vl-sf__mark'), t = box('.vl-sf__strip'); return (s.bottom <= m.top + 1 && m.bottom <= t.top + 1) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "la phrase parle EN PREMIER : elle affleure la marge haute, rien n'est au-dessus d'elle",
+          "measure": "box('.vl-sf__statement').top / H",
+          "expect": 0.0472,
+          "tol": 0.004
+        },
+        {
+          "name": "la nav lui FAIT FACE : même bord haut à moins de 1 % de la hauteur près",
+          "measure": "Math.abs(box('.vl-sf__nav').top - box('.vl-sf__statement').top) / H",
+          "max": 0.01
+        },
+        {
+          "name": "et elle est fer à DROITE sur la marge : les deux blocs de tête tiennent les deux bords",
+          "measure": "(W - box('.vl-sf__nav').right) / W",
+          "expect": 0.0351,
+          "tol": 0.004
+        },
+        {
+          "name": "les deux blocs de tête ne se croisent jamais : la mesure de la phrase laisse la place à la nav",
+          "measure": "(box('.vl-sf__nav').left - box('.vl-sf__statement').right) / W",
+          "min": 0.02
+        },
+        {
+          "name": "SAUT D'ÉCHELLE : le corps du nom vaut au moins 7 fois celui de la phrase",
+          "measure": "num('.vl-sf__mark','fontSize') / num('.vl-sf__statement','fontSize')",
+          "min": 7,
+          "max": 9
+        },
+        {
+          "name": "et SANS PALIER : le troisième corps de la page (la nav) est plus PETIT que la phrase, pas entre elle et le nom",
+          "measure": "num('.vl-sf__nav','fontSize') < num('.vl-sf__statement','fontSize') ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "le blanc qui SÉPARE la phrase du nom est plus large que celui qui suit le nom — c'est lui qui fait lever les yeux",
+          "measure": "(box('.vl-sf__mark').top - box('.vl-sf__statement').bottom) / (box('.vl-sf__strip').top - box('.vl-sf__mark').bottom)",
+          "min": 1.15
+        },
+        {
+          "name": "la bande tombe en PIED : son bas affleure la marge basse",
+          "measure": "(H - box('.vl-sf__strip').bottom) / H",
+          "expect": 0.0472,
+          "tol": 0.004
+        },
+        {
+          "name": "elle occupe TOUTE la largeur utile — d'une marge à l'autre, jamais une bande centrée plus étroite",
+          "measure": "box('.vl-sf__strip').w / W",
+          "expect": 0.9298,
+          "tol": 0.004
+        },
+        {
+          "name": "et elle pèse près de 45 % de la hauteur : assez pour FERMER la page, pas assez pour la partager en deux",
+          "measure": "box('.vl-sf__strip').h / H",
+          "expect": 0.448,
+          "tol": 0.02
+        },
+        {
+          "name": "marges ÉGALES sur les quatre côtés — une seule valeur, c'est ce qui fait que la page est la surface",
+          "measure": "(() => { const s = getComputedStyle(document.querySelector('.vl-sf')); const p = ['paddingTop','paddingRight','paddingBottom','paddingLeft'].map((k) => parseFloat(s[k])); return (Math.max(...p) - Math.min(...p)) / W; })()",
+          "max": 0.001
+        },
+        {
+          "name": "rien ne franchit la marge : mesuré sur l'ENCRE du nom (un h1 est un bloc — sa boîte fait la largeur utile quoi qu'on y écrive, donc elle ne prouve rien)",
+          "measure": "(() => { const el = document.querySelector('.vl-sf__mark'); const r = document.createRange(); r.selectNodeContents(el); const ink = r.getBoundingClientRect(); const lim = W - 2 * num('.vl-sf','paddingLeft'); return ink.width / lim; })()",
+          "min": 0.985,
+          "max": 1
+        },
+        {
+          "name": "la phrase reste une ADRESSE et pas un paragraphe : sa mesure est bornée sous les deux tiers de la page",
+          "measure": "box('.vl-sf__statement').w / W",
+          "min": 0.35,
+          "max": 0.65
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/layout-14-statement-first.html"
     },
     {
       "id": "list-01-giant-numbers",
@@ -7130,6 +7318,152 @@
       ],
       "pptx": null,
       "html": "patterns/title-03-wordmark-bottom-left.html"
+    },
+    {
+      "id": "title-04-name-fills-measure",
+      "name": "Nom réglé à la mesure, ® sous la capitale",
+      "family": "title",
+      "ref": "ref-08-swiss-studio-hero",
+      "media": [
+        "web",
+        "slide"
+      ],
+      "intent": "Régler un nom de marque à la LARGEUR plutôt qu'à une taille : le corps n'est pas choisi dans l'échelle de la charte, il est déduit de la mesure disponible, et l'encre du mot affleure les deux marges à 99,6 %. Le ® qui le suit est calé sous la hauteur de capitale — un quart du corps, remonté de 55 % de la capitale — pour qu'il signe le nom sans devenir sa douzième lettre.",
+      "when_to_use": "Un hero, une couverture ou un pied de page dont le nom de marque doit faire ENSEIGNE : un mot unique, court, qui prend toute la mesure et devient une forme avant d'être un texte. Aussi partout où une charte sans accent coloré doit produire un point fort — ici c'est l'échelle qui fait l'accent, donc trois valeurs d'encre suffisent.",
+      "avoid_when": "Le nom tient sur deux mots ou deux lignes : le réglage suppose une ligne unique que l'on peut étirer d'une marge à l'autre, et deux lignes redonnent au nom un statut de bloc de texte, ce qui est un autre pattern (title-03-wordmark-bottom-left). Écarter aussi quand le mot doit rester à taille FIXE d'un support à l'autre — un logotype normé, une signature de charte : ici le corps change avec la largeur du conteneur, c'est le principe.",
+      "tags": [
+        "wordmark",
+        "nom-de-marque",
+        "logotype",
+        "hero",
+        "echelle",
+        "largeur-utile",
+        "registered",
+        "exposant",
+        "grotesk",
+        "container-query"
+      ],
+      "vars": [
+        {
+          "name": "--vl-ink",
+          "role": "encre du nom — la valeur la plus contrastée de la charte, c'est le plus gros objet de la page",
+          "default": "#111111"
+        },
+        {
+          "name": "--vl-mark-chasse",
+          "role": "la CHASSE du mot : rapport mesuré largeur-d'encre / corps, pour CE mot dans CETTE graisse à CETTE approche. C'est lui qui convertit la largeur disponible en corps — il se remesure dès qu'on change le mot, la police ou l'approche, jamais il ne s'estime",
+          "default": "5.270"
+        }
+      ],
+      "slots": [
+        "mark"
+      ],
+      "geometry": {
+        "root": ".vl-nfm",
+        "frame": [
+          1060,
+          185
+        ],
+        "ratios": {
+          "ink_fill_of_measure": 0.996,
+          "mark_leading": 0.92,
+          "mark_tracking": -0.035,
+          "r_size_over_mark": 0.26,
+          "r_top_over_cap": 0.82,
+          "r_baseline_rise_over_cap": 0.548
+        },
+        "type_px": {
+          "mark": 201
+        },
+        "pad_ratio": {
+          "top": 0,
+          "x": 0,
+          "bottom": 0
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "L'ENCRE SATURE LA MESURE — c'est tout le pattern : 99,6 % de la largeur, et jamais plus de 100 %",
+          "measure": "(() => { const r = document.createRange(); r.selectNodeContents(document.querySelector('.vl-nfm__mark')); return r.getBoundingClientRect().width / W; })()",
+          "min": 0.99,
+          "max": 1
+        },
+        {
+          "name": "et elle affleure les DEUX marges — pas un mot large centré dans sa ligne",
+          "measure": "(() => { const b = document.querySelector('.vl-nfm').getBoundingClientRect(); const r = document.createRange(); r.selectNodeContents(document.querySelector('.vl-nfm__mark')); const i = r.getBoundingClientRect(); return Math.max(Math.abs(i.left - b.left), Math.abs(b.right - i.right)) / W; })()",
+          "max": 0.006
+        },
+        {
+          "name": "LE CORPS EST UNE FONCTION DE LA LARGEUR, pas un nombre : reparamétrée à 700 px, la zone garde exactement le même taux de remplissage",
+          "measure": "(() => { const root = document.querySelector('.vl-nfm'); const ref = (() => { const r = document.createRange(); r.selectNodeContents(root.querySelector('.vl-nfm__mark')); return r.getBoundingClientRect().width / root.getBoundingClientRect().width; })(); const c = root.cloneNode(true); c.style.width = '700px'; document.body.appendChild(c); const r2 = document.createRange(); r2.selectNodeContents(c.querySelector('.vl-nfm__mark')); const fill = r2.getBoundingClientRect().width / c.getBoundingClientRect().width; const ratio = parseFloat(getComputedStyle(c.querySelector('.vl-nfm__mark')).fontSize) / parseFloat(getComputedStyle(root.querySelector('.vl-nfm__mark')).fontSize); c.remove(); return (Math.abs(fill - ref) <= 0.003 && Math.abs(ratio - 700 / W) <= 0.003) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "et le mécanisme qui le permet est BIEN ARMÉ : sans contexte de conteneur, `cqw` retomberait sur la fenêtre et le réglage serait faux SANS erreur",
+          "measure": "cs('.vl-nfm','containerType') === 'inline-size' ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "UNE SEULE LIGNE : la hauteur de la boîte vaut l'interligne, jamais deux fois",
+          "measure": "box('.vl-nfm__mark').h / num('.vl-nfm__mark','fontSize')",
+          "min": 0.85,
+          "max": 1
+        },
+        {
+          "name": "interligne écrasé sous 1 — la boîte du nom ne porte pas d'air qu'il n'occupe pas",
+          "measure": "num('.vl-nfm__mark','lineHeight') / num('.vl-nfm__mark','fontSize')",
+          "min": 0.85,
+          "max": 0.99
+        },
+        {
+          "name": "approche NÉGATIVE : elle fait partie du réglage, c'est elle qui achète la hauteur du corps",
+          "measure": "num('.vl-nfm__mark','letterSpacing') / num('.vl-nfm__mark','fontSize')",
+          "max": -0.02
+        },
+        {
+          "name": "casse MIXTE, et par la frappe : capitaliser ce nom en ferait un titre, or c'est une signature",
+          "measure": "(cs('.vl-nfm__mark','textTransform') === 'none' && /[a-z]/.test(text('.vl-nfm__mark'))) ? 1 : 0",
+          "expect": 1,
+          "tol": 0
+        },
+        {
+          "name": "LE ® EST UN QUART DU CORPS — à sa taille naturelle il ferait une douzième lettre",
+          "measure": "num('.vl-nfm__r','fontSize') / num('.vl-nfm__mark','fontSize')",
+          "min": 0.22,
+          "max": 0.32
+        },
+        {
+          "name": "et il ne PÈSE pas dans la mesure : moins de 5 % de l'encre totale",
+          "measure": "(() => { const r = document.createRange(); r.selectNodeContents(document.querySelector('.vl-nfm__mark')); return box('.vl-nfm__r').w / r.getBoundingClientRect().width; })()",
+          "max": 0.05
+        },
+        {
+          "name": "SON SOMMET TOMBE SOUS LA LIGNE DE CAPITALE (82 % de la capitale) — au-dessus, il flotte et le bloc perd son bord haut franc",
+          "measure": "(() => { const mk = document.querySelector('.vl-nfm__mark'), rg = document.querySelector('.vl-nfm__r'); const sm = getComputedStyle(mk), sr = getComputedStyle(rg); const c = document.createElement('canvas').getContext('2d'); c.font = sm.fontWeight + ' ' + sm.fontSize + ' ' + sm.fontFamily; const hm = c.measureText('H'); const rr = document.createRange(); rr.selectNodeContents(mk.firstChild); const baseline = rr.getBoundingClientRect().top + hm.fontBoundingBoxAscent; c.font = sr.fontWeight + ' ' + sr.fontSize + ' ' + sr.fontFamily; const rm = c.measureText(rg.textContent); const rBase = rg.getBoundingClientRect().top + rm.fontBoundingBoxAscent; return (baseline - (rBase - rm.actualBoundingBoxAscent)) / hm.actualBoundingBoxAscent; })()",
+          "min": 0.6,
+          "max": 0.99
+        },
+        {
+          "name": "et son PIED reste dans la moitié haute des capitales : c'est un exposant, pas un signe posé sur la ligne de base",
+          "measure": "(() => { const mk = document.querySelector('.vl-nfm__mark'), rg = document.querySelector('.vl-nfm__r'); const sm = getComputedStyle(mk), sr = getComputedStyle(rg); const c = document.createElement('canvas').getContext('2d'); c.font = sm.fontWeight + ' ' + sm.fontSize + ' ' + sm.fontFamily; const hm = c.measureText('H'); const rr = document.createRange(); rr.selectNodeContents(mk.firstChild); const baseline = rr.getBoundingClientRect().top + hm.fontBoundingBoxAscent; c.font = sr.fontWeight + ' ' + sr.fontSize + ' ' + sr.fontFamily; const rm = c.measureText(rg.textContent); const rBase = rg.getBoundingClientRect().top + rm.fontBoundingBoxAscent; return (baseline - (rBase + rm.actualBoundingBoxDescent)) / hm.actualBoundingBoxAscent; })()",
+          "min": 0.45
+        },
+        {
+          "name": "le nom tient le plancher de contraste — un gros corps n'en dispense pas, c'est le seul objet de la page",
+          "measure": "contrast('.vl-nfm__mark')",
+          "min": 4.5
+        },
+        {
+          "name": "racine TRANSPARENTE et sans marge : cette zone est la largeur UTILE d'un conteneur qui porte déjà son fond",
+          "measure": "(() => { const s = getComputedStyle(document.querySelector('.vl-nfm')); const p = ['paddingTop','paddingRight','paddingBottom','paddingLeft'].map((k) => parseFloat(s[k])); return (s.backgroundColor === 'rgba(0, 0, 0, 0)' && Math.max(...p) === 0) ? 1 : 0; })()",
+          "expect": 1,
+          "tol": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/title-04-name-fills-measure.html"
     }
   ],
   "refs": [
@@ -7337,7 +7671,10 @@
     {
       "id": "ref-08-swiss-studio-hero",
       "name": "Suisse studio — hero web Studioform®",
-      "patterns": [],
+      "patterns": [
+        "layout-14-statement-first",
+        "title-04-name-fills-measure"
+      ],
       "deck": "decks/ref-08-swiss-studio-hero.html",
       "tokens": {
         "--vl-bg": "#F6F5F2",
@@ -7356,8 +7693,8 @@
         "scale": {
           "wordmark": "204px / 1 / 700 / -0.035em — se règle à la largeur, pas au nombre",
           "registered": "0.30em du wordmark, en exposant",
-          "statement": "21px / 1.45 / 400 — 3 lignes, ≈ 43 caractères par ligne",
-          "nav": "15px / 1 / 400"
+          "statement": "27px / 1.4 / 400 — 3 lignes, ≈ 46 caractères par ligne",
+          "nav": "18px / 1 / 400"
         }
       }
     },

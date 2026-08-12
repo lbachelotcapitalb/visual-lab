@@ -133,8 +133,10 @@ CHECKPOINT_STEP: S5
       la bande en ref-08 pour prouver « une seule bande, deux références »
 - [x] `layout-14-…` — la composition à ordre de lecture inversé (phrase d'abord, nom géant
       ensuite, bande en pied)
-- [ ] `title-04-…` — le nom réglé pour affleurer les deux marges + le ® en exposant
-      (absorbe `type-registered-superscript`, qui tient dans sa propre phrase)
+- [x] `title-04-name-fills-measure` — le nom réglé pour affleurer les deux marges + le ® en
+      exposant (absorbe `type-registered-superscript`, qui tient dans sa propre phrase) :
+      le corps est DÉRIVÉ de la largeur (`calc(100cqw / chasse)`), et un benchmark le prouve
+      en reparamétrant la zone à 700 px — contre-épreuve faite, un corps en dur y sort à 1,51
 - [ ] gate + regard sur le rendu + doc (README/ROADMAP) + commit final
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à

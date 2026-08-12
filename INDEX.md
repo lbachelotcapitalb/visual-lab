@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-48 patterns · 16 références · 41 vérifiés par benchmarks mesurés.
+50 patterns · 16 références · 43 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -59,7 +59,8 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `layout-10-bleed-column-inset` | Faire porter une slide entière par les IMAGES, sans marge ni carte : deux photos à fond perdu qui touchent les quatre bords de la scène, séparées par une COUTURE unique de la couleur de page — jamais une gouttière symétrique —, et une troisième image beaucoup plus petite posée par-dessus l'une d'elles, sans partager une seule arête avec le lit. C'est cette incrustation flottante, et elle seule, qui donne de la profondeur à une composition entièrement plate. | slide web | 16 | ref-10-campaign-board-red |
 | `layout-11-hero-card-on-photo` | Poser la coque d'un hero de page en DEUX couches seulement : une photo pleine page qui est le sol de la page — pas un décor de maquette, pas une mise en scène —, et une carte unie qui y est INCRUSTÉE, marges de sol strictement égales à gauche et à droite, rayon discret et ombre descendante qui la fait flotter. Le sol reste une photo : posée sur un aplat de sa propre couleur, la carte perd son bord et le hero n'a plus de sol du tout. | web | 14 | ref-07-retro-brand-hero |
 | `layout-12-nav-three-zone` | Poser une navigation en trois zones — liens à gauche, nom de marque au centre, bouton d'action à droite — dont le nom est calé sur l'axe du CONTENEUR et non entre ses deux voisins. Les zones latérales n'ont jamais la même largeur : un centrage entre elles fait dériver le nom de plusieurs dizaines de pixels, et rien ne le signale tant qu'on ne le mesure pas. La zone centrale sort donc du flux, ce qui est la seule construction où l'axe du nom ne dépend pas de ce qu'on écrit à ses côtés. | web slide | 12 | ref-07-retro-brand-hero |
-| `layout-13-image-triptych` | Poser trois images de façon qu'elles se lisent comme UN bloc et non comme trois objets : même ratio pour les trois, gouttière constante et petite devant une cellule, bande remplie exactement d'un bord à l'autre. Le ratio des cellules et leurs poids de largeur sont les deux seuls paramètres — c'est par eux que la même bande donne un triptyque portrait dans un coin ou une frise paysage sur toute une largeur. | web slide print | 13 | ref-07-retro-brand-hero |
+| `layout-13-image-triptych` | Poser trois images de façon qu'elles se lisent comme UN bloc et non comme trois objets : une hauteur COMMUNE, une gouttière constante et petite devant une cellule, une bande remplie exactement d'un bord à l'autre. La hauteur, les trois poids de largeur et — quand la hauteur est laissée libre — le ratio qui la déduit sont les seuls paramètres : c'est par eux que la même bande donne un triptyque portrait à poids égaux dans un coin, ou une frise à cellules inégales sur toute une largeur. | web slide print | 15 | ref-07-retro-brand-hero |
+| `layout-14-statement-first` | Inverser l'ordre de lecture d'un hero : la phrase parle en premier dans un petit corps, la navigation lui fait face à la même hauteur, et le nom de marque n'arrive qu'ensuite — mais il prend alors toute la largeur utile, sans qu'AUCUNE taille intermédiaire n'existe entre les deux. C'est ce saut sans palier, et le blanc plus large qui le précède, qui font qu'un nom devient un événement au lieu d'être le plus gros d'une série. | web slide | 14 | ref-08-swiss-studio-hero |
 | `list-01-giant-numbers` | Aligner trois à quatre arguments de même rang en colonnes, chacun ouvert par un numéro ou un chiffre démesuré qui sert à la fois de repère de lecture et de seule tache de couleur du bloc. | slide web | — | ref-04-swiss-investor-blue |
 | `list-02-ruled-index` | Lister les sections d'un document en donnant à chacune son libellé, une ligne d'explication et son numéro à droite, séparées par un filet fin qui appartient à l'entrée qu'il suit. | slide web | 9 | ref-06-orange-notched |
 | `list-03-two-column-toc` | Faire tenir un sommaire de dix à quatorze sections sur une seule slide, en deux colonnes numérotées, lisible d'un coup d'œil et refermable aussitôt. | slide web | — | ref-04-swiss-investor-blue |
@@ -74,6 +75,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `title-01-leading-rule` | Marquer le titre d'une slide d'un filet vertical d'accent sans ajouter ni couleur au texte ni élément décoratif : le filet est le seul accent du titre, et il est collé au mot. | slide web | 7 | ref-06-orange-notched |
 | `title-02-condensed-overlay-stack` | Tenir une slide entière avec du TEXTE SEUL — aucun aplat, aucun trait, aucune boîte — en posant trois blocs sur la scène : un titre condensé noir à l'interligne écrasé, le numéro de section entre parenthèses au MÊME fer que lui mais à l'autre bout de la colonne, et un contrepoids en micro-capitales au coin diagonalement opposé. Le cadre est transparent : il se pose par-dessus des images sans rien leur enlever. | slide web | 21 | ref-10-campaign-board-red |
 | `title-03-wordmark-bottom-left` | Fermer une page d'accueil par le nom de la marque plutôt que de l'ouvrir par lui : wordmark de deux lignes, fer à gauche, posé sur la marge BASSE, et une réserve visuelle au coin diagonalement opposé qui l'empêche de faire basculer la page. Les deux blocs ne se croisent jamais en hauteur — c'est la seule chose qui fait lire une diagonale plutôt que deux objets empilés. | web slide social | 18 | ref-07-retro-brand-hero |
+| `title-04-name-fills-measure` | Régler un nom de marque à la LARGEUR plutôt qu'à une taille : le corps n'est pas choisi dans l'échelle de la charte, il est déduit de la mesure disponible, et l'encre du mot affleure les deux marges à 99,6 %. Le ® qui le suit est calé sous la hauteur de capitale — un quart du corps, remonté de 55 % de la capitale — pour qu'il signe le nom sans devenir sa douzième lettre. | web slide | 14 | ref-08-swiss-studio-hero |
 
 ## Détail
 
@@ -354,11 +356,19 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 
 **layout-13-image-triptych** — Triptyque d'images en bande
 
-- employer : Un bloc de trois visuels qui doit peser comme une masse unique — contrepoids d'un titre, frise de pied de carte, bandeau de trois vues d'un même sujet. Se pose dans n'importe quelle largeur : la bande la remplit et sa hauteur en découle par le ratio.
+- employer : Un bloc de trois visuels qui doit peser comme une masse unique — contrepoids d'un titre, frise de pied de page, bandeau de trois vues d'un même sujet. Se pose dans n'importe quelle largeur : la bande la remplit, et sa hauteur est soit imposée, soit déduite du ratio de la première cellule. Des poids inégaux sont un usage NORMAL du pattern, pas une entorse — c'est même eux qui font qu'une bande se lit comme une suite de photographies plutôt que comme une grille.
 - éviter : Une des trois images doit être regardée pour elle-même : la bande écrase les hiérarchies, et une image à mettre en avant demande une composition à mise en avant. Écarter aussi au-delà de trois cellules — à quatre, chaque vignette passe sous le quart de la largeur et la bande devient une planche de contact.
 - à remplir : cell-a, cell-b, cell-c
 - variables : --vl-gap, --vl-radius-photo, --vl-ph-a-hi, --vl-ph-a-lo, --vl-ph-a-crest, --vl-ph-b-sky, --vl-ph-b-canvas, --vl-ph-b-canvas-lo, --vl-ph-b-pole, --vl-ph-c-hi, --vl-ph-c-lo
 - tags : images, triptyque, bande, frise, photos, grille, gouttiere, ratio, flex, media
+
+**layout-14-statement-first** — Page qui parle avant de se nommer
+
+- employer : Une page d'accueil ou une couverture dont le message vaut mieux que le nom : studio, agence, maison déjà connue de ceux à qui elle parle. Aussi quand la charte n'a aucun accent coloré — la composition tient entièrement par l'échelle et le blanc, donc elle survit à une palette de trois valeurs.
+- éviter : Le nom doit être reconnu AVANT le message — page institutionnelle, premier contact avec un public qui ne connaît pas la maison : ici le nom arrive en second, et cet ordre suppose que la phrase se suffit. Écarter aussi quand le nom tient sur deux lignes : le saut d'échelle repose sur un mot unique qui sature la largeur utile, et sur deux lignes le nom cesse d'être un signe pour redevenir un bloc de texte.
+- à remplir : statement, nav, mark, strip
+- variables : --vl-card, --vl-ink, --vl-ink-soft, --vl-margin, --vl-radius-card, --vl-radius-photo, --vl-gap-photo
+- tags : hero, accueil, ordre-de-lecture, echelle, wordmark, nav, bande, grotesk, neutre, blanc
 
 ### list
 
@@ -481,6 +491,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-accent, --vl-ink, --vl-radius-photo
 - tags : wordmark, logotype, marque, hero, pied, diagonale, contrepoids, display, deux-lignes, interligne-serre
 
+**title-04-name-fills-measure** — Nom réglé à la mesure, ® sous la capitale
+
+- employer : Un hero, une couverture ou un pied de page dont le nom de marque doit faire ENSEIGNE : un mot unique, court, qui prend toute la mesure et devient une forme avant d'être un texte. Aussi partout où une charte sans accent coloré doit produire un point fort — ici c'est l'échelle qui fait l'accent, donc trois valeurs d'encre suffisent.
+- éviter : Le nom tient sur deux mots ou deux lignes : le réglage suppose une ligne unique que l'on peut étirer d'une marge à l'autre, et deux lignes redonnent au nom un statut de bloc de texte, ce qui est un autre pattern (title-03-wordmark-bottom-left). Écarter aussi quand le mot doit rester à taille FIXE d'un support à l'autre — un logotype normé, une signature de charte : ici le corps change avec la largeur du conteneur, c'est le principe.
+- à remplir : mark
+- variables : --vl-ink, --vl-mark-chasse
+- tags : wordmark, nom-de-marque, logotype, hero, echelle, largeur-utile, registered, exposant, grotesk, container-query
+
 ## Références
 
 | référence | charte | patterns extraits | deck |
@@ -490,7 +508,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |
 | `ref-06-orange-notched` | Corporate orange chanfreiné | `card-02-notched-brief`, `card-03-stat-accent`, `list-02-ruled-index`, `shape-notched-corner`, `title-01-leading-rule` | `decks/ref-06-orange-notched.html` |
 | `ref-07-retro-brand-hero` | Retro brand hero (crème + rouge de marque, sol photographique) | `layout-11-hero-card-on-photo`, `layout-12-nav-three-zone`, `layout-13-image-triptych`, `title-03-wordmark-bottom-left` | `decks/ref-07-retro-brand-hero.html` |
-| `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | — | `decks/ref-08-swiss-studio-hero.html` |
+| `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | `layout-14-statement-first`, `title-04-name-fills-measure` | `decks/ref-08-swiss-studio-hero.html` |
 | `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | `layout-10-bleed-column-inset`, `list-07-hairline-spec-table`, `title-02-condensed-overlay-stack` | `decks/ref-10-campaign-board-red.html` |
 | `ref-11-finance-dashboard-mint` | Dashboard bento clair — menthe & lilas | `card-04-stat-barchart`, `card-05-balance-gauge`, `card-06-forecast-timeline`, `card-07-transactions` | `decks/ref-11-finance-dashboard-mint.html` |
 | `ref-12-neon-capsule-tags` | Néon vert — étiquettes capsules sur fond sombre | `tag-01-gooey-capsule` | `decks/ref-12-neon-capsule-tags.html` |

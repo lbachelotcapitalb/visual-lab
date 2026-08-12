@@ -1,0 +1,68 @@
+<!-- title-04-name-fills-measure — le nom de marque réglé pour AFFLEURER LES DEUX MARGES, et son
+     ® calé sous la hauteur de capitale. Ce n'est pas un titre pris dans une échelle : son corps
+     n'est pas choisi, il est DÉDUIT de la largeur qu'on lui donne. Poser 96 px « parce que c'est
+     le rang display de la charte » produit un mot qui flotte au milieu d'une ligne ; ici la
+     mesure est saturée à 99 % et le nom devient une enseigne.
+
+     La racine est TRANSPARENTE et sans marge : elle occupe la largeur UTILE d'un conteneur qui
+     porte déjà son fond et sa marge (la page de layout-14-statement-first sur la référence).
+     Couleurs via --vl-* uniquement. -->
+<div class="vl-nfm">
+
+  <!-- Le nom, en casse mixte — ce n'est pas un titre qu'on crie, c'est une signature. Le ® est
+       un SPAN parce qu'il n'est pas une lettre du mot : laissé à sa taille naturelle il ferait
+       une douzième lettre, mangerait la fin de la mesure et casserait le bloc. -->
+  <h1 class="vl-nfm__mark">Northbeam<span class="vl-nfm__r">&reg;</span></h1>
+
+</div>
+
+<style>
+/* La zone = la largeur UTILE du conteneur, et rien de plus. `container-type: inline-size` n'est
+   pas un raffinement : c'est ce qui permet au corps du nom d'être une FONCTION de cette largeur
+   plutôt qu'un nombre recopié. Sans lui, `cqw` n'a pas de référence et le réglage retombe sur
+   une constante — c'est-à-dire exactement la faute que ce pattern corrige. */
+.vl-nfm {
+  container-type: inline-size;
+  width: 1060px;
+  font-family: "Helvetica Neue", Helvetica, Inter, Arial, sans-serif;
+  color: var(--vl-ink);
+}
+
+/* LE RÉGLAGE. `100cqw / chasse` : la largeur utile divisée par la chasse du mot, où la chasse
+   est le rapport MESURÉ largeur-d'encre / corps pour CE mot, dans CETTE graisse, à CETTE
+   approche. 5.270 pour « Northbeam® » en Helvetica Bold à -0.035em ; `ref-08` écrit un mot de
+   même longueur mais d'une autre chasse et tombe sur 5.196. La constante n'est donc pas un
+   réglage esthétique : elle se REMESURE dès qu'on change le mot, la police ou l'approche — et
+   le benchmark de saturation tombe si on ne le fait pas.
+
+   L'approche négative fait partie du réglage : à -0.035em, dix caractères gagnent un tiers de
+   corps. Sans elle, le même mot à la même largeur perd 3 % de hauteur, et c'est visible.
+   `white-space: nowrap` verrouille la ligne unique : le jour où le mot ne rentre plus, on veut
+   qu'il DÉBORDE (et que le benchmark le voie), pas qu'il se replie en silence sur deux lignes. */
+.vl-nfm__mark {
+  margin: 0;
+  font-size: calc(100cqw / var(--vl-mark-chasse, 5.270));
+  line-height: 0.92;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+}
+
+/* LE ®. Deux réglages solidaires, et c'est pour ça qu'il ne fait pas un pattern à lui seul :
+   - 0.26em, soit un quart du corps du nom — assez pour rester lisible à cette taille, assez peu
+     pour ne pas peser dans la mesure (il vaut 2,5 % de l'encre totale) ;
+   - remonté de 1.52em de SON propre corps, soit 0.395em du corps du NOM : son sommet tombe
+     alors à ~81 % de la hauteur de capitale. Sous la ligne de capitale, jamais au-dessus — un ®
+     qui dépasse le sommet des lettres devient un exposant flottant et le bloc n'a plus de bord
+     haut franc.
+   `letter-spacing: 0` : l'approche négative du nom serre les lettres entre elles, elle n'a rien
+   à faire derrière un signe isolé, où elle ne ferait que le décoller de sa position calculée. */
+.vl-nfm__r {
+  font-size: 0.26em;
+  vertical-align: baseline;
+  position: relative;
+  top: -1.52em;
+  left: 0.02em;
+  letter-spacing: 0;
+}
+</style>
