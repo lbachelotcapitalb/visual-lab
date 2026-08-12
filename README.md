@@ -426,7 +426,7 @@ au milieu d'un deck — deux patterns en portaient une. Un pattern non émis se 
 
 ## État
 
-**44 patterns**, dont 37 mesurés par des benchmarks. Le décompte vient de `bin/index.mjs`, pas
+**48 patterns**, dont 41 mesurés par des benchmarks. Le décompte vient de `bin/index.mjs`, pas
 d'ici : la ligne ci-dessus est un ordre de grandeur, [INDEX.md](INDEX.md) est la vérité.
 
 **11/08/2026 — le corpus sort du slide/web : trois patterns écrits NATIVEMENT pour l'email**
@@ -452,6 +452,21 @@ propre phrase de description.
 est dans le tableau « Références » d'[INDEX.md](INDEX.md), qui est GÉNÉRÉ : c'est la seule
 version qui ne peut pas mentir. Il ne reste **qu'une** référence à deck sans patterns
 (`ref-08-swiss-studio-hero`) ; plus aucune n'a de patterns sans deck.
+
+**12/08/2026 — `ref-07-retro-brand-hero` est versée**, et c'est la première PAGE WEB du corpus :
+scène 1440 × 900 déclarée `vl:stage web`, parce qu'un hero de page n'a rien à faire dans un
+16:9 de projection. Quatre patterns : `layout-11-hero-card-on-photo` (la carte incrustée sur un
+sol photographique — ici la photo n'est pas une mise en scène du design, c'est le fond de la
+page, et l'ôter supprimerait le sujet), `layout-12-nav-three-zone` (le nom centré sur le
+CONTENEUR, pas entre ses deux voisins), `title-03-wordmark-bottom-left` (le nom en pied et sa
+masse de contrepoids en diagonale) et `layout-13-image-triptych` (trois images qui font une
+bande). Les deux derniers ont démenti la spec sur un chiffre chacun : le wordmark mesure
+0,465 de la largeur de carte et non 0,51, et les trois images ont des largeurs ÉGALES là où la
+liste de patterns annonçait l'inverse — la table de géométrie de la même spec disait déjà le
+contraire. Effet de bord mesuré : `overflow()` est le mauvais instrument pour un interligne
+écrasé (à 0,82 la boîte de contenu de la ligne dépasse de 24 px sous sa propre boîte et
+`scrollHeight` le compte), ce qui rendait rouge un pattern parfaitement contenu ; la containment
+se mesure sur les BOÎTES, et le vide sous la ligne de base se prouve au canvas.
 
 **12/08/2026 — `ref-10-campaign-board-red` est extraite**, en trois patterns et non les cinq
 que la spec annonçait. Les cinq de la spec étaient nommés par ÉLÉMENT (« le titre condensé »,

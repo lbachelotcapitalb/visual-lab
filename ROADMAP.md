@@ -194,10 +194,27 @@ Trois pièges payés ici, à ne pas repayer :
    émis par python-pptx référence l'ombre du thème. Toutes les cartes sont sorties avec une
    ombre grise — invisible dans le proxy PIL, flagrante au rendu LibreOffice.
 
-### ⬜ Lot 6 — `ref-07` retro-brand-hero
-Page web, carte flottante sur photo, wordmark géant bas-gauche, triptyque portrait
-haut-droite. Patterns : `hero-card-on-photo`, `nav-three-zone`,
-`hero-wordmark-bottom-left`, `image-triptych`.
+### ✅ Lot 6 — `ref-07` retro-brand-hero — SOLDÉ le 12/08/2026
+Première **page web** du corpus : `systems/ref-07-retro-brand-hero.json` et
+`decks/ref-07-retro-brand-hero.html` — scène **1440 × 900**, déclarée `<!-- vl:stage web -->`,
+deux couches (sol photographique génératif → carte crème incrustée). Quatre patterns, aux noms
+que `bin/new.mjs` impose : `layout-11-hero-card-on-photo`, `layout-12-nav-three-zone`,
+`title-03-wordmark-bottom-left`, `layout-13-image-triptych`.
+
+Aucune image source sur disque : `bin/diff.mjs` impossible, la fidélité tient à la spec, au
+regard et à `check-deck.mjs`.
+
+Deux chiffres de la spec ont été corrigés CONTRE elle, par la mesure :
+- wordmark **0,465 Wc**, pas 0,51 — la spec estimait une largeur que le mot rendu ne fait pas.
+  L'assertion qui en dépendait (« les deux blocs ne tiendraient pas côte à côte ») était donc
+  fausse ; ce qui est vrai et mesuré, c'est la SATURATION de la rangée (96 % de la largeur).
+- triptyque à largeurs **égales**, pas inégales — la table de géométrie de la spec (0.42 Wc,
+  gouttière 12) le disait déjà, seule sa liste de patterns prétendait le contraire.
+
+Piège d'outillage payé ici : `overflow()` compte le débord de la boîte de CONTENU d'une ligne,
+que produit tout interligne sous 1 (à 0,82 sur Archivo, 24 px sous la boîte). Un pattern
+parfaitement contenu sortait rouge. La containment se mesure sur les boîtes ; que le débord
+soit du vide se prouve au canvas (`actualBoundingBoxDescent`), pas par affirmation.
 
 ### 🟡 Lot 7 — `ref-08` swiss-studio-hero — reconstitution faite, patterns à extraire
 **Fait le 30/07/2026, HORS ordre** (demande directe de Léo sur le visuel source) :
@@ -219,7 +236,7 @@ avait été écrite en supposant une carte plus petite :
 
 **Reste à faire** : les patterns. `hero-statement-first`,
 `type-registered-superscript`, et surtout la preuve du lot — que
-`hero-card-on-photo` et `image-triptych` (lot 6, pas encore écrits) produisent
+`layout-11-hero-card-on-photo` et `layout-13-image-triptych` (lot 6, versés le 12/08/2026) produisent
 ref-07 ET ref-08 **par variables**, sans duplication. Le tableau des différences est dans
 la spec. Faire le lot 6 d'abord, puis revenir extraire ici.
 
@@ -587,7 +604,7 @@ email et social.
 
 | ce qui reste | nature | ce que ça débloque | poids |
 |---|---|---|---|
-| `ref-07` retro-brand-hero (lot 6) | matière — page web | 4 patterns, et il CONDITIONNE le lot 7 | 1 session |
+| ~~`ref-07` retro-brand-hero (lot 6)~~ | **soldée le 12/08/2026** | 4 patterns versés ; deux chiffres de la spec corrigés par la mesure (largeur du wordmark, largeurs du triptyque), et `overflow()` disqualifié comme instrument de containment sur un interligne écrasé | — |
 | `ref-08` swiss-studio-hero (lot 7) | matière — extraction | le deck existe ; la preuve du lot est que les patterns du lot 6 produisent ref-07 ET ref-08 par VARIABLES | ½ session, après le 6 |
 | ~~`ref-10` campaign-board-red (lot 9)~~ | **soldée le 12/08/2026** | 3 patterns versés au lieu des 5 annoncés — les trois « patterns » qui nommaient un ÉLÉMENT sont absorbés par celui qui porte leur disposition ; la source a été corrigée deux fois (contraste du rouge, cellules centrées au lieu de pendre du filet) | — |
 | ~~`ref-12` neon-capsule-tags~~ | **soldée le 12/08/2026** | le deck existe ; il a démenti l'unité que le pattern portait sans écran (`--vl-cap-u` 56 → 91 px) et sorti deux défauts qu'aucune mesure ne voyait — l'arrondi de bordure Chrome à la soudure, et le trou de rastérisation bout à bout | — |
