@@ -103,6 +103,23 @@ règles dures :
       Le code source vit HORS du dépôt : la chaîne tourne sur la machine qui le porte, donc elle
       y a accès — mais la PREMIÈRE sous-tâche du step est de le recopier dans `kit/`, sinon le
       dépôt publie un émetteur dont la source n'est nulle part.
+- [ ] **S12 — Commiter le mécanisme d'INBOX** : l'étape 1-bis de `CONTINUATION_PROMPT.md` et
+      `scripts/roadmap/INBOX.md` lui-même. _Pourquoi_ : déposé à chaud sans commit pour ne pas
+      faire diverger la chaîne. Tant que ce n'est pas commité, une autre machine n'aurait pas
+      l'étape 1-bis et perdrait la file. _(entré par l'INBOX le 2026-08-12)_
+- [ ] **S13 — Mettre `frame.mjs` (ou un contrôle équivalent) dans le gate** : un pattern qui
+      déclare `media: social` doit encore tenir le cadre 1080×1350 après modification.
+      _Pourquoi_ : 7 patterns portent `media: social` depuis une mesure du 11/08 que rien ne
+      rejoue quand la géométrie bouge — `tag-01-gooey-capsule` est passé de 56 à 91 px d'unité
+      en S2 sans que sa déclaration soit revalidée. Une déclaration adossée à une mesure doit
+      tomber quand la mesure change, sinon le catalogue ment en silence.
+      _(entré par l'INBOX le 2026-08-12)_
+- [ ] **S14 — Documenter le piège `overflow()` DANS `bin/check.mjs`**, à côté des autres pièges
+      du harnais (`getPropertyValue`, `clipPath`, `bgOf`). _Pourquoi_ : S4 a établi qu'`overflow()`
+      compte le débord de la boîte de CONTENU d'une ligne, que produit tout interligne sous 1
+      (24 px de faux débord sur Archivo à 0,82). C'est consigné dans les notes de `title-03`,
+      pas là où le prochain qui écrit un benchmark le lira.
+      _(entré par l'INBOX le 2026-08-12)_
 
 ## Checkpoint intra-step
 
