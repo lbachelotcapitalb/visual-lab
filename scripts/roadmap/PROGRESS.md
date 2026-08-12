@@ -106,18 +106,19 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: (aucun)
+CHECKPOINT_STEP: S5
 
-- [x] spec `ref-07` complétée (palette relevée→corrigée, ratios ancrés sur la largeur de PAGE,
-      ce qui est écarté) + `systems/ref-07-retro-brand-hero.json`
-- [x] deck `ref-07` : sol photo génératif + carte flottante + nav trois zones
-- [x] deck `ref-07` : wordmark géant bas-gauche + triptyque portrait haut-droite,
-      `check-deck.mjs ref-07` vert
-- [x] `layout-11-hero-card-on-photo` (le shell : sol, encart, rayon, ombre)
-- [x] `layout-12-nav-three-zone` (liens / logo optiquement centré / bouton)
-- [x] `title-03-wordmark-bottom-left` (wordmark calé sur la largeur + contrepoids diagonal)
-- [x] `layout-13-image-triptych` (3 images de même ratio, largeurs égales, gouttière constante)
-- [x] gate + regard sur le rendu + doc (README/ROADMAP) + commit final
+- [ ] spec `ref-08` relevée SUR le deck existant (1140×848) : géométrie et échelle réelles,
+      ratios ancrés sur la largeur de PAGE, contrastes vérifiés, tableau des différences
+      vs ref-07 remis d'équerre + `systems/ref-08-…json` recalé sur le deck
+- [ ] `layout-13-image-triptych` généralisé : la loi de la bande est la HAUTEUR COMMUNE, pas
+      le ratio identique (cas particulier des poids égaux) — et un benchmark qui REPARAMÈTRE
+      la bande en ref-08 pour prouver « une seule bande, deux références »
+- [ ] `layout-14-…` — la composition à ordre de lecture inversé (phrase d'abord, nom géant
+      ensuite, bande en pied)
+- [ ] `title-04-…` — le nom réglé pour affleurer les deux marges + le ® en exposant
+      (absorbe `type-registered-superscript`, qui tient dans sa propre phrase)
+- [ ] gate + regard sur le rendu + doc (README/ROADMAP) + commit final
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à
      mesure et poussée en commit `wip(<step>): …`. C'est ce qui permet de reprendre au milieu
