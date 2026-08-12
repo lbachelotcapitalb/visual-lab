@@ -2,9 +2,9 @@
 
 STATE: RUNNING
 <!-- RUNNING (continue) | AWAITING_DECISION (halt, présenter le tableau au mainteneur) | BLOCKED (gate rouge, halt) | DONE (fini) | STOPPED (coupé par le mainteneur via `roadmap stop` — ne jamais relancer soi-même) -->
-CURRENT_STEP: S5
+CURRENT_STEP: S6
 UPDATED: 2026-08-12
-LAST_COMMIT: b5aa899
+LAST_COMMIT: 39c5b7e
 
 ## Objectif
 
@@ -78,7 +78,7 @@ règles dures :
 - [x] **S4 — `ref-07-retro-brand-hero`.** Page web, pas une slide : le deck déclare sa scène en
       clair (`<!-- vl:stage web — … -->`) sinon le lint la refuse. Patterns visés :
       `hero-card-on-photo`, `nav-three-zone`, `hero-wordmark-bottom-left`, `image-triptych`.
-- [ ] **S5 — `ref-08-swiss-studio-hero` : extraire les patterns.** DÉPEND DE S4. La preuve du lot
+- [x] **S5 — `ref-08-swiss-studio-hero` : extraire les patterns.** DÉPEND DE S4. La preuve du lot
       est que `hero-card-on-photo` et `image-triptych` produisent ref-07 ET ref-08 **par
       variables**, sans duplication — le tableau des différences est dans la spec.
 - [ ] **S6 — `ref-01-bento-pills-2030`.** Couverture seule, purement géométrique. Reconstruire
@@ -123,27 +123,33 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: S5
-
-- [x] spec `ref-08` relevée SUR le deck existant (1140×848) : géométrie et échelle réelles,
-      ratios ancrés sur la largeur de PAGE, contrastes vérifiés, tableau des différences
-      vs ref-07 remis d'équerre + `systems/ref-08-…json` recalé sur le deck
-- [x] `layout-13-image-triptych` généralisé : la loi de la bande est la HAUTEUR COMMUNE, pas
-      le ratio identique (cas particulier des poids égaux) — et un benchmark qui REPARAMÈTRE
-      la bande en ref-08 pour prouver « une seule bande, deux références »
-- [x] `layout-14-…` — la composition à ordre de lecture inversé (phrase d'abord, nom géant
-      ensuite, bande en pied)
-- [x] `title-04-name-fills-measure` — le nom réglé pour affleurer les deux marges + le ® en
-      exposant (absorbe `type-registered-superscript`, qui tient dans sa propre phrase) :
-      le corps est DÉRIVÉ de la largeur (`calc(100cqw / chasse)`), et un benchmark le prouve
-      en reparamétrant la zone à 700 px — contre-épreuve faite, un corps en dur y sort à 1,51
-- [ ] gate + regard sur le rendu + doc (README/ROADMAP) + commit final
+CHECKPOINT_STEP: (aucun)
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à
      mesure et poussée en commit `wip(<step>): …`. C'est ce qui permet de reprendre au milieu
      d'un step après un relais sur seuil de contexte ou un crash. -->
 
 ## Journal (append-only, le plus récent en haut)
+
+- 2026-08-12 — S5 fait (39c5b7e). `ref-08` est extraite, et avec elle **les 16 références du
+  corpus sont complètes** : plus une seule sans deck, plus une seule sans patterns. Ce que le
+  lot devait prouver — qu'un pattern de `ref-07` rend aussi `ref-08` par variables — a d'abord
+  obligé à corriger ce que ce pattern AFFIRMAIT. « Même ratio pour les trois cellules » n'est
+  pas la loi d'une bande : c'est ce qu'on obtient à poids égaux, le cas particulier de `ref-07`.
+  La loi est la HAUTEUR COMMUNE. Écrit à l'ancienne, `aspect-ratio` sur les trois cellules leur
+  imposait trois hauteurs dès que les poids cessaient de l'être — la bande se disloquait et
+  aucune variable ne pouvait la sauver ; posé sur la première seule, il donne sa taille
+  transversale à la ligne flex et `stretch` la recopie. Le benchmark reparamètre le fragment aux
+  valeurs de `ref-08` (1060 large, gouttière 16, hauteur 380, poids 1 / 1,31 / 1,14) et retrouve
+  298 / 390,3 / 339,7 à 0,2 % près. Second enseignement, de méthode celui-là : le pattern qui
+  MANQUE peut être une preuve. `layout-11-hero-card-on-photo` ne s'applique pas ici, et c'est
+  son propre `avoid_when` qui le dit — sans sol photographique, ni incrustation ni marge de sol.
+  Deux patterns versés : `layout-14-statement-first` et `title-04-name-fills-measure`, qui
+  absorbe le `type-registered-superscript` que la spec annonçait seul. Acquis d'outillage qui
+  resservira : le corps d'un nom d'enseigne est une FONCTION de la largeur
+  (`calc(100cqw / chasse)`) et non une taille de charte — et il se mesure à l'ENCRE, au `Range`,
+  jamais à la boîte du `h1`, qui fait la largeur utile quoi qu'on écrive dedans et ne prouve
+  donc rien. Aucune image source sur disque : `bin/diff.mjs` impossible.
 
 - 2026-08-12 — S4 fait (b5aa899). `ref-07` est versée et le corpus porte enfin une PAGE WEB :
   scène 1440×900 déclarée `vl:stage web`, deux couches (sol photo génératif → carte crème
