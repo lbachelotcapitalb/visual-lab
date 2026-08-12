@@ -2,9 +2,9 @@
 
 STATE: RUNNING
 <!-- RUNNING (continue) | AWAITING_DECISION (halt, présenter le tableau au mainteneur) | BLOCKED (gate rouge, halt) | DONE (fini) | STOPPED (coupé par le mainteneur via `roadmap stop` — ne jamais relancer soi-même) -->
-CURRENT_STEP: S6
+CURRENT_STEP: S7
 UPDATED: 2026-08-12
-LAST_COMMIT: 39c5b7e
+LAST_COMMIT: d3d8ba0
 
 ## Objectif
 
@@ -81,7 +81,7 @@ règles dures :
 - [x] **S5 — `ref-08-swiss-studio-hero` : extraire les patterns.** DÉPEND DE S4. La preuve du lot
       est que `hero-card-on-photo` et `image-triptych` produisent ref-07 ET ref-08 **par
       variables**, sans duplication — le tableau des différences est dans la spec.
-- [ ] **S6 — `ref-01-bento-pills-2030`.** Couverture seule, purement géométrique. Reconstruire
+- [x] **S6 — `ref-01-bento-pills-2030`.** Couverture seule, purement géométrique. Reconstruire
       **à plat** : ne reproduire ni la perspective ni l'ombre de la photo d'origine.
 - [ ] **S7 — `ref-05-proposal-acid-yellow`.** 8 slides. Neutre + UN accent fluo, header tri-parti,
       astérisque de marque. `accent-single-fluo` est une règle éditoriale : ne l'extraire que si
@@ -123,7 +123,7 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: S6
+CHECKPOINT_STEP: (aucun)
 
 - [x] **S6.1 — la spec `ref-01` corrigée avant tout code.** Quatre points à trancher dans
       `SPEC-SOURCES.md` : l'échelle (la spec donne des px sans dire la taille de la cellule),
@@ -186,14 +186,36 @@ CHECKPOINT_STEP: S6
       correctif, verte avec. Constat non traité, à arbitrer : huit autres patterns portent du
       texte sans déclarer de famille — aucun ne dérive sa géométrie d'une chasse, donc aucun
       n'est faux, mais aucun ne rend pareil selon l'outil qui l'ouvre.
-- [ ] **S6.6 — gate complet, doc à jour dans le même commit** (ROADMAP lot 10, README « État »,
-      SPEC-SOURCES), commit final + MAJ de PROGRESS.
+- [x] **S6.6 — gate complet, doc à jour dans le même commit** (ROADMAP lot 10, README « État »,
+      SPEC-SOURCES), commit final + MAJ de PROGRESS. **Fait (d3d8ba0)** : 53 patterns dont 46
+      mesurés, 17 decks, tout vert.
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à
      mesure et poussée en commit `wip(<step>): …`. C'est ce qui permet de reprendre au milieu
      d'un step après un relais sur seuil de contexte ou un crash. -->
 
 ## Journal (append-only, le plus récent en haut)
+
+- 2026-08-12 — S6 fait (d3d8ba0). `ref-01` est versée et le corpus compte **17 références
+  complètes**. La spec annonçait quatre patterns, il en sort trois : le « toggle » et le rail à
+  barre en dégradé ne sont pas deux primitives mais **le même objet à deux remplissages**, et
+  c'est cette identité que `shape-03-stadium-track` verse — la spec la manquait en les listant à
+  part. Trois lois établies, toutes réutilisables hors de ce lot. (1) Un rayon écrit en `%` se
+  résout par AXE : `50%/50%` sur une boîte 2:1 est une ellipse, pas un stadium — et lire la
+  valeur calculée ne le voit pas, Chrome rend le `%` tel quel, donc les benchmarks sondent la
+  forme PEINTE au point sur cinq et six angles. (2) Une grille de cellules carrées a un aspect
+  BORNÉ : 4 × 3 plafonne à 3/2, un 16:9 exigerait une gouttière négative — ce n'est pas un
+  arbitrage de cadrage mais une impossibilité, et le benchmark ne la calcule pas, il reparamètre
+  la gouttière de 0 à 1000 px et constate. (3) Sortie du seul CONTRÔLE VISUEL, et c'est
+  l'enseignement de méthode du lot : **un fragment dont une cote dépend d'une chasse doit
+  épingler sa police**. Le corps de l'année vaut `calc(100cqw / 1,216)` ; sans famille déclarée
+  il saturait 88 % sous `check.mjs` — qui sert « Helvetica Neue » en tête — et 97 % sous
+  `render.mjs`, qui sert la police système. Le benchmark était vert sur un rendu où les chiffres
+  léchaient le bord de la pilule : **un harnais qui impose sa propre police ne peut pas voir le
+  défaut qu'il est censé exclure.** Corrigé, et doublé d'une assertion qui remesure la saturation
+  sous un serif imposé à la racine du fragment (contre-épreuve : rouge sans le correctif).
+  Le mainteneur a enqueué la généralisation pendant le lot — elle est reportée en S15. Aucune
+  image source sur disque : `bin/diff.mjs` impossible.
 
 - 2026-08-12 — S5 fait (39c5b7e). `ref-08` est extraite, et avec elle **les 16 références du
   corpus sont complètes** : plus une seule sans deck, plus une seule sans patterns. Ce que le
