@@ -140,11 +140,55 @@ une. **3 patterns retenus** : `layout-02-swiss-frame`, `list-01-giant-numbers`,
 `list-03-two-column-toc`. Élagués le 30/07 : le titre en grosses capitales et la règle de
 rythme des fonds pleins (aucun rendu).
 
-### ⬜ Lot 4 — `ref-05` proposal-acid-yellow
-**8 slides** (format slides, une section par slide). Neutre + **un** accent fluo, header
-tri-parti, astérisque de marque.
-Patterns : `header-tripartite`, `mark-asterisk`, `cards-numbered-steps`,
-`title-hyphen-break`, `accent-single-fluo` (règle éditoriale — à extraire seulement si elle a un rendu).
+### ✅ Lot 4 — `ref-05` proposal-acid-yellow — SOLDÉ le 12/08/2026
+`systems/ref-05-proposal-acid-yellow.json` et `decks/ref-05-proposal-acid-yellow.html` —
+**8 slides 1600×900**, neutre + un accent fluo, header tri-parti sur les huit, astérisque de
+marque. `check-deck.mjs` vert (32/32), zéro couche au-dessus de la scène sur 7 slides sur 8.
+Police « Hanken Grotesk » : la seule grotesk du dépôt qui tienne le `0.12em` des capitales du
+header. Aucune image source sur disque : `bin/diff.mjs` impossible, la fidélité tient à la
+spec, au regard et à `check-deck.mjs`.
+
+**Quatre patterns au lieu des cinq annoncés** — 67 benchmarks au total :
+`title-05-hyphen-break` (13), `shape-04-asterisk-mark` (15), `card-14-numbered-steps` (19),
+`layout-16-header-tripartite` (20). `accent-single-fluo` n'est **pas** extrait : c'est une
+règle éditoriale, et un fragment qui ne serait qu'un aplat jaune tient dans sa propre phrase
+de description. Elle est mesurée là où elle a un sens — sur la SLIDE — par un benchmark de
+surface porté par les patterns qui posent du jaune.
+
+**Ce que le lot a établi, et qui vaut hors de cette charte :**
+
+- **L'accent unique est une contrainte de DIMENSION, pas de compte.** « ≤ 12 % de la slide »
+  tombe sur un objet qui est pourtant le SEUL jaune de sa slide : la carte de total à pleine
+  hauteur de colonne (460 × 669) couvrait 21,4 %. Bornée à 460 × 300 : 9,6 %. Même mécanique
+  pour la rangée de cartes, bornée à 440 de haut plutôt que `flex: 1` (11,9 % → 10,6 %).
+- **Mais un objet borné ne peut pas tenir une colonne** — sorti du seul REGARD sur le rendu.
+  Bornée puis laissée pendre en pied de colonne, la même carte respectait le plafond et
+  laissait 300 px de bande morte sous le titre. La borne avait DÉPLACÉ le défaut : un objet
+  dont la dimension est contrainte doit changer de PLACE. `check-deck.mjs` compte les couches,
+  pas les bandes mortes — aucune mesure ne voyait ce vide.
+- **`#EAFF00` sur `#EFEFED` vaut 1,03:1**, et la charte l'écrivait de travers. « Le jaune ne
+  colore jamais du texte » est faux (l'astérisque du carré noir EST une encre) et laissait
+  passer un astérisque jaune sur fond clair. La règle exacte : **le jaune ne descend jamais
+  sur le fond clair — il y est en aplat, ou en encre SUR NOIR.** Corollaire écrit dans la
+  spec : `≤ 12 %` est un plafond, pas un quota — une slide a le droit de n'avoir aucun jaune.
+- **Un titre « césuré » n'est pas une césure mais une SOUDURE de locution** : le trait remplace
+  l'espace de deux mots entiers. Sa loi de forme n'est pas l'égalité des lignes (`Thank-` /
+  `you` la dément) mais que le trait d'union soit l'ENCRE LA PLUS À DROITE du bloc.
+- **Une forme se mesure PEINTE quand c'est la forme qui est le sujet.** L'astérisque est
+  vérifié par 720 sondages qui comptent six arcs, puis relèvent l'axe de chaque branche au
+  barycentre des points peints en travers d'elle. Le premier jet — six sondages à 0,7 R —
+  restait vert sur une branche décalée de 10°.
+- **Une contre-épreuve doit reparamétrer là où les constructions DIVERGENT.** `minmax(0, 1fr)`
+  contre `1fr` nu : un libellé long mais sécable se replie tout seul, les deux passent. C'est
+  un libellé INSÉCABLE plus large que son rail qui les sépare (54 px de dérive contre 0).
+
+Trois pièges d'outillage repayés du gabarit : un `var()` à **fallback hexadécimal** est une
+couleur en dur pour `index.mjs` (à raison — le fallback rend en silence quand le token manque) ;
+un fragment **sans largeur déclarée** se mesure à la largeur du harnais (676 px au lieu de
+1456), soit 7 benchmarks rouges pour une raison qui n'est pas la leur ; et `box()` du harnais
+est en coordonnées **relatives à la racine** là où un `getBoundingClientRect()` brut — le seul
+moyen de mesurer une encre, au `Range` — est en coordonnées de VUE. Les mélanger donne un rouge
+de 40 px sur une géométrie juste, et surtout un VERT sur un bord d'encre faux de 40 px.
 
 ### ✅ Lot 5 — `ref-06` orange-notched (30/07/2026)
 **8 slides.** La signature est le **coin chanfreiné** (`clip-path`).
@@ -659,7 +703,7 @@ couleur ligne par ligne), là où les seize lots précédents estimaient à l'œ
 
 ## Ce qui reste, en un coup d'œil
 
-**À jour au 11/08/2026.** Le lot 12 est CLOS (karto et l'arbitrage de publication sont tranchés
+**À jour au 12/08/2026.** Le lot 12 est CLOS (karto et l'arbitrage de publication sont tranchés
 depuis le 31/07 — cette ligne l'annonçait encore comme ouvert), et le lot 13 a soldé ses volets
 email et social.
 
@@ -669,7 +713,7 @@ email et social.
 | ~~`ref-08` swiss-studio-hero (lot 7)~~ | **soldée le 12/08/2026** | 2 patterns versés + `layout-13-image-triptych` généralisé : une seule bande rend ref-07 ET ref-08 par variables, prouvé par reparamétrage. La loi de la bande n'était pas le ratio commun mais la HAUTEUR commune. Avec elle, **les 16 références du corpus sont complètes** — plus une seule sans deck ni sans patterns | — |
 | ~~`ref-10` campaign-board-red (lot 9)~~ | **soldée le 12/08/2026** | 3 patterns versés au lieu des 5 annoncés — les trois « patterns » qui nommaient un ÉLÉMENT sont absorbés par celui qui porte leur disposition ; la source a été corrigée deux fois (contraste du rouge, cellules centrées au lieu de pendre du filet) | — |
 | ~~`ref-12` neon-capsule-tags~~ | **soldée le 12/08/2026** | le deck existe ; il a démenti l'unité que le pattern portait sans écran (`--vl-cap-u` 56 → 91 px) et sorti deux défauts qu'aucune mesure ne voyait — l'arrondi de bordure Chrome à la soudure, et le trou de rastérisation bout à bout | — |
-| `ref-05` proposal-acid-yellow (lot 4) | matière — 8 slides | 5 patterns, dont une règle éditoriale à n'extraire que si elle a un rendu | 1 session |
+| ~~`ref-05` proposal-acid-yellow (lot 4)~~ | **soldée le 12/08/2026** | 4 patterns versés au lieu des 5 annoncés — `accent-single-fluo` est une règle, pas une composition, et se mesure sur la SLIDE. Le lot établit que l'accent unique est une contrainte de DIMENSION (le seul objet jaune d'une slide peut la faire tomber à 21,4 %), qu'un objet borné doit alors changer de PLACE (300 px de bande morte, vus par le seul regard), et que le jaune ne descend jamais sur le fond clair (1,03:1) | — |
 | `ref-09` zine-annotated-blue (lot 8) | matière — 12 slides | `annotation-marker` : le générateur de tracés manuscrits, **le plus fort différenciateur anti-« AI slop » du corpus** | 1 session entière |
 | ~~`ref-01` bento-pills-2030 (lot 10)~~ | **soldée le 12/08/2026** | 3 patterns versés au lieu des 4 annoncés — le rail à dégradé et le « toggle » sont le même objet à deux remplissages. Trois lois établies contre le relevé : `50%` donne une ellipse et non un stadium, un 4 × 3 carré est borné à 3/2 d'aspect (donc jamais 16:9), et un fragment dont la géométrie dépend d'une chasse doit épingler sa police | — |
 | Formats éditoriaux social (lot 13) | matière — natif canal | les 7 patterns `social` sont TOUS des vignettes de donnée : rien pour une citation, un décryptage, un carousel | 1 session, à cadrer d'abord |

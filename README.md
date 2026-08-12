@@ -426,7 +426,7 @@ au milieu d'un deck — deux patterns en portaient une. Un pattern non émis se 
 
 ## État
 
-**53 patterns**, dont 46 mesurés par des benchmarks. Le décompte vient de `bin/index.mjs`, pas
+**57 patterns**, dont 50 mesurés par des benchmarks. Le décompte vient de `bin/index.mjs`, pas
 d'ici : la ligne ci-dessus est un ordre de grandeur, [INDEX.md](INDEX.md) est la vérité.
 
 **11/08/2026 — le corpus sort du slide/web : trois patterns écrits NATIVEMENT pour l'email**
@@ -448,11 +448,30 @@ grosses capitales, trois « règles » qui n'avaient aucun rendu. Un pattern se 
 une COMPOSITION qu'on ne réécrit pas de tête, ou une géométrie mesurée ; pas s'il tient dans sa
 propre phrase de description.
 
-**17 références, et depuis le 12/08/2026 elles sont toutes COMPLÈTES** — chacune a son deck ET
+**18 références, et depuis le 12/08/2026 elles sont toutes COMPLÈTES** — chacune a son deck ET
 ses patterns. Aucune n'a plus de deck sans extraction, aucune n'a plus de patterns sans
 reconstitution : c'était le dernier trou du corpus, dans les deux sens. Le décompte par
 référence est dans le tableau « Références » d'[INDEX.md](INDEX.md), qui est GÉNÉRÉ : c'est la
 seule version qui ne peut pas mentir.
+
+**12/08/2026 — `ref-05-proposal-acid-yellow` est versée**, huit slides et quatre patterns
+(`title-05-hyphen-break`, `shape-04-asterisk-mark`, `card-14-numbered-steps`,
+`layout-16-header-tripartite`, 67 benchmarks). Sa charte tient en une phrase — neutre plus UN
+accent fluo — et c'est ce que le lot a dû apprendre à MESURER, parce qu'une règle éditoriale
+sans chiffre ne tient jamais. Ce qui en sort dépasse cette charte. **L'accent unique est une
+contrainte de dimension avant d'être une contrainte de compte** : la carte de total de la
+slide 7 était bien le seul objet jaune de sa slide, et couvrait 21,4 % de sa surface pour un
+plafond de 12 % — parce qu'elle avait été laissée à pleine hauteur de colonne. **Mais un objet
+borné ne peut pas tenir une colonne**, et c'est le regard, pas la mesure, qui l'a vu : bornée
+à 300 px puis laissée pendre en pied, la même carte respectait le plafond et laissait 300 px de
+bande morte sous le titre. La borne avait déplacé le défaut — un objet dont la dimension est
+contrainte doit changer de PLACE. Troisième acquis, un contraste : **`#EAFF00` sur `#EFEFED`
+vaut 1,03:1**, deux luminances presque égales séparées par une seule teinte, qui vibre à
+l'écran et disparaît en gris. La charte l'écrivait de travers (« le jaune ne colore jamais du
+texte » — faux, l'astérisque du carré noir EST une encre) et cette approximation avait laissé
+passer un astérisque jaune sur le fond clair. La règle exacte est que **le jaune ne descend
+jamais sur le fond clair** : il y est en aplat, ou en encre sur noir. Aucune image source sur
+disque : `bin/diff.mjs` impossible.
 
 **12/08/2026 — `ref-01-bento-pills-2030` est versée**, et c'est la seule planche du corpus qui
 ne porte **aucun texte** hormis son année : tout y est dit par la forme, ce qui en fait le seul

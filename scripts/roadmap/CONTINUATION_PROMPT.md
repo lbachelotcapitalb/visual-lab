@@ -26,6 +26,14 @@ en découlent, et qui diffèrent du gabarit habituel de ce kit :
    précédente a passé la main en cours de route. Le travail coché est déjà commité (`wip(…)`).
    Reprends à la première sous-tâche NON cochée — ne refais pas le step depuis zéro.
 
+1-bis. **Vide la file d'ajouts à chaud.** Si `scripts/roadmap/INBOX.md` existe et porte des
+   entrées `- [ ]`, reporte-les **en FIN** de la checklist de PROGRESS.md — une entrée = un step,
+   en gardant son « pourquoi » — puis retire-les du fichier et commite les deux ensemble
+   (`git add scripts/roadmap/INBOX.md scripts/roadmap/PROGRESS.md`).
+   C'est le canal par lequel le mainteneur ajoute du travail **sans arrêter la chaîne** : une
+   entrée laissée dans l'INBOX est du travail perdu.
+   ⚠️ Tu les REPORTES, tu ne les traites pas : ce tour-ci reste consacré au step courant.
+
 2. **Fais UN seul step** : le premier `[ ]` depuis `CURRENT_STEP`.
    Si le step comporte plusieurs gestes, écris d'abord sa sous-checklist dans « Checkpoint
    intra-step » (`CHECKPOINT_STEP: <step>` + une case par sous-tâche), commit+push. Puis après

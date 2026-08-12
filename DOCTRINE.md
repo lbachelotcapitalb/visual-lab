@@ -55,6 +55,16 @@ rangée ; **même groupe = même taille**, le contenu le plus haut fixe la haute
 égaliser, on **colle le paragraphe en BAS** de la carte, les dernières lignes partagent alors
 leur ligne de base et l'écart se voit au-dessus du paragraphe, jamais en pied de rangée.
 
+**Un objet dont la DIMENSION est bornée ne peut pas tenir une colonne — il doit changer de
+PLACE.** Borner une carte est le bon geste quand elle est trop grande (une charte à accent
+unique le lui impose : `ref-05`, une carte de total à pleine hauteur de colonne couvrait 21,4 %
+de la slide pour un plafond de 12 %). Mais la borne ne fait que DÉPLACER le vide : la même
+carte, ramenée à 300 px et laissée pendre en pied de sa colonne, respectait le plafond et
+laissait 300 px de bande morte sous le titre. Ce qui résout est un changement de place — la
+carte remonte dans la bande de titre, dont elle partage la ligne de départ, et le bloc voisin
+prend toute la hauteur restante. Aucune mesure ne voit ce défaut : `check-deck.mjs` compte les
+couches, pas les bandes mortes, et les benchmarks du pattern ne voient que son intérieur.
+
 ## 2. Alignement inter-cartes — même départ, on grandit vers le bas
 
 Une rangée de cartes s'aligne sur une grille PARTAGÉE, jamais carte par carte. Icônes sur une
