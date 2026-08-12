@@ -1,0 +1,175 @@
+{
+  "name": "Page qui parle avant de se nommer",
+  "family": "layout",
+  "ref": "ref-08-swiss-studio-hero",
+  "intent": "Inverser l'ordre de lecture d'un hero : la phrase parle en premier dans un petit corps, la navigation lui fait face à la même hauteur, et le nom de marque n'arrive qu'ensuite — mais il prend alors toute la largeur utile, sans qu'AUCUNE taille intermédiaire n'existe entre les deux. C'est ce saut sans palier, et le blanc plus large qui le précède, qui font qu'un nom devient un événement au lieu d'être le plus gros d'une série.",
+  "when_to_use": "Une page d'accueil ou une couverture dont le message vaut mieux que le nom : studio, agence, maison déjà connue de ceux à qui elle parle. Aussi quand la charte n'a aucun accent coloré — la composition tient entièrement par l'échelle et le blanc, donc elle survit à une palette de trois valeurs.",
+  "avoid_when": "Le nom doit être reconnu AVANT le message — page institutionnelle, premier contact avec un public qui ne connaît pas la maison : ici le nom arrive en second, et cet ordre suppose que la phrase se suffit. Écarter aussi quand le nom tient sur deux lignes : le saut d'échelle repose sur un mot unique qui sature la largeur utile, et sur deux lignes le nom cesse d'être un signe pour redevenir un bloc de texte.",
+  "media": [
+    "web",
+    "slide"
+  ],
+  "tags": [
+    "hero",
+    "accueil",
+    "ordre-de-lecture",
+    "echelle",
+    "wordmark",
+    "nav",
+    "bande",
+    "grotesk",
+    "neutre",
+    "blanc"
+  ],
+  "vars": [
+    {
+      "name": "--vl-card",
+      "role": "fond de la page — c'est la page elle-même, il n'y a pas de sol derrière",
+      "default": "#F6F5F2"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "encre du nom et de la nav",
+      "default": "#111111"
+    },
+    {
+      "name": "--vl-ink-soft",
+      "role": "encre de la phrase — le seul texte à LIRE, donc le seul à ne pas être au maximum du contraste",
+      "default": "#2A2A28"
+    },
+    {
+      "name": "--vl-margin",
+      "role": "marge de page, égale sur les quatre côtés",
+      "default": "40px"
+    },
+    {
+      "name": "--vl-radius-card",
+      "role": "rayon de la page",
+      "default": "4px"
+    },
+    {
+      "name": "--vl-radius-photo",
+      "role": "rayon des cellules de la bande de pied",
+      "default": "8px"
+    },
+    {
+      "name": "--vl-gap-photo",
+      "role": "gouttière de la bande de pied",
+      "default": "16px"
+    }
+  ],
+  "slots": [
+    "statement",
+    "nav",
+    "mark",
+    "strip"
+  ],
+  "geometry": {
+    "root": ".vl-sf",
+    "frame": [
+      1140,
+      848
+    ],
+    "ratios": {
+      "margin_over_frame": 0.0351,
+      "margin_over_frame_h": 0.0472,
+      "statement_measure_over_frame": 0.614,
+      "strip_h_over_frame_h": 0.448,
+      "strip_w_over_frame": 0.9298,
+      "mark_over_statement_size": 7.44
+    },
+    "type_px": {
+      "statement": 27,
+      "nav": 18,
+      "mark": 201
+    },
+    "pad_ratio": {
+      "top": 0.0351,
+      "x": 0.0351,
+      "bottom": 0.0351
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "L'ORDRE DE LECTURE — phrase, puis nom, puis bande : trois zones qui ne se chevauchent jamais",
+      "measure": "(() => { const s = box('.vl-sf__statement'), m = box('.vl-sf__mark'), t = box('.vl-sf__strip'); return (s.bottom <= m.top + 1 && m.bottom <= t.top + 1) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "la phrase parle EN PREMIER : elle affleure la marge haute, rien n'est au-dessus d'elle",
+      "measure": "box('.vl-sf__statement').top / H",
+      "expect": 0.0472,
+      "tol": 0.004
+    },
+    {
+      "name": "la nav lui FAIT FACE : même bord haut à moins de 1 % de la hauteur près",
+      "measure": "Math.abs(box('.vl-sf__nav').top - box('.vl-sf__statement').top) / H",
+      "max": 0.01
+    },
+    {
+      "name": "et elle est fer à DROITE sur la marge : les deux blocs de tête tiennent les deux bords",
+      "measure": "(W - box('.vl-sf__nav').right) / W",
+      "expect": 0.0351,
+      "tol": 0.004
+    },
+    {
+      "name": "les deux blocs de tête ne se croisent jamais : la mesure de la phrase laisse la place à la nav",
+      "measure": "(box('.vl-sf__nav').left - box('.vl-sf__statement').right) / W",
+      "min": 0.02
+    },
+    {
+      "name": "SAUT D'ÉCHELLE : le corps du nom vaut au moins 7 fois celui de la phrase",
+      "measure": "num('.vl-sf__mark','fontSize') / num('.vl-sf__statement','fontSize')",
+      "min": 7,
+      "max": 9
+    },
+    {
+      "name": "et SANS PALIER : le troisième corps de la page (la nav) est plus PETIT que la phrase, pas entre elle et le nom",
+      "measure": "num('.vl-sf__nav','fontSize') < num('.vl-sf__statement','fontSize') ? 1 : 0",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "le blanc qui SÉPARE la phrase du nom est plus large que celui qui suit le nom — c'est lui qui fait lever les yeux",
+      "measure": "(box('.vl-sf__mark').top - box('.vl-sf__statement').bottom) / (box('.vl-sf__strip').top - box('.vl-sf__mark').bottom)",
+      "min": 1.15
+    },
+    {
+      "name": "la bande tombe en PIED : son bas affleure la marge basse",
+      "measure": "(H - box('.vl-sf__strip').bottom) / H",
+      "expect": 0.0472,
+      "tol": 0.004
+    },
+    {
+      "name": "elle occupe TOUTE la largeur utile — d'une marge à l'autre, jamais une bande centrée plus étroite",
+      "measure": "box('.vl-sf__strip').w / W",
+      "expect": 0.9298,
+      "tol": 0.004
+    },
+    {
+      "name": "et elle pèse près de 45 % de la hauteur : assez pour FERMER la page, pas assez pour la partager en deux",
+      "measure": "box('.vl-sf__strip').h / H",
+      "expect": 0.448,
+      "tol": 0.02
+    },
+    {
+      "name": "marges ÉGALES sur les quatre côtés — une seule valeur, c'est ce qui fait que la page est la surface",
+      "measure": "(() => { const s = getComputedStyle(document.querySelector('.vl-sf')); const p = ['paddingTop','paddingRight','paddingBottom','paddingLeft'].map((k) => parseFloat(s[k])); return (Math.max(...p) - Math.min(...p)) / W; })()",
+      "max": 0.001
+    },
+    {
+      "name": "rien ne franchit la marge : mesuré sur l'ENCRE du nom (un h1 est un bloc — sa boîte fait la largeur utile quoi qu'on y écrive, donc elle ne prouve rien)",
+      "measure": "(() => { const el = document.querySelector('.vl-sf__mark'); const r = document.createRange(); r.selectNodeContents(el); const ink = r.getBoundingClientRect(); const lim = W - 2 * num('.vl-sf','paddingLeft'); return ink.width / lim; })()",
+      "min": 0.985,
+      "max": 1.0
+    },
+    {
+      "name": "la phrase reste une ADRESSE et pas un paragraphe : sa mesure est bornée sous les deux tiers de la page",
+      "measure": "box('.vl-sf__statement').w / W",
+      "min": 0.35,
+      "max": 0.65
+    }
+  ],
+  "notes": "La composition tient sur deux ressorts, et ils se mesurent tous les deux.\n\nLe premier est le SAUT D'ÉCHELLE : 27 px puis 204 px, sans rien entre les deux. Ce n'est pas une échelle typographique, c'est son refus — une échelle à raison régulière donnerait quatre ou cinq paliers, et le nom ne serait plus qu'un maximum. Deux assertions le tiennent ensemble : le rapport ≥ 7, et le fait que le troisième corps de la page (la nav) se range SOUS le plus petit des deux autres au lieu de s'intercaler. C'est cette seconde assertion qui attrape la faute qu'on commet vraiment : personne n'ajoute un corps intermédiaire par erreur, tout le monde grossit la nav « pour équilibrer ».\n\nLe second est un BLANC ASYMÉTRIQUE : l'intervalle phrase → nom (54 px) est plus large que l'intervalle nom → bande (33 px). Répartis également, les trois blocs se lisent comme une pile ; asymétriques, ils se lisent comme un mouvement. Le blanc de pied n'est d'ailleurs pas posé, il RESTE : la bande est poussée par `margin-top: auto`, donc l'intervalle absorbe tout changement de longueur de phrase sans qu'on recalcule quoi que ce soit.\n\nPiège de mesure payé ici : un `h1` est un BLOC, sa boîte fait toujours la largeur utile quoi qu'on écrive dedans. Une assertion \u00ab le nom ne franchit pas la marge \u00bb écrite sur `getBoundingClientRect()` de l'élément est donc VIDE — elle sort verte sur un nom qui déborde de 1 %. Elle se mesure sur l'ENCRE, par un `Range` sur le contenu ; et c'est cette correction qui a fait tomber le corps de démonstration de 204 à 201 px, le mot de remplissage n'ayant pas la chasse de celui de la source.\n\nLa bande de pied est `layout-13-image-triptych` dans le slot `strip` — poids inégaux compris, ils font partie de la composition. Elle est ici réduite à trois cellules pleines pour que le fragment reste autonome et que ses assertions portent sur la composition. Le réglage du nom à la largeur utile et le calage de son `®` appartiennent à `title-04-name-fills-measure` : les deux patterns se posent l'un dans l'autre et ne se recouvrent sur rien.\n\nLa page est UNE couche. Pas de carte posée sur un sol, pas de fond de planche : elle porte son fond, sa marge et sa mise en page. C'est ce qui la distingue de `layout-11-hero-card-on-photo`, la composition jumelle de `ref-07`, qui en a deux parce qu'elle a un sol photographique — et dont l'`avoid_when` refuse explicitement le cas d'ici."
+}

@@ -1,0 +1,116 @@
+<!-- layout-14-statement-first — la page qui parle AVANT de se nommer. L'ordre de lecture est
+     inversé par rapport au hero courant : d'abord la phrase (haut-gauche, petit corps), la nav
+     qui lui fait face à la même hauteur, et le nom de marque seulement ENSUITE — mais il prend
+     alors toute la largeur utile. La bande d'images tombe en pied et ferme la page.
+
+     Ce qui fait tenir la composition n'est pas la disposition, c'est le SAUT D'ÉCHELLE : entre
+     le corps de la phrase et celui du nom il n'y a AUCUN palier, aucune taille intermédiaire.
+     Un sous-titre glissé entre les deux et la page redevient une page ordinaire — le nom cesse
+     d'être un événement pour devenir le plus gros d'une série.
+
+     Le second ressort est un blanc : l'intervalle qui sépare la phrase du nom est le plus grand
+     de la page, plus grand que celui qui sépare le nom de la bande. C'est lui qui fait qu'on
+     LÈVE les yeux du texte avant de recevoir le nom.
+
+     La bande de pied est `layout-13-image-triptych`, posée dans le slot `strip` : ici elle est
+     réduite à trois cellules pleines, pour que ce fragment reste autonome et que ses assertions
+     portent sur la COMPOSITION et non sur des images. En usage réel on y colle le triptyque.
+     Couleurs via --vl-* uniquement, aucune valeur en dur. -->
+<div class="vl-sf">
+
+  <div class="vl-sf__top">
+    <p class="vl-sf__statement">We partner with startups and visionaries to<br>
+      craft brand identities, digital experiences,<br>
+      and narratives that resonate.</p>
+    <nav class="vl-sf__nav">
+      <a href="#">Work</a><a href="#">Index</a><a href="#">About</a><a href="#">Contact</a>
+    </nav>
+  </div>
+
+  <h1 class="vl-sf__mark">Northbeam<span class="vl-sf__r">&reg;</span></h1>
+
+  <div class="vl-sf__strip">
+    <figure class="vl-sf__cell"></figure>
+    <figure class="vl-sf__cell"></figure>
+    <figure class="vl-sf__cell"></figure>
+  </div>
+
+</div>
+
+<style>
+/* La page EST la surface : elle porte son fond, sa marge et sa mise en page. Pas de carte
+   posée dessus, pas de sol derrière — une couche, et c'est tout ce que la source montre.
+   La colonne flex à trois enfants est ce qui rend l'ordre de lecture MESURABLE : haut, nom,
+   pied, dans cet ordre, sans qu'aucun positionnement ne puisse les faire se croiser. */
+.vl-sf {
+  width: 1140px; height: 848px;
+  padding: var(--vl-margin);
+  background: var(--vl-card);
+  color: var(--vl-ink);
+  border-radius: var(--vl-radius-card);
+  display: flex; flex-direction: column;
+  font-family: "Helvetica Neue", Helvetica, Inter, Arial, sans-serif;
+}
+
+/* La phrase et la nav partagent la même ligne haute — `flex-start`, pas d'alignement optique
+   bricolé. Les deux affleurent la marge : la phrase à gauche, la nav à droite. */
+.vl-sf__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 64px; }
+
+/* Le petit corps de la page, et le seul texte à LIRE. Sa mesure est bornée : au-delà d'une
+   soixantaine de signes la phrase cesse d'être une adresse et redevient un paragraphe. */
+.vl-sf__statement {
+  margin: 0; max-width: 700px;
+  font-size: 27px; line-height: 1.4; font-weight: 400; letter-spacing: -0.004em;
+  color: var(--vl-ink-soft);
+}
+
+/* La nav est PLUS PETITE que la phrase, et c'est structurant : le troisième corps de la page
+   se range sous le plus petit des deux autres, jamais entre eux. Un corps intermédiaire ferait
+   un palier, et le saut d'échelle qui porte toute la composition disparaîtrait. */
+.vl-sf__nav {
+  display: flex; gap: 17px;
+  margin: 5px 0 0;
+  font-size: 18px; line-height: 1; font-weight: 400;
+}
+.vl-sf__nav a { color: var(--vl-ink); text-decoration: none; }
+
+/* Le nom. Sa marge HAUTE est le plus grand blanc de la page — plus grand que celui qui le
+   sépare de la bande. C'est cette asymétrie qui fait qu'on lève les yeux de la phrase avant de
+   recevoir le nom ; répartie également, la page redevient une pile de trois blocs.
+   Le corps ne se choisit pas dans une échelle : il se règle à la largeur utile — c'est le
+   travail de `title-04-name-fills-measure`, qui porte aussi le calage du ®.
+   201 px et non une valeur ronde : c'est ce qu'il faut pour que « Northbeam® » affleure les
+   deux marges d'une page de 1140. `ref-08` écrit un autre mot, de même longueur mais pas de
+   même chasse, et y met 204. Changer le mot ou la largeur oblige à recalculer — un h1 est un
+   BLOC, sa boîte fait la largeur utile quoi qu'on écrive dedans, donc rien ne signale le
+   débord : c'est l'ENCRE qu'il faut mesurer, et un benchmark le fait. */
+.vl-sf__mark {
+  margin: 54px 0 0;
+  font-size: 201px; line-height: 0.92; font-weight: 700;
+  letter-spacing: -0.035em; white-space: nowrap;
+}
+.vl-sf__r {
+  font-size: 0.26em; vertical-align: baseline;
+  position: relative; top: -1.52em; left: 0.02em;
+  letter-spacing: 0;
+}
+
+/* `margin-top: auto` : la bande est poussée en PIED, et le blanc qui reste retombe au-dessus
+   d'elle. Une hauteur fixe plus un `margin-top` calculé donnerait la même image aujourd'hui et
+   dériverait au premier changement de longueur de phrase. */
+.vl-sf__strip {
+  margin-top: auto;
+  display: flex; align-items: stretch; gap: var(--vl-gap-photo);
+  height: 380px;
+}
+/* Trois cellules pleines : ce fragment mesure la composition, pas des photos. Les poids
+   inégaux sont conservés parce qu'ils font partie de la composition — c'est `layout-13` qui
+   porte leur loi (hauteur commune, gouttière constante, remplissage exact). */
+.vl-sf__cell {
+  margin: 0; flex: 1 0 0;
+  background: var(--vl-ink); opacity: 0.12;
+  border-radius: var(--vl-radius-photo);
+}
+.vl-sf__cell:nth-child(2) { flex-grow: 1.31; opacity: 0.2; }
+.vl-sf__cell:nth-child(3) { flex-grow: 1.14; opacity: 0.16; }
+</style>

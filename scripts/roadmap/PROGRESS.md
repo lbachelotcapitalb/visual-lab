@@ -114,7 +114,7 @@ CHECKPOINT_STEP: S5
 - [x] `layout-13-image-triptych` généralisé : la loi de la bande est la HAUTEUR COMMUNE, pas
       le ratio identique (cas particulier des poids égaux) — et un benchmark qui REPARAMÈTRE
       la bande en ref-08 pour prouver « une seule bande, deux références »
-- [ ] `layout-14-…` — la composition à ordre de lecture inversé (phrase d'abord, nom géant
+- [x] `layout-14-…` — la composition à ordre de lecture inversé (phrase d'abord, nom géant
       ensuite, bande en pied)
 - [ ] `title-04-…` — le nom réglé pour affleurer les deux marges + le ® en exposant
       (absorbe `type-registered-superscript`, qui tient dans sa propre phrase)
