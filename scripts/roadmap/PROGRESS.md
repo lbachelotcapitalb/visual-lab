@@ -2,9 +2,9 @@
 
 STATE: RUNNING
 <!-- RUNNING (continue) | AWAITING_DECISION (halt, présenter le tableau au mainteneur) | BLOCKED (gate rouge, halt) | DONE (fini) | STOPPED (coupé par le mainteneur via `roadmap stop` — ne jamais relancer soi-même) -->
-CURRENT_STEP: S1
+CURRENT_STEP: S2
 UPDATED: 2026-08-12
-LAST_COMMIT: (aucun)
+LAST_COMMIT: 671de7c
 
 ## Objectif
 
@@ -65,7 +65,7 @@ règles dures :
 
 ## Checklist des steps
 
-- [ ] **S1 — Dette : `pptx.emitter` sur `diagram-01-layer-stack`.** Déclarer l'émetteur dans
+- [x] **S1 — Dette : `pptx.emitter` sur `diagram-01-layer-stack`.** Déclarer l'émetteur dans
       `kit/vl_pptx.py` + le champ `pptx.emitter` du JSON, pour que le pattern existe enfin dans
       `deck-builder`. Petit lot volontairement placé en tête : il vérifie la chaîne de bout en
       bout (gate, commit nommé, doc, relance) sur un périmètre où l'erreur coûte peu.
@@ -106,19 +106,19 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: S1
-
-- [x] 1. `scale()` sait s'ancrer sur `note`, et `layer_stack()` est écrit dans `kit/vl_pptx.py`
-- [x] 2. le bloc `pptx` est déclaré dans `patterns/diagram-01-layer-stack.json`
-- [x] 3. lint : `bin/index.mjs` refuse un `pptx.emitter` dont la fonction n'existe pas dans le kit
-- [x] 4. contrôle : un .pptx de démonstration est produit, `audit()` est vert, le rendu est REGARDÉ
-- [ ] 5. gate + doc à jour + commit final
+CHECKPOINT_STEP: (aucun)
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à
      mesure et poussée en commit `wip(<step>): …`. C'est ce qui permet de reprendre au milieu
      d'un step après un relais sur seuil de contexte ou un crash. -->
 
 ## Journal (append-only, le plus récent en haut)
+
+- 2026-08-12 — S1 fait (671de7c). `vl_pptx.layer_stack` livré : `diagram-01` sort en .pptx. Les
+  dix mesures d'`audit()` étaient vertes sur un rendu FAUTIF — c'est le regard qui a sorti les
+  trois défauts (alpha absent, ombre de thème sur les connecteurs, filet posé par-dessus son
+  losange). Effet de bord du step : `bin/index.mjs` vérifie désormais qu'un `pptx.emitter` mène
+  à une fonction réelle, et deux déclarations sur sept étaient fictives.
 
 - 2026-08-12 — chaîne armée en mode LOCAL (première du genre : le driver `handoff` était
   VPS-first). Kit posé, gate vérifié à la main (34/34 benchmarks, 14/14 decks), dette des
