@@ -1,0 +1,147 @@
+<!-- layout-15-primitive-mosaic — une planche de formes qui se lit comme UNE surface, et non
+     comme une collection d'objets posés. Ce n'est pas un bento : un bento range du CONTENU
+     dans des cartes de tailles choisies, ici il n'y a aucun contenu et la taille n'est pas
+     choisie — toutes les cellules sont le MÊME carré, et une primitive ne se distingue que
+     par son RAYON. Trois règles portent tout, et elles se mesurent :
+
+       • CELLULE CARRÉE, une seule pour toute la planche. C'est elle qui autorise le disc
+         (un cercle dans une cellule à 1,43 devient une ellipse, ou laisse un mou par côté
+         qui détruit le serrage) ;
+       • UNE gouttière, la même horizontalement et verticalement, et petite devant la
+         cellule (8 %). Élargie, la planche redevient une collection ;
+       • un SEUL creux, et il est placé — pas laissé au flux automatique. Onze douzièmes
+         occupés : douze, et la planche est un damier ; dix, et elle est trouée.
+
+     LOI D'ASPECT — et c'est ce qui interdit d'étirer la planche : 4 colonnes × 3 rangées de
+     cellules carrées ont pour aspect (4c + 3g) / (3c + 2g). Il vaut 4/3 à gouttière nulle,
+     CROÎT avec la gouttière vers une borne de 3/2 qu'il n'atteint jamais (limite en 3g/2g),
+     et vaut 1,342 au réglage d'ici. Demander 16:9 (1,778) exigerait une gouttière négative :
+     ce n'est pas un arbitrage, c'est une impossibilité arithmétique. Une planche 4 × 3 se
+     cale donc sur la HAUTEUR de sa scène et se centre — ses bandes latérales sont le
+     pourtour de la feuille, jamais un vide de composition.
+
+     Les primitives sont ici la démonstration, pas le sujet : `shape-02-teardrop-quadrant`
+     porte le carré à un seul coin droit, `shape-03-stadium-track` le rail et son enfant
+     emboîté. Couleurs via --vl-* uniquement. -->
+<div class="vl-mos">
+
+  <div class="vl-mos__p vl-mos__p--disc"></div>                        <!-- 1  r1c1 -->
+
+  <!-- 2 — rail à barre en dégradé, 2 colonnes. La `background-color` de la barre déclare
+       l'extrémité CLAIRE du dégradé : sans elle, l'enfant a un fond transparent et toute
+       mesure de couleur compose avec celle du rail. -->
+  <div class="vl-mos__p vl-mos__p--rail vl-mos__at2">
+    <div class="vl-mos__fill vl-mos__fill--gradient"></div>
+  </div>
+
+  <div class="vl-mos__p vl-mos__p--tear-tr"></div>                     <!-- 3  r1c4 -->
+
+  <div class="vl-mos__p vl-mos__p--squircle"></div>                    <!-- 4  r2c1 -->
+
+  <!-- 5 — la pilule, 2 rangées : le seul objet qui porte du texte -->
+  <div class="vl-mos__p vl-mos__p--pill vl-mos__at5">
+    <span class="vl-mos__year">20<br>30</span>
+  </div>
+
+  <div class="vl-mos__p vl-mos__p--disc"></div>                        <!-- 6  r2c3 -->
+  <!-- r2c4 : le SEUL creux de la planche. Il est obtenu par le placement explicite de 8
+       et de 7 ci-dessous — laissé au flux automatique, la grille le comblerait. -->
+
+  <div class="vl-mos__p vl-mos__p--tear-bl vl-mos__at8"></div>         <!-- 8  r3c1 -->
+
+  <!-- 7 — le même rail que 2, rempli d'une pastille au lieu d'un dégradé -->
+  <div class="vl-mos__p vl-mos__p--rail vl-mos__at7">
+    <div class="vl-mos__fill vl-mos__fill--knob"></div>
+  </div>
+
+</div>
+
+<style>
+/* Les DEUX paramètres de la planche, et il n'y en a pas d'autres — tout le reste s'en déduit :
+     --vl-mos-cell   le côté de la cellule carrée. Il fixe l'échelle ET les trois rayons.
+     --vl-mos-gap    la gouttière, unique, horizontale comme verticale.
+   Les rayons ne sont PAS des tailles de charte : ce sont trois fractions de la cellule, et
+   c'est leur ÉCARTEMENT qui fait tenir la planche. À cellule 180 le squircle (0,300) et le
+   teardrop (0,220) ne sont plus qu'à 11 % l'un de l'autre et se confondent, alors que la
+   composition les emploie comme deux primitives distinctes. */
+.vl-mos {
+  --vl-mos-cell: 232px;
+  --vl-mos-gap: 19px;
+
+  --vl-mos-r-stadium: calc(var(--vl-mos-cell) / 2);       /* 0.500 c — le petit côté / 2 */
+  --vl-mos-r-squircle: calc(var(--vl-mos-cell) * 0.300);
+  --vl-mos-r-teardrop: calc(var(--vl-mos-cell) * 0.220);  /* sur TROIS coins */
+  --vl-mos-inset: calc(var(--vl-mos-cell) * 0.068);
+
+  display: grid;
+  grid-template-columns: repeat(4, var(--vl-mos-cell));
+  grid-template-rows: repeat(3, var(--vl-mos-cell));
+  gap: var(--vl-mos-gap);
+  width: max-content;
+}
+
+/* Aucune primitive n'a de taille propre : chacune remplit la ou les cellules qu'elle occupe,
+   et seul son rayon la distingue. C'est ce qui fait que la planche se reparamètre d'une
+   seule variable. */
+.vl-mos__p { width: 100%; height: 100%; background: var(--vl-ink); }
+
+.vl-mos__p--disc     { background: var(--vl-accent); border-radius: var(--vl-mos-r-stadium); }
+.vl-mos__p--squircle { border-radius: var(--vl-mos-r-squircle); }
+
+/* Le coin DROIT pointe le coin de feuille que la forme occupe — c'est ce qui interdit de
+   permuter les deux teardrops, posés sur des coins diagonalement opposés. */
+.vl-mos__p--tear-tr { border-radius: var(--vl-mos-r-teardrop) 0 var(--vl-mos-r-teardrop) var(--vl-mos-r-teardrop); }
+.vl-mos__p--tear-bl { border-radius: var(--vl-mos-r-teardrop) var(--vl-mos-r-teardrop) var(--vl-mos-r-teardrop) 0; }
+
+/* Le rail : un stadium portant un enfant en inset CONSTANT sur ses quatre côtés, dont le
+   rayon vaut celui du parent moins cet inset — contours concentriques. Le rayon s'écrit en
+   LONGUEUR, jamais `50%` : les deux pourcentages de `50%/50%` se résolvent sur des axes
+   différents et donnent une ELLIPSE dès que la boîte n'est pas carrée. */
+.vl-mos__p--rail {
+  border-radius: var(--vl-mos-r-stadium);
+  padding: var(--vl-mos-inset);
+  display: flex; align-items: center;
+}
+.vl-mos__fill {
+  height: calc(var(--vl-mos-cell) - 2 * var(--vl-mos-inset));
+  border-radius: calc(var(--vl-mos-r-stadium) - var(--vl-mos-inset));
+}
+/* La barre est posée sur la ligne de colonne invisible : son bord droit tombe exactement sur
+   la frontière c2/c3, soit `c − inset` de long — 44,8 % du rail. */
+.vl-mos__fill--gradient {
+  width: calc(var(--vl-mos-cell) - var(--vl-mos-inset));
+  background-color: var(--vl-white);
+  background-image: linear-gradient(90deg, var(--vl-white), var(--vl-accent));
+}
+/* Même inset, même rayon : la pastille sort RONDE sans qu'on l'écrive. */
+.vl-mos__fill--knob {
+  width: calc(var(--vl-mos-cell) - 2 * var(--vl-mos-inset));
+  background: var(--vl-white);
+}
+
+.vl-mos__p--pill {
+  border-radius: var(--vl-mos-r-stadium);
+  background-color: var(--vl-accent);
+  background-image: linear-gradient(180deg, var(--vl-accent), var(--vl-accent-deep));
+  container-type: inline-size;
+  display: flex; align-items: center; justify-content: center;
+}
+/* Le corps de l'année est une FONCTION de la largeur de la pilule, pas une taille de charte :
+   la chasse d'encre de « 20 » vaut 1,070 em en grotesk bold, et 1,216 = 1,070 / 0,88 règle
+   l'encre à 88 % de la boîte. Posé à une taille fixe, le chiffre occupait 44 % de sa pilule —
+   un petit bloc centré dans une grande boîte, ce que DOCTRINE §1 nomme un raté. */
+.vl-mos__year {
+  font-size: calc(100cqw / 1.216);
+  line-height: 0.92;
+  font-weight: 700;
+  text-align: center;
+  color: var(--vl-on-accent);
+}
+
+/* Les portées, et le CREUX. Le placement de 8 puis de 7 est ce qui laisse r2c4 vide : sans
+   lui, le flux automatique y ferait tomber le teardrop et la planche perdrait son seul vide. */
+.vl-mos__at2 { grid-column: 2 / span 2; }               /* rail     r1 c2-c3 */
+.vl-mos__at5 { grid-column: 2; grid-row: 2 / span 2; }  /* pilule   r2-r3 c2 */
+.vl-mos__at8 { grid-column: 1; grid-row: 3; }           /* teardrop r3 c1    */
+.vl-mos__at7 { grid-column: 3 / span 2; grid-row: 3; }  /* toggle   r3 c3-c4 */
+</style>

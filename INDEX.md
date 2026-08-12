@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-50 patterns · 17 références · 43 vérifiés par benchmarks mesurés.
+51 patterns · 17 références · 44 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -61,6 +61,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `layout-12-nav-three-zone` | Poser une navigation en trois zones — liens à gauche, nom de marque au centre, bouton d'action à droite — dont le nom est calé sur l'axe du CONTENEUR et non entre ses deux voisins. Les zones latérales n'ont jamais la même largeur : un centrage entre elles fait dériver le nom de plusieurs dizaines de pixels, et rien ne le signale tant qu'on ne le mesure pas. La zone centrale sort donc du flux, ce qui est la seule construction où l'axe du nom ne dépend pas de ce qu'on écrit à ses côtés. | web slide | 12 | ref-07-retro-brand-hero |
 | `layout-13-image-triptych` | Poser trois images de façon qu'elles se lisent comme UN bloc et non comme trois objets : une hauteur COMMUNE, une gouttière constante et petite devant une cellule, une bande remplie exactement d'un bord à l'autre. La hauteur, les trois poids de largeur et — quand la hauteur est laissée libre — le ratio qui la déduit sont les seuls paramètres : c'est par eux que la même bande donne un triptyque portrait à poids égaux dans un coin, ou une frise à cellules inégales sur toute une largeur. | web slide print | 15 | ref-07-retro-brand-hero |
 | `layout-14-statement-first` | Inverser l'ordre de lecture d'un hero : la phrase parle en premier dans un petit corps, la navigation lui fait face à la même hauteur, et le nom de marque n'arrive qu'ensuite — mais il prend alors toute la largeur utile, sans qu'AUCUNE taille intermédiaire n'existe entre les deux. C'est ce saut sans palier, et le blanc plus large qui le précède, qui font qu'un nom devient un événement au lieu d'être le plus gros d'une série. | web slide | 14 | ref-08-swiss-studio-hero |
+| `layout-15-primitive-mosaic` | Composer une couverture qui ne dit rien et se lit quand même : une planche de formes pleines posées sur une grille dont toutes les cellules sont le MÊME carré, une gouttière unique et petite, et un seul creux placé exprès. Aucune taille n'est choisie objet par objet — une primitive ne se distingue que par son RAYON, ce qui fait que la planche entière se reparamètre d'une seule variable. Et parce que 4 colonnes × 3 rangées de carrés plafonnent arithmétiquement à un aspect de 3/2, elle se cale sur la HAUTEUR de sa scène et se centre : la loi d'aspect fait partie du pattern, elle n'est pas une contrainte qu'on subit. | slide web | 15 | ref-01-bento-pills-2030 |
 | `list-01-giant-numbers` | Aligner trois à quatre arguments de même rang en colonnes, chacun ouvert par un numéro ou un chiffre démesuré qui sert à la fois de repère de lecture et de seule tache de couleur du bloc. | slide web | — | ref-04-swiss-investor-blue |
 | `list-02-ruled-index` | Lister les sections d'un document en donnant à chacune son libellé, une ligne d'explication et son numéro à droite, séparées par un filet fin qui appartient à l'entrée qu'il suit. | slide web | 9 | ref-06-orange-notched |
 | `list-03-two-column-toc` | Faire tenir un sommaire de dix à quatorze sections sur une seule slide, en deux colonnes numérotées, lisible d'un coup d'œil et refermable aussitôt. | slide web | — | ref-04-swiss-investor-blue |
@@ -370,6 +371,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-card, --vl-ink, --vl-ink-soft, --vl-margin, --vl-radius-card, --vl-radius-photo, --vl-gap-photo
 - tags : hero, accueil, ordre-de-lecture, echelle, wordmark, nav, bande, grotesk, neutre, blanc
 
+**layout-15-primitive-mosaic** — Planche de primitives, cellule carrée
+
+- employer : Une couverture, un intercalaire ou une ouverture de chapitre qui doit porter une identité SANS texte — rapport annuel, design system, dossier de marque. Aussi comme fond de section quand le contenu arrive ailleurs : la planche donne un vocabulaire de formes (les trois rayons) que le reste du document réemploie, et c'est cet écartement de rayons, pas la couleur, qui fait la signature.
+- éviter : Il y a du contenu à ranger : ce n'est PAS un bento. Un bento range des blocs de contenu dans des cartes de tailles choisies ; ici la taille n'est pas choisie et une cellule ne porte rien. Écarter aussi dès que la scène impose de REMPLIR un 16:9 — le bloc plafonne à 1,5 d'aspect et vaut 1,342 en pratique ; l'étirer casserait les cellules carrées, donc les deux discs et les deux teardrops. Et écarter en format social portrait, pour la raison inverse : une planche à 1,34 posée dans un 4:5 laisse un tiers de la hauteur vide.
+- à remplir : year
+- variables : --vl-mos-cell, --vl-mos-gap, --vl-ink, --vl-accent, --vl-accent-deep, --vl-white, --vl-on-accent
+- tags : couverture, geometrie, grille, primitives, sans-texte, bento, carre, rayon, mosaique, annee
+
 ### list
 
 **list-01-giant-numbers** — Colonnes à numéro géant
@@ -503,7 +512,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 
 | référence | charte | patterns extraits | deck |
 |---|---|---|---|
-| `ref-01-bento-pills-2030` | Bento pills 2030 — couverture géométrique | — | `decks/ref-01-bento-pills-2030.html` |
+| `ref-01-bento-pills-2030` | Bento pills 2030 — couverture géométrique | `layout-15-primitive-mosaic` | `decks/ref-01-bento-pills-2030.html` |
 | `ref-02-ghost-icon-claim` | Gris fantôme — argument unique | `card-01-ghost-icon` | `decks/ref-02-ghost-icon-claim.html` |
 | `ref-03-bento-dark-pitch` | Bento sombre — pitch investisseur | `chart-01-stadium-bars`, `chart-02-isotype`, `layout-01-nested-bento` | `decks/ref-03-bento-dark-pitch.html` |
 | `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |

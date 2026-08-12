@@ -1,0 +1,177 @@
+{
+  "name": "Planche de primitives, cellule carrée",
+  "family": "layout",
+  "ref": "ref-01-bento-pills-2030",
+  "intent": "Composer une couverture qui ne dit rien et se lit quand même : une planche de formes pleines posées sur une grille dont toutes les cellules sont le MÊME carré, une gouttière unique et petite, et un seul creux placé exprès. Aucune taille n'est choisie objet par objet — une primitive ne se distingue que par son RAYON, ce qui fait que la planche entière se reparamètre d'une seule variable. Et parce que 4 colonnes × 3 rangées de carrés plafonnent arithmétiquement à un aspect de 3/2, elle se cale sur la HAUTEUR de sa scène et se centre : la loi d'aspect fait partie du pattern, elle n'est pas une contrainte qu'on subit.",
+  "when_to_use": "Une couverture, un intercalaire ou une ouverture de chapitre qui doit porter une identité SANS texte — rapport annuel, design system, dossier de marque. Aussi comme fond de section quand le contenu arrive ailleurs : la planche donne un vocabulaire de formes (les trois rayons) que le reste du document réemploie, et c'est cet écartement de rayons, pas la couleur, qui fait la signature.",
+  "avoid_when": "Il y a du contenu à ranger : ce n'est PAS un bento. Un bento range des blocs de contenu dans des cartes de tailles choisies ; ici la taille n'est pas choisie et une cellule ne porte rien. Écarter aussi dès que la scène impose de REMPLIR un 16:9 — le bloc plafonne à 1,5 d'aspect et vaut 1,342 en pratique ; l'étirer casserait les cellules carrées, donc les deux discs et les deux teardrops. Et écarter en format social portrait, pour la raison inverse : une planche à 1,34 posée dans un 4:5 laisse un tiers de la hauteur vide.",
+  "media": [
+    "slide",
+    "web"
+  ],
+  "tags": [
+    "couverture",
+    "geometrie",
+    "grille",
+    "primitives",
+    "sans-texte",
+    "bento",
+    "carre",
+    "rayon",
+    "mosaique",
+    "annee"
+  ],
+  "vars": [
+    {
+      "name": "--vl-mos-cell",
+      "role": "le côté de la cellule CARRÉE — le seul paramètre d'échelle : il fixe la planche entière et les trois rayons, qui en sont des fractions",
+      "default": "232px"
+    },
+    {
+      "name": "--vl-mos-gap",
+      "role": "la gouttière, unique — la même horizontalement et verticalement, et c'est elle qui commande l'aspect du bloc entre 4/3 et sa borne de 3/2",
+      "default": "19px"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "l'encre des primitives neutres (squircle, teardrops, rails)",
+      "default": "#0B0B0B"
+    },
+    {
+      "name": "--vl-accent",
+      "role": "l'accent des discs et le départ du dégradé — la seule couleur de la planche",
+      "default": "#E8342A"
+    },
+    {
+      "name": "--vl-accent-deep",
+      "role": "l'arrivée du dégradé de la pilule",
+      "default": "#8E1114"
+    },
+    {
+      "name": "--vl-white",
+      "role": "le remplissage clair des enfants emboîtés (pastille, extrémité claire de la barre)",
+      "default": "#FFFFFF"
+    },
+    {
+      "name": "--vl-on-accent",
+      "role": "l'encre de l'année, sur le dégradé de la pilule",
+      "default": "#FFFFFF"
+    }
+  ],
+  "slots": [
+    "year"
+  ],
+  "geometry": {
+    "root": ".vl-mos",
+    "frame": [
+      985,
+      734
+    ],
+    "ratios": {
+      "cell_over_frame": 0.2355,
+      "gutter_over_frame": 0.0193,
+      "gutter_over_cell": 0.0819,
+      "aspect": 1.342,
+      "aspect_ceiling": 1.5,
+      "span2_over_frame": 0.4904,
+      "radius_stadium_over_cell": 0.5,
+      "radius_squircle_over_cell": 0.3,
+      "radius_teardrop_over_cell": 0.22,
+      "inset_over_cell": 0.068,
+      "gradient_bar_over_rail": 0.4477,
+      "filled_cells_over_total": 0.9167
+    },
+    "type_px": {
+      "year": 190.8
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "CELLULE CARRÉE — l'unité de la planche est un carré, et c'est ce qui autorise le disc : dans une cellule à 1,43 il devient une ellipse, ou laisse un mou par côté qui détruit le serrage",
+      "measure": "box('.vl-mos > :nth-child(1)').w / box('.vl-mos > :nth-child(1)').h",
+      "expect": 1,
+      "tol": 0.005
+    },
+    {
+      "name": "quatre colonnes ÉGALES et trois rangées égales : aucune taille n'est décidée cellule par cellule",
+      "measure": "(() => { const s = getComputedStyle(document.querySelector('.vl-mos')); const v = [...s.gridTemplateColumns.split(/\\s+/), ...s.gridTemplateRows.split(/\\s+/)].map(parseFloat); return (Math.max(...v) - Math.min(...v)) / Math.max(...v); })()",
+      "max": 0.003
+    },
+    {
+      "name": "UNE seule gouttière : l'écart horizontal et l'écart vertical sont le même — deux écarts qui ne veulent rien dire, c'est la dette de DOCTRINE §9",
+      "measure": "Math.abs((box('.vl-mos > :nth-child(2)').left - box('.vl-mos > :nth-child(1)').right) - (box('.vl-mos > :nth-child(4)').top - box('.vl-mos > :nth-child(1)').bottom)) / W",
+      "max": 0.001
+    },
+    {
+      "name": "et elle est PETITE devant la cellule (8 %) : élargie, la planche cesse d'être une surface et redevient une collection d'objets",
+      "measure": "(box('.vl-mos > :nth-child(2)').left - box('.vl-mos > :nth-child(1)').right) / box('.vl-mos > :nth-child(1)').w",
+      "expect": 0.0819,
+      "tol": 0.006
+    },
+    {
+      "name": "LOI D'ASPECT — la planche vaut 1,342 : c'est ce que 4 × 3 cellules carrées PRODUISENT, pas une décision de cadrage",
+      "measure": "W / H",
+      "expect": 1.342,
+      "tol": 0.01
+    },
+    {
+      "name": "…et 3/2 est une BORNE qu'aucune gouttière n'atteint : de 0 à 1000 px de gouttière l'aspect reste entre 4/3 et 1,5 — un 16:9 (1,778) exigerait une gouttière NÉGATIVE, ce n'est pas un arbitrage",
+      "measure": "(() => { const el = document.querySelector('.vl-mos'); let worst = 0; for (const g of ['0px', '19px', '60px', '200px', '1000px']) { el.style.setProperty('--vl-mos-gap', g); const b = el.getBoundingClientRect(); worst = Math.max(worst, b.width / b.height); } el.style.removeProperty('--vl-mos-gap'); return worst; })()",
+      "min": 1.333,
+      "max": 1.5
+    },
+    {
+      "name": "PORTÉE 2 COLONNES — le rail fait exactement deux cellules plus une gouttière, jamais une largeur posée à la main",
+      "measure": "box('.vl-mos > :nth-child(2)').w / (2 * box('.vl-mos > :nth-child(1)').w + (box('.vl-mos > :nth-child(2)').left - box('.vl-mos > :nth-child(1)').right))",
+      "expect": 1,
+      "tol": 0.003
+    },
+    {
+      "name": "PORTÉE 2 RANGÉES — la pilule fait exactement deux cellules plus une gouttière",
+      "measure": "box('.vl-mos > :nth-child(5)').h / (2 * box('.vl-mos > :nth-child(1)').h + (box('.vl-mos > :nth-child(4)').top - box('.vl-mos > :nth-child(1)').bottom))",
+      "expect": 1,
+      "tol": 0.003
+    },
+    {
+      "name": "UN SEUL CREUX, et il est en r2c4 : c'est le placement EXPLICITE du teardrop et du toggle qui l'empêche d'être comblé par le flux automatique de la grille",
+      "measure": "(() => { const root = document.querySelector('.vl-mos'); const rb = root.getBoundingClientRect(); const kids = [...root.children].map((e) => e.getBoundingClientRect()); const u = kids[0].width, g = kids[1].left - kids[0].right; const empty = []; for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) { const x = rb.left + c * (u + g) + u / 2, y = rb.top + r * (u + g) + u / 2; if (!kids.some((k) => x > k.left && x < k.right && y > k.top && y < k.bottom)) empty.push(r * 4 + c); } return empty.length === 1 && empty[0] === 7 ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "la planche est EXACTEMENT remplie : sa largeur est 4 cellules + 3 gouttières, il ne reste rien à droite",
+      "measure": "(4 * box('.vl-mos > :nth-child(1)').w + 3 * (box('.vl-mos > :nth-child(2)').left - box('.vl-mos > :nth-child(1)').right)) / W",
+      "expect": 1,
+      "tol": 0.003
+    },
+    {
+      "name": "aucune primitive ne déborde de la planche : une forme qui sort de la grille casserait le pourtour de feuille sans qu'aucun alignement ne bouge",
+      "measure": "(() => { const root = document.querySelector('.vl-mos'); const r = root.getBoundingClientRect(); return [...root.children].every((e) => { const b = e.getBoundingClientRect(); return b.left >= r.left - 0.5 && b.right <= r.right + 0.5 && b.top >= r.top - 0.5 && b.bottom <= r.bottom + 0.5; }) ? 1 : 0; })()",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "TROIS RAYONS ÉCARTÉS — le squircle et le teardrop restent à plus de 25 % l'un de l'autre : rapprochés, les deux primitives se confondent et la planche n'en porte plus qu'une",
+      "measure": "(num('.vl-mos__p--squircle', 'borderTopLeftRadius') - num('.vl-mos__p--tear-tr', 'borderTopLeftRadius')) / num('.vl-mos__p--squircle', 'borderTopLeftRadius')",
+      "min": 0.25
+    },
+    {
+      "name": "le rayon du stadium est écrit en LONGUEUR : sur une boîte 2:1 il vaut la moitié du PETIT côté. `50%` en donnerait la moitié de CHAQUE axe, c'est-à-dire une ellipse — le piège était dans le relevé, sur la primitive la plus fréquente de la planche",
+      "measure": "num('.vl-mos__p--rail', 'borderTopLeftRadius') / box('.vl-mos > :nth-child(2)').h",
+      "expect": 0.5,
+      "tol": 0.005
+    },
+    {
+      "name": "l'ANNÉE sature sa pilule à 88 % — mesurée sur l'ENCRE (un Range), pas sur la boîte du span, qui ne prouverait rien",
+      "measure": "(() => { const el = document.querySelector('.vl-mos__year'); const r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect().width / box('.vl-mos__p--pill').w; })()",
+      "expect": 0.88,
+      "tol": 0.04
+    },
+    {
+      "name": "et elle reste lisible : le blanc est mesuré sur l'extrémité CLAIRE du dégradé, celle qui décide du contraste",
+      "measure": "contrast('.vl-mos__year')",
+      "min": 3
+    }
+  ],
+  "notes": "Le pattern porte la GRILLE, pas les formes. Les huit primitives sont la démonstration : `shape-02-teardrop-quadrant` porte le carré à un seul coin droit et `shape-03-stadium-track` le rail et son enfant emboîté, chacun avec ses propres paramètres. Ce qui appartient en propre à la planche tient en trois lois, et elles se mesurent toutes les trois.\n\n**La cellule carrée** n'est pas une préférence de forme, c'est ce qui rend le vocabulaire possible : un disc dans une cellule à 1,43 devient une ellipse, et lui rendre son cercle laisse 54 px de mou par côté qui détruisent le serrage de la mosaïque — l'alternative a été essayée puis écartée. Deux discs et deux teardrops en dépendent.\n\n**La loi d'aspect** en découle, et c'est le point que le lot a dû démontrer plutôt qu'arbitrer. Une grille de 4 colonnes × 3 rangées de carrés a pour aspect (4c + 3g) / (3c + 2g) : il vaut 4/3 à gouttière nulle, croît avec la gouttière vers une borne de 3/2 (limite en 3g/2g) qu'il n'atteint jamais, et vaut 1,342 au réglage d'ici. Poser 1,778 exigerait une gouttière négative. Le benchmark ne s'en remet pas au calcul : il REPARAMÈTRE le fragment de 0 à 1000 px de gouttière et vérifie que l'aspect reste sous 1,5 — c'est la même méthode qu'en S5, où le fragment de `ref-08` était rejoué aux valeurs de `ref-07`. Conséquence de composition : une planche 4 × 3 se cale sur la HAUTEUR de sa scène et se centre ; sur 1600 × 900 elle laisse 307,5 px de chaque côté, qui sont le pourtour de la feuille et non un vide. Précédents du corpus, mêmes raisons : `ref-15` et `ref-12`.\n\n**Le creux est PLACÉ.** Onze douzièmes occupés : douze et la planche est un damier, dix et elle est trouée. Piège payé ici : le flux automatique de la grille comble r2c4 avec le premier élément non placé, et la planche perd son seul vide sans qu'aucun alignement ne bouge. Ce sont les placements explicites du teardrop en r3c1 puis du toggle en r3c3-c4 qui le tiennent, et le benchmark ne se contente pas de compter les creux — il vérifie LEQUEL est vide, en sondant le centre des douze cellules.\n\nDeux corrections portées contre le relevé de la source et qui vivent maintenant ici. Le rayon du stadium était relevé en `50%/50%`, qui n'est pas un stadium mais une ELLIPSE : les deux pourcentages se résolvent sur des axes différents, et sur une pilule de 483 × 232 cela donne 241,5 de rayon horizontal contre 116 de vertical. Il s'écrit en LONGUEUR, exactement comme le chanfrein de `shape-01-notched-corner` s'écrit en longueur pour rester à 45° — même famille de piège, même correction. Et le corps de l'année n'est pas une taille de charte mais une FONCTION de la largeur de sa pilule (`calc(100cqw / 1.216)`, l'acquis de `title-04-name-fills-measure`), réglée pour que l'encre en sature 88 % ; posée à une taille fixe, elle occupait 44 % de sa boîte.\n\nCe pattern n'est pas un bento et son `avoid_when` le dit : `layout-01-nested-bento` et `layout-06-bento-l-span` rangent du CONTENU dans des cartes de tailles choisies. Ici il n'y a pas de contenu, et la taille n'est pas choisie."
+}

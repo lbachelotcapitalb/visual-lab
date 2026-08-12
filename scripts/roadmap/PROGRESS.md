@@ -147,8 +147,15 @@ CHECKPOINT_STEP: S6
       a une `background-color` transparente, donc `check-deck.mjs` compose sa couleur avec
       celle du rail et le déclare couche 1:1 redondante — la `background-color` doit déclarer
       l'extrémité claire du dégradé, comme sur `ref-15`.
-- [ ] **S6.3 — `layout-15-primitive-mosaic`** : la grille + les huit primitives, benchmarks en
-      ratios, `check.mjs` vert.
+- [x] **S6.3 — `layout-15-primitive-mosaic`** : la grille + les huit primitives, benchmarks en
+      ratios, `check.mjs` vert. **Fait** : 15 benchmarks, verts du premier coup, et le rendu
+      correspond à la disposition de la spec (creux en r2c4, coins droits diagonalement
+      opposés, pastille à gauche). Le benchmark qui porte le lot est celui de la LOI D'ASPECT :
+      il ne se fie pas au calcul, il REPARAMÈTRE le fragment de 0 à 1000 px de gouttière et
+      vérifie que l'aspect reste sous 1,5 — même méthode qu'en S5. Les deux paramètres du
+      pattern sont `--vl-mos-cell` et `--vl-mos-gap` ; les trois rayons en sont des fractions
+      (0,500 / 0,300 / 0,220) et un benchmark garde leur ÉCARTEMENT, faute de quoi squircle et
+      teardrop se confondent et la planche ne porte plus qu'une primitive.
 - [ ] **S6.4 — `shape-02-teardrop-quadrant` + `shape-03-stadium-track`** : la forme à un seul
       coin droit (4 orientations) et le stadium emboîté (rail + pastille / rail + dégradé, qui
       absorbe le `fill-gradient-stadium` annoncé seul par la spec).
