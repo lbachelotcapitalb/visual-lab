@@ -418,7 +418,11 @@ bibliothèque à moitié indexée qui se tait coûte plus cher qu'une erreur bru
 disponible dans `deck-builder`) : `geometry.ratios` (les rapports qui font la charte),
 `geometry.type_px` (les corps du fragment, qui servent de RAPPORTS et non de valeurs),
 `geometry.pad_ratio` (marges intérieures ÷ largeur) et `pptx.emitter` (la fonction de
-`kit/vl_pptx.py` qui le pose sur une slide).
+`kit/vl_pptx.py` qui le pose sur une slide). **`pptx.emitter` est vérifié à l'indexation** : il
+nomme une fonction qui doit exister dans le kit, sinon `bin/index.mjs` refuse. Une déclaration
+sans fonction derrière est une promesse faite à `deck-builder` qui ne se découvre qu'à l'appel,
+au milieu d'un deck — deux patterns en portaient une. Un pattern non émis se déclare comme tel
+(`primitive` + une `note` sur ce que la conversion devra traiter), il ne s'invente pas d'émetteur.
 
 ## État
 
@@ -456,6 +460,16 @@ une figure qui explique une STRUCTURE et non une donnée. D'où la famille `diag
 perspective et sans seconde teinte** : par l'ordre d'empilement et par une opacité qui décroît
 d'un rapport constant (× 0,42). Les recouvrements ne sont jamais dessinés, ils sont composités —
 c'est ce qui rend le schéma rejouable sur une autre charte en ne changeant qu'UNE couleur.
+
+**12/08/2026 — la pile de couches sort en .pptx** (`vl_pptx.layer_stack`) : `diagram-01` était
+le seul pattern à géométrie complète sans émetteur, donc invisible dans `deck-builder`. Deux
+choses s'y sont apprises. L'opacité n'y est pas un effet mais l'INFORMATION — or python-pptx
+n'expose aucune transparence, elle s'écrit dans le XML du remplissage, faute de quoi les trois
+plans sortent identiques et le rang disparaît. Et le pas de la pile est géométrique quand le
+corps, lui, est ancré au plancher de lisibilité en points : les deux ne tiennent ensemble
+qu'au-delà d'une largeur donnée, sous laquelle l'explication d'une couche mord sur le nom de la
+suivante. L'émetteur la calcule et REFUSE de poser en dessous, en donnant la largeur minimale —
+un texte qui déborde n'est pas une erreur en .pptx, personne ne l'aurait signalé.
 
 **31/07/2026 — `ref-13-glass-fintech-dashboard`** : la première référence en **verre dépoli**
 (deux couches — un fond en dégradé qui accueille, des modules translucides posés dessus — et

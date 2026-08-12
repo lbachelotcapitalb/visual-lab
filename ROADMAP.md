@@ -488,8 +488,17 @@ services, données). Menée en parallèle du lot `ref-15` dans le même dépôt.
   a rendu 12 faux échecs sur `card-05` et `chart-03` (mesures croisées, cadres d'un autre
   pattern). Repassés verts à l'unité, sans un octet changé. Le correctif propre — un nom de
   temporaire unique par processus — reste à faire.
-- ⬜ Pas d'émetteur `.pptx` : `pptx.emitter` n'est pas déclaré, le pattern n'est donc pas encore
-  disponible dans `deck-builder`.
+- ✅ **Émetteur `.pptx` livré le 12/08/2026** (`vl_pptx.layer_stack`) : le pattern est disponible
+  dans `deck-builder`. Trois pièges payés au rendu, tous invisibles au contrôle mathématique —
+  les dix mesures étaient vertes sur un premier rendu fautif. (1) python-pptx n'expose AUCUNE
+  transparence : l'alpha s'écrit dans le XML du remplissage, sinon les trois plans sortent
+  identiques et le rang, qui EST l'information, disparaît. (2) Le `<p:style>` du thème ne
+  s'enlève pas qu'aux aplats : un connecteur naît avec le sien, et un filet de 0,75 pt doublé
+  d'une ombre grise se lit comme un trait sale. (3) L'ordre d'insertion porte la composition —
+  les filets AVANT les losanges, parce qu'ils naissent dessous et que leur longueur visible est
+  dictée par la forme. Et une contrainte que le fragment n'a pas : le pas est géométrique quand
+  le corps est ancré au plancher en points, donc sous ≈ 12 " de large les rangées se
+  chevauchent — l'émetteur refuse et donne la largeur minimale.
 
 ### ✅ Lot 16 — `ref-15` lilac-notched-kpi (31/07/2026)
 Référence apportée hors corpus initial, fournie en **crop horizontal** (≈ 813 × 297) : une bande
@@ -581,7 +590,8 @@ email et social.
 | `bin/compose.mjs` (lot 11) | outillage | assembler une slide depuis des ids + un système + un contenu JSON, sans copier-coller | ½ session |
 | Émetteur PSD live-text (lot 13) | outillage | reprendre `build-livetext-psd.mjs`, aujourd'hui prisonnier de `gtm-content` | ½ session |
 | Nom de temporaire unique par processus | **dette** | deux sessions en parallèle se marchent dessus : 12 faux échecs déjà payés le 31/07 | 20 min |
-| `pptx.emitter` sur `diagram-01` | **dette** | sans lui, le pattern n'est pas disponible dans `deck-builder` | 20 min |
+| ~~`pptx.emitter` sur `diagram-01`~~ | **soldée le 12/08/2026** | `vl_pptx.layer_stack` ; au passage, `bin/index.mjs` refuse désormais un `pptx.emitter` sans fonction derrière — deux patterns en portaient un | — |
+| Émetteur .pptx de `list-02-ruled-index` | **dette** | son `pptx.emitter` annonçait un `index_rows` jamais écrit ; la déclaration est retirée, la liste ne sort donc pas en .pptx | 30 min |
 
 Ce que rien ne mesure encore, et qui n'est pas dans le tableau parce que ce ne sont pas des
 lots mais des trous nommés : la COMPOSITION d'un mailing, celle d'un post, et le détachement
