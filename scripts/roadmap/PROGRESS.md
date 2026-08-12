@@ -115,7 +115,7 @@ CHECKPOINT_STEP: S4
       `check-deck.mjs ref-07` vert
 - [x] `layout-11-hero-card-on-photo` (le shell : sol, encart, rayon, ombre)
 - [x] `layout-12-nav-three-zone` (liens / logo optiquement centré / bouton)
-- [ ] `title-03-wordmark-bottom-left` (wordmark calé sur la largeur + contrepoids diagonal)
+- [x] `title-03-wordmark-bottom-left` (wordmark calé sur la largeur + contrepoids diagonal)
 - [ ] `layout-13-image-triptych` (3 images de même ratio, largeurs inégales, gouttière constante)
 - [ ] gate + regard sur le rendu + doc (README/ROADMAP) + commit final
 

@@ -1,0 +1,58 @@
+<!-- title-03-wordmark-bottom-left — le NOM DE MARQUE en pied de page, et la masse qui l'équilibre
+     au coin diagonalement opposé. Ce n'est pas un titre : un titre ouvre, celui-ci FERME. Il se
+     lit en dernier, une fois la page parcourue, et c'est pour ça qu'il est posé sur la marge
+     basse et qu'il est le plus gros objet typographique de la zone.
+
+     La racine est TRANSPARENTE et sans marge : cette zone est le CORPS d'un conteneur qui la
+     porte déjà (la carte de layout-11-hero-card-on-photo sur la référence). Lui donner un fond
+     ajouterait une couche qui n'encadre rien. Couleurs via --vl-* uniquement. -->
+<div class="vl-wbl">
+
+  <!-- LE CONTREPOIDS, coin HAUT-DROITE. C'est une réserve : le pattern n'en possède pas le
+       contenu, il en possède la POSITION et la masse. Sur la référence elle reçoit
+       layout-13-image-triptych ; n'importe quel bloc visuel de même encombrement fait l'affaire.
+       Ce qu'elle ne peut pas être, c'est du texte à lire — le wordmark ne partage pas la page
+       avec un second point de lecture. -->
+  <div class="vl-wbl__counter" role="presentation"></div>
+
+  <!-- LE WORDMARK, coin BAS-GAUCHE. Deux lignes, fer à gauche, interligne écrasé sous 1 : ce
+       serrage est ce qui fait du nom un BLOC et non deux mots empilés. Coupé à la main
+       (<br>) et pas au hasard de la largeur disponible : la césure est un choix de marque. -->
+  <h1 class="vl-wbl__mark">North<br>beam</h1>
+
+</div>
+
+<style>
+/* La zone entière, sans padding : les deux blocs se mesurent aux BORDS et l'un à l'autre.
+   Un padding ici déplacerait le fer du wordmark, qui doit tomber sur la marge intérieure du
+   conteneur — celle-ci appartient au conteneur, pas à ce cadre. */
+.vl-wbl {
+  position: relative;
+  width: 1036px; height: 506px;
+  font-family: Archivo, Inter, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Réserve du contrepoids : ferrée haut ET droite, pas centrée dans son quart. Le filet est
+   TIRETÉ à dessein — un filet plein se lit comme un cadre voulu, et personne ne le remplace ;
+   tireté, il dit qu'il manque quelque chose. Il disparaît dès qu'on la remplit. */
+.vl-wbl__counter {
+  position: absolute; top: 0; right: 0;
+  width: 45.56%; height: 39.33%;
+  border: 1px dashed var(--vl-ink);
+  border-radius: var(--vl-radius-photo);
+  opacity: 0.22;
+}
+
+/* Le wordmark. `bottom: 0` et non un `top` calculé : la marge basse est la seule référence qui
+   survit à un changement de hauteur de zone, et c'est elle qui pose le nom en pied.
+   L'axe `wdth` à 125 fait partie du dessin — le même nom en largeur normale devient une
+   signature de bas de page, plus une enseigne. */
+.vl-wbl__mark {
+  position: absolute; left: 0; bottom: 0; margin: 0;
+  font-size: 148px; line-height: 0.82;
+  font-weight: 900; font-stretch: 125%;
+  font-variation-settings: 'wght' 900, 'wdth' 125;
+  letter-spacing: -0.01em; text-transform: uppercase;
+  color: var(--vl-accent);
+}
+</style>

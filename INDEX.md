@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-46 patterns · 16 références · 39 vérifiés par benchmarks mesurés.
+47 patterns · 16 références · 40 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -72,6 +72,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `tag-03-action-pill-bar` | Aligner filtres et action principale sur une même ligne sans hiérarchie typographique : toutes les commandes sont des pilules de MÊME hauteur, les filtres portent un puits d'icône plus clair que la pilule qui le contient, et UNE SEULE pilule — la dernière — est pleine. C'est la position et le remplissage qui disent le rang, jamais la taille. | web | 16 | ref-18-lime-sales-dashboard |
 | `title-01-leading-rule` | Marquer le titre d'une slide d'un filet vertical d'accent sans ajouter ni couleur au texte ni élément décoratif : le filet est le seul accent du titre, et il est collé au mot. | slide web | 7 | ref-06-orange-notched |
 | `title-02-condensed-overlay-stack` | Tenir une slide entière avec du TEXTE SEUL — aucun aplat, aucun trait, aucune boîte — en posant trois blocs sur la scène : un titre condensé noir à l'interligne écrasé, le numéro de section entre parenthèses au MÊME fer que lui mais à l'autre bout de la colonne, et un contrepoids en micro-capitales au coin diagonalement opposé. Le cadre est transparent : il se pose par-dessus des images sans rien leur enlever. | slide web | 21 | ref-10-campaign-board-red |
+| `title-03-wordmark-bottom-left` | Fermer une page d'accueil par le nom de la marque plutôt que de l'ouvrir par lui : wordmark de deux lignes, fer à gauche, posé sur la marge BASSE, et une réserve visuelle au coin diagonalement opposé qui l'empêche de faire basculer la page. Les deux blocs ne se croisent jamais en hauteur — c'est la seule chose qui fait lire une diagonale plutôt que deux objets empilés. | web slide social | 18 | ref-07-retro-brand-hero |
 
 ## Détail
 
@@ -463,6 +464,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-red, --vl-white, --vl-cos-fer
 - tags : titre, condensé, capitales, overlay, numéro, section, parenthèses, micro-caps, campagne, chapitre, typo
 
+**title-03-wordmark-bottom-left** — Wordmark en pied, contrepoids diagonal
+
+- employer : Hero ou couverture dont le nom de marque est le dernier mot, pas le premier : le contenu parle d'abord (nav, images, accroche), la signature arrive en pied. Demande un nom court, coupable en deux lignes, et une zone d'au moins deux fois la hauteur du wordmark pour que la diagonale respire.
+- éviter : Le nom doit être lu EN PREMIER — un titre de section, une couverture de deck : le poser en bas inverse l'ordre de lecture et le contrepoids devient le sujet. Écarter aussi quand le nom ne se coupe pas en deux lignes de longueur voisine : une ligne courte sur une ligne longue casse le bloc, et un wordmark d'une seule ligne n'a plus rien à équilibrer.
+- à remplir : mark, counter
+- variables : --vl-accent, --vl-ink, --vl-radius-photo
+- tags : wordmark, logotype, marque, hero, pied, diagonale, contrepoids, display, deux-lignes, interligne-serre
+
 ## Références
 
 | référence | charte | patterns extraits | deck |
@@ -471,7 +480,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-03-bento-dark-pitch` | Bento sombre — pitch investisseur | `chart-01-stadium-bars`, `chart-02-isotype`, `layout-01-nested-bento` | `decks/ref-03-bento-dark-pitch.html` |
 | `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |
 | `ref-06-orange-notched` | Corporate orange chanfreiné | `card-02-notched-brief`, `card-03-stat-accent`, `list-02-ruled-index`, `shape-notched-corner`, `title-01-leading-rule` | `decks/ref-06-orange-notched.html` |
-| `ref-07-retro-brand-hero` | Retro brand hero (crème + rouge de marque, sol photographique) | `layout-11-hero-card-on-photo`, `layout-12-nav-three-zone` | `decks/ref-07-retro-brand-hero.html` |
+| `ref-07-retro-brand-hero` | Retro brand hero (crème + rouge de marque, sol photographique) | `layout-11-hero-card-on-photo`, `layout-12-nav-three-zone`, `title-03-wordmark-bottom-left` | `decks/ref-07-retro-brand-hero.html` |
 | `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | — | `decks/ref-08-swiss-studio-hero.html` |
 | `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | `layout-10-bleed-column-inset`, `list-07-hairline-spec-table`, `title-02-condensed-overlay-stack` | `decks/ref-10-campaign-board-red.html` |
 | `ref-11-finance-dashboard-mint` | Dashboard bento clair — menthe & lilas | `card-04-stat-barchart`, `card-05-balance-gauge`, `card-06-forecast-timeline`, `card-07-transactions` | `decks/ref-11-finance-dashboard-mint.html` |

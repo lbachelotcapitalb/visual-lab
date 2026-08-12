@@ -1,0 +1,165 @@
+{
+  "name": "Wordmark en pied, contrepoids diagonal",
+  "family": "title",
+  "ref": "ref-07-retro-brand-hero",
+  "intent": "Fermer une page d'accueil par le nom de la marque plutôt que de l'ouvrir par lui : wordmark de deux lignes, fer à gauche, posé sur la marge BASSE, et une réserve visuelle au coin diagonalement opposé qui l'empêche de faire basculer la page. Les deux blocs ne se croisent jamais en hauteur — c'est la seule chose qui fait lire une diagonale plutôt que deux objets empilés.",
+  "when_to_use": "Hero ou couverture dont le nom de marque est le dernier mot, pas le premier : le contenu parle d'abord (nav, images, accroche), la signature arrive en pied. Demande un nom court, coupable en deux lignes, et une zone d'au moins deux fois la hauteur du wordmark pour que la diagonale respire.",
+  "avoid_when": "Le nom doit être lu EN PREMIER — un titre de section, une couverture de deck : le poser en bas inverse l'ordre de lecture et le contrepoids devient le sujet. Écarter aussi quand le nom ne se coupe pas en deux lignes de longueur voisine : une ligne courte sur une ligne longue casse le bloc, et un wordmark d'une seule ligne n'a plus rien à équilibrer.",
+  "media": [
+    "web",
+    "slide",
+    "social"
+  ],
+  "tags": [
+    "wordmark",
+    "logotype",
+    "marque",
+    "hero",
+    "pied",
+    "diagonale",
+    "contrepoids",
+    "display",
+    "deux-lignes",
+    "interligne-serre"
+  ],
+  "vars": [
+    {
+      "name": "--vl-accent",
+      "role": "encre du wordmark — la couleur de marque, ici sur son plus gros objet",
+      "default": "#B2201C"
+    },
+    {
+      "name": "--vl-ink",
+      "role": "filet de la réserve du contrepoids ; disparaît dès qu'on la remplit",
+      "default": "#1E1B18"
+    },
+    {
+      "name": "--vl-radius-photo",
+      "role": "rayon de la réserve — celui du bloc visuel qui viendra s'y loger",
+      "default": "8px"
+    }
+  ],
+  "slots": [
+    "mark",
+    "counter"
+  ],
+  "geometry": {
+    "root": ".vl-wbl",
+    "frame": [
+      1036,
+      506
+    ],
+    "ratios": {
+      "mark_size_over_frame": 0.1429,
+      "mark_leading": 0.82,
+      "counter_w_over_frame": 0.4556,
+      "counter_h_over_frame_h": 0.3933
+    },
+    "type_px": {
+      "mark": 148
+    },
+    "pad_ratio": {
+      "top": 0,
+      "x": 0,
+      "bottom": 0
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "le wordmark est ferré sur le bord GAUCHE de la zone",
+      "measure": "box('.vl-wbl__mark').left / W",
+      "max": 0.003
+    },
+    {
+      "name": "et posé sur la marge BASSE : c'est ce qui en fait une signature, pas un titre",
+      "measure": "(H - box('.vl-wbl__mark').bottom) / H",
+      "max": 0.01
+    },
+    {
+      "name": "interligne ÉCRASÉ sous 1 : les deux lignes font UN bloc",
+      "measure": "num('.vl-wbl__mark','lineHeight') / num('.vl-wbl__mark','fontSize')",
+      "min": 0.72,
+      "max": 0.9
+    },
+    {
+      "name": "le wordmark est bien sur DEUX lignes, pas une",
+      "measure": "box('.vl-wbl__mark').h / num('.vl-wbl__mark','fontSize')",
+      "min": 1.55,
+      "max": 1.85
+    },
+    {
+      "name": "le contrepoids est ferré sur le bord DROIT",
+      "measure": "(W - box('.vl-wbl__counter').right) / W",
+      "max": 0.003
+    },
+    {
+      "name": "et sur le bord HAUT — le coin diagonalement opposé, pas un flottement",
+      "measure": "box('.vl-wbl__counter').top / H",
+      "max": 0.003
+    },
+    {
+      "name": "DIAGONALE, axe horizontal : les deux centres se séparent d'au moins un tiers de la largeur",
+      "measure": "(box('.vl-wbl__counter').left + box('.vl-wbl__counter').right - box('.vl-wbl__mark').left - box('.vl-wbl__mark').right) / (2 * W)",
+      "min": 0.33
+    },
+    {
+      "name": "DIAGONALE, axe vertical : et d'au moins un tiers de la hauteur",
+      "measure": "(box('.vl-wbl__mark').top + box('.vl-wbl__mark').bottom - box('.vl-wbl__counter').top - box('.vl-wbl__counter').bottom) / (2 * H)",
+      "min": 0.33
+    },
+    {
+      "name": "AUCUN CROISEMENT EN HAUTEUR : du blanc franc entre le pied du contrepoids et le haut du wordmark",
+      "measure": "(box('.vl-wbl__mark').top - box('.vl-wbl__counter').bottom) / H",
+      "min": 0.06
+    },
+    {
+      "name": "la rangée est SATURÉE : côte à côte, il ne resterait pas de quoi séparer les deux blocs — la diagonale est subie, pas décorative",
+      "measure": "(W - box('.vl-wbl__mark').w - box('.vl-wbl__counter').w) / W",
+      "max": 0.07
+    },
+    {
+      "name": "le wordmark tient ≈ la moitié de la largeur de la zone",
+      "measure": "box('.vl-wbl__mark').w / W",
+      "min": 0.45,
+      "max": 0.65
+    },
+    {
+      "name": "le contrepoids est une MASSE, pas un filet : plus d'un tiers de la hauteur",
+      "measure": "box('.vl-wbl__counter').h / H",
+      "min": 0.3
+    },
+    {
+      "name": "l'axe de LARGEUR du display est bien ouvert — un wordmark en largeur normale est un autre pattern",
+      "measure": "parseFloat((cs('.vl-wbl__mark','fontVariationSettings').match(/\"wdth\" ([\\d.]+)/) || [0, 0])[1])",
+      "min": 110
+    },
+    {
+      "name": "capitales par le CSS, pas par la frappe : le nom reste lisible dans le markup",
+      "measure": "cs('.vl-wbl__mark','textTransform') === 'uppercase' ? 1 : 0",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "le wordmark porte la couleur de marque, et il tient le plancher de contraste malgré sa taille",
+      "measure": "contrast('.vl-wbl__mark')",
+      "min": 4.5
+    },
+    {
+      "name": "racine TRANSPARENTE : cette zone est le corps d'un conteneur qui a déjà son fond",
+      "measure": "cs('.vl-wbl','backgroundColor') === 'rgba(0, 0, 0, 0)' ? 1 : 0",
+      "expect": 1,
+      "tol": 0
+    },
+    {
+      "name": "aucune BOÎTE ne sort de la zone — ni en bas, ni à droite, ni en amont des deux bords opposés",
+      "measure": "Math.max(box('.vl-wbl__mark').right - W, box('.vl-wbl__mark').bottom - H, box('.vl-wbl__counter').right - W, box('.vl-wbl__counter').bottom - H, -box('.vl-wbl__mark').left, -box('.vl-wbl__counter').top) / W",
+      "max": 0.002
+    },
+    {
+      "name": "ce que l'interligne négatif fait dépasser sous le wordmark est du VIDE : en capitales, ce qui descend sous la ligne de base est le débord optique des rondes, pas un jambage",
+      "measure": "(() => { const el = document.querySelector('.vl-wbl__mark'); const s = getComputedStyle(el); const c = document.createElement('canvas').getContext('2d'); c.font = s.fontWeight + ' ' + s.fontSize + ' ' + s.fontFamily; return c.measureText(el.textContent.toUpperCase()).actualBoundingBoxDescent / parseFloat(s.fontSize); })()",
+      "max": 0.03
+    }
+  ],
+  "notes": "Le pattern ne tient qu'à une chose, et elle est contre-intuitive : le wordmark n'est PAS centré, pas ferré en haut, pas au milieu — il est posé au coin bas-gauche, et une masse occupe le coin haut-droite. Retirez la masse et la page bascule à gauche ; posez-la à gauche aussi et les deux blocs s'empilent, la diagonale disparaît, le wordmark redevient une légende sous une image.\n\nDeux benchmarks tiennent la diagonale, et ils disent des choses différentes. Le premier mesure l'écart des CENTRES sur les deux axes (≥ un tiers de la dimension) : c'est la diagonale elle-même. Le second mesure que la rangée est SATURÉE — les deux blocs cumulent 96 % de la largeur, il ne resterait pas 4 % pour les séparer s'ils étaient posés côte à côte. Sans lui, on satisferait la diagonale avec deux petites vignettes perdues dans deux coins, ce qui n'est pas une composition. C'est aussi ce qui rend obligatoire le non-croisement en hauteur : ils ne peuvent pas s'éviter en largeur, donc ils s'évitent en verticale.\n\nLa containment se mesure sur les BOÎTES, pas avec `overflow()`, et c'est un piège payé ici. Un interligne de 0,82 est plus court que la boîte de contenu de la ligne (ascendante + descendante = 1,15 em sur Archivo) : la ligne du bas dépasse de 24 px sous sa propre boîte, `scrollHeight` le compte, et `overflow()` sortait 5 % de la hauteur pour un pattern parfaitement contenu. Ce dépassement est du vide — le nom est en capitales, et ce qui descend sous la ligne de base ne vaut que 1,6 % du corps : le débord optique du « O », pas un jambage. Un benchmark le MESURE au canvas au lieu de l'affirmer, parce que le jour où quelqu'un remplacera le nom de démonstration par un mot à jambage, l'assertion doit tomber. Optiquement, la ligne de base de la seconde ligne tombe à 13 px du bord bas, soit un huitième de hauteur de capitale : c'est ce qui fait « posé sur la marge » plutôt que « collé au bord ».\n\nLa réserve du contrepoids est vide par construction. Le pattern possède sa position et son encombrement, pas son contenu : sur la référence elle reçoit `layout-13-image-triptych`, mais un bloc plein, une seule photo ou un dessin conviennent. Ce qu'elle ne doit pas recevoir, c'est du texte à lire — le wordmark ne partage pas la page avec un second point de lecture, et le contraste du filet (22 % d'encre) dit assez qu'il n'est pas là pour être vu.\n\nL'axe `wdth` à 125 est mesuré, pas décoratif. Archivo est la seule variable du dépôt qui porte un axe de largeur, et c'est elle qui donne au nom son allure d'enseigne ; le même dessin en largeur normale rend une signature de bas de page, qui est un autre objet. L'assertion est posée sur `font-variation-settings` parce que `font-stretch` seul ne se relit pas de façon fiable dans le style calculé."
+}
