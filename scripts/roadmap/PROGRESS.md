@@ -2,7 +2,7 @@
 
 STATE: RUNNING
 <!-- RUNNING (continue) | AWAITING_DECISION (halt, présenter le tableau au mainteneur) | BLOCKED (gate rouge, halt) | DONE (fini) | STOPPED (coupé par le mainteneur via `roadmap stop` — ne jamais relancer soi-même) -->
-CURRENT_STEP: S2
+CURRENT_STEP: S3
 UPDATED: 2026-08-12
 LAST_COMMIT: 671de7c
 
@@ -69,7 +69,7 @@ règles dures :
       `kit/vl_pptx.py` + le champ `pptx.emitter` du JSON, pour que le pattern existe enfin dans
       `deck-builder`. Petit lot volontairement placé en tête : il vérifie la chaîne de bout en
       bout (gate, commit nommé, doc, relance) sur un périmètre où l'erreur coûte peu.
-- [ ] **S2 — `ref-12-neon-capsule-tags` : le deck manquant.** Les patterns existent sans
+- [x] **S2 — `ref-12-neon-capsule-tags` : le deck manquant.** Les patterns existent sans
       reconstitution — le seul trou du corpus en sens inverse. Écrire `decks/ref-12-….html` selon
       la spec, et vérifier que les patterns déjà extraits en sortent bien (s'ils divergent, c'est
       la spec qui tranche, et on corrige les patterns).
@@ -106,45 +106,27 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: S2
-
-- [x] `decks/ref-12-neon-capsule-tags.html` — la slide 1600×900 : sol vert forêt, pile des six
-      capsules alignées à droite, écart `0,1 u`, rien d'autre. Le bord droit coupé de la source
-      est un accident de cadrage : on remet à plat, on ne reproduit pas l'amputation.
-      `check-deck.mjs` vert (0 couche au-dessus de la scène : une capsule est un TRAIT, pas une
-      surface). Deux choses que le REGARD a sorties et que rien ne mesurait :
-      **(a)** `--vl-cap-u: 56px` (la valeur héritée du système, posée sans deck) laissait la pile
-      à 26 % de la largeur et 50 % de la hauteur — DOCTRINE §1. L'unité n'est pas libre : six
-      rangées + cinq écarts = 8,03 u, et le plafond de hauteur donne u ≤ 97 px.
-      **(b)** à u = 97, Chrome arrondit la bordure CSS de la pilule à 5 px là où le stroke SVG
-      vaut 5,335 px : le contour changeait d'épaisseur à chaque soudure. **u = 91** (trait
-      5,005 px des deux côtés) + un **débord de 0,05 u** ajouté aux deux extrémités des tracés
-      SVG (tête et calotte) pour fermer le trou de rastérisation de ~0,7 px. Corrigé dans le deck
-      ET dans `patterns/tag-01-gooey-capsule.html` — mesuré : couverture ≥ 0,99 sur les douze
-      lignes droites, contre 0,30 avant.
-- [x] Confronter `tag-01-gooey-capsule` au deck — le pattern SORT du deck sans divergence, une
-      fois l'unité alignée. `systems/ref-12-…json` passe de `--vl-cap-u: 56px` à **91px** (et le
-      fallback du fragment avec, sinon un consommateur sans système récupère une unité que le
-      deck a démentie) ; `geometry.frame` re-mesuré [241, 70] → **[372, 114]**, `type_px.label`
-      34.7 → **56.4**. Les treize benchmarks sont en RATIOS : tous verts sans en toucher un seul
-      — c'est la preuve que l'unité était le SEUL écart. Les deux trouvailles du regard sont
-      versées en `notes` (pattern : le débord de 0,05 u ; système : pourquoi u ≤ 97 et pourquoi
-      91 plutôt que 97), sans quoi le prochain qui règle l'unité au goût repaie les deux.
-- [x] Doc : `SPEC-SOURCES.md` § ref-12 — deux mensonges corrigés, pas un seul : « Patterns
-      extraits » annonçait un `stack-keyword-flush-right` inexistant (la pile est DANS `tag-01`,
-      et une règle d'empilement qui tient dans sa phrase ne se garde pas) ET un id `tag-capsule-
-      gooey` qui n'est pas la nomenclature. Ajout de la rubrique « Reconstitution » (u ≤ 97, 91
-      retenu, le débord de 0,05 u) ; l'échelle absolue y est désormais annoncée comme DÉDUITE du
-      deck et non relevée sur la source — le fragment est recadré, la scène d'origine est
-      inconnue. README « État » (entrée 12/08 + décompte 12 → 13 références reconstituées, et
-      plus aucune n'a de patterns sans deck) et ROADMAP (ligne barrée « soldée le 12/08/2026 »).
-- [ ] Gate + regard du rendu + commit final nommé.
+CHECKPOINT_STEP: (aucun)
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à
      mesure et poussée en commit `wip(<step>): …`. C'est ce qui permet de reprendre au milieu
      d'un step après un relais sur seuil de contexte ou un crash. -->
 
 ## Journal (append-only, le plus récent en haut)
+
+- 2026-08-12 — S2 fait. `ref-12` a son deck : le corpus n'a plus une seule référence à patterns
+  sans reconstitution. Le deck a DÉMENTI le pattern, ce qui est l'intérêt du sens inverse —
+  `--vl-cap-u` valait 56 px, une valeur jamais confrontée à une slide, qui laissait la pile à
+  26 % de la largeur (DOCTRINE §1). Posée sur 1600×900 l'unité n'est plus libre : 8,03 u de pile
+  plafonnent u à 97 px, et c'est 91 qui est retenu parce que Chrome arrondit une bordure CSS au
+  pixel entier là où il ne le fait pas d'un stroke SVG (contour 5,335 → 5 px à chaque soudure,
+  douze fois par slide). Deuxième défaut du même genre : bout à bout, les deux traits laissent
+  un trou de rastérisation de ~0,7 px — débord de 0,05 u aux extrémités, couverture 0,30 → ≥ 0,99.
+  Les treize benchmarks sont restés verts d'un bout à l'autre sans qu'on en touche un : ils sont
+  en RATIOS, donc structurellement aveugles à l'échelle et à la rastérisation. Aucune image
+  source sur disque : `bin/diff.mjs` impossible, fidélité tenue par la spec, le regard et
+  `check-deck.mjs`. Effet de bord : la spec annonçait un `stack-keyword-flush-right` qui n'a
+  jamais existé, et un id hors nomenclature — les deux sont corrigés.
 
 - 2026-08-12 — S1 fait (671de7c). `vl_pptx.layer_stack` livré : `diagram-01` sort en .pptx. Les
   dix mesures d'`audit()` étaient vertes sur un rendu FAUTIF — c'est le regard qui a sorti les
