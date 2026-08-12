@@ -106,7 +106,18 @@ règles dures :
 
 ## Checkpoint intra-step
 
-CHECKPOINT_STEP: (aucun)
+CHECKPOINT_STEP: S4
+
+- [ ] spec `ref-07` complétée (palette relevée→corrigée, ratios ancrés sur la largeur de PAGE,
+      ce qui est écarté) + `systems/ref-07-retro-brand-hero.json`
+- [ ] deck `ref-07` : sol photo génératif + carte flottante + nav trois zones
+- [ ] deck `ref-07` : wordmark géant bas-gauche + triptyque portrait haut-droite,
+      `check-deck.mjs ref-07` vert
+- [ ] `layout-11-hero-card-on-photo` (le shell : sol, encart, rayon, ombre)
+- [ ] `layout-12-nav-three-zone` (liens / logo optiquement centré / bouton)
+- [ ] `title-03-wordmark-bottom-left` (wordmark calé sur la largeur + contrepoids diagonal)
+- [ ] `layout-13-image-triptych` (3 images de même ratio, largeurs inégales, gouttière constante)
+- [ ] gate + regard sur le rendu + doc (README/ROADMAP) + commit final
 
 <!-- Une case par sous-tâche du step en cours, écrite AVANT de commencer, cochée au fur et à
      mesure et poussée en commit `wip(<step>): …`. C'est ce qui permet de reprendre au milieu
