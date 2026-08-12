@@ -1,0 +1,194 @@
+{
+  "name": "Carte de hero incrustée sur un sol photographique",
+  "family": "layout",
+  "ref": "ref-07-retro-brand-hero",
+  "intent": "Poser la coque d'un hero de page en DEUX couches seulement : une photo pleine page qui est le sol de la page — pas un décor de maquette, pas une mise en scène —, et une carte unie qui y est INCRUSTÉE, marges de sol strictement égales à gauche et à droite, rayon discret et ombre descendante qui la fait flotter. Le sol reste une photo : posée sur un aplat de sa propre couleur, la carte perd son bord et le hero n'a plus de sol du tout.",
+  "when_to_use": "Hero de page d'accueil ou de landing dont on veut que la photo appartienne à la PAGE et non à une mise en scène du design : la carte porte toute la typographie, la photo n'affleure qu'en cadre autour d'elle. Sert aussi de coque à un écran de couverture web où le contenu doit rester lisible sur une image mouvante.",
+  "avoid_when": "La photo est une mise en scène du design (une maquette posée sur un bureau, une ombre d'objet physique, une perspective) : il faut alors la retirer, pas l'incruster — c'est exactement l'arbitrage rendu entre cette référence et ref-08. Écarter aussi quand le contenu doit saigner jusqu'aux bords : ce pattern n'a de sens que si la carte laisse voir son sol sur ses quatre côtés.",
+  "media": [
+    "web"
+  ],
+  "tags": [
+    "hero",
+    "landing",
+    "photo",
+    "image",
+    "incrustation",
+    "carte",
+    "flottant",
+    "ombre",
+    "coque",
+    "shell",
+    "accueil"
+  ],
+  "vars": [
+    {
+      "name": "--vl-card",
+      "role": "aplat de la carte incrustée — doit trancher sur le sol, jamais s'y fondre",
+      "default": "#FBF7EC"
+    },
+    {
+      "name": "--vl-radius-card",
+      "role": "rayon de la carte : un liseré, jamais une pilule",
+      "default": "6px"
+    },
+    {
+      "name": "--vl-shadow-card",
+      "role": "ombre descendante et diffuse — c'est elle, et elle seule, qui fait flotter la carte",
+      "default": "0 24px 60px rgba(0, 0, 0, 0.18)"
+    },
+    {
+      "name": "--vl-margin",
+      "role": "marge intérieure de la carte, sur laquelle se ferre tout ce qu'on y pose",
+      "default": "44px"
+    },
+    {
+      "name": "--vl-ground-sky-hi",
+      "role": "haut du ciel du sol photographique",
+      "default": "#D7E6EC"
+    },
+    {
+      "name": "--vl-ground-sky-lo",
+      "role": "bas du ciel — et repli opaque de la scène, ce que lit le lint de composition",
+      "default": "#BBD3DE"
+    },
+    {
+      "name": "--vl-ground-sun",
+      "role": "halo solaire diffusé dans le ciel",
+      "default": "#F4EFE2"
+    },
+    {
+      "name": "--vl-ground-sea-hi",
+      "role": "mer, près du rivage",
+      "default": "#7FA8BC"
+    },
+    {
+      "name": "--vl-ground-sea-lo",
+      "role": "mer, au large",
+      "default": "#5E8AA0"
+    },
+    {
+      "name": "--vl-ground-foam",
+      "role": "écume et lignes de houle",
+      "default": "#EFEAE0"
+    },
+    {
+      "name": "--vl-ground-sand-wet",
+      "role": "sable mouillé, laisses de marée",
+      "default": "#C7B49A"
+    },
+    {
+      "name": "--vl-ground-sand-dry",
+      "role": "sable sec",
+      "default": "#E4D5BC"
+    }
+  ],
+  "slots": [
+    "ground",
+    "content"
+  ],
+  "geometry": {
+    "root": ".vl-hcop",
+    "frame": [
+      1440,
+      900
+    ],
+    "ratios": {
+      "card_w_over_frame": 0.7806,
+      "card_h_over_frame_h": 0.7422,
+      "ground_margin_x_over_frame": 0.1097,
+      "ground_margin_y_over_frame_h": 0.1289,
+      "card_radius_over_frame": 0.0042,
+      "shadow_offset_y_over_frame_h": 0.0267,
+      "shadow_blur_over_frame": 0.0417,
+      "card_pad_over_card_w": 0.0391
+    },
+    "type_px": {},
+    "pad_ratio": {
+      "top": 0,
+      "x": 0,
+      "bottom": 0
+    }
+  },
+  "benchmarks": [
+    {
+      "name": "marges de sol gauche et droite ÉGALES : c'est une incrustation, pas une carte poussée dans un coin",
+      "measure": "Math.abs(box('.vl-hcop__card').left - (W - box('.vl-hcop__card').right)) / W",
+      "max": 0.002
+    },
+    {
+      "name": "marge de sol latérale : 11 % de la largeur de page",
+      "measure": "box('.vl-hcop__card').left / W",
+      "expect": 0.1097,
+      "tol": 0.005
+    },
+    {
+      "name": "marges de sol haute et basse égales",
+      "measure": "Math.abs(box('.vl-hcop__card').top - (H - box('.vl-hcop__card').bottom)) / H",
+      "max": 0.002
+    },
+    {
+      "name": "marge de sol verticale : 12,9 % de la hauteur de page",
+      "measure": "box('.vl-hcop__card').top / H",
+      "expect": 0.1289,
+      "tol": 0.006
+    },
+    {
+      "name": "la carte occupe 78 % de la largeur de page",
+      "measure": "box('.vl-hcop__card').w / W",
+      "expect": 0.7806,
+      "tol": 0.008
+    },
+    {
+      "name": "la carte occupe 74 % de la hauteur de page",
+      "measure": "box('.vl-hcop__card').h / H",
+      "expect": 0.7422,
+      "tol": 0.008
+    },
+    {
+      "name": "la carte n'est JAMAIS à fond perdu : le sol reste visible sur ses quatre côtés",
+      "measure": "Math.min(box('.vl-hcop__card').left, box('.vl-hcop__card').top, W - box('.vl-hcop__card').right, H - box('.vl-hcop__card').bottom) / W",
+      "min": 0.06
+    },
+    {
+      "name": "le sol couvre TOUTE la page : aucune bande de fond nu autour de la photo",
+      "measure": "(box('.vl-hcop__ground').w * box('.vl-hcop__ground').h) / (W * H)",
+      "expect": 1,
+      "tol": 0.002
+    },
+    {
+      "name": "le sol n'est PAS un aplat de la couleur de la carte : sans écart, la carte perd son bord",
+      "measure": "(() => { const p = (s) => (getComputedStyle(document.querySelector(s)).backgroundColor.match(/[\\d.]+/g) || []).map(Number); const a = p('.vl-hcop'), b = p('.vl-hcop__card'); return Math.max(Math.abs(a[0]-b[0]), Math.abs(a[1]-b[1]), Math.abs(a[2]-b[2])) / 255; })()",
+      "min": 0.06
+    },
+    {
+      "name": "la carte FLOTTE : une ombre portée est déclarée",
+      "measure": "cs('.vl-hcop__card','boxShadow') === 'none' ? 0 : 1",
+      "expect": 1,
+      "tol": 0.001
+    },
+    {
+      "name": "l'ombre tombe VERS LE BAS : décalage vertical ≥ 1 % de la hauteur de page",
+      "measure": "(() => { const m = (cs('.vl-hcop__card','boxShadow').match(/-?[\\d.]+px/g) || []).map(parseFloat); return m[1] / H; })()",
+      "min": 0.01
+    },
+    {
+      "name": "l'ombre est DIFFUSE, jamais un liseré dur : flou ≥ 2 % de la largeur de page",
+      "measure": "(() => { const m = (cs('.vl-hcop__card','boxShadow').match(/-?[\\d.]+px/g) || []).map(parseFloat); return m[2] / W; })()",
+      "min": 0.02
+    },
+    {
+      "name": "le rayon de la carte est un LISERÉ, pas une pilule : ≤ 0,8 % de la largeur de page",
+      "measure": "num('.vl-hcop__card','borderTopLeftRadius') / W",
+      "min": 0.001,
+      "max": 0.008
+    },
+    {
+      "name": "scène de HERO WEB au ratio 1,6 — ce n'est pas une slide 16:9",
+      "measure": "W / H",
+      "expect": 1.6,
+      "tol": 0.01
+    }
+  ],
+  "notes": "Le pattern tient sur une seule frontière, et elle n'est pas « photo ou pas photo » : c'est **mise en scène du design** contre **fond de la page**. Sur ref-08 la photo montrait la carte posée dans une pièce, avec ombre d'objet physique — elle a été retirée le 30/07 parce qu'elle obligeait à recadrer chaque export. Ici la photo est le sol de la page, à plat, sans perspective : la retirer supprimerait le sujet du pattern. Le benchmark d'écart de fond (sol ≠ carte, ≥ 6 % sur une composante) est la version mesurée de cette frontière — il refuse le cas où quelqu'un remplace la photo par un aplat crème, qui passe tous les autres contrôles et fait pourtant disparaître le bord de la carte.\n\nDeux couches, pas trois. Le sol et la carte, et c'est tout. Tout ce qui vient ensuite — la nav, le wordmark, le triptyque — sont des feuilles DANS la carte, pas des couches supplémentaires : les empiler ferait tomber check-deck.mjs, qui compte la profondeur des surfaces.\n\nLes marges de sol gauche et droite ne sont pas posées à la main, elles découlent du centrage de la carte : la seule manière de garantir l'égalité sans qu'une correction de taille la casse en silence. Les marges verticales, elles, sont plus SERRÉES que les latérales (12,9 % de la hauteur contre 11 % de la largeur, soit 116 px contre 158) — c'est ce qui empêche la carte de se lire comme un cadre photo centré.\n\n`.vl-hcop__card` est livrée VIDE : c'est le slot. Sa marge intérieure (`--vl-margin`, 3,9 % de la largeur de carte) est la seule promesse que la coque tienne à ce qu'on y pose. Le sol est une composition SVG générative, sans URL distante ; ce qui compte pour le pattern est qu'il soit photographique et pleine page, pas son sujet."
+}

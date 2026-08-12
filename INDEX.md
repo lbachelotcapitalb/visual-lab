@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-44 patterns · 15 références · 37 vérifiés par benchmarks mesurés.
+45 patterns · 16 références · 38 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -57,6 +57,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `layout-08-sheet-handle-tab` | Ouvrir un dossier par-dessus une application sans que la modale se lise comme « une carte de plus » : un voile sombre qui PORTE de l'interface (onglets, fermeture), une feuille claire qui saigne à quelques pixels des bords, et un onglet-poignée titré soudé à cette feuille par DEUX congés concaves — la seule courbe inversée du corpus, et ce qui fait que la poignée appartient à la feuille au lieu de flotter au-dessus d'elle. | web | 17 | ref-19-acid-clinical-timeline |
 | `layout-09-email-envelope` | Poser la coquille d'un mailing avec ce que le moteur Word d'Outlook sait réellement rendre : une table de garde pleine largeur qui porte le fond, une colonne de 600 px centrée qui porte tout le contenu, et l'espacement entièrement délégué au padding des cellules — jamais à une gouttière, une position ou un calcul. Les trois zones (bandeau, corps, pied) sont trois aplats PLEINS et différents, ce qui est à la fois la signature de la charte et le seul modèle de hiérarchie qu'un client mail rende à l'identique partout. | email | 18 | ref-04-swiss-investor-blue |
 | `layout-10-bleed-column-inset` | Faire porter une slide entière par les IMAGES, sans marge ni carte : deux photos à fond perdu qui touchent les quatre bords de la scène, séparées par une COUTURE unique de la couleur de page — jamais une gouttière symétrique —, et une troisième image beaucoup plus petite posée par-dessus l'une d'elles, sans partager une seule arête avec le lit. C'est cette incrustation flottante, et elle seule, qui donne de la profondeur à une composition entièrement plate. | slide web | 16 | ref-10-campaign-board-red |
+| `layout-11-hero-card-on-photo` | Poser la coque d'un hero de page en DEUX couches seulement : une photo pleine page qui est le sol de la page — pas un décor de maquette, pas une mise en scène —, et une carte unie qui y est INCRUSTÉE, marges de sol strictement égales à gauche et à droite, rayon discret et ombre descendante qui la fait flotter. Le sol reste une photo : posée sur un aplat de sa propre couleur, la carte perd son bord et le hero n'a plus de sol du tout. | web | 14 | ref-07-retro-brand-hero |
 | `list-01-giant-numbers` | Aligner trois à quatre arguments de même rang en colonnes, chacun ouvert par un numéro ou un chiffre démesuré qui sert à la fois de repère de lecture et de seule tache de couleur du bloc. | slide web | — | ref-04-swiss-investor-blue |
 | `list-02-ruled-index` | Lister les sections d'un document en donnant à chacune son libellé, une ligne d'explication et son numéro à droite, séparées par un filet fin qui appartient à l'entrée qu'il suit. | slide web | 9 | ref-06-orange-notched |
 | `list-03-two-column-toc` | Faire tenir un sommaire de dix à quatorze sections sur une seule slide, en deux colonnes numérotées, lisible d'un coup d'œil et refermable aussitôt. | slide web | — | ref-04-swiss-investor-blue |
@@ -332,6 +333,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - variables : --vl-slide, --vl-gutter
 - tags : image, photo, collage, fond-perdu, bleed, incrustation, overlay, colonnes, hero, campagne, moodboard
 
+**layout-11-hero-card-on-photo** — Carte de hero incrustée sur un sol photographique
+
+- employer : Hero de page d'accueil ou de landing dont on veut que la photo appartienne à la PAGE et non à une mise en scène du design : la carte porte toute la typographie, la photo n'affleure qu'en cadre autour d'elle. Sert aussi de coque à un écran de couverture web où le contenu doit rester lisible sur une image mouvante.
+- éviter : La photo est une mise en scène du design (une maquette posée sur un bureau, une ombre d'objet physique, une perspective) : il faut alors la retirer, pas l'incruster — c'est exactement l'arbitrage rendu entre cette référence et ref-08. Écarter aussi quand le contenu doit saigner jusqu'aux bords : ce pattern n'a de sens que si la carte laisse voir son sol sur ses quatre côtés.
+- à remplir : ground, content
+- variables : --vl-card, --vl-radius-card, --vl-shadow-card, --vl-margin, --vl-ground-sky-hi, --vl-ground-sky-lo, --vl-ground-sun, --vl-ground-sea-hi, --vl-ground-sea-lo, --vl-ground-foam, --vl-ground-sand-wet, --vl-ground-sand-dry
+- tags : hero, landing, photo, image, incrustation, carte, flottant, ombre, coque, shell, accueil
+
 ### list
 
 **list-01-giant-numbers** — Colonnes à numéro géant
@@ -453,6 +462,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-03-bento-dark-pitch` | Bento sombre — pitch investisseur | `chart-01-stadium-bars`, `chart-02-isotype`, `layout-01-nested-bento` | `decks/ref-03-bento-dark-pitch.html` |
 | `ref-04-swiss-investor-blue` | Suisse maximaliste — investor deck bleu | `card-13-email-figure-band`, `layout-02-swiss-frame`, `layout-09-email-envelope`, `list-01-giant-numbers`, `list-03-two-column-toc`, `list-06-email-digest` | `decks/ref-04-swiss-investor-blue.html` |
 | `ref-06-orange-notched` | Corporate orange chanfreiné | `card-02-notched-brief`, `card-03-stat-accent`, `list-02-ruled-index`, `shape-notched-corner`, `title-01-leading-rule` | `decks/ref-06-orange-notched.html` |
+| `ref-07-retro-brand-hero` | Retro brand hero (crème + rouge de marque, sol photographique) | `layout-11-hero-card-on-photo` | `decks/ref-07-retro-brand-hero.html` |
 | `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | — | `decks/ref-08-swiss-studio-hero.html` |
 | `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | `layout-10-bleed-column-inset`, `list-07-hairline-spec-table`, `title-02-condensed-overlay-stack` | `decks/ref-10-campaign-board-red.html` |
 | `ref-11-finance-dashboard-mint` | Dashboard bento clair — menthe & lilas | `card-04-stat-barchart`, `card-05-balance-gauge`, `card-06-forecast-timeline`, `card-07-transactions` | `decks/ref-11-finance-dashboard-mint.html` |

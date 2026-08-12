@@ -113,7 +113,7 @@ CHECKPOINT_STEP: S4
 - [x] deck `ref-07` : sol photo génératif + carte flottante + nav trois zones
 - [x] deck `ref-07` : wordmark géant bas-gauche + triptyque portrait haut-droite,
       `check-deck.mjs ref-07` vert
-- [ ] `layout-11-hero-card-on-photo` (le shell : sol, encart, rayon, ombre)
+- [x] `layout-11-hero-card-on-photo` (le shell : sol, encart, rayon, ombre)
 - [ ] `layout-12-nav-three-zone` (liens / logo optiquement centré / bouton)
 - [ ] `title-03-wordmark-bottom-left` (wordmark calé sur la largeur + contrepoids diagonal)
 - [ ] `layout-13-image-triptych` (3 images de même ratio, largeurs inégales, gouttière constante)
