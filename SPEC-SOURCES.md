@@ -396,45 +396,103 @@ retirer supprimerait le sujet du pattern `layout-11-hero-card-on-photo`. La fron
 - `layout-12-nav-three-zone` — nav liens / logo centré sur le CONTENEUR / bouton.
 - `title-03-wordmark-bottom-left` — wordmark de deux lignes calé bas-gauche, et son
   contrepoids diagonal en haut à droite.
-- `layout-13-image-triptych` — 3 images de même ratio, gouttière constante, bande pleine d'un
-  bord à l'autre. **Largeurs ÉGALES**, contrairement à ce que disait cette ligne : la table de
-  géométrie ci-dessus (0.42 Wc, gouttière 12) et la reconstitution donnent trois tiers exacts,
-  et `ref-08` en fait autant sur toute la largeur de sa carte. Les poids restent un paramètre
-  du pattern — aucune des deux références ne s'en sert.
+- `layout-13-image-triptych` — 3 images, gouttière constante, bande pleine d'un bord à l'autre.
+  **Largeurs ÉGALES ici**, contrairement à ce que disait cette ligne : la table de géométrie
+  ci-dessus (0.42 Wc, gouttière 12) et la reconstitution donnent trois tiers exacts. **Et non,
+  `ref-08` n'en fait pas autant** — corrigé le 12/08 en relevant son deck plutôt qu'en le
+  supposant : ses cellules pèsent 1 / 1,31 / 1,14. Les poids sont donc un paramètre dont une
+  référence sur deux se sert, et c'est ce qui a obligé le pattern à choisir sa vraie loi :
+  hauteur commune, pas ratio identique.
 
 ---
 
 ## ref-08-swiss-studio-hero
 
-**Nature** — Maquette de page d'accueil « Studioform® », carte blanche flottant sur une
-photo d'intérieur (fenêtre, lumière chaude). **Jumelle structurelle de ref-07** : même
-squelette (carte flottante + wordmark + triptyque), tempérament opposé.
+**Nature** — Page d'accueil « Studioform® », grotesk neutre, sans aucun accent coloré.
+**Jumelle de tempérament de `ref-07`, pas jumelle de structure** : les deux portent un
+wordmark géant et une bande de trois images, mais `ref-07` a un SOL et `ref-08` n'en a pas
+(voir « ce qui est écarté »).
 
-**Palette** — carte `#FFFFFF`, texte `#111111`, pas d'accent coloré.
+**Ce qu'il faut isoler** — la PAGE, et elle seule. Le visuel source montrait la carte **posée
+dans une pièce photographiée**, avec ombre portée d'objet physique : c'est un décor de
+maquette, retiré le 30/07 — il obligeait à recadrer chaque export à la main. Ce qui reste est
+la page, bord à bord, **1140 × 848** (ratio 1,344), déclarée `<!-- vl:stage web -->` : ce n'est
+pas une slide. **UNE seule couche** : la page porte son fond, sa marge et sa mise en page ;
+la bande d'images et le wordmark sont des feuilles, pas des couches.
 
-**Typo**
-- Statement d'intro : 15 px / poids 400 / `line-height: 1.45`, 2 lignes, ≈ 64 caractères,
-  calé **en haut à gauche** — c'est lui qui parle en premier, avant le nom.
-- Nav : `Work Index About Contact` en ligne, 13 px, calé en haut à droite.
-- Wordmark : `Studioform®` en Helvetica/Inter **Bold** ≈ 112 px, `letter-spacing: -0.035em`,
-  casse mixte, noir, aligné gauche. Le `®` en exposant ≈ 0.35 em.
+**Palette** — trois valeurs, aucun accent. Toute la couleur du visuel vient des IMAGES.
 
-**Layout** — Carte radius 4, ombre douce. Trois images **paysage** (ratio 4:3, radius 10,
-gap 14) en bas, pleine largeur de la carte, hauteur ≈ 38 % de la carte.
+| rôle | valeur | contraste |
+|---|---|---|
+| page | `#F6F5F2` | blanc cassé chaud — **corrigé contre la spec** (`#FFFFFF`) : la page est éclairée par la pièce du visuel source |
+| encre | `#111111` | **17,4:1** — nav, wordmark |
+| encre douce | `#2A2A28` | **13,3:1** — le statement |
+
+Pas de correction de contraste à faire cette fois : c'est la première référence de la série
+dont le secondaire ne passe pas sous 4,5:1. Les deux valeurs sont relevées, pas estimées.
+
+**Typo** — Helvetica Neue / Inter. Échelle en fraction de la largeur de **page** (`Wp` = 1140) :
+
+| rang | px | ratio | ce que ça porte |
+|---|---|---|---|
+| wordmark | **204** | `0.179 Wp` | `Studioform®`, poids 700, `-0.035em`, `line-height 0.92`, casse mixte |
+| `®` | 53 | `0.26 em` du wordmark | exposant, remonté de `1.52 em` — voir plus bas |
+| statement | **27** | `0.0237 Wp` | 3 lignes, `line-height 1.4`, poids 400, ≈ 46 caractères |
+| nav | **18** | `0.0158 Wp` | `Work Index About Contact`, poids 400, gouttière 17 |
+
+> **Trois valeurs corrigées contre la spec d'origine, au vu du visuel source** (30/07) :
+> wordmark **204** et non 112 — il affleure les deux marges, c'est une largeur, pas une taille
+> de charte ; statement **27 sur 3 lignes** et non 15 sur 2 ; page **#F6F5F2** et non blanc.
+> Et **aucune taille intermédiaire n'existe entre 27 et 204** : c'est ce saut, sans palier,
+> qui fait tout le visuel.
+
+**Géométrie** (page 1140 × 848, marge 40 → largeur utile **1060**)
+
+| objet | valeur | ratio |
+|---|---|---|
+| marge de page | 40 sur les quatre côtés | `0.0351 Wp` |
+| rayon de page | 4 | `0.0035 Wp` |
+| wordmark | encre de 40 à 1096 — **99,6 % de la largeur utile** | corps ≈ utile / 5,196 |
+| bande d'images | 1060 × 380, calée en PIED (`margin-top: auto`) | `0.448 Hp` |
+| cellules | 298 / 390,3 / 339,7 — poids **1 / 1,31 / 1,14** | hauteur COMMUNE, ratios 0,78 / 1,03 / 0,89 |
+| gouttière | 16, constante | `0.0140 Wp` |
+| rayon d'image | 8 | `0.0070 Wp` |
+
+Le geste de la composition est un **ordre de lecture inversé** : la phrase parle en premier
+(haut-gauche), la nav lui fait face (haut-droite), le nom n'arrive qu'ensuite — mais il prend
+alors toute la largeur utile. La bande tombe en pied et ferme la page.
+
+**Ce qui est écarté** — la mise en scène : photo d'intérieur, ombre portée d'objet physique,
+fond de planche. Rien n'est coupé par le cadre, aucune perspective ne subsiste.
+
+**Ce que `ref-08` NE prend PAS de `ref-07`** — `layout-11-hero-card-on-photo` ne s'applique
+pas ici, et ce n'est pas un manque : sans sol photographique, il n'y a ni incrustation, ni
+marge de sol, ni ombre à mesurer — le pattern refuse ce cas dans son propre `avoid_when`.
+La frontière est **mise en scène du design** contre **fond de la page** (cf. `ref-07`), et
+`ref-08` est du premier côté. Ce que les deux références partagent VRAIMENT, c'est la bande :
+`layout-13-image-triptych`, et lui seul.
 
 **Différences à conserver vs ref-07** (c'est ce qui rend le pattern paramétrable) :
 | axe | ref-07 | ref-08 |
 |---|---|---|
+| sol | photo pleine page, carte incrustée | aucun — la page EST la surface |
 | ordre de lecture | nom d'abord | phrase d'abord |
-| images | portrait, haut-droite, 42 % | paysage, bas, 100 % |
+| bande | portrait 3:4, haut-droite, 42 % de la carte, poids ÉGAUX | hauteur fixe 380, pied, 100 % de la page, poids **1 / 1,31 / 1,14** |
 | accent | rouge saturé | aucun |
-| typo | display rounded | grotesk neutre |
-| radius carte | 6 | 4 |
+| typo | display rounded (Archivo 900 / wdth 125) | grotesk neutre (Helvetica Bold) |
+| radius de surface | 6 | 4 |
 
-**Patterns à extraire**
-- `hero-statement-first` — la variante « phrase avant le nom ».
-- `type-registered-superscript` — le `®` en exposant calibré.
-- réutilise `hero-card-on-photo` et `image-triptych` (paramétrés autrement).
+**Patterns extraits — deux, plus une généralisation** (12/08/2026)
+
+`type-registered-superscript` n'est pas versé seul : le `®` calibré tient dans sa propre phrase
+de description, ce que l'élagage du 30/07 interdit. Il est absorbé par le pattern de wordmark,
+qui porte ce qu'il perd isolé — la calibration du signe est solidaire du réglage du corps.
+
+| pattern | ce qu'il porte |
+|---|---|
+| `layout-14-statement-first` | l'ordre de lecture inversé : phrase + nav en haut, nom géant, bande en pied, et le saut d'échelle SANS palier entre les deux corps |
+| `title-04-name-fills-measure` | le nom réglé pour saturer la mesure (≥ 99 % de la largeur utile) et son `®` en exposant, calé sous la hauteur de capitale |
+| `layout-13-image-triptych` | **généralisé** : la loi de la bande est la HAUTEUR COMMUNE, pas le ratio identique — celui-ci n'en est que le cas particulier à poids égaux. `ref-07` et `ref-08` sortent du même pattern, par variables |
 
 ---
 

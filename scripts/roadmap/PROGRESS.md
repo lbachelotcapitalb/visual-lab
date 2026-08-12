@@ -108,7 +108,7 @@ règles dures :
 
 CHECKPOINT_STEP: S5
 
-- [ ] spec `ref-08` relevée SUR le deck existant (1140×848) : géométrie et échelle réelles,
+- [x] spec `ref-08` relevée SUR le deck existant (1140×848) : géométrie et échelle réelles,
       ratios ancrés sur la largeur de PAGE, contrastes vérifiés, tableau des différences
       vs ref-07 remis d'équerre + `systems/ref-08-…json` recalé sur le deck
 - [ ] `layout-13-image-triptych` généralisé : la loi de la bande est la HAUTEUR COMMUNE, pas

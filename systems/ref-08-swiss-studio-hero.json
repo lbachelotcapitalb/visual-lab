@@ -1,6 +1,6 @@
 {
   "name": "Suisse studio — hero web Studioform®",
-  "notes": "La SLIDE est la carte, 1140×848, rien autour : ni photo d'intérieur, ni ombre portée, ni fond de planche. La mise en scène « carte flottant dans une pièce » du visuel source est un décor de maquette — le garder obligeait à recadrer chaque export. Aucune couleur d'accent : tout le système tient sur un blanc cassé, un noir d'encre et la chaleur de la photo d'arrière-plan — la seule couleur du visuel vient des images, jamais de la charte. L'ordre de lecture est inversé par rapport à un hero classique : la PHRASE parle en premier (haut-gauche, 21px), le nom de marque n'arrive qu'ensuite, mais il occupe alors TOUTE la largeur utile de la carte — c'est ce contraste 21px / 204px, sans aucune taille intermédiaire, qui fait tout le visuel. Le wordmark n'a pas une taille absolue : il se règle pour affleurer les deux marges de la carte (≈ W/5.2 en Helvetica Bold à -0.035em, ® compris). Le triptyque est en bas, pleine largeur, avec des largeurs INÉGALES (1 / 1.31 / 1.14) et une hauteur commune : trois vignettes égales rendraient la bande décorative, l'inégalité la rend photographique. Fidélité au visuel source retenue contre la spec sur deux points : la carte est un blanc cassé chaud (#F6F5F2, pas #FFFFFF — elle est éclairée par la pièce) et la phrase tient sur 3 lignes, pas 2.",
+  "notes": "La SLIDE est la carte, 1140×848, rien autour : ni photo d'intérieur, ni ombre portée, ni fond de planche. La mise en scène « carte flottant dans une pièce » du visuel source est un décor de maquette — le garder obligeait à recadrer chaque export. Aucune couleur d'accent : tout le système tient sur un blanc cassé, un noir d'encre et la chaleur de la photo d'arrière-plan — la seule couleur du visuel vient des images, jamais de la charte. L'ordre de lecture est inversé par rapport à un hero classique : la PHRASE parle en premier (haut-gauche, 27px), le nom de marque n'arrive qu'ensuite, mais il occupe alors TOUTE la largeur utile de la carte — c'est ce saut 27px / 204px, sans aucune taille intermédiaire, qui fait tout le visuel. Le wordmark n'a pas une taille absolue : il se règle pour affleurer les deux marges de la carte (≈ W/5.2 en Helvetica Bold à -0.035em, ® compris). Le triptyque est en bas, pleine largeur, avec des largeurs INÉGALES (1 / 1.31 / 1.14) et une hauteur commune : trois vignettes égales rendraient la bande décorative, l'inégalité la rend photographique. C'est cette inégalité, relevée sur le deck le 12/08 au lieu d'être supposée, qui a établi la vraie loi de `layout-13-image-triptych` — ce qui fait qu'on lit UNE bande est la hauteur commune, pas le ratio identique, qui n'en est que le cas particulier à poids égaux (celui de ref-07). Fidélité au visuel source retenue contre la spec sur deux points : la carte est un blanc cassé chaud (#F6F5F2, pas #FFFFFF — elle est éclairée par la pièce) et la phrase tient sur 3 lignes, pas 2.",
   "tokens": {
     "--vl-bg": "#F6F5F2",
     "--vl-board": "#F6F5F2",
@@ -18,8 +18,8 @@
     "scale": {
       "wordmark": "204px / 1 / 700 / -0.035em — se règle à la largeur, pas au nombre",
       "registered": "0.30em du wordmark, en exposant",
-      "statement": "21px / 1.45 / 400 — 3 lignes, ≈ 43 caractères par ligne",
-      "nav": "15px / 1 / 400"
+      "statement": "27px / 1.4 / 400 — 3 lignes, ≈ 46 caractères par ligne",
+      "nav": "18px / 1 / 400"
     }
   }
 }
