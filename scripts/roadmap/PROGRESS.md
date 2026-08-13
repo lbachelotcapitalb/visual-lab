@@ -144,7 +144,7 @@ règles dures :
 
 CHECKPOINT_STEP: S8
 
-- [ ] **S8.1 — la spec `ref-09` complétée AVANT tout code.** La section actuelle de
+- [x] **S8.1 — la spec `ref-09` complétée AVANT tout code.** La section actuelle de
       `SPEC-SOURCES.md` tient en 33 lignes : nature, palette, typo, l'élément signature et un
       « layout très libre ». Il manque exactement ce qui a bloqué S7 tant qu'il n'était pas
       écrit — l'ÉCHELLE (la spec donne des corps relevés sur une planche : titre ≈ 40 px, corps
@@ -154,6 +154,18 @@ CHECKPOINT_STEP: S8
       4,5:1), et le NOM des patterns dans la nomenclature fermée : `annotation-marker`,
       `type-lowercase-editorial` et `type-vertical-rail` ne portent aucune des huit familles.
       Trancher aussi lesquels sont des compositions et lesquels tiennent dans leur phrase.
+      **Fait** : la section passe de 33 à ~150 lignes, S8.2→S8.7 n'ont plus rien à décider.
+      Échelle **×2** (planche de 12 slides ≈ 800 px/slide, contre ~1000 pour les planches de 8) :
+      titre 80 / intertitre 32 / corps 20 / légende 15 / micro 16 — et **une seule marche de
+      titre**, la couverture n'a pas de display, c'est ce qui la fait lire comme un imprimé.
+      Gris `#8A8A8A` → `#6F6F6F` (3,45:1 → 5,02:1 sur blanc ; le minimum strict `#767676` vaut
+      4,54:1, un plancher n'est pas une cible et ce gris porte le corps le plus exigeant du
+      corpus). Colonnes justifiées de 34 caractères → **448 px = 46,2 caractères MESURÉS** dans
+      Chrome (DOCTRINE §8 : sous 45, la justification est perdue). Grille 6 × 208 + gouttière 32
+      = 1408, marge 96, rail dans la marge droite, aucun rayon, 2 couches. Plan des 12 slides en
+      tableau, avec **une annotation par slide au plus, 4 slides sans, chaque tracé servi 2 fois**.
+      Noms remis dans la nomenclature : `shape-05-annotation-marker`,
+      `layout-17-editorial-lowercase`, le rail tranché en S8.7 sur le critère de rétention.
 - [ ] **S8.2 — `systems/ref-09-zine-annotated-blue.json` + le deck, slides 1 à 4.**
 - [ ] **S8.3 — le deck, slides 5 à 8.**
 - [ ] **S8.4 — le deck, slides 9 à 12, `check-deck.mjs` vert sur les 12.**

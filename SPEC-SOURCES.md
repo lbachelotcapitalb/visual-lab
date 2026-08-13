@@ -689,14 +689,64 @@ qui porte ce qu'il perd isolé — la calibration du signe est solidaire du rég
 ## ref-09-zine-annotated-blue
 
 **Nature** — Planche de 12 slides d'un « project proposal », slides blanches sur fond de
-planche `#D4D4D4`.
+planche `#D4D4D4`. L'image source n'existe pas sur disque : **cette section fait foi**,
+`bin/diff.mjs` est donc impossible sur ce lot et le contrôle de fidélité se limite au regard
+et à `check-deck.mjs`.
 
-**Palette** — blanc `#FFFFFF`, bleu `#2F3FE0`, texte noir `#111`, gris `#8A8A8A`.
+**Palette**
+- papier `#FFFFFF` — la slide, et rien dessous : le fond de planche `#D4D4D4` n'est PAS
+  reproduit (c'est le décor de la planche-contact, pas une couche de la slide).
+- bleu `#2F3FE0` — les titres ET les annotations, la seule couleur de la charte (7,22:1 sur
+  blanc, il passe même en corps).
+- encre `#111111` (18,88:1).
+- gris de corps `#6F6F6F` — **corrigé** : le relevé donnait `#8A8A8A`, qui vaut **3,45:1** sur
+  blanc, très en dessous du seuil de 4,5 des corps qu'il porte. `#767676` remettrait tout juste
+  à 4,54:1 ; on prend un demi-ton de plus (**5,02:1**) parce que ce gris porte ici le corps le
+  plus exigeant du corpus — 20 px justifié sur des paragraphes longs — et qu'un plancher n'est
+  pas une cible (DOCTRINE §7). Quatrième lot d'affilée où la source place son secondaire sous
+  le seuil ; la bibliothèque ne capitalise pas le défaut de la source.
+- filet `#DCDCDC` — décoratif, aucun texte ne s'y pose, donc hors seuil de contraste.
 
-**Typo** — Sans-serif **tout en minuscules**, y compris les titres (`project proposal`,
-`about us`, `our team`). Titres ≈ 40 px bleu. Corps ≈ 10 px, **justifié**
-(`text-align: justify; hyphens: auto`) en colonnes étroites (≈ 34 caractères), gris foncé,
-`line-height: 1.45`. Micro-typo **tournée à 90°** sur le bord droit de la slide.
+**Échelle — ×2.** Les corps du relevé (titre ≈40, corps ≈10, micro ≈8) ont été pris sur une
+planche de **12** slides, donc environ 800 px par slide — deux fois plus dense que les planches
+de 8 slides de `ref-05` et `ref-06`, relevées à ~1000 px et remises à l'échelle ×1,6. Reportés
+tels quels sur 1600×900, ces corps seraient illisibles (un corps de 10 px). Les PROPORTIONS de
+la spec valent, ses valeurs absolues non. Le contrôle croisé qui fixe le facteur : le corps
+sort à **20**, à côté des 19 de `ref-05` — deux chartes de même nature ne peuvent pas porter
+des corps à 16 et à 19.
+
+| rôle | relevé | slide 1600×900 |
+|---|---|---|
+| titre (couverture ET sections) | ≈40 | **80** / 1.0 / 500 / `-0.02em`, bas de casse, bleu |
+| intertitre de colonne | — (interpolé) | **32** / 1.25 / 600, bas de casse, encre |
+| corps justifié | ≈10 | **20** / 1.45 / 400, gris |
+| légende d'image, libellé de liste | — (interpolé) | **15** / 1.35 / 500 |
+| micro du rail, folio | ≈8 | **16** / 1 / 500 / `0.18em`, bas de casse |
+
+**Une seule marche de titre — la couverture n'a PAS de display.** Le relevé range
+`project proposal` (la couverture) au même corps que `about us` et `our team`. C'est faithful
+et c'est la signature : une planche qui n'escalade pas sur sa couverture se lit comme une page
+IMPRIMÉE et non comme un deck. La couverture tient sa présence de son image et de son ovale
+d'encerclement, pas d'un corps de 128.
+
+**Bas de casse partout, sans exception** — titres compris. C'est la règle éditoriale de la
+charte, et elle n'a pas de contre-exemple : aucune capitale, aucun `text-transform`.
+
+**Géométrie** — slide 1600×900, marge **96** sur les quatre côtés. Zone de contenu
+**1408 × 708** (y de 96 à 804). Grille de **6 colonnes de 208, gouttière 32**
+(6 × 208 + 5 × 32 = 1408). Le rail vertical vit DANS la marge droite (bande de 96 collée au
+bord, axe à x ≈ 1552) : il ne mange pas la zone de contenu et n'ajoute aucune couche.
+**Aucun rayon dans cette charte** — tout est à angle vif, images comprises. C'est un imprimé.
+
+**La mesure de texte — ce qui corrige la source.** Le relevé donne des colonnes justifiées de
+≈34 caractères. DOCTRINE §8 est explicite : **sous ~45 caractères, la justification est perdue
+d'avance**, et le recours nommé en premier est d'élargir la colonne. On garde donc la
+justification (c'est la signature) et on élargit : une colonne de texte = **2 unités + 1
+gouttière = 448 px**. Mesuré dans Chrome (Inter 20 px, bas de casse justifié) : **46,2
+caractères** de moyenne sur les lignes pleines — 416 px n'en donnerait que 43,8, sous le seuil.
+C'est cette mesure qui fixe l'unité de grille, pas l'inverse. Trois colonnes de texte tiennent
+dans la zone de contenu, pas plus. La mesure est ASSERTÉE, pas supposée : le pattern éditorial porte un
+benchmark « ≥ 45 caractères par ligne » mesuré dans Chrome.
 
 **L'élément signature — les annotations manuscrites** (c'est le pattern qui compte) :
 tracés SVG bleus posés **par-dessus** la typo, comme au marqueur.
@@ -704,20 +754,86 @@ tracés SVG bleus posés **par-dessus** la typo, comme au marqueur.
 - flèche courbe avec pointe ouverte (2 traits), reliant un mot à une image
 - soulignement simple ou double, légèrement ondulé, plus long que le mot
 - gribouillis vertical (zigzag serré) le long d'un titre en colonne
+
 Caractéristiques du trait : `stroke-width: 3.5`, `stroke-linecap: round`,
 `stroke-linejoin: round`, `fill: none`, **irrégularité obligatoire** (les points de contrôle
-Bézier doivent être décalés de ±3 % sinon ça redevient une forme géométrique et l'effet
-tombe). Rotation légère de l'ensemble (−2° à +3°).
+Bézier décalés de ±3 % — sinon le tracé redevient une forme géométrique et l'effet tombe).
+Rotation légère de l'ensemble (−2° à +3°).
 
-**Layout** — Très libre : images N&B de tailles inégales, texte en 1 à 3 colonnes étroites,
-grands blancs. Le déséquilibre est intentionnel.
+**L'annotation est posée en SURIMPRESSION, jamais en conteneur.** Le SVG est un calque
+`position: absolute` au-dessus de la typo, pas une boîte qui l'enveloppe : une boîte qui
+n'encadre qu'un titre est exactement la couche 1:1 que `check-deck.mjs` refuse.
 
-**Patterns à extraire**
-- `annotation-marker` — la bibliothèque de tracés (ellipse, flèche, soulignement,
-  zigzag) + la règle d'irrégularité. **Priorité haute** : c'est le plus fort
-  différenciateur anti-« AI slop » du corpus.
-- `type-lowercase-editorial` — titres en minuscules + corps justifié étroit.
-- `type-vertical-rail` — la micro-typo tournée sur le bord.
+**La règle du « une par slide », chiffrée.** Au plus **une annotation par slide**, et
+**quatre slides sur douze n'en portent aucune**. C'est la transposition directe de la leçon de
+`ref-05` : une charte dont chaque slide place sa signature parce que « la charte en a une » est
+exactement la charte que la signature cherchait à éviter. Chacun des quatre tracés sert **deux
+fois** sur les douze — c'est ce qui prouve que la bibliothèque de tracés est une bibliothèque
+et pas quatre dessins.
+
+**Comment l'irrégularité se MESURE** (c'est ce qui fait de ce lot autre chose qu'un dessin) :
+le fragment est du HTML statique, donc le désordre est cuit dans l'attribut `d` du tracé. Le
+benchmark échantillonne le chemin (`getPointAtLength`) et compare les points à la forme
+géométrique parfaite la plus proche (ellipse pour l'ovale, segment pour le soulignement) :
+l'écart quadratique moyen doit tenir dans une **fourchette** — au moins 1,5 % de la largeur du
+tracé (en dessous, c'est une forme géométrique), au plus 5 % (au-dessus, ce n'est plus une
+annotation mais un gribouillis). La contre-épreuve est le vrai contrôle : remplacer le `d` par
+l'ellipse parfaite ⇒ le benchmark sort ROUGE. Si `bin/check.mjs` n'a pas l'outil pour le dire,
+c'est `bin/check.mjs` qu'on amende dans le même commit.
+
+**Layout** — Très libre : images N&B de tailles inégales, texte en 1 à 3 colonnes, grands
+blancs. Le déséquilibre est intentionnel — mais il se joue **sur la grille de 6** : sans elle,
+rien ne distingue un déséquilibre voulu d'un défaut, et aucune mesure ne peut trancher.
+Aucune image n'existant sur disque, les photographies N&B se reconstruisent en **dégradés et
+formes SVG en niveaux de gris** dans leur cadre à angle vif — substitut assumé, noté ici pour
+qu'on ne le prenne pas pour un relevé.
+
+**Profondeur : 2 couches.** papier de slide → modules (bloc de texte, cadre d'image, ligne de
+liste). Pas de panneau intermédiaire, pas de fond de planche, pas de marge de page.
+
+**Plan des 12 slides** (arbitré ici — la spec d'origine annonçait 12 slides sans les décrire) :
+
+| # | slide | ce qu'elle porte | l'annotation |
+|---|---|---|---|
+| 1 | Couverture | titre `project proposal`, ligne d'auteur et de date en micro, grande image N&B à droite (4 unités) | **ovale** autour du titre |
+| 2 | `contents` | index numéroté `01`→`08`, deux colonnes de lignes filetées | aucune |
+| 3 | `about us` | titre + **deux colonnes** de corps justifié + image carrée (2 unités) | **soulignement** ondulé sous deux mots du corps |
+| 4 | `the problem` | titre + une colonne de corps + bande d'image N&B en pied (6 unités) | **zigzag** le long du titre |
+| 5 | `our approach` | trois colonnes, chacune intertitre + corps justifié | aucune |
+| 6 | `the process` | quatre étapes numérotées en lignes filetées + petite image | **flèche** courbe de l'étape 03 vers une note en marge |
+| 7 | `our team` | trois portraits N&B, nom et rôle sous chacun | **ovale** autour d'un nom |
+| 8 | `case study` | image pleine hauteur à gauche (3 unités) + colonne de corps à droite | aucune |
+| 9 | `deliverables` | liste à filets : libellé à gauche, délai à droite | **soulignement double** sous un libellé |
+| 10 | `timeline` | quatre jalons sur une ligne filetée horizontale | **flèche** vers le jalon final |
+| 11 | `investment` | trois lignes de prix filetées + total | **zigzag** le long du total |
+| 12 | Clôture | `thank you`, coordonnées en corps, image carrée | aucune |
+
+Le rail vertical est présent sur les **12** slides (bord droit, lecture de bas en haut) : il
+porte le nom de section en bas et le folio en haut, sur le même axe. C'est l'appareil de la
+charte, l'équivalent du header tri-parti de `ref-05`.
+
+**Patterns à extraire** — trois annoncés, et leurs noms de la spec d'origine
+(`annotation-marker`, `type-lowercase-editorial`, `type-vertical-rail`) **ne portent aucune des
+huit familles** de la nomenclature fermée. Renommés :
+
+| annoncé | id retenu | pourquoi cette famille |
+|---|---|---|
+| `annotation-marker` | `shape-05-annotation-marker` | une bibliothèque de TRACÉS, aucune donnée, aucune structure — c'est une forme |
+| `type-lowercase-editorial` | `layout-17-editorial-lowercase` | ce n'est pas un titre seul : c'est la DISPOSITION titre bas-de-casse ↔ colonnes justifiées, donc un layout |
+| `type-vertical-rail` | à trancher en S8.7 | voir ci-dessous |
+
+`bin/new.mjs` tranche le numéro et refuse un mot de slug déjà pris ; les ids ci-dessus sont
+l'intention, pas un acquis.
+
+**Le sort du rail se décide sur le critère de rétention du dépôt**, pas sur l'envie d'avoir
+trois patterns : un fragment qui tient dans sa propre phrase de description ne se garde pas.
+« Une micro-typo tournée à 90° sur le bord » tient dans sa phrase. Ce qui pourrait ne pas y
+tenir : le rail porte DEUX contenus aux deux extrémités du même axe, à un décalage de bord
+commun — c'est une composition, si le rendu le confirme. Sinon il est absorbé par le deck et
+écrit comme tel, comme `accent-single-fluo` l'a été sur `ref-05`.
+
+**Écarté de la reconstruction** : le fond de planche `#D4D4D4`, et les photographies N&B
+(remplacées par des dégradés, voir plus haut).
 
 ---
 
