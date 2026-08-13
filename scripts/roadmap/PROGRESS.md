@@ -214,7 +214,42 @@ CHECKPOINT_STEP: S8
       Second acquis : **un ovale n'a pas de place par défaut.** Aux marges d'origine le couloir
       entre l'image et la légende faisait 74 px pour un nom de 38 — ce sont les MARGES qu'on
       ouvre (34/26, couloir de 104), pas le tracé qu'on écrase.
-- [ ] **S8.4 — le deck, slides 9 à 12, `check-deck.mjs` vert sur les 12.**
+- [x] **S8.4 — le deck, slides 9 à 12, `check-deck.mjs` vert sur les 12.** **Fait** :
+      `deliverables` (5 lignes filetées libellé/délai + **soulignement DOUBLE**), `timeline`
+      (4 jalons sur un filet horizontal + **flèche**), `investment` (3 prix filetés + total en
+      marche de titre bleue + **zigzag**), clôture (`thank you`, 4 lignes de coordonnées,
+      image carrée 688×676, sans annotation). Les 48 contrôles de composition sont verts sur
+      les 12 slides. **Le contrat de la spec est tenu et vérifiable** : chacun des quatre
+      tracés est servi DEUX fois (ovale 1+7, soulignement 3+9, zigzag 4+11, flèche 6+10), et
+      quatre slides sur douze n'en portent aucune (2, 5, 8, 12). `timeline` est la seconde
+      slide de la section 07 — le sommaire annonce huit sections, pas neuf, et son entrée dit
+      « ce qui atterrit dans vos mains, ET QUAND ».
+      **L'OUTIL QUI SORT DU BLOC — `bin/target.mjs`.** La leçon de S8.3 (« la cible se mesure
+      sur le RENDU ») restait une consigne que rien n'outillait : elle est maintenant exécutable.
+      L'outil repasse la slide par le chemin EXACT de `bin/slides.mjs`, peint la cible d'un
+      aplat de repérage, et relève sa boîte SUR LE PNG. Il rend deux boîtes, et la distinction
+      compte : `box` (boîte de ligne, ce qu'un ovale doit contenir) et `ink` (les glyphes,
+      jambages compris, ce que vise un soulignement). Contre-épreuve avant emploi : rejoué sur
+      l'ovale déjà posé de la slide 7, il retrouve son centre à 3 px.
+      Trois pièges payés sur ce bloc :
+      (a) **`.caption` n'est pas réinitialisée dans cette feuille** (contrairement à `.sub` et
+      `.body`) : sa marge basse d'agent utilisateur de 15 px par ligne faisait déborder la
+      liste de la slide 9 de 24 px sous la zone de contenu — invisible au `check-deck`, relevé
+      au pixel. Corrigé LOCALEMENT (`.dl-list`, `.ty-img`) et **pas sur la classe de base** :
+      `.tm-p .photo` est en `flex: 1`, donc corriger `.caption` globalement décalerait le nom
+      de la slide 7 de 15 px et ferait rater son ovale. À reprendre en S8.8, avec la reprise
+      du tracé dans le même geste.
+      (b) **Un couloir libre dans le HTML ne l'est pas sur la slide.** La flèche piquant du
+      dessus sur le dernier jalon traversait `week 11` et le rayait ; elle arrive maintenant
+      par le flanc droit, où le jalon a 218 px de vide jusqu'à la marge.
+      (c) **Le nombre de zags s'adapte à la hauteur, jamais l'inverse.** Neuf zags sur les
+      90 px du total refermaient les angles : le tracé devenait un ressort. Six, et il court
+      sur la RANGÉE et non sur le seul chiffre — un tracé plus court que ce qu'il désigne se
+      lit comme une poussière.
+      **Et une limite du contrôle au pixel, à ne pas prendre pour une faute** : « aucune encre
+      hors de la bande 96 → 804 » vaut pour le CONTENU, pas pour la couche d'annotation. Les
+      slides 1 et 4 en sortent (x 68 et x 44) parce que l'ovale de couverture déborde dans la
+      marge et que le zigzag y vit tout entier — c'est la spec, pas un débordement.
 - [ ] **S8.5 — le pattern d'annotation manuscrite**, le cœur du lot. L'irrégularité des points
       de contrôle EST la fonctionnalité : elle doit donc être ASSERTÉE, pas seulement écrite —
       un tracé régulier redevient une forme géométrique et l'effet tombe. Le benchmark qui

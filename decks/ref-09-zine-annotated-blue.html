@@ -245,6 +245,77 @@ body {
 .cs-res li { border-top: 1px solid var(--vl-rule); padding-top: 16px; display: flex; justify-content: space-between; align-items: baseline; column-gap: 24px; }
 .cs-res li + li { margin-top: 18px; }
 .cs-res .v { font-size: 32px; line-height: 1.25; font-weight: 600; color: var(--vl-blue); }
+
+/* ————— slide 9 — deliverables ————— */
+.dl-head { grid-column: 1 / 3; display: flex; flex-direction: column; }
+.dl-head .body { margin-top: 26px; }
+.dl-head .photo { flex: 1; margin-top: 26px; min-height: 0; }
+.dl-list { grid-column: 3 / 7; display: flex; flex-direction: column; margin: 0; padding: 0; }
+.dl-list li {
+  list-style: none; flex: 1;
+  display: grid; grid-template-columns: 1fr 168px; column-gap: 32px;
+  border-top: 1px solid var(--vl-rule); padding-top: 20px;
+}
+/* CINQ lignes et pas six : à six, la ligne de description passe à trois lignes sur les
+   libellés longs et la dernière rangée sort de la zone de contenu. */
+/* 30 et pas 10 : le libellé de la deuxième ligne porte un soulignement DOUBLE, et deux traits
+   d'annotation demandent 28 px sous la ligne de base. Ce sont les marges qu'on ouvre, pas le
+   tracé qu'on écrase (leçon de l'ovale de la slide 7). L'écart vaut pour les cinq lignes :
+   une charte n'a pas un interligne pour la ligne annotée et un autre pour les quatre autres. */
+.dl-list .caption { margin: 30px 0 0; max-width: 470px; }
+.dl-list .when { text-align: right; padding-top: 10px; }
+
+/* ————— slide 10 — timeline ————— */
+/* Deuxième slide de la section 07 : le sommaire annonce huit sections, pas neuf. Son entrée
+   dit « ce qui atterrit dans vos mains, ET QUAND » — le « quand » est cette slide, et le rail
+   porte donc le même nom de section que la 9. */
+.tl { grid-template-rows: auto auto 1fr; }
+.tl-head { grid-column: 1 / 3; grid-row: 1; }
+.tl-lead { grid-column: 4 / 7; grid-row: 1; }
+.tl-lead .note { margin-top: 22px; }
+.tl-rail { grid-column: 1 / 7; grid-row: 2; display: flex; margin: 0; padding: 0; }
+.tl-rail li { list-style: none; flex: 1; border-top: 1px solid var(--vl-rule); padding: 20px 32px 0 0; }
+.tl-rail .sub { margin-top: 12px; }
+.tl-rail .caption { margin-top: 10px; }
+.tl-band { grid-column: 1 / 7; grid-row: 3; }
+
+/* ————— slide 11 — investment ————— */
+.iv { grid-template-rows: auto 1fr auto; }
+.iv-head { grid-column: 1 / 3; grid-row: 1; }
+.iv-lead { grid-column: 4 / 7; grid-row: 1; }
+.iv-list { grid-column: 1 / 7; grid-row: 2; display: flex; flex-direction: column; margin: 0; padding: 0; }
+.iv-list li {
+  list-style: none; flex: 1;
+  display: grid; grid-template-columns: 1fr 260px; column-gap: 32px;
+  border-top: 1px solid var(--vl-rule); padding-top: 22px;
+}
+.iv-list .caption { margin-top: 10px; max-width: 620px; }
+.iv-list .price { text-align: right; font-size: 32px; line-height: 1.25; font-weight: 600; }
+/* Le total ne crée PAS de sixième corps : il reprend la marche de titre, en bleu. Une charte
+   à une seule marche n'en invente pas une pour son chiffre le plus important. */
+.iv-total {
+  grid-column: 1 / 7; grid-row: 3;
+  display: grid; grid-template-columns: 1fr 500px; column-gap: 32px;
+  border-top: 1px solid var(--vl-rule); padding-top: 24px; align-items: baseline;
+}
+.iv-total .title { text-align: right; }
+
+/* ————— slide 12 — clôture ————— */
+.ty-txt { grid-column: 1 / 3; display: flex; flex-direction: column; }
+.ty-txt .body { margin-top: 26px; }
+.ty-contact { margin: auto 0 0; padding: 0; list-style: none; }
+.ty-contact li { border-top: 1px solid var(--vl-rule); padding-top: 14px; display: grid; grid-template-columns: 132px 1fr; column-gap: 20px; align-items: baseline; }
+.ty-contact li + li { margin-top: 18px; }
+.ty-contact .micro { padding-top: 4px; }
+.ty-contact .v { font-size: 20px; line-height: 1.45; font-weight: 500; }
+/* L'image carrée de la source : 688 de large pour 676 de haut une fois la légende posée —
+   carrée à 2 % près, et la colonne est PLEINE. Une vraie 688×688 laisserait 32 px morts.
+   La légende remet sa marge basse à zéro : `.caption` n'est pas réinitialisée dans cette
+   feuille (contrairement à `.sub` et `.body`), et sa marge d'agent utilisateur de 15 px
+   tombait en pied de colonne comme une bande morte. */
+.ty-img { grid-column: 4 / 7; display: flex; flex-direction: column; }
+.ty-img .photo { flex: 1; min-height: 0; }
+.ty-img .caption { margin: 12px 0 0; }
 </style>
 </head>
 <body>
@@ -550,6 +621,200 @@ body {
     </div>
   </div>
   <div class="rail"><span class="micro folio">08</span><span class="micro">northbeam — case study</span></div>
+</section>
+
+<!-- ————————————————————————————— 9 · deliverables ————————————————————————————— -->
+<section class="slide">
+  <div class="canvas">
+    <div class="dl-head">
+      <h2 class="title">deliverables</h2>
+      <p class="body">five things land in your hands, each one signed off on the date next to
+        it. none of them is a folder of images, and none of them needs us to be opened.</p>
+      <div class="photo"></div>
+    </div>
+    <ol class="dl-list">
+      <li>
+        <div>
+          <h3 class="sub">audit report</h3>
+          <p class="caption">every surface you ship, side by side, with the decision that made
+            each one differ from the last.</p>
+        </div>
+        <span class="micro when">week 2</span>
+      </li>
+      <li>
+        <div>
+          <h3 class="sub"><span class="nw" id="s9-mark">the token set</span></h3>
+          <p class="caption">colour, type, spacing and radius as variables your build reads
+            directly — not values retyped from a page.</p>
+        </div>
+        <span class="micro when">week 5</span>
+      </li>
+      <li>
+        <div>
+          <h3 class="sub">component library</h3>
+          <p class="caption">the components your teams use, built in your own stack, with your
+            engineers, in the weeks we are there.</p>
+        </div>
+        <span class="micro when">week 9</span>
+      </li>
+      <li>
+        <div>
+          <h3 class="sub">usage notes</h3>
+          <p class="caption">the reasoning next to the artwork: what each rule is for, and what
+            it costs to break it on purpose.</p>
+        </div>
+        <span class="micro when">week 10</span>
+      </li>
+      <li>
+        <div>
+          <h3 class="sub">handover session</h3>
+          <p class="caption">a half-day, recorded, with the two people who will own the result
+            once we are gone.</p>
+        </div>
+        <span class="micro when">week 11</span>
+      </li>
+    </ol>
+  </div>
+  <div class="rail"><span class="micro folio">09</span><span class="micro">northbeam — deliverables</span></div>
+  <svg class="ann" viewBox="0 0 1600 900" aria-hidden="true">
+    <!-- soulignement DOUBLE sous « the token set » — le second emploi du tracé de la slide 3,
+         dans sa variante à deux traits. Cible relevée par `node bin/target.mjs … 9 s9-mark` :
+         encre 579…763 × 271…295, donc ligne de base à 295 (le libellé n'a aucun jambage).
+         Amplitude 3 et non 4 : à 4 les deux ondulations se croisent et forment une chaîne. -->
+    <g style="transform: rotate(-0.7deg); transform-origin: 671px 308px;">
+      <path d="M 568 301.5 C 581.7 300.7, 595.4 306.6, 609.2 302.5 C 622.9 306.3, 636.7 299.7, 650.4 302.3 C 664.1 299.6, 677.9 305.8, 691.6 303.6 C 705.3 305.9, 719.1 300.5, 732.8 303.2 C 746.6 300.6, 760.3 305.8, 774 303.2"/>
+      <path d="M 568 312.6 C 581.7 311.6, 595.4 317.4, 609.2 313.8 C 622.9 316.3, 636.7 310.6, 650.4 314.5 C 664.1 311, 677.9 317.2, 691.6 314.4 C 705.3 317.6, 719.1 311.3, 732.8 314.6 C 746.6 310.8, 760.3 317.3, 774 314.1"/>
+    </g>
+  </svg>
+</section>
+
+<!-- ————————————————————————————— 10 · timeline ————————————————————————————— -->
+<section class="slide">
+  <div class="canvas tl">
+    <div class="tl-head"><h2 class="title">timeline</h2></div>
+    <div class="tl-lead">
+      <p class="body">eleven weeks, four signatures. the dates are the ones we hold ourselves
+        to; the only thing that moves them is a block where the person who owns the result
+        could not be in the room.</p>
+      <p class="caption note" id="s10-note">the last milestone is the one that matters — after
+        it, nothing we drew still needs us.</p>
+    </div>
+    <ol class="tl-rail">
+      <li>
+        <span class="micro">week 2</span>
+        <h3 class="sub">audit signed off</h3>
+        <p class="caption">the list of what is broken, agreed before anything is drawn</p>
+      </li>
+      <li>
+        <span class="micro">week 5</span>
+        <h3 class="sub">tokens live</h3>
+        <p class="caption">the variables land in your build, ahead of any drawing</p>
+      </li>
+      <li>
+        <span class="micro">week 9</span>
+        <h3 class="sub">components shipped</h3>
+        <p class="caption">your teams build with them for two weeks while we are still there</p>
+      </li>
+      <li>
+        <span class="micro">week 11</span>
+        <h3 class="sub"><span class="nw" id="s10-mark">you run it</span></h3>
+        <p class="caption">we leave, and the next surface is drawn without us</p>
+      </li>
+    </ol>
+    <div class="tl-band photo b"></div>
+  </div>
+  <div class="rail"><span class="micro folio">10</span><span class="micro">northbeam — deliverables</span></div>
+  <svg class="ann" viewBox="0 0 1600 900" aria-hidden="true">
+    <!-- flèche de la note en marge vers le DERNIER jalon — second emploi du tracé de la slide 6,
+         et le sens est inversé : là-bas l'étape désignait la note, ici la note désigne le jalon.
+         Départ et pointe relevés par `bin/target.mjs … 10 s10-note s10-mark` (note : encre
+         jusqu'à x 1396, y 223 ; jalon : encre 1153…1285 × 332…362).
+         LA POINTE ARRIVE PAR LA DROITE, ET C'EST UNE CORRECTION DE RENDU : une flèche piquant
+         du dessus traversait « week 11 » et le rayait — un couloir libre à l'œil dans le HTML
+         ne l'est pas sur la slide. Le flanc droit du jalon a 218 px de vide jusqu'à la marge ;
+         la pointe s'y arrête 17 px après la dernière lettre, à la hauteur de l'œil du mot. -->
+    <g style="transform: rotate(1.6deg); transform-origin: 1363px 297px;">
+      <path d="M 1424 246 Q 1316.3 260, 1302 347"/>
+      <path d="M 1302 347 L 1291.5 323.2 M 1302 347 L 1322.6 331.2"/>
+    </g>
+  </svg>
+</section>
+
+<!-- ————————————————————————————— 11 · investment ————————————————————————————— -->
+<section class="slide">
+  <div class="canvas iv">
+    <div class="iv-head"><h2 class="title">investment</h2></div>
+    <div class="iv-lead">
+      <p class="body">three lines, one total, no hourly rate. each line is a stage you sign
+        off before the next one starts, and nothing is redone for free after a signature.</p>
+    </div>
+    <ol class="iv-list">
+      <li>
+        <div>
+          <h3 class="sub">audit and language</h3>
+          <p class="caption">weeks 1–5. the surfaces you ship read side by side, then the type
+            scale, palette and spacing delivered as tokens.</p>
+        </div>
+        <span class="price">$38,000</span>
+      </li>
+      <li>
+        <div>
+          <h3 class="sub">build</h3>
+          <p class="caption">weeks 6–9. the components, in your own stack, with your engineers
+            — the longest stage, and the one that decides whether any of it survives.</p>
+        </div>
+        <span class="price">$74,000</span>
+      </li>
+      <li>
+        <div>
+          <h3 class="sub">handover and training</h3>
+          <p class="caption">weeks 10–11. usage notes, the recorded half-day, and one quarter
+            of questions answered at no charge.</p>
+        </div>
+        <span class="price">$22,000</span>
+      </li>
+    </ol>
+    <div class="iv-total">
+      <h3 class="sub">total, eleven weeks</h3>
+      <span class="title" id="s11-mark">$134,000</span>
+    </div>
+  </div>
+  <div class="rail"><span class="micro folio">11</span><span class="micro">northbeam — investment</span></div>
+  <svg class="ann" viewBox="0 0 1600 900" aria-hidden="true">
+    <!-- gribouillis vertical le long du total — second emploi du tracé de la slide 4, et il
+         change d'échelle : là-bas il courait sur 370 px le long d'une colonne de titre, ici il
+         court sur les 90 px de la rangée de total, du filet au pied de la zone de contenu.
+         Posé dans le couloir libre entre le libellé et le nombre (encre du total relevée à
+         x 1177 : le couloir fait 173 px pour un tracé de 50).
+         SIX zags et non neuf : à neuf sur cette hauteur les angles se referment et le tracé
+         devient un ressort. Un gribouillis garde ses angles OUVERTS — c'est le nombre de zags
+         qui s'adapte à la hauteur, jamais l'inverse. Et il court sur la RANGÉE, pas sur le
+         seul chiffre : un tracé plus court que ce qu'il désigne se lit comme une poussière. -->
+    <path style="transform: rotate(-2.4deg); transform-origin: 1120px 765px;" d="M 1093 708 L 1137 722.6 L 1096.2 738.1 L 1140.7 752.8 L 1095.6 767.7 L 1138.7 783.1 L 1090.2 797.6"/>
+  </svg>
+</section>
+
+<!-- ————————————————————————————— 12 · clôture ————————————————————————————— -->
+<section class="slide">
+  <div class="canvas">
+    <div class="ty-txt">
+      <h2 class="title">thank you</h2>
+      <p class="body">that is the proposal. if you want to argue with it — and we hope you do —
+        the fastest way is to send the section number and the sentence you disagree with. we
+        would rather rewrite it now than defend it in week six.</p>
+      <ul class="ty-contact">
+        <li><span class="micro">studio</span><span class="v">oranienstraße 41, berlin</span></li>
+        <li><span class="micro">write to</span><span class="v">esther@northbeam.example</span></li>
+        <li><span class="micro">answer by</span><span class="v">28 march 2045</span></li>
+        <li><span class="micro">prepared by</span><span class="v">mara okonjo, esther lindqvist</span></li>
+      </ul>
+    </div>
+    <div class="ty-img">
+      <div class="photo b"></div>
+      <p class="caption">the room where the handover happens — kreuzberg, 2044</p>
+    </div>
+  </div>
+  <div class="rail"><span class="micro folio">12</span><span class="micro">northbeam — project proposal</span></div>
 </section>
 
 </body>

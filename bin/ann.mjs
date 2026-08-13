@@ -84,7 +84,9 @@ export function zigzag(x, y1, y2, { w = 26, n = 9, jitter = 0.03, seed = 31 } = 
 const [cmd, ...a] = process.argv.slice(2);
 const n = (i, d) => (a[i] === undefined ? d : Number(a[i]));
 if (cmd === 'oval') console.log(oval(n(0), n(1), n(2), n(3), { seed: n(4, 7) }));
-else if (cmd === 'underline') console.log(underline(n(0), n(1), n(2), { seed: n(3, 11) }));
+// L'amplitude est exposée parce que le soulignement DOUBLE existe dans la charte : deux traits
+// à 4 d'amplitude se croisent, à 3 ils se lisent comme une paire.
+else if (cmd === 'underline') console.log(underline(n(0), n(1), n(2), { seed: n(3, 11), amp: n(4, 4) }));
 else if (cmd === 'arrow') console.log(arrow(n(0), n(1), n(2), n(3), { seed: n(4, 23) }).join('\n'));
 else if (cmd === 'zigzag') console.log(zigzag(n(0), n(1), n(2), { seed: n(3, 31) }));
 else if (cmd) {
