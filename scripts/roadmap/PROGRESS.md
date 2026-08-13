@@ -153,6 +153,15 @@ règles dures :
       repris. Une erreur transitoire qui laisse `STATE: RUNNING` et aucune session vivante mérite
       au moins UNE reprise, avec le même anti-boucle.
       _(entré par l'INBOX le 2026-08-13)_
+- [ ] **S19 — Fiabiliser le watchdog sur la DURÉE** : il détecte correctement quand on le lance,
+      mais deux instances longues n'ont jamais alerté sur une chaîne morte. _Pourquoi_ : deux
+      échecs constatés les 12 et 14/08. Lancé à l'instant, il voit la mort en 2 relevés et
+      notifie — le mécanisme est bon. Mais l'instance armée depuis 40 min n'a rien écrit alors
+      que la chaîne était morte depuis 6 min, sans être bloquée (elle dormait normalement dans
+      sa boucle). Piste : le compteur « morts » est une variable de boucle qu'aucune trace ne
+      montre — journaliser CHAQUE relevé (même vert) pour pouvoir diagnostiquer, et envisager un
+      état sur DISQUE plutôt qu'en mémoire. Un garde dont on ne peut pas prouver qu'il a regardé
+      ne vaut pas mieux qu'aucun garde. _(entré par l'INBOX le 2026-08-13)_
 
 ## Checkpoint intra-step
 
