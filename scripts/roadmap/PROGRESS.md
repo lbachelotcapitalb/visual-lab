@@ -168,9 +168,9 @@ CHECKPOINT_STEP: S8
       `layout-17-editorial-lowercase`, le rail tranché en S8.7 sur le critère de rétention.
 - [x] **S8.2 — `systems/ref-09-zine-annotated-blue.json` + le deck, slides 1 à 4.** **Fait** :
       système (14 tokens + échelle typo), deck 4 slides 1600×900, `check-deck.mjs` VERT
-      (0 couche au-dessus de la scène, aucune couche 1:1). Le générateur de tracés vit dans le
-      scratchpad de la session (`ann.mjs` : ovale / soulignement / flèche / zigzag, graine +
-      jitter ±3 %) — **les `d` sont CUITS dans le HTML**, le fragment reste statique. Trois
+      (0 couche au-dessus de la scène, aucune couche 1:1). Le générateur de tracés est devenu un OUTIL du
+      dépôt — `bin/ann.mjs` (ovale / soulignement / flèche / zigzag, graine + jitter ±3 %),
+      parce qu'un scratchpad de session ne survit pas à la session qui le crée — **les `d` sont CUITS dans le HTML**, le fragment reste statique. Trois
       annotations posées (ovale slide 1, soulignement slide 3, zigzag slide 4), slide 2 nue.
       Deux pièges payés, à ne pas repayer sur les slides 5→12 :
       (a) **un mot annoté ne doit jamais pouvoir se couper** — `someone else` s'est réparti sur
