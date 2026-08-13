@@ -166,7 +166,23 @@ CHECKPOINT_STEP: S8
       tableau, avec **une annotation par slide au plus, 4 slides sans, chaque tracé servi 2 fois**.
       Noms remis dans la nomenclature : `shape-05-annotation-marker`,
       `layout-17-editorial-lowercase`, le rail tranché en S8.7 sur le critère de rétention.
-- [ ] **S8.2 — `systems/ref-09-zine-annotated-blue.json` + le deck, slides 1 à 4.**
+- [x] **S8.2 — `systems/ref-09-zine-annotated-blue.json` + le deck, slides 1 à 4.** **Fait** :
+      système (14 tokens + échelle typo), deck 4 slides 1600×900, `check-deck.mjs` VERT
+      (0 couche au-dessus de la scène, aucune couche 1:1). Le générateur de tracés vit dans le
+      scratchpad de la session (`ann.mjs` : ovale / soulignement / flèche / zigzag, graine +
+      jitter ±3 %) — **les `d` sont CUITS dans le HTML**, le fragment reste statique. Trois
+      annotations posées (ovale slide 1, soulignement slide 3, zigzag slide 4), slide 2 nue.
+      Deux pièges payés, à ne pas repayer sur les slides 5→12 :
+      (a) **un mot annoté ne doit jamais pouvoir se couper** — `someone else` s'est réparti sur
+      deux lignes au premier rendu et aucun trait n'était possible ; d'où la classe `.nw`
+      (`white-space: nowrap`) sur toute cible d'annotation ;
+      (b) **les coordonnées de l'annotation se MESURENT dans Chrome** (Range + `getClientRects`
+      sur la cible, en repère de slide) avant de générer le tracé — les estimer à la main donne
+      un ovale qui rate son titre. Les quatre slides ont été REGARDÉES, puis corrigées de leurs
+      bandes mortes (répartition en écarts égaux slide 1, ligne de résumé par entrée + image en
+      pied slide 2, deux paragraphes de plus slide 3, citation ramenée sur la ligne de départ du
+      titre slide 4). **Restant à regarder** : les slides 1, 3 et 4 n'ont PAS été rerendues
+      après ces corrections (seule la 2 l'a été) — à faire en S8.8 avec les autres.
 - [ ] **S8.3 — le deck, slides 5 à 8.**
 - [ ] **S8.4 — le deck, slides 9 à 12, `check-deck.mjs` vert sur les 12.**
 - [ ] **S8.5 — le pattern d'annotation manuscrite**, le cœur du lot. L'irrégularité des points

@@ -1,0 +1,31 @@
+{
+  "name": "Zine annoté bleu",
+  "notes": "Trois gestes portent la charte. (1) LE BAS DE CASSE SANS EXCEPTION — titres compris. Aucune capitale, aucun text-transform : c'est ce qui fait lire la planche comme un imprimé et non comme un deck. (2) UNE SEULE MARCHE DE TITRE : la couverture porte le même corps que les sections (80). Une charte qui n'escalade pas sur sa couverture tient sa présence de son image et de son annotation, pas d'un display de 128. (3) L'ANNOTATION MANUSCRITE, posée en SURIMPRESSION et jamais en conteneur — un SVG absolu au-dessus de la typo, jamais une boîte qui l'enveloppe (une boîte qui n'encadre qu'un titre est la couche 1:1 que check-deck.mjs refuse). Au plus UNE annotation par slide, quatre slides sur douze n'en portent aucune, et chacun des quatre tracés sert deux fois : c'est ce qui en fait une bibliothèque et pas quatre dessins. ÉCHELLE : les corps relevés dans SPEC-SOURCES.md (titre 40 / corps 10 / micro 8) l'ont été sur une planche de DOUZE slides, soit ~800 px par slide — deux fois plus dense que les planches de huit de ref-05 et ref-06. Facteur ×2, pas ×1,6 : titre 80, corps 20, micro 16. Le contrôle croisé qui le fixe est le corps, qui sort à 20 à côté des 19 de ref-05 — deux chartes de même nature ne peuvent pas porter des corps à 16 et à 19. L'encre grise est à #6F6F6F et non #8A8A8A : le relevé vaut 3,45:1 sur blanc, très sous le seuil de 4,5 des corps qu'il porte. Le minimum strict serait #767676 (4,54:1) ; on prend un demi-ton de plus (5,02:1) parce que ce gris porte le corps le plus exigeant du corpus — 20 px JUSTIFIÉ sur des paragraphes longs — et qu'un plancher n'est pas une cible. LA MESURE DE TEXTE EST UNE CONTRAINTE DE GRILLE, pas un goût : la source justifie sur ~34 caractères, DOCTRINE §8 donne la justification perdue sous 45. On garde la justification (c'est la signature) et on élargit la colonne à 448 px = 2 unités + 1 gouttière, mesuré à 46,2 caractères dans Chrome (416 px n'en donnerait que 43,8). AUCUN RAYON : tout est à angle vif, images comprises. Le fond de planche #D4D4D4 de la source n'est PAS une couche de la slide — il ne sert que de sol à la page du deck, comme le --vl-board de ref-05.",
+  "tokens": {
+    "--vl-paper": "#FFFFFF",
+    "--vl-board": "#D4D4D4",
+    "--vl-ink": "#111111",
+    "--vl-ink-soft": "#6F6F6F",
+    "--vl-blue": "#2F3FE0",
+    "--vl-rule": "#DCDCDC",
+    "--vl-photo-light": "#E4E4E4",
+    "--vl-photo-mid": "#A8A8A8",
+    "--vl-photo-dark": "#1A1A1A",
+    "--vl-margin": "96px",
+    "--vl-col": "208px",
+    "--vl-gutter": "32px",
+    "--vl-measure": "448px",
+    "--vl-stroke": "3.5px"
+  },
+  "type": {
+    "display": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+    "body": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+    "scale": {
+      "title": "80px / 1 / 500 / -0.02em (couverture ET sections, bas de casse, bleu)",
+      "sub": "32px / 1.25 / 600 (intertitre de colonne, encre)",
+      "body": "20px / 1.45 / 400 (justifié, hyphens auto, gris, mesure 448)",
+      "caption": "15px / 1.35 / 500 (légende d'image, libellé de liste)",
+      "micro": "16px / 1 / 500 / 0.18em (rail vertical, folio)"
+    }
+  }
+}
