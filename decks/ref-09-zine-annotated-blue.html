@@ -185,6 +185,66 @@ body {
 .pb-side { grid-column: 4 / 7; grid-row: 1; }
 .pb-side .sub { max-width: 620px; }
 .pb-band { grid-column: 1 / 7; grid-row: 2; }
+
+/* ————— slide 5 — our approach ————— */
+/* Trois colonnes de MESURE (2 unités + 1 gouttière = 448) : c'est la seule largeur de la
+   charte qui tienne 45 caractères justifiés, donc trois colonnes est le maximum. */
+.ap { grid-template-rows: auto 1fr; }
+.ap-head { grid-column: 1 / 3; grid-row: 1; }
+.ap-lead { grid-column: 5 / 7; grid-row: 1; }
+.ap-col { grid-row: 2; display: flex; flex-direction: column; border-top: 1px solid var(--vl-rule); padding-top: 22px; }
+.ap-col .n { font-size: 16px; font-weight: 500; letter-spacing: 0.18em; color: var(--vl-blue); }
+/* 12/14 et pas 16/18 : à 16/18 la quatorzième ligne des colonnes tombe à 810, six pixels
+   SOUS le pied de la zone de contenu (804). Un interligne ne se rogne pas, un blanc si. */
+.ap-col .sub { margin: 12px 0 14px; }
+.ap-1 { grid-column: 1 / 3; }
+.ap-2 { grid-column: 3 / 5; }
+.ap-3 { grid-column: 5 / 7; }
+
+/* ————— slide 6 — the process ————— */
+.pr-head { grid-column: 1 / 3; display: flex; flex-direction: column; }
+.pr-head .body { margin-top: 26px; }
+.pr-head .note { margin-top: 26px; }
+.pr-head .photo { flex: 1; margin-top: 26px; min-height: 0; }
+.pr-steps { grid-column: 3 / 7; display: flex; flex-direction: column; margin: 0; padding: 0; }
+.pr-steps li {
+  list-style: none; flex: 1;
+  display: grid; grid-template-columns: 88px 1fr 168px; column-gap: 32px;
+  border-top: 1px solid var(--vl-rule); padding-top: 22px;
+}
+.pr-steps .n { font-size: 16px; font-weight: 500; letter-spacing: 0.18em; color: var(--vl-blue); padding-top: 10px; }
+/* La description est bornée en MESURE, pas laissée à la largeur de sa cellule : 608 px de
+   ligne à 15 px font 85 caractères, très au-dessus de la fourchette de DOCTRINE §8. */
+.pr-steps .caption { margin-top: 10px; max-width: 470px; }
+.pr-steps .when { text-align: right; padding-top: 10px; }
+/* La note en marge est la CIBLE de la flèche : elle prend l'encre de l'annotation, parce
+   qu'elle est de la même main — c'est une remarque ajoutée, pas du corps de texte. */
+.note { color: var(--vl-blue); }
+
+/* ————— slide 7 — our team ————— */
+.tm { grid-template-rows: auto 1fr; }
+.tm-head { grid-column: 1 / 3; grid-row: 1; }
+.tm-lead { grid-column: 5 / 7; grid-row: 1; }
+.tm-p { grid-row: 2; display: flex; flex-direction: column; }
+.tm-p .photo { flex: 1; min-height: 0; }
+/* L'écart nom ↔ légende est ce qui rend l'encerclement POSSIBLE : un ovale a besoin d'air
+   au-dessus et au-dessous du mot qu'il entoure, sinon il barre la ligne suivante. */
+.tm-p .sub { margin-top: 34px; }
+.tm-p .caption { margin-top: 26px; }
+.tm-1 { grid-column: 1 / 3; }
+.tm-2 { grid-column: 3 / 5; }
+.tm-3 { grid-column: 5 / 7; }
+
+/* ————— slide 8 — case study ————— */
+.cs-img { grid-column: 1 / 4; display: flex; flex-direction: column; }
+.cs-img .photo { flex: 1; min-height: 0; }
+.cs-img .caption { margin-top: 12px; }
+.cs-txt { grid-column: 5 / 7; display: flex; flex-direction: column; }
+.cs-txt .body { margin-top: 26px; }
+.cs-res { margin: auto 0 0; padding: 0; list-style: none; }
+.cs-res li { border-top: 1px solid var(--vl-rule); padding-top: 16px; display: flex; justify-content: space-between; align-items: baseline; column-gap: 24px; }
+.cs-res li + li { margin-top: 18px; }
+.cs-res .v { font-size: 32px; line-height: 1.25; font-weight: 600; color: var(--vl-blue); }
 </style>
 </head>
 <body>
@@ -307,6 +367,189 @@ body {
          aucune courbe : le zigzag est le seul des quatre traces qui soit anguleux. -->
     <path style="transform: rotate(2.2deg); transform-origin: 66px 276px;" d="M 53 92 L 77.8 124.6 L 55.1 159.5 L 76.9 193 L 52 224.9 L 78 259 L 51.3 293.7 L 80.9 326 L 54.9 360.6 L 78.8 393.7 L 52.3 425.8 L 81.1 461"/>
   </svg>
+</section>
+
+<!-- ————————————————————————————— 5 · our approach ————————————————————————————— -->
+<section class="slide">
+  <div class="canvas ap">
+    <div class="ap-head"><h2 class="title">our approach</h2></div>
+    <div class="ap-lead">
+      <p class="body">three rules, and they are the same three on every project we take. they
+        are not a method: they are what we do instead of one, and each of them exists because
+        of a project where its absence cost us a month.</p>
+    </div>
+    <div class="ap-col ap-1">
+      <span class="n">01</span>
+      <h3 class="sub">short blocks</h3>
+      <p class="body">we work in blocks of two weeks, and each block ends with something you
+        can use rather than something you can look at. a component, a token set, a page that
+        runs in your own build — never a board of proposals. the block is short because that
+        is the interval at which a wrong assumption is still cheap to unmake: at six weeks the
+        drawing has already been built on, and the argument stops being about the drawing.
+        nothing is held back to be shown later, and there is no phase in which we go quiet. we
+        would rather be wrong in week two than right in week eight, and the calendar is written
+        to keep it cheap.</p>
+    </div>
+    <div class="ap-col ap-2">
+      <span class="n">02</span>
+      <h3 class="sub">owners in the room</h3>
+      <p class="body">the people who will maintain the result are in the room from the first
+        block, not shown the result in the last one. that is a scheduling cost for you and it
+        is the single thing that decides whether the system survives us. a design handed to a
+        team that did not argue with it is a design that team will route around within two
+        quarters — politely, one exception at a time, until the exceptions are the system and
+        the original file is something nobody opens. the room is small on purpose: four people
+        who can decide, and nobody there to report back. if the person who will own the result
+        cannot come, we move the block.</p>
+    </div>
+    <div class="ap-col ap-3">
+      <span class="n">03</span>
+      <h3 class="sub">measured, not defended</h3>
+      <p class="body">every rule we write down comes with the measurement that decides whether
+        it holds — contrast on the real background, the character count of a justified column,
+        the smallest body on the page. it means we lose arguments to numbers, including our
+        own, and it means you can check the system without us. a rule that cannot be measured
+        is a preference, and a preference does not belong in a document a team has to run for
+        two years. we lost the argument about this very column twice — once to the character
+        count, once to the contrast of its grey — and the document is better for both losses.</p>
+    </div>
+  </div>
+  <div class="rail"><span class="micro folio">05</span><span class="micro">northbeam — our approach</span></div>
+</section>
+
+<!-- ————————————————————————————— 6 · the process ————————————————————————————— -->
+<section class="slide">
+  <div class="canvas">
+    <div class="pr-head">
+      <h2 class="title">the process</h2>
+      <p class="body">four stages, eleven weeks, and a signature at the end of each. nothing
+        starts before the previous stage is signed, and nothing is redone for free after it
+        is.</p>
+      <p class="caption note" id="s6-note">the token set ships before the visual language is
+        signed off — it is the only order that survives a change of mind.</p>
+      <div class="photo b"></div>
+    </div>
+    <ol class="pr-steps">
+      <li>
+        <span class="n">01</span>
+        <div>
+          <h3 class="sub">audit</h3>
+          <p class="caption">every surface you ship, side by side, with the decision that made
+            each one differ. you sign off the list of what is broken before we draw anything.</p>
+        </div>
+        <span class="micro when">weeks 1–2</span>
+      </li>
+      <li>
+        <span class="n">02</span>
+        <div>
+          <h3 class="sub">language</h3>
+          <p class="caption">type scale, palette, spacing and the measurements that keep them
+            honest. delivered as tokens first, drawings second.</p>
+        </div>
+        <span class="micro when">weeks 3–5</span>
+      </li>
+      <li>
+        <span class="n" id="s6-mark">03</span>
+        <div>
+          <h3 class="sub">build</h3>
+          <p class="caption">the components your teams actually use, built in your own stack
+            with your engineers, not handed over as a folder of images.</p>
+        </div>
+        <span class="micro when">weeks 6–9</span>
+      </li>
+      <li>
+        <span class="n">04</span>
+        <div>
+          <h3 class="sub">handover</h3>
+          <p class="caption">a half-day on the reasoning: what each decision was for, what we
+            would change first, and which parts are safe to break.</p>
+        </div>
+        <span class="micro when">weeks 10–11</span>
+      </li>
+    </ol>
+  </div>
+  <div class="rail"><span class="micro folio">06</span><span class="micro">northbeam — the process</span></div>
+  <svg class="ann" viewBox="0 0 1600 900" aria-hidden="true">
+    <!-- fleche courbe de l'etape 03 vers la note en marge. Depart et arrivee MESURES dans
+         Chrome (Range sur `#s6-mark` et `#s6-note`), jamais estimes. La pointe est OUVERTE :
+         deux traits qui ne se rejoignent pas, c'est ce qui la distingue d'un chevron. -->
+    <g style="transform: rotate(-1.8deg); transform-origin: 594px 418px;">
+      <path d="M 640 470 Q 613.6 389.1, 548 366"/>
+      <path d="M 548 366 L 572.9 358.6 M 548 366 L 562.4 387.7"/>
+    </g>
+  </svg>
+</section>
+
+<!-- ————————————————————————————— 7 · our team ————————————————————————————— -->
+<section class="slide">
+  <div class="canvas tm">
+    <div class="tm-head"><h2 class="title">our team</h2></div>
+    <div class="tm-lead">
+      <p class="body">eleven people, three of whom you will meet every week. the same two stay
+        on the project from the first conversation to the last — it is the only way we know to
+        keep a promise made in week one.</p>
+    </div>
+    <div class="tm-p tm-1">
+      <div class="photo"></div>
+      <h3 class="sub">mara okonjo</h3>
+      <p class="caption">principal — brand systems, and the person who signs off the language</p>
+    </div>
+    <div class="tm-p tm-2">
+      <div class="photo b"></div>
+      <h3 class="sub"><span class="nw" id="s7-mark">esther lindqvist</span></h3>
+      <p class="caption">design lead — she runs the blocks, and she is who you call first</p>
+    </div>
+    <div class="tm-p tm-3">
+      <div class="photo c"></div>
+      <h3 class="sub">tomás vieira</h3>
+      <p class="caption">engineering — he builds the components inside your own stack</p>
+    </div>
+  </div>
+  <div class="rail"><span class="micro folio">07</span><span class="micro">northbeam — our team</span></div>
+  <svg class="ann" viewBox="0 0 1600 900" aria-hidden="true">
+    <!-- ovale d'encerclement du nom du milieu — le SECOND emploi du trace de la couverture,
+         ce qui prouve que la bibliotheque de traces en est une. Ellipse OUVERTE : elle part
+         de 816,691 et finit a 819,715, au-dela de son point de depart.
+         DEUX CHOSES PAYEES ICI, et elles valent pour toute annotation qui suit.
+         (a) Un ovale n'a pas de place par defaut. Aux marges d'origine (20/14) le couloir
+         libre entre le pied de l'image et le haut de la legende faisait 74 px pour un nom de
+         38 : l'ellipse grattait le nom en haut et barrait la legende en bas. Ce sont les
+         MARGES qu'on ouvre (34/26 — couloir de 104 px, rayon vertical 38), pas le trace qu'on
+         ecrase.
+         (b) La cible se mesure SUR LE RENDU, en pixels, pas dans un harnais a part. Un dump
+         Chrome monte a la main donnait le nom a y=704 la ou `bin/slides.mjs` le pose a 691 :
+         le harnais n'avait pas charge Inter a temps, sa legende tenait sur UNE ligne au lieu
+         de deux, et l'image en `flex: 1` absorbait la difference. Treize pixels d'ecart, soit
+         un ovale qui barre le mot qu'il devait entourer. Le rendu fait foi. -->
+    <path style="transform: rotate(1deg); transform-origin: 687px 705px;" d="M 816.4 691.8 C 813.4 697.8, 821.2 719.8, 797.9 728 C 774.5 736.4, 719 743.3, 679.8 742.6 C 641 742, 586.3 733.1, 566.5 724 C 547.3 715.1, 547.6 697.5, 564.4 688.1 C 581.1 678.8, 629.7 669.5, 668.8 668.1 C 707.7 666.7, 767.3 672, 792.3 679.8 C 818 687.6, 814.8 709.3, 819.2 715.2"/>
+  </svg>
+</section>
+
+<!-- ————————————————————————————— 8 · case study ————————————————————————————— -->
+<section class="slide">
+  <div class="canvas">
+    <div class="cs-img">
+      <div class="photo c"></div>
+      <p class="caption">meridian rail — the wayfinding set, two years after handover</p>
+    </div>
+    <div class="cs-txt">
+      <h2 class="title">case study</h2>
+      <p class="body">meridian rail came to us with the same problem, one size larger: nine
+        product teams, four of them in other companies, and a wayfinding system that had been
+        redrawn three times in five years without ever being written down.</p>
+      <p class="body">we ran the four stages once, with their engineers in the room from the
+        first week, and then we left. the thing we are proudest of is not in the drawings:
+        they have shipped eleven new surfaces since, and we drew none of them.</p>
+      <p class="body">the system is still the one we handed over, and it is still being
+        argued with — the change log has two hundred entries and every one of them names the
+        measurement it was decided on.</p>
+      <ul class="cs-res">
+        <li><span class="caption">surfaces shipped since handover, none drawn by us</span><span class="v">11</span></li>
+        <li><span class="caption">years the token set has run without a redraw</span><span class="v">2</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="rail"><span class="micro folio">08</span><span class="micro">northbeam — case study</span></div>
 </section>
 
 </body>

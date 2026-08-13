@@ -197,7 +197,23 @@ CHECKPOINT_STEP: S8
       pied slide 2, deux paragraphes de plus slide 3, citation ramenée sur la ligne de départ du
       titre slide 4). **Restant à regarder** : les slides 1, 3 et 4 n'ont PAS été rerendues
       après ces corrections (seule la 2 l'a été) — à faire en S8.8 avec les autres.
-- [ ] **S8.3 — le deck, slides 5 à 8.**
+- [x] **S8.3 — le deck, slides 5 à 8.** **Fait** : `our approach` (trois colonnes de mesure,
+      sans annotation), `the process` (quatre étapes filetées + **flèche** vers une note en
+      marge), `our team` (trois portraits + **ovale** autour d'un nom), `case study` (image
+      pleine hauteur + colonne, sans annotation). `check-deck.mjs` vert sur les 8 (0 couche
+      au-dessus de la scène). Deux tracés de plus, donc **flèche et ovale sont chacun servis
+      deux fois** — la moitié du contrat « chaque tracé sert deux fois » est tenue.
+      **LA LEÇON DU BLOC, et elle invalide la méthode de S8.2 : la cible d'une annotation se
+      mesure SUR LE RENDU, en pixels, pas dans un dump Chrome monté à côté.** Un harnais de
+      mesure ad hoc plaçait le nom de la slide 7 à y=704 là où `bin/slides.mjs` le pose à 691 :
+      il n'avait pas chargé Inter à temps, sa légende tenait sur UNE ligne au lieu de deux, et
+      l'image en `flex: 1` absorbait la différence. Treize pixels — soit un ovale qui barre le
+      mot qu'il devait entourer. Le même écart a fait passer pour tenue une slide 5 qui
+      débordait de 20 px sous le pied de la zone de contenu. Le contrôle qui tranche est
+      pixel : aucune encre hors de la bande 96 → 804, relevée sur le PNG.
+      Second acquis : **un ovale n'a pas de place par défaut.** Aux marges d'origine le couloir
+      entre l'image et la légende faisait 74 px pour un nom de 38 — ce sont les MARGES qu'on
+      ouvre (34/26, couloir de 104), pas le tracé qu'on écrase.
 - [ ] **S8.4 — le deck, slides 9 à 12, `check-deck.mjs` vert sur les 12.**
 - [ ] **S8.5 — le pattern d'annotation manuscrite**, le cœur du lot. L'irrégularité des points
       de contrôle EST la fonctionnalité : elle doit donc être ASSERTÉE, pas seulement écrite —
