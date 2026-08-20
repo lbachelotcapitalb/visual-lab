@@ -30,3 +30,7 @@ assets/refs/
 # reste patterns/ + systems/. Le versionner doublerait le dépôt à chaque pattern touché.
 site/
 .site-frames.json
+
+# Le CODE des bibliothèques tierces : indexé (sources/*.index.json), jamais ré-hébergé
+# dans notre historique. Se reconstitue par `node bin/harvest.mjs <id>`.
+.sources/

@@ -1,0 +1,43 @@
+{
+  "id": "uiverse",
+  "name": "Uiverse",
+  "url": "https://uiverse.io",
+  "credit": "Uiverse.io et ses contributeurs",
+  "licence": "MIT",
+  "licenceUrl": "https://github.com/uiverse-io/galaxy/blob/main/LICENSE",
+  "resume": "Une communauté de composants d'interface en CSS pur — surtout des CONTRÔLES (boutons, interrupteurs, chargements) et des effets. Fort en matière, faible en composition : on y vient chercher un traitement, pas une mise en page.",
+  "fetch": {
+    "git": "https://github.com/uiverse-io/galaxy.git",
+    "depth": 1
+  },
+  "categories": {
+    "Cards": "Cartes",
+    "Patterns": "Motifs de fond",
+    "Forms": "Formulaires",
+    "Inputs": "Champs",
+    "Buttons": "Boutons",
+    "loaders": "Chargements",
+    "Toggle-switches": "Interrupteurs",
+    "Checkboxes": "Cases à cocher",
+    "Radio-buttons": "Boutons radio",
+    "Tooltips": "Infobulles",
+    "Notifications": "Notifications"
+  },
+  "element": {
+    "_note": "Le crédit Uiverse existe sous plusieurs formes — commentaire HTML, commentaire CSS dans le <style>, avec ou sans champs Website/Name intermédiaires. D'où DEUX motifs indépendants plutôt qu'un seul qui prétendrait tout couvrir : chacun cherche sa donnée où qu'elle soit dans le fichier.",
+    "author": "From Uiverse\\.io by\\s+([A-Za-z0-9_.\\-]+)",
+    "tags": "Tags:\\s*([^*>]*?)\\s*(?:\\*/|-->)",
+    "slugFrom": "^[^_]+_(.+)\\.html$",
+    "permalink": "https://uiverse.io/{author}/{slug}"
+  },
+  "exclude": [
+    {
+      "absent": "<style[\\s>]",
+      "motif": "écrit en Tailwind — sans sa feuille il s'afficherait nu, et on jugerait « raté » un élément qui ne l'est pas"
+    },
+    {
+      "present": "(?:src|href)\\s*=\\s*[\"']https?:|url\\(\\s*[\"']?https?:",
+      "motif": "ressource distante — zéro requête sortante est un invariant du site"
+    }
+  ]
+}

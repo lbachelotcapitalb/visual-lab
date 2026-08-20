@@ -25,6 +25,7 @@ import { tmpdir } from 'node:os';
 import {
   ROOT, DIRS, loadPatterns, loadSystems, mediaOf, FAMILIES, MEDIA, CHROME,
 } from './lib.mjs';
+import { manifestes, cacheDe, lireIndex } from './harvest.mjs';
 
 const argv = process.argv.slice(2);
 const flag = (n) => { const i = argv.indexOf('--' + n); return i === -1 ? null : argv[i + 1]; };
@@ -40,6 +41,17 @@ const SITE_URL = 'https://visual.capitalb.fr';
 const systems = new Map(loadSystems().map((s) => [s.id, s]));
 const patterns = loadPatterns().sort((a, b) => a.id.localeCompare(b.id));
 if (!patterns.length) { console.error('Aucun pattern.'); process.exit(1); }
+
+/* ─────────────── LE RAYON EXTÉRIEUR ───────────────
+   Des bibliothèques tierces, déclarées dans `sources/*.json`, indexées par bin/harvest.mjs.
+   Elles vivent à CÔTÉ du canon, jamais dedans : un élément tiers n'a ni intention déclarée,
+   ni conditions d'emploi, ni benchmarks — l'appeler « pattern » viderait le mot. Une source
+   dont le cache local est absent est simplement sautée : le site se construit quand même, et
+   le dit. */
+const sources = manifestes()
+  .map((m) => ({ m, idx: lireIndex(m), cache: cacheDe(m) }))
+  .filter((s) => s.idx && existsSync(s.cache));
+const extTotal = sources.reduce((n, s) => n + s.idx.total, 0);
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const attr = (s) => esc(s).replace(/"/g, '&quot;');
@@ -194,6 +206,7 @@ const shell = ({ title, desc, base, active, body, bodyClass = '' }) => `<!doctyp
   <nav>
     <a href="${base}index.html"${active === 'patterns' ? ' class="on"' : ''}>Patterns</a>
     <a href="${base}chartes.html"${active === 'chartes' ? ' class="on"' : ''}>Chartes</a>
+    <a href="${base}sources.html"${active === 'sources' ? ' class="on"' : ''}>Sources</a>
     <a href="${base}contribuer.html"${active === 'contribuer' ? ' class="on"' : ''}>Contribuer</a>
     <a href="${REPO}" rel="noopener">GitHub&nbsp;↗</a>
   </nav>
@@ -270,6 +283,10 @@ const home = shell({
   <div class="filters">
     <div class="chips" data-kind="family"><span class="chips__label">famille</span>${famUsed.map((f) => `<button class="chip" type="button" data-value="${attr(f)}">${esc(f)}<i>${patterns.filter((p) => p.family === f).length}</i></button>`).join('')}</div>
     <div class="chips" data-kind="media"><span class="chips__label">média</span>${medUsed.map((m) => `<button class="chip" type="button" data-value="${attr(m)}">${esc(m)}<i>${patterns.filter((p) => mediaOf(p).includes(m)).length}</i></button>`).join('')}</div>
+    <div class="chips" data-kind="origine"><span class="chips__label">origine</span>
+      <span class="chip chip--fixed on" title="les patterns contractuels de la bibliothèque">bibliothèque<i>${patterns.length}</i></span>
+      ${extTotal ? `<button class="chip" id="ext" type="button" title="des bibliothèques libres, sans contrat — voir Sources">sources tierces<i>${extTotal}</i></button>` : ''}
+    </div>
     <div class="chips chips--sel"><span class="chips__label">charte</span>
       <select id="ref"><option value="">toutes (${systems.size})</option>${[...systems.keys()].sort().map((r) => `<option value="${attr(r)}">${esc(r)}</option>`).join('')}</select>
       <button id="reset" class="link" type="button">tout afficher</button>
@@ -280,6 +297,12 @@ const home = shell({
 
 <section class="grid" id="grid">
 ${patterns.map(card).join('\n')}
+</section>
+<section id="extwrap" hidden>
+  <h2>Sources tierces</h2>
+  <p class="lede">Des bibliothèques libres, indexées ici. <b>Sans contrat</b> — ni intention déclarée, ni conditions d'emploi, ni benchmarks. Crédit de l'auteur sous chaque vignette, lien vers l'original. <a href="sources.html">Le rayon entier →</a></p>
+  <div class="grid" id="extgrid"></div>
+  <p class="mut" id="extmore"></p>
 </section>
 <p class="empty" id="empty" hidden>Rien ne correspond. <button class="link" id="reset2" type="button">Tout afficher</button> — ou <a href="contribuer.html">versez le pattern manquant</a>.</p>
 
@@ -727,6 +750,41 @@ main{padding:0 clamp(16px,4vw,44px) 72px;max-width:1600px;margin:0 auto}
 .steps .acts{margin:24px 0 8px}
 .steps{margin-bottom:40px}
 
+/* ── le rayon extérieur ── */
+.licence{margin:14px 0 0;padding:12px 14px;border-radius:10px;background:var(--sur-warn,color-mix(in srgb,var(--warn) 9%,transparent));
+  border:1px solid color-mix(in srgb,var(--warn) 26%,transparent);color:var(--mut);font-size:13px;max-width:96ch}
+.licence b{color:var(--ink)}
+.grid--cats{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));margin-top:22px}
+.catcard{display:flex;align-items:baseline;justify-content:space-between;gap:10px;text-decoration:none;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px 17px;box-shadow:var(--shadow)}
+.catcard:hover{border-color:var(--ink)}
+.catcard span{color:var(--mut);font-variant-numeric:tabular-nums;font-size:13px}
+.grid--src{grid-template-columns:repeat(auto-fill,minmax(310px,1fr));margin-top:22px}
+.srccard{display:block;text-decoration:none;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r);padding:20px 22px;box-shadow:var(--shadow)}
+.srccard:hover{border-color:var(--ink)}
+.srccard b{font-family:var(--title);font-size:19px;letter-spacing:-.02em}
+.srccard .badges{margin:9px 0 0}
+.srccard p{margin:11px 0 0;color:var(--mut);font-size:13.5px}
+/* Le rayon extérieur n'utilise PAS la mécanique de .stage : là c'est la page hôte qui
+   met le fragment à l'échelle, ici c'est le document tiers qui se contient lui-même (on n'a
+   pas le droit de le mesurer depuis dehors — l'iframe est sandboxée, donc opaque). D'où une
+   classe à part : sans elle, l'iframe garde sa taille par défaut de 300×150 et l'élément se
+   colle en haut à gauche d'une cellule trois fois trop grande. */
+.st{position:relative;overflow:hidden;display:block}
+.st iframe{width:100%;height:100%;border:0;display:block}
+.st--ext{height:210px;background:var(--ext-sol,#111116)}
+body.solclair .st--ext{--ext-sol:#F2F2F5}
+.card--ext .card__foot{margin-top:0;font-size:11.5px}
+.card--ext .card__foot b{font-weight:600}
+.search--sm{max-width:420px;margin-top:18px}
+.search--sm #qx{width:100%;height:40px;padding:0 40px;border-radius:999px;border:1px solid var(--line-strong);
+  background:var(--surface);color:var(--ink);font:inherit;font-size:14px}
+.search--sm svg{position:absolute;left:14px;width:16px;height:16px;fill:none;stroke:var(--mut);stroke-width:1.8;stroke-linecap:round}
+#extwrap{margin-top:40px;padding-top:26px;border-top:1px solid var(--line)}
+#extwrap h2{font-size:20px}
+#extwrap .lede{margin:6px 0 16px;font-size:13.5px}
+
 .foot{border-top:1px solid var(--line);padding:28px clamp(16px,4vw,44px) 60px;color:var(--mut);font-size:13px}
 .foot p{margin:0 0 6px;max-width:100ch}
 `;
@@ -806,6 +864,32 @@ const JS = String.raw`/* GÉNÉRÉ par bin/site.mjs — ne pas éditer à la mai
     });
   });
 
+  /* ── page de catégorie du rayon : filtre local + bascule de sol ──
+     Beaucoup d'éléments tiers sont dessinés pour un fond noir et deviennent invisibles sur du
+     blanc (et l'inverse). Sans bascule, on jugerait « raté » ce qui est simplement montré sur
+     le mauvais sol. */
+  var qx = document.getElementById('qx');
+  if (qx) {
+    var xs = [].slice.call(document.querySelectorAll('.card--ext'));
+    var nx = document.getElementById('nx');
+    var applyX = function () {
+      var t = norm(qx.value).trim(), k = 0;
+      xs.forEach(function (c) {
+        var ok = !t || norm(c.dataset.hay).indexOf(t) !== -1;
+        c.hidden = !ok; if (ok) k++;
+      });
+      nx.textContent = k + ' / ' + xs.length;
+    };
+    qx.addEventListener('input', applyX);
+    var sol = document.getElementById('sol');
+    sol.addEventListener('click', function () {
+      document.body.classList.toggle('solclair');
+      sol.textContent = document.body.classList.contains('solclair') ? 'sol sombre' : 'sol clair';
+      sol.classList.toggle('on');
+    });
+    applyX();
+  }
+
   /* ── recherche + filtres (accueil seulement) ── */
   var q = document.getElementById('q');
   if (!q) return;
@@ -816,7 +900,7 @@ const JS = String.raw`/* GÉNÉRÉ par bin/site.mjs — ne pas éditer à la mai
   var count = document.getElementById('count');
   var empty = document.getElementById('empty');
   var refSel = document.getElementById('ref');
-  var chips = [].slice.call(document.querySelectorAll('.chip'));
+  var chips = [].slice.call(document.querySelectorAll('.chip[data-value]'));
 
   /* Sans accents et sans casse : « chanfrein » doit trouver « chanfreinée », et « KPI » « kpi ». */
   function norm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ""); }
@@ -850,6 +934,59 @@ const JS = String.raw`/* GÉNÉRÉ par bin/site.mjs — ne pas éditer à la mai
                 .map(function (c) { return c.dataset.value; });
   }
 
+/* ── le rayon extérieur, cherché à la demande ──────────────────────────────
+     3 330 entrées ne sont pas embarquées dans l'accueil : elles seraient payées par chaque
+     visiteur, y compris ceux qui ne cherchent que dans le canon. L'index n'arrive que si on
+     l'ouvre — et une fois seulement. Le canon reste AU-DESSUS, toujours : c'est lui qui
+     porte un contrat, et l'ordre d'une page est une affirmation sur ce qui compte. */
+  var extBtn = document.getElementById('ext');
+  var extWrap = document.getElementById('extwrap');
+  var extGrid = document.getElementById('extgrid');
+  var extMore = document.getElementById('extmore');
+  var extData = null, extEnCours = false;
+  var PLAFOND = 60;
+
+  function extRendu(words) {
+    if (!extData) return;
+    var out = [], n = 0;
+    for (var i = 0; i < extData.els.length; i++) {
+      var e = extData.els[i];                    // [source, cat, fichier, auteur, tags, nom]
+      var hay = norm(e[3] + ' ' + e[4] + ' ' + e[5] + ' ' + e[2].replace(/[_.-]/g, ' '));
+      var ok = true;
+      for (var w = 0; w < words.length; w++) if (hay.indexOf(words[w]) === -1) { ok = false; break; }
+      if (!ok) continue;
+      n++;
+      if (out.length >= PLAFOND) continue;
+      var href = 'ext/' + e[0] + '/' + e[1] + '/' + e[2];
+      out.push('<article class="card card--ext"><div class="st st--ext">'
+        + '<iframe loading="lazy" sandbox="allow-scripts" title="' + e[3] + '" src="' + href + '"></iframe></div>'
+        + '<footer class="card__foot"><b>@' + e[3] + '</b><span class="mut"> · ' + e[5] + '</span>'
+        + '<span class="spacer"></span><a class="btn btn--ghost" href="' + href + '" download>code</a></footer></article>');
+    }
+    extGrid.innerHTML = out.join('');
+    // Un plafond muet ferait croire à un corpus plus petit qu'il n'est : on dit ce qu'on coupe.
+    extMore.textContent = n > PLAFOND
+      ? (n - PLAFOND) + ' autres correspondances non affichées — affinez, ou ouvrez le rayon entier.'
+      : (n ? '' : 'Aucune correspondance dans les sources tierces.');
+  }
+
+  function extApply(words) {
+    if (!extBtn || !extBtn.classList.contains('on')) { extWrap.hidden = true; return; }
+    extWrap.hidden = false;
+    if (extData) return extRendu(words);
+    if (extEnCours) return;
+    extEnCours = true;
+    extMore.textContent = 'chargement de l\'index des sources…';
+    fetch('api/ext-index.json').then(function (r) { return r.json(); }).then(function (d) {
+      extData = d; extEnCours = false; extRendu(words);
+    }).catch(function () { extEnCours = false; extMore.textContent = 'index des sources indisponible.'; });
+  }
+
+  if (extBtn) extBtn.addEventListener('click', function () {
+    extBtn.classList.toggle('on');
+    apply();
+  });
+
   function apply(push) {
     var text = norm(q.value).trim();
     var words = text ? text.split(/\s+/) : [];
@@ -880,6 +1017,7 @@ const JS = String.raw`/* GÉNÉRÉ par bin/site.mjs — ne pas éditer à la mai
     document.getElementById('clear').hidden = !q.value;
     /* Les vignettes qui viennent d'apparaître n'avaient pas de largeur : les remesurer. */
     stages.forEach(fit);
+    extApply(words);
     if (push !== false) sync();
   }
 
@@ -891,6 +1029,7 @@ const JS = String.raw`/* GÉNÉRÉ par bin/site.mjs — ne pas éditer à la mai
     active('family').forEach(function (v) { p.append('family', v); });
     active('media').forEach(function (v) { p.append('media', v); });
     if (refSel.value) p.set('ref', refSel.value);
+    if (extBtn && extBtn.classList.contains('on')) p.set('ext', '1');
     var s = p.toString();
     history.replaceState(null, '', s ? '?' + s : location.pathname);
   }
@@ -898,6 +1037,7 @@ const JS = String.raw`/* GÉNÉRÉ par bin/site.mjs — ne pas éditer à la mai
     var p = new URLSearchParams(location.search);
     q.value = p.get('q') || '';
     refSel.value = p.get('ref') || '';
+    if (extBtn) extBtn.classList.toggle('on', p.get('ext') === '1');
     var fams = p.getAll('family'), meds = p.getAll('media');
     chips.forEach(function (c) {
       var k = c.parentElement.dataset.kind;
@@ -909,7 +1049,12 @@ const JS = String.raw`/* GÉNÉRÉ par bin/site.mjs — ne pas éditer à la mai
   refSel.addEventListener('change', function () { apply(); });
   chips.forEach(function (c) { c.addEventListener('click', function () { c.classList.toggle('on'); apply(); }); });
   document.getElementById('clear').addEventListener('click', function () { q.value = ''; q.focus(); apply(); });
-  function reset() { q.value = ''; refSel.value = ''; chips.forEach(function (c) { c.classList.remove('on'); }); apply(); }
+  function reset() {
+    q.value = ''; refSel.value = '';
+    chips.forEach(function (c) { c.classList.remove('on'); });
+    if (extBtn) extBtn.classList.remove('on');
+    apply();
+  }
   document.getElementById('reset').addEventListener('click', reset);
   document.getElementById('reset2').addEventListener('click', reset);
   [].forEach.call(document.querySelectorAll('.tag[data-tag]'), function (t) {
@@ -929,6 +1074,125 @@ const JS = String.raw`/* GÉNÉRÉ par bin/site.mjs — ne pas éditer à la mai
   apply(false);
 })();
 `;
+
+/* ═══════════════ LE RAYON EXTÉRIEUR — pages et fichiers ═══════════════ */
+
+/** Le document autonome d'UN élément tiers. Trois protections, parce qu'on héberge du code
+ *  écrit par 842 inconnus sur notre propre domaine :
+ *   · l'iframe qui l'affiche est en `sandbox="allow-scripts"` → origine unique, aucun accès
+ *     à la page hôte, ni cookie, ni stockage ;
+ *   · une CSP `default-src 'none'` INTERDIT toute requête sortante — « zéro requête » cesse
+ *     d'être une promesse pour devenir une contrainte que le navigateur applique ;
+ *   · le crédit de l'auteur voyage DANS le fichier, pas seulement dans la page qui l'entoure :
+ *     c'est ce que la licence MIT exige, et un fichier se copie sans son entourage. */
+const extDoc = (src, e, raw) => `<!doctype html><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; font-src 'none'">
+<title>${attr(e.slug)} — ${attr(e.author)} · ${attr(src.name)}</title>
+<!-- ${esc(src.name)} · @${esc(e.author)} · licence ${esc(src.licence)} · ${esc(e.permalink || src.url)}
+     Repris tel quel, sans modification. Le crédit doit rester attaché au code. -->
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{margin:0;height:100%;overflow:hidden}
+  #vl-e{position:absolute;top:50%;left:50%;width:max-content;height:max-content;
+    transform:translate(-50%,-50%);transform-origin:center center}
+</style>
+<script>
+  // Contenir, jamais rogner : on ne connaît pas la taille de 3 330 éléments tiers, et une
+  // cellule fixe en amputerait la moitié en silence.
+  addEventListener('load', function () {
+    var w = document.getElementById('vl-e'), r = w.getBoundingClientRect();
+    var k = Math.min(1, (innerWidth - 18) / Math.max(1, r.width), (innerHeight - 18) / Math.max(1, r.height));
+    w.style.transform = 'translate(-50%,-50%) scale(' + k.toFixed(3) + ')';
+  });
+</script>
+<div id="vl-e">${raw.replace(/<!--[\s\S]*?-->/, '').trim()}</div>
+`;
+
+const extCell = (src, e, base) => `<article class="card card--ext" data-hay="${attr([e.cat, e.nom, e.author, ...e.tags].join(' ').toLowerCase())}">
+  <div class="st st--ext"><iframe loading="lazy" sandbox="allow-scripts" title="${attr(e.slug)} par ${attr(e.author)}"
+    src="${base}ext/${attr(src.id)}/${attr(e.cat)}/${attr(e.file)}"></iframe></div>
+  <footer class="card__foot">
+    <b>@${esc(e.author)}</b>${e.tags.length ? `<span class="mut"> · ${esc(e.tags.slice(0, 2).join(', '))}</span>` : ''}
+    <span class="spacer"></span>
+    <a class="btn btn--ghost" href="${base}ext/${attr(src.id)}/${attr(e.cat)}/${attr(e.file)}" download>code</a>
+    ${e.permalink ? `<a class="btn btn--ghost" href="${attr(e.permalink)}" rel="noopener nofollow">source ↗</a>` : ''}
+  </footer>
+</article>`;
+
+const bandeauLicence = (src) => `<p class="licence"><b>${esc(src.name)}</b> · licence <a href="${attr(src.licenceUrl)}" rel="noopener">${esc(src.licence)}</a> · ${esc(src.credit)}. Les éléments sont repris <b>tels quels</b>, crédit de leur auteur attaché au fichier. Ils n'ont ni intention déclarée, ni conditions d'emploi, ni benchmarks — ce ne sont pas des patterns de cette bibliothèque, c'est de la matière à regarder.</p>`;
+
+function pageSource(src) {
+  const cats = Object.entries(src.m.categories).filter(([c]) => src.idx.parCategorie[c]);
+  return shell({
+    title: `${src.m.name} — sources · visual-lab`,
+    desc: src.m.resume,
+    base: '../', active: 'sources',
+    body: `
+<nav class="crumb"><a href="../sources.html">Sources</a> <span>/</span> <b>${esc(src.m.name)}</b></nav>
+<section class="hero hero--tight">
+  <h1>${esc(src.m.name)}</h1>
+  <p class="lede">${esc(src.m.resume)}</p>
+  ${bandeauLicence(src.m)}
+  <p class="badges"><span class="badge">${src.idx.total} éléments</span><span class="badge badge--soft">${src.idx.auteurs} auteurs</span>${Object.entries(src.idx.ecartes).map(([motif, n]) => `<span class="badge badge--warn" title="${attr(motif)}">${n} écartés</span>`).join('')}<a class="badge badge--soft" href="${attr(src.m.url)}" rel="noopener">${attr(src.m.url.replace(/^https?:\/\//, ''))} ↗</a></p>
+</section>
+<section class="grid grid--cats">
+  ${cats.map(([c, nom]) => `<a class="catcard" href="${attr(src.m.id)}/${attr(c)}.html"><b>${esc(nom)}</b><span>${src.idx.parCategorie[c]}</span></a>`).join('')}
+</section>
+<p class="mut" style="margin-top:26px">Écartés à la récolte, et pourquoi : ${Object.entries(src.idx.ecartes).map(([motif, n]) => `<b>${n}</b> — ${esc(motif)}`).join(' · ')}. Un corpus qu'on filtre sans dire ce qu'on retire n'est pas un corpus, c'est une vitrine.</p>
+`,
+  });
+}
+
+function pageCategorie(src, cat) {
+  const nom = src.m.categories[cat];
+  const els = src.idx.elements.filter((e) => e.cat === cat);
+  return shell({
+    title: `${nom} — ${src.m.name} · visual-lab`,
+    desc: `${els.length} ${nom.toLowerCase()} de ${src.m.name}, rendus vivants.`,
+    base: '../../', active: 'sources',
+    bodyClass: 'is-ext',
+    body: `
+<nav class="crumb"><a href="../../sources.html">Sources</a> <span>/</span> <a href="../${attr(src.m.id)}.html">${esc(src.m.name)}</a> <span>/</span> <b>${esc(nom)}</b></nav>
+<section class="hero hero--tight">
+  <h1>${esc(nom)} <span class="mut">· ${els.length}</span></h1>
+  ${bandeauLicence(src.m)}
+  <div class="search search--sm">
+    <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M13.5 13.5 18 18"/></svg>
+    <input id="qx" type="search" placeholder="filtrer : auteur, tag, néon, verre…" autocomplete="off">
+  </div>
+  <p class="bar"><button class="chip" id="sol" type="button">sol clair</button><span id="nx" class="count"></span></p>
+</section>
+<section class="grid" id="gx">
+${els.map((e) => extCell(src.m, e, '../../')).join('\n')}
+</section>
+`,
+  });
+}
+
+const pageSources = shell({
+  title: 'Sources — visual-lab',
+  desc: 'Les bibliothèques tierces indexées ici : de la matière libre, rendue vivante, créditée — à côté du canon, jamais dedans.',
+  base: '', active: 'sources',
+  body: `
+<section class="hero hero--tight">
+  <h1>Les sources</h1>
+  <p class="lede">Des bibliothèques <b>libres</b>, indexées et rendues vivantes ici pour qu'on puisse les fouiller d'un seul endroit. Elles sont <b>à côté</b> de la bibliothèque, jamais dedans&nbsp;: un pattern d'ici porte une intention, des conditions d'emploi et des assertions mesurables&nbsp;; un élément tiers porte un effet. Confondre les deux viderait le mot.</p>
+  <p class="lede">Chaque élément garde le crédit de son auteur et un lien vers l'original. Rien n'est modifié, rien n'est revendiqué.</p>
+</section>
+${sources.length ? `<section class="grid grid--src">
+${sources.map((s) => `<a class="srccard" href="s/${attr(s.m.id)}.html">
+  <b>${esc(s.m.name)}</b>
+  <span class="badges"><span class="badge">${s.idx.total}</span><span class="badge badge--soft">${esc(s.m.licence)}</span><span class="badge badge--soft">${s.idx.auteurs} auteurs</span></span>
+  <p>${esc(s.m.resume)}</p>
+</a>`).join('')}
+</section>` : '<p class="empty">Aucune source récoltée. <code>node bin/harvest.mjs &lt;id&gt;</code>.</p>'}
+
+<section class="steps" style="margin-top:34px">
+  <h2 class="col-h2">Brancher une bibliothèque de plus</h2>
+  <p class="mut">Rien dans le code ne connaît Uiverse&nbsp;: tout vient d'un manifeste — d'où cloner, comment lire l'auteur et les tags, quelles catégories garder, ce qu'on écarte et <b>pourquoi</b>. Une source de plus, c'est un fichier JSON dans <code>sources/</code>, puis <code>node bin/harvest.mjs &lt;id&gt;</code>. Aucune ligne à écrire.</p>
+</section>
+`,
+});
 
 /* ───────────────────────────── écriture ───────────────────────────── */
 
@@ -965,6 +1229,36 @@ for (const r of systems.keys()) write(`raw/${r}.tokens.css`,
    composition ne rend pas ce que la bibliothèque montre. */\n` +
   RESET + '\n\n' + rootBlockOf(r) + '\n');
 
+/* ── le rayon extérieur ──
+   Un fichier par élément, servi tel quel : c'est l'iframe qui va le chercher, avec
+   `loading="lazy"`. Une page par catégorie qui embarquerait 1 100 documents en `srcdoc`
+   pèserait des mégaoctets avant le premier pixel ; ici la page ne pèse que ses liens, et le
+   navigateur ne télécharge que ce que le regard atteint. */
+let extFichiers = 0;
+const extIndex = [];
+for (const src of sources) {
+  for (const e of src.idx.elements) {
+    const brut = readFileSync(join(src.cache, e.cat, e.file), 'utf8');
+    write(`ext/${src.m.id}/${e.cat}/${e.file}`, extDoc(src.m, e, brut));
+    extFichiers++;
+    extIndex.push([src.m.id, e.cat, e.file, e.author, e.tags.join(' '), e.nom]);
+  }
+  write(`s/${src.m.id}.html`, pageSource(src));
+  for (const cat of Object.keys(src.m.categories)) {
+    if (src.idx.parCategorie[cat]) write(`s/${src.m.id}/${cat}.html`, pageCategorie(src, cat));
+  }
+}
+write('sources.html', pageSources);
+
+// L'index de recherche du rayon n'est PAS inline dans l'accueil : 3 330 entrées y pèseraient
+// plus que toute la bibliothèque, et seraient payées par chaque visiteur qui ne cherche que
+// dans le canon. Il n'est chargé que quand on demande explicitement à chercher dehors.
+write('api/ext-index.json', JSON.stringify({
+  sources: sources.map((s) => ({ id: s.m.id, name: s.m.name, licence: s.m.licence, url: s.m.url })),
+  champs: ['source', 'categorie', 'fichier', 'auteur', 'tags', 'nom'],
+  els: extIndex,
+}));
+
 // L'API publique : le même index.json que consomment les agents, servi sur le web.
 write('api/index.json', readFileSync(join(ROOT, 'index.json'), 'utf8'));
 write('api/search.json', JSON.stringify(searchRows));
@@ -982,7 +1276,10 @@ write('404.html', shell({
 }));
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  ['index.html', 'chartes.html', 'contribuer.html', ...patterns.map((p) => `p/${p.id}.html`)]
+  ['index.html', 'chartes.html', 'contribuer.html', 'sources.html',
+   ...patterns.map((p) => `p/${p.id}.html`),
+   ...sources.flatMap((s) => [`s/${s.m.id}.html`,
+     ...Object.keys(s.m.categories).filter((c) => s.idx.parCategorie[c]).map((c) => `s/${s.m.id}/${c}.html`)])]
     .map((u) => `  <url><loc>${SITE_URL}/${u}</loc></url>`).join('\n') + `\n</urlset>\n`);
 
 // Une archive par pattern : le fragment, ses jetons, son contrat, et une note qui dit quoi
@@ -1023,4 +1320,9 @@ const files = execFileSync('bash', ['-c', `find ${JSON.stringify(OUT)} -type f |
 const size = execFileSync('du', ['-sh', OUT], { encoding: 'utf8' }).split('\t')[0];
 console.log(`✓ ${OUT}`);
 console.log(`   ${patterns.length} patterns · ${systems.size} chartes · ${files} fichiers · ${size}`);
+if (sources.length) {
+  console.log(`   rayon extérieur : ${extFichiers} éléments de ${sources.length} source(s) — ${sources.map((s) => s.m.name + ' (' + s.m.licence + ')').join(', ')}`);
+} else {
+  console.log('   rayon extérieur : aucune source récoltée (node bin/harvest.mjs <id>)');
+}
 console.log(`   open ${join(OUT, 'index.html')}`);

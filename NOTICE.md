@@ -28,3 +28,32 @@ nommés nulle part et dont aucun fichier n'est distribué ici. Les identifiants 
 
 Si vous reconnaissez votre travail dans une reconstitution de `decks/` et que sa présence vous
 gêne : ouvrez une issue, elle sera retirée.
+
+## 4. Le rayon extérieur — des bibliothèques tierces, servies telles quelles
+
+Depuis août 2026, le site publié (`visual.capitalb.fr`) sert aussi un **rayon extérieur** : des
+bibliothèques libres, déclarées dans `sources/*.json`, récoltées par `bin/harvest.mjs` et rendues
+vivantes à côté de la bibliothèque. C'est la seule partie du projet où du code écrit par des tiers
+est **redistribué**, et elle obéit à trois règles strictes.
+
+**Le code tiers n'entre pas dans l'historique de ce dépôt.** Les clones vivent dans `.sources/`,
+qui est gitignoré. Ce qui est versionné, ce sont les **index** (`sources/*.index.json`) : la liste
+de ce qui a été récolté, avec l'auteur de chaque élément et le commit exact de la source. Cloner ce
+dépôt ne clone donc aucune bibliothèque tierce ; `node bin/harvest.mjs <id>` les reconstitue.
+
+**Le crédit voyage avec le code.** Chaque élément servi par le site est un fichier autonome dont
+l'en-tête porte la source, l'auteur, la licence et un lien vers l'original — parce qu'un fichier
+se copie sans la page qui l'entourait. La licence de la source prime sur le MIT de ce dépôt.
+
+**Ce ne sont pas des patterns.** Un élément tiers n'a ni intention déclarée, ni conditions
+d'emploi, ni benchmarks. Il n'est pas dans `patterns/`, il n'est pas dans `index.json`, il ne
+compte pas dans les totaux de la bibliothèque, et le site le dit sur chaque page où il apparaît.
+
+Sources actuellement déclarées :
+
+| source | licence | ce qui est servi |
+|---|---|---|
+| [Uiverse](https://uiverse.io) — [galaxy](https://github.com/uiverse-io/galaxy) | MIT | composants CSS de la communauté, crédit par auteur |
+
+Si vous êtes l'auteur d'un élément et que sa présence ici vous gêne : ouvrez une issue, il sera
+retiré de l'index.
