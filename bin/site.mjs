@@ -444,16 +444,27 @@ const gabarit = JSON.stringify({
 
 const contribuerPage = shell({
   title: 'Contribuer — visual-lab',
-  desc: 'Comment verser un pattern dans la bibliothèque : le contrat, la nomenclature, la pull request.',
+  desc: 'Comment verser un pattern dans la bibliothèque : par formulaire sans cloner, ou par pull request. Le contrat, la nomenclature, le contrôle automatique.',
   base: '',
   active: 'contribuer',
   body: `
 <section class="hero hero--tight">
   <h1>Verser un pattern</h1>
-  <p class="lede">La bibliothèque n'a pas de base de données et pas de formulaire&nbsp;: <b>le dépôt EST le formulaire</b>. Un pattern, ce sont deux fichiers dans <code>patterns/</code> — un fragment HTML autonome et son contrat JSON — plus, si sa charte est nouvelle, un jeu de jetons dans <code>systems/</code>. Vous ouvrez une pull request, elle est relue, elle est fusionnée. Licence MIT.</p>
+  <p class="lede">Deux portes, la même bibliothèque&nbsp;: un <b>formulaire</b> si vous ne voulez pas cloner, une <b>pull request</b> si git ne vous fait pas peur. Dans les deux cas un contrôle automatique répond dans la minute, champ par champ, et vous êtes crédité dans le pattern. Licence MIT.</p>
+  <p class="acts"><a class="btn btn--primary" href="${REPO}/issues/new?template=pattern.yml" rel="noopener">Remplir le formulaire ↗</a> <a class="btn" href="${REPO}/fork" rel="noopener">Forker le dépôt ↗</a></p>
 </section>
 
 <section class="steps">
+  <h2 class="col-h2">Sans git — le formulaire</h2>
+  <ol>
+    <li><b>Remplissez le formulaire.</b> Identifiant, famille, intention, conditions d'emploi, mots-clés, et le fragment HTML avec son <code>&lt;style&gt;</code>. Rien à installer.</li>
+    <li><b>Un robot contrôle</b> dans la minute et commente ce qui manque&nbsp;: identifiant déjà pris, script ou image interdits, couleurs en dur, <code>avoid_when</code> trop court. Vous modifiez l'issue, le contrôle se rejoue.</li>
+    <li><b>Un mainteneur répond <code>/accepter</code></b>&nbsp;: les fichiers sont écrits, l'index régénéré, et une pull request s'ouvre <b>à votre nom</b>. Elle se referme sur votre issue à la fusion.</li>
+  </ol>
+</section>
+
+<section class="steps">
+  <h2 class="col-h2">Avec git — la pull request</h2>
   <ol>
     <li><b>Forkez et clonez.</b> <code>gh repo fork lbachelotcapitalb/visual-lab --clone</code></li>
     <li><b>Écrivez le fragment</b> dans <code>patterns/&lt;famille&gt;-&lt;NN&gt;-&lt;slug&gt;.html</code>. Autonome&nbsp;: son CSS voyage dans un <code>&lt;style&gt;</code> à l'intérieur du fichier, ses couleurs passent par des variables <code>--vl-*</code>, jamais par des valeurs en dur. Aucun script, aucune police distante, aucune image.</li>
@@ -461,7 +472,7 @@ const contribuerPage = shell({
     <li><b>Régénérez et vérifiez.</b> <code>node bin/index.mjs &amp;&amp; node bin/check.mjs &lt;id&gt;</code> — l'index se reconstruit, les benchmarks se rejouent dans un vrai navigateur.</li>
     <li><b>Ouvrez la pull request.</b> Une pull request = un pattern (ou une charte + ses patterns). Décrivez ce que la composition résout, pas à quoi elle ressemble.</li>
   </ol>
-  <p class="acts"><a class="btn btn--primary" href="${REPO}/fork" rel="noopener">Forker le dépôt ↗</a> <a class="btn" href="${REPO}/compare" rel="noopener">Ouvrir une pull request ↗</a> <a class="btn" href="${REPO}/issues/new" rel="noopener">Proposer sans coder (issue) ↗</a></p>
+  <p class="acts"><a class="btn" href="${REPO}/compare" rel="noopener">Ouvrir une pull request ↗</a></p>
 </section>
 
 <div class="cols">
@@ -694,7 +705,8 @@ main{padding:0 clamp(16px,4vw,44px) 72px;max-width:1600px;margin:0 auto}
 .charte__pats .tag{font-family:var(--mono);font-size:11.5px}
 
 /* ── contribuer ── */
-.steps ol{margin:18px 0 0;padding-left:22px;max-width:82ch}
+.steps .col-h2{font-size:15px;letter-spacing:.02em;text-transform:uppercase;color:var(--mut);font-weight:600;margin:0 0 4px}
+.steps ol{margin:14px 0 0;padding-left:22px;max-width:82ch}
 .steps li{margin:0 0 12px;color:var(--mut)}
 .steps li b{color:var(--ink)}
 .steps .acts{margin:24px 0 8px}

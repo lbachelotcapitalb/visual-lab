@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: La bibliothèque en ligne
+    url: https://visual.capitalb.fr
+    about: Chercher un pattern, le voir vivant, copier ou télécharger son code.
+  - name: Contribuer par pull request
+    url: https://github.com/lbachelotcapitalb/visual-lab/blob/main/README.md
+    about: Vous savez faire une PR ? Passez directement par là — le formulaire est pour ceux qui ne veulent pas cloner.

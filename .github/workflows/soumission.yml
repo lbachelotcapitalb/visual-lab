@@ -1,0 +1,55 @@
+name: Contrôle d'une soumission
+
+# Une soumission mal remplie qu'on laisse dormir est une soumission perdue : le robot dit
+# dans la minute ce qui manque, champ par champ, et se rejoue à chaque modification de
+# l'issue. Aucune écriture dans le dépôt — il ne fait que lire et commenter.
+on:
+  issues:
+    types: [opened, edited, reopened]
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  controle:
+    if: contains(github.event.issue.labels.*.name, 'soumission')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - name: Contrôler la soumission
+        id: check
+        env:
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          printf '%s' "$BODY" > /tmp/issue.md
+          set +e
+          node scripts/submission/parse-issue.mjs /tmp/issue.md --markdown > /tmp/verdict.md
+          echo "ok=$([ $? -eq 0 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          set -e
+          cat /tmp/verdict.md
+
+      - name: Répondre dans l'issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('/tmp/verdict.md', 'utf8');
+            const ok = '${{ steps.check.outputs.ok }}' === 'true';
+            const marker = '<!-- vl-controle -->';
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+
+            // On MET À JOUR le même commentaire au lieu d'en empiler un par modification :
+            // une issue avec huit verdicts successifs ne se lit plus.
+            const comments = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
+            const mine = comments.find((c) => c.body.includes(marker));
+            const payload = marker + '\n' + body;
+            if (mine) await github.rest.issues.updateComment({ owner, repo, comment_id: mine.id, body: payload });
+            else await github.rest.issues.createComment({ owner, repo, issue_number, body: payload });
+
+            const labels = ['soumission', ok ? 'soumission:recevable' : 'soumission:à-corriger'];
+            await github.rest.issues.setLabels({ owner, repo, issue_number, labels });

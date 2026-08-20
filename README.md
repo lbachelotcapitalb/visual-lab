@@ -11,9 +11,23 @@ node bin/site.mjs && open site/index.html # la BIBLIOTHÈQUE EN LIGNE, telle qu'
 > **En ligne : <https://visual.capitalb.fr>** — la même bibliothèque, cherchable, une page par
 > pattern, le code à copier ou à télécharger (`.html`, `.zip`), et l'index machine sur
 > `/api/index.json`. Site **statique, sans base de données** : la source de vérité reste ce
-> dépôt, `bin/site.mjs` en fabrique `site/`, `bin/deploy-site.sh` le publie. On y verse un
-> pattern par **pull request** — voir [`deploy/PROVISION.md`](deploy/PROVISION.md) pour la mise
-> en ligne, et la page « Contribuer » du site pour le contrat.
+> dépôt, `bin/site.mjs` en fabrique `site/`, `bin/deploy-site.sh` le publie. Voir
+> [`deploy/PROVISION.md`](deploy/PROVISION.md) pour la mise en ligne.
+
+## Verser un pattern — deux portes
+
+**Sans git** : le [formulaire](https://github.com/lbachelotcapitalb/visual-lab/issues/new?template=pattern.yml).
+Un contrôle automatique (`.github/workflows/soumission.yml`) répond dans la minute, champ par
+champ — identifiant déjà pris, script ou image interdits, `avoid_when` trop court, couleurs
+écrites en dur. Le contributeur corrige en modifiant son issue, le contrôle se rejoue. Quand un
+mainteneur répond `/accepter`, `scripts/submission/materialise.mjs` écrit les fichiers, l'index
+se régénère et **une pull request s'ouvre au nom du contributeur**.
+
+Pourquoi passer par une issue plutôt que par une base de données : la modération, l'historique,
+l'anti-spam et l'identité sont déjà là, et rien n'entre dans `main` sans relecture. Une table
+Postgres aurait tout cela à réécrire.
+
+**Avec git** : fork, branche, pull request — le chemin normal, décrit plus bas.
 
 > **AI agents: read [`AGENTS.md`](AGENTS.md) first** (also served as `CLAUDE.md`). It is the
 > short, English, machine-facing entry point: what a pattern is, how to consume `index.json`,

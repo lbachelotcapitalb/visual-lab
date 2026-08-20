@@ -1,0 +1,82 @@
+name: Adopter une soumission
+
+# Un mainteneur écrit `/accepter` dans l'issue → les fichiers sont écrits, l'index régénéré,
+# une pull request s'ouvre au nom du contributeur. La PR est le point de contrôle : rien ne
+# part dans `main` sans relecture, même accepté.
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  adopter:
+    if: >-
+      github.event.issue.pull_request == null &&
+      startsWith(github.event.comment.body, '/accepter') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+
+      - name: Écrire les fichiers
+        id: write
+        env:
+          BODY: ${{ github.event.issue.body }}
+          AUTHOR: ${{ github.event.issue.user.login }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          printf '%s' "$BODY" > /tmp/issue.md
+          node scripts/submission/materialise.mjs /tmp/issue.md --author "$AUTHOR" --issue "$NUM" | tee /tmp/out.txt
+          grep '^id=' /tmp/out.txt >> "$GITHUB_OUTPUT"
+
+      - name: Régénérer l'index et la vitrine
+        run: node bin/index.mjs
+
+      - name: Ouvrir la pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ID: ${{ steps.write.outputs.id }}
+          AUTHOR: ${{ github.event.issue.user.login }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          git config user.name  "visual-lab bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "soumission/$ID"
+          git add patterns systems INDEX.md index.json gallery.html
+          git commit -m "$ID — versé par @$AUTHOR (soumission #$NUM)
+
+          Adopté depuis l'issue #$NUM. Le contrat, les mots-clés et le fragment viennent du
+          formulaire ; les variables --vl-* ont été relevées dans le CSS. Restent à compléter
+          avant fusion : le rôle de chaque variable, les emplacements, et les benchmarks —
+          c'est ce que la relecture de cette PR sert à faire.
+
+          Closes #$NUM"
+          git push -u origin "soumission/$ID"
+          gh pr create \
+            --title "$ID — soumission de @$AUTHOR" \
+            --body "Adoption de #$NUM.
+
+          **Reste à faire avant fusion** — le formulaire ne peut pas les deviner :
+          - [ ] rôle et valeur par défaut de chaque variable \`--vl-*\`
+          - [ ] les emplacements (\`slots\`)
+          - [ ] au moins deux benchmarks, puis \`node bin/check.mjs $ID\`
+          - [ ] un coup d'œil dans \`gallery.html\`, à taille réelle
+
+          Merci @$AUTHOR." \
+            --base main --head "soumission/$ID"
+
+      - name: Répondre au contributeur
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            await github.rest.issues.createComment({
+              owner, repo, issue_number: context.issue.number,
+              body: "✅ Accepté — la pull request est ouverte et se referme sur cette issue. Merci !",
+            });

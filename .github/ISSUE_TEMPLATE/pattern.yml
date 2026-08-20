@@ -1,0 +1,136 @@
+name: Proposer un pattern
+description: Verser une composition dans la bibliothèque — sans cloner, sans git.
+title: "[pattern] "
+labels: ["soumission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ce formulaire remplace la pull request : remplissez-le, un robot contrôle la
+        soumission dans la minute et dit précisément ce qui manque. Une fois acceptée, elle
+        devient une pull request dont **vous êtes crédité**.
+
+        Un pattern est une **composition**, pas un composant : du HTML et du CSS, aucun
+        JavaScript, aucune requête sortante, aucune image. Ses couleurs passent par des
+        variables `--vl-*` pour qu'il puisse changer de charte. En cas de doute, ouvrez
+        n'importe quel fichier de [`patterns/`](https://github.com/lbachelotcapitalb/visual-lab/tree/main/patterns) : c'est le modèle.
+
+  - type: input
+    id: identifiant
+    attributes:
+      label: Identifiant
+      description: "En minuscules, préfixé par la famille : `card-20-mon-pattern`. C'est le nom des fichiers."
+      placeholder: card-20-prix-compare
+    validations:
+      required: true
+
+  - type: dropdown
+    id: famille
+    attributes:
+      label: Famille
+      description: "Vocabulaire fermé. `chart` porte des DONNÉES (une valeur mesurée décide de la géométrie) ; `diagram` porte une STRUCTURE, où rien n'est proportionnel."
+      options: [card, chart, diagram, layout, list, shape, tag, title]
+    validations:
+      required: true
+
+  - type: input
+    id: nom
+    attributes:
+      label: Nom
+      description: En français, court, et qui dit ce que la composition FAIT — pas à quoi elle ressemble.
+      placeholder: Carte de comparaison de prix à colonne mise en avant
+    validations:
+      required: true
+
+  - type: textarea
+    id: intention
+    attributes:
+      label: Intention
+      description: Une phrase — le problème de composition que ce pattern résout.
+    validations:
+      required: true
+
+  - type: textarea
+    id: employer
+    attributes:
+      label: Employer quand
+      description: Les conditions concrètes où on le prend.
+    validations:
+      required: true
+
+  - type: textarea
+    id: eviter
+    attributes:
+      label: Eviter quand
+      description: >-
+        Les conditions où il est le MAUVAIS choix. Cette ligne vaut la précédente : un pattern
+        qu'on ne sait pas refuser ne route plus rien dans le catalogue.
+    validations:
+      required: true
+
+  - type: input
+    id: motscles
+    attributes:
+      label: Mots-cles
+      description: Séparés par des virgules, trois au minimum. C'est ce qui le fait trouver dans la recherche.
+      placeholder: prix, comparaison, offre, colonne, tarif
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: medias
+    attributes:
+      label: Medias
+      description: Où cette composition est censée servir. C'est une intention — la faisabilité, elle, se prouve par `bin/emit.mjs`.
+      options:
+        - label: slide
+        - label: web
+        - label: email
+        - label: print
+        - label: social
+
+  - type: input
+    id: charte
+    attributes:
+      label: Charte
+      description: >-
+        L'identifiant d'une charte existante (`ref-11-finance-dashboard-mint`…), ou un nouveau
+        `ref-NN-slug` — auquel cas remplissez le champ suivant.
+      placeholder: ref-11-finance-dashboard-mint
+    validations:
+      required: true
+
+  - type: textarea
+    id: jetons
+    attributes:
+      label: Jetons de la charte
+      description: "Seulement si la charte est NOUVELLE : le bloc `:root { --vl-… }` qui donne ses couleurs et ses mesures."
+      render: css
+
+  - type: input
+    id: cadre
+    attributes:
+      label: Cadre
+      description: "Les dimensions d'UNE unité, en pixels, séparées par un x — `430x340`. Facultatif mais recommandé : c'est ce qui permet de mesurer le pattern."
+      placeholder: 430x340
+
+  - type: textarea
+    id: fragment
+    attributes:
+      label: Le fragment HTML
+      description: >-
+        Le markup ET son `<style>`, tels qu'on les collerait. Autonome : rien à importer,
+        aucune police distante, aucune image, aucun script.
+      render: html
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: engagement
+    attributes:
+      label: Engagement
+      options:
+        - label: Ce code est de moi, ou je peux le publier sous licence MIT.
+          required: true
+        - label: Il ne contient ni script, ni requête sortante, ni image ; ses couleurs passent par des variables CSS.
+          required: true
