@@ -7,6 +7,14 @@ bar or a heatmap from scratch every time.
 
 Nothing to install. No network. No build step. `git clone`, then read on.
 
+If you cannot clone, the same catalogue is served as static JSON at
+`https://visual.capitalb.fr/api/index.json` (and a lighter search index at
+`/api/search.json`). Each pattern also has a page — `/p/<id>.html` — and its raw files at
+`/raw/<id>.html`, `/raw/<id>.json`, `/raw/<ref>.tokens.css`.
+
+One thing the fragments assume and do not carry: `box-sizing: border-box`. Paste it with
+the tokens, or every composition renders larger than its declared frame.
+
 ---
 
 ## 60 seconds

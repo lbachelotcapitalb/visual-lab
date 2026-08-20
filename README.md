@@ -3,9 +3,17 @@
 **Start here / Commencer ici**
 
 ```bash
-node bin/index.mjs && open gallery.html   # la VITRINE : tous les patterns rendus, filtrables
+node bin/index.mjs && open gallery.html   # la VITRINE locale : tous les patterns rendus, filtrables
 node bin/search.mjs --show <id>           # un fragment + ses tokens, prêts à coller
+node bin/site.mjs && open site/index.html # la BIBLIOTHÈQUE EN LIGNE, telle qu'elle est publiée
 ```
+
+> **En ligne : <https://visual.capitalb.fr>** — la même bibliothèque, cherchable, une page par
+> pattern, le code à copier ou à télécharger (`.html`, `.zip`), et l'index machine sur
+> `/api/index.json`. Site **statique, sans base de données** : la source de vérité reste ce
+> dépôt, `bin/site.mjs` en fabrique `site/`, `bin/deploy-site.sh` le publie. On y verse un
+> pattern par **pull request** — voir [`deploy/PROVISION.md`](deploy/PROVISION.md) pour la mise
+> en ligne, et la page « Contribuer » du site pour le contrat.
 
 > **AI agents: read [`AGENTS.md`](AGENTS.md) first** (also served as `CLAUDE.md`). It is the
 > short, English, machine-facing entry point: what a pattern is, how to consume `index.json`,
@@ -41,6 +49,21 @@ Bibliothèque de **patterns visuels HTML/CSS** reconstruits par reverse-engineer
 d'un corpus de 15 références (decks, planches de campagne, heros web, écrans d'application). Objectif : quand il
 faut produire une slide, un visuel ou une landing, partir d'un pattern qui a fait ses preuves
 plutôt que d'une page blanche — et savoir *pourquoi* il marche.
+
+## Ce qu'un fragment suppose de sa page hôte
+
+Un fragment est autonome pour son CSS, **pas** pour le socle : il compte sur
+`box-sizing: border-box`. `gallery.html` le pose globalement, donc le défaut ne s'y voit pas —
+mais dans un document isolé, une carte annoncée 430 × 340 en mesure 498 × 408 (ses marges
+intérieures s'ajoutent au lieu de rentrer dedans). C'est pour cette raison que le `.css`
+téléchargeable du site porte la règle en tête, avant les jetons. Une page qui ne l'a pas rendra
+toutes les compositions trop grandes, et le défaut sera imputé aux patterns.
+
+Deuxième écart à connaître : `geometry.frame` est le cadre d'**une unité**, pas celui du fichier
+de démonstration. Treize fragments montrent plusieurs exemplaires côte à côte
+(`card-02-notched-brief` en aligne deux, `tag-01-gooey-capsule` toute une planche) : leur boîte
+réelle est plus grande que le cadre déclaré, et c'est normal. Le site mesure la boîte réelle
+pour dimensionner ses rendus, et affiche le cadre déclaré comme contrat.
 
 ## Ce que ce dépôt est, et n'est pas
 

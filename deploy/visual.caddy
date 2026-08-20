@@ -1,0 +1,27 @@
+# visual.capitalb.fr — la bibliothèque visual-lab, en ligne.
+#
+# Un site STATIQUE, sans base de données et sans processus : la source de vérité est le
+# dépôt git, `bin/site.mjs` en produit `site/`, `bin/deploy-site.sh` le rsync ici. Rien à
+# redémarrer, rien à sauvegarder — une perte de /srv/visual-lab se répare par un redéploiement.
+visual.capitalb.fr {
+	encode zstd gzip
+	root * /srv/visual-lab
+	file_server
+
+	header {
+		-Server
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+	}
+
+	# Les polices et les feuilles du site changent avec le build, pas entre deux visites.
+	# Les pages, elles, ne sont PAS mises en cache longtemps : un pattern corrigé doit
+	# apparaître au rechargement suivant, sinon la bibliothèque ment sur son contenu.
+	@statics path /fonts/* /assets/* /decks/* /dl/*
+	header @statics Cache-Control "public, max-age=604800"
+
+	handle_errors {
+		rewrite * /404.html
+		file_server
+	}
+}

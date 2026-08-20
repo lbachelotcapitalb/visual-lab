@@ -31,6 +31,7 @@ copie divergerait :
 | quoi | où |
 |---|---|
 | **la vitrine — les patterns VIVANTS, à ouvrir dans un navigateur** | [gallery.html](gallery.html) — **GÉNÉRÉ** par `bin/index.mjs` |
+| **la bibliothèque EN LIGNE, publique** | <https://visual.capitalb.fr> — **GÉNÉRÉE** par `bin/site.mjs`, publiée par `bin/deploy-site.sh` |
 | le catalogue (une ligne par pattern, c'est là qu'on choisit) | [INDEX.md](INDEX.md) — **GÉNÉRÉ**, jamais édité |
 | le même pour la machine (ratios, benchmarks, tokens) | `index.json` — **GÉNÉRÉ** |
 | le contrat d'un pattern, la nomenclature, les outils | [README.md](README.md) |

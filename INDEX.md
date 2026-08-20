@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-57 patterns · 18 références · 50 vérifiés par benchmarks mesurés.
+57 patterns · 19 références · 50 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -572,6 +572,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-06-orange-notched` | Corporate orange chanfreiné | `card-02-notched-brief`, `card-03-stat-accent`, `list-02-ruled-index`, `shape-notched-corner`, `title-01-leading-rule` | `decks/ref-06-orange-notched.html` |
 | `ref-07-retro-brand-hero` | Retro brand hero (crème + rouge de marque, sol photographique) | `layout-11-hero-card-on-photo`, `layout-12-nav-three-zone`, `layout-13-image-triptych`, `title-03-wordmark-bottom-left` | `decks/ref-07-retro-brand-hero.html` |
 | `ref-08-swiss-studio-hero` | Suisse studio — hero web Studioform® | `layout-14-statement-first`, `title-04-name-fills-measure` | `decks/ref-08-swiss-studio-hero.html` |
+| `ref-09-zine-annotated-blue` | Zine annoté bleu | — | `decks/ref-09-zine-annotated-blue.html` |
 | `ref-10-campaign-board-red` | Planche de campagne — condensée rouge | `layout-10-bleed-column-inset`, `list-07-hairline-spec-table`, `title-02-condensed-overlay-stack` | `decks/ref-10-campaign-board-red.html` |
 | `ref-11-finance-dashboard-mint` | Dashboard bento clair — menthe & lilas | `card-04-stat-barchart`, `card-05-balance-gauge`, `card-06-forecast-timeline`, `card-07-transactions` | `decks/ref-11-finance-dashboard-mint.html` |
 | `ref-12-neon-capsule-tags` | Néon vert — étiquettes capsules sur fond sombre | `tag-01-gooey-capsule` | `decks/ref-12-neon-capsule-tags.html` |

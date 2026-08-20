@@ -26,3 +26,7 @@ assets/refs/
 .diff-*.html
 .palette-*.png
 .measure-tmp.html
+# Le SITE est un artefact de build (bin/site.mjs), déployé par rsync : la source de vérité
+# reste patterns/ + systems/. Le versionner doublerait le dépôt à chaque pattern touché.
+site/
+.site-frames.json

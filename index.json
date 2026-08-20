@@ -21,7 +21,7 @@
   ],
   "counts": {
     "patterns": 57,
-    "refs": 18,
+    "refs": 19,
     "checkable": 50
   },
   "patterns": [
@@ -9020,6 +9020,39 @@
           "registered": "0.30em du wordmark, en exposant",
           "statement": "27px / 1.4 / 400 — 3 lignes, ≈ 46 caractères par ligne",
           "nav": "18px / 1 / 400"
+        }
+      }
+    },
+    {
+      "id": "ref-09-zine-annotated-blue",
+      "name": "Zine annoté bleu",
+      "patterns": [],
+      "deck": "decks/ref-09-zine-annotated-blue.html",
+      "tokens": {
+        "--vl-paper": "#FFFFFF",
+        "--vl-board": "#D4D4D4",
+        "--vl-ink": "#111111",
+        "--vl-ink-soft": "#6F6F6F",
+        "--vl-blue": "#2F3FE0",
+        "--vl-rule": "#DCDCDC",
+        "--vl-photo-light": "#E4E4E4",
+        "--vl-photo-mid": "#A8A8A8",
+        "--vl-photo-dark": "#1A1A1A",
+        "--vl-margin": "96px",
+        "--vl-col": "208px",
+        "--vl-gutter": "32px",
+        "--vl-measure": "448px",
+        "--vl-stroke": "3.5px"
+      },
+      "type": {
+        "display": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+        "body": "Inter, \"Helvetica Neue\", Arial, sans-serif",
+        "scale": {
+          "title": "80px / 1 / 500 / -0.02em (couverture ET sections, bas de casse, bleu)",
+          "sub": "32px / 1.25 / 600 (intertitre de colonne, encre)",
+          "body": "20px / 1.45 / 400 (justifié, hyphens auto, gris, mesure 448)",
+          "caption": "15px / 1.35 / 500 (légende d'image, libellé de liste)",
+          "micro": "16px / 1 / 500 / 0.18em (rail vertical, folio)"
         }
       }
     },
