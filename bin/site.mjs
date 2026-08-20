@@ -19,6 +19,7 @@
 // site ne peut pas déteindre dessus (ni l'inverse).
 import { readFileSync, writeFileSync, mkdirSync, rmSync, cpSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import {
@@ -158,6 +159,20 @@ function stage(p, base, maxH) {
 
 /* ───────────────────────────── le châssis de page ───────────────────────────── */
 
+/** L'EMPREINTE DES ASSETS. Le vhost met une semaine de cache sur /assets/* — sans empreinte,
+ *  un déploiement qui change le CSS n'atteint pas les navigateurs ayant déjà visité le site
+ *  (mesuré : une règle corrigée toujours absente après rsync). On empreinte la SOURCE du
+ *  générateur plutôt que le CSS lui-même : le CSS est déclaré plus bas dans ce fichier, et il
+ *  n'existe pas encore quand la première page se construit. Sur-invalider quand le générateur
+ *  change est sans conséquence ; sous-invalider laisse un site cassé chez le visiteur.
+ */
+const STAMP = (() => {
+  let h = 5381;
+  const src = readFileSync(fileURLToPath(import.meta.url), 'utf8');
+  for (let i = 0; i < src.length; i++) h = ((h * 33) ^ src.charCodeAt(i)) >>> 0;
+  return h.toString(36);
+})();
+
 const shell = ({ title, desc, base, active, body, bodyClass = '' }) => `<!doctype html>
 <html lang="fr">
 <head>
@@ -170,7 +185,7 @@ const shell = ({ title, desc, base, active, body, bodyClass = '' }) => `<!doctyp
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23101014'/><rect x='7' y='7' width='8' height='8' fill='%23FFF'/><rect x='17' y='7' width='8' height='18' rx='4' fill='%231A57FF'/><rect x='7' y='17' width='8' height='8' rx='4' fill='%23FFF'/></svg>">
 <link rel="stylesheet" href="${base}fonts/fonts.css">
-<link rel="stylesheet" href="${base}assets/site.css">
+<link rel="stylesheet" href="${base}assets/site.css?v=${STAMP}">
 </head>
 <body class="${bodyClass}">
 <a class="skip" href="#main">Aller au contenu</a>
@@ -191,7 +206,7 @@ ${body}
   <p><b>visual-lab</b> — bibliothèque de patterns visuels HTML/CSS, sous licence MIT. Les polices restent sous OFL, les images sources ne sont pas redistribuées (voir <a href="${REPO}/blob/main/NOTICE.md" rel="noopener">NOTICE.md</a>).</p>
   <p>Rien à installer, rien à importer : on copie un fragment, on le remplit, on le rend. <a href="${REPO}" rel="noopener">Le dépôt</a> · <a href="${base}api/index.json">index.json</a> · <a href="${base}contribuer.html">verser un pattern</a></p>
 </footer>
-<script src="${base}assets/site.js"></script>
+<script src="${base}assets/site.js?v=${STAMP}"></script>
 </body>
 </html>
 `;
