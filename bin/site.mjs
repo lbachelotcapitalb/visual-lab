@@ -160,6 +160,43 @@ const labelFrame = (p) => (declared(p) ? p.geometry.frame : frameOfPattern(p));
 
 /* ───────────────────────────── le rendu isolé ───────────────────────────── */
 
+/** Le document autonome d'un pattern du canon — le fragment, ses jetons, son sol, et le même
+ *  script de contenance que le rayon extérieur. Il sert la page « Collections », qui doit
+ *  pouvoir rendre côte à côte un pattern d'ici et un élément tiers sans savoir lequel est
+ *  lequel : une collection mélange les deux par nature, et deux mécaniques de rendu
+ *  différentes dans une même grille, c'est deux fois plus de choses à casser. */
+const fragDoc = (p) => `<!doctype html><meta charset="utf-8">
+<title>${attr(p.id)} — visual-lab</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+  ${RESET}
+  html,body{margin:0;height:100%;overflow:hidden;background:${attr(groundOf(p.ref))}}
+  :root{${Object.entries(tokensOf(p.ref)).map(([k, v]) => k + ':' + v).join(';')}}
+  #vl-f{position:absolute;top:50%;left:50%;width:max-content;height:max-content;
+    transform:translate(-50%,-50%);transform-origin:center center}
+</style>
+<script>
+  addEventListener('load', function () {
+    var w = document.getElementById('vl-f'), r = w.getBoundingClientRect();
+    var k = Math.min(1, (innerWidth - 18) / Math.max(1, r.width), (innerHeight - 18) / Math.max(1, r.height));
+    w.style.transform = 'translate(-50%,-50%) scale(' + k.toFixed(3) + ')';
+  });
+</script>
+<div id="vl-f">${p.html || ''}</div>
+`;
+
+/** Les deux boutons de rangement, posés sur chaque vignette. Ils portent avec eux TOUT ce
+ *  qu'il faut pour reconstituer la carte ailleurs (titre, rendu, fiche, origine) : la page
+ *  « Collections » n'a alors aucun index à charger ni à tenir à jour, et un élément rangé
+ *  survit à sa disparition du catalogue. */
+const rangement = (o) => `<button class="ic js-fav" type="button" aria-pressed="false"
+    title="Mettre en favori" data-id="${attr(o.id)}" data-t="${attr(o.titre)}" data-u="${attr(o.rendu)}" data-h="${attr(o.fiche)}" data-s="${attr(o.origine)}">
+  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.6l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L2.8 7.9l5-.7z"/></svg>
+</button><button class="ic js-col" type="button"
+    title="Ajouter à une collection" data-id="${attr(o.id)}" data-t="${attr(o.titre)}" data-u="${attr(o.rendu)}" data-h="${attr(o.fiche)}" data-s="${attr(o.origine)}">
+  <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4.5v11M4.5 10h11"/></svg>
+</button>`;
+
 function stage(p, base, maxH) {
   const [w, h] = frameOfPattern(p);
   const doc = `<!doctype html><meta charset="utf-8"><link rel="stylesheet" href="${base}fonts/fonts.css">` +
@@ -207,6 +244,7 @@ const shell = ({ title, desc, base, active, body, bodyClass = '' }) => `<!doctyp
     <a href="${base}index.html"${active === 'patterns' ? ' class="on"' : ''}>Patterns</a>
     <a href="${base}chartes.html"${active === 'chartes' ? ' class="on"' : ''}>Chartes</a>
     <a href="${base}sources.html"${active === 'sources' ? ' class="on"' : ''}>Sources</a>
+    <a href="${base}collections.html"${active === 'collections' ? ' class="on"' : ''}>Collections<span id="navcount" class="navcount" hidden></span></a>
     <a href="${base}contribuer.html"${active === 'contribuer' ? ' class="on"' : ''}>Contribuer</a>
     <a href="${REPO}" rel="noopener">GitHub&nbsp;↗</a>
   </nav>
@@ -259,8 +297,8 @@ const card = (p) => {
     <span class="badge badge--soft" title="cadre de référence">${w}×${h}</span>
     ${p.benchmarks?.length ? `<span class="badge badge--ok" title="assertions mesurables sur sa géométrie">${p.benchmarks.length} bench</span>` : ''}
     <span class="spacer"></span>
+    ${rangement({ id: 'p:' + p.id, titre: p.name, rendu: '/frag/' + p.id + '.html', fiche: '/p/' + p.id + '.html', origine: 'visual-lab' })}
     <button class="btn btn--ghost js-copy" type="button" data-src="raw/${attr(p.id)}.html">Copier</button>
-    <a class="btn btn--ghost" href="raw/${attr(p.id)}.html" download>.html</a>
   </div>
 </article>`;
 };
@@ -356,6 +394,7 @@ function patternPage(p) {
     <button class="btn btn--primary js-copy" type="button" data-src="../raw/${attr(p.id)}.html">Copier le fragment</button>
     <button class="btn js-copy" type="button" data-src="../raw/${attr(p.ref)}.tokens.css">Copier les tokens</button>
     <a class="btn" href="../dl/${attr(p.id)}.zip" download>Télécharger le .zip</a>
+    ${rangement({ id: 'p:' + p.id, titre: p.name, rendu: '/frag/' + p.id + '.html', fiche: '/p/' + p.id + '.html', origine: 'visual-lab' })}
   </div>
 </header>
 
@@ -785,6 +824,41 @@ body.solclair .st--ext{--ext-sol:#F2F2F5}
 #extwrap h2{font-size:20px}
 #extwrap .lede{margin:6px 0 16px;font-size:13.5px}
 
+/* ── rangement : favoris et collections ── */
+.ic{width:27px;height:27px;flex:none;display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid var(--line);background:var(--surface);border-radius:8px;cursor:pointer;padding:0;color:var(--mut)}
+.ic svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round}
+.ic:hover{border-color:var(--ink);color:var(--ink)}
+.ic.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.js-fav.on svg{fill:currentColor}
+.navcount{display:inline-block;min-width:17px;padding:0 5px;margin-left:5px;border-radius:999px;
+  background:var(--accent);color:var(--accent-ink);font-size:10.5px;line-height:16px;text-align:center;
+  font-variant-numeric:tabular-nums;vertical-align:1px}
+
+.colmenu{position:absolute;z-index:60;min-width:210px;max-height:320px;overflow:auto;
+  background:var(--surface);border:1px solid var(--line-strong);border-radius:12px;padding:6px;
+  box-shadow:0 10px 40px -12px rgba(0,0,0,.35)}
+.colmenu__t{margin:4px 8px 6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.colmenu__vide{margin:4px 8px 8px;font-size:13px;color:var(--mut)}
+.colmenu button{display:flex;width:100%;align-items:center;gap:8px;border:0;background:none;color:var(--ink);
+  font:inherit;font-size:13.5px;text-align:left;padding:7px 9px;border-radius:8px;cursor:pointer}
+.colmenu button:hover{background:var(--sunk)}
+.colmenu button i{margin-left:auto;font-style:normal;font-size:11px;color:var(--mut);font-variant-numeric:tabular-nums}
+.colmenu__new{border-top:1px solid var(--line)!important;margin-top:4px;border-radius:0 0 8px 8px!important;color:var(--accent)!important}
+
+#vl-toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,14px);z-index:80;
+  display:flex;align-items:center;gap:12px;padding:11px 18px;border-radius:999px;
+  background:var(--ink);color:var(--bg);font-size:13.5px;box-shadow:0 10px 36px -12px rgba(0,0,0,.5);
+  opacity:0;pointer-events:none;transition:opacity .16s,transform .16s}
+#vl-toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#vl-toast button{border:0;background:none;color:var(--bg);font:inherit;font-size:13px;
+  text-decoration:underline;cursor:pointer;padding:0;opacity:.85}
+
+.col-groupe{margin:34px 0 0}
+.col-tete{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.col-tete h2{font-size:21px}
+.is-cols .card__foot b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
 .foot{border-top:1px solid var(--line);padding:28px clamp(16px,4vw,44px) 60px;color:var(--mut);font-size:13px}
 .foot p{margin:0 0 6px;max-width:100ch}
 `;
@@ -831,6 +905,155 @@ const JS = String.raw`/* GÉNÉRÉ par bin/site.mjs — ne pas éditer à la mai
   } else {
     addEventListener('resize', function () { stages.forEach(fit); });
   }
+
+/* ═══════════════ LE RANGEMENT — favoris et collections ═══════════════
+     Où vit l'état : dans CE navigateur, nulle part ailleurs. Pas de compte à créer, pas de
+     serveur à tenir, rien qui parte sur le réseau. Le prix est assumé et écrit sur la page :
+     ça ne suit pas d'un appareil à l'autre, et un nettoyage du navigateur efface tout — d'où
+     l'export, qui n'est pas un bonus mais le filet.
+
+     Ce qu'on range : pas un identifiant, mais TOUT ce qu'il faut pour redessiner la carte
+     (titre, URL du rendu, fiche, origine). Sinon la page « Collections » devrait charger les
+     index de la bibliothèque ET de chaque source pour afficher trois vignettes — et un
+     élément retiré d'un catalogue disparaîtrait des collections de tout le monde. */
+  var CLE = 'visual-lab:collections';
+  function lire() {
+    try {
+      var d = JSON.parse(localStorage.getItem(CLE) || '{}');
+      return { v: 1, fav: d.fav || [], cols: d.cols || {}, meta: d.meta || {} };
+    } catch (e) { return { v: 1, fav: [], cols: {}, meta: {} }; }
+  }
+  function ecrire(d) {
+    try { localStorage.setItem(CLE, JSON.stringify(d)); } catch (e) { toast('Stockage plein ou refusé.'); }
+    majBoutons(); majBadge();
+    if (typeof rendreCollections === 'function') rendreCollections();
+  }
+  function nb(d) {
+    var n = d.fav.length;
+    for (var k in d.cols) n += d.cols[k].length;
+    return n;
+  }
+  function fiche(b) {
+    return { id: b.dataset.id, t: b.dataset.t, u: b.dataset.u, h: b.dataset.h, s: b.dataset.s };
+  }
+
+  var minuteur;
+  function toast(txt, action) {
+    var t = document.getElementById('vl-toast');
+    if (!t) {
+      t = document.createElement('div'); t.id = 'vl-toast'; document.body.appendChild(t);
+    }
+    t.innerHTML = '';
+    t.appendChild(document.createTextNode(txt));
+    if (action) {
+      var a = document.createElement('button');
+      a.type = 'button'; a.textContent = action.texte;
+      a.addEventListener('click', function () { action.faire(); t.classList.remove('on'); });
+      t.appendChild(a);
+    }
+    t.classList.add('on');
+    clearTimeout(minuteur);
+    minuteur = setTimeout(function () { t.classList.remove('on'); }, action ? 6000 : 2600);
+  }
+
+  function majBadge() {
+    var b = document.getElementById('navcount');
+    if (!b) return;
+    var n = nb(lire());
+    b.textContent = n; b.hidden = !n;
+  }
+  /* Un favori déjà posé doit se VOIR sans avoir à cliquer pour s'en souvenir : l'état de
+     l'étoile est relu à chaque rendu, y compris sur les cartes créées après coup par la
+     recherche du rayon extérieur. */
+  function majBoutons() {
+    var d = lire();
+    [].forEach.call(document.querySelectorAll('.js-fav'), function (b) {
+      var on = d.fav.indexOf(b.dataset.id) !== -1;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.title = on ? 'Retirer des favoris' : 'Mettre en favori';
+    });
+    [].forEach.call(document.querySelectorAll('.js-col'), function (b) {
+      var dans = [];
+      for (var k in d.cols) if (d.cols[k].indexOf(b.dataset.id) !== -1) dans.push(k);
+      b.classList.toggle('on', dans.length > 0);
+      b.title = dans.length ? 'Dans : ' + dans.join(', ') : 'Ajouter à une collection';
+    });
+  }
+
+  function basculerFavori(b) {
+    var d = lire(), f = fiche(b), i = d.fav.indexOf(f.id);
+    if (i === -1) { d.fav.unshift(f.id); d.meta[f.id] = f; toast('Ajouté aux favoris'); }
+    else {
+      d.fav.splice(i, 1);
+      toast('Retiré des favoris', { texte: 'annuler', faire: function () {
+        var e = lire(); e.fav.unshift(f.id); e.meta[f.id] = f; ecrire(e);
+      } });
+    }
+    ecrire(d);
+  }
+
+  /* Le menu du « + ». Un prompt() pour tout aurait été plus court, mais il oblige à retaper
+     le nom d'une collection existante à chaque ajout — donc à en créer des doublons. */
+  var menu;
+  function fermerMenu() { if (menu) { menu.remove(); menu = null; } }
+  document.addEventListener('click', function (ev) {
+    if (menu && !menu.contains(ev.target) && !ev.target.closest('.js-col')) fermerMenu();
+  });
+  addEventListener('keydown', function (ev) { if (ev.key === 'Escape') fermerMenu(); });
+
+  function ouvrirMenu(b) {
+    fermerMenu();
+    var d = lire(), f = fiche(b), noms = Object.keys(d.cols).sort();
+    menu = document.createElement('div');
+    menu.className = 'colmenu';
+    menu.innerHTML = '<p class="colmenu__t">Ranger dans…</p>'
+      + (noms.length ? noms.map(function (n) {
+          var dedans = d.cols[n].indexOf(f.id) !== -1;
+          return '<button type="button" data-n="' + n.replace(/"/g, '&quot;') + '"' + (dedans ? ' class="on"' : '') + '>'
+            + (dedans ? '✓ ' : '') + n + '<i>' + d.cols[n].length + '</i></button>';
+        }).join('') : '<p class="colmenu__vide">aucune collection</p>')
+      + '<button type="button" class="colmenu__new">+ Nouvelle collection…</button>';
+    document.body.appendChild(menu);
+
+    var r = b.getBoundingClientRect();
+    // Repositionné si ça déborde : un menu à moitié hors écran est un menu inutilisable, et
+    // ces boutons vivent souvent tout en bas ou tout à droite d'une grille.
+    menu.style.top = (r.bottom + scrollY + 6) + 'px';
+    menu.style.left = Math.max(8, Math.min(r.left + scrollX, innerWidth - menu.offsetWidth - 12)) + 'px';
+    if (r.bottom + menu.offsetHeight + 20 > innerHeight) {
+      menu.style.top = (r.top + scrollY - menu.offsetHeight - 6) + 'px';
+    }
+
+    [].forEach.call(menu.querySelectorAll('button[data-n]'), function (x) {
+      x.addEventListener('click', function () {
+        var e = lire(), n = x.dataset.n, i = e.cols[n].indexOf(f.id);
+        if (i === -1) { e.cols[n].push(f.id); e.meta[f.id] = f; toast('Rangé dans « ' + n + ' »'); }
+        else { e.cols[n].splice(i, 1); toast('Retiré de « ' + n + ' »'); }
+        ecrire(e); fermerMenu();
+      });
+    });
+    menu.querySelector('.colmenu__new').addEventListener('click', function () {
+      var n = (prompt('Nom de la collection') || '').trim();
+      if (!n) return;
+      var e = lire();
+      if (!e.cols[n]) e.cols[n] = [];
+      if (e.cols[n].indexOf(f.id) === -1) e.cols[n].push(f.id);
+      e.meta[f.id] = f;
+      ecrire(e); fermerMenu(); toast('Rangé dans « ' + n + ' »');
+    });
+  }
+
+  /* Délégation : les vignettes du rayon extérieur sont créées APRÈS le chargement, par la
+     recherche. Accrocher les écouteurs une fois pour toutes sur le document est la seule
+     façon qu'elles fonctionnent aussi. */
+  document.addEventListener('click', function (ev) {
+    var f = ev.target.closest && ev.target.closest('.js-fav');
+    if (f) { ev.preventDefault(); ev.stopPropagation(); basculerFavori(f); return; }
+    var c = ev.target.closest && ev.target.closest('.js-col');
+    if (c) { ev.preventDefault(); ev.stopPropagation(); ouvrirMenu(c); }
+  });
+  majBoutons(); majBadge();
 
   /* ── copier ── */
   function flash(b, txt) {
@@ -890,6 +1113,125 @@ const JS = String.raw`/* GÉNÉRÉ par bin/site.mjs — ne pas éditer à la mai
     applyX();
   }
 
+/* ═══════════════ LA PAGE « MES COLLECTIONS » ═══════════════ */
+  var listes = document.getElementById('listes');
+  if (listes) {
+    var vide = document.getElementById('vide');
+
+    window.rendreCollections = function () {
+      var d = lire();
+      var groupes = [];
+      if (d.fav.length) groupes.push({ nom: 'Favoris', cle: null, ids: d.fav });
+      Object.keys(d.cols).sort().forEach(function (n) { groupes.push({ nom: n, cle: n, ids: d.cols[n] }); });
+
+      vide.hidden = groupes.length > 0;
+      listes.innerHTML = groupes.map(function (g) {
+        var cartes = g.ids.map(function (id) {
+          var m = d.meta[id];
+          if (!m) return '';
+          return '<article class="card card--ext" data-id="' + id + '">'
+            + '<a class="card__stage" href="' + m.h + '"><div class="st st--ext">'
+            + '<iframe loading="lazy" sandbox="allow-scripts" title="' + m.t + '" src="' + m.u + '"></iframe>'
+            + '</div></a><footer class="card__foot"><b>' + m.t + '</b>'
+            + '<span class="mut"> · ' + m.s + '</span><span class="spacer"></span>'
+            + '<button class="btn btn--ghost js-retirer" type="button" data-id="' + id + '" data-col="'
+            + (g.cle === null ? '' : String(g.cle).replace(/"/g, '&quot;')) + '">retirer</button></footer></article>';
+        }).join('');
+        return '<section class="col-groupe">'
+          + '<div class="col-tete"><h2>' + g.nom + ' <span class="mut">· ' + g.ids.length + '</span></h2>'
+          + (g.cle === null ? '' :
+              '<span><button class="btn btn--ghost js-renommer" type="button" data-n="' + String(g.cle).replace(/"/g, '&quot;') + '">renommer</button> '
+            + '<button class="btn btn--ghost js-suppr" type="button" data-n="' + String(g.cle).replace(/"/g, '&quot;') + '">supprimer</button></span>')
+          + '</div><div class="grid">' + (cartes || '<p class="mut">Collection vide.</p>') + '</div></section>';
+      }).join('');
+      majBoutons();
+    };
+
+    listes.addEventListener('click', function (ev) {
+      var t = ev.target.closest && ev.target.closest('button');
+      if (!t) return;
+      var d = lire();
+      if (t.classList.contains('js-retirer')) {
+        ev.preventDefault();
+        var col = t.dataset.col, id = t.dataset.id;
+        var arr = col ? d.cols[col] : d.fav;
+        var i = arr.indexOf(id);
+        if (i !== -1) arr.splice(i, 1);
+        ecrire(d);
+      } else if (t.classList.contains('js-renommer')) {
+        var av = t.dataset.n, ap = (prompt('Nouveau nom', av) || '').trim();
+        if (!ap || ap === av) return;
+        // On FUSIONNE si le nom cible existe déjà, au lieu d'écraser : renommer « A » en « B »
+        // quand B existe ne doit pas faire disparaître le contenu de B.
+        d.cols[ap] = (d.cols[ap] || []).concat(d.cols[av].filter(function (x) { return (d.cols[ap] || []).indexOf(x) === -1; }));
+        delete d.cols[av];
+        ecrire(d);
+      } else if (t.classList.contains('js-suppr')) {
+        var n = t.dataset.n, sauv = d.cols[n].slice();
+        delete d.cols[n];
+        ecrire(d);
+        toast('« ' + n + ' » supprimée', { texte: 'annuler', faire: function () {
+          var e = lire(); e.cols[n] = sauv; ecrire(e);
+        } });
+      }
+    });
+
+    document.getElementById('nouvelle').addEventListener('click', function () {
+      var n = (prompt('Nom de la collection') || '').trim();
+      if (!n) return;
+      var d = lire();
+      if (d.cols[n]) return toast('Cette collection existe déjà.');
+      d.cols[n] = []; ecrire(d);
+    });
+
+    document.getElementById('exporter').addEventListener('click', function () {
+      var b = new Blob([JSON.stringify(lire(), null, 2)], { type: 'application/json' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(b);
+      a.download = 'visual-lab-collections.json';
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    });
+
+    document.getElementById('fichier').addEventListener('change', function (ev) {
+      var f = ev.target.files[0];
+      if (!f) return;
+      var r = new FileReader();
+      r.onload = function () {
+        try {
+          var e = JSON.parse(r.result);
+          if (!e || typeof e !== 'object' || !('fav' in e) && !('cols' in e)) throw 0;
+          // FUSION, jamais remplacement : importer sur un autre appareil ne doit pas effacer
+          // ce qui y est déjà rangé — c'est précisément le geste qu'on ne peut pas annuler.
+          var d = lire();
+          (e.fav || []).forEach(function (id) { if (d.fav.indexOf(id) === -1) d.fav.push(id); });
+          Object.keys(e.cols || {}).forEach(function (n) {
+            d.cols[n] = d.cols[n] || [];
+            e.cols[n].forEach(function (id) { if (d.cols[n].indexOf(id) === -1) d.cols[n].push(id); });
+          });
+          Object.assign(d.meta, e.meta || {});
+          ecrire(d);
+          toast('Importé et fusionné avec ce qui était déjà là.');
+        } catch (x) { toast('Fichier illisible — attendu : un export de cette page.'); }
+        ev.target.value = '';
+      };
+      r.readAsText(f);
+    });
+
+    document.getElementById('vider').addEventListener('click', function () {
+      var d = lire();
+      if (!nb(d)) return;
+      var sauv = JSON.stringify(d);
+      localStorage.removeItem(CLE);
+      majBadge(); rendreCollections();
+      toast('Tout effacé', { texte: 'annuler', faire: function () {
+        localStorage.setItem(CLE, sauv); majBadge(); rendreCollections(); majBoutons();
+      } });
+    });
+
+    rendreCollections();
+  }
+
   /* ── recherche + filtres (accueil seulement) ── */
   var q = document.getElementById('q');
   if (!q) return;
@@ -946,6 +1288,20 @@ const JS = String.raw`/* GÉNÉRÉ par bin/site.mjs — ne pas éditer à la mai
   var extData = null, extEnCours = false;
   var PLAFOND = 60;
 
+  // Le même balisage que côté serveur — une seule définition, sinon les deux divergent et
+  // seule la moitié des vignettes devient rangeable.
+  function boutonsRangement(id, titre, rendu, fiche, origine) {
+    var d = 'data-id="' + id + '" data-t="' + String(titre).replace(/"/g, '&quot;') + '" data-u="' + rendu + '" data-h="' + fiche + '" data-s="' + origine + '"';
+    return '<button class="ic js-fav" type="button" aria-pressed="false" title="Mettre en favori" ' + d
+      + '><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.6l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L2.8 7.9l5-.7z"/></svg></button>'
+      + '<button class="ic js-col" type="button" title="Ajouter à une collection" ' + d
+      + '><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4.5v11M4.5 10h11"/></svg></button>';
+  }
+  function extNom(id) {
+    var s = (extData && extData.sources || []).filter(function (x) { return x.id === id; })[0];
+    return s ? s.name : id;
+  }
+
   function extRendu(words) {
     if (!extData) return;
     var out = [], n = 0;
@@ -961,9 +1317,12 @@ const JS = String.raw`/* GÉNÉRÉ par bin/site.mjs — ne pas éditer à la mai
       out.push('<article class="card card--ext"><div class="st st--ext">'
         + '<iframe loading="lazy" sandbox="allow-scripts" title="' + e[3] + '" src="' + href + '"></iframe></div>'
         + '<footer class="card__foot"><b>@' + e[3] + '</b><span class="mut"> · ' + e[5] + '</span>'
-        + '<span class="spacer"></span><a class="btn btn--ghost" href="' + href + '" download>code</a></footer></article>');
+        + '<span class="spacer"></span>'
+        + boutonsRangement('x:' + e[0] + '/' + e[1] + '/' + e[2], e[2].replace(/^[^_]+_/, '').replace(/\.html$/, '') + ' · @' + e[3], '/' + href, '/s/' + e[0] + '/' + e[1] + '.html', extNom(e[0]))
+        + '<a class="btn btn--ghost" href="' + href + '" download>code</a></footer></article>');
     }
     extGrid.innerHTML = out.join('');
+    majBoutons();
     // Un plafond muet ferait croire à un corpus plus petit qu'il n'est : on dit ce qu'on coupe.
     extMore.textContent = n > PLAFOND
       ? (n - PLAFOND) + ' autres correspondances non affichées — affinez, ou ouvrez le rayon entier.'
@@ -1075,6 +1434,34 @@ const JS = String.raw`/* GÉNÉRÉ par bin/site.mjs — ne pas éditer à la mai
 })();
 `;
 
+/* ═══════════════ COLLECTIONS ═══════════════
+   Tout est reconstruit dans le navigateur à partir du stockage local : la page ne connaît
+   aucun élément à l'avance, et n'a donc pas à être régénérée quand on range quelque chose. */
+const pageCollections = shell({
+  title: 'Mes collections — visual-lab',
+  desc: 'Vos favoris et vos collections, rangés dans ce navigateur.',
+  base: '', active: 'collections',
+  bodyClass: 'is-cols',
+  body: `
+<section class="hero hero--tight">
+  <h1>Mes collections</h1>
+  <p class="lede">Rangées dans <b>ce navigateur</b>, pas sur un serveur&nbsp;: rien n'est envoyé nulle part, rien ne demande de compte. Le revers est net&nbsp;— elles ne suivent pas d'un appareil à l'autre, et un nettoyage du navigateur les efface. D'où l'export ci-dessous, qui est le seul filet.</p>
+  <p class="acts">
+    <button class="btn" id="nouvelle" type="button">Nouvelle collection</button>
+    <button class="btn" id="exporter" type="button">Exporter (.json)</button>
+    <label class="btn" for="fichier">Importer…</label>
+    <input id="fichier" type="file" accept="application/json" hidden>
+    <button class="btn btn--ghost" id="vider" type="button">Tout effacer</button>
+  </p>
+</section>
+<div id="vide" class="empty" hidden>
+  Rien de rangé pour l'instant. Sur n'importe quelle vignette, l'étoile met en favori et le
+  <b>+</b> range dans une collection. <a href="index.html">Retour à la bibliothèque</a>.
+</div>
+<div id="listes"></div>
+`,
+});
+
 /* ═══════════════ LE RAYON EXTÉRIEUR — pages et fichiers ═══════════════ */
 
 /** Le document autonome d'UN élément tiers. Trois protections, parce qu'on héberge du code
@@ -1114,6 +1501,7 @@ const extCell = (src, e, base) => `<article class="card card--ext" data-hay="${a
   <footer class="card__foot">
     <b>@${esc(e.author)}</b>${e.tags.length ? `<span class="mut"> · ${esc(e.tags.slice(0, 2).join(', '))}</span>` : ''}
     <span class="spacer"></span>
+    ${rangement({ id: `x:${src.id}/${e.cat}/${e.file}`, titre: `${e.slug} · @${e.author}`, rendu: `/ext/${src.id}/${e.cat}/${e.file}`, fiche: `/s/${src.id}/${e.cat}.html`, origine: src.name })}
     <a class="btn btn--ghost" href="${base}ext/${attr(src.id)}/${attr(e.cat)}/${attr(e.file)}" download>code</a>
     ${e.permalink ? `<a class="btn btn--ghost" href="${attr(e.permalink)}" rel="noopener nofollow">source ↗</a>` : ''}
   </footer>
@@ -1215,6 +1603,8 @@ write('chartes.html', chartesPage);
 write('contribuer.html', contribuerPage);
 
 for (const p of patterns) write(`p/${p.id}.html`, patternPage(p));
+for (const p of patterns) write(`frag/${p.id}.html`, fragDoc(p));
+write('collections.html', pageCollections);
 
 // Les fichiers BRUTS : ce sont eux que « copier » va chercher et que « télécharger » sert.
 // Une seule source pour les deux gestes — un bouton qui copie autre chose que ce qu'il
@@ -1276,7 +1666,7 @@ write('404.html', shell({
 }));
 write('robots.txt', `User-agent: *\nAllow: /\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-  ['index.html', 'chartes.html', 'contribuer.html', 'sources.html',
+  ['index.html', 'chartes.html', 'contribuer.html', 'sources.html', 'collections.html',
    ...patterns.map((p) => `p/${p.id}.html`),
    ...sources.flatMap((s) => [`s/${s.m.id}.html`,
      ...Object.keys(s.m.categories).filter((c) => s.idx.parCategorie[c]).map((c) => `s/${s.m.id}/${c}.html`)])]
