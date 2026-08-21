@@ -1,0 +1,77 @@
+<!-- card-15-notched-float-statement — vignette éditoriale chanfreinée qui FLOTTE.
+     Couleurs via --vl-* uniquement. Trois niveaux, et chacun existe pour une raison de
+     rendu, pas de style : la racine porte l'OMBRE (un filtre s'applique AVANT le
+     clip-path, donc une ombre posée sur l'élément clippé est découpée avec lui et
+     disparaît) ; `__card` porte le clip et l'aplat de CONTOUR (un clip-path mange les
+     bordures, le contour est donc un aplat, jamais un `border`) ; `::before` porte la
+     carte, insérée de l'épaisseur du contour.
+     `vl-notched-float--end` est la variante d'accent : UNE par rangée, et c'est une FIN. -->
+<article class="vl-notched-float">
+  <div class="vl-notched-float__card">
+    <span class="vl-notched-float__fill" aria-hidden="true"></span>
+    <p class="vl-notched-float__t">La polyvalence métiers et systèmes des consultants</p>
+    <p class="vl-notched-float__p" lang="fr">Un même consultant tient la norme comptable et l'outil qui la produit. Le sujet n'est jamais coupé en deux entre un fonctionnel et un technique qui se renvoient la question d'un comité à l'autre. Le client garde un seul interlocuteur, et la question ne fait pas d'aller-retour.</p>
+  </div>
+</article>
+
+<style>
+.vl-notched-float {
+  --nfs-notch: var(--vl-notch, 44px);
+  --nfs-bw: var(--vl-border, 2.6px);
+  /* Le chanfrein intérieur se DÉDUIT, il ne se choisit pas : décaler une oblique à 45°
+     de b raccourcit sa coupe de b(2 − √2) ≈ 0,586 b. Sans ce facteur le contour
+     s'épaissit dans les deux angles coupés, et c'est la seule chose que l'œil y voit. */
+  --nfs-notch-in: calc(var(--nfs-notch) - var(--nfs-bw) * 0.586);
+  --nfs-radius: var(--vl-radius, 15px);
+  --nfs-edge: var(--vl-edge);
+  --nfs-fill: var(--vl-card);
+  --nfs-ink: var(--vl-ink);
+  --nfs-ink-2: var(--vl-ink-muted);
+  width: 426px; height: 454px;
+  filter: drop-shadow(var(--vl-shadow));
+  transition: filter .22s ease, transform .22s ease;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.vl-notched-float:hover {
+  transform: translateY(-6px);
+  filter: drop-shadow(var(--vl-shadow-hover));
+}
+.vl-notched-float--end {
+  --nfs-edge: var(--vl-gold-edge);
+  --nfs-fill: var(--vl-gold);
+  --nfs-ink: var(--vl-on-gold);
+  --nfs-ink-2: var(--vl-on-gold-muted);
+}
+.vl-notched-float__card {
+  position: relative; isolation: isolate; box-sizing: border-box;
+  height: 100%; display: flex; flex-direction: column; align-items: flex-start;
+  padding: 34px; border-radius: var(--nfs-radius);
+  background-color: var(--nfs-fill);
+  background-image: linear-gradient(var(--nfs-edge), var(--nfs-edge));
+  clip-path: polygon(
+    0 0, calc(100% - var(--nfs-notch)) 0, 100% var(--nfs-notch),
+    100% 100%, var(--nfs-notch) 100%, 0 calc(100% - var(--nfs-notch))
+  );
+}
+.vl-notched-float__fill {
+  content: ''; position: absolute; inset: var(--nfs-bw); z-index: -1;
+  border-radius: calc(var(--nfs-radius) - var(--nfs-bw));
+  background: var(--nfs-fill);
+  clip-path: polygon(
+    0 0, calc(100% - var(--nfs-notch-in)) 0, 100% var(--nfs-notch-in),
+    100% 100%, var(--nfs-notch-in) 100%, 0 calc(100% - var(--nfs-notch-in))
+  );
+}
+.vl-notched-float__t {
+  margin: 0; font-size: 29px; line-height: 1.22; font-weight: 600;
+  letter-spacing: -0.018em; color: var(--nfs-ink);
+}
+/* Justifier une colonne étroite sans césure ouvre des rivières de blanc : ici la césure
+   n'est pas un ornement, c'est ce qui rend le drapeau justifié tenable. Elle suppose un
+   `lang` sur le document — sans lui, aucun dictionnaire, aucune coupe. */
+.vl-notched-float__p {
+  margin: 16px 0 0; font-size: 22px; line-height: 1.52; color: var(--nfs-ink-2);
+  text-align: justify; hyphens: auto; -webkit-hyphens: auto;
+  hyphenate-limit-chars: 6 3 2;
+}
+</style>

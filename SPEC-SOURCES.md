@@ -1587,3 +1587,59 @@ que ce système n'a nulle part.
 **Ce qui n'est PAS repris** — les photographies (portrait patient, silhouette anatomique) et les
 tracés d'imagerie réels : le deck les remplace par des compositions SVG génératives de même
 cadrage et de même valeur.
+
+---
+
+## ref-20-finengy-navy-notched
+
+**Nature** — Section de page web (« Une procédure systématique », Finengy Advisory), capturée
+sur le BUILD à 1280 px de fenêtre. Source **interne** : contrairement au reste du corpus, ce
+n'est pas un visuel tiers relevé mais un écran conçu ici — la palette et l'échelle ne sont donc
+pas *relevées* mais *connues*, prises dans les jetons `--fx-*` du site.
+
+**Ce qu'il faut isoler** — La rangée de vignettes et son titre de section. DEUX couches : le
+fond marine de la section, et les vignettes. Écartés : le chrome de page (barre de navigation,
+bulle « Contactez-nous »), et la seconde rangée — trois vignettes suffisent à porter la
+grammaire, dont l'unique vignette d'accent.
+
+**Palette** (jetons `--fx-*` du site, valeurs exactes — aucune pipette n'était nécessaire)
+
+| rôle | valeur |
+|---|---|
+| fond de section | `#0D2A3D` |
+| aplat de vignette | `#1A3A52` |
+| contour de vignette | `rgba(244,247,249,0.34)` |
+| aplat de FIN (accent) | `#F5C518` |
+| contour de fin | `rgba(255,224,102,0.95)` |
+| titre | `#FFFFFF` |
+| corps | `rgba(244,247,249,0.72)` — soit `#B7C2CA`, 7,4:1 |
+| titre sur accent | `#0D2A3D` |
+| corps sur accent | `rgba(13,42,61,0.78)` — soit `#404C35`, **5,68:1, le point le plus serré** |
+
+**Typo** — Inter, 600 pour le titre (−0,018em), 400 pour le corps. Échelle en fraction de la
+largeur de slide (`Ws` = 1600) :
+
+| rang | ratio | ce que ça porte |
+|---|---|---|
+| titre de section | `0.0388 Ws` | l'intitulé de la rangée |
+| titre de vignette | `0.0181 Ws` | l'engagement, affirmatif |
+| corps de vignette | `0.0138 Ws` | son développement, justifié et coupé |
+
+**Géométrie** — Rangée de 3, gouttière `0.025 Ws`, marge de page `0.075 Ws`. Vignette de
+`0.266 Ws` (426 px), rapport L/H 0,938. Chanfrein `0.103` de la largeur de vignette, sur la
+DIAGONALE haut-droit + bas-gauche ; rayon `0.035` sur les deux autres coins ; contour `0.0061` ;
+marge intérieure `0.0798`. Ombre portée `0 15px 21px rgba(0,0,0,0.55)`, lift de 6 px au survol.
+
+**Ce que la source apprend, et qui ne se voit pas sur l'image**
+- Un **filtre s'applique AVANT le clip-path** : une ombre posée sur l'élément chanfreiné est
+  découpée avec lui et disparaît — sans erreur, sans warning. Elle vit un cran au-dessus.
+- `drop-shadow()` **n'accepte pas de rayon d'étalement**. Une quatrième longueur rend la
+  fonction invalide et le filtre entier est ignoré, en silence : la carte perd toute ombre.
+- Un **clip-path mange les bordures** : le contour est un aplat, jamais un `border`. Et le
+  chanfrein intérieur se DÉDUIT — `b(2 − √2) ≈ 0,586 b` — sinon il s'épaissit dans les angles.
+- La **césure suppose une langue déclarée**. Sans `lang`, aucun dictionnaire : le texte reste
+  justifié mais s'ouvre en rivières de blanc, jusqu'à ×4,2 l'espace naturelle sur 281 px.
+
+**Patterns extraits**
+- `card-15-notched-float-statement` — la vignette éditoriale chanfreinée, contourée et flottante,
+  à corps justifié qui remplit la carte.

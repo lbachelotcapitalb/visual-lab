@@ -20,9 +20,9 @@
     "social"
   ],
   "counts": {
-    "patterns": 57,
-    "refs": 19,
-    "checkable": 50
+    "patterns": 58,
+    "refs": 20,
+    "checkable": 51
   },
   "patterns": [
     {
@@ -2196,6 +2196,260 @@
       ],
       "pptx": null,
       "html": "patterns/card-14-numbered-steps.html"
+    },
+    {
+      "id": "card-15-notched-float-statement",
+      "name": "Vignette éditoriale chanfreinée, flottante et contourée",
+      "family": "card",
+      "ref": "ref-20-finengy-navy-notched",
+      "media": [
+        "web",
+        "slide"
+      ],
+      "intent": "Porter un ENGAGEMENT — un titre affirmatif et son développement de plusieurs lignes — dans une vignette à silhouette de ticket qui flotte au-dessus d'un fond sombre : contour clair épais, ombre portée qui suit le chanfrein, texte justifié et coupé qui remplit la vignette jusqu'au dernier pixel.",
+      "when_to_use": "Trois à six promesses de même rang sur un fond sombre — méthode, engagements, différenciateurs — chacune valant un paragraphe et non une ligne. Une seule prend la variante `--end`, et c'est une FIN de série, pas un « le plus important ».",
+      "avoid_when": "Le développement tient en une ligne (la vignette se vide et le contour épais n'encadre plus rien : c'est card-02-notched-brief qu'il faut), la colonne descend sous ~260 px (le texte justifié y ouvre des rivières que la césure n'absorbe plus), ou le fond de page est clair — le contour clair et l'ombre noire n'y détachent rien.",
+      "tags": [
+        "carte",
+        "vignette",
+        "chanfrein",
+        "notch",
+        "contour",
+        "bordure",
+        "ombre",
+        "flottante",
+        "engagement",
+        "promesse",
+        "justifie",
+        "cesure",
+        "paragraphe",
+        "rangee",
+        "accent",
+        "fond-sombre",
+        "editorial"
+      ],
+      "vars": [
+        {
+          "name": "--vl-card",
+          "role": "aplat de la vignette neutre — c'est LUI qui est sous le texte",
+          "default": "#1A3A52"
+        },
+        {
+          "name": "--vl-edge",
+          "role": "contour clair épais ; c'est un aplat, pas un `border`",
+          "default": "rgba(244,247,249,0.34)"
+        },
+        {
+          "name": "--vl-gold",
+          "role": "aplat de la variante de FIN",
+          "default": "#F5C518"
+        },
+        {
+          "name": "--vl-gold-edge",
+          "role": "contour de la variante de fin",
+          "default": "rgba(255,224,102,0.95)"
+        },
+        {
+          "name": "--vl-ink",
+          "role": "titre sur la vignette neutre",
+          "default": "#FFFFFF"
+        },
+        {
+          "name": "--vl-ink-muted",
+          "role": "corps sur la vignette neutre",
+          "default": "rgba(244,247,249,0.72)"
+        },
+        {
+          "name": "--vl-on-gold",
+          "role": "titre sur l'aplat de fin",
+          "default": "#0D2A3D"
+        },
+        {
+          "name": "--vl-on-gold-muted",
+          "role": "corps sur l'aplat de fin — c'est le contraste le plus SERRÉ du pattern (5,68:1)",
+          "default": "rgba(13,42,61,0.78)"
+        },
+        {
+          "name": "--vl-notch",
+          "role": "longueur du chanfrein, posée sur les DEUX coins de la diagonale",
+          "default": "44px"
+        },
+        {
+          "name": "--vl-radius",
+          "role": "rayon des deux coins non coupés",
+          "default": "15px"
+        },
+        {
+          "name": "--vl-border",
+          "role": "épaisseur du contour ; le chanfrein intérieur s'en déduit",
+          "default": "2.6px"
+        },
+        {
+          "name": "--vl-shadow",
+          "role": "ombre portée au repos, posée sur la RACINE et jamais sur la couche clippée",
+          "default": "0 15px 21px rgba(0,0,0,0.55)"
+        },
+        {
+          "name": "--vl-shadow-hover",
+          "role": "ombre au survol, avec un lift de 6 px",
+          "default": "0 26px 31px rgba(0,0,0,0.62)"
+        }
+      ],
+      "slots": [
+        "titre",
+        "corps"
+      ],
+      "geometry": {
+        "root": ".vl-notched-float",
+        "frame": [
+          426,
+          454
+        ],
+        "ratios": {
+          "width_over_height": 0.938,
+          "notch_over_width": 0.103,
+          "border_over_width": 0.0061,
+          "radius_over_width": 0.035,
+          "pad_x_over_width": 0.0798,
+          "titre_over_corps": 1.318,
+          "lift_over_height": 0.0132,
+          "pad_y_over_height": 0.0749
+        },
+        "type_px": {
+          "titre": 29,
+          "corps": 22
+        },
+        "pad_ratio": {
+          "top": 0.0749,
+          "x": 0.0798,
+          "bottom": 0.0749
+        }
+      },
+      "benchmarks": [
+        {
+          "name": "vignette un rien plus haute que large",
+          "measure": "W / H",
+          "expect": 0.938,
+          "tol": 0.03
+        },
+        {
+          "name": "chanfrein ≈ 10,3 % de la largeur",
+          "measure": "notch('.vl-notched-float__card') / W",
+          "expect": 0.103,
+          "tol": 0.02
+        },
+        {
+          "name": "le polygone porte 6 sommets : DEUX coins coupés, pas un ni quatre",
+          "measure": "(cs('.vl-notched-float__card','clipPath').match(/,/g) || []).length + 1",
+          "expect": 6,
+          "tol": 0
+        },
+        {
+          "name": "la coupe commence au coin haut-droit (l'autre est son opposé sur la diagonale)",
+          "measure": "notchCorner('.vl-notched-float__card') === 'tr' ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "les coins non coupés gardent un rayon ≈ 3,5 % de la largeur",
+          "measure": "num('.vl-notched-float__card','borderTopLeftRadius') / W",
+          "expect": 0.035,
+          "tol": 0.015
+        },
+        {
+          "name": "L'OMBRE EST SUR LA RACINE : un filtre s'applique avant le clip, posée plus bas elle serait découpée",
+          "measure": "cs('.vl-notched-float','filter').indexOf('drop-shadow') >= 0 ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "la racine n'est PAS clippée — c'est ce qui laisse l'ombre exister",
+          "measure": "cs('.vl-notched-float','clipPath') === 'none' ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "la couche clippée ne porte AUCUN filtre — sinon l'ombre se découpe avec elle",
+          "measure": "cs('.vl-notched-float__card','filter') === 'none' ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "le contour n'est pas un `border` : un clip-path le mangerait",
+          "measure": "num('.vl-notched-float__card','borderTopWidth')",
+          "expect": 0,
+          "tol": 0
+        },
+        {
+          "name": "contour ≈ 0,61 % de la largeur — épais, mais un contour",
+          "measure": "parseFloat(cs('.vl-notched-float','--nfs-bw')) / W",
+          "expect": 0.0061,
+          "tol": 0.002
+        },
+        {
+          "name": "le contour existe bel et bien : l'aplat de carte est inséré de l'épaisseur déclarée",
+          "measure": "Math.abs(box('.vl-notched-float__fill').left - parseFloat(cs('.vl-notched-float','--nfs-bw')))",
+          "max": 0.6
+        },
+        {
+          "name": "la césure ne dépend d'aucun document d'accueil : le fragment déclare sa LANGUE",
+          "measure": "$('.vl-notched-float__p').closest('[lang]') ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "CHANFREIN INTÉRIEUR DÉDUIT : b(2−√2) ≈ 0,586 b de moins que l'extérieur, sinon le contour s'épaissit dans les angles",
+          "measure": "(notch('.vl-notched-float__card') - notch('.vl-notched-float__fill')) / parseFloat(cs('.vl-notched-float','--nfs-bw'))",
+          "expect": 0.586,
+          "tol": 0.02
+        },
+        {
+          "name": "marge intérieure gauche ≈ 8 % de la largeur",
+          "measure": "num('.vl-notched-float__card','paddingLeft') / W",
+          "expect": 0.0798,
+          "tol": 0.02
+        },
+        {
+          "name": "le titre ouvre la vignette : il colle la marge du haut",
+          "measure": "box('.vl-notched-float__t').top - num('.vl-notched-float__card','paddingTop')",
+          "expect": 0,
+          "tol": 2
+        },
+        {
+          "name": "saut typographique titre / corps entre 1,25 et 1,5 — un titre, pas un chiffre héros",
+          "measure": "num('.vl-notched-float__t','fontSize') / num('.vl-notched-float__p','fontSize')",
+          "min": 1.25,
+          "max": 1.5
+        },
+        {
+          "name": "le corps est JUSTIFIÉ — c'est la signature du pattern",
+          "measure": "cs('.vl-notched-float__p','textAlign') === 'justify' ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "la césure est active : sans elle une colonne étroite justifiée ouvre des rivières",
+          "measure": "cs('.vl-notched-float__p','hyphens') === 'auto' ? 1 : 0",
+          "expect": 1
+        },
+        {
+          "name": "LA VIGNETTE EST PLEINE : moins d'une ligne de corps entre le texte et la marge du bas",
+          "measure": "H - box('.vl-notched-float__p').bottom - num('.vl-notched-float__card','paddingBottom')",
+          "min": -2,
+          "max": 34
+        },
+        {
+          "name": "contraste du titre ≥ 4,5",
+          "measure": "contrast('.vl-notched-float__t')",
+          "min": 4.5
+        },
+        {
+          "name": "contraste du corps ≥ 4,5 — c'est lui qui plafonne, pas le titre",
+          "measure": "contrast('.vl-notched-float__p')",
+          "min": 4.5
+        },
+        {
+          "name": "aucun débordement du contenu hors de la vignette",
+          "measure": "overflow('.vl-notched-float')",
+          "max": 0
+        }
+      ],
+      "pptx": null,
+      "html": "patterns/card-15-notched-float-statement.html"
     },
     {
       "id": "chart-01-stadium-bars",
@@ -9478,6 +9732,40 @@
           "value": "30px / 1.1 / 600 / -0.01em",
           "label": "24px / 1.2 / 500 / -0.01em",
           "micro": "14px / 1.3 / 500"
+        }
+      }
+    },
+    {
+      "id": "ref-20-finengy-navy-notched",
+      "name": "Marine Finengy à vignettes chanfreinées",
+      "patterns": [
+        "card-15-notched-float-statement"
+      ],
+      "deck": "decks/ref-20-finengy-navy-notched.html",
+      "tokens": {
+        "--vl-bg": "#0D2A3D",
+        "--vl-card": "#1A3A52",
+        "--vl-edge": "rgba(244,247,249,0.34)",
+        "--vl-gold": "#F5C518",
+        "--vl-gold-edge": "rgba(255,224,102,0.95)",
+        "--vl-ink": "#FFFFFF",
+        "--vl-ink-muted": "rgba(244,247,249,0.72)",
+        "--vl-on-gold": "#0D2A3D",
+        "--vl-on-gold-muted": "rgba(13,42,61,0.78)",
+        "--vl-notch": "44px",
+        "--vl-radius": "15px",
+        "--vl-border": "2.6px",
+        "--vl-shadow": "0 15px 21px rgba(0,0,0,0.55)",
+        "--vl-shadow-hover": "0 26px 31px rgba(0,0,0,0.62)",
+        "--vl-gap": "40px",
+        "--vl-margin": "120px"
+      },
+      "type": {
+        "display": "Inter, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "body": "Inter, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+        "scale": {
+          "titre": "29px / 1.22 / 600 / -0.018em",
+          "corps": "22px / 1.52 / 400"
         }
       }
     }

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>ref-20-finengy-navy-notched — reconstitution</title>
+<style>
+@import url("../fonts/fonts.css");
+
+/* ref-20-finengy-navy-notched — reconstitution fidèle, format PPT 1600×900.
+   DEUX couches et pas trois : le fond marine, et les vignettes. La source est une
+   section de page ; le titre de section en fait partie et ne compte pas comme une
+   couche (c'est du texte posé sur le fond, pas une surface). */
+:root {
+  --vl-bg: #0D2A3D;
+  --vl-card: #1A3A52;
+  --vl-edge: rgba(244,247,249,0.34);
+  --vl-gold: #F5C518;
+  --vl-gold-edge: rgba(255,224,102,0.95);
+  --vl-ink: #FFFFFF;
+  --vl-ink-muted: rgba(244,247,249,0.72);
+  --vl-on-gold: #0D2A3D;
+  --vl-on-gold-muted: rgba(13,42,61,0.78);
+  --vl-notch: 44px;
+  --vl-radius: 15px;
+  --vl-border: 2.6px;
+  --vl-shadow: 0 15px 21px rgba(0,0,0,0.55);
+  --vl-shadow-hover: 0 26px 31px rgba(0,0,0,0.62);
+  --vl-gap: 40px;
+  --vl-margin: 120px;
+  --vl-font: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 0; display: flex; background: var(--vl-bg);
+       font-family: var(--vl-font); color: var(--vl-ink); -webkit-font-smoothing: antialiased; }
+.slide { position: relative; width: 1600px; height: 900px; padding: var(--vl-margin);
+         display: flex; flex-direction: column; gap: 46px; overflow: hidden;
+         background: var(--vl-bg); }
+.slide h2 { margin: 0; font-size: 62px; line-height: 1.04; font-weight: 700;
+            letter-spacing: -0.03em; color: var(--vl-ink); }
+.rangee { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--vl-gap); }
+
+/* ------- le pattern card-15-notched-float-statement ------- */
+.vl-nfs {
+  --nfs-notch: var(--vl-notch);
+  --nfs-bw: var(--vl-border);
+  /* Décaler une oblique à 45° de b raccourcit sa coupe de b(2 − √2) ≈ 0,586 b.
+     Sans ce facteur le contour s'épaissit dans les deux angles coupés — et c'est
+     la seule chose que l'œil y voit. */
+  --nfs-notch-in: calc(var(--nfs-notch) - var(--nfs-bw) * 0.586);
+  --nfs-edge: var(--vl-edge);
+  --nfs-fill: var(--vl-card);
+  --nfs-ink: var(--vl-ink);
+  --nfs-ink-2: var(--vl-ink-muted);
+  /* L'ombre vit ICI, un cran au-dessus du clip : un filtre s'applique AVANT le
+     clip-path, donc posée sur la carte elle serait découpée avec elle. */
+  filter: drop-shadow(var(--vl-shadow));
+  transition: filter .22s ease, transform .22s ease;
+}
+.vl-nfs:hover { transform: translateY(-6px); filter: drop-shadow(var(--vl-shadow-hover)); }
+.vl-nfs--end {
+  --nfs-edge: var(--vl-gold-edge);
+  --nfs-fill: var(--vl-gold);
+  --nfs-ink: var(--vl-on-gold);
+  --nfs-ink-2: var(--vl-on-gold-muted);
+}
+.vl-nfs__card {
+  position: relative; isolation: isolate;
+  height: 100%; display: flex; flex-direction: column; align-items: flex-start;
+  padding: 34px; border-radius: var(--vl-radius);
+  background-color: var(--nfs-fill);
+  background-image: linear-gradient(var(--nfs-edge), var(--nfs-edge));
+  clip-path: polygon(
+    0 0, calc(100% - var(--nfs-notch)) 0, 100% var(--nfs-notch),
+    100% 100%, var(--nfs-notch) 100%, 0 calc(100% - var(--nfs-notch))
+  );
+}
+.vl-nfs__fill {
+  content: ''; position: absolute; inset: var(--nfs-bw); z-index: -1;
+  border-radius: calc(var(--vl-radius) - var(--nfs-bw));
+  background: var(--nfs-fill);
+  clip-path: polygon(
+    0 0, calc(100% - var(--nfs-notch-in)) 0, 100% var(--nfs-notch-in),
+    100% 100%, var(--nfs-notch-in) 100%, 0 calc(100% - var(--nfs-notch-in))
+  );
+}
+.vl-nfs__t { margin: 0; font-size: 29px; line-height: 1.22; font-weight: 600;
+             letter-spacing: -0.018em; color: var(--nfs-ink); }
+.vl-nfs__p { margin: 16px 0 0; font-size: 22px; line-height: 1.52; color: var(--nfs-ink-2);
+             text-align: justify; hyphens: auto; -webkit-hyphens: auto;
+             hyphenate-limit-chars: 6 3 2; }
+</style>
+</head>
+<body>
+
+<section class="slide">
+  <h2>Une procédure systématique</h2>
+  <div class="rangee">
+    <article class="vl-nfs">
+      <div class="vl-nfs__card">
+        <span class="vl-nfs__fill" aria-hidden="true"></span>
+        <p class="vl-nfs__t">La polyvalence métiers et systèmes des consultants</p>
+        <p class="vl-nfs__p" lang="fr">Un même consultant tient la norme comptable et l'outil qui la produit. Le sujet n'est jamais coupé en deux entre un fonctionnel et un technique qui se renvoient la question d'un comité à l'autre. Le client garde un seul interlocuteur, et la question ne fait pas d'aller-retour.</p>
+      </div>
+    </article>
+    <article class="vl-nfs">
+      <div class="vl-nfs__card">
+        <span class="vl-nfs__fill" aria-hidden="true"></span>
+        <p class="vl-nfs__t">Une connaissance approfondie des systèmes d'assurance</p>
+        <p class="vl-nfs__p" lang="fr">Solvabilité II, QRT, ENS, provisions techniques : les référentiels du secteur et les chaînes qui les alimentent sont connus d'avance, sans phase d'acculturation facturée. Le temps passé va au sujet, pas au contexte, et le sujet est pris à son niveau.</p>
+      </div>
+    </article>
+    <article class="vl-nfs vl-nfs--end">
+      <div class="vl-nfs__card">
+        <span class="vl-nfs__fill" aria-hidden="true"></span>
+        <p class="vl-nfs__t">Un point formalisé mensuel avec le responsable Client</p>
+        <p class="vl-nfs__p" lang="fr">Une revue écrite de la mission : livrables tenus, charge consommée, points ouverts. Elle sert de base à l'arbitrage du mois suivant, pas d'archive. Le client sait où en est sa mission, chiffres en main, sans avoir à la demander.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+</body>
+</html>

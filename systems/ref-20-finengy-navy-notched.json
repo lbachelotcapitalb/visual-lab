@@ -1,0 +1,30 @@
+{
+  "name": "Marine Finengy à vignettes chanfreinées",
+  "notes": "Charte de conseil, fond marine profond, un seul accent chaud. Trois gestes la portent. PREMIER : le double chanfrein sur la DIAGONALE (haut-droit + bas-gauche, 0,103 × la largeur de vignette), les deux autres coins gardant leur rayon — même grammaire que ref-15, mais employée ici sur une carte ÉDITORIALE et non sur un KPI, et surtout CONTOURÉE, ce que ref-15 ne fait pas. DEUXIÈME : le contour épais clair (0,006 × la largeur) qui détache la vignette du marine — il n'est PAS un `border`, parce qu'un clip-path découpe la bordure avec la boîte ; il est l'aplat de la couche du dessous, la carte étant une seconde couche insérée de l'épaisseur voulue. TROISIÈME : la vignette FLOTTE — une ombre portée qui suit la silhouette chanfreinée, donc un `drop-shadow` posé un cran AU-DESSUS de l'élément clippé, jamais dessus (un filtre s'applique avant le clip : posée sur la carte elle-même, l'ombre est découpée avec elle et disparaît). CONTRASTE : l'encre secondaire relevée (rgba(244,247,249,0.72) sur #1A3A52, soit #B7C2CA) tient 7,4:1 ; sur l'accent or, l'encre secondaire est le marine à 78 % (#404C35 sur #F5C518). ACCENT DE RANGÉE : une seule vignette or par rangée, et c'est une FIN — pas un second accent, pas un « le plus important ». ÉCHELLE : relevé sur la page à 1280 px de fenêtre (vignette de 331 px), reporté ici à l'échelle d'une slide 1600×900, vignette de 426 px. Les patterns héritent de CES valeurs — c'est le système qui porte l'échelle, jamais le fragment.",
+  "tokens": {
+    "--vl-bg": "#0D2A3D",
+    "--vl-card": "#1A3A52",
+    "--vl-edge": "rgba(244,247,249,0.34)",
+    "--vl-gold": "#F5C518",
+    "--vl-gold-edge": "rgba(255,224,102,0.95)",
+    "--vl-ink": "#FFFFFF",
+    "--vl-ink-muted": "rgba(244,247,249,0.72)",
+    "--vl-on-gold": "#0D2A3D",
+    "--vl-on-gold-muted": "rgba(13,42,61,0.78)",
+    "--vl-notch": "44px",
+    "--vl-radius": "15px",
+    "--vl-border": "2.6px",
+    "--vl-shadow": "0 15px 21px rgba(0,0,0,0.55)",
+    "--vl-shadow-hover": "0 26px 31px rgba(0,0,0,0.62)",
+    "--vl-gap": "40px",
+    "--vl-margin": "120px"
+  },
+  "type": {
+    "display": "Inter, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+    "body": "Inter, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+    "scale": {
+      "titre": "29px / 1.22 / 600 / -0.018em",
+      "corps": "22px / 1.52 / 400"
+    }
+  }
+}

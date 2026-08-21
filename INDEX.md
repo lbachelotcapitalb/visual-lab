@@ -2,7 +2,7 @@
 
 **Généré par `node bin/index.mjs`. Ne jamais éditer à la main.**
 
-57 patterns · 19 références · 50 vérifiés par benchmarks mesurés.
+58 patterns · 20 références · 51 vérifiés par benchmarks mesurés.
 
 ## Comment se servir de ce fichier
 
@@ -40,6 +40,7 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `card-12-inverted-kpi-row` | Ouvrir un tableau de bord par trois indicateurs de même nature dont UN SEUL est de premier rang, en lui appliquant deux fois le même geste de hiérarchie : l'aplat inversé ET une colonne 5 % plus large. Chaque carte range ses quatre informations dans le même ordre — libellé en haut, pastille de renvoi ancrée au coin opposé, chiffre poussé en bas, note collée dessous. | web slide | 16 | ref-18-lime-sales-dashboard |
 | `card-13-email-figure-band` | Poser trois indicateurs de même nature en une bande dans un mail, sans aplat de carte ni encadrement : les colonnes sont des cellules à largeur en pourcentage sur une table à disposition fixe — la seule répartition en parts égales qu'Outlook respecte — et les séparateurs sont des filets de cellule, pas des colonnes intercalaires. La couleur ne fait qu'une chose : elle porte les chiffres. | email | 17 | ref-04-swiss-investor-blue |
 | `card-14-numbered-steps` | Poser une méthode en quatre temps sur une seule rangée, en tenant DEUX rails : le chiffre de chaque étape pend du même plafond, son texte pousse depuis le même plancher — donc une phrase de deux lignes et une de quatre ne décalent rien. Une seule carte est accentuée, et elle l'est par le FOND et rien d'autre ; la dernière est noire parce qu'elle est une fin, pas un second accent. | slide web | 19 | ref-05-proposal-acid-yellow |
+| `card-15-notched-float-statement` | Porter un ENGAGEMENT — un titre affirmatif et son développement de plusieurs lignes — dans une vignette à silhouette de ticket qui flotte au-dessus d'un fond sombre : contour clair épais, ombre portée qui suit le chanfrein, texte justifié et coupé qui remplit la vignette jusqu'au dernier pixel. | web slide | 22 | ref-20-finengy-navy-notched |
 | `chart-01-stadium-bars` | Un histogramme réduit à l'essentiel : des barres à sommet en demi-cercle, aucune ligne d'axe, des légendes en pilules. | slide social web | — | ref-03-bento-dark-pitch |
 | `chart-02-isotype` | Raconter une proportion en unités comptables (24 pictogrammes sur 40) au lieu d'un pourcentage abstrait. | slide web | — | ref-03-bento-dark-pitch |
 | `chart-03-accent-column-callout` | Donner la forme d'une série en quelques colonnes flottantes sans axe ni graduation, et n'en chiffrer qu'une seule — la courante — par une info-bulle sombre ancrée à sa colonne. | slide web | 11 | ref-13-glass-fintech-dashboard |
@@ -201,6 +202,14 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 - à remplir : n, label, body
 - variables : --vl-nsteps-w, --vl-nsteps-h, --vl-nsteps-gap, --vl-nsteps-radius, --vl-nsteps-pad, --vl-nsteps-plain, --vl-nsteps-accent, --vl-nsteps-end, --vl-nsteps-ink, --vl-nsteps-ink-invert, --vl-nsteps-muted, --vl-nsteps-muted-invert, --vl-font-body
 - tags : etapes, process, methode, numerotee, rangee, chiffre, accent, accent-unique, timeline, parcours, carte, plan
+
+**card-15-notched-float-statement** — Vignette éditoriale chanfreinée, flottante et contourée
+
+- employer : Trois à six promesses de même rang sur un fond sombre — méthode, engagements, différenciateurs — chacune valant un paragraphe et non une ligne. Une seule prend la variante `--end`, et c'est une FIN de série, pas un « le plus important ».
+- éviter : Le développement tient en une ligne (la vignette se vide et le contour épais n'encadre plus rien : c'est card-02-notched-brief qu'il faut), la colonne descend sous ~260 px (le texte justifié y ouvre des rivières que la césure n'absorbe plus), ou le fond de page est clair — le contour clair et l'ombre noire n'y détachent rien.
+- à remplir : titre, corps
+- variables : --vl-card, --vl-edge, --vl-gold, --vl-gold-edge, --vl-ink, --vl-ink-muted, --vl-on-gold, --vl-on-gold-muted, --vl-notch, --vl-radius, --vl-border, --vl-shadow, --vl-shadow-hover
+- tags : carte, vignette, chanfrein, notch, contour, bordure, ombre, flottante, engagement, promesse, justifie, cesure, paragraphe, rangee, accent, fond-sombre, editorial
 
 ### chart
 
@@ -583,5 +592,6 @@ rendre. Filtrer : `node bin/search.mjs --media email`.
 | `ref-17-mono-bento-legal` | Bento monochrome, hiérarchie par la surface | `card-11-corner-arrow-tile`, `layout-05-nav-pill-bar`, `layout-06-bento-l-span`, `tag-02-centered-cloud` | `decks/ref-17-mono-bento-legal.html` |
 | `ref-18-lime-sales-dashboard` | Tableau de bord achromatique à accent vert dosé | `card-12-inverted-kpi-row`, `chart-05-tile-heatmap`, `layout-07-icon-rail-shell`, `tag-03-action-pill-bar` | `decks/ref-18-lime-sales-dashboard.html` |
 | `ref-19-acid-clinical-timeline` | Feuille clinique grise sur voile, accent acide | `diagram-02-branch-timeline`, `diagram-03-time-scrubber`, `layout-08-sheet-handle-tab`, `list-05-vitals-strip` | `decks/ref-19-acid-clinical-timeline.html` |
+| `ref-20-finengy-navy-notched` | Marine Finengy à vignettes chanfreinées | `card-15-notched-float-statement` | `decks/ref-20-finengy-navy-notched.html` |
 
 Ce que chaque référence fait, sa palette et sa typo : [SPEC-SOURCES.md](SPEC-SOURCES.md).
