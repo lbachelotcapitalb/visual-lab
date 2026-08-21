@@ -107,7 +107,7 @@ const hash = (s) => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h *
  *  rognait en silence. `scrollWidth/scrollHeight` compte le débordement ; les rectangles des
  *  enfants rattrapent les cas où la racine est plus petite que ce qu'elle laisse dépasser. */
 function measureFrames(list) {
-  const todo = list.filter((p) => p.html && cache[p.id]?.k !== hash(p.html));
+  const todo = list.filter((p) => p.html && cache[p.id]?.k !== 'v2:' + hash(p.html));
   if (!todo.length) return;
   const frames = todo.map((p) => {
     const doc = `<!doctype html><meta charset="utf-8"><link rel="stylesheet" href="file://${join(ROOT, 'fonts/fonts.css')}">`
@@ -132,7 +132,15 @@ function measureFrames(list) {
           var b = el.getBoundingClientRect();
           w = Math.max(w, Math.ceil(b.right)); h = Math.max(h, Math.ceil(b.bottom));
         });
-        out[f.dataset.id] = [Math.min(w, 2600) || 430, Math.min(h, 2600) || 340];
+        // La couleur de fond PROPRE de l'élément : c'est elle qui décide du sol. Un
+        // élément sans fond à lui compte sur celui de sa charte — on le laisse tranquille.
+        var bg = 'transparent', el = d.body.firstElementChild;
+        for (var p = 0; p < 3 && el; p++) {
+          var c = getComputedStyle(el).backgroundColor;
+          if (c && c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent') { bg = c; break; }
+          el = el.firstElementChild;
+        }
+        out[f.dataset.id] = { box: [Math.min(w, 2600) || 430, Math.min(h, 2600) || 340], bg: bg };
       } catch (e) { /* un fragment qui refuse de se mesurer garde son cadre déclaré */ }
     });
     document.getElementById('vl-out').textContent = JSON.stringify(out);
@@ -141,7 +149,7 @@ function measureFrames(list) {
 </script></body>`);
   try {
     const got = dumpProbe(probe);
-    for (const p of todo) if (got[p.id]) cache[p.id] = { box: got[p.id], k: hash(p.html) };
+    for (const p of todo) if (got[p.id]) cache[p.id] = { box: got[p.id].box, bg: got[p.id].bg, k: 'v2:' + hash(p.html) };
     writeFileSync(CACHE, JSON.stringify(cache, null, 1));
     console.log(`   ${todo.length} fragment(s) mesuré(s) dans Chrome → .site-frames.json`);
   } catch (e) {
@@ -158,6 +166,66 @@ const frameOfPattern = (p) => cache[p.id]?.box || (declared(p) ? p.geometry.fram
 /** Ce qu'on AFFICHE comme cadre : le contrat quand il existe — c'est lui qui engage le pattern. */
 const labelFrame = (p) => (declared(p) ? p.geometry.frame : frameOfPattern(p));
 
+/* ─────────────── LE SOL D'UN RENDU — contrasté, jamais complaisant ───────────────
+   Le sol par défaut est celui que sa charte prévoit : beaucoup de fragments n'ont pas de
+   fond propre et comptent dessus. Mais quand un élément porte SON fond et que ce fond a la
+   même valeur que celui de sa charte, la vignette se fond dans son sol et on ne voit plus
+   que l'ombre — c'est le cas d'une carte marine posée sur une section marine. On mesure donc
+   le contraste, et quand il est insuffisant on pose l'élément sur un sol NEUTRE qui le
+   détache : clair par défaut, sombre seulement si l'élément est lui-même clair. */
+/** Les deux écritures cohabitent dans le corpus : les jetons d'une charte sont en HEXA, ce
+ *  que renvoie le navigateur est en `rgb()`. Une fonction qui ne lit que l'une des deux ne
+ *  échoue pas bruyamment — elle renvoie « pas de contraste mesurable », donc « tout va bien »,
+ *  et la règle ne s'applique jamais. C'est exactement ce qui s'était passé. */
+const lum = (c) => {
+  const s = String(c).trim();
+  let r, g, b;
+  const hex = s.match(/^#([0-9a-f]{3,8})$/i);
+  if (hex) {
+    let h = hex[1];
+    if (h.length === 3 || h.length === 4) h = h.slice(0, 3).split('').map((x) => x + x).join('');
+    if (h.length < 6) return null;
+    [r, g, b] = [h.slice(0, 2), h.slice(2, 4), h.slice(4, 6)].map((x) => parseInt(x, 16));
+  } else {
+    const m = s.match(/-?\d+(?:\.\d+)?/g);
+    if (!m || m.length < 3) return null;
+    [r, g, b] = m.slice(0, 3).map(Number);
+  }
+  const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+  return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+};
+const contraste = (a, b) => {
+  const la = lum(a), lb = lum(b);
+  if (la === null || lb === null) return 21;
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+};
+/* LE SOL DE SECOURS SE CALCULE, il ne se choisit pas dans une petite liste. Une couleur
+   fixe finit toujours par tomber sur un élément de la même valeur qu'elle : un gris de page
+   choisi une fois avait laissé 14 vignettes sur 44 encore collées à leur sol. On part donc de
+   la luminance de l'élément et on en déduit un gris neutre qui garantit l'écart.
+
+   Le sens de l'écart n'est pas symétrique : un élément SOMBRE va sur du clair — c'est la
+   règle, et c'est franc. Un élément clair, lui, ne va pas sur du noir : l'inverser changerait
+   le caractère du visuel qu'on prétend montrer. Il reçoit un gris juste assez soutenu. */
+const versGris = (L) => {
+  const c = L <= 0.0031308 ? L * 12.92 : 1.055 * Math.pow(Math.max(0, L), 1 / 2.4) - 0.055;
+  const v = Math.round(Math.max(0, Math.min(1, c)) * 255);
+  return '#' + [v, v, v].map((x) => x.toString(16).padStart(2, '0')).join('').toUpperCase();
+};
+const SOL_CLAIR = '#F1F1F4';   // pour un élément sombre : il ressort franchement
+const SEUIL_SOL = 1.4;         // en dessous, l'œil ne sépare plus la vignette de son sol
+const CIBLE_SOL = 1.6;         // ce qu'on vise quand on doit en fabriquer un
+
+function solDe(p) {
+  const charte = groundOf(p.ref);
+  const propre = cache[p.id]?.bg;
+  if (!propre || propre === 'transparent') return charte;   // pas de fond à lui → sa charte
+  if (contraste(charte, propre) >= SEUIL_SOL) return charte;
+  const L = lum(propre);
+  if (L < 0.18) return SOL_CLAIR;
+  return versGris((L + 0.05) / CIBLE_SOL - 0.05);
+}
+
 /* ───────────────────────────── le rendu isolé ───────────────────────────── */
 
 /** Le document autonome d'un pattern du canon — le fragment, ses jetons, son sol, et le même
@@ -170,7 +238,7 @@ const fragDoc = (p) => `<!doctype html><meta charset="utf-8">
 <link rel="stylesheet" href="../fonts/fonts.css">
 <style>
   ${RESET}
-  html,body{margin:0;height:100%;overflow:hidden;background:${attr(groundOf(p.ref))}}
+  html,body{margin:0;height:100%;overflow:hidden;background:${attr(solDe(p))}}
   :root{${Object.entries(tokensOf(p.ref)).map(([k, v]) => k + ':' + v).join(';')}}
   #vl-f{position:absolute;top:50%;left:50%;width:max-content;height:max-content;
     transform:translate(-50%,-50%);transform-origin:center center}
@@ -200,9 +268,13 @@ const rangement = (o) => `<button class="ic js-fav" type="button" aria-pressed="
 function stage(p, base, maxH) {
   const [w, h] = frameOfPattern(p);
   const doc = `<!doctype html><meta charset="utf-8"><link rel="stylesheet" href="${base}fonts/fonts.css">` +
-    `<style>${RESET}html,body{margin:0;width:max-content}:root{${Object.entries(tokensOf(p.ref)).map(([k, v]) => k + ':' + v).join(';')}}</style>` +
+    // `background:transparent` n'est PAS une redondance : un document embarqué peint un fond
+    // blanc de base, et une découpe (chanfrein, coin arrondi, masque) y laisse voir ce blanc
+    // au lieu du sol. C'est ce qui mettait deux triangles blancs dans les coins coupés.
+    `<style>${RESET}html,body{margin:0;width:max-content;background:transparent}` +
+    `:root{${Object.entries(tokensOf(p.ref)).map(([k, v]) => k + ':' + v).join(';')}}</style>` +
     p.html;
-  return `<div class="stage" style="background:${attr(groundOf(p.ref))}" data-w="${w}" data-h="${h}"${maxH ? ` data-maxh="${maxH}"` : ''}>` +
+  return `<div class="stage" style="background:${attr(solDe(p))}" data-w="${w}" data-h="${h}"${maxH ? ` data-maxh="${maxH}"` : ''}>` +
     `<iframe loading="lazy" title="${attr(p.name)}" srcdoc="${srcdoc(doc)}" style="width:${w}px;height:${h}px"></iframe></div>`;
 }
 
@@ -1479,7 +1551,7 @@ const extDoc = (src, e, raw) => `<!doctype html><meta charset="utf-8">
      Repris tel quel, sans modification. Le crédit doit rester attaché au code. -->
 <style>
   *,*::before,*::after{box-sizing:border-box}
-  html,body{margin:0;height:100%;overflow:hidden}
+  html,body{margin:0;height:100%;overflow:hidden;background:transparent}
   #vl-e{position:absolute;top:50%;left:50%;width:max-content;height:max-content;
     transform:translate(-50%,-50%);transform-origin:center center}
 </style>
